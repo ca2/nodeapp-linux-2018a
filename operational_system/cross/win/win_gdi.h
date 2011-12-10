@@ -2,7 +2,7 @@
 
 
 
-struct CLASS_DECL_____ gdi_object
+struct CLASS_DECL_c gdi_object
 {
 
 

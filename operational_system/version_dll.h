@@ -12,13 +12,13 @@
 
 // default AFX_XXX_DATA and AFX_XXX_DATADEF macros for using MFC DLLs
 
-#ifdef _CAFX_DLL
+/*#ifdef _CAFX_DLL
 	#define AFX_CORE_DATA       CLASS_DECL_ca
 	#define AFX_CORE_DATADEF
 #elif AFX_CORE_DATA
 	#define AFX_CORE_DATA       AFX_DATA_IMPORT
 	#define AFX_CORE_DATADEF
-#endif
+#endif*/
 
 #ifndef AFX_OLE_DATA
 	#define AFX_OLE_DATA        AFX_DATA_IMPORT
