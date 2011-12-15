@@ -78,7 +78,7 @@ typedef union _XEvent XEvent;
 
 
 #ifdef __cplusplus
-inline void AfxDebugBreak() { asm("int 3"); }
+inline void AfxDebugBreak() { asm("int $3"); }
 #endif
 
 

@@ -521,3 +521,13 @@ BOOL RedrawWindow(HWND hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags
 
 #define RDW_FRAME               0x0400
 #define RDW_NOFRAME             0x0800
+
+
+#define DI_MASK         0x0001
+#define DI_IMAGE        0x0002
+#define DI_NORMAL       0x0003
+#define DI_COMPAT       0x0004
+#define DI_DEFAULTSIZE  0x0008
+#if(_WIN32_WINNT >= 0x0501)
+#define DI_NOMIRROR     0x0010
+#endif /* _WIN32_WINNT >= 0x0501 */
