@@ -308,6 +308,38 @@ typedef LPFONT HFONT;
 #define FW_BLACK            FW_HEAVY
 
 
+/* Pel Array */
+typedef struct tagPELARRAY
+  {
+    LONG        paXCount;
+    LONG        paYCount;
+    LONG        paXExt;
+    LONG        paYExt;
+    BYTE        paRGBs;
+  } PELARRAY, *PPELARRAY, NEAR *NPPELARRAY, FAR *LPPELARRAY;
+
+/* Logical Brush (or Pattern) */
+typedef struct tagLOGBRUSH
+{
+    UINT        lbStyle;
+    COLORREF    lbColor;
+    ULONG_PTR   lbHatch;
+} LOGBRUSH, *PLOGBRUSH, NEAR *NPLOGBRUSH, FAR *LPLOGBRUSH;
+
+typedef struct tagLOGBRUSH32
+{
+    UINT        lbStyle;
+    COLORREF    lbColor;
+    ULONG       lbHatch;
+} LOGBRUSH32, *PLOGBRUSH32, NEAR *NPLOGBRUSH32, FAR *LPLOGBRUSH32;
+
+
+typedef LOGBRUSH            PATTERN;
+typedef PATTERN             *PPATTERN;
+typedef PATTERN NEAR        *NPPATTERN;
+typedef PATTERN FAR         *LPPATTERN;
+
+
 /* Logical Pen */
 typedef struct tagLOGPEN
   {
@@ -366,14 +398,11 @@ typedef LPEXTLOGPEN HPEN;
 
 
 
-struct tagLOGBRUSH;
+struct tagEXTLOGBRUSH;
 
+typedef struct tagEXTLOGBRUSH  EXTLOGBRUSH, *PEXTLOGBRUSH, NEAR *NPEXTLOGBRUSH, FAR *LPEXTLOGBRUSH;
 
-typedef struct tagLOGBRUSH  LOGBRUSH, *PLOGBRUSH, NEAR *NPLOGBRUSH, FAR *LPLOGBRUSH;
-
-
-typedef LPLOGBRUSH HBRUSH;
-
+typedef LPEXTLOGBRUSH HBRUSH;
 
 
 /* Stock Logical Objects */

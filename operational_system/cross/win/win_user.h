@@ -1,6 +1,94 @@
 #pragma once
 
 
+//#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
+
+typedef VOID (CALLBACK* TIMERPROC)(HWND, UINT, UINT_PTR, DWORD);
+typedef BOOL (CALLBACK* GRAYSTRINGPROC)(HDC, LPARAM, int);
+typedef BOOL (CALLBACK* WNDENUMPROC)(HWND, LPARAM);
+typedef LRESULT (CALLBACK* HOOKPROC)(int code, WPARAM wParam, LPARAM lParam);
+typedef VOID (CALLBACK* SENDASYNCPROC)(HWND, UINT, ULONG_PTR, LRESULT);
+
+typedef BOOL (CALLBACK* PROPENUMPROCA)(HWND, LPCSTR, HANDLE);
+typedef BOOL (CALLBACK* PROPENUMPROCW)(HWND, LPCWSTR, HANDLE);
+
+typedef BOOL (CALLBACK* PROPENUMPROCEXA)(HWND, LPSTR, HANDLE, ULONG_PTR);
+typedef BOOL (CALLBACK* PROPENUMPROCEXW)(HWND, LPWSTR, HANDLE, ULONG_PTR);
+
+typedef int (CALLBACK* EDITWORDBREAKPROCA)(LPSTR lpch, int ichCurrent, int cch, int code);
+typedef int (CALLBACK* EDITWORDBREAKPROCW)(LPWSTR lpch, int ichCurrent, int cch, int code);
+
+
+#ifndef NOWINOFFSETS
+
+/*
+ * Window field offsets for GetWindowLong()
+ */
+#define GWL_WNDPROC         (-4)
+#define GWL_HINSTANCE       (-6)
+#define GWL_HWNDPARENT      (-8)
+#define GWL_STYLE           (-16)
+#define GWL_EXSTYLE         (-20)
+#define GWL_USERDATA        (-21)
+#define GWL_ID              (-12)
+
+#ifdef _WIN64
+
+#undef GWL_WNDPROC
+#undef GWL_HINSTANCE
+#undef GWL_HWNDPARENT
+#undef GWL_USERDATA
+
+#endif /* _WIN64 */
+
+#define GWLP_WNDPROC        (-4)
+#define GWLP_HINSTANCE      (-6)
+#define GWLP_HWNDPARENT     (-8)
+#define GWLP_USERDATA       (-21)
+#define GWLP_ID             (-12)
+
+/*
+ * Class field offsets for GetClassLong()
+ */
+#define GCL_MENUNAME        (-8)
+#define GCL_HBRBACKGROUND   (-10)
+#define GCL_HCURSOR         (-12)
+#define GCL_HICON           (-14)
+#define GCL_HMODULE         (-16)
+#define GCL_CBWNDEXTRA      (-18)
+#define GCL_CBCLSEXTRA      (-20)
+#define GCL_WNDPROC         (-24)
+#define GCL_STYLE           (-26)
+#define GCW_ATOM            (-32)
+
+#if(WINVER >= 0x0400)
+#define GCL_HICONSM         (-34)
+#endif /* WINVER >= 0x0400 */
+
+#ifdef _WIN64
+
+#undef GCL_MENUNAME
+#undef GCL_HBRBACKGROUND
+#undef GCL_HCURSOR
+#undef GCL_HICON
+#undef GCL_HMODULE
+#undef GCL_WNDPROC
+#undef GCL_HICONSM
+
+#endif /* _WIN64 */
+
+#define GCLP_MENUNAME       (-8)
+#define GCLP_HBRBACKGROUND  (-10)
+#define GCLP_HCURSOR        (-12)
+#define GCLP_HICON          (-14)
+#define GCLP_HMODULE        (-16)
+#define GCLP_WNDPROC        (-24)
+#define GCLP_HICONSM        (-34)
+
+#endif /* !NOWINOFFSETS */
+
+
+
 
 /*
  * SetWindowPos Flags
@@ -129,6 +217,55 @@
 #endif /* _WIN32_WINNT >= 0x0500 */
 
 
+
+
+HWND
+WINAPI
+GetDesktopWindow(
+    VOID);
+
+
+
+HWND
+WINAPI
+GetParent(
+    HWND hWnd);
+
+
+HWND
+WINAPI
+SetParent(
+    HWND hWndChild,
+    HWND hWndNewParent);
+
+
+BOOL
+WINAPI
+EnumChildWindows(
+    HWND hWndParent,
+    WNDENUMPROC lpEnumFunc,
+    LPARAM lParam);
+
+
+HWND
+WINAPI
+FindWindowA(
+    LPCSTR lpClassName,
+    LPCSTR lpWindowName);
+
+HWND
+WINAPI
+FindWindowW(
+    LPCWSTR lpClassName,
+    LPCWSTR lpWindowName);
+#ifdef UNICODE
+#define FindWindow  FindWindowW
+#else
+#define FindWindow  FindWindowA
+#endif // !UNICODE
+
+
+
 /*
  * WM_SIZE message wParam values
  */
@@ -224,6 +361,36 @@ typedef struct tagNCCALCSIZE_PARAMS {
 
 
 
+
+
+
+HWND
+WINAPI
+GetLastActivePopup(
+    HWND hWnd);
+
+/*
+ * GetWindow() Constants
+ */
+#define GW_HWNDFIRST        0
+#define GW_HWNDLAST         1
+#define GW_HWNDNEXT         2
+#define GW_HWNDPREV         3
+#define GW_OWNER            4
+#define GW_CHILD            5
+#if(WINVER <= 0x0400)
+#define GW_MAX              5
+#else
+#define GW_ENABLEDPOPUP     6
+#define GW_MAX              6
+#endif
+
+
+HWND
+WINAPI
+GetWindow(
+    HWND hWnd,
+    UINT uCmd);
 
 
 
@@ -531,3 +698,22 @@ BOOL RedrawWindow(HWND hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags
 #if(_WIN32_WINNT >= 0x0501)
 #define DI_NOMIRROR     0x0010
 #endif /* _WIN32_WINNT >= 0x0501 */
+
+
+LONG
+WINAPI
+GetWindowLongA(
+    HWND hWnd,
+    int nIndex);
+
+
+LONG
+WINAPI
+GetWindowLongW(
+    HWND hWnd,
+    int nIndex);
+#ifdef UNICODE
+#define GetWindowLong  GetWindowLongW
+#else
+#define GetWindowLong  GetWindowLongA
+#endif // !UNICODE
