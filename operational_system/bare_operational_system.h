@@ -22,7 +22,13 @@ struct device_context;
 struct gdi_object;
 
 typedef XID Window;
-typedef Window HWND;
+
+
+struct tag_WINDOW;
+
+typedef struct tag_WINDOW WINDOW, * LPWINDOW;
+
+typedef LPWINDOW HWND;
 
 
 typedef struct device_context * HDC;
