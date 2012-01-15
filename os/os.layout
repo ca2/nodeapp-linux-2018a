@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="../operational_system/bare_operational_system.h" open="1" top="1" tabpos="0">
+	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="0">
 		<Cursor position="374" topLine="10" />
 	</File>
 	<File name="../operational_system/cross/win/win_gdi.h" open="0" top="0" tabpos="3">
