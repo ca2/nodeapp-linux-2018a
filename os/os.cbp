@@ -33,6 +33,9 @@
 		<Unit filename="../operational_system/cross/win/base_tsd.h" />
 		<Unit filename="../operational_system/cross/win/win.h" />
 		<Unit filename="../operational_system/cross/win/win_base.h" />
+		<Unit filename="../operational_system/cross/win/win_crt.h">
+			<Option target="&lt;{~None~}&gt;" />
+		</Unit>
 		<Unit filename="../operational_system/cross/win/win_crtdefs.h" />
 		<Unit filename="../operational_system/cross/win/win_def.h" />
 		<Unit filename="../operational_system/cross/win/win_errno.h" />

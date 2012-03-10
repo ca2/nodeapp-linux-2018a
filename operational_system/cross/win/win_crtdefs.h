@@ -11,3 +11,5 @@
 #if !defined(_TRUNCATE)
 #define _TRUNCATE ((size_t)-1)
 #endif
+
+

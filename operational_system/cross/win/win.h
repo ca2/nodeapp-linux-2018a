@@ -3,6 +3,7 @@
 
 #include "base_tsd.h"
 #include "win_def.h"
+#include "win_crt.h"
 
 
 #define MAX_PATH          260
