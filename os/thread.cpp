@@ -2265,6 +2265,14 @@ namespace gen { namespace pal {
 	   event_base::wait();
 	}
 
+
+	bool thread::has_message()
+	{
+
+	   throw "how to know?";
+
+	}
+
 //} } // namespace gen { namespace pal {
 //
 //

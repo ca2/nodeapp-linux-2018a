@@ -19,6 +19,9 @@
 	<File name="../operational_system/cross/win/win_user.h" open="0" top="0" tabpos="2">
 		<Cursor position="34365" topLine="1243" />
 	</File>
+	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="0">
+		<Cursor position="644" topLine="30" />
+	</File>
 	<File name="../operational_system/linux32_system.h" open="0" top="0" tabpos="1">
 		<Cursor position="419" topLine="0" />
 	</File>

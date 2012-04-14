@@ -36,8 +36,30 @@
 
 #define __forceinline inline
 
-typedef uint8_t byte;
+#if defined(__LP64__) || defined(_LP64)
+
+#if !defined(__LP64__)
+#define __LP64__
+#endif
+
+#if !defined(_LP64)
+#define _LP64
+#endif
+
+typedef uint64_t DWORD_PTR;
+
+#else
+
+#define _X86_
+
 typedef uint32_t DWORD_PTR;
+
+
+#endif
+
+
+typedef uint8_t byte;
+
 
 #define __int3264   int32_t
 
@@ -55,7 +77,7 @@ typedef void * PVOID;
 #define PURE = 0
 
 
-#define _X86_
+
 
 
 #include "linux32_system.h"
