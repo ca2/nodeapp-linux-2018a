@@ -225,3 +225,4 @@ DWORD GetLastError();
 
 
 
+#define _T(psz) psz

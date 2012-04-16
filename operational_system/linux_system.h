@@ -2,7 +2,7 @@
 
 
 
-#if defined(_M_X64)
+#if defined(_LP64)
 
     typedef long int INT_PTR, *PINT_PTR;
     typedef unsigned long int UINT_PTR, *PUINT_PTR;

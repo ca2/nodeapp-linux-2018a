@@ -24,10 +24,12 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="../event_wait.cpp" />
 		<Unit filename="../operational_system/_.h" />
+		<Unit filename="../operational_system/aaa_version_want_to_remove_xxx.h" />
 		<Unit filename="../operational_system/bare_operational_system.h" />
 		<Unit filename="../operational_system/ca2.h" />
 		<Unit filename="../operational_system/cross/win/base_tsd.h" />
@@ -52,7 +54,6 @@
 		<Unit filename="../operational_system/version.h" />
 		<Unit filename="../operational_system/version_configuration.h" />
 		<Unit filename="../operational_system/version_cpu.h" />
-		<Unit filename="../operational_system/version_dll.h" />
 		<Unit filename="../operational_system/version_linux.h" />
 		<Unit filename="AfxImpl.H" />
 		<Unit filename="Kerr/LocalMemory.h" />
@@ -116,6 +117,8 @@
 		<Unit filename="handle.cpp" />
 		<Unit filename="handle.h" />
 		<Unit filename="implementation.h" />
+		<Unit filename="ip_enum.cpp" />
+		<Unit filename="ip_enum.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="osi.cpp" />
 		<Unit filename="osi.h" />

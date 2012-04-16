@@ -78,9 +78,9 @@ typedef union _XEvent XEvent;
 	#include "version_cpu.h"
 #endif
 
-#ifdef _ApplicationFrameworkDLL
-	#include "version_dll.h"
-#endif
+//#ifdef _ApplicationFrameworkDLL
+	//#include "version_dll.h"
+//#endif
 
 
 #ifdef __cplusplus

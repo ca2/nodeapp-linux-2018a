@@ -1,18 +1,6 @@
 #pragma once
 
 
-// _AFXEXT implies _ApplicationFrameworkDLL
-#if defined(_AFXEXT) && !defined(_ApplicationFrameworkDLL)
-	#define _ApplicationFrameworkDLL
-#endif
-
-#if defined(_ApplicationFrameworkDLL) && !defined(_DLL) && defined(WIN32)
-//	#error Please use the /MD switch for _ApplicationFrameworkDLL builds
-#endif
-
-#if defined(_ApplicationFrameworkDLL) && !defined(_MT) && defined(WIN32)
-	#error Please use the /MD switch (multithreaded DLL C-runtime)
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // special include files
@@ -28,10 +16,6 @@
 	#include "version_cpu.h"
 #endif
 
-
-#ifdef _ApplicationFrameworkDLL
-	#include "version_dll.h"
-#endif
 
 //#undef  AfxDebugBreak
 //#define AfxDebugBreak() ({asm("int 3")})

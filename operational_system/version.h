@@ -40,9 +40,7 @@
 //
 // Additional build options:
 //  _DEBUG              debug versions (full diagnostics)
-//  _ApplicationFrameworkDLL             use shared MFC DLL
-//  _AFXEXT             extension DLL version, implies _ApplicationFrameworkDLL
-//  _USRDLL             create regular DLL (_ApplicationFrameworkDLL is valid too)
+//  _USRDLL             create regular DLL
 //
 
 #ifndef _DEBUG
@@ -52,22 +50,6 @@
 #endif
 
 #define _AFX_NO_NESTED_DERIVATION
-
-/////////////////////////////////////////////////////////////////////////////
-// Special configurations
-
-// _AFXEXT implies _ApplicationFrameworkDLL
-#if defined(_AFXEXT) && !defined(_ApplicationFrameworkDLL)
-	#define _ApplicationFrameworkDLL
-#endif
-
-#if defined(_ApplicationFrameworkDLL) && !defined(_DLL) && defined(WIN32)
-//	#error Please use the /MD switch for _ApplicationFrameworkDLL builds
-#endif
-
-#if defined(_ApplicationFrameworkDLL) && !defined(_MT) && defined(WIN32)
-	#error Please use the /MD switch (multithreaded DLL C-runtime)
-#endif
 
 /////////////////////////////////////////////////////////////////////////////
 // special include files
@@ -97,9 +79,6 @@
 	#define _AFX_PACKING    4   // default packs structs at 4 bytes
 #endif
 
-#ifdef _ApplicationFrameworkDLL
-	#include "v_dll.h"
-#endif
 
 // Define this virtual key for use by status bar
 #ifndef VK_KANA
@@ -321,7 +300,7 @@
 #ifdef _AFX_DEVBUILD
 	#define AFX_IMPL_DATA AFX_DATA_EXPORT
 #else
-	#define AFX_IMPL_DATA CLASS_DECL_ca 
+	#define AFX_IMPL_DATA CLASS_DECL_ca
 #endif
 
 

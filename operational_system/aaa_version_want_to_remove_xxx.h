@@ -19,7 +19,7 @@
 	#define AFX_CORE_DATA       AFX_DATA_IMPORT
 	#define AFX_CORE_DATADEF
 #endif*/
-
+/*
 #ifndef AFX_OLE_DATA
 	#define AFX_OLE_DATA        AFX_DATA_IMPORT
 	#define AFX_OLE_DATADEF
@@ -34,14 +34,14 @@
 	#define AFX_NET_DATA        AFX_DATA_IMPORT
 	#define AFX_NET_DATADEF
 #endif
-
+*/
 // default AFX_EXT_DATA and AFX_EXT_DATADEF macros for using or
 //  creating MFC extension DLLs, depending on _AFX_EXT_IMPL
 // AFX_EXT_CLASS can be used to import or export entire classes
 //  in an extension DLL without the hassle of creating a .DEF file
 //  with decorated names.
 
-#ifndef AFX_EXT_DATA
+/*#ifndef AFX_EXT_DATA
 	#ifdef _AFXEXT
 		#define AFX_EXT_CLASS       AFX_CLASS_EXPORT
 		#define AFX_EXT_API         AFX_API_EXPORT
@@ -54,3 +54,4 @@
 		#define AFX_EXT_DATADEF
 	#endif
 #endif
+*/

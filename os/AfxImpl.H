@@ -426,7 +426,6 @@ UINT AFXAPI AfxGetFileName(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nMax);
 void AFX_CDECL AfxTimeToFileTime(const CTime& time, LPFILETIME pFileTime);
 void AFXAPI AfxGetRoot(LPCTSTR lpszPath, CString& strRoot);
 
-#ifndef _AFX_NO_OLE_SUPPORT
 class AFX_COM
 {
 public:
@@ -439,7 +438,6 @@ CString AFXAPI AfxStringFromCLSID(REFCLSID rclsid);
 BOOL AFXAPI AfxGetInProcServer(LPCTSTR lpszCLSID, CString& str);
 BOOL AFXAPI AfxResolveShortcut(CWnd* pWnd, LPCTSTR pszShortcutFile,
 	LPTSTR pszPath, int cchPath);
-#endif // _AFX_NO_OLE_SUPPORT
 
 #define NULL_TLS ((DWORD)-1)
 

@@ -223,7 +223,7 @@ void WinFile::write(const void * lpBuf, DWORD_PTR nCount)
 
 INT_PTR WinFile::seek(INT_PTR lOff, UINT nFrom)
 {
-   
+
    if(m_hFile == (UINT)hFileNull)
       WinFileException::ThrowOsError(get_app(), (LONG)0);
 
@@ -398,7 +398,6 @@ BOOL CLASS_DECL_VMSWIN vfxGetInProcServer(const char * lpszCLSID, string & str)
    }
    return b;
 }
-//#endif  //!_AFX_NO_OLE_SUPPORT
 
 
 BOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t * lpszFileIn,
@@ -411,7 +410,7 @@ BOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
    throw not_implemented_exception();
 /*
    DWORD dwVersion = GetVersion();
- 
+
    // get the Windows version.
 
    DWORD dwWindowsMajorVersion =  (DWORD)(LOBYTE(LOWORD(dwVersion)));
@@ -436,7 +435,7 @@ BOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
    else                                     // Windows Me/98/95
        bNativeUnicode = FALSE;
 
-   
+
    if(bNativeUnicode)
    {
       AFX_COM com;
@@ -1018,7 +1017,7 @@ void PASCAL WinFileException::ThrowErrno(::ca::application * papp, int nErrno, c
 
 BOOL WinFileException::GetErrorMessage(string & str, PUINT pnHelpContext)
 {
-   
+
    if (pnHelpContext != NULL)
       *pnHelpContext = m_cause + AFX_IDP_FILE_NONE;
 

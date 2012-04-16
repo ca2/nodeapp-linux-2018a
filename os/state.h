@@ -41,43 +41,7 @@ public:
 
 EXTERN_PROCESS_LOCAL(_AFX_WIN_STATE, _afxWinState)
 
-/////////////////////////////////////////////////////////////////////////////
-// Type library cache - AFX_INTERNAL
 
-#ifndef _AFX_NO_OLE_SUPPORT
-
-struct ITypeInfo;
-typedef ITypeInfo* LPTYPEINFO;
-
-struct ITypeLib;
-typedef ITypeLib* LPTYPELIB;
-
-typedef struct _GUID GUID;
-#ifndef _REFCLSID_DEFINED
-#define REFGUID const GUID &
-#endif
-
-class CLASS_DECL_VMSWIN CTypeLibCache
-{
-public:
-   CTypeLibCache() : m_cRef(0), m_lcid((LCID)-1), m_ptlib(NULL), m_ptinfo(NULL) {}
-   void Lock();
-   void Unlock();
-   BOOL Lookup(LCID lcid, LPTYPELIB* pptlib);
-   void Cache(LCID lcid, LPTYPELIB ptlib);
-   BOOL LookupTypeInfo(LCID lcid, REFGUID guid, LPTYPEINFO* pptinfo);
-   void CacheTypeInfo(LCID lcid, REFGUID guid, LPTYPEINFO ptinfo);
-   const GUID* m_pTypeLibID;
-
-protected:
-   LCID m_lcid;
-   LPTYPELIB m_ptlib;
-   GUID m_guidInfo;
-   LPTYPEINFO m_ptinfo;
-   long m_cRef;
-};
-
-#endif //!_AFX_NO_OLE_SUPPORT
 
 /////////////////////////////////////////////////////////////////////////////
 // AFX_MODULE_STATE : portion of state that is pushed/popped
@@ -94,7 +58,7 @@ class ::userbase::control_bar;
 class ::user::interaction;
 namespace ca
 {
-   
+
    class thread;
    class window;
 }
@@ -104,7 +68,7 @@ typedef int (__cdecl * _PNH)( size_t );
 #define _PNH_DEFINED
 #endif
 
-template<class TYPE> 
+template<class TYPE>
 class CEmbeddedButActsLikePtr
 {
 public:
@@ -246,11 +210,7 @@ public:
    _AFX_DAO_STATE* m_pDaoState;
 #endif
 
-#ifndef _AFX_NO_OLE_SUPPORT
-   // Type library caches
-   CTypeLibCache m_typeLibCache;
-   CTypeLibCacheMap* m_pTypeLibCacheMap;
-#endif
+
 
    // define thread local portions of module state
    thread_local<AFX_MODULE_THREAD_STATE> m_thread;

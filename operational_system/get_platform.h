@@ -80,9 +80,7 @@ typedef void * PVOID;
 
 
 
-#include "linux32_system.h"
-#define _ApplicationFrameworkDLL
-#define _AFX_NO_OLE_SUPPORT
+#include "linux_system.h"
 
 
 
