@@ -5,7 +5,7 @@
 #define LINUX
 
 
-#define _POSIX_SOURCE
+//#define _POSIX_SOURCE
 
 
 #define DECL_C

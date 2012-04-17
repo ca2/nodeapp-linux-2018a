@@ -176,10 +176,10 @@ typedef struct {
 } GUID;
 #else
 typedef struct _GUID {
-    unsigned long  Data1;
-    unsigned short Data2;
-    unsigned short Data3;
-    unsigned char  Data4[ 8 ];
+    uint32_t   Data1;
+    uint16_t   Data2;
+    uint16_t   Data3;
+    uint8_t    Data4[ 8 ];
 } GUID;
 #endif
 #endif
@@ -197,7 +197,15 @@ typedef struct _GUID {
 void RaiseException(DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, const ULONG_PTR *lpArguments);
 typedef int errno_t;
 
-DWORD GetLastError();
+
+#ifdef __cplusplus
+  #define MY_EXTERN_C extern "C"
+#else
+  #define MY_EXTERN_C extern
+#endif
+
+
+MY_EXTERN_C DWORD GetLastError();
 
 
 #define MAKELPARAM(x, y)            ((x & 0xffff) |((y & 0xffff) << 16))
