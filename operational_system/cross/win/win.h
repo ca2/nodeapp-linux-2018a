@@ -14,14 +14,14 @@
 
 
 
-struct win_handle
+struct tagHandle
 {
 
    void * m_p;
 
 };
 
-typedef struct win_handle * HANDLE;
+typedef struct tagHandle * HANDLE;
 
 
 typedef unsigned int       DWORD;
