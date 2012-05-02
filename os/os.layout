@@ -4,8 +4,8 @@
 	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="0">
 		<Cursor position="1552" topLine="63" />
 	</File>
-	<File name="../operational_system/ca2.h" open="0" top="0" tabpos="1">
-		<Cursor position="391" topLine="16" />
+	<File name="../operational_system/ca2.h" open="1" top="0" tabpos="2">
+		<Cursor position="352" topLine="12" />
 	</File>
 	<File name="../operational_system/cross/win/win.h" open="0" top="0" tabpos="4">
 		<Cursor position="4115" topLine="181" />
