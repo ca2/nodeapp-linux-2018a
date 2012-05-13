@@ -4,8 +4,8 @@
 	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="0">
 		<Cursor position="1552" topLine="63" />
 	</File>
-	<File name="../operational_system/ca2.h" open="0" top="0" tabpos="0">
-		<Cursor position="352" topLine="5" />
+	<File name="../operational_system/ca2.h" open="0" top="0" tabpos="2">
+		<Cursor position="352" topLine="12" />
 	</File>
 	<File name="../operational_system/cross/win/win.h" open="0" top="0" tabpos="4">
 		<Cursor position="4115" topLine="181" />
@@ -45,9 +45,6 @@
 	</File>
 	<File name="UACTools.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="4288" topLine="97" />
-	</File>
-	<File name="handle.h" open="1" top="1" tabpos="0">
-		<Cursor position="1889" topLine="32" />
 	</File>
 	<File name="ip_enum.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="135" topLine="0" />

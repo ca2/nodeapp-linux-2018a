@@ -2,7 +2,7 @@
 
 #define SECURITY_WIN32
 
-#include "include/ca2.h"
+#include "ca2/ca2.h"
 #include <shlobj.h>
 #include <Security.h>
 #include <shlobj.h>
@@ -106,12 +106,12 @@ CLASS_DECL_VMSWIN WNDPROC AfxGetAfxWndProc();
 #pragma comment(lib, "oleaut32.lib")
 #pragma comment(lib, "uuid.lib")
 #pragma comment(lib, "shlwapi.lib")
-#pragma comment(lib, "vfw32.lib") 
-#pragma comment(lib, "opengl32.lib") 
-#pragma comment(lib, "Wtsapi32.lib") 
-#pragma comment(lib, "Secur32.lib") 
-#pragma comment(lib, "Msimg32.lib") 
-#pragma comment(lib, "Psapi.lib") 
+#pragma comment(lib, "vfw32.lib")
+#pragma comment(lib, "opengl32.lib")
+#pragma comment(lib, "Wtsapi32.lib")
+#pragma comment(lib, "Secur32.lib")
+#pragma comment(lib, "Msimg32.lib")
+#pragma comment(lib, "Psapi.lib")
 
 CLASS_DECL_VMSWIN void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj);
 CLASS_DECL_VMSWIN void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg);
