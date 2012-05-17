@@ -84,7 +84,7 @@ typedef union _XEvent XEvent;
 
 
 #ifdef __cplusplus
-inline void AfxDebugBreak() { asm("int $3"); }
+inline void __debug_break() { asm("int $3"); }
 #endif
 
 
@@ -163,9 +163,9 @@ inline void AfxDebugBreak() { asm("int $3"); }
 	#define AFX_EXPORT EXPORT
 #endif
 
-#ifndef AFX_STATIC
-	#define AFX_STATIC extern
-	#define AFX_STATIC_DATA extern __declspec(selectany)
+#ifndef __STATIC
+	#define __STATIC extern
+	#define __STATIC_DATA extern __declspec(selectany)
 #endif
 
 // The following macros are used to enable export/import

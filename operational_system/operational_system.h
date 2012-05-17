@@ -17,13 +17,13 @@
 #endif
 
 
-//#undef  AfxDebugBreak
-//#define AfxDebugBreak() ({asm("int 3")})
+//#undef  __debug_break
+//#define __debug_break() ({asm("int 3")})
 /*#else
-#define AfxDebugBreak() DebugBreak()
+#define __debug_break() DebugBreak()
 #endif
 #else
-#define AfxDebugBreak() _CrtDbgBreak()
+#define __debug_break() _CrtDbgBreak()
 #endif
 #endif*/
 
@@ -98,9 +98,9 @@
 	#define AFX_EXPORT
 #endif
 
-#ifndef AFX_STATIC
-	#define AFX_STATIC extern
-	#define AFX_STATIC_DATA extern __declspec(selectany)
+#ifndef __STATIC
+	#define __STATIC extern
+	#define __STATIC_DATA extern __declspec(selectany)
 #endif
 
 // for data

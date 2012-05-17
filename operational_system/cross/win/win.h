@@ -234,3 +234,9 @@ MY_EXTERN_C DWORD GetLastError();
 
 
 #define _T(psz) psz
+
+
+#define __CORE_DATA
+#define c_cdecl __cdecl
+
+//#define c_decl __cdecl

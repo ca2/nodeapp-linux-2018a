@@ -242,7 +242,7 @@ void thread_slot_data::SetValue(int nSlot, void * pValue)
             LeaveCriticalSection(&m_sect);
             ::ca::rethrow(pe);
          }
-         
+
          pData->nCount = 0;
          pData->pData = NULL;
          DEBUG_ONLY(pData->pNext = NULL);
@@ -417,7 +417,7 @@ no_track_object* process_local_object::get_data(
          AfxUnlockGlobals(CRIT_PROCESSLOCAL);
          ::ca::rethrow(pe);
       }
-      
+
       AfxUnlockGlobals(CRIT_PROCESSLOCAL);
    }
    return m_pObject;
@@ -449,7 +449,7 @@ void CLASS_DECL_VMSWIN AfxTermLocalData(HINSTANCE hInst, BOOL bAll)
 // It is basically a reference count of the number of processes that
 // have attached to the ca2 API DLL.
 
-AFX_STATIC_DATA long _afxTlsRef = 0;
+__STATIC_DATA long _afxTlsRef = 0;
 
 void CLASS_DECL_VMSWIN AfxTlsAddRef()
 {
