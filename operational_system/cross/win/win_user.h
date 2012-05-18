@@ -1141,17 +1141,29 @@ MessageBoxW(
 #endif /* WINVER >= 0x0501 */
 
 
-
-struct user_menu;
-
-
-typedef struct user_menu * HMENU;
+namespace user
+{
 
 
-struct visual_cursor;
+   class menu;
 
 
-typedef struct visual_cursor * HCURSOR;
+} // namespace user
+
+
+typedef ::user::menu * HMENU;
+
+
+namespace visual
+{
+
+
+   class cursor;
+
+
+} // namespace visual
+
+typedef ::visual::cursor * HCURSOR;
 
 
 typedef void * HDROP;
@@ -1254,6 +1266,18 @@ typedef struct tag_MSG
    LPARAM   lparam;
 } MSG, * LPMSG ;
 
+
+
+/*
+ * Struct pointed to by WM_GETMINMAXINFO lParam
+ */
+typedef struct tagMINMAXINFO {
+    POINT ptReserved;
+    POINT ptMaxSize;
+    POINT ptMaxPosition;
+    POINT ptMinTrackSize;
+    POINT ptMaxTrackSize;
+} MINMAXINFO, *PMINMAXINFO, *LPMINMAXINFO;
 
 
 
