@@ -232,7 +232,7 @@
 
 // The following macros are used on data declarations/definitions
 //  (they are redefined for extension DLLs and the shared MFC DLL)
-#define AFX_DATADEF
+#define __DATADEF
 #define AFX_API CLASS_DECL_ca
 
 // used when building the "core" MFC80.DLL

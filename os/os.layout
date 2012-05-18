@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="0">
-		<Cursor position="1552" topLine="63" />
+	<File name="../operational_system/bare_operational_system.h" open="1" top="1" tabpos="1">
+		<Cursor position="4820" topLine="192" />
 	</File>
 	<File name="../operational_system/ca2.h" open="0" top="0" tabpos="2">
 		<Cursor position="352" topLine="12" />
@@ -34,17 +34,20 @@
 	<File name="../operational_system/linux32_system.h" open="0" top="0" tabpos="1">
 		<Cursor position="419" topLine="0" />
 	</File>
-	<File name="../operational_system/operational_system.h" open="0" top="0" tabpos="0">
-		<Cursor position="18" topLine="0" />
+	<File name="../operational_system/operational_system.h" open="1" top="0" tabpos="2">
+		<Cursor position="3392" topLine="104" />
 	</File>
-	<File name="../operational_system/version.h" open="0" top="0" tabpos="0">
-		<Cursor position="2650" topLine="63" />
+	<File name="../operational_system/version.h" open="1" top="0" tabpos="3">
+		<Cursor position="6590" topLine="191" />
 	</File>
 	<File name="AfxImpl.H" open="0" top="0" tabpos="0">
 		<Cursor position="13151" topLine="423" />
 	</File>
 	<File name="UACTools.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="4288" topLine="97" />
+	</File>
+	<File name="dumpinit.cpp" open="1" top="0" tabpos="4">
+		<Cursor position="4027" topLine="109" />
 	</File>
 	<File name="ip_enum.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="135" topLine="0" />

@@ -13,7 +13,7 @@ void __cdecl _AfxCrtDumpClient(void * pvData, size_t nBytes)
    char sz[1024];
    try
    {
-      
+
       if(_CrtReportBlockType(pvData) != _AFX_CLIENT_BLOCK)
          return;
 
@@ -128,7 +128,7 @@ _AFX_DEBUG_STATE::~_AFX_DEBUG_STATE()
    int nOldState = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
    _CrtSetDbgFlag(nOldState & ~_CRTDBG_LEAK_CHECK_DF);
 
-   ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE,_AfxCrtReportHook) != -1);   
+   ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE,_AfxCrtReportHook) != -1);
    _CrtSetDumpClient(pfnOldCrtDumpClient);
 #endif // _AFX_NO_DEBUG_CRT
 }
@@ -150,7 +150,7 @@ BOOL CLASS_DECL_VMSWIN AfxDiagnosticInit(void)
 #include "sal.h"
 
 
-//AFX_DATADEF BOOL afxTraceEnabled = TRUE;
-//AFX_DATADEF UINT afxTraceFlags = 0;
+//__DATADEF BOOL afxTraceEnabled = TRUE;
+//__DATADEF UINT afxTraceFlags = 0;
 static BOOL _afxDiagnosticInit = AfxDiagnosticInit();
 
