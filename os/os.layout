@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="../operational_system/bare_operational_system.h" open="1" top="1" tabpos="1">
-		<Cursor position="4820" topLine="192" />
+	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="0">
+		<Cursor position="4837" topLine="174" />
 	</File>
-	<File name="../operational_system/ca2.h" open="0" top="0" tabpos="2">
-		<Cursor position="352" topLine="12" />
+	<File name="../operational_system/ca2.h" open="0" top="0" tabpos="0">
+		<Cursor position="352" topLine="5" />
 	</File>
 	<File name="../operational_system/cross/win/win.h" open="0" top="0" tabpos="4">
 		<Cursor position="4115" topLine="181" />
@@ -25,8 +25,8 @@
 	<File name="../operational_system/cross/win/win_gdi.h" open="0" top="0" tabpos="3">
 		<Cursor position="15726" topLine="598" />
 	</File>
-	<File name="../operational_system/cross/win/win_user.h" open="0" top="0" tabpos="2">
-		<Cursor position="34365" topLine="1243" />
+	<File name="../operational_system/cross/win/win_user.h" open="1" top="0" tabpos="16">
+		<Cursor position="5791" topLine="169" />
 	</File>
 	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="0">
 		<Cursor position="34" topLine="0" />
@@ -34,11 +34,14 @@
 	<File name="../operational_system/linux32_system.h" open="0" top="0" tabpos="1">
 		<Cursor position="419" topLine="0" />
 	</File>
-	<File name="../operational_system/operational_system.h" open="1" top="0" tabpos="2">
-		<Cursor position="3392" topLine="104" />
+	<File name="../operational_system/operational_system.h" open="0" top="0" tabpos="0">
+		<Cursor position="3375" topLine="127" />
 	</File>
-	<File name="../operational_system/version.h" open="1" top="0" tabpos="3">
-		<Cursor position="6590" topLine="191" />
+	<File name="../operational_system/version.h" open="0" top="0" tabpos="0">
+		<Cursor position="6590" topLine="194" />
+	</File>
+	<File name="../operational_system/version_cpu.h" open="0" top="0" tabpos="0">
+		<Cursor position="1045" topLine="0" />
 	</File>
 	<File name="AfxImpl.H" open="0" top="0" tabpos="0">
 		<Cursor position="13151" topLine="423" />
@@ -46,22 +49,40 @@
 	<File name="UACTools.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="4288" topLine="97" />
 	</File>
-	<File name="dumpinit.cpp" open="1" top="0" tabpos="4">
-		<Cursor position="4027" topLine="109" />
+	<File name="afxstate.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="5202" topLine="143" />
+	</File>
+	<File name="dumpinit.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="3581" topLine="113" />
+	</File>
+	<File name="graphics.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="38575" topLine="714" />
+	</File>
+	<File name="handle.h" open="0" top="0" tabpos="0">
+		<Cursor position="1889" topLine="32" />
 	</File>
 	<File name="ip_enum.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="135" topLine="0" />
+	</File>
+	<File name="preview_dc.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="13172" topLine="438" />
 	</File>
 	<File name="state.h" open="0" top="0" tabpos="0">
 		<Cursor position="5181" topLine="200" />
 	</File>
 	<File name="thread.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="66621" topLine="2226" />
+		<Cursor position="82882" topLine="2853" />
 	</File>
 	<File name="thread.h" open="0" top="0" tabpos="5">
 		<Cursor position="1521" topLine="10" />
 	</File>
+	<File name="thread_local_storage.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="12981" topLine="411" />
+	</File>
 	<File name="win.h" open="0" top="0" tabpos="1">
 		<Cursor position="42" topLine="0" />
+	</File>
+	<File name="window.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="188220" topLine="5568" />
 	</File>
 </CodeBlocks_layout_file>
