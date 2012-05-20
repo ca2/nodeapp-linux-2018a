@@ -3,7 +3,7 @@
 
 #if !defined(_MAC) && (defined(_M_MRX000) || defined(_M_AMD64) || defined(_M_IA64)) && (_MSC_VER >= 1100) && !(defined(MIDL_PASS) || defined(RC_INVOKED))
  #define POINTER_64 __ptr64
- typedef unsigned __int64 POINTER_64_INT;
+ typedef unsigned int64_t POINTER_64_INT;
  #if defined(_WIN64)
   #define POINTER_32 __ptr32
  #else
@@ -12,7 +12,7 @@
 #else
  #if defined(_MAC) && defined(_MAC_INT_64)
   #define POINTER_64 __ptr64
-  typedef unsigned __int64 POINTER_64_INT;
+  typedef unsigned int64_t POINTER_64_INT;
  #else
   #if (_MSC_VER >= 1300) && !(defined(MIDL_PASS) || defined(RC_INVOKED))
    #define POINTER_64 __ptr64
@@ -97,8 +97,8 @@ typedef unsigned __int3264 ULONG_PTR, *PULONG_PTR;*/
 
 #define ADDRESS_TAG_BIT 0x40000000000UI64
 
-typedef __int64 SHANDLE_PTR;
-typedef unsigned __int64 HANDLE_PTR;
+typedef int64_t SHANDLE_PTR;
+typedef unsigned int64_t HANDLE_PTR;
 typedef unsigned int UHALF_PTR, *PUHALF_PTR;
 typedef int HALF_PTR, *PHALF_PTR;
 

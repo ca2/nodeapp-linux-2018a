@@ -40,9 +40,9 @@ __STATIC long CLASS_DECL_VMSWIN _AfxMultMultDivDiv(
    long numerator = (long)num1 * (long)num2;   // no overflow
    long denominator = (long)den1 * (long)den2; // no overflow
 #else
-   __int64 numerator = (__int64)num1 * (__int64)num2;   // no overflow
-   __int64 denominator = (__int64)den1 * (__int64)den2; // no overflow
-   __int64 temp;
+   int64_t numerator = (int64_t)num1 * (int64_t)num2;   // no overflow
+   int64_t denominator = (int64_t)den1 * (int64_t)den2; // no overflow
+   int64_t temp;
 #endif
 
    temp = numerator < 0 ? -numerator : numerator;
@@ -67,7 +67,7 @@ __STATIC long CLASS_DECL_VMSWIN _AfxMultMultDivDiv(
       numerator = -numerator;
    }
 
-   // get the product of factor * numerator representable in a long/__int64
+   // get the product of factor * numerator representable in a long/int64_t
    // while distributing loss of presision across all three numerator terms
    // Adjust denominator as well
    //

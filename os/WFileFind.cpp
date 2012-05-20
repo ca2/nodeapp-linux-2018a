@@ -73,7 +73,7 @@ BOOL FileFind::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /* = 
       return FALSE;
    }
    wstring wstrRoot;
-   
+
    wchar_t * pstrRoot = wstrRoot.alloc(_MAX_PATH);
    const wchar_t * pstr = WindowsShell::_fullpath(pstrRoot, wstrName, _MAX_PATH);
 
@@ -309,14 +309,14 @@ string FileFind::GetFileName() const
    return ret;
 }
 
-__int64 FileFind::get_length() const
+int64_t FileFind::get_length() const
 {
    ASSERT(m_hContext != NULL);
    ASSERT_VALID(this);
 
    if (m_pFoundInfo != NULL)
       return ((LPWIN32_FIND_DATAW) m_pFoundInfo)->nFileSizeLow +
-            ((__int64)(((LPWIN32_FIND_DATAW) m_pFoundInfo)->nFileSizeHigh) << 32);
+            ((int64_t)(((LPWIN32_FIND_DATAW) m_pFoundInfo)->nFileSizeHigh) << 32);
    else
       return 0;
 }

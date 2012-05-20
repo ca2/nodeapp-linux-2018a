@@ -34,7 +34,7 @@ typedef std::type_info std_type_info;
 #endif
 
 
-typedef __int64_t __int64;
+typedef int64_t_t int64_t;
 
 
 #define stricmp strcasecmp

@@ -351,3 +351,7 @@ void memmove(void * dst, const void * src, int iSize);
 #include <stdarg.h>
 
 
+
+
+#define max(x,y) (((x) > (y)) ? (x) : (y))
+#define min(x,y) (((x) < (y)) ? (x) : (y))

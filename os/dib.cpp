@@ -13,11 +13,11 @@ namespace win
    float dib::Cosines[360];
    float dib::Sines[360];
 
-   __int64 dib::CosN[360]; // * 1 << 31
-   __int64 dib::SinN[360]; 
+   int64_t dib::CosN[360]; // * 1 << 31
+   int64_t dib::SinN[360];
 
-   __int64 dib::Cos10N[10]; // until 10 degress
-   __int64 dib::Sin10N[10]; // more precision * 1 << 34
+   int64_t dib::Cos10N[10]; // until 10 degress
+   int64_t dib::Sin10N[10]; // more precision * 1 << 34
 
    double dib::dPi;
 
@@ -59,8 +59,8 @@ namespace win
          dSin = ::sin ( i/180.0*dPi );
          Cosines[i]=float(dCos);
          Sines[i]=float(dSin);
-         CosN[i] = (__int64) (dCos * d32);
-         SinN[i] = (__int64) (dSin * d32);
+         CosN[i] = (int64_t) (dCos * d32);
+         SinN[i] = (int64_t) (dSin * d32);
       }
       d32 = (1U << 31);
       d32 *= 8;
@@ -68,8 +68,8 @@ namespace win
       {
          dCos = ::cos ( i/180.0*dPi );
          dSin = ::sin ( i/180.0*dPi );
-         Cos10N[i] = (__int64) (dCos * d32);
-         Sin10N[i] = (__int64) (dSin * d32);
+         Cos10N[i] = (int64_t) (dCos * d32);
+         Sin10N[i] = (int64_t) (dSin * d32);
       }
    }
 
@@ -93,7 +93,7 @@ namespace win
    BOOL dib::create(int width, int height)
    {
       if(m_spbitmap.is_set()
-      && m_spbitmap->get_os_data() != NULL 
+      && m_spbitmap->get_os_data() != NULL
       && class size(width, height) == m_size)
          return TRUE;
 
@@ -108,7 +108,7 @@ namespace win
       m_info.bmiHeader.biWidth         = width;
       m_info.bmiHeader.biHeight        =- height;
       m_info.bmiHeader.biPlanes        = 1;
-      m_info.bmiHeader.biBitCount      = 32; 
+      m_info.bmiHeader.biBitCount      = 32;
       m_info.bmiHeader.biCompression   = BI_RGB;
       m_info.bmiHeader.biSizeImage     = width * height * 4;
 
@@ -117,7 +117,7 @@ namespace win
          m_size = class size(0, 0);
          return FALSE;
       }
-      
+
       if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, NULL, NULL))
       {
          m_size = class size(0, 0);
@@ -128,7 +128,7 @@ namespace win
       {
          m_spgraphics->CreateCompatibleDC(NULL);
          ::ca::bitmap * pbitmap = m_spgraphics->SelectObject(m_spbitmap);
-         if(pbitmap == NULL || 
+         if(pbitmap == NULL ||
             pbitmap->get_os_data() == NULL)
          {
             Destroy();
@@ -177,7 +177,7 @@ namespace win
       if(m_spbitmap.m_p != NULL && m_spbitmap->get_os_data() != NULL)
          m_spbitmap->delete_object();
 
-      
+
       if(m_spgraphics.is_set() && m_spgraphics->is_set())
       {
          m_spgraphics->SelectObject(m_hbitmapOriginal);
@@ -186,19 +186,19 @@ namespace win
 
       m_size         = class size(0, 0);
       m_pcolorref    = NULL;
-      
+
       return TRUE;
    }
 
    bool dib::to(::ca::graphics * pgraphics, point pt, class size size, point ptSrc)
    {
       return SetDIBitsToDevice(
-         (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(), 
-         pt.x, pt.y, 
-         size.cx, size.cy, 
-         ptSrc.x, ptSrc.y, ptSrc.y, m_size.cy - ptSrc.y, 
+         (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(),
+         pt.x, pt.y,
+         size.cx, size.cy,
+         ptSrc.x, ptSrc.y, ptSrc.y, m_size.cy - ptSrc.y,
          m_pcolorref, &m_info, 0)
-            != FALSE; 
+            != FALSE;
    }
 
    bool dib::from(::ca::graphics * pdc)
@@ -220,7 +220,7 @@ namespace win
          WIN_DC(pdc)->SelectObject(pbitmap);
          return false;
       }
-      bool bOk = GetDIBits(WIN_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE; 
+      bool bOk = GetDIBits(WIN_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
       WIN_DC(pdc)->SelectObject(pbitmap);
       return bOk;
    }
@@ -297,7 +297,7 @@ namespace win
    void dib::from_alpha()
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      __int64 size = m_size.area();
+      int64_t size = m_size.area();
 
       while ( size-- )
       {
@@ -311,7 +311,7 @@ namespace win
    void dib::mult_alpha()
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      __int64 size = m_size.area();
+      int64_t size = m_size.area();
 
       while (size >= 8)
       {
@@ -449,7 +449,7 @@ namespace win
             pand     mm2, mm7
             por      mm1, mm2
             movq     [ebx], mm1
-            
+
             sub      eax, 2
             add      ebx, 8
             add      ecx, 8
@@ -457,7 +457,7 @@ namespace win
             jmp      fill_loop
 
       fill_last:
-            emms 
+            emms
          }
    #endif
       }
@@ -480,7 +480,7 @@ namespace win
 
    void dib::channel_invert(visual::rgba::echannel echannel)
    {
-      __int64 size=m_size.area();
+      int64_t size=m_size.area();
       LPBYTE lpb = (LPBYTE) m_pcolorref;
       lpb += ((int)echannel) % 4;
       for ( int i=0; i<size; i++ )
@@ -493,15 +493,15 @@ namespace win
    {
       if(dRate < 0)
          return;
-      register __int64 size = area();
+      register int64_t size = area();
       LPBYTE lpb = (LPBYTE) get_data();
       lpb += ((int)echannel) % 4;
       register int iDiv = 256 * 256;
       register int iMul = (int) (dRate * ((double) iDiv));
       register int iRes;
-      for(register __int64 i = 0; i < size; i++)
+      for(register int64_t i = 0; i < size; i++)
       {
-         iRes = *lpb * iMul / iDiv; 
+         iRes = *lpb * iMul / iDiv;
          *lpb = (byte) (iRes > 255 ? 255 : iRes);
          lpb += 4;
       }
@@ -511,18 +511,18 @@ namespace win
    {
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
-         
+
       while ( size-- )
       {
          dst[0]=(BYTE)(((B-dst[0])*A+(dst[0]<<8))>>8);
          dst[1]=(BYTE)(((G-dst[1])*A+(dst[1]<<8))>>8);
-         dst[2]=(BYTE)(((R-dst[2])*A+(dst[2]<<8))>>8);   
+         dst[2]=(BYTE)(((R-dst[2])*A+(dst[2]<<8))>>8);
          dst+=4;
       }
    }
 
    void dib::FillStippledGlass ( int R, int G, int B )
-   {   
+   {
       COLORREF color=RGB ( B, G, R );
       int w=m_size.cx;
       int h=m_size.cy;
@@ -564,16 +564,16 @@ namespace win
       DWORD dwB = rgba_get_b(cr);
       DWORD dwG = rgba_get_g(cr);
       DWORD dwR = rgba_get_r(cr);
-    
+
       DWORD dwB_ = dwB << 8;
       DWORD dwG_ = dwG << 8;
       DWORD dwR_ = dwR << 8;
-         
+
       while ( size-- )
       {
          dst[0]=(BYTE)(((dst[0]-dwB)*bAlpha+dwB_)>>8);
          dst[1]=(BYTE)(((dst[1]-dwG)*bAlpha+dwG_)>>8);
-         dst[2]=(BYTE)(((dst[2]-dwG)*bAlpha+dwR_)>>8);   
+         dst[2]=(BYTE)(((dst[2]-dwG)*bAlpha+dwR_)>>8);
          dst+=4;
       }
       return true;
@@ -588,12 +588,12 @@ namespace win
       BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
-         
+
       while ( size-- )
       {
          dst[0]=(BYTE)(((src[0]-dst[0])*A+(dst[0]<<8))>>8);
          dst[1]=(BYTE)(((src[1]-dst[1])*A+(dst[1]<<8))>>8);
-         dst[2]=(BYTE)(((src[2]-dst[2])*A+(dst[2]<<8))>>8);   
+         dst[2]=(BYTE)(((src[2]-dst[2])*A+(dst[2]<<8))>>8);
          dst+=4;
          src+=4;
       }
@@ -611,12 +611,12 @@ namespace win
       int size=m_size.cx*m_size.cy;
 
       A = 2 - A;
-         
+
       while ( size-- )
       {
          dst[0]=(BYTE)(((src[0]-dst[0])*alf[A]+(dst[0]<<8))>>8);
          dst[1]=(BYTE)(((src[1]-dst[1])*alf[A]+(dst[1]<<8))>>8);
-         dst[2]=(BYTE)(((src[2]-dst[2])*alf[A]+(dst[2]<<8))>>8);   
+         dst[2]=(BYTE)(((src[2]-dst[2])*alf[A]+(dst[2]<<8))>>8);
          dst+=4;
          src+=4;
          alf+=4;
@@ -633,12 +633,12 @@ namespace win
       BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
-         
+
       while ( size-- )
       {
          dst[0]=(BYTE)((src[0]<dst[0]) ? src[0] : dst[0]);
          dst[1]=(BYTE)((src[1]<dst[1]) ? src[1] : dst[1]);
-         dst[2]=(BYTE)((src[2]<dst[2]) ? src[2] : dst[2]);   
+         dst[2]=(BYTE)((src[2]<dst[2]) ? src[2] : dst[2]);
          dst+=4;
          src+=4;
       }
@@ -652,7 +652,7 @@ namespace win
       BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
-         
+
       while ( size-- )
       {
          int Difference;
@@ -661,7 +661,7 @@ namespace win
          Difference=src[1]-dst[1];
          dst[1]=(BYTE)((Difference<0) ? -Difference : Difference);
          Difference=src[2]-dst[2];
-         dst[2]=(BYTE)((Difference<0) ? -Difference : Difference);   
+         dst[2]=(BYTE)((Difference<0) ? -Difference : Difference);
          dst+=4;
          src+=4;
       }
@@ -675,12 +675,12 @@ namespace win
       BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
-         
+
       while ( size-- )
       {
          dst[0]=(BYTE)((src[0]>dst[0]) ? src[0] : dst[0]);
          dst[1]=(BYTE)((src[1]>dst[1]) ? src[1] : dst[1]);
-         dst[2]=(BYTE)((src[2]>dst[2]) ? src[2] : dst[2]);   
+         dst[2]=(BYTE)((src[2]>dst[2]) ? src[2] : dst[2]);
          dst+=4;
          src+=4;
       }
@@ -695,12 +695,12 @@ namespace win
       BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
-         
+
       while ( size-- )
       {
          dst[0]=(BYTE)(((src[0])*(dst[0]))>>8);
          dst[1]=(BYTE)(((src[1])*(dst[1]))>>8);
-         dst[2]=(BYTE)(((src[2])*(dst[2]))>>8);   
+         dst[2]=(BYTE)(((src[2])*(dst[2]))>>8);
          dst+=4;
          src+=4;
       }
@@ -714,12 +714,12 @@ namespace win
       BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
-         
+
       while ( size-- )
       {
          dst[0]=(BYTE)(255-(((255-src[0])*(255-dst[0]))>>8));
          dst[1]=(BYTE)(255-(((255-src[1])*(255-dst[1]))>>8));
-         dst[2]=(BYTE)(255-(((255-src[2])*(255-dst[2]))>>8));   
+         dst[2]=(BYTE)(255-(((255-src[2])*(255-dst[2]))>>8));
          dst+=4;
          src+=4;
       }
@@ -811,7 +811,7 @@ namespace win
       {
          for ( int i=0; i<dx; i++ )
          {
-            dst[i]=color;   
+            dst[i]=color;
          }
          dst+=m_size.cx;
       }
@@ -841,7 +841,7 @@ namespace win
          {
             dst[0]=(BYTE)(((B-dst[0])*A+(dst[0]<<8))>>8);
             dst[1]=(BYTE)(((G-dst[1])*A+(dst[1]<<8))>>8);
-            dst[2]=(BYTE)(((R-dst[2])*A+(dst[2]<<8))>>8);   
+            dst[2]=(BYTE)(((R-dst[2])*A+(dst[2]<<8))>>8);
             dst+=4;
          }
          dst+=(m_size.cx-dx)<<2;
@@ -871,7 +871,7 @@ namespace win
       {
          for ( int i=0; i<dx; i++ )
          {
-            dst[i]=((i+j)&0x1) ? dst[i] : color;   
+            dst[i]=((i+j)&0x1) ? dst[i] : color;
          }
          dst+=m_size.cx;
       }
@@ -902,7 +902,7 @@ namespace win
          {
             dst[0]=(BYTE)(((src[0]-dst[0])*A+(dst[0]<<8))>>8);
             dst[1]=(BYTE)(((src[1]-dst[1])*A+(dst[1]<<8))>>8);
-            dst[2]=(BYTE)(((src[2]-dst[2])*A+(dst[2]<<8))>>8);   
+            dst[2]=(BYTE)(((src[2]-dst[2])*A+(dst[2]<<8))>>8);
             dst+=4;
             src+=4;
          }
@@ -936,7 +936,7 @@ namespace win
          {
             dst[0]=(BYTE)((src[0]<dst[0]) ? src[0] : dst[0]);
             dst[1]=(BYTE)((src[1]<dst[1]) ? src[1] : dst[1]);
-            dst[2]=(BYTE)((src[2]<dst[2]) ? src[2] : dst[2]);   
+            dst[2]=(BYTE)((src[2]<dst[2]) ? src[2] : dst[2]);
             dst+=4;
             src+=4;
          }
@@ -974,7 +974,7 @@ namespace win
             Difference=src[1]-dst[1];
             dst[1]=(BYTE)((Difference<0) ? -Difference : Difference);
             Difference=src[2]-dst[2];
-            dst[2]=(BYTE)((Difference<0) ? -Difference : Difference);   
+            dst[2]=(BYTE)((Difference<0) ? -Difference : Difference);
             dst+=4;
             src+=4;
          }
@@ -1103,14 +1103,14 @@ namespace win
       y=y1;
 
       m_pcolorref[y*m_size.cx+x]=color;
-      while (x<dx) 
+      while (x<dx)
       {
-         if (d<=0) 
+         if (d<=0)
          {
             d+=k1;
             x++;
-         } 
-         else 
+         }
+         else
          {
             d+=k2;
             x++;
@@ -1124,7 +1124,7 @@ namespace win
    {
       int d, x, y, ax, ay, sx, sy, dx, dy;
       COLORREF color=RGB ( B, G, R );
-      
+
       dx=x2-x1;
       ax=abs ( dx )<<1;
       sx=(dx<0) ? -1 : 1;
@@ -1133,7 +1133,7 @@ namespace win
       sy=(dy<0) ? -1 : 1;
       x=x1;
       y=y1;
-      
+
       if ( ax>ay )
       {
          d=ay-(ax>>1);
@@ -1171,7 +1171,7 @@ namespace win
       int d, x, y, ax, ay, sx, sy, dx, dy;
 //      COLORREF color=RGB ( B, G, R );
       BYTE *dst=(BYTE *)m_pcolorref;
-      
+
       dx=x2-x1;
       ax=abs ( dx )<<1;
       sx=(dx<0) ? -1 : 1;
@@ -1180,7 +1180,7 @@ namespace win
       sy=(dy<0) ? -1 : 1;
       x=x1;
       y=y1;
-      
+
       if ( ax>ay )
       {
          d=ay-(ax>>1);
@@ -1236,7 +1236,7 @@ namespace win
    void dib::transparent_color(color color)
    {
       COLORREF crFind = color.get_rgb();
-      __int64 size = area();
+      int64_t size = area();
 
       for ( int i=0; i<size; i++ )
          if((m_pcolorref[i] & 0x00ffffff) == crFind)
@@ -1278,7 +1278,7 @@ namespace win
          return;
       /*if(version == 0)
       {
-         
+
          int iR = iRadius - 1;
 
          int xL = xCenter - iR;
@@ -1349,7 +1349,7 @@ namespace win
                      iLevel = 1.0 - dr * 1.0 / iRadius;
                      dst[0] = blue  * iLevel;
                      dst[1] = green * iLevel;
-                     dst[2] = red   * iLevel;   
+                     dst[2] = red   * iLevel;
                   }
                   dst += 4;
                }
@@ -1379,13 +1379,13 @@ namespace win
                else
                   b = 255 - b;
 
-               
+
                lpb[x + y * iRadius] = (byte) b;
                lpb[y + x * iRadius] = (byte) b;
             }
          }
 
-         
+
          int iR = iRadius - 1;
 
          int xL = xCenter - iR;
@@ -1398,12 +1398,12 @@ namespace win
          if(xU >= m_size.cx) xU = m_size.cx - 1;
          if(yL < 0) yL = 0;
          if(yU >= m_size.cy) yU = m_size.cy - 1;
-      
+
 
          BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * m_size.cx));
          DWORD dwAdd = ((m_size.cx - 1 - xU) + xL) * 4;
 //         int size=m_size.cx*m_size.cy;
-      
+
          int dx, dy;
 
          // Top Left
@@ -1417,8 +1417,8 @@ namespace win
                b = lpb[dx + dy * iRadius];
                dst[0] = (byte) (blue     * b / 255);
                dst[1] = (byte) (green    * b / 255);
-               dst[2] = (byte) (red      * b / 255);   
-               dst[3] = (byte) (alpha    * b / 255);   
+               dst[2] = (byte) (red      * b / 255);
+               dst[3] = (byte) (alpha    * b / 255);
                dst += 4;
             }
             dst += dwAdd;
@@ -1438,7 +1438,7 @@ namespace win
          return;
       /*if(version == 0)
       {
-         
+
          int iR = iRadius - 1;
 
          int xL = xCenter - iR;
@@ -1509,7 +1509,7 @@ namespace win
                      iLevel = 1.0 - dr * 1.0 / iRadius;
                      dst[0] = blue  * iLevel;
                      dst[1] = green * iLevel;
-                     dst[2] = red   * iLevel;   
+                     dst[2] = red   * iLevel;
                   }
                   dst += 4;
                }
@@ -1539,13 +1539,13 @@ namespace win
                else
                   b = ~b;
 
-               
+
                lpb[x + y * iRadius] = (byte) b;
                lpb[y + x * iRadius] = (byte) b;
             }
          }
 
-         
+
          int iR = iRadius - 1;
 
          int xL = xCenter - iR;
@@ -1558,12 +1558,12 @@ namespace win
          if(xU >= m_size.cx) xU = m_size.cx - 1;
          if(yL < 0) yL = 0;
          if(yU >= m_size.cy) yU = m_size.cy - 1;
-      
+
 
          BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * m_size.cx));
          DWORD dwAdd = ((m_size.cx - 1 - xU) + xL) * 4;
 //         int size=m_size.cx*m_size.cy;
-      
+
          int dx, dy;
 
          BYTE bComp;
@@ -1598,8 +1598,8 @@ namespace win
       if(cx <= 0 || cy <= 0)
          return;
 
-    
-    
+
+
 
       // White blend dib
       dib dib1(get_app());
@@ -1613,7 +1613,7 @@ namespace win
          0,
          NULL,
          DI_IMAGE | DI_MASK);
-    
+
       // Black blend dib
       ::ca::dib_sp spdib2(get_app());
       spdib2->create(cx, cy);
@@ -1638,13 +1638,13 @@ namespace win
          0,
          NULL,
          DI_MASK);
-    
+
       BYTE * r1=(BYTE*)dib1.m_pcolorref;
       BYTE * r2=(BYTE*)spdib2->get_data();
       BYTE * srcM=(BYTE*)dibM.m_pcolorref;
       BYTE * dest=(BYTE*)m_pcolorref;
       int iSize = m_size.cx*m_size.cy;
-    
+
       BYTE b;
       BYTE bMax;
          while ( iSize-- > 0)
@@ -1660,7 +1660,7 @@ namespace win
                bMax = max(b, bMax);
                b =(BYTE)(r1[1]  - r2[1]);
                bMax = max(b, bMax);
-               b =(BYTE)(r1[2]  - r2[2]); 
+               b =(BYTE)(r1[2]  - r2[2]);
                bMax = max(b, bMax);
                bMax = 255 - bMax;
             }
@@ -1672,9 +1672,9 @@ namespace win
             r1       += 4;
             r2       += 4;
          }
-      
-    
-    
+
+
+
    }
 
    void dib::rotate(::ca::dib * pdib, double dAngle, double dScale)
@@ -1687,7 +1687,7 @@ namespace win
 
       int l = max(cx, cy);
 
-      
+
       int jmax = min(l, cy / 2);
       int jmin = - jmax;
       int imax = min(l, cx / 2);
@@ -1755,7 +1755,7 @@ namespace win
             }
 
 
-            
+
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
                WIN_DIB(pdib)->m_pcolorref[y * cx + x];
             k++;
@@ -1766,13 +1766,13 @@ namespace win
 
    void dib::Rotate034(::ca::dib * pdib, double dAngle, double dScale)
    {
-     
+
       int cx = m_size.cx;
       int cy = m_size.cy;
 
       int l = max(cx, cy);
 
-      
+
       int jmax = min(l, cy / 2);
       int jmin = - jmax;
       int imax = min(l, cx / 2);
@@ -1784,11 +1784,11 @@ namespace win
 
       if((cx % 2) == 1)
          imax++;
-      
+
       int joff = cy / 2;
       int ioff = cx / 2;
 
-      
+
       int k = 0;
       double dCos = ::cos(dAngle * dPi / 180.0) * dScale;
       double dSin = ::sin(dAngle * dPi / 180.0) * dScale;
@@ -1826,7 +1826,7 @@ namespace win
             }
 
 
-            
+
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
                WIN_DIB(pdib)->m_pcolorref[y * cx + x];
             k++;
@@ -1837,7 +1837,7 @@ namespace win
    void dib::rotate(
       ::ca::dib * pdib,
       LPCRECT lpcrect,
-      double dAngle, 
+      double dAngle,
       double dScale)
    {
      // ::ca::dib_sp spdib(get_app());
@@ -1851,7 +1851,7 @@ namespace win
       int cy = rect.height();
 
       int l = max(cx, cy);
-      
+
       int jmax = min(l, cy / 2);
       int jmin = - jmax;
       int imax = min(l, cx / 2);
@@ -1919,7 +1919,7 @@ namespace win
             }
 
 
-            
+
             m_pcolorref[(j+joff)*m_size.cx+(i+ioff)]=
                WIN_DIB(pdib)->m_pcolorref[y * m_size.cx + x];
             k++;
@@ -2030,7 +2030,7 @@ namespace win
       {
          return 0;
       }
-      
+
    }
 
 
@@ -2266,7 +2266,7 @@ namespace win
          SP_HDC(m_spgraphics),
          0, 0,
          m_size.cx, m_size.cy,
-         0, 0, 
+         0, 0,
          WIN_DIB(pdib)->m_size.cx, WIN_DIB(pdib)->m_size.cy,
          WIN_DIB(pdib)->m_pcolorref,
          &WIN_DIB(pdib)->m_info,
