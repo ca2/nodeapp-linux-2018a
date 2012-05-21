@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Build data tables by including data file three times
 
-struct CLASS_DECL_ca AFX_MAP_MESSAGE
+struct CLASS_DECL_ca __MAP_MESSAGE
 {
    UINT    nMsg;
    const char *  lpszMsg;
@@ -13,7 +13,7 @@ struct CLASS_DECL_ca AFX_MAP_MESSAGE
 
 #define DEFINE_MESSAGE(wm)  { wm, #wm }
 
-static const AFX_MAP_MESSAGE allMessages[] =
+static const __MAP_MESSAGE allMessages[] =
 {
    DEFINE_MESSAGE(WM_CREATE),
    DEFINE_MESSAGE(WM_DESTROY),
@@ -207,10 +207,10 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
    ENSURE_ARG(pMsg != NULL);
    if (pMsg->message == WM_DDE_EXECUTE)
    {
-      UINT_PTR nDummy;
+      uint_ptr nDummy;
       HGLOBAL hCommands;
       if (!UnpackDDElParam(WM_DDE_EXECUTE, pMsg->lParam,
-         &nDummy, (UINT_PTR*)&hCommands))
+         &nDummy, (uint_ptr*)&hCommands))
       {
 //         ::OutputDebugString(::radix::trace::category_AppMsg, 0, "Warning: Unable to unpack WM_DDE_EXECUTE lParam %08lX.\n",
   //          pMsg->lParam);
@@ -225,11 +225,11 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
    }
    else if (pMsg->message == WM_DDE_ADVISE)
    {
-      UINT_PTR nItem;
+      uint_ptr nItem;
       ATOM aItem;
       HGLOBAL hAdvise;
       if (!UnpackDDElParam(WM_DDE_ADVISE, pMsg->lParam,
-         (UINT_PTR*)&hAdvise, &nItem))
+         (uint_ptr*)&hAdvise, &nItem))
       {
 //         ::OutputDebugString(::radix::trace::category_AppMsg, 0, "Warning: Unable to unpack WM_DDE_ADVISE lParam %08lX.\n",
 //            pMsg->lParam);
@@ -312,7 +312,7 @@ void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
    else
    {
       // a system windows message
-      const AFX_MAP_MESSAGE* pMapMsg = allMessages;
+      const __MAP_MESSAGE* pMapMsg = allMessages;
       for (/*null*/; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == pbase->m_uiMessage)
@@ -394,7 +394,7 @@ void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg)
    else
    {
       // a system windows message
-      const AFX_MAP_MESSAGE* pMapMsg = allMessages;
+      const __MAP_MESSAGE* pMapMsg = allMessages;
       for (/*null*/; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == lpmsg->message)

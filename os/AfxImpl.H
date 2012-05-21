@@ -8,8 +8,8 @@
 // See these sources for detailed information regarding the
 // Microsoft Foundation Classes product.
 
-#undef AFX_DATA
-#define AFX_DATA AFX_CORE_DATA
+#undef __DATA
+#define __DATA __CORE_DATA
 
 /////////////////////////////////////////////////////////////////////////////
 // Auxiliary System/Screen metrics
@@ -58,15 +58,15 @@ struct AUX_DATA
 	void UpdateSysMetrics();
 };
 
-extern AFX_DATA AUX_DATA afxData;
+extern __DATA AUX_DATA afxData;
 
 /////////////////////////////////////////////////////////////////////////////
 // _AFX_CTL3D_STATE
 
 #ifndef _AFX_NO_CTL3D_SUPPORT
 
-#undef AFX_DATA
-#define AFX_DATA
+#undef __DATA
+#define __DATA
 
 class _AFX_CTL3D_STATE : public CNoTrackObject
 {
@@ -99,7 +99,7 @@ public:
 
 EXTERN_THREAD_LOCAL(_AFX_CTL3D_THREAD, _afxCtl3dThread)
 
-_AFX_CTL3D_STATE* AFXAPI AfxGetCtl3dState();
+_AFX_CTL3D_STATE* _API AfxGetCtl3dState();
 
 #endif //!_AFX_NO_CTL3D_SUPPORT
 
@@ -121,8 +121,8 @@ public:
 	BOOL bWord; // TRUE==match whole word, FALSE==not
 };
 
-#undef AFX_DATA
-#define AFX_DATA AFX_CORE_DATA
+#undef __DATA
+#define __DATA __CORE_DATA
 
 class _AFX_RICHEDIT_STATE : public _AFX_EDIT_STATE
 {
@@ -133,10 +133,10 @@ public:
 
 EXTERN_PROCESS_LOCAL(_AFX_RICHEDIT_STATE, _afxRichEditState)
 
-_AFX_RICHEDIT_STATE* AFX_CDECL AfxGetRichEditState();
+_AFX_RICHEDIT_STATE* __CDECL AfxGetRichEditState();
 
-#undef AFX_DATA
-#define AFX_DATA
+#undef __DATA
+#define __DATA
 
 ////////////////////////////////////////////////////////////////////////////
 // other global state
@@ -194,32 +194,32 @@ extern const TCHAR _afxWndMDIFrame[];
 extern const TCHAR _afxWndFrameOrView[];
 extern const TCHAR _afxWndOleControl[];
 
-#define AFX_WND_REG                     0x00001
-#define AFX_WNDCONTROLBAR_REG           0x00002
-#define AFX_WNDMDIFRAME_REG             0x00004
-#define AFX_WNDFRAMEORVIEW_REG          0x00008
-#define AFX_WNDCOMMCTLS_REG             0x00010 // means all original Win95
-#define AFX_WNDOLECONTROL_REG           0x00020
-#define AFX_WNDCOMMCTL_UPDOWN_REG       0x00040 // these are original Win95
-#define AFX_WNDCOMMCTL_TREEVIEW_REG     0x00080
-#define AFX_WNDCOMMCTL_TAB_REG          0x00100
-#define AFX_WNDCOMMCTL_PROGRESS_REG     0x00200
-#define AFX_WNDCOMMCTL_LISTVIEW_REG     0x00400
-#define AFX_WNDCOMMCTL_HOTKEY_REG       0x00800
-#define AFX_WNDCOMMCTL_BAR_REG          0x01000
-#define AFX_WNDCOMMCTL_ANIMATE_REG      0x02000
-#define AFX_WNDCOMMCTL_INTERNET_REG     0x04000 // these are new in IE4
-#define AFX_WNDCOMMCTL_COOL_REG         0x08000
-#define AFX_WNDCOMMCTL_USEREX_REG       0x10000
-#define AFX_WNDCOMMCTL_DATE_REG         0x20000
+#define __WND_REG                     0x00001
+#define __WNDCONTROLBAR_REG           0x00002
+#define __WNDMDIFRAME_REG             0x00004
+#define __WNDFRAMEORVIEW_REG          0x00008
+#define __WNDCOMMCTLS_REG             0x00010 // means all original Win95
+#define __WNDOLECONTROL_REG           0x00020
+#define __WNDCOMMCTL_UPDOWN_REG       0x00040 // these are original Win95
+#define __WNDCOMMCTL_TREEVIEW_REG     0x00080
+#define __WNDCOMMCTL_TAB_REG          0x00100
+#define __WNDCOMMCTL_PROGRESS_REG     0x00200
+#define __WNDCOMMCTL_LISTVIEW_REG     0x00400
+#define __WNDCOMMCTL_HOTKEY_REG       0x00800
+#define __WNDCOMMCTL_BAR_REG          0x01000
+#define __WNDCOMMCTL_ANIMATE_REG      0x02000
+#define __WNDCOMMCTL_INTERNET_REG     0x04000 // these are new in IE4
+#define __WNDCOMMCTL_COOL_REG         0x08000
+#define __WNDCOMMCTL_USEREX_REG       0x10000
+#define __WNDCOMMCTL_DATE_REG         0x20000
 
-#define AFX_WIN95CTLS_MASK              0x03FC0 // UPDOWN -> ANIMATE
-#define AFX_WNDCOMMCTLSALL_REG          0x3C010 // COMMCTLS|INTERNET|COOL|USEREX|DATE
-#define AFX_WNDCOMMCTLSNEW_REG          0x3C000 // INTERNET|COOL|USEREX|DATE
+#define __WIN95CTLS_MASK              0x03FC0 // UPDOWN -> ANIMATE
+#define __WNDCOMMCTLSALL_REG          0x3C010 // COMMCTLS|INTERNET|COOL|USEREX|DATE
+#define __WNDCOMMCTLSNEW_REG          0x3C000 // INTERNET|COOL|USEREX|DATE
 
 #define AfxDeferRegisterClass(fClass) AfxEndDeferRegisterClass(fClass)
 
-BOOL AFXAPI AfxEndDeferRegisterClass(LONG fToRegister);
+BOOL _API AfxEndDeferRegisterClass(LONG fToRegister);
 
 // MFC has its own version of the TOOLINFO structure containing the
 // the Win95 base version of the structure. Since MFC targets Win95 base,
@@ -233,9 +233,9 @@ typedef struct tagAFX_OLDTOOLINFO {
 	RECT rect;
 	HINSTANCE hinst;
 	LPTSTR lpszText;
-} AFX_OLDTOOLINFO;
+} __OLDTOOLINFO;
 
-// special AFX window class name mangling
+// special _ window class name mangling
 
 #ifndef _UNICODE
 #define _UNICODE_SUFFIX
@@ -243,10 +243,10 @@ typedef struct tagAFX_OLDTOOLINFO {
 #define _UNICODE_SUFFIX _T("u")
 #endif
 
-#ifndef _DEBUG
-#define _DEBUG_SUFFIX
+#ifndef DEBUG
+#define DEBUG_SUFFIX
 #else
-#define _DEBUG_SUFFIX _T("d")
+#define DEBUG_SUFFIX _T("d")
 #endif
 
 #ifdef _AFXDLL
@@ -255,14 +255,14 @@ typedef struct tagAFX_OLDTOOLINFO {
 #define _STATIC_SUFFIX _T("s")
 #endif
 
-#define AFX_WNDCLASS(s) \
-	_T("Afx") _T(s) _T("42") _STATIC_SUFFIX _UNICODE_SUFFIX _DEBUG_SUFFIX
+#define __WNDCLASS(s) \
+	_T("Afx") _T(s) _T("42") _STATIC_SUFFIX _UNICODE_SUFFIX DEBUG_SUFFIX
 
-#define AFX_WND             AFX_WNDCLASS("Wnd")
-#define AFX_WNDCONTROLBAR   AFX_WNDCLASS("ControlBar")
-#define AFX_WNDMDIFRAME     AFX_WNDCLASS("MDIFrame")
-#define AFX_WNDFRAMEORVIEW  AFX_WNDCLASS("FrameOrView")
-#define AFX_WNDOLECONTROL   AFX_WNDCLASS("OleControl")
+#define __WND             __WNDCLASS("Wnd")
+#define __WNDCONTROLBAR   __WNDCLASS("ControlBar")
+#define __WNDMDIFRAME     __WNDCLASS("MDIFrame")
+#define __WNDFRAMEORVIEW  __WNDCLASS("FrameOrView")
+#define __WNDOLECONTROL   __WNDCLASS("OleControl")
 
 // dialog/commdlg hook procs
 BOOL CALLBACK AfxDlgProc(HWND, UINT, WPARAM, LPARAM);
@@ -308,18 +308,18 @@ typedef struct
 /////////////////////////////////////////////////////////////////////////////
 // Special helpers
 
-void AFXAPI AfxCancelModes(HWND hWndRcvr);
-HWND AFXAPI AfxGetParentOwner(HWND hWnd);
-BOOL AFXAPI AfxIsDescendant(HWND hWndParent, HWND hWndChild);
-BOOL AFXAPI AfxHelpEnabled();  // determine if ID_HELP handler exists
-void AFXAPI AfxDeleteObject(HGDIOBJ* pObject);
-BOOL AFXAPI AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont);
-BOOL AFXAPI AfxGetPropSheetFont(CString& strFace, WORD& wSize, BOOL bWizard);
+void _API AfxCancelModes(HWND hWndRcvr);
+HWND _API AfxGetParentOwner(HWND hWnd);
+BOOL _API AfxIsDescendant(HWND hWndParent, HWND hWndChild);
+BOOL _API AfxHelpEnabled();  // determine if ID_HELP handler exists
+void _API AfxDeleteObject(HGDIOBJ* pObject);
+BOOL _API AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont);
+BOOL _API AfxGetPropSheetFont(CString& strFace, WORD& wSize, BOOL bWizard);
 
-BOOL AFXAPI _AfxIsComboBoxControl(HWND hWnd, UINT nStyle);
-BOOL AFXAPI _AfxCheckCenterDialog(LPCTSTR lpszResource);
-BOOL AFXAPI _AfxCompareClassName(HWND hWnd, LPCTSTR lpszClassName);
-HWND AFXAPI _AfxChildWindowFromPoint(HWND, POINT);
+BOOL _API _AfxIsComboBoxControl(HWND hWnd, UINT nStyle);
+BOOL _API _AfxCheckCenterDialog(LPCTSTR lpszResource);
+BOOL _API _AfxCompareClassName(HWND hWnd, LPCTSTR lpszClassName);
+HWND _API _AfxChildWindowFromPoint(HWND, POINT);
 
 // for determining version of COMCTL32.DLL
 #define VERSION_WIN4    MAKELONG(0, 4)
@@ -327,29 +327,29 @@ HWND AFXAPI _AfxChildWindowFromPoint(HWND, POINT);
 #define VERSION_IE4     MAKELONG(71, 4)
 #define VERSION_IE401   MAKELONG(72, 4)
 extern int _afxComCtlVersion;
-DWORD AFXAPI _AfxGetComCtlVersion();
+DWORD _API _AfxGetComCtlVersion();
 
-#undef AFX_DATA
-#define AFX_DATA AFX_CORE_DATA
+#undef __DATA
+#define __DATA __CORE_DATA
 
 // UNICODE/MBCS abstractions
 #ifdef _MBCS
-	extern AFX_DATA const BOOL _afxDBCS;
+	extern __DATA const BOOL _afxDBCS;
 #else
 	#define _afxDBCS FALSE
 #endif
 
-#undef AFX_DATA
-#define AFX_DATA
+#undef __DATA
+#define __DATA
 
 // determine number of elements in an array (not bytes)
 #define _countof(array) (sizeof(array)/sizeof(array[0]))
 
 #ifndef _AFX_PORTABLE
-int AFX_CDECL AfxCriticalNewHandler(size_t nSize);
+int __CDECL AfxCriticalNewHandler(size_t nSize);
 #endif
 
-void AFXAPI AfxGlobalFree(HGLOBAL hGlobal);
+void _API AfxGlobalFree(HGLOBAL hGlobal);
 
 /////////////////////////////////////////////////////////////////////////////
 // static exceptions
@@ -370,10 +370,10 @@ extern CResourceException _simpleResourceException;
 
 
 /////////////////////////////////////////////////////////////////////////////
-// AFX_CRITICAL_SECTION
+// __CRITICAL_SECTION
 
-#undef AFX_DATA
-#define AFX_DATA AFX_CORE_DATA
+#undef __DATA
+#define __DATA __CORE_DATA
 
 // these globals are protected by the same critical section
 #define CRIT_DYNLINKLIST    0
@@ -400,10 +400,10 @@ extern CResourceException _simpleResourceException;
 #define CRIT_MAX    17  // Note: above plus one!
 
 #ifdef _MT
-void AFXAPI AfxLockGlobals(int nLockType);
-void AFXAPI AfxUnlockGlobals(int nLockType);
-BOOL AFXAPI AfxCriticalInit();
-void AFXAPI AfxCriticalTerm();
+void _API AfxLockGlobals(int nLockType);
+void _API AfxUnlockGlobals(int nLockType);
+BOOL _API AfxCriticalInit();
+void _API AfxCriticalTerm();
 #else
 #define AfxLockGlobals(nLockType)
 #define AfxUnlockGlobals(nLockType)
@@ -418,15 +418,15 @@ void AFXAPI AfxCriticalTerm();
 #define _AfxGetDlgCtrlID(hWnd)          ((UINT)(WORD)::GetDlgCtrlID(hWnd))
 
 // misc helpers
-BOOL AFXAPI AfxFullPath(LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
-BOOL AFXAPI AfxComparePath(LPCTSTR lpszPath1, LPCTSTR lpszPath2);
+BOOL _API AfxFullPath(LPTSTR lpszPathOut, LPCTSTR lpszFileIn);
+BOOL _API AfxComparePath(LPCTSTR lpszPath1, LPCTSTR lpszPath2);
 
-UINT AFXAPI AfxGetFileTitle(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nMax);
-UINT AFXAPI AfxGetFileName(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nMax);
-void AFX_CDECL AfxTimeToFileTime(const CTime& time, LPFILETIME pFileTime);
-void AFXAPI AfxGetRoot(LPCTSTR lpszPath, CString& strRoot);
+UINT _API AfxGetFileTitle(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nMax);
+UINT _API AfxGetFileName(LPCTSTR lpszPathName, LPTSTR lpszTitle, UINT nMax);
+void __CDECL AfxTimeToFileTime(const CTime& time, LPFILETIME pFileTime);
+void _API AfxGetRoot(LPCTSTR lpszPath, CString& strRoot);
 
-class AFX_COM
+class __COM
 {
 public:
 	HRESULT CreateInstance(REFCLSID rclsid, LPUNKNOWN pUnkOuter,
@@ -434,9 +434,9 @@ public:
 	HRESULT GetClassObject(REFCLSID rclsid, REFIID riid, LPVOID* ppv);
 };
 
-CString AFXAPI AfxStringFromCLSID(REFCLSID rclsid);
-BOOL AFXAPI AfxGetInProcServer(LPCTSTR lpszCLSID, CString& str);
-BOOL AFXAPI AfxResolveShortcut(CWnd* pWnd, LPCTSTR pszShortcutFile,
+CString _API AfxStringFromCLSID(REFCLSID rclsid);
+BOOL _API AfxGetInProcServer(LPCTSTR lpszCLSID, CString& str);
+BOOL _API AfxResolveShortcut(CWnd* pWnd, LPCTSTR pszShortcutFile,
 	LPTSTR pszPath, int cchPath);
 
 #define NULL_TLS ((DWORD)-1)
@@ -444,80 +444,80 @@ BOOL AFXAPI AfxResolveShortcut(CWnd* pWnd, LPCTSTR pszShortcutFile,
 /////////////////////////////////////////////////////////////////////////////
 // Message map and message dispatch
 
-const AFX_MSGMAP_ENTRY* AFXAPI
-AfxFindMessageEntry(const AFX_MSGMAP_ENTRY* lpEntry,
+const __MSGMAP_ENTRY* _API
+AfxFindMessageEntry(const __MSGMAP_ENTRY* lpEntry,
 	UINT nMsg, UINT nCode, UINT nID);
 
 union MessageMapFunctions
 {
-	AFX_PMSG pfn;   // generic member function pointer
+	__PMSG pfn;   // generic member function pointer
 
 	// specific type safe variants for WM_COMMAND and WM_NOTIFY messages
-	void (AFX_MSG_CALL CCmdTarget::*pfn_COMMAND)();
-	BOOL (AFX_MSG_CALL CCmdTarget::*pfn_bCOMMAND)();
-	void (AFX_MSG_CALL CCmdTarget::*pfn_COMMAND_RANGE)(UINT);
-	BOOL (AFX_MSG_CALL CCmdTarget::*pfn_COMMAND_EX)(UINT);
+	void (__MSG_CALL CCmdTarget::*pfn_COMMAND)();
+	BOOL (__MSG_CALL CCmdTarget::*pfn_bCOMMAND)();
+	void (__MSG_CALL CCmdTarget::*pfn_COMMAND_RANGE)(UINT);
+	BOOL (__MSG_CALL CCmdTarget::*pfn_COMMAND_EX)(UINT);
 
-	void (AFX_MSG_CALL CCmdTarget::*pfn_UPDATE_COMMAND_UI)(CCmdUI*);
-	void (AFX_MSG_CALL CCmdTarget::*pfn_UPDATE_COMMAND_UI_RANGE)(CCmdUI*, UINT);
-	void (AFX_MSG_CALL CCmdTarget::*pfn_OTHER)(void*);
-	BOOL (AFX_MSG_CALL CCmdTarget::*pfn_OTHER_EX)(void*);
+	void (__MSG_CALL CCmdTarget::*pfn_UPDATE_COMMAND_UI)(CCmdUI*);
+	void (__MSG_CALL CCmdTarget::*pfn_UPDATE_COMMAND_UI_RANGE)(CCmdUI*, UINT);
+	void (__MSG_CALL CCmdTarget::*pfn_OTHER)(void*);
+	BOOL (__MSG_CALL CCmdTarget::*pfn_OTHER_EX)(void*);
 
-	void (AFX_MSG_CALL CCmdTarget::*pfn_NOTIFY)(NMHDR*, LRESULT*);
-	BOOL (AFX_MSG_CALL CCmdTarget::*pfn_bNOTIFY)(NMHDR*, LRESULT*);
-	void (AFX_MSG_CALL CCmdTarget::*pfn_NOTIFY_RANGE)(UINT, NMHDR*, LRESULT*);
-	BOOL (AFX_MSG_CALL CCmdTarget::*pfn_NOTIFY_EX)(UINT, NMHDR*, LRESULT*);
+	void (__MSG_CALL CCmdTarget::*pfn_NOTIFY)(NMHDR*, LRESULT*);
+	BOOL (__MSG_CALL CCmdTarget::*pfn_bNOTIFY)(NMHDR*, LRESULT*);
+	void (__MSG_CALL CCmdTarget::*pfn_NOTIFY_RANGE)(UINT, NMHDR*, LRESULT*);
+	BOOL (__MSG_CALL CCmdTarget::*pfn_NOTIFY_EX)(UINT, NMHDR*, LRESULT*);
 
 	// type safe variant for thread messages
 
-	void (AFX_MSG_CALL CWinThread::*pfn_THREAD)(WPARAM, LPARAM);
+	void (__MSG_CALL CWinThread::*pfn_THREAD)(WPARAM, LPARAM);
 
 	// specific type safe variants for WM-style messages
-	BOOL    (AFX_MSG_CALL CWnd::*pfn_bD)(CDC*);
-	BOOL    (AFX_MSG_CALL CWnd::*pfn_bb)(BOOL);
-	BOOL    (AFX_MSG_CALL CWnd::*pfn_bWww)(CWnd*, UINT, UINT);
-	BOOL    (AFX_MSG_CALL CWnd::*pfn_bHELPINFO)(HELPINFO*);
-	BOOL    (AFX_MSG_CALL CWnd::*pfn_bWCDS)(CWnd*, COPYDATASTRUCT*);
-	HBRUSH  (AFX_MSG_CALL CWnd::*pfn_hDWw)(CDC*, CWnd*, UINT);
-	HBRUSH  (AFX_MSG_CALL CWnd::*pfn_hDw)(CDC*, UINT);
-	int     (AFX_MSG_CALL CWnd::*pfn_iwWw)(UINT, CWnd*, UINT);
-	int     (AFX_MSG_CALL CWnd::*pfn_iww)(UINT, UINT);
-	int     (AFX_MSG_CALL CWnd::*pfn_iWww)(CWnd*, UINT, UINT);
-	int     (AFX_MSG_CALL CWnd::*pfn_is)(LPTSTR);
-	LRESULT (AFX_MSG_CALL CWnd::*pfn_lwl)(WPARAM, LPARAM);
-	LRESULT (AFX_MSG_CALL CWnd::*pfn_lwwM)(UINT, UINT, CMenu*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vv)(void);
+	BOOL    (__MSG_CALL CWnd::*pfn_bD)(CDC*);
+	BOOL    (__MSG_CALL CWnd::*pfn_bb)(BOOL);
+	BOOL    (__MSG_CALL CWnd::*pfn_bWww)(CWnd*, UINT, UINT);
+	BOOL    (__MSG_CALL CWnd::*pfn_bHELPINFO)(HELPINFO*);
+	BOOL    (__MSG_CALL CWnd::*pfn_bWCDS)(CWnd*, COPYDATASTRUCT*);
+	HBRUSH  (__MSG_CALL CWnd::*pfn_hDWw)(CDC*, CWnd*, UINT);
+	HBRUSH  (__MSG_CALL CWnd::*pfn_hDw)(CDC*, UINT);
+	int     (__MSG_CALL CWnd::*pfn_iwWw)(UINT, CWnd*, UINT);
+	int     (__MSG_CALL CWnd::*pfn_iww)(UINT, UINT);
+	int     (__MSG_CALL CWnd::*pfn_iWww)(CWnd*, UINT, UINT);
+	int     (__MSG_CALL CWnd::*pfn_is)(LPTSTR);
+	LRESULT (__MSG_CALL CWnd::*pfn_lwl)(WPARAM, LPARAM);
+	LRESULT (__MSG_CALL CWnd::*pfn_lwwM)(UINT, UINT, CMenu*);
+	void    (__MSG_CALL CWnd::*pfn_vv)(void);
 
-	void    (AFX_MSG_CALL CWnd::*pfn_vw)(UINT);
-	void    (AFX_MSG_CALL CWnd::*pfn_vww)(UINT, UINT);
-	void    (AFX_MSG_CALL CWnd::*pfn_vvii)(int, int);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwww)(UINT, UINT, UINT);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwii)(UINT, int, int);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwl)(WPARAM, LPARAM);
-	void    (AFX_MSG_CALL CWnd::*pfn_vbWW)(BOOL, CWnd*, CWnd*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vD)(CDC*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vM)(CMenu*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vMwb)(CMenu*, UINT, BOOL);
+	void    (__MSG_CALL CWnd::*pfn_vw)(UINT);
+	void    (__MSG_CALL CWnd::*pfn_vww)(UINT, UINT);
+	void    (__MSG_CALL CWnd::*pfn_vvii)(int, int);
+	void    (__MSG_CALL CWnd::*pfn_vwww)(UINT, UINT, UINT);
+	void    (__MSG_CALL CWnd::*pfn_vwii)(UINT, int, int);
+	void    (__MSG_CALL CWnd::*pfn_vwl)(WPARAM, LPARAM);
+	void    (__MSG_CALL CWnd::*pfn_vbWW)(BOOL, CWnd*, CWnd*);
+	void    (__MSG_CALL CWnd::*pfn_vD)(CDC*);
+	void    (__MSG_CALL CWnd::*pfn_vM)(CMenu*);
+	void    (__MSG_CALL CWnd::*pfn_vMwb)(CMenu*, UINT, BOOL);
 
-	void    (AFX_MSG_CALL CWnd::*pfn_vW)(CWnd*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vWww)(CWnd*, UINT, UINT);
-	void    (AFX_MSG_CALL CWnd::*pfn_vWp)(CWnd*, CPoint);
-	void    (AFX_MSG_CALL CWnd::*pfn_vWh)(CWnd*, HANDLE);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwW)(UINT, CWnd*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwWb)(UINT, CWnd*, BOOL);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwwW)(UINT, UINT, CWnd*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwwx)(UINT, UINT);
-	void    (AFX_MSG_CALL CWnd::*pfn_vs)(LPTSTR);
-	void    (AFX_MSG_CALL CWnd::*pfn_vOWNER)(int, LPTSTR);   // force return TRUE
-	int     (AFX_MSG_CALL CWnd::*pfn_iis)(int, LPTSTR);
-	UINT    (AFX_MSG_CALL CWnd::*pfn_wp)(CPoint);
-	UINT    (AFX_MSG_CALL CWnd::*pfn_wv)(void);
-	void    (AFX_MSG_CALL CWnd::*pfn_vPOS)(WINDOWPOS*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vCALC)(BOOL, NCCALCSIZE_PARAMS*);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwp)(UINT, CPoint);
-	void    (AFX_MSG_CALL CWnd::*pfn_vwwh)(UINT, UINT, HANDLE);
-	BOOL    (AFX_MSG_CALL CWnd::*pfn_bwsp)(UINT, short, CPoint);
-	void    (AFX_MSG_CALL CWnd::*pfn_vws)(UINT, LPCTSTR);
+	void    (__MSG_CALL CWnd::*pfn_vW)(CWnd*);
+	void    (__MSG_CALL CWnd::*pfn_vWww)(CWnd*, UINT, UINT);
+	void    (__MSG_CALL CWnd::*pfn_vWp)(CWnd*, CPoint);
+	void    (__MSG_CALL CWnd::*pfn_vWh)(CWnd*, HANDLE);
+	void    (__MSG_CALL CWnd::*pfn_vwW)(UINT, CWnd*);
+	void    (__MSG_CALL CWnd::*pfn_vwWb)(UINT, CWnd*, BOOL);
+	void    (__MSG_CALL CWnd::*pfn_vwwW)(UINT, UINT, CWnd*);
+	void    (__MSG_CALL CWnd::*pfn_vwwx)(UINT, UINT);
+	void    (__MSG_CALL CWnd::*pfn_vs)(LPTSTR);
+	void    (__MSG_CALL CWnd::*pfn_vOWNER)(int, LPTSTR);   // force return TRUE
+	int     (__MSG_CALL CWnd::*pfn_iis)(int, LPTSTR);
+	UINT    (__MSG_CALL CWnd::*pfn_wp)(CPoint);
+	UINT    (__MSG_CALL CWnd::*pfn_wv)(void);
+	void    (__MSG_CALL CWnd::*pfn_vPOS)(WINDOWPOS*);
+	void    (__MSG_CALL CWnd::*pfn_vCALC)(BOOL, NCCALCSIZE_PARAMS*);
+	void    (__MSG_CALL CWnd::*pfn_vwp)(UINT, CPoint);
+	void    (__MSG_CALL CWnd::*pfn_vwwh)(UINT, UINT, HANDLE);
+	BOOL    (__MSG_CALL CWnd::*pfn_bwsp)(UINT, short, CPoint);
+	void    (__MSG_CALL CWnd::*pfn_vws)(UINT, LPCTSTR);
 };
 
 CHandleMap* PASCAL afxMapHWND(BOOL bCreate = FALSE);
@@ -529,9 +529,9 @@ CHandleMap* PASCAL afxMapHMENU(BOOL bCreate = FALSE);
 /////////////////////////////////////////////////////////////////////////////
 // Debugging/Tracing helpers
 
-#ifdef _DEBUG
-	void AFXAPI _AfxTraceMsg(LPCTSTR lpszPrefix, const MSG* pMsg);
-	BOOL AFXAPI _AfxCheckDialogTemplate(LPCTSTR lpszResource,
+#ifdef DEBUG
+	void _API _AfxTraceMsg(LPCTSTR lpszPrefix, const MSG* pMsg);
+	BOOL _API _AfxCheckDialogTemplate(LPCTSTR lpszResource,
 		BOOL bInvisibleChild);
 #endif
 
@@ -613,7 +613,7 @@ inline void _AfxByteSwap(double d, BYTE* pb)
 }
 #endif //_AFX_BYTESWAP
 
-#undef AFX_DATA
-#define AFX_DATA
+#undef __DATA
+#define __DATA
 
 /////////////////////////////////////////////////////////////////////////////

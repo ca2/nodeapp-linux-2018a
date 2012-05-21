@@ -29,7 +29,7 @@ public:
 
 // Operations
    int AllocSlot();
-   void FreeSlot(int nSlot);   
+   void FreeSlot(int nSlot);
    void SetValue(int nSlot, void * pValue);
    // delete all values in process/thread
    void DeleteValues(HINSTANCE hInst, BOOL bAll = FALSE);
@@ -55,7 +55,7 @@ public:
    ~thread_slot_data();
 };
 
-class CLASS_DECL_VMSWIN AFX_NOVTABLE no_track_object
+class CLASS_DECL_VMSWIN __NOVTABLE no_track_object
 {
 public:
 #undef new
@@ -63,7 +63,7 @@ public:
 #define new DEBUG_NEW
    void PASCAL operator delete(void *);
 
-#if defined(_DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
+#if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
 #undef new
    void * PASCAL operator new(size_t nSize, const char *, int);
 #define new DEBUG_NEW
@@ -72,7 +72,7 @@ public:
     virtual ~no_track_object() {};
 };
 
-class CLASS_DECL_VMSWIN AFX_NOVTABLE thread_local_object
+class CLASS_DECL_VMSWIN __NOVTABLE thread_local_object
 {
 public:
 // Attributes
@@ -84,7 +84,7 @@ public:
    ~thread_local_object();
 };
 
-class CLASS_DECL_VMSWIN AFX_NOVTABLE process_local_object
+class CLASS_DECL_VMSWIN __NOVTABLE process_local_object
 {
 public:
 // Attributes
@@ -112,12 +112,12 @@ public:
       return pData;
    }
    inline operator TYPE*()
-   { 
-      return get_data(); 
+   {
+      return get_data();
    }
    inline TYPE* operator->()
-   { 
-      return get_data(); 
+   {
+      return get_data();
    }
 
 // Implementation
@@ -127,7 +127,7 @@ public:
 };
 
 #define THREAD_LOCAL(class_name, ident_name) \
-   AFX_COMDAT thread_local<class_name> ident_name;
+   __COMDAT thread_local<class_name> ident_name;
 #define EXTERN_THREAD_LOCAL(class_name, ident_name) \
    extern CLASS_DECL_VMSWIN thread_local<class_name> ident_name;
 
@@ -156,7 +156,7 @@ public:
 };
 
 #define PROCESS_LOCAL(class_name, ident_name) \
-   AFX_COMDAT process_local<class_name> ident_name;
+   __COMDAT process_local<class_name> ident_name;
 #define EXTERN_PROCESS_LOCAL(class_name, ident_name) \
    extern process_local<class_name> ident_name;
 

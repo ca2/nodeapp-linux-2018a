@@ -6,9 +6,6 @@
 #endif
 
 
-#include <stdlib.h>
-#include <stdio.h>
-
 #ifndef EXPORT
 #define EXPORT
 #endif

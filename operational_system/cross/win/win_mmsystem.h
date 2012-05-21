@@ -40,13 +40,13 @@ typedef struct midihdr_tag {
     LPSTR       lpData;               /* pointer to locked data block */
     DWORD       dwBufferLength;       /* length of data in data block */
     DWORD       dwBytesRecorded;      /* used for input only */
-    DWORD_PTR   dwUser;               /* for client's use */
+    dword_ptr   dwUser;               /* for client's use */
     DWORD       dwFlags;              /* assorted flags (see defines) */
     struct midihdr_tag far *lpNext;   /* reserved for driver */
-    DWORD_PTR   reserved;             /* reserved for driver */
+    dword_ptr   reserved;             /* reserved for driver */
 #if (WINVER >= 0x0400)
     DWORD       dwOffset;             /* Callback offset into buffer */
-    DWORD_PTR   dwReserved[8];        /* Reserved for MMSYSTEM */
+    dword_ptr   dwReserved[8];        /* Reserved for MMSYSTEM */
 #endif
 } MIDIHDR, *PMIDIHDR, NEAR *NPMIDIHDR, FAR *LPMIDIHDR;
 
@@ -227,7 +227,7 @@ typedef struct tagMIXERLINEA {
     DWORD       dwSource;               /* zero based source index (if source) */
     DWORD       dwLineID;               /* unique line id for mixer device */
     DWORD       fdwLine;                /* state/information about line */
-    DWORD_PTR   dwUser;                 /* driver specific information */
+    dword_ptr   dwUser;                 /* driver specific information */
     DWORD       dwComponentType;        /* component type line connects to */
     DWORD       cChannels;              /* number of channels line supports */
     DWORD       cConnections;           /* number of connections [possible] */
@@ -249,7 +249,7 @@ typedef struct tagMIXERLINEW {
     DWORD       dwSource;               /* zero based source index (if source) */
     DWORD       dwLineID;               /* unique line id for mixer device */
     DWORD       fdwLine;                /* state/information about line */
-    DWORD_PTR   dwUser;                 /* driver specific information */
+    dword_ptr   dwUser;                 /* driver specific information */
     DWORD       dwComponentType;        /* component type line connects to */
     DWORD       cChannels;              /* number of channels line supports */
     DWORD       cConnections;           /* number of connections [possible] */

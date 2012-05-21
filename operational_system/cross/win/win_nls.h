@@ -1123,9 +1123,9 @@ typedef enum _NORM_FORM {
 
 #ifdef STRICT
 
-typedef BOOL (CALLBACK* LANGUAGEGROUP_ENUMPROCA)(LGRPID, LPSTR, LPSTR, DWORD, LONG_PTR);
-//xxx linux typedef BOOL (CALLBACK* LANGGROUPLOCALE_ENUMPROCA)(LGRPID, LCID, LPSTR, LONG_PTR);
-typedef BOOL (CALLBACK* UILANGUAGE_ENUMPROCA)(LPSTR, LONG_PTR);
+typedef BOOL (CALLBACK* LANGUAGEGROUP_ENUMPROCA)(LGRPID, LPSTR, LPSTR, DWORD, long_ptr);
+//xxx linux typedef BOOL (CALLBACK* LANGGROUPLOCALE_ENUMPROCA)(LGRPID, LCID, LPSTR, long_ptr);
+typedef BOOL (CALLBACK* UILANGUAGE_ENUMPROCA)(LPSTR, long_ptr);
 typedef BOOL (CALLBACK* LOCALE_ENUMPROCA)(LPSTR);
 typedef BOOL (CALLBACK* CODEPAGE_ENUMPROCA)(LPSTR);
 typedef BOOL (CALLBACK* DATEFMT_ENUMPROCA)(LPSTR);
@@ -1134,9 +1134,9 @@ typedef BOOL (CALLBACK* TIMEFMT_ENUMPROCA)(LPSTR);
 typedef BOOL (CALLBACK* CALINFO_ENUMPROCA)(LPSTR);
 typedef BOOL (CALLBACK* CALINFO_ENUMPROCEXA)(LPSTR, CALID);
 
-typedef BOOL (CALLBACK* LANGUAGEGROUP_ENUMPROCW)(LGRPID, LPWSTR, LPWSTR, DWORD, LONG_PTR);
-//xxx linux typedef BOOL (CALLBACK* LANGGROUPLOCALE_ENUMPROCW)(LGRPID, LCID, LPWSTR, LONG_PTR);
-typedef BOOL (CALLBACK* UILANGUAGE_ENUMPROCW)(LPWSTR, LONG_PTR);
+typedef BOOL (CALLBACK* LANGUAGEGROUP_ENUMPROCW)(LGRPID, LPWSTR, LPWSTR, DWORD, long_ptr);
+//xxx linux typedef BOOL (CALLBACK* LANGGROUPLOCALE_ENUMPROCW)(LGRPID, LCID, LPWSTR, long_ptr);
+typedef BOOL (CALLBACK* UILANGUAGE_ENUMPROCW)(LPWSTR, long_ptr);
 typedef BOOL (CALLBACK* LOCALE_ENUMPROCW)(LPWSTR);
 typedef BOOL (CALLBACK* CODEPAGE_ENUMPROCW)(LPWSTR);
 typedef BOOL (CALLBACK* DATEFMT_ENUMPROCW)(LPWSTR);
@@ -1246,31 +1246,31 @@ typedef struct _FILEMUIINFO {
 //
 // Gets the culture name (LPWSTR), NULL if not initialized
 #define FILEMUIINFO_GET_CULTURE(pInfo)          \
-    ((LPWSTR)((pInfo->dwLanguageNameOffset>0)?(ULONG_PTR)pInfo+pInfo->dwLanguageNameOffset:NULL))
+    ((LPWSTR)((pInfo->dwLanguageNameOffset>0)?(ulong_ptr)pInfo+pInfo->dwLanguageNameOffset:NULL))
 //
 // Gets the main module types array (DWORD[]), NULL if not initialized
 #define FILEMUIINFO_GET_MAIN_TYPEIDS(pInfo)       \
-    ((DWORD*)((pInfo->dwTypeIDMainOffset>0)?(ULONG_PTR)pInfo+pInfo->dwTypeIDMainOffset:NULL))
+    ((DWORD*)((pInfo->dwTypeIDMainOffset>0)?(ulong_ptr)pInfo+pInfo->dwTypeIDMainOffset:NULL))
 //
 // Gets the main module type array element iType (DWORD), the array is not initialized or index is out of bounds
 #define FILEMUIINFO_GET_MAIN_TYPEID(pInfo,iType)  \
-    (((iType<pInfo->dwTypeIDMainSize)&&(pInfo->dwTypeIDMainOffset>0))?*((DWORD*)((ULONG_PTR)pInfo+pInfo->dwTypeIDMainOffset)+iType):0)
+    (((iType<pInfo->dwTypeIDMainSize)&&(pInfo->dwTypeIDMainOffset>0))?*((DWORD*)((ulong_ptr)pInfo+pInfo->dwTypeIDMainOffset)+iType):0)
 //
 // Gets the main module names multistring array (LPWSTR), NULL if not initialized
 #define FILEMUIINFO_GET_MAIN_TYPENAMES(pInfo)       \
-    ((LPWSTR)((pInfo->dwTypeNameMainOffset>0)?(ULONG_PTR)pInfo+pInfo->dwTypeNameMainOffset:NULL))
+    ((LPWSTR)((pInfo->dwTypeNameMainOffset>0)?(ulong_ptr)pInfo+pInfo->dwTypeNameMainOffset:NULL))
 //
 // Gets the mui module types array (DWORD[]), NULL if not initialized
 #define FILEMUIINFO_GET_MUI_TYPEIDS(pInfo)        \
-    ((DWORD*)((pInfo->dwTypeIDMUIOffset>0)?(ULONG_PTR)pInfo+pInfo->dwTypeIDMUIOffset:NULL))
+    ((DWORD*)((pInfo->dwTypeIDMUIOffset>0)?(ulong_ptr)pInfo+pInfo->dwTypeIDMUIOffset:NULL))
 //
 // Gets the mui module type array element iType (DWORD), the array is not initialized or index is out of bounds
 #define FILEMUIINFO_GET_MUI_TYPEID(pInfo,iType)   \
-    (((iType<pInfo->dwTypeIDMUISize)&&(pInfo->dwTypeIDMUIOffset>0))?*((DWORD*)((ULONG_PTR)pInfo+pInfo->dwTypeIDMUIOffset)+iType):0)
+    (((iType<pInfo->dwTypeIDMUISize)&&(pInfo->dwTypeIDMUIOffset>0))?*((DWORD*)((ulong_ptr)pInfo+pInfo->dwTypeIDMUIOffset)+iType):0)
 //
 // Gets the mui module names multistring array (LPWSTR), NULL if not initialized
 #define FILEMUIINFO_GET_MUI_TYPENAMES(pInfo)        \
-    ((LPWSTR)((pInfo->dwTypeNameMUIOffset>0)?(ULONG_PTR)pInfo+pInfo->dwTypeNameMUIOffset:NULL))
+    ((LPWSTR)((pInfo->dwTypeNameMUIOffset>0)?(ulong_ptr)pInfo+pInfo->dwTypeNameMUIOffset:NULL))
 // ------------------------------------------------------------------------
 
 
@@ -2196,14 +2196,14 @@ WINAPI
 EnumSystemLanguageGroupsA(
     LANGUAGEGROUP_ENUMPROCA lpLanguageGroupEnumProc,
     DWORD                   dwFlags,
-    LONG_PTR                lParam);
+    long_ptr                lParam);
 WINBASEAPI
 BOOL
 WINAPI
 EnumSystemLanguageGroupsW(
     LANGUAGEGROUP_ENUMPROCW lpLanguageGroupEnumProc,
     DWORD                   dwFlags,
-    LONG_PTR                lParam);
+    long_ptr                lParam);
 #ifdef UNICODE
 #define EnumSystemLanguageGroups  EnumSystemLanguageGroupsW
 #else
@@ -2217,7 +2217,7 @@ EnumLanguageGroupLocalesA(
     LANGGROUPLOCALE_ENUMPROCA lpLangGroupLocaleEnumProc,
     LGRPID                    LanguageGroup,
     DWORD                     dwFlags,
-    LONG_PTR                  lParam);
+    long_ptr                  lParam);
 WINBASEAPI
 BOOL
 WINAPI
@@ -2225,7 +2225,7 @@ EnumLanguageGroupLocalesW(
     LANGGROUPLOCALE_ENUMPROCW lpLangGroupLocaleEnumProc,
     LGRPID                    LanguageGroup,
     DWORD                     dwFlags,
-    LONG_PTR                  lParam);
+    long_ptr                  lParam);
 #ifdef UNICODE
 #define EnumLanguageGroupLocales  EnumLanguageGroupLocalesW
 #else
@@ -2238,14 +2238,14 @@ WINAPI
 EnumUILanguagesA(
     UILANGUAGE_ENUMPROCA lpUILanguageEnumProc,
     DWORD                dwFlags,
-    LONG_PTR             lParam);
+    long_ptr             lParam);
 WINBASEAPI
 BOOL
 WINAPI
 EnumUILanguagesW(
     UILANGUAGE_ENUMPROCW lpUILanguageEnumProc,
     DWORD                dwFlags,
-    LONG_PTR             lParam);
+    long_ptr             lParam);
 #ifdef UNICODE
 #define EnumUILanguages  EnumUILanguagesW
 #else

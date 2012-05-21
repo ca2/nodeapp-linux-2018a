@@ -4,28 +4,28 @@ namespace win
 {
 
    graphics_object::operator HGDIOBJ() const
-   { 
-      return this == NULL ? NULL : get_handle(); 
+   {
+      return this == NULL ? NULL : get_handle();
    }
-   
+
    HGDIOBJ graphics_object::get_os_data() const
    {
-      return this == NULL ? NULL : get_handle(); 
+      return this == NULL ? NULL : get_handle();
    }
-   
+
    graphics_object::graphics_object()
    {
-      set_handle(NULL); 
+      set_handle(NULL);
    }
-   
+
    graphics_object::~graphics_object()
-   { 
-      delete_object(); 
+   {
+      delete_object();
    }
-   
+
    int graphics_object::_AFX_FUNCNAME(GetObject)(int nCount, LPVOID lpObject) const
-   { 
-      return ::GetObject(get_handle(), nCount, lpObject); 
+   {
+      return ::GetObject(get_handle(), nCount, lpObject);
    }
 
 #pragma push_macro("GetObject")
@@ -116,7 +116,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // ::ca::graphics_object
 
-#ifdef _DEBUG
+#ifdef DEBUG
    void graphics_object::dump(dump_context & dumpcontext) const
    {
       ::radix::object::dump(dumpcontext);
@@ -149,7 +149,7 @@ hgdiobj_map * PASCAL afxMapHGDIOBJ(BOOL bCreate)
 {
    try
    {
-      AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+      __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
       if(pState == NULL)
          return NULL;
       if(pState->m_pCurrentWinThread == NULL)

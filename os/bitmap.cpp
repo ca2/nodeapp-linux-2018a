@@ -4,16 +4,16 @@ namespace win
 {
    bitmap::bitmap(::ca::application * papp) :
       ca(papp)
-   { 
+   {
    }
 
    bitmap::operator HBITMAP() const
-   { 
-      return (HBITMAP)(this == NULL ? NULL : get_handle()); 
+   {
+      return (HBITMAP)(this == NULL ? NULL : get_handle());
    }
    bitmap* PASCAL bitmap::from_handle(::ca::application * papp, HBITMAP hBitmap)
-   { 
-      return dynamic_cast < bitmap * > (::win::graphics_object::from_handle(papp, hBitmap)); 
+   {
+      return dynamic_cast < bitmap * > (::win::graphics_object::from_handle(papp, hBitmap));
    }
    bitmap::~bitmap()
    { }
@@ -64,7 +64,7 @@ namespace win
 
       /////////////////////////////////////////////////////////////////////////////
 
-#ifdef _DEBUG
+#ifdef DEBUG
       void bitmap::dump(dump_context & dumpcontext) const
       {
          ::ca::graphics_object::dump(dumpcontext);

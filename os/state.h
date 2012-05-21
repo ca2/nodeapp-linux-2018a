@@ -15,7 +15,7 @@ namespace win
 /////////////////////////////////////////////////////////////////////////////
 // _AFX_DEBUG_STATE
 
-#ifdef _DEBUG
+#ifdef DEBUG
 
 class _AFX_DEBUG_STATE : public no_track_object
 {
@@ -26,7 +26,7 @@ public:
 
 EXTERN_PROCESS_LOCAL(_AFX_DEBUG_STATE, afxDebugState)
 
-#endif //_DEBUG
+#endif //DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
 // _AFX_WIN_STATE
@@ -44,8 +44,8 @@ EXTERN_PROCESS_LOCAL(_AFX_WIN_STATE, _afxWinState)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// AFX_MODULE_STATE : portion of state that is pushed/popped
-// forward references required for AFX_MODULE_THREAD_STATE definition
+// __MODULE_STATE : portion of state that is pushed/popped
+// forward references required for __MODULE_THREAD_STATE definition
 //class CHandleMap;
 class hwnd_map;
 class hmenu_map;
@@ -77,12 +77,12 @@ public:
    TYPE m_data;
 };
 
-// AFX_MODULE_THREAD_STATE (local to thread *and* module)
-class CLASS_DECL_VMSWIN AFX_MODULE_THREAD_STATE : public no_track_object
+// __MODULE_THREAD_STATE (local to thread *and* module)
+class CLASS_DECL_VMSWIN __MODULE_THREAD_STATE : public no_track_object
 {
 public:
-   AFX_MODULE_THREAD_STATE();
-   virtual ~AFX_MODULE_THREAD_STATE();
+   __MODULE_THREAD_STATE();
+   virtual ~__MODULE_THREAD_STATE();
 
    // current thread pointer
    class ::win::thread* m_pCurrentWinThread;
@@ -109,13 +109,13 @@ public:
    // common controls thread state
    CToolTipCtrl* m_pToolTip;
    ::ca::window * m_pLastHit;       // last ::ca::window to own tooltip
-   INT_PTR m_nLastHit;         // last hittest code
+   int_ptr m_nLastHit;         // last hittest code
    TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
-   INT_PTR m_nLastStatus;      // last flyby status message
+   int_ptr m_nLastStatus;      // last flyby status message
    ::userbase::control_bar* m_pLastStatus; // last flyby status control bar
 };
 
-// forward references required for AFX_MODULE_STATE definition
+// forward references required for __MODULE_STATE definition
 class application;
 
 
@@ -147,17 +147,17 @@ public:
 };
 
 
-// AFX_MODULE_STATE (global data for a module)
-class CLASS_DECL_VMSWIN AFX_MODULE_STATE : public no_track_object
+// __MODULE_STATE (global data for a module)
+class CLASS_DECL_VMSWIN __MODULE_STATE : public no_track_object
 {
 public:
 #ifdef _ApplicationFrameworkDLL
-   AFX_MODULE_STATE(BOOL bDLL, WNDPROC pfnAfxWndProc, DWORD dwVersion,
+   __MODULE_STATE(BOOL bDLL, WNDPROC pfnAfxWndProc, DWORD dwVersion,
       BOOL bSystem = FALSE);
 #else
-   explicit AFX_MODULE_STATE(BOOL bDLL);
+   explicit __MODULE_STATE(BOOL bDLL);
 #endif
-   ~AFX_MODULE_STATE();
+   ~__MODULE_STATE();
 
    ::radix::application* m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
@@ -188,7 +188,7 @@ public:
 #endif
 
    // variables related to a given process in a module
-   //  (used to be AFX_MODULE_PROCESS_STATE)
+   //  (used to be __MODULE_PROCESS_STATE)
    void (PASCAL *m_pfnFilterToolTipMessage)(MSG*, ::ca::window *);
 
 #ifdef _ApplicationFrameworkDLL
@@ -213,28 +213,28 @@ public:
 
 
    // define thread local portions of module state
-   thread_local<AFX_MODULE_THREAD_STATE> m_thread;
+   thread_local<__MODULE_THREAD_STATE> m_thread;
 
    //Fusion: declare pointer to base_array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
-   //Defaults to TRUE. When FALSE - ca2 API will not activate context in AFX_MAINTAIN_STATE2 (used by AFX_MANAGE_STATE).
+   //Defaults to TRUE. When FALSE - ca2 API will not activate context in __MAINTAIN_STATE2 (used by __MANAGE_STATE).
    BOOL   m_bSetAmbientActCtx;
    //Handle of the module context.
    HANDLE   m_hActCtx;
    void CreateActivationContext();
 };
 
-//CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxGetAppModuleState();
+//CLASS_DECL_VMSWIN __MODULE_STATE* AfxGetAppModuleState();
 #ifdef _ApplicationFrameworkDLL
-CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxSetModuleState(AFX_MODULE_STATE* pNewState);
+CLASS_DECL_VMSWIN __MODULE_STATE* AfxSetModuleState(__MODULE_STATE* pNewState);
 #endif
-CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxGetModuleState();
+CLASS_DECL_VMSWIN __MODULE_STATE* AfxGetModuleState();
 CLASS_DECL_VMSWIN BOOL AfxIsModuleDll();
 CLASS_DECL_VMSWIN BOOL AfxInitCurrentStateApp();
-CLASS_DECL_VMSWIN AFX_MODULE_STATE* AfxGetStaticModuleState();
+CLASS_DECL_VMSWIN __MODULE_STATE* AfxGetStaticModuleState();
 CLASS_DECL_VMSWIN HINSTANCE AfxGetInstanceHandleHelper();
 
-CLASS_DECL_VMSWIN AFX_MODULE_THREAD_STATE* AfxGetModuleThreadState();
+CLASS_DECL_VMSWIN __MODULE_THREAD_STATE* AfxGetModuleThreadState();
 
 #ifdef _ApplicationFrameworkDLL
 #define _AFX_CMDTARGET_GETSTATE() (m_pModuleState)
@@ -246,32 +246,32 @@ CLASS_DECL_VMSWIN AFX_MODULE_THREAD_STATE* AfxGetModuleThreadState();
 // macros & classes to manage pushing/popping the module state
 
 #ifdef _ApplicationFrameworkDLL
-struct CLASS_DECL_VMSWIN AFX_MAINTAIN_STATE
+struct CLASS_DECL_VMSWIN __MAINTAIN_STATE
 {
-   explicit AFX_MAINTAIN_STATE(AFX_MODULE_STATE* pModuleState) throw();
-   ~AFX_MAINTAIN_STATE();
+   explicit __MAINTAIN_STATE(__MODULE_STATE* pModuleState) throw();
+   ~__MAINTAIN_STATE();
 
 protected:
-   AFX_MODULE_STATE* m_pPrevModuleState;
+   __MODULE_STATE* m_pPrevModuleState;
 };
 #endif
 
 class _AFX_THREAD_STATE;
-struct CLASS_DECL_VMSWIN AFX_MAINTAIN_STATE2
+struct CLASS_DECL_VMSWIN __MAINTAIN_STATE2
 {
-   explicit AFX_MAINTAIN_STATE2(AFX_MODULE_STATE* pModuleState);
-   ~AFX_MAINTAIN_STATE2();
+   explicit __MAINTAIN_STATE2(__MODULE_STATE* pModuleState);
+   ~__MAINTAIN_STATE2();
 
 protected:
 #ifdef _ApplicationFrameworkDLL
-   AFX_MODULE_STATE* m_pPrevModuleState;
+   __MODULE_STATE* m_pPrevModuleState;
    _AFX_THREAD_STATE* m_pThreadState;
 #endif
 
-   ULONG_PTR m_ulActCtxCookie;
+   ulong_ptr m_ulActCtxCookie;
    BOOL m_bValidActCtxCookie;
 };
-#define AFX_MANAGE_STATE(p) _AfxInitManaged(); AFX_MAINTAIN_STATE2 _ctlState(p);
+#define __MANAGE_STATE(p) _AfxInitManaged(); __MAINTAIN_STATE2 _ctlState(p);
 
 /////////////////////////////////////////////////////////////////////////////
 // Thread global state
@@ -291,8 +291,8 @@ public:
    virtual ~_AFX_THREAD_STATE();
 
    // override for m_pModuleState in _AFX_APP_STATE
-   AFX_MODULE_STATE* m_pModuleState;
-   AFX_MODULE_STATE* m_pPrevModuleState;
+   __MODULE_STATE* m_pModuleState;
+   __MODULE_STATE* m_pPrevModuleState;
 
 
 
@@ -300,7 +300,7 @@ public:
    void * m_pSafetyPoolBuffer;    // current buffer
 
    // thread local exception context
-   AFX_EXCEPTION_CONTEXT m_exceptionContext;
+   __EXCEPTION_CONTEXT m_exceptionContext;
 
    // ::ca::window create, gray dialog hook, and other hook data
    ::user::interaction * m_pWndInit;
@@ -316,7 +316,7 @@ public:
    point m_ptCursorLast;          // last mouse position
    UINT m_nMsgLast;                // last mouse message
 
-#ifdef _DEBUG
+#ifdef DEBUG
       int m_nDisablePumpCount; // Diagnostic trap to detect illegal re-entrancy
 #endif
 

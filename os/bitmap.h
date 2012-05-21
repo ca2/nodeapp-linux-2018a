@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN bitmap : 
+   class CLASS_DECL_VMSWIN bitmap :
       virtual public ::win::graphics_object,
       virtual public ::ca::bitmap
    {
@@ -40,7 +40,7 @@ namespace win
    // Implementation
    public:
       virtual ~bitmap();
-   #ifdef _DEBUG
+   #ifdef DEBUG
       virtual void dump(dump_context & dumpcontext) const;
    #endif
    };

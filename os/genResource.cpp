@@ -17,8 +17,8 @@ namespace gen
 
 
    bool Resource::ReadResource(
-      primitive::memory & storage, 
-      UINT nID, 
+      primitive::memory & storage,
+      UINT nID,
       const char * lpcszType)
    {
 
@@ -30,14 +30,14 @@ namespace gen
 
    bool Resource::ReadResource(
       HINSTANCE hinst,
-      primitive::memory & storage, 
-      UINT nID, 
+      primitive::memory & storage,
+      UINT nID,
       const char * lpcszType)
    {
 
       HRSRC hrsrc = ::FindResource(
          hinst,
-         MAKEINTRESOURCE(nID), 
+         MAKEINTRESOURCE(nID),
          lpcszType);
       if(hrsrc == NULL)
          return false;
@@ -59,12 +59,12 @@ namespace gen
            }
            catch(ex1::file_exception_sp * pe)
            {
-         #ifdef _DEBUG
+         #ifdef DEBUG
               //
             //afxdump << "File could not be opened " << (*pe)->m_cause << "\n";
          #endif
            }
-           
+
 
          #ifndef WIN32 //Unlock Resource is obsolete in the Win32 API
             ::UnlockResource(hres);
@@ -86,7 +86,7 @@ HINSTANCE CLASS_DECL_VMSWIN vfxFindResourceHandle(const char * lpszName, const c
    HINSTANCE hInst;
 
    // first check the main module state
-   AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+   __MODULE_STATE* pModuleState = AfxGetModuleState();
    if (!pModuleState->m_bSystem)
    {
       hInst = AfxGetResourceHandle();
@@ -148,7 +148,7 @@ HINSTANCE CLASS_DECL_VMSWIN vfxFindResourceHandle(const wchar_t * lpszName, cons
    HINSTANCE hInst;
 
    // first check the main module state
-   AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+   __MODULE_STATE* pModuleState = AfxGetModuleState();
    if (!pModuleState->m_bSystem)
    {
       hInst = AfxGetResourceHandle();

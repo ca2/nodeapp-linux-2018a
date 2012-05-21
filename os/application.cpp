@@ -204,9 +204,9 @@ namespace win
             /*         if (!rCmdInfo.m_bRunEmbedded)
             {
             if (bUnregistered)
-            System.simple_message_box(AFX_IDP_UNREG_DONE);
+            System.simple_message_box(__IDP_UNREG_DONE);
             else
-            System.simple_message_box(AFX_IDP_UNREG_FAILURE);
+            System.simple_message_box(__IDP_UNREG_FAILURE);
             }
             bResult = FALSE;    // that's all we do
 
@@ -381,7 +381,7 @@ namespace win
    {
 /*      try
       {
-   #ifdef _DEBUG
+   #ifdef DEBUG
          // check for missing AfxLockTempMap calls
          if (AfxGetModuleThreadState()->m_pCurrentWinThread->m_nTempMapLock != 0)
          {
@@ -402,7 +402,7 @@ namespace win
          // cleanup thread local tooltip ::ca::window
          if (hInstTerm == NULL)
          {
-//            AFX_MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
+//            __MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
          }
       }
       catch( base_exception* e )
@@ -455,10 +455,10 @@ namespace win
    //void application::EnableHtmlHelp()
    //{ SetHelpMode( afxHTMLHelp ); }
 
-   //AFX_HELP_TYPE application::GetHelpMode()
+   //__HELP_TYPE application::GetHelpMode()
    //{ return m_eHelpType; }
 
-   //void application::SetHelpMode( AFX_HELP_TYPE eHelpType )
+   //void application::SetHelpMode( __HELP_TYPE eHelpType )
    //{
    // ASSERT( eHelpType == afxHTMLHelp || eHelpType == afxWinHelp );
    //m_eHelpType = eHelpType;
@@ -469,7 +469,7 @@ namespace win
 
 
 
-   /*void application::construct(AFX_THREADPROC pfnThreadProc, LPVOID pParam)
+   /*void application::construct(__THREADPROC pfnThreadProc, LPVOID pParam)
    {
       ::win::thread::construct(pfnThreadProc, pParam);
    }
@@ -479,7 +479,7 @@ namespace win
       return ::win::thread::get_os_data();
    }
 
-   INT_PTR application::get_os_int()
+   int_ptr application::get_os_int()
    {
       return ::win::thread::get_os_int();
    }
@@ -649,7 +649,7 @@ namespace win
    }
 
 
-   #ifdef _DEBUG
+   #ifdef DEBUG
    void application::assert_valid() const
    {
       ::win::thread::assert_valid();
@@ -795,11 +795,11 @@ namespace win
       AfxGetModuleState()->m_lpszCurrentAppName = _tcsdup(m_strAppName);
 
       // initialize thread state
-      AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+      __MODULE_STATE* pModuleState = AfxGetModuleState();
       ENSURE(pModuleState);
       if(pModuleState->m_pCurrentWinApp == NULL)
       {
-         AFX_MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
+         __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
          ENSURE(pThreadState);
 //         ASSERT(System.GetThread() == NULL);
          pThreadState->m_pCurrentWinThread = dynamic_cast < class ::win::thread * > (::ca::thread_sp::m_p);
@@ -900,7 +900,7 @@ namespace win
          SetErrorMode(SetErrorMode(0) | SEM_FAILCRITICALERRORS | SEM_NOOPENFILEERRORBOX);
 
          // set resource handles
-         AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+         __MODULE_STATE* pModuleState = AfxGetModuleState();
          pModuleState->m_hCurrentInstanceHandle = hInstance;
          pModuleState->m_hCurrentResourceHandle = hInstance;
          pModuleState->CreateActivationContext();

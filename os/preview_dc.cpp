@@ -156,7 +156,7 @@ void preview_dc::SetScaleRatio(int nNumerator, int nDenominator)
 }
 
 // Implementation support
-#ifdef _DEBUG
+#ifdef DEBUG
 void preview_dc::assert_valid() const
 {
    ::ca::graphics_sp::assert_valid();

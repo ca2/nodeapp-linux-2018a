@@ -26,22 +26,22 @@ namespace win
 
 
 // Placed on frame for EXCEPTION linkage, or base_exception cleanup
-struct CLASS_DECL_VMSWIN AFX_EXCEPTION_LINK
+struct CLASS_DECL_VMSWIN __EXCEPTION_LINK
 {
-   AFX_EXCEPTION_LINK* m_pLinkPrev;    // previous top, next in handler chain
+   __EXCEPTION_LINK* m_pLinkPrev;    // previous top, next in handler chain
    base_exception* m_pException;   // current exception (NULL in try block)
 
-   AFX_EXCEPTION_LINK();       // for initialization and linking
-   ~AFX_EXCEPTION_LINK()       // for cleanup and unlinking
+   __EXCEPTION_LINK();       // for initialization and linking
+   ~__EXCEPTION_LINK()       // for cleanup and unlinking
       { AfxTryCleanup(); };
 };
 
 // Exception global state - never access directly
-struct CLASS_DECL_VMSWIN AFX_EXCEPTION_CONTEXT
+struct CLASS_DECL_VMSWIN __EXCEPTION_CONTEXT
 {
-   AFX_EXCEPTION_LINK* m_pLinkTop;
+   __EXCEPTION_LINK* m_pLinkTop;
 
-   // Note: most of the exception context is now in the AFX_EXCEPTION_LINK
+   // Note: most of the exception context is now in the __EXCEPTION_LINK
 };
 
 #ifndef _PNH_DEFINED
@@ -51,7 +51,7 @@ typedef int (__cdecl * _PNH)( size_t );
 
 _PNH CLASS_DECL_VMSWIN AfxGetNewHandler();
 _PNH CLASS_DECL_VMSWIN AfxSetNewHandler(_PNH pfnNewHandler);
-CLASS_DECL_ca int AFX_CDECL AfxNewHandler(size_t nSize);
+CLASS_DECL_ca int __CDECL AfxNewHandler(size_t nSize);
 
 void CLASS_DECL_VMSWIN AfxAbort();
 
@@ -71,11 +71,11 @@ CLASS_DECL_VMSWIN LRESULT CALLBACK AfxWndProc(HWND hWnd, UINT nMsg, WPARAM wPara
 CLASS_DECL_VMSWIN WNDPROC AfxGetAfxWndProc();
 #define AfxWndProc (*AfxGetAfxWndProc())
 
-typedef void (AFX_MSG_CALL ::ca::window::*AFX_PMSGW)(void);
-   // like 'AFX_PMSG' but for ::ca::window derived classes only
+typedef void (__MSG_CALL ::ca::window::*__PMSGW)(void);
+   // like '__PMSG' but for ::ca::window derived classes only
 
-typedef void (AFX_MSG_CALL ::radix::thread::*AFX_PMSGT)(void);
-   // like 'AFX_PMSG' but for thread-derived classes only
+typedef void (__MSG_CALL ::radix::thread::*__PMSGT)(void);
+   // like '__PMSG' but for thread-derived classes only
 
 
 

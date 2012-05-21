@@ -71,8 +71,8 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
       pThreadState->m_pModuleState = pStartup->pThreadState->m_pModuleState;
 
       // set current thread pointer for System.GetThread
-      AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
-      AFX_MODULE_THREAD_STATE* pState = pModuleState->m_thread;
+      __MODULE_STATE* pModuleState = AfxGetModuleState();
+      __MODULE_THREAD_STATE* pState = pModuleState->m_thread;
       pState->m_pCurrentWinThread = pThread;
 
       // forced initialization of the thread
@@ -126,7 +126,7 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
 CLASS_DECL_VMSWIN ::lnx::thread * AfxGetThread()
 {
    // check for current thread in module thread state
-   AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+   __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
    ::lnx::thread* pThread = pState->m_pCurrentWinThread;
    return pThread;
 }
@@ -135,7 +135,7 @@ CLASS_DECL_VMSWIN ::lnx::thread * AfxGetThread()
 CLASS_DECL_VMSWIN void AfxSetThread(::radix::thread * pthread)
 {
    // check for current thread in module thread state
-   AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+   __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
    pState->m_pCurrentWinThread = dynamic_cast < ::lnx::thread * > (pthread->::ca::thread_sp::m_p);
 }
 
@@ -346,7 +346,7 @@ BOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 }
 
 
-/*thread* CLASS_DECL_VMSWIN AfxBeginThread(::ca::application * papp, AFX_THREADPROC pfnThreadProc, LPVOID pParam,
+/*thread* CLASS_DECL_VMSWIN AfxBeginThread(::ca::application * papp, __THREADPROC pfnThreadProc, LPVOID pParam,
                               int nPriority, UINT nStackSize, DWORD dwCreateFlags,
                               LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
@@ -370,7 +370,7 @@ BOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 void CLASS_DECL_VMSWIN AfxEndThread(::radix::application * papp, UINT nExitCode, BOOL bDelete)
 {
    // remove current thread object from primitive::memory
-   AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+   __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
    ::lnx::thread* pThread = pState->m_pCurrentWinThread;
    if (pThread != NULL)
    {
@@ -398,7 +398,7 @@ void CLASS_DECL_VMSWIN AfxTermThread(::radix::application * papp, HINSTANCE hIns
       // cleanup thread local tooltip window
       if (hInstTerm == NULL)
       {
-//         AFX_MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
+//         __MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
       }
    }
    catch( base_exception* e )
@@ -448,7 +448,7 @@ namespace lnx
    // thread construction
 
 
-   void thread::construct(AFX_THREADPROC pfnThreadProc, LPVOID pParam)
+   void thread::construct(__THREADPROC pfnThreadProc, LPVOID pParam)
    {
       m_evFinish.SetEvent();
       if(System.GetThread() != NULL)
@@ -543,7 +543,7 @@ namespace lnx
          sl.Unlock();
       }
 
-      AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+      __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
 /*      // clean up temp objects
       pState->m_pmapHGDIOBJ->delete_temp();
       pState->m_pmapHDC->delete_temp();
@@ -593,7 +593,7 @@ namespace lnx
       return m_hThread;
    }
 
-   INT_PTR thread::get_os_int()
+   int_ptr thread::get_os_int()
    {
       return m_nThreadID;
    }
@@ -707,7 +707,7 @@ namespace lnx
       return m_puiptra->element_at(iIndex);
    }
 
-   void thread::set_timer(::user::interaction * pui, UINT_PTR nIDEvent, UINT nEllapse)
+   void thread::set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse)
    {
       if(m_spwindowMessage.is_null())
       {
@@ -726,11 +726,11 @@ namespace lnx
       sl.Unlock();
       if(m_spwindowMessage->IsWindow())
       {
-         m_spwindowMessage->SetTimer((UINT_PTR)-2, iMin, NULL);
+         m_spwindowMessage->SetTimer((uint_ptr)-2, iMin, NULL);
       }
    }
 
-   void thread::unset_timer(::user::interaction * pui, UINT_PTR nIDEvent)
+   void thread::unset_timer(::user::interaction * pui, uint_ptr nIDEvent)
    {
       m_ptimera->unset(pui, nIDEvent);
    }
@@ -815,7 +815,7 @@ namespace lnx
 #ifdef _WIN32
 //   m_thread = ::CreateThread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
    // create the thread (it may or may not start to run)
-   m_hThread = (HANDLE)(ULONG_PTR)_beginthreadex(lpSecurityAttrs, nStackSize,
+   m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,
       &_AfxThreadEntry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
 #else
    pthread_attr_t attr;
@@ -1008,7 +1008,7 @@ void thread::Delete()
 
       try
       {
-   #ifdef _DEBUG
+   #ifdef DEBUG
          // Check for missing LockTempMap calls
          if(m_nTempMapLock != 0)
          {
@@ -1071,7 +1071,7 @@ void thread::Delete()
    {
       ASSERT_VALID(this);
 
-   #if defined(_DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
+   #if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
       // check ca2 API's allocator (before idle)
       if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
          ASSERT(AfxCheckMemory());
@@ -1112,7 +1112,7 @@ void thread::Delete()
          }
          */
          // send WM_IDLEUPDATECMDUI to all frame windows
-         /* linux AFX_MODULE_THREAD_STATE* pState = _AFX_CMDTARGET_GETSTATE()->m_thread;
+         /* linux __MODULE_THREAD_STATE* pState = _AFX_CMDTARGET_GETSTATE()->m_thread;
          frame_window* pFrameWnd = pState->m_frameList;
          while (pFrameWnd != NULL)
          {
@@ -1137,7 +1137,7 @@ void thread::Delete()
       }
       else if (lCount >= 0)
       {
-/*         AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+/*         __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
          if (pState->m_nTempMapLock == 0)
          {
             // free temp maps, OLE DLLs, etc.
@@ -1146,7 +1146,7 @@ void thread::Delete()
          }*/
       }
 
-   #if defined(_DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
+   #if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
       // check ca2 API's allocator (after idle)
       if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
          ASSERT(AfxCheckMemory());
@@ -1173,8 +1173,8 @@ void thread::Delete()
          pbase->m_bRet = true;
          return;
       }
-   /*   const AFX_MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
-      const AFX_MSGMAP_ENTRY* lpEntry;
+   /*   const __MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
+      const __MSGMAP_ENTRY* lpEntry;
 
       for (/* pMessageMap already init'ed *//*; pMessageMap->pfnGetBaseMap != NULL;
          pMessageMap = (*pMessageMap->pfnGetBaseMap)())
@@ -1421,7 +1421,7 @@ void thread::Delete()
    /////////////////////////////////////////////////////////////////////////////
    // thread diagnostics
 
-#ifdef _DEBUG
+#ifdef DEBUG
    void thread::assert_valid() const
    {
       command_target::assert_valid();
@@ -1572,9 +1572,9 @@ void thread::Delete()
       m_hThread = (HANDLE) pvoidOsData;
    }
 
-   void thread::set_os_int(INT_PTR iData)
+   void thread::set_os_int(int_ptr iData)
    {
-      m_nThreadID = (DWORD_PTR) iData;
+      m_nThreadID = (dword_ptr) iData;
    }
 
    void thread::message_window_message_handler(gen::signal_object * pobj)
@@ -2295,7 +2295,7 @@ BOOL AfxInternalIsIdleMessage(LPMSG lpmsg);
 /*thread* CLASS_DECL_VMSWIN System.GetThread()
 {
 // check for current thread in module thread state
-AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+__MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
 //thread* pThread = pState->m_pCurrentWinThread;
 return pThread;
 }
@@ -2313,7 +2313,7 @@ _AFX_THREAD_STATE *pState = AfxGetThreadState();
 
 if (!::GetMessage(&(pState->m_msgCur), NULL, NULL, NULL))
 {
-#ifdef _DEBUG
+#ifdef DEBUG
 TRACE(::radix::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
 pState->m_nDisablePumpCount++; // application must die
 #endif
@@ -2322,7 +2322,7 @@ pState->m_nDisablePumpCount++; // application must die
 return FALSE;
 }
 
-#ifdef _DEBUG
+#ifdef DEBUG
 if (pState->m_nDisablePumpCount != 0)
 {
 TRACE(::radix::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
@@ -2330,7 +2330,7 @@ ASSERT(FALSE);
 }
 #endif
 
-#ifdef _DEBUG
+#ifdef DEBUG
 _AfxTraceMsg("pump_message", &(pState->m_msgCur));
 #endif
 
@@ -2489,7 +2489,7 @@ nExitCode;
 bDelete;
 #else
 // remove current thread object from primitive::memory
-AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+__MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
 // thread* pThread = pState->m_pCurrentWinThread;
 if (pThread != NULL)
 {
@@ -2562,7 +2562,7 @@ return FALSE;
 #ifdef _WIN32
 //   m_thread = ::CreateThread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
 // create the thread (it may or may not start to run)
-m_hThread = (HANDLE)(ULONG_PTR)_beginthreadex(lpSecurityAttrs, nStackSize,
+m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,
 &_AfxThreadEntry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
 #else
 pthread_attr_t attr;
@@ -2706,7 +2706,7 @@ BOOL thread::on_idle(LONG lCount)
 {
 ASSERT_VALID(this);
 
-#if defined(_DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
+#if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
 // check ca2 API's allocator (before idle)
 if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
 ASSERT(AfxCheckMemory());
@@ -2725,7 +2725,7 @@ pMainWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
 (WPARAM)TRUE, 0, TRUE, TRUE);
 }
 // send WM_IDLEUPDATECMDUI to all frame windows
-/* linux AFX_MODULE_THREAD_STATE* pState = _AFX_CMDTARGET_GETSTATE()->m_thread;
+/* linux __MODULE_THREAD_STATE* pState = _AFX_CMDTARGET_GETSTATE()->m_thread;
 frame_window* pFrameWnd = pState->m_frameList;
 while (pFrameWnd != NULL)
 {
@@ -2750,7 +2750,7 @@ pFrameWnd = pFrameWnd->m_pNextFrameWnd;
 /*}
 else if (lCount >= 0)
 {
-AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+__MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
 if (pState->m_nTempMapLock == 0)
 {
 // free temp maps, OLE DLLs, etc.
@@ -2759,7 +2759,7 @@ AfxUnlockTempMaps();
 }
 }
 
-#if defined(_DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
+#if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
 // check ca2 API's allocator (after idle)
 if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
 ASSERT(AfxCheckMemory());
@@ -2782,8 +2782,8 @@ gen::scoped_ptr < lnx::message > spmessage(pmsg->lParam);
 spmessage->send();
 return TRUE;
 }
-/*   const AFX_MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
-const AFX_MSGMAP_ENTRY* lpEntry;
+/*   const __MSGMAP* pMessageMap; pMessageMap = GetMessageMap();
+const __MSGMAP_ENTRY* lpEntry;
 
 for (/* pMessageMap already init'ed *//*; pMessageMap->pfnGetBaseMap != NULL;
 pMessageMap = (*pMessageMap->pfnGetBaseMap)())

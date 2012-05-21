@@ -6,7 +6,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // ::ca::graphics_object subclasses (drawing tools)
 
-   class CLASS_DECL_VMSWIN pen : 
+   class CLASS_DECL_VMSWIN pen :
       virtual public ::win::graphics_object,
       virtual public ::ca::pen
    {
@@ -30,7 +30,7 @@ namespace win
    // Implementation
    public:
       virtual ~pen();
-   #ifdef _DEBUG
+   #ifdef DEBUG
       virtual void dump(dump_context & dumpcontext) const;
    #endif
    };

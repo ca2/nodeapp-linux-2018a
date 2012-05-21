@@ -13,8 +13,8 @@ WinResource::~WinResource()
 
 
 /*bool WinResource::ReadResource(
-   ex1::filesp & file, 
-   UINT nID, 
+   ex1::filesp & file,
+   UINT nID,
    const char * lpcszType)
 {
 
@@ -26,14 +26,14 @@ WinResource::~WinResource()
 
 /*bool WinResource::ReadResource(
    HINSTANCE hinst,
-   ex1::filesp & file, 
-   UINT nID, 
+   ex1::filesp & file,
+   UINT nID,
    const char * lpcszType)
 {
 
    HRSRC hrsrc = ::FindResource(
       hinst,
-      MAKEINTRESOURCE(nID), 
+      MAKEINTRESOURCE(nID),
       lpcszType);
    if(hrsrc == NULL)
       return false;
@@ -60,7 +60,7 @@ WinResource::~WinResource()
          afxdump << "File could not be opened " << e->m_cause << "\n";
       #endif
         }
-        
+
 
       #ifndef WIN32 //Unlock WinResource is obsolete in the Win32 API
          ::UnlockResource(hres);
@@ -74,8 +74,8 @@ WinResource::~WinResource()
 
 
 bool WinResource::ReadResource(
-   string & str, 
-   UINT nID, 
+   string & str,
+   UINT nID,
    const char * lpcszType)
 {
    gen::memory_file file(get_app());
@@ -85,13 +85,13 @@ bool WinResource::ReadResource(
    ((char * )file.GetAllocation())[file.get_length() -1 ] = '\0';
    str = ((char * )file.GetAllocation());
    return true;
-}  
+}
 
 
 
 bool WinResource::ReadResource(
-   ex1::file & file, 
-   UINT nID, 
+   ex1::file & file,
+   UINT nID,
    const char * lpcszType)
 {
 
@@ -103,14 +103,14 @@ bool WinResource::ReadResource(
 
 bool WinResource::ReadResource(
    HINSTANCE hinst,
-   ex1::file & spfile, 
-   UINT nID, 
+   ex1::file & spfile,
+   UINT nID,
    const char * lpcszType)
 {
 
    HRSRC hrsrc = ::FindResource(
       hinst,
-      MAKEINTRESOURCE(nID), 
+      MAKEINTRESOURCE(nID),
       lpcszType);
    if(hrsrc == NULL)
       return false;
@@ -137,7 +137,7 @@ bool WinResource::ReadResource(
 //         afxdump << "File could not be opened " << pe->m_cause << "\n";
       #endif
         }
-        
+
 
       #ifndef WIN32 //Unlock WinResource is obsolete in the Win32 API
          ::UnlockResource(hres);
@@ -159,7 +159,7 @@ HINSTANCE CLASS_DECL_VMSWIN vfxFindResourceHandle(const char * lpszName, const c
    HINSTANCE hInst;
 
    // first check the main module state
-   AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+   __MODULE_STATE* pModuleState = AfxGetModuleState();
    if (!pModuleState->m_bSystem)
    {
       hInst = AfxGetResourceHandle();
@@ -222,7 +222,7 @@ HINSTANCE CLASS_DECL_VMSWIN vfxFindResourceHandle(const char * lpszName, const c
    HINSTANCE hInst;
 
    // first check the main module state
-   AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+   __MODULE_STATE* pModuleState = AfxGetModuleState();
    if (!pModuleState->m_bSystem)
    {
       hInst = AfxGetResourceHandle();

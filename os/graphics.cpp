@@ -754,7 +754,7 @@ namespace win
 
    __STATIC_DATA HBRUSH _afxHalftoneBrush = 0;
 
-   void AFX_CDECL AfxWingdixTerm()
+   void __CDECL AfxWingdixTerm()
    {
       AfxDeleteObject((HGDIOBJ*)&_afxHalftoneBrush);
    }
@@ -1006,7 +1006,7 @@ namespace win
       m_bPrinting = FALSE;
    }
 
-#ifdef _DEBUG
+#ifdef DEBUG
    void graphics::assert_valid() const
    {
       ::radix::object::assert_valid();
@@ -1022,7 +1022,7 @@ namespace win
 
       dumpcontext << "\n";
    }
-#endif //_DEBUG
+#endif //DEBUG
 
 
    ::ca::graphics * PASCAL ::win::graphics::from_handle(HDC hDC)
@@ -1090,7 +1090,7 @@ namespace win
 
    void graphics::SetOutputDC(HDC hDC)  // Set the Output DC
    {
-#ifdef _DEBUG
+#ifdef DEBUG
       hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
@@ -1108,7 +1108,7 @@ namespace win
 
    void graphics::ReleaseOutputDC()     // Release the Output DC
    {
-#ifdef _DEBUG
+#ifdef DEBUG
       hdc_map* pMap = afxMapHDC();
       if (pMap != NULL && pMap->lookup_permanent(get_handle1()) == this)
       {
@@ -1208,9 +1208,9 @@ namespace win
    {
       int nRetVal = GDI_ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = (int)(INT_PTR)::SelectObject(get_handle1(), pRgn->get_os_data());
+         nRetVal = (int)(int_ptr)::SelectObject(get_handle1(), pRgn->get_os_data());
       if(get_handle2() != NULL)
-         nRetVal = (int)(INT_PTR)::SelectObject(get_handle2(), pRgn->get_os_data());
+         nRetVal = (int)(int_ptr)::SelectObject(get_handle2(), pRgn->get_os_data());
       return nRetVal;
    }
 
@@ -1547,16 +1547,16 @@ namespace win
       return dwRetVal;
    }
 
-   typedef DWORD (CALLBACK* AFX_GDIGETLAYOUTPROC)(HDC);
-   typedef DWORD (CALLBACK* AFX_GDISETLAYOUTPROC)(HDC, DWORD);
+   typedef DWORD (CALLBACK* __GDIGETLAYOUTPROC)(HDC);
+   typedef DWORD (CALLBACK* __GDISETLAYOUTPROC)(HDC, DWORD);
 
    DWORD graphics::GetLayout() const
    {
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
       DWORD dwGetLayout = LAYOUT_LTR;
-      AFX_GDIGETLAYOUTPROC pfn;
-      pfn = (AFX_GDIGETLAYOUTPROC) GetProcAddress(hInst, "GetLayout");
+      __GDIGETLAYOUTPROC pfn;
+      pfn = (__GDIGETLAYOUTPROC) GetProcAddress(hInst, "GetLayout");
       // if they API is available, just call it. If it is not
       // available, indicate an error.
       if (pfn != NULL)
@@ -1574,8 +1574,8 @@ namespace win
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
       DWORD dwGetLayout = LAYOUT_LTR;
-      AFX_GDISETLAYOUTPROC pfn;
-      pfn = (AFX_GDISETLAYOUTPROC) GetProcAddress(hInst, "SetLayout");
+      __GDISETLAYOUTPROC pfn;
+      pfn = (__GDISETLAYOUTPROC) GetProcAddress(hInst, "SetLayout");
       // If the API is availalbe, just call it. If it's not available,
       // setting anything other than LAYOUT_LTR is an error.
       if (pfn != NULL)
@@ -1949,7 +1949,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // Helper DCs
 
-#ifdef _DEBUG
+#ifdef DEBUG
    void CClientDC::assert_valid() const
    {
       graphics::assert_valid();
@@ -1979,7 +1979,7 @@ namespace win
       ::ReleaseDC(m_hWnd, Detach());
    }
 
-#ifdef _DEBUG
+#ifdef DEBUG
    void CWindowDC::assert_valid() const
    {
       graphics::assert_valid();
@@ -2009,7 +2009,7 @@ namespace win
       ::ReleaseDC(m_hWnd, Detach());
    }
 
-#ifdef _DEBUG
+#ifdef DEBUG
    void CPaintDC::assert_valid() const
    {
       graphics::assert_valid();
@@ -2056,10 +2056,10 @@ namespace win
 
 
    // IMPLEMENT_DYNAMIC(resource_exception, base_exception)
-   //resource_exception _simpleResourceException(FALSE, AFX_IDS_RESOURCE_EXCEPTION);
+   //resource_exception _simpleResourceException(FALSE, __IDS_RESOURCE_EXCEPTION);
 
    // IMPLEMENT_DYNAMIC(user_exception, base_exception)
-   //user_exception _simpleUserException(FALSE, AFX_IDS_USER_EXCEPTION);
+   //user_exception _simpleUserException(FALSE, __IDS_USER_EXCEPTION);
 
    // IMPLEMENT_DYNCREATE(graphics, ::radix::object)
    // IMPLEMENT_DYNAMIC(CClientDC, graphics)
@@ -2097,6 +2097,6 @@ namespace win
 
    hdc_map* PASCAL afxMapHDC(BOOL bCreate)
    {
-      AFX_MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+      __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
       return pState->m_pCurrentWinThread->m_pmapHDC;
    }

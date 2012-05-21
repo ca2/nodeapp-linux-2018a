@@ -6,16 +6,16 @@
 #pragma init_seg(compiler)
 
 /////////////////////////////////////////////////////////////////////////////
-// AFX_MODULE_STATE push/pop implementation
+// __MODULE_STATE push/pop implementation
 
 #ifdef _ApplicationFrameworkDLL
-CLASS_DECL_VMSWIN AFX_MODULE_STATE * AfxSetModuleState(AFX_MODULE_STATE* pNewState)
+CLASS_DECL_VMSWIN __MODULE_STATE * AfxSetModuleState(__MODULE_STATE* pNewState)
 {
    _AFX_THREAD_STATE* pState = _afxThreadState;
    ASSERT(pState);
    if(pState)
    {
-      AFX_MODULE_STATE* pPrevState = pState->m_pModuleState;
+      __MODULE_STATE* pPrevState = pState->m_pModuleState;
       pState->m_pModuleState = pNewState;
       return pPrevState;
    }
@@ -25,7 +25,7 @@ CLASS_DECL_VMSWIN AFX_MODULE_STATE * AfxSetModuleState(AFX_MODULE_STATE* pNewSta
    }
 }
 
-AFX_MAINTAIN_STATE::~AFX_MAINTAIN_STATE()
+__MAINTAIN_STATE::~__MAINTAIN_STATE()
 {
    _AFX_THREAD_STATE* pState = _afxThreadState;
    ASSERT(pState);
@@ -36,7 +36,7 @@ AFX_MAINTAIN_STATE::~AFX_MAINTAIN_STATE()
 }
 #endif //_ApplicationFrameworkDLL
 
-AFX_MAINTAIN_STATE2::AFX_MAINTAIN_STATE2(AFX_MODULE_STATE* pNewState)
+__MAINTAIN_STATE2::__MAINTAIN_STATE2(__MODULE_STATE* pNewState)
 {
 #ifdef _ApplicationFrameworkDLL
    m_pThreadState = _afxThreadState;
@@ -71,7 +71,7 @@ AFX_MAINTAIN_STATE2::AFX_MAINTAIN_STATE2(AFX_MODULE_STATE* pNewState)
 
 _AFX_THREAD_STATE::_AFX_THREAD_STATE()
 {
-#ifdef _DEBUG
+#ifdef DEBUG
    m_nDisablePumpCount = 0;
 #endif
    m_msgCur.message = WM_NULL;
@@ -108,13 +108,13 @@ CLASS_DECL_VMSWIN _AFX_THREAD_STATE * AfxGetThreadState()
 THREAD_LOCAL(_AFX_THREAD_STATE, _afxThreadState)
 
 /////////////////////////////////////////////////////////////////////////////
-// AFX_MODULE_STATE implementation
+// __MODULE_STATE implementation
 
 #ifdef _ApplicationFrameworkDLL
-AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL, WNDPROC pfnAfxWndProc,
+__MODULE_STATE::__MODULE_STATE(BOOL bDLL, WNDPROC pfnAfxWndProc,
    DWORD dwVersion, BOOL bSystem)
 #else
-AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL)
+__MODULE_STATE::__MODULE_STATE(BOOL bDLL)
 #endif
 {
    m_pmapHWND = NULL;
@@ -166,20 +166,20 @@ AFX_MODULE_STATE::AFX_MODULE_STATE(BOOL bDLL)
 /////////////////////////////////////////////////////////////////////////////
 // Activation Context API wrappers
 
-#define AFX_ACTCTX_API_INIT_PROCPTR(hKernel,name) \
+#define __ACTCTX_API_INIT_PROCPTR(hKernel,name) \
    pfn##name = (PFN_##name) GetProcAddress(hKernel, #name)\
 
 
 /////////////////////////////////////////////////////////////////////////////
 // Global function pointers for Context (WinSxS/Manifest) API, to be init during ca2 API global init.
-#define AFX_ACTCTX_API_PTR_DEFINE(name, type, params) \
+#define __ACTCTX_API_PTR_DEFINE(name, type, params) \
    typedef type (WINAPI* PFN_##name)params; \
    PFN_##name pfn##name = NULL;
 
-AFX_ACTCTX_API_PTR_DEFINE(CreateActCtxW, HANDLE, (PCACTCTXW));
-AFX_ACTCTX_API_PTR_DEFINE(ReleaseActCtx, void, (HANDLE));
-AFX_ACTCTX_API_PTR_DEFINE(ActivateActCtx, BOOL, (HANDLE, ULONG_PTR*));
-AFX_ACTCTX_API_PTR_DEFINE(DeactivateActCtx, BOOL, (DWORD, ULONG_PTR));
+__ACTCTX_API_PTR_DEFINE(CreateActCtxW, HANDLE, (PCACTCTXW));
+__ACTCTX_API_PTR_DEFINE(ReleaseActCtx, void, (HANDLE));
+__ACTCTX_API_PTR_DEFINE(ActivateActCtx, BOOL, (HANDLE, ulong_ptr*));
+__ACTCTX_API_PTR_DEFINE(DeactivateActCtx, BOOL, (DWORD, ulong_ptr));
 
 __STATIC void CLASS_DECL_VMSWIN _AfxInitContextAPI()
 {
@@ -188,10 +188,10 @@ __STATIC void CLASS_DECL_VMSWIN _AfxInitContextAPI()
    {
       hKernel = GetModuleHandle("KERNEL32");
       ENSURE(hKernel != NULL);
-      AFX_ACTCTX_API_INIT_PROCPTR(hKernel,CreateActCtxW);
-      AFX_ACTCTX_API_INIT_PROCPTR(hKernel,ReleaseActCtx);
-      AFX_ACTCTX_API_INIT_PROCPTR(hKernel,ActivateActCtx);
-      AFX_ACTCTX_API_INIT_PROCPTR(hKernel,DeactivateActCtx);
+      __ACTCTX_API_INIT_PROCPTR(hKernel,CreateActCtxW);
+      __ACTCTX_API_INIT_PROCPTR(hKernel,ReleaseActCtx);
+      __ACTCTX_API_INIT_PROCPTR(hKernel,ActivateActCtx);
+      __ACTCTX_API_INIT_PROCPTR(hKernel,DeactivateActCtx);
    }
 }
 
@@ -217,20 +217,20 @@ void CLASS_DECL_VMSWIN AfxReleaseActCtx(HANDLE hActCtx)
    }
 }
 
-CLASS_DECL_VMSWIN BOOL AfxActivateActCtx(HANDLE hActCtx, ULONG_PTR *lpCookie)
+CLASS_DECL_VMSWIN BOOL AfxActivateActCtx(HANDLE hActCtx, ulong_ptr *lpCookie)
 {
    BOOL rc = pfnActivateActCtx != 0 ? pfnActivateActCtx(hActCtx, lpCookie) : FALSE;
    return rc;
 }
 
-CLASS_DECL_VMSWIN BOOL AfxDeactivateActCtx(DWORD dwFlags, ULONG_PTR ulCookie)
+CLASS_DECL_VMSWIN BOOL AfxDeactivateActCtx(DWORD dwFlags, ulong_ptr ulCookie)
 {
    BOOL rc = pfnDeactivateActCtx != 0 ? pfnDeactivateActCtx(dwFlags, ulCookie) : FALSE;
    return rc;
 }
 
 
-void AFX_MODULE_STATE::CreateActivationContext()
+void __MODULE_STATE::CreateActivationContext()
 {
    _AfxInitContextAPI();
    HMODULE hModule = m_hCurrentInstanceHandle;
@@ -273,7 +273,7 @@ void AFX_MODULE_STATE::CreateActivationContext()
    }
 }
 
-AFX_MODULE_STATE::~AFX_MODULE_STATE()
+__MODULE_STATE::~__MODULE_STATE()
 {
 #ifndef _AFX_NO_DAO_SUPPORT
 //   delete m_pDaoState;
@@ -307,17 +307,17 @@ void CTypeLibCacheMap::remove_all(void * pExcept)
    }
 }
 
-AFX_MODULE_THREAD_STATE::AFX_MODULE_THREAD_STATE()
+__MODULE_THREAD_STATE::__MODULE_THREAD_STATE()
 {
-   m_nLastHit = static_cast<INT_PTR>(-1);
-   m_nLastStatus = static_cast<INT_PTR>(-1);
+   m_nLastHit = static_cast<int_ptr>(-1);
+   m_nLastStatus = static_cast<int_ptr>(-1);
    m_pLastInfo = NULL;
 
    // Note: it is only necessary to initialize non-zero data
    m_pfnNewHandler = &AfxNewHandler;
 }
 
-AFX_MODULE_THREAD_STATE::~AFX_MODULE_THREAD_STATE()
+__MODULE_THREAD_STATE::~__MODULE_THREAD_STATE()
 {
    // cleanup thread local tooltip ::ca::window
 /*   if (m_pToolTip != NULL)
@@ -341,17 +341,17 @@ AFX_MODULE_THREAD_STATE::~AFX_MODULE_THREAD_STATE()
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// AFX_MODULE_STATE for base application
+// __MODULE_STATE for base application
 
 LRESULT CALLBACK AfxWndProcBase(HWND, UINT, WPARAM, LPARAM);
 
-class _AFX_BASE_MODULE_STATE : public AFX_MODULE_STATE
+class _AFX_BASE_MODULE_STATE : public __MODULE_STATE
 {
 public:
 #ifdef _ApplicationFrameworkDLL
-   _AFX_BASE_MODULE_STATE() : AFX_MODULE_STATE(TRUE, AfxWndProcBase, _MFC_VER)
+   _AFX_BASE_MODULE_STATE() : __MODULE_STATE(TRUE, AfxWndProcBase, _MFC_VER)
 #else
-   _AFX_BASE_MODULE_STATE() : AFX_MODULE_STATE(TRUE)
+   _AFX_BASE_MODULE_STATE() : __MODULE_STATE(TRUE)
 #endif
       { }
 };
@@ -372,16 +372,16 @@ AfxWndProcBase(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 /////////////////////////////////////////////////////////////////////////////
 // helper functions for module state
 
-CLASS_DECL_VMSWIN AFX_MODULE_STATE * AfxGetAppModuleState()
+CLASS_DECL_VMSWIN __MODULE_STATE * AfxGetAppModuleState()
 {
    return _afxBaseModuleState.get_data();
 }
 
-CLASS_DECL_VMSWIN AFX_MODULE_STATE * AfxGetModuleState()
+CLASS_DECL_VMSWIN __MODULE_STATE * AfxGetModuleState()
 {
    _AFX_THREAD_STATE* pState = _afxThreadState;
    ENSURE(pState);
-   AFX_MODULE_STATE* pResult;
+   __MODULE_STATE* pResult;
    if (pState->m_pModuleState != NULL)
    {
       // thread state's module state serves as override
@@ -425,9 +425,9 @@ BOOL CLASS_DECL_VMSWIN AfxInitCurrentStateApp()
    return TRUE;
 }
 
-CLASS_DECL_VMSWIN AFX_MODULE_THREAD_STATE * AfxGetModuleThreadState()
+CLASS_DECL_VMSWIN __MODULE_THREAD_STATE * AfxGetModuleThreadState()
 {
-   AFX_MODULE_THREAD_STATE* pResult=AfxGetModuleState()->m_thread.get_data();
+   __MODULE_THREAD_STATE* pResult=AfxGetModuleState()->m_thread.get_data();
    ENSURE(pResult != NULL);
    return pResult;
 }

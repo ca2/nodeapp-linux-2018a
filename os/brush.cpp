@@ -5,17 +5,17 @@ namespace win
 
    brush::brush(::ca::application * papp) :
       ca(papp)
-   { 
+   {
    }
 
    brush::~brush()
-   { 
+   {
    }
 
    // brush
     brush::operator HBRUSH() const
-   { 
-      return (HBRUSH)(this == NULL ? NULL : get_os_data()); 
+   {
+      return (HBRUSH)(this == NULL ? NULL : get_os_data());
    }
     brush* PASCAL brush::from_handle(::ca::application * papp, HBRUSH hBrush)
    {
@@ -70,7 +70,7 @@ namespace win
          return bResult;
       }
 
-#ifdef _DEBUG
+#ifdef DEBUG
       void brush::dump(dump_context & dumpcontext) const
       {
          ::ca::graphics_object::dump(dumpcontext);
@@ -89,7 +89,7 @@ namespace win
          VERIFY(GetObject(sizeof(lb), &lb));
          dumpcontext << "lb.lbStyle = " << lb.lbStyle;
          dumpcontext << "\nlb.lbHatch = " << lb.lbHatch;
-         dumpcontext << "\nlb.lbColor = " << (void *)(DWORD_PTR)lb.lbColor;
+         dumpcontext << "\nlb.lbColor = " << (void *)(dword_ptr)lb.lbColor;
 
          dumpcontext << "\n";
       }

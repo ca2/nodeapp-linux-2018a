@@ -1,12 +1,12 @@
 // This is ca2 API library.
-// 
-// 
 //
-// 
-// 
-// 
-// 
-// 
+//
+//
+//
+//
+//
+//
+//
 
 #include "StdAfx.h"
 #include <ddeml.h> // for MSGF_DDEMGR
@@ -22,9 +22,9 @@
 void CLASS_DECL_VMSWIN AfxUnregisterWndClasses()
 {
    // unregister Window classes
-   AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+   __MODULE_STATE* pModuleState = AfxGetModuleState();
    AfxLockGlobals(CRIT_REGCLASSLIST);
-   if(pModuleState->m_pstrUnregisterList != NULL) 
+   if(pModuleState->m_pstrUnregisterList != NULL)
    {
       int start = 0;
       string className = pModuleState->m_pstrUnregisterList->Tokenize("\n",start);
@@ -40,13 +40,13 @@ void CLASS_DECL_VMSWIN AfxUnregisterWndClasses()
 
 }
 void CLASS_DECL_VMSWIN AfxWinTerm(void)
-{   
+{
    AfxUnregisterWndClasses();
    // cleanup OLE if required
 //   thread* pThread = &System;
 
    // cleanup thread local tooltip ::ca::window
-//   AFX_MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
+//   __MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
 /*   if (pModuleThreadState->m_pToolTip != NULL)
    {
       if (pModuleThreadState->m_pToolTip->DestroyToolTipCtrl())

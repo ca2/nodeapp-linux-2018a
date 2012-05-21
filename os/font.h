@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN font : 
+   class CLASS_DECL_VMSWIN font :
       virtual public ::win::graphics_object,
       virtual public ::ca::font
    {
@@ -30,7 +30,7 @@ namespace win
 
       // Implementation
       public:
-      #ifdef _DEBUG
+      #ifdef DEBUG
          virtual void dump(dump_context & dumpcontext) const;
       #endif
    };

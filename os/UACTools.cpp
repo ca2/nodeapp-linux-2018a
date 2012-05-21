@@ -110,14 +110,14 @@ MODIFICATIONS:
 // to use the CRT assert()
 
 /*#ifndef ASSERT
-#   ifdef _DEBUG
+#   ifdef DEBUG
 #      include <assert.h>
 #      define ASSERT(x) assert( x )
 #      define ASSERT_HERE assert( FALSE )
-#   else// _DEBUG
+#   else// DEBUG
 #      define ASSERT(x)
 #      define ASSERT_HERE
-#   endif//_DEBUG
+#   endif//DEBUG
 #endif//ASSERT*/
 
 ///////////////////////////////////////////////////////////////////

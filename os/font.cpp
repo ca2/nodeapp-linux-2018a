@@ -10,11 +10,11 @@ namespace win
 
    font::operator HFONT() const
    {
-      return (HFONT)(this == NULL ? NULL : get_handle()); 
+      return (HFONT)(this == NULL ? NULL : get_handle());
    }
    font* PASCAL font::from_handle(::ca::application * papp, HFONT hFont)
    {
-      return dynamic_cast < font * > (::win::graphics_object::from_handle(papp, hFont)); 
+      return dynamic_cast < font * > (::win::graphics_object::from_handle(papp, hFont));
    }
    BOOL font::CreateFontIndirect(const LOGFONT* lpLogFont)
    { return Attach(::CreateFontIndirect(lpLogFont)); }
@@ -48,7 +48,7 @@ namespace win
          }
       }
 
-#ifdef _DEBUG
+#ifdef DEBUG
       void font::dump(dump_context & dumpcontext) const
       {
          ::ca::graphics_object::dump(dumpcontext);

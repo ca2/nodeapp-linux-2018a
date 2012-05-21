@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN graphics : 
+   class CLASS_DECL_VMSWIN graphics :
       virtual public ::ca::graphics,
       virtual public hdc_handle
    {
@@ -241,7 +241,7 @@ namespace win
       BOOL Ellipse(LPCRECT lpRect);
       BOOL Pie(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
       BOOL Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
-      BOOL Polygon(const POINT* lpPoints, int nCount);   
+      BOOL Polygon(const POINT* lpPoints, int nCount);
       BOOL PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int nCount);
       BOOL Rectangle(int x1, int y1, int x2, int y2);
       BOOL Rectangle(LPCRECT lpRect);
@@ -267,13 +267,13 @@ namespace win
          int nWidth, int nHeight, ::ca::bitmap& maskBitmap, int xMask, int yMask);
       BOOL SetPixelV(int x, int y, COLORREF crColor);
       BOOL SetPixelV(POINT point, COLORREF crColor);
-      BOOL GradientFill(TRIVERTEX* pVertices, ULONG nVertices, 
+      BOOL GradientFill(TRIVERTEX* pVertices, ULONG nVertices,
         void * pMesh, ULONG nMeshElements, DWORD dwMode);
       BOOL TransparentBlt(int xDest, int yDest, int nDestWidth, int nDestHeight,
-        ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
+        ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight,
         UINT clrTransparent);
       bool alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
-        ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, 
+        ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight,
         BLENDFUNCTION blend);
 
    // Text Functions
@@ -437,7 +437,7 @@ namespace win
 
    // Implementation
    public:
-   #ifdef _DEBUG
+   #ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
    #endif

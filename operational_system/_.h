@@ -4,16 +4,18 @@
 #include "get_platform.h"
 
 
-
-
 /**
 * \file		src/lib/pal/linux/thread_linux.hpp
 * \brief	Platform independent threads and synchronization objects (linux version)
 * \author	Thomas Nass
 */
 
+
 #include <pthread.h>
+
+
 #include <sys/resource.h>
+
 
 namespace ca
 {

@@ -90,7 +90,7 @@ void CLASS_DECL_VMSWIN AfxSetWindowText(::user::interaction * hWndCtrl, const ch
 
 void CLASS_DECL_VMSWIN AfxDeleteObject(HGDIOBJ* pObject)
 {
-   ENSURE_ARG(pObject != NULL);   
+   ENSURE_ARG(pObject != NULL);
    if (*pObject != NULL)
    {
       ::DeleteObject(*pObject);
@@ -126,7 +126,7 @@ void CLASS_DECL_VMSWIN AfxCancelModes(HWND hWndRcvr)
      (::GetWindowLong(hWndRcvr, GWL_STYLE) & WS_CHILD) != 0 &&
      ::GetParent(hWndRcvr) == ::GetDesktopWindow())
       return;
-  
+
    // finally, we should cancel the mode!
    ::SendMessage(hWndCancel, CB_SHOWDROPDOWN, FALSE, 0L);
 }*/
@@ -153,7 +153,7 @@ void CLASS_DECL_VMSWIN AfxGlobalFree(HGLOBAL hGlobal)
 
 #define MIN_MALLOC_OVERHEAD 4   // LocalAlloc or other overhead
 
-int AFX_CDECL AfxCriticalNewHandler(size_t nSize)
+int __CDECL AfxCriticalNewHandler(size_t nSize)
    // nSize is already rounded
 {
    // called during critical primitive::memory allocation

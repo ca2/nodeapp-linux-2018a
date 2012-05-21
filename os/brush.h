@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN brush : 
+   class CLASS_DECL_VMSWIN brush :
       virtual public ::win::graphics_object,
       virtual public ::ca::brush
    {
@@ -32,7 +32,7 @@ namespace win
 
       // Implementation
    public:
-#ifdef _DEBUG
+#ifdef DEBUG
       virtual void dump(dump_context & dumpcontext) const;
 #endif
    };

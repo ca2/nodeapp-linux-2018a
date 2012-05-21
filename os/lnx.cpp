@@ -1,10 +1,10 @@
 #include "StdAfx.h"
 #include "ca2/radix/cafxdllx.h"
 
-#pragma comment(lib, "version.lib") 
+#pragma comment(lib, "version.lib")
 
 
-static AFX_EXTENSION_MODULE VmswinDLL = { NULL, NULL };
+static __EXTENSION_MODULE VmswinDLL = { NULL, NULL };
 
 extern "C" int APIENTRY
 DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
@@ -15,7 +15,7 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
    if (dwReason == DLL_PROCESS_ATTACH)
    {
       ::OutputDebugString("::ca2:: win.dll :: initializing!\n");
-      
+
       // Extension DLL one-time initialization
       if (!AfxInitExtensionModule(VmswinDLL, hInstance))
          return 0;

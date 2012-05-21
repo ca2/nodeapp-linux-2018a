@@ -321,7 +321,7 @@ int64_t FileFind::get_length() const
       return 0;
 }
 
-#ifdef _DEBUG
+#ifdef DEBUG
 void FileFind::dump(dump_context & dumpcontext) const
 {
    ::radix::object::dump(dumpcontext);

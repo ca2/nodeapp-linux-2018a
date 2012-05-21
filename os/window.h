@@ -2,13 +2,13 @@
 
 namespace win
 {
-   
+
    CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
    //CLASS_DECL_VMSWIN void _AfxStandardSubclass(HWND);
    CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
    CLASS_DECL_VMSWIN LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
-   class CLASS_DECL_VMSWIN window : 
+   class CLASS_DECL_VMSWIN window :
       virtual public ::ca::window,
       virtual public hwnd_handle
    {
@@ -49,7 +49,7 @@ namespace win
 
       virtual HWND _get_handle();
 
-      virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);   
+      virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -118,7 +118,7 @@ namespace win
       enum AdjustType { adjustBorder = 0, adjustOutside = 1 };
       virtual void CalcWindowRect(LPRECT lpClientRect, UINT nAdjustType = adjustBorder);
 
-      
+
          // get immediate child with given ID
       using ::user::interaction::GetDlgItem;
       void GetDlgItem(id id, HWND* phWnd) const;
@@ -257,7 +257,7 @@ namespace win
    #if(_WIN32_WINNT >= 0x0500)
 
       virtual BOOL SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags);
-      virtual BOOL UpdateLayeredWindow(::ca::graphics * pDCDst, POINT *pptDst, SIZE *psize, 
+      virtual BOOL UpdateLayeredWindow(::ca::graphics * pDCDst, POINT *pptDst, SIZE *psize,
          ::ca::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags);
 
    #endif   // _WIN32_WINNT >= 0x0500
@@ -270,9 +270,9 @@ namespace win
 
 
    // Timer Functions
-      virtual UINT_PTR SetTimer(UINT_PTR nIDEvent, UINT nElapse,
-         void (CALLBACK* lpfnTimer)(HWND, UINT, UINT_PTR, DWORD));
-      virtual BOOL KillTimer(UINT_PTR nIDEvent);
+      virtual uint_ptr SetTimer(uint_ptr nIDEvent, UINT nElapse,
+         void (CALLBACK* lpfnTimer)(HWND, UINT, uint_ptr, DWORD));
+      virtual BOOL KillTimer(uint_ptr nIDEvent);
 
    // Window State Functions
       virtual BOOL IsWindowEnabled();
@@ -289,7 +289,7 @@ namespace win
       virtual id SetDlgCtrlId(id id);
       virtual id GetDlgCtrlId();
 
-      
+
 
       // capture and focus apply to all windows
       static ::ca::window * PASCAL GetCapture();
@@ -427,9 +427,9 @@ namespace win
       afx_msg void OnHelpIndex();     // ID_HELP_INDEX
       afx_msg void OnHelpFinder();    // ID_HELP_FINDER, ID_DEFAULT_HELP
       afx_msg void OnHelpUsing();     // ID_HELP_USING
-      virtual void WinHelp(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
-      //virtual void HtmlHelp(DWORD_PTR dwData, UINT nCmd = 0x000F);
-      virtual void WinHelpInternal(DWORD_PTR dwData, UINT nCmd = HELP_CONTEXT);
+      virtual void WinHelp(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
+      //virtual void HtmlHelp(dword_ptr dwData, UINT nCmd = 0x000F);
+      virtual void WinHelpInternal(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
 
    // layout and other functions
    /*   void RepositionBars(const char * pszPrefix, const char * pszIdLeftOver,
@@ -555,7 +555,7 @@ namespace win
       afx_msg void OnRButtonDown(UINT nFlags, point point);
       afx_msg void OnRButtonUp(UINT nFlags, point point);
       DECL_GEN_SIGNAL(_001OnSetCursor)
-      afx_msg void OnTimer(UINT_PTR nIDEvent);
+      afx_msg void OnTimer(uint_ptr nIDEvent);
 
    // Initialization message handler member functions
       afx_msg void OnInitMenu(::userbase::menu* pMenu);
@@ -594,7 +594,7 @@ namespace win
       afx_msg void OnSizing(UINT nSide, LPRECT lpRect);
       afx_msg void OnMoving(UINT nSide, LPRECT lpRect);
       afx_msg void OnCaptureChanged(::ca::window * pWnd);
-      afx_msg BOOL OnDeviceChange(UINT nEventType, DWORD_PTR dwData);
+      afx_msg BOOL OnDeviceChange(UINT nEventType, dword_ptr dwData);
 
    // Overridables and other helpers (for implementation of derived classes)
       // for deriving from a standard control
@@ -631,7 +631,7 @@ namespace win
    // Implementation
       virtual ~window();
       virtual BOOL CheckAutoCenter();
-   #ifdef _DEBUG
+   #ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
    #endif
@@ -685,7 +685,7 @@ namespace win
       afx_msg LRESULT OnDisplayChange(WPARAM, LPARAM);
       afx_msg LRESULT OnDragList(WPARAM, LPARAM);
 
-      static BOOL CALLBACK GetAppsEnumWindowsProc(      
+      static BOOL CALLBACK GetAppsEnumWindowsProc(
             HWND hwnd,
             LPARAM lParam);
 

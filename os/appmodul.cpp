@@ -23,7 +23,7 @@ _tWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance,
 
 CLASS_DECL_VMSWIN BOOL AfxInitialize(BOOL bDLL, DWORD dwVersion)
 {
-   AFX_MODULE_STATE* pModuleState = AfxGetModuleState();
+   __MODULE_STATE* pModuleState = AfxGetModuleState();
    pModuleState->m_bDLL = (BYTE)bDLL;
    ASSERT(dwVersion <= _MFC_VER);
    UNUSED(dwVersion);  // not used in release build
@@ -43,7 +43,7 @@ CLASS_DECL_VMSWIN BOOL AfxInitialize(BOOL bDLL, DWORD dwVersion)
 //#pragma init_seg(lib)
 
 #ifndef _ApplicationFrameworkDLL
-void AFX_CDECL _AfxTermAppState()
+void __CDECL _AfxTermAppState()
 {
    // terminate local data and critical sections
    AfxTermLocalData(NULL, TRUE);

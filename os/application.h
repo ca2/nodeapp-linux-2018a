@@ -35,7 +35,7 @@ namespace win
 
       application(::ca::application * papp);
       virtual ~application();
-      
+
       virtual HINSTANCE GetHinstance();
       BOOL _001OnDDECommand(const char * lpcsz);
       virtual void _001EnableShellOpen();
@@ -89,7 +89,7 @@ namespace win
 
 
 
-      
+
       virtual bool win_init(main_init_data * pdata);
 
 
@@ -122,7 +122,7 @@ namespace win
 
 
 
-      /*virtual void construct(AFX_THREADPROC pfnThreadProc, LPVOID pParam);
+      /*virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
       virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
          DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
@@ -131,7 +131,7 @@ namespace win
          LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
       virtual void * get_os_data();
-      virtual INT_PTR get_os_int();
+      virtual int_ptr get_os_int();
 
 
       int GetThreadPriority();
@@ -153,7 +153,7 @@ namespace win
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::user::win::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode); 
+      virtual ::user::win::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
       // running and idle processing
       virtual int run();
@@ -174,7 +174,7 @@ namespace win
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
 
-   #ifdef _DEBUG
+   #ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
    #endif

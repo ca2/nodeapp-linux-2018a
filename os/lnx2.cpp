@@ -17,7 +17,7 @@
  CLASS_DECL_VMSWIN ::user::interaction * AfxGetMainWnd()
 {
       ::radix::thread* pThread = dynamic_cast < ::radix::thread * > (::win::get_thread());
-      return pThread != NULL ? pThread->GetMainWnd() : NULL; 
+      return pThread != NULL ? pThread->GetMainWnd() : NULL;
  }
 
  CLASS_DECL_VMSWIN BOOL AfxGetAmbientActCtx()
@@ -28,13 +28,13 @@
 
 
 #ifdef _ApplicationFrameworkDLL
-// AFX_MAINTAIN_STATE functions
- AFX_MAINTAIN_STATE::AFX_MAINTAIN_STATE(AFX_MODULE_STATE* pNewState)
+// __MAINTAIN_STATE functions
+ __MAINTAIN_STATE::__MAINTAIN_STATE(__MODULE_STATE* pNewState)
    {  m_pPrevModuleState = AfxSetModuleState(pNewState); }
 #endif
 
-// AFX_MAINTAIN_STATE2 functions
- AFX_MAINTAIN_STATE2::~AFX_MAINTAIN_STATE2()
+// __MAINTAIN_STATE2 functions
+ __MAINTAIN_STATE2::~__MAINTAIN_STATE2()
 {
 #ifdef _ApplicationFrameworkDLL
    // Not a good place to report errors here, so just be safe

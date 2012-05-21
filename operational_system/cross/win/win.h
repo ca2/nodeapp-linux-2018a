@@ -194,7 +194,7 @@ typedef struct _GUID {
 #define FAR
 
 #define DECLSPEC_NO_RETURN
-void RaiseException(DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, const ULONG_PTR *lpArguments);
+void RaiseException(DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, const ulong_ptr *lpArguments);
 typedef int errno_t;
 
 
@@ -236,7 +236,6 @@ MY_EXTERN_C DWORD GetLastError();
 #define _T(psz) psz
 
 
-#define __CORE_DATA
 #define c_cdecl __cdecl
 
 //#define c_decl __cdecl

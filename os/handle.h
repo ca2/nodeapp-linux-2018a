@@ -1,12 +1,12 @@
 // This is ca2 API library.
-// 
-// 
 //
-// 
-// 
-// 
-// 
-// 
+//
+//
+//
+//
+//
+//
+//
 
 /////////////////////////////////////////////////////////////////////////////
 // CHandleMap
@@ -92,8 +92,8 @@ template<class TYPE>
 struct ConstructDestruct
 {
    static void PASCAL Construct(::radix::object* pObject)
-   { 
-      new (pObject) TYPE; 
+   {
+      new (pObject) TYPE;
    }
    static void PASCAL Destruct(::radix::object* pObject)
    {
@@ -101,9 +101,9 @@ struct ConstructDestruct
       p->~TYPE();
    }
    static void PASCAL Construct(TYPE * pObject)
-   { 
+   {
 #undef new
-      new (pObject) TYPE; 
+      new (pObject) TYPE;
 #define new DEBUG_NEW
    }
    static void PASCAL Destruct(TYPE * pObject)
@@ -166,7 +166,7 @@ class CLASS_DECL_VMSWIN hdc_map :
 public:
 };
 
-class hgdiobj_map : 
+class hgdiobj_map :
    public handle_map < ::win::hgdiobj_handle, ::win::graphics_object >
 {
 public:
@@ -178,8 +178,8 @@ public:
 // CHandleMap implementation
 
 template < class HT, class CT >
-handle_map < HT, CT > ::handle_map() : 
-      m_permanentMap(10), 
+handle_map < HT, CT > ::handle_map() :
+      m_permanentMap(10),
       m_temporaryMap(4), // small block size for temporary ::collection::map
       m_alloc(sizeof(CT), 64)
 {
@@ -200,7 +200,7 @@ handle_map < HT, CT > ::handle_map() :
 template < class HT, class CT >
 CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::application *, HANDLE), ::ca::application * papp)
 {
-   
+
    CSingleLock sl(&m_mutex, TRUE);
 
 //   ASSERT(m_pClass != NULL);
@@ -267,7 +267,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
       AfxEnableMemoryTracking(bEnable);
       ::ca::rethrow(pe);
    }
-   
+
 
 #ifndef _AFX_PORTABLE
    AfxSetNewHandler(pnhOldHandler);
@@ -283,11 +283,11 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    return pTemp;
 }
 
-#ifdef _DEBUG   // out-of-line version for primitive::memory tracking
+#ifdef DEBUG   // out-of-line version for primitive::memory tracking
 template < class HT, class CT >
 void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
 {
-   
+
    CSingleLock sl(&m_mutex, TRUE);
 
    BOOL bEnable = AfxEnableMemoryTracking(FALSE);
@@ -295,13 +295,13 @@ void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
    AfxEnableMemoryTracking(bEnable);
 
 }
-#endif //_DEBUG
+#endif //DEBUG
 
-#ifdef _DEBUG
+#ifdef DEBUG
 template < class HT, class CT >
 void handle_map < HT, CT > ::remove_handle(HANDLE h)
 {
-   
+
    CSingleLock sl(&m_mutex, TRUE);
 
    // make sure the handle entry is consistent before deleting
@@ -332,7 +332,7 @@ void handle_map < HT, CT > ::remove_handle(HANDLE h)
 template < class HT, class CT >
 void handle_map < HT, CT >::delete_temp()
 {
-   
+
    CSingleLock sl(&m_mutex, TRUE);
 
    if (gen::is_null(this))
@@ -365,8 +365,8 @@ void handle_map < HT, CT >::delete_temp()
 }
 
 
-// Note: out-of-line _DEBUG version is in winhand.cpp
-#ifndef _DEBUG
+// Note: out-of-line DEBUG version is in winhand.cpp
+#ifndef DEBUG
 template < class HT, class CT >
 inline void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
    { m_permanentMap[(HANDLE)h] = permOb; }
@@ -382,7 +382,7 @@ inline void handle_map < HT, CT >::remove_handle(HANDLE h)
 
 template < class HT, class CT >
 inline CT* handle_map <HT, CT>::lookup_permanent(HANDLE h)
-{ 
+{
 
    CSingleLock sl(&m_mutex, TRUE);
 
@@ -400,7 +400,7 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 
    CSingleLock sl(&m_mutex, TRUE);
 
-   CT * pt = m_temporaryMap.get(h, (CT*) NULL); 
+   CT * pt = m_temporaryMap.get(h, (CT*) NULL);
    if(pt != NULL && pt->get_os_data() == h)
       return pt;
    else

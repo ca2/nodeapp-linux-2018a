@@ -39,11 +39,11 @@
 //   _CUSTOM   : for custom configurations (causes afxv_cfg.h to be included)
 //
 // Additional build options:
-//  _DEBUG              debug versions (full diagnostics)
+//  DEBUG              debug versions (full diagnostics)
 //  _USRDLL             create regular DLL
 //
 
-#ifndef _DEBUG
+#ifndef DEBUG
 #ifndef _AFX_DISABLE_INLINES
 //	#define _AFX_ENABLE_INLINES
 #endif
@@ -54,8 +54,8 @@
 /////////////////////////////////////////////////////////////////////////////
 // special include files
 
-#ifndef AFX_INLINE
-	#define AFX_INLINE inline /*__forceinline*/
+#ifndef __INLINE
+	#define __INLINE inline /*__forceinline*/
 #endif
 
 #include "v_w32.h"
@@ -101,12 +101,12 @@
 #endif
 #endif
 
-/*#ifndef _DEBUG
+/*#ifndef DEBUG
 #ifdef __debug_break
 #undef __debug_break
 #endif
 #define __debug_break()
-#endif  // _DEBUG*/
+#endif  // DEBUG*/
 
 /////////////////////////////////////////////////////////////////////////////
 // Standard preprocessor symbols if not already defined
@@ -145,12 +145,12 @@
 #endif
 #endif
 
-// AFX_DEPRECATED is used for functions that should no longer be used
-#ifndef AFX_DEPRECATED
+// __DEPRECATED is used for functions that should no longer be used
+#ifndef __DEPRECATED
 #ifdef _AFX_DISABLE_DEPRECATED
-	#define AFX_DEPRECATED(_Message)
+	#define __DEPRECATED(_Message)
 #else
-	#define AFX_DEPRECATED(_Message) __declspec(deprecated(_Message))
+	#define __DEPRECATED(_Message) __declspec(deprecated(_Message))
 #endif
 #endif
 
@@ -163,24 +163,24 @@
 #endif // _AFX_SECURE_NO_DEPRECATE
 #endif // _AFX_INSECURE_DEPRECATE
 
-// AFXAPI is used on global public functions
-#ifndef AFXAPI
-	#define AFXAPI __stdcall
+// _API is used on global public functions
+#ifndef _API
+	#define _API __stdcall
 #endif
 
-// AFXOLEAPI is used for some special OLE functions
-#ifndef AFXOLEAPI
-	#define AFXOLEAPI __stdcall
+// _OLEAPI is used for some special OLE functions
+#ifndef _OLEAPI
+	#define _OLEAPI __stdcall
 #endif
 
-// AFX_CDECL is used for rare functions taking variable arguments
-#ifndef AFX_CDECL
-	#define AFX_CDECL __cdecl
+// __CDECL is used for rare functions taking variable arguments
+#ifndef __CDECL
+	#define __CDECL __cdecl
 #endif
 
-// AFX_EXPORT is used for functions which need to be exported
-#ifndef AFX_EXPORT
-	#define AFX_EXPORT EXPORT
+// __EXPORT is used for functions which need to be exported
+#ifndef __EXPORT
+	#define __EXPORT EXPORT
 #endif
 
 #ifndef __STATIC
@@ -191,80 +191,80 @@
 // The following macros are used to enable export/import
 
 // for data
-#ifndef AFX_DATA_EXPORT
-	#define AFX_DATA_EXPORT __declspec(dllexport)
+#ifndef __DATA_EXPORT
+	#define __DATA_EXPORT __declspec(dllexport)
 #endif
-#ifndef AFX_DATA_IMPORT
-	#define AFX_DATA_IMPORT __declspec(dllimport)
+#ifndef __DATA_IMPORT
+	#define __DATA_IMPORT __declspec(dllimport)
 #endif
 
 // for classes
-#ifndef AFX_CLASS_EXPORT
-	#define AFX_CLASS_EXPORT __declspec(dllexport)
+#ifndef __CLASS_EXPORT
+	#define __CLASS_EXPORT __declspec(dllexport)
 #endif
-#ifndef AFX_CLASS_IMPORT
-	#define AFX_CLASS_IMPORT __declspec(dllimport)
+#ifndef __CLASS_IMPORT
+	#define __CLASS_IMPORT __declspec(dllimport)
 #endif
 
 // for global APIs
-#ifndef AFX_API_EXPORT
-	#define AFX_API_EXPORT __declspec(dllexport)
+#ifndef __API_EXPORT
+	#define __API_EXPORT __declspec(dllexport)
 #endif
-#ifndef AFX_API_IMPORT
-	#define AFX_API_IMPORT __declspec(dllimport)
+#ifndef __API_IMPORT
+	#define __API_IMPORT __declspec(dllimport)
 #endif
 
 // This macro is used to reduce size requirements of some classes
-#ifndef AFX_ALWAYS_VTABLE
-#ifndef AFX_NOVTABLE
-#if _MSC_VER >= 1100 && !defined(_DEBUG)
-#define AFX_NOVTABLE __declspec(novtable)
+#ifndef __ALWAYS_VTABLE
+#ifndef __NOVTABLE
+#if _MSC_VER >= 1100 && !defined(DEBUG)
+#define __NOVTABLE __declspec(novtable)
 #else
-#define AFX_NOVTABLE
+#define __NOVTABLE
 #endif
 #endif
 #endif
 
 // for global data that should be in COMDATs (packaged data)
-#ifndef AFX_COMDAT
-#define AFX_COMDAT __declspec(selectany)
+#ifndef __COMDAT
+#define __COMDAT __declspec(selectany)
 #endif
 
 // The following macros are used on data declarations/definitions
 //  (they are redefined for extension DLLs and the shared MFC DLL)
 #define __DATADEF
-#define AFX_API CLASS_DECL_ca
+#define __API CLASS_DECL_ca
 
 // used when building the "core" MFC80.DLL
-#ifndef AFX_CORE_DATA
-	#define AFX_CORE_DATA CLASS_DECL_ca
-	#define AFX_CORE_DATADEF
+#ifndef __CORE_DATA
+	#define __CORE_DATA CLASS_DECL_ca
+	#define __CORE_DATADEF
 #endif
 
 // used when building the MFC/OLE support MFCO80.DLL
-#ifndef AFX_OLE_DATA
-	#define AFX_OLE_DATA
-	#define AFX_OLE_DATADEF
+#ifndef __OLE_DATA
+	#define __OLE_DATA
+	#define __OLE_DATADEF
 #endif
 
 // used when building the MFC/DB support MFCD80.DLL
-#ifndef AFX_DB_DATA
-	#define AFX_DB_DATA
-	#define AFX_DB_DATADEF
+#ifndef __DB_DATA
+	#define __DB_DATA
+	#define __DB_DATADEF
 #endif
 
 // used when building the MFC/NET support MFCN80.DLL
-#ifndef AFX_NET_DATA
-	#define AFX_NET_DATA
-	#define AFX_NET_DATADEF
+#ifndef __NET_DATA
+	#define __NET_DATA
+	#define __NET_DATADEF
 #endif
 
 // used when building extension DLLs
-#ifndef AFX_EXT_DATA
-	#define AFX_EXT_DATA
-	#define AFX_EXT_DATADEF
-	#define AFX_EXT_CLASS
-	#define AFX_EXT_API
+#ifndef __EXT_DATA
+	#define __EXT_DATA
+	#define __EXT_DATADEF
+	#define __EXT_CLASS
+	#define __EXT_API
 #endif
 
 // BASED_XXXX macros are provided for backward compatibility
@@ -298,9 +298,9 @@
 #pragma inline_depth(16)
 
 #ifdef _AFX_DEVBUILD
-	#define AFX_IMPL_DATA AFX_DATA_EXPORT
+	#define __IMPL_DATA __DATA_EXPORT
 #else
-	#define AFX_IMPL_DATA CLASS_DECL_ca
+	#define __IMPL_DATA CLASS_DECL_ca
 #endif
 
 
@@ -310,7 +310,7 @@
 #define NO_ANSIUNI_ONLY
 #define _MFC_OVERRIDES_NEW
 
-#define AFX_COMDAT __declspec(selectany)
+#define __COMDAT __declspec(selectany)
 
 #include <winreg.h>
 #include <winnls.h>

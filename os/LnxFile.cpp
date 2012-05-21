@@ -4,7 +4,7 @@
 #include "WindowsShell.h"
 
 
-AFX_STATIC inline BOOL IsDirSep(WCHAR ch)
+__STATIC inline BOOL IsDirSep(WCHAR ch)
 {
    return (ch == '\\' || ch == '/');
 }
@@ -438,7 +438,7 @@ BOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
 
    if(bNativeUnicode)
    {
-      AFX_COM com;
+      __COM com;
       IShellLinkW* psl;
       *lpszFileOut = 0;   // assume failure
 
@@ -482,7 +482,7 @@ BOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
 
       gen::international::UnicodeToMultiByte(gen::international::CodePageAnsi, strFileIn, lpszFileIn);
 
-      AFX_COM com;
+      __COM com;
       IShellLink* psl;
       *lpszFileOut = 0;   // assume failure
 
@@ -1019,7 +1019,7 @@ BOOL WinFileException::GetErrorMessage(string & str, PUINT pnHelpContext)
 {
 
    if (pnHelpContext != NULL)
-      *pnHelpContext = m_cause + AFX_IDP_FILE_NONE;
+      *pnHelpContext = m_cause + __IDP_FILE_NONE;
 
    string strMessage;
    string strFileName = m_strFileName;
