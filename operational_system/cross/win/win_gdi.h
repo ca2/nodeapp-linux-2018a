@@ -161,6 +161,22 @@ typedef struct tagRGBQUAD {
 typedef RGBQUAD FAR* LPRGBQUAD;
 
 
+
+typedef struct tagPALETTEENTRY {
+    BYTE        peRed;
+    BYTE        peGreen;
+    BYTE        peBlue;
+    BYTE        peFlags;
+} PALETTEENTRY, *PPALETTEENTRY, FAR *LPPALETTEENTRY;
+
+/* Logical Palette */
+typedef struct tagLOGPALETTE {
+    WORD                palVersion;
+    WORD                palNumEntries;
+    PALETTEENTRY        palPalEntry[1];
+} LOGPALETTE, *PLOGPALETTE, NEAR *NPLOGPALETTE, FAR *LPLOGPALETTE;
+
+
 /* Logical Font */
 #define LF_FACESIZE         32
 

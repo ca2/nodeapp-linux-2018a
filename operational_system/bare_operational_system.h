@@ -269,3 +269,9 @@ inline void __debug_break() { asm("int $3"); }
 
 
 
+// _BSD types from sys/types.h
+
+typedef unsigned char   u_char;
+typedef unsigned short  u_short;
+typedef unsigned int    u_int;
+typedef unsigned long   u_long;

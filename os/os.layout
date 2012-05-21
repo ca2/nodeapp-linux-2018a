@@ -2,10 +2,10 @@
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
 	<File name="../operational_system/_.h" open="0" top="0" tabpos="0">
-		<Cursor position="251" topLine="0" />
+		<Cursor position="34" topLine="0" />
 	</File>
 	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="0">
-		<Cursor position="4851" topLine="225" />
+		<Cursor position="588" topLine="6" />
 	</File>
 	<File name="../operational_system/cross/win/win.h" open="0" top="0" tabpos="0">
 		<Cursor position="198" topLine="0" />
@@ -13,8 +13,11 @@
 	<File name="../operational_system/cross/win/win_errno.h" open="0" top="0" tabpos="0">
 		<Cursor position="180" topLine="0" />
 	</File>
+	<File name="../operational_system/cross/win/win_gdi.h" open="0" top="0" tabpos="0">
+		<Cursor position="5008" topLine="154" />
+	</File>
 	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="0">
-		<Cursor position="49" topLine="0" />
+		<Cursor position="969" topLine="54" />
 	</File>
 	<File name="../operational_system/linux_system.h" open="0" top="0" tabpos="0">
 		<Cursor position="575" topLine="26" />
