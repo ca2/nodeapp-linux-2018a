@@ -8,6 +8,9 @@
 typedef std::type_info std_type_info;
 
 
+#include <math.h>
+
+
 #if defined(_LP64)
 
 #define AMD64
