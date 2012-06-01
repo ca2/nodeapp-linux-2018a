@@ -45,7 +45,8 @@
 #include <inttypes.h>
 
 
-
+#define _gmtime64 gmtime
+#define _stricmp  stricmp
 
 #ifndef _XSERVER64
 #ifndef _XTYPEDEF_XID
