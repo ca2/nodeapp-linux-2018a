@@ -18,11 +18,11 @@ namespace win
    {
       return dynamic_cast < pen* > (::win::graphics_object::from_handle(papp, hPen));
    }
-   BOOL pen::CreatePen(int nPenStyle, int nWidth, COLORREF crColor)
+   WINBOOL pen::CreatePen(int nPenStyle, int nWidth, COLORREF crColor)
    { return Attach(::CreatePen(nPenStyle, nWidth, crColor)); }
-   BOOL pen::CreatePenIndirect(LPLOGPEN lpLogPen)
+   WINBOOL pen::CreatePenIndirect(LPLOGPEN lpLogPen)
    { return Attach(::CreatePenIndirect(lpLogPen)); }
-   BOOL pen::CreatePen(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
+   WINBOOL pen::CreatePen(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
       int nStyleCount, const DWORD* lpStyle)
    { return Attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
    lpStyle)); }

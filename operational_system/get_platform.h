@@ -57,7 +57,6 @@
 typedef uint64_t dword_ptr;
 
 
-#define __int3264   int64_t
 
 
 #else

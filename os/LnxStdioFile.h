@@ -5,7 +5,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // STDIO file implementation
 
-class WinStdioFile : 
+class WinStdioFile :
    virtual public WinFile,
    virtual public ex1::text_file
 {
@@ -31,7 +31,7 @@ public:
    void dump(dump_context & dumpcontext) const;
 #endif
    virtual DWORD_PTR GetPosition() const;
-   virtual BOOL open(const char * lpszFileName, UINT nOpenFlags,
+   virtual WINBOOL open(const char * lpszFileName, UINT nOpenFlags,
       ex1::file_exception_sp * pError = NULL);
    virtual DWORD_PTR read(void * lpBuf, DWORD_PTR nCount);
    virtual void write(const void * lpBuf, DWORD_PTR nCount);

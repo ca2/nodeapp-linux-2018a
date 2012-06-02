@@ -1,6 +1,19 @@
 #pragma once
 
 
+#define WINE_NO_UNICODE_MACROS
+#define WINE_UNICODE_NATIVE
+#define _WCTYPE_T_DEFINED
+
+
+#ifdef WINE_NO_UNICODE_MACROS
+# define DECL_WINELIB_TYPE_AW(type)  /* nothing */
+#else
+# define DECL_WINELIB_TYPE_AW(type)  typedef WINELIB_NAME_AW(type) type;
+#endif
+
+
+
 #include "base_tsd.h"
 #include "win_def.h"
 #include "win_crt.h"
@@ -21,17 +34,17 @@ struct tagHandle
 
 };
 
-typedef struct tagHandle * HANDLE;
+//typedef struct tagHandle * HANDLE;
 
 
 typedef unsigned int       DWORD;
-typedef int                 BOOL;
+typedef int                 WINBOOL;
 typedef unsigned char       BYTE;
 typedef unsigned short      WORD;
 typedef float               FLOAT;
 typedef FLOAT               *PFLOAT;
-typedef BOOL near           *PBOOL;
-typedef BOOL far            *LPBOOL;
+typedef WINBOOL near           *PBOOL;
+typedef WINBOOL far            *LPBOOL;
 typedef BYTE near           *PBYTE;
 typedef BYTE far            *LPBYTE;
 typedef int near            *PINT;
@@ -81,7 +94,7 @@ typedef int INT;
 //
 
 #ifndef _MAC
-typedef wchar_t WCHAR;    // wc,   16-bit UNICODE character
+//typedef wchar_t WCHAR;    // wc,   16-bit UNICODE character
 #else
 // some Macintosh compilers don't define wchar_t in a convenient location, or define it as a char
 typedef unsigned short WCHAR;    // wc,   16-bit UNICODE character
@@ -154,7 +167,6 @@ typedef PZZSTR PZZTSTR, PUZZTSTR;
 typedef PCZZSTR PCZZTSTR, PCUZZTSTR;
 typedef PNZCH PNZTCH, PUNZTCH;
 typedef PCNZCH PCNZTCH, PCUNZTCH;
-#define __TEXT(quote) quote         // r_winnt
 
 #define TEXT(quote) __TEXT(quote)   // r_winnt
 
@@ -163,7 +175,7 @@ typedef SHORT *PSHORT;
 typedef LONG *PLONG;
 
 
-typedef void *HINSTANCE;
+//typedef void *HINSTANCE;
 
 #ifndef GUID_DEFINED
 #define GUID_DEFINED

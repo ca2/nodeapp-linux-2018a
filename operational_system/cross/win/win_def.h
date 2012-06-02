@@ -126,13 +126,13 @@ typedef char *PSZ;
 #endif
 
 typedef unsigned int       DWORD;
-typedef int                 BOOL;
+typedef int                 WINBOOL;
 typedef unsigned char       BYTE;
 typedef unsigned short      WORD;
 typedef float               FLOAT;
 typedef FLOAT               *PFLOAT;
-typedef BOOL near           *PBOOL;
-typedef BOOL far            *LPBOOL;
+typedef WINBOOL near           *PBOOL;
+typedef WINBOOL far            *LPBOOL;
 typedef BYTE near           *PBYTE;
 typedef BYTE far            *LPBYTE;
 typedef int near            *PINT;
@@ -241,7 +241,7 @@ DECLARE_HANDLE(HICON);
 #if !defined(_MAC) || !defined(WIN_INTERNAL)
 DECLARE_HANDLE(HMENU);
 #endif
-DECLARE_HANDLE(HMETAFILE);
+DECLARE_HANDLE(HMETAFILE);*/
 DECLARE_HANDLE(HINSTANCE);
 typedef HINSTANCE HMODULE;      /* HMODULEs can be used in place of HINSTANCEs */
 /*#if !defined(_MAC) || !defined(GDI_INTERNAL)

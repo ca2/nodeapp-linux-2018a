@@ -1,12 +1,12 @@
 // This is ca2 API library.
-// 
-// 
 //
-// 
-// 
-// 
-// 
-// 
+//
+//
+//
+//
+//
+//
+//
 
 #include "StdAfx.h"
 #include "sal.h"
@@ -15,7 +15,7 @@
 
 /////////////////////////////////////////////////////////////////////////////
 
-/*BOOL CLASS_DECL_VMSWIN AfxWinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
+/*WINBOOL CLASS_DECL_VMSWIN AfxWinInit(HINSTANCE hInstance, HINSTANCE hPrevInstance,
    __in LPTSTR lpCmdLine, int nCmdShow)
 {
 }*/

@@ -61,7 +61,7 @@ typedef struct _OVERLAPPED_ENTRY {
 typedef struct _SECURITY_ATTRIBUTES {
     DWORD nLength;
     LPVOID lpSecurityDescriptor;
-    BOOL bInheritHandle;
+    WINBOOL bInheritHandle;
 } SECURITY_ATTRIBUTES, *PSECURITY_ATTRIBUTES, *LPSECURITY_ATTRIBUTES;
 
 typedef struct _PROCESS_INFORMATION {
@@ -98,7 +98,7 @@ SetFilePointer(
     );
 
 
-BOOL
+WINBOOL
 WINAPI
 WriteFile(
     HANDLE hFile,
@@ -108,7 +108,7 @@ WriteFile(
     LPOVERLAPPED lpOverlapped
     );
 
-BOOL
+WINBOOL
 WINAPI
 ReadFile(
     HANDLE hFile,
@@ -118,14 +118,14 @@ ReadFile(
     LPOVERLAPPED lpOverlapped
     );
 
-BOOL
+WINBOOL
 WINAPI
 FlushFileBuffers(
     HANDLE hFile
     );
 
 
-BOOL
+WINBOOL
 WINAPI
 CloseHandle(
     HANDLE hObject

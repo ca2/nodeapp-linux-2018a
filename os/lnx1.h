@@ -10,14 +10,14 @@ namespace win
    };
 
    CLASS_DECL_VMSWIN HINSTANCE   LoadLibrary(const char * lpsz);
-   CLASS_DECL_VMSWIN BOOL        SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, BOOL fCreate);
+   CLASS_DECL_VMSWIN WINBOOL        SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, WINBOOL fCreate);
    CLASS_DECL_VMSWIN DWORD       GetFileAttributes(const char * lpFileName);
-   CLASS_DECL_VMSWIN BOOL        CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes);
+   CLASS_DECL_VMSWIN WINBOOL        CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes);
    CLASS_DECL_VMSWIN DWORD       GetCurrentDirectory(string & str);
    CLASS_DECL_VMSWIN DWORD       GetTempPath(string & str);
    CLASS_DECL_VMSWIN LONG        RegQueryValue(HKEY hkey, const char * lpszSubKey, string & str);
    CLASS_DECL_VMSWIN HICON       ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex);
-   CLASS_DECL_VMSWIN BOOL        DeleteFile(const char * lpFileName);
+   CLASS_DECL_VMSWIN WINBOOL        DeleteFile(const char * lpFileName);
    CLASS_DECL_VMSWIN int         GetMenuStringW(HMENU hMenu, UINT uIDItem, string & str, UINT flags);
    CLASS_DECL_VMSWIN void        TimeToFileTime(::ca::application * papp, const class time& time, LPFILETIME pFileTime);
 
@@ -60,12 +60,12 @@ void CLASS_DECL_VMSWIN AfxAbort();
 CLASS_DECL_VMSWIN const char * AfxRegisterWndClass(UINT nClassStyle,
    HCURSOR hCursor = 0, HBRUSH hbrBackground = 0, HICON hIcon = 0);
 
-CLASS_DECL_VMSWIN BOOL AfxRegisterClass(WNDCLASS* lpWndClass);
+CLASS_DECL_VMSWIN WINBOOL AfxRegisterClass(WNDCLASS* lpWndClass);
 
 // helper to initialize rich edit 1.0 control
-CLASS_DECL_VMSWIN BOOL AfxInitRichEdit();
+CLASS_DECL_VMSWIN WINBOOL AfxInitRichEdit();
 // helper to initialize rich edit 2.0 control
-CLASS_DECL_VMSWIN BOOL AfxInitRichEdit2();
+CLASS_DECL_VMSWIN WINBOOL AfxInitRichEdit2();
 
 CLASS_DECL_VMSWIN LRESULT CALLBACK AfxWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 CLASS_DECL_VMSWIN WNDPROC AfxGetAfxWndProc();
@@ -84,14 +84,14 @@ CLASS_DECL_VMSWIN LONG AfxDelRegTreeHelper(HKEY hParentKey, const string & strKe
 
 
 // Advanced initialization: for overriding default diagnostics
-CLASS_DECL_VMSWIN BOOL AfxDiagnosticInit(void);
+CLASS_DECL_VMSWIN WINBOOL AfxDiagnosticInit(void);
 
 
 CLASS_DECL_VMSWIN ::win::thread * AfxGetThread();
 CLASS_DECL_VMSWIN void AfxSetThread(::radix::thread * pthread);
 CLASS_DECL_VMSWIN MSG* AfxGetCurrentMessage();
 
-CLASS_DECL_VMSWIN void AfxEndThread(::radix::application * papp, UINT nExitCode, BOOL bDelete = TRUE);
+CLASS_DECL_VMSWIN void AfxEndThread(::radix::application * papp, UINT nExitCode, WINBOOL bDelete = TRUE);
 
 CLASS_DECL_VMSWIN void AfxInitThread();
 CLASS_DECL_VMSWIN void AfxTermThread(::radix::application * papp, HINSTANCE hInstTerm = NULL);
@@ -121,7 +121,7 @@ CLASS_DECL_VMSWIN void AfxTermThread(::radix::application * papp, HINSTANCE hIns
 #define afxCommDlgWrapper static_cast<CCommDlgWrapper*>(AfxGetModuleState()->m_pDllIsolationWrappers[_AFX_COMMDLG_ISOLATION_WRAPPER_INDEX])
 
 // Advanced initialization: for overriding default WinMain
-//CLASS_DECL_VMSWIN BOOL AfxWinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
+//CLASS_DECL_VMSWIN WINBOOL AfxWinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
   // __in_z LPTSTR lpCmdLine, __in int nCmdShow);
 CLASS_DECL_VMSWIN void AfxWinTerm();
 

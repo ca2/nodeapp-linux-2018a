@@ -40,21 +40,21 @@ public:
    operator HFILE() const;
 
    virtual DWORD_PTR GetPosition() const;
-   BOOL GetStatus(ex1::file_status & rStatus) const;
+   WINBOOL GetStatus(ex1::file_status & rStatus) const;
    virtual string GetFileName() const;
    virtual string GetFileTitle() const;
    virtual string GetFilePath() const;
    virtual void SetFilePath(const char * lpszNewName);
 
 // Operations
-   virtual BOOL open(const char * lpszFileName, UINT nOpenFlags,
+   virtual WINBOOL open(const char * lpszFileName, UINT nOpenFlags,
       ex1::file_exception_sp * pError = NULL);
 
 /*
    static void PASCAL Rename(const char * lpszOldName,
             const char * lpszNewName);
    static void PASCAL remov(const char * lpszFileName);*/
-   virtual BOOL PASCAL GetStatus(const char * lpszFileName,
+   virtual WINBOOL PASCAL GetStatus(const char * lpszFileName,
             ::ex1::file_status& rStatus);
    /*static void PASCAL SetStatus(const char * lpszFileName,
             const ::ex1::file_status& status);
@@ -97,7 +97,7 @@ public:
       void ** ppBufStart = NULL, void ** ppBufMax = NULL);
 
 protected:
-   BOOL m_bCloseOnDelete;
+   WINBOOL m_bCloseOnDelete;
    string m_strFileName;
 };
 
@@ -154,7 +154,7 @@ public:
 #ifdef _DEBUG
    virtual void dump(dump_context&) const;
 #endif
-   virtual BOOL GetErrorMessage(string & str, PUINT pnHelpContext = NULL);
+   virtual WINBOOL GetErrorMessage(string & str, PUINT pnHelpContext = NULL);
 };
 
 inline WinFileException::WinFileException(::ca::application * papp, int cause, LONG lOsError,

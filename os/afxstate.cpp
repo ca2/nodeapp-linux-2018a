@@ -111,10 +111,10 @@ THREAD_LOCAL(_AFX_THREAD_STATE, _afxThreadState)
 // __MODULE_STATE implementation
 
 #ifdef _ApplicationFrameworkDLL
-__MODULE_STATE::__MODULE_STATE(BOOL bDLL, WNDPROC pfnAfxWndProc,
-   DWORD dwVersion, BOOL bSystem)
+__MODULE_STATE::__MODULE_STATE(WINBOOL bDLL, WNDPROC pfnAfxWndProc,
+   DWORD dwVersion, WINBOOL bSystem)
 #else
-__MODULE_STATE::__MODULE_STATE(BOOL bDLL)
+__MODULE_STATE::__MODULE_STATE(WINBOOL bDLL)
 #endif
 {
    m_pmapHWND = NULL;
@@ -129,7 +129,7 @@ __MODULE_STATE::__MODULE_STATE(BOOL bDLL)
    m_dwVersion = dwVersion;
    m_bSystem = (BYTE)bSystem;
 #endif
-   BOOL bEnable = TRUE;
+   WINBOOL bEnable = TRUE;
    try
    {
       //Preallocate the registered classes string, but CRT primitive::memory leak report is
@@ -178,8 +178,8 @@ __MODULE_STATE::__MODULE_STATE(BOOL bDLL)
 
 __ACTCTX_API_PTR_DEFINE(CreateActCtxW, HANDLE, (PCACTCTXW));
 __ACTCTX_API_PTR_DEFINE(ReleaseActCtx, void, (HANDLE));
-__ACTCTX_API_PTR_DEFINE(ActivateActCtx, BOOL, (HANDLE, ulong_ptr*));
-__ACTCTX_API_PTR_DEFINE(DeactivateActCtx, BOOL, (DWORD, ulong_ptr));
+__ACTCTX_API_PTR_DEFINE(ActivateActCtx, WINBOOL, (HANDLE, ulong_ptr*));
+__ACTCTX_API_PTR_DEFINE(DeactivateActCtx, WINBOOL, (DWORD, ulong_ptr));
 
 __STATIC void CLASS_DECL_VMSWIN _AfxInitContextAPI()
 {
@@ -217,15 +217,15 @@ void CLASS_DECL_VMSWIN AfxReleaseActCtx(HANDLE hActCtx)
    }
 }
 
-CLASS_DECL_VMSWIN BOOL AfxActivateActCtx(HANDLE hActCtx, ulong_ptr *lpCookie)
+CLASS_DECL_VMSWIN WINBOOL AfxActivateActCtx(HANDLE hActCtx, ulong_ptr *lpCookie)
 {
-   BOOL rc = pfnActivateActCtx != 0 ? pfnActivateActCtx(hActCtx, lpCookie) : FALSE;
+   WINBOOL rc = pfnActivateActCtx != 0 ? pfnActivateActCtx(hActCtx, lpCookie) : FALSE;
    return rc;
 }
 
-CLASS_DECL_VMSWIN BOOL AfxDeactivateActCtx(DWORD dwFlags, ulong_ptr ulCookie)
+CLASS_DECL_VMSWIN WINBOOL AfxDeactivateActCtx(DWORD dwFlags, ulong_ptr ulCookie)
 {
-   BOOL rc = pfnDeactivateActCtx != 0 ? pfnDeactivateActCtx(dwFlags, ulCookie) : FALSE;
+   WINBOOL rc = pfnDeactivateActCtx != 0 ? pfnDeactivateActCtx(dwFlags, ulCookie) : FALSE;
    return rc;
 }
 
@@ -401,12 +401,12 @@ HINSTANCE CLASS_DECL_VMSWIN AfxGetInstanceHandleHelper()
    return AfxGetModuleState()->m_hCurrentInstanceHandle;
 }
 
-BOOL CLASS_DECL_VMSWIN AfxIsModuleDll()
+WINBOOL CLASS_DECL_VMSWIN AfxIsModuleDll()
 {
    return AfxGetModuleState()->m_bDLL;
 }
 
-BOOL CLASS_DECL_VMSWIN AfxInitCurrentStateApp()
+WINBOOL CLASS_DECL_VMSWIN AfxInitCurrentStateApp()
 {
    ::radix::application* pApp = AfxGetModuleState()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())

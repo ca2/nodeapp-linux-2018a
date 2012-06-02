@@ -135,7 +135,7 @@ _AFX_DEBUG_STATE::~_AFX_DEBUG_STATE()
 
 PROCESS_LOCAL(_AFX_DEBUG_STATE, afxDebugState)
 
-BOOL CLASS_DECL_VMSWIN AfxDiagnosticInit(void)
+WINBOOL CLASS_DECL_VMSWIN AfxDiagnosticInit(void)
 {
    // just get the debug state to cause initialization
    _AFX_DEBUG_STATE* pState = afxDebugState.get_data();
@@ -150,7 +150,7 @@ BOOL CLASS_DECL_VMSWIN AfxDiagnosticInit(void)
 #include "sal.h"
 
 
-//__DATADEF BOOL afxTraceEnabled = TRUE;
+//__DATADEF WINBOOL afxTraceEnabled = TRUE;
 //__DATADEF UINT afxTraceFlags = 0;
-static BOOL _afxDiagnosticInit = AfxDiagnosticInit();
+static WINBOOL _afxDiagnosticInit = AfxDiagnosticInit();
 

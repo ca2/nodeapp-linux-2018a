@@ -123,7 +123,7 @@ typedef struct tagRGBTRIPLE {
         BYTE    rgbtGreen;
         BYTE    rgbtRed;
 } RGBTRIPLE, *PRGBTRIPLE, NEAR *NPRGBTRIPLE, FAR *LPRGBTRIPLE;
-//#include <poppack.h>
+//#include "poppack.h"
 
 
 /* ICM Color Definitions */
@@ -673,20 +673,20 @@ typedef LPLOGRGN HRGN;
 HBITMAP CreateCompatibleBitmap(HDC hdc, int cx, int cy);
 
 
-BOOL BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop);
+WINBOOL BitBlt(HDC hdcDest, int nXDest, int nYDest, int nWidth, int nHeight, HDC hdcSrc, int nXSrc, int nYSrc, DWORD dwRop);
 
 
-BOOL SetViewportOrgEx(HDC hdc, int X, int Y, LPPOINT lpPoint);
+WINBOOL SetViewportOrgEx(HDC hdc, int X, int Y, LPPOINT lpPoint);
 
 
 
-BOOL GetClientRect(HWND hwnd, LPRECT lprect);
+WINBOOL GetClientRect(HWND hwnd, LPRECT lprect);
 
-BOOL GetWindowRect(HWND hwnd, LPRECT lprect);
+WINBOOL GetWindowRect(HWND hwnd, LPRECT lprect);
 
 int FillRect(HDC hDC, const RECT *lprc, HBRUSH hbr);
 
-BOOL ReleaseDC(HWND hwnd, HDC hdc);
+WINBOOL ReleaseDC(HWND hwnd, HDC hdc);
 
 HDC GetWindowDC(HWND hwnd);
 

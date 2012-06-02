@@ -7,10 +7,10 @@ namespace lnx
    class thread;
 } // namespace lnx
 
-BOOL CLASS_DECL_VMSWIN AfxInternalPumpMessage();
+WINBOOL CLASS_DECL_VMSWIN AfxInternalPumpMessage();
 LRESULT CLASS_DECL_VMSWIN AfxInternalProcessWndProcException(base_exception*, const MSG* pMsg);
-BOOL AfxInternalPreTranslateMessage(MSG* pMsg);
-BOOL AfxInternalIsIdleMessage(MSG* pMsg);
+WINBOOL AfxInternalPreTranslateMessage(MSG* pMsg);
+WINBOOL AfxInternalIsIdleMessage(MSG* pMsg);
 __STATIC void CLASS_DECL_VMSWIN _AfxPreInitDialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
 __STATIC void CLASS_DECL_VMSWIN _AfxPostInitDialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
 
@@ -48,7 +48,7 @@ struct _AFX_THREAD_STARTUP : ::ca::thread_startup
    //HANDLE hEvent2;         // event triggered after thread is resumed
 
    // strictly "out" -- set after hEvent is triggered
-   BOOL bError;    // TRUE if error during startup
+   WINBOOL bError;    // TRUE if error during startup
 };
 
 UINT APIENTRY _AfxThreadEntry(void * pParam)
@@ -268,7 +268,7 @@ void __cdecl AfxPreTranslateMessage(gen::signal_object * pobj)
       return AfxInternalPreTranslateMessage( pobj );
 }
 
-BOOL AfxInternalIsIdleMessage(gen::signal_object * pobj)
+WINBOOL AfxInternalIsIdleMessage(gen::signal_object * pobj)
 {
    SCAST_PTR(user::lnx::message::base, pbase, pobj);
    // Return FALSE if the message just dispatched should _not_
@@ -300,7 +300,7 @@ BOOL AfxInternalIsIdleMessage(gen::signal_object * pobj)
 
 
 
-BOOL AfxInternalIsIdleMessage(LPMSG lpmsg)
+WINBOOL AfxInternalIsIdleMessage(LPMSG lpmsg)
 {
    // Return FALSE if the message just dispatched should _not_
    // cause on_idle to be run.  Messages which do not usually
@@ -327,7 +327,7 @@ BOOL AfxInternalIsIdleMessage(LPMSG lpmsg)
    return lpmsg->message != WM_PAINT && lpmsg->message != 0x0118;
 }
 
-BOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj)
+WINBOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj)
 {
    ::radix::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
@@ -336,7 +336,7 @@ BOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj)
       return AfxInternalIsIdleMessage(pobj);
 }
 
-BOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
+WINBOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 {
    lnx::thread * pThread = AfxGetThread();
    if(pThread)
@@ -367,7 +367,7 @@ BOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 
    return pThread;
 }*/
-void CLASS_DECL_VMSWIN AfxEndThread(::radix::application * papp, UINT nExitCode, BOOL bDelete)
+void CLASS_DECL_VMSWIN AfxEndThread(::radix::application * papp, UINT nExitCode, WINBOOL bDelete)
 {
    // remove current thread object from primitive::memory
    __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
@@ -779,7 +779,7 @@ namespace lnx
       m_ptimera->check();
    }
 
-   BOOL thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
+   WINBOOL thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
       LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 #ifndef _MT
@@ -910,7 +910,7 @@ void thread::Delete()
 //      _AFX_THREAD_STATE* pState = AfxGetThreadState();
 
       // for tracking the idle time state
-      BOOL bIdle = TRUE;
+      WINBOOL bIdle = TRUE;
       LONG lIdleCount = 0;
       ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (this);
       ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_p);
@@ -981,12 +981,12 @@ void thread::Delete()
       return 0;
    }
 
-   BOOL thread::is_idle_message(gen::signal_object * pobj)
+   WINBOOL thread::is_idle_message(gen::signal_object * pobj)
    {
       return AfxInternalIsIdleMessage(pobj);
    }
 
-   BOOL thread::is_idle_message(LPMSG lpmsg)
+   WINBOOL thread::is_idle_message(LPMSG lpmsg)
    {
       return AfxInternalIsIdleMessage(lpmsg);
    }
@@ -1067,7 +1067,7 @@ void thread::Delete()
       return nResult;
    }
 
-   BOOL thread::on_idle(LONG lCount)
+   WINBOOL thread::on_idle(LONG lCount)
    {
       ASSERT_VALID(this);
 
@@ -1249,13 +1249,13 @@ void thread::Delete()
       return AfxInternalProcessWndProcException(e, pobj);
    }
 
-   __STATIC inline BOOL IsEnterKey(gen::signal_object * pobj)
+   __STATIC inline WINBOOL IsEnterKey(gen::signal_object * pobj)
    {
       SCAST_PTR(user::lnx::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
    }
 
-   __STATIC inline BOOL IsButtonUp(gen::signal_object * pobj)
+   __STATIC inline WINBOOL IsButtonUp(gen::signal_object * pobj)
    {
       SCAST_PTR(user::lnx::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_LBUTTONUP;
@@ -1346,7 +1346,7 @@ void thread::Delete()
    /////////////////////////////////////////////////////////////////////////////
    // thread implementation helpers
 
-   BOOL thread::pump_message()
+   WINBOOL thread::pump_message()
    {
       try
       {
@@ -1556,7 +1556,7 @@ void thread::Delete()
 
    thread::operator HANDLE() const
    { return this == NULL ? NULL : m_hThread; }
-   BOOL thread::SetThreadPriority(int nPriority)
+   WINBOOL thread::SetThreadPriority(int nPriority)
    { ASSERT(m_hThread != NULL); return ::SetThreadPriority(m_hThread, nPriority); }
    int thread::GetThreadPriority()
    { ASSERT(m_hThread != NULL); return ::GetThreadPriority(m_hThread); }
@@ -1564,7 +1564,7 @@ void thread::Delete()
    { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
    DWORD thread::SuspendThread()
    { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
-   BOOL thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
+   WINBOOL thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
    { ASSERT(m_hThread != NULL); return ::PostThreadMessage(m_nThreadID, message, wParam, lParam); }
 
    void thread::set_os_data(void * pvoidOsData)
@@ -1595,7 +1595,7 @@ void thread::Delete()
    {
       ++m_nTempMapLock;
    }
-   BOOL thread::UnlockTempMaps(BOOL bDeleteTemp)
+   WINBOOL thread::UnlockTempMaps(WINBOOL bDeleteTemp)
    {
       if (m_nTempMapLock != 0 && --m_nTempMapLock == 0)
    {
@@ -1629,7 +1629,7 @@ void thread::Delete()
             }
 
             // undo handler trap for the following allocation
-            BOOL bEnable = AfxEnableMemoryTracking(FALSE);
+            WINBOOL bEnable = AfxEnableMemoryTracking(FALSE);
             try
             {
                pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
@@ -2285,11 +2285,11 @@ namespace gen { namespace pal {
 
 
 
-BOOL CLASS_DECL_VMSWIN AfxInternalPumpMessage();
+WINBOOL CLASS_DECL_VMSWIN AfxInternalPumpMessage();
 LRESULT CLASS_DECL_VMSWIN AfxInternalProcessWndProcException(base_exception*, const MSG* pMsg);
 void AfxInternalPreTranslateMessage(gen::signal_object * pobj);
-BOOL AfxInternalIsIdleMessage(gen::signal_object * pobj);
-BOOL AfxInternalIsIdleMessage(LPMSG lpmsg);
+WINBOOL AfxInternalIsIdleMessage(gen::signal_object * pobj);
+WINBOOL AfxInternalIsIdleMessage(LPMSG lpmsg);
 
 
 /*thread* CLASS_DECL_VMSWIN System.GetThread()
@@ -2307,7 +2307,7 @@ ASSERT(pState);
 return &(pState->m_msgCur);
 }
 
-BOOL CLASS_DECL_VMSWIN AfxInternalPumpMessage()
+WINBOOL CLASS_DECL_VMSWIN AfxInternalPumpMessage()
 {
 _AFX_THREAD_STATE *pState = AfxGetThreadState();
 
@@ -2344,7 +2344,7 @@ if (pState->m_msgCur.message != WM_KICKIDLE && !AfxPreTranslateMessage(&(pState-
 return TRUE;
 }
 
-BOOL CLASS_DECL_VMSWIN AfxPumpMessage()
+WINBOOL CLASS_DECL_VMSWIN AfxPumpMessage()
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2376,7 +2376,7 @@ return pThread->ProcessWndProcException( e, pMsg );
 else
 return AfxInternalProcessWndProcException( e, pMsg );
 }
-BOOL AfxInternalPreTranslateMessage(MSG* pMsg)
+WINBOOL AfxInternalPreTranslateMessage(MSG* pMsg)
 {
 //   ASSERT_VALID(this);
 
@@ -2405,7 +2405,7 @@ return pMainWnd->pre_translate_message(pMsg);
 return FALSE;   // no special processing
 }
 
-BOOL __cdecl AfxPreTranslateMessage(MSG* pMsg)
+WINBOOL __cdecl AfxPreTranslateMessage(MSG* pMsg)
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2414,7 +2414,7 @@ else
 return AfxInternalPreTranslateMessage( pMsg );
 }
 
-BOOL AfxInternalIsIdleMessage(MSG* pMsg)
+WINBOOL AfxInternalIsIdleMessage(MSG* pMsg)
 {
 // Return FALSE if the message just dispatched should _not_
 // cause on_idle to be run.  Messages which do not usually
@@ -2438,7 +2438,7 @@ return TRUE;
 return pMsg->message != WM_PAINT && pMsg->message != 0x0118;
 }
 
-BOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
+WINBOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2482,7 +2482,7 @@ return NULL;
 }*/
 
 /*
-void CLASS_DECL_VMSWIN AfxEndThread(UINT nExitCode, BOOL bDelete)
+void CLASS_DECL_VMSWIN AfxEndThread(UINT nExitCode, WINBOOL bDelete)
 {
 #ifndef _MT
 nExitCode;
@@ -2530,7 +2530,7 @@ _AfxMsgFilterHook, NULL, ::GetCurrentThreadId());
 
 
 
-BOOL thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
+WINBOOL thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 #ifndef _MT
@@ -2643,7 +2643,7 @@ ASSERT_VALID(this);
 _AFX_THREAD_STATE* pState = AfxGetThreadState();
 
 // for tracking the idle time state
-BOOL bIdle = TRUE;
+WINBOOL bIdle = TRUE;
 LONG lIdleCount = 0;
 
 // acquire and dispatch messages until a WM_QUIT message is received.
@@ -2680,7 +2680,7 @@ m_ptimera->check();
 }
 }
 
-BOOL thread::is_idle_message(MSG* pMsg)
+WINBOOL thread::is_idle_message(MSG* pMsg)
 {
 return AfxInternalIsIdleMessage(pMsg);
 }
@@ -2702,7 +2702,7 @@ int nResult = (int)AfxGetCurrentMessage()->wParam;  // returns the value from Po
 return nResult;
 }
 
-BOOL thread::on_idle(LONG lCount)
+WINBOOL thread::on_idle(LONG lCount)
 {
 ASSERT_VALID(this);
 
@@ -2774,7 +2774,7 @@ return ::user::lnx::message::PrototypeNone;
 }
 
 
-BOOL thread::DispatchThreadMessageEx(MSG* pmsg)
+WINBOOL thread::DispatchThreadMessageEx(MSG* pmsg)
 {
 if(pmsg->message == WM_APP + 1984 && pmsg->wParam == 77)
 {
@@ -2847,7 +2847,7 @@ break;
 return true;
 }
 
-BOOL thread::pre_translate_message(gen::signal_object * pobj)
+WINBOOL thread::pre_translate_message(gen::signal_object * pobj)
 {
 ASSERT_VALID(this);
 return AfxInternalPreTranslateMessage( pMsg );
@@ -2877,7 +2877,7 @@ LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam)
    return lresult;
 }
 
-__STATIC BOOL CLASS_DECL_VMSWIN IsHelpKey(LPMSG lpMsg)
+__STATIC WINBOOL CLASS_DECL_VMSWIN IsHelpKey(LPMSG lpMsg)
 // return TRUE only for non-repeat F1 keydowns.
 {
    return lpMsg->message == WM_KEYDOWN &&
@@ -2888,9 +2888,9 @@ __STATIC BOOL CLASS_DECL_VMSWIN IsHelpKey(LPMSG lpMsg)
       GetKeyState(VK_MENU) >= 0;
 }
 
-__STATIC inline BOOL IsEnterKey(LPMSG lpMsg)
+__STATIC inline WINBOOL IsEnterKey(LPMSG lpMsg)
 { return lpMsg->message == WM_KEYDOWN && lpMsg->wParam == VK_RETURN; }
 
-__STATIC inline BOOL IsButtonUp(LPMSG lpMsg)
+__STATIC inline WINBOOL IsButtonUp(LPMSG lpMsg)
 { return lpMsg->message == WM_LBUTTONUP; }
 
