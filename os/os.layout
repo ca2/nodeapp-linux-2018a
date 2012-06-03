@@ -7,13 +7,13 @@
 	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="2">
 		<Cursor position="840" topLine="12" />
 	</File>
-	<File name="../operational_system/cross/win/win.h" open="1" top="0" tabpos="7">
-		<Cursor position="82" topLine="0" />
+	<File name="../operational_system/cross/win/win.h" open="1" top="0" tabpos="2">
+		<Cursor position="15" topLine="0" />
 	</File>
 	<File name="../operational_system/cross/win/win_base.h" open="0" top="0" tabpos="0">
 		<Cursor position="3529" topLine="81" />
 	</File>
-	<File name="../operational_system/cross/win/win_crtdefs.h" open="1" top="0" tabpos="11">
+	<File name="../operational_system/cross/win/win_crtdefs.h" open="1" top="0" tabpos="3">
 		<Cursor position="4347" topLine="154" />
 	</File>
 	<File name="../operational_system/cross/win/win_def.h" open="0" top="0" tabpos="0">
@@ -34,8 +34,8 @@
 	<File name="../operational_system/cross/win/win_nls.h" open="0" top="0" tabpos="0">
 		<Cursor position="90255" topLine="2538" />
 	</File>
-	<File name="../operational_system/cross/win/win_nt.h" open="1" top="0" tabpos="6">
-		<Cursor position="137555" topLine="4290" />
+	<File name="../operational_system/cross/win/win_nt.h" open="1" top="0" tabpos="1">
+		<Cursor position="169115" topLine="5346" />
 	</File>
 	<File name="../operational_system/cross/win/win_user.h" open="0" top="0" tabpos="1">
 		<Cursor position="137" topLine="0" />
