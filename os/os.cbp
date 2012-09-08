@@ -31,6 +31,7 @@
 		<Unit filename="../operational_system/_.h" />
 		<Unit filename="../operational_system/bare_operational_system.h" />
 		<Unit filename="../operational_system/cross/win/base_tsd.h" />
+		<Unit filename="../operational_system/cross/win/ntstatus.h" />
 		<Unit filename="../operational_system/cross/win/win.h" />
 		<Unit filename="../operational_system/cross/win/win_base.h" />
 		<Unit filename="../operational_system/cross/win/win_crt.h" />
@@ -45,7 +46,6 @@
 		<Unit filename="../operational_system/cross/win/win_nt.h" />
 		<Unit filename="../operational_system/cross/win/win_user.h" />
 		<Unit filename="../operational_system/get_platform.h" />
-		<Unit filename="../operational_system/linux_system.h" />
 		<Unit filename="../operational_system/operational_system.h" />
 		<Unit filename="../operational_system/version.h" />
 		<Unit filename="../operational_system/version_configuration.h" />

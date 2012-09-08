@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
-		<Project filename="../../appseed/c/_.cbp" />
-		<Project filename="../../../nodeapp/os/os.cbp">
-			<Depends filename="../../appseed/c/_.cbp" />
-			<Depends filename="../../appseed/ca/ca.cbp" />
+		<Project filename="../../os/os.cbp">
+			<Depends filename="../../../app/appseed/c/_.cbp" />
+			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 		</Project>
-		<Project filename="../../appseed/ca/ca.cbp" active="1">
-			<Depends filename="../../appseed/c/_.cbp" />
+		<Project filename="../../../app/appseed/c/_.cbp" />
+		<Project filename="../../../app/appseed/ca/ca.cbp" active="1">
+			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
