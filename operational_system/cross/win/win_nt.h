@@ -40,7 +40,8 @@ extern "C" {
 #define NTSYSAPI DECLSPEC_IMPORT
 #endif
 
-#define NTAPI __stdcall
+//#define NTAPI __stdcall
+#define NTAPI
 
 #ifndef MIDL_PASS
 # if defined(_MSC_VER)

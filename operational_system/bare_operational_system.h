@@ -3,33 +3,8 @@
 
 
 
-#undef _GNU_SOURCE
 
-
-
-
-# undef  _ISOC95_SOURCE
-# define _ISOC95_SOURCE	1
-# undef  _ISOC99_SOURCE
-# define _ISOC99_SOURCE	1
-# undef  _POSIX_SOURCE
-# define _POSIX_SOURCE	1
-# undef  _POSIX_C_SOURCE
-# define _POSIX_C_SOURCE	200809L
-# undef  _XOPEN_SOURCE
-# define _XOPEN_SOURCE	700
-# undef  _XOPEN_SOURCE_EXTENDED
-# define _XOPEN_SOURCE_EXTENDED	1
-# undef	 _LARGEFILE64_SOURCE
-# define _LARGEFILE64_SOURCE	1
-# undef  _BSD_SOURCE
-//# define _BSD_SOURCE	1
-# undef  _SVID_SOURCE
-# define _SVID_SOURCE	1
-# undef  _ATFILE_SOURCE
-# define _ATFILE_SOURCE	1
-
-
+#include <features.h>
 
 
 #include <stdlib.h>
@@ -43,6 +18,9 @@
 #include <errno.h>
 #include <malloc.h>
 #include <inttypes.h>
+#include <sys/time.h>
+#include <pthread.h>
+#include <sys/resource.h>
 
 
 #define _gmtime64 gmtime
@@ -54,6 +32,50 @@
 typedef unsigned long XID;
 #endif
 #endif
+
+
+#pragma once
+
+
+
+#if defined(_LP64)
+
+    typedef long int int_ptr, *pint_ptr;
+    typedef unsigned long int uint_ptr, *puint_ptr;
+
+    typedef long long long_ptr, *plong_ptr;
+    typedef unsigned long long ulong_ptr, *pulong_ptr;
+
+#else
+
+    typedef int int_ptr, *pint_ptr;
+    typedef unsigned int uint_ptr, *puint_ptr;
+
+    typedef long long_ptr, *plong_ptr;
+    typedef unsigned int ulong_ptr, *pulong_ptr;
+
+#endif
+
+
+//typedef void * HANDLE;
+//typedef void * HDC;
+typedef unsigned char BYTE;
+typedef unsigned int UINT;
+//typedef int_ptr WPARAM;
+//typedef int_ptr LPARAM;
+
+
+
+#define __cdecl
+#define _stdcall
+
+// dbg alloc MS VC CRT
+#define _NORMAL_BLOCK  1
+
+
+
+
+
 
 struct device_context;
 
@@ -276,3 +298,88 @@ typedef unsigned char   u_char;
 typedef unsigned short  u_short;
 typedef unsigned int    u_int;
 typedef unsigned long   u_long;
+
+
+#define DECL_C
+
+
+#define _PRE_WIDEN(x) L##x
+#define _WIDEN(x) _PRE_WIDEN(x)
+
+#define NOTHROW throw()
+#define THROWS // gnucc null throw statement means that the function can throw any exception
+
+
+#ifdef DEBUG
+
+#define RELEASENOTHROW
+
+#else
+
+#define RELEASENOTHROW throw()
+
+#endif
+
+
+#define DWORD     uint32_t
+
+#define BYTE      uint8_t
+
+//#define NULL 0
+
+#define _strcmpi strcasecmp
+
+
+#define __forceinline inline
+
+
+#if defined(__LP64__) || defined(_LP64)
+
+#if !defined(__LP64__)
+#define __LP64__
+#endif
+
+#if !defined(_LP64)
+#define _LP64
+#endif
+
+
+typedef uint64_t dword_ptr;
+
+
+
+
+#else
+
+
+#define _X86_
+
+
+typedef uint32_t dword_ptr;
+
+
+#define __int3264   int32_t
+
+
+#endif
+
+
+typedef uint8_t byte;
+
+
+typedef void * PVOID;
+
+
+#define _strcmpi strcasecmp
+
+
+#define PURE = 0
+
+
+#define __stdcall
+
+
+#include "cross/win/win.h"
+
+
+

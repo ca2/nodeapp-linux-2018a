@@ -218,6 +218,7 @@ typedef int errno_t;
 
 
 MY_EXTERN_C DWORD GetLastError();
+MY_EXTERN_C DWORD SetLastError(DWORD dw);
 
 
 #define MAKELPARAM(x, y)            ((x & 0xffff) |((y & 0xffff) << 16))
@@ -251,3 +252,7 @@ MY_EXTERN_C DWORD GetLastError();
 #define c_cdecl __cdecl
 
 //#define c_decl __cdecl
+
+
+
+#include "ntstatus.h"
