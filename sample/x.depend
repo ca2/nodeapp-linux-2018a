@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1347129905 source:/ca2/nodeapp/sample/x.cpp
+	<X11/Xlib.h>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
