@@ -5,7 +5,7 @@
 		<Cursor position="44" topLine="0" />
 	</File>
 	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="2">
-		<Cursor position="6286" topLine="345" />
+		<Cursor position="1351" topLine="69" />
 	</File>
 	<File name="../operational_system/cross/win/ntstatus.h" open="0" top="0" tabpos="0">
 		<Cursor position="8073" topLine="125" />
@@ -32,7 +32,7 @@
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="../operational_system/cross/win/win_gdi.h" open="0" top="0" tabpos="5">
-		<Cursor position="17787" topLine="642" />
+		<Cursor position="14160" topLine="491" />
 	</File>
 	<File name="../operational_system/cross/win/win_mmsystem.h" open="0" top="0" tabpos="0">
 		<Cursor position="903" topLine="22" />
@@ -125,7 +125,7 @@
 		<Cursor position="2615" topLine="11" />
 	</File>
 	<File name="bitmap.h" open="0" top="0" tabpos="0">
-		<Cursor position="1156" topLine="0" />
+		<Cursor position="149" topLine="0" />
 	</File>
 	<File name="brush.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="2311" topLine="21" />
@@ -146,7 +146,7 @@
 		<Cursor position="3826" topLine="91" />
 	</File>
 	<File name="draw_dib.h" open="0" top="0" tabpos="0">
-		<Cursor position="1816" topLine="11" />
+		<Cursor position="543" topLine="4" />
 	</File>
 	<File name="dumpinit.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="4073" topLine="108" />
@@ -173,7 +173,7 @@
 		<Cursor position="4355" topLine="101" />
 	</File>
 	<File name="graphics_object.h" open="0" top="0" tabpos="0">
-		<Cursor position="1320" topLine="0" />
+		<Cursor position="277" topLine="0" />
 	</File>
 	<File name="handle.h" open="0" top="0" tabpos="0">
 		<Cursor position="12314" topLine="369" />
@@ -230,7 +230,7 @@
 		<Cursor position="9370" topLine="293" />
 	</File>
 	<File name="thread.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="82970" topLine="2847" />
+		<Cursor position="39876" topLine="1355" />
 	</File>
 	<File name="thread.h" open="0" top="0" tabpos="0">
 		<Cursor position="6387" topLine="132" />
@@ -251,7 +251,7 @@
 		<Cursor position="196176" topLine="5804" />
 	</File>
 	<File name="window.h" open="0" top="0" tabpos="0">
-		<Cursor position="31499" topLine="641" />
+		<Cursor position="451" topLine="0" />
 	</File>
 	<File name="window_draw.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="18285" topLine="585" />
