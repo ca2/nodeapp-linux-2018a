@@ -1,12 +1,15 @@
 #pragma once
 
+
 namespace win
 {
 
+
    CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
-   //CLASS_DECL_VMSWIN void _AfxStandardSubclass(HWND);
+   //CLASS_DECL_VMSWIN void _AfxStandardSubclass(void * );
    CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
-   CLASS_DECL_VMSWIN LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_VMSWIN LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+
 
    class CLASS_DECL_VMSWIN window :
       virtual public ::ca::window,
@@ -23,7 +26,7 @@ namespace win
 
       window();
       window(::ca::application * papp);
-      virtual void construct(HWND hwnd);
+      virtual void construct(void * hwnd);
 
       virtual void on_delete(::ca::ca * poc);
 
@@ -47,7 +50,7 @@ namespace win
       //virtual ::user::interaction * GetOwner();
       virtual void SetOwner(::user::interaction * pOwnerWnd);
 
-      virtual HWND _get_handle();
+      virtual void * _get_handle();
 
       virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);
 
@@ -73,17 +76,17 @@ namespace win
       virtual ::ca::window * from_os_data(void * pdata);
       virtual void * get_os_data() const;
 
-      static window * PASCAL from_handle(HWND hWnd);
-      static window * PASCAL FromHandlePermanent(HWND hWnd);
+      static window * PASCAL from_handle(void * hWnd);
+      static window * PASCAL FromHandlePermanent(void * hWnd);
       static void PASCAL DeleteTempMap();
-      WINBOOL Attach(HWND hWndNew);
-      HWND Detach();
+      WINBOOL Attach(void * hWndNew);
+      void * Detach();
 
       // subclassing/unsubclassing functions
       virtual void pre_subclass_window();
-      WINBOOL SubclassWindow(HWND hWnd);
+      WINBOOL SubclassWindow(void *  hWnd);
       WINBOOL SubclassDlgItem(UINT nID, ::ca::window * pParent);
-      HWND UnsubclassWindow();
+      void * UnsubclassWindow();
 
       // handling of RT_DLGINIT resource (extension to RT_DIALOG)
       WINBOOL ExecuteDlgInit(const char * lpszResourceName);
@@ -91,23 +94,12 @@ namespace win
 
       using ::user::interaction::create;
       // for child windows, views, panes etc
-      virtual WINBOOL create(const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
-         const RECT& rect,
-         ::user::interaction * pParentWnd, id id,
-         create_context* pContext = NULL);
+      virtual WINBOOL create(const char * lpszClassName, const char * lpszWindowName, DWORD dwStyle, const RECT& rect, ::user::interaction * pParentWnd, id id, create_context* pContext = NULL);
 
       // advanced creation (allows access to extended styles)
-      virtual WINBOOL CreateEx(DWORD dwExStyle, const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
-         int x, int y, int nWidth, int nHeight,
-         HWND hWndParent, id id, LPVOID lpParam = NULL);
+      virtual WINBOOL CreateEx(DWORD dwExStyle, const char * lpszClassName, const char * lpszWindowName, DWORD dwStyle, int x, int y, int nWidth, int nHeight, void * hWndParent, id id, LPVOID lpParam = NULL);
 
-      virtual WINBOOL CreateEx(DWORD dwExStyle, const char * lpszClassName,
-         const char * lpszWindowName, DWORD dwStyle,
-         const RECT& rect,
-         ::user::interaction* pParentWnd, id id,
-         LPVOID lpParam = NULL);
+      virtual WINBOOL CreateEx(DWORD dwExStyle, const char * lpszClassName, const char * lpszWindowName, DWORD dwStyle, const RECT& rect, ::user::interaction* pParentWnd, id id, LPVOID lpParam = NULL);
 
       virtual WINBOOL DestroyWindow();
 
@@ -121,8 +113,8 @@ namespace win
 
          // get immediate child with given ID
       using ::user::interaction::GetDlgItem;
-      void GetDlgItem(id id, HWND* phWnd) const;
-         // as above, but returns HWND
+      void GetDlgItem(id id, void ** phWnd) const;
+         // as above, but returns void *
       using ::user::interaction::GetDescendantWindow;
       ::user::interaction * GetDescendantWindow(id id);
          // like GetDlgItem but recursive
@@ -135,7 +127,7 @@ namespace win
       ::user::interaction* GetTopLevelOwner();
       ::user::interaction* GetParentOwner();
       frame_window* GetTopLevelFrame();
-      static ::ca::window * PASCAL GetSafeOwner(::ca::window * pParent = NULL, HWND* pWndTop = NULL);
+      static ::ca::window * PASCAL GetSafeOwner(::ca::window * pParent = NULL, void ** pWndTop = NULL);
 
       virtual WINBOOL IsWindow();
 
@@ -172,8 +164,7 @@ namespace win
    // Window size and position Functions
       virtual bool IsIconic();
       virtual bool IsZoomed();
-      void MoveWindow(int x, int y, int nWidth, int nHeight,
-               WINBOOL bRepaint = TRUE);
+      void MoveWindow(int x, int y, int nWidth, int nHeight, WINBOOL bRepaint = TRUE);
       void MoveWindow(LPCRECT lpRect, WINBOOL bRepaint = TRUE);
       int SetWindowRgn(HRGN hRgn, WINBOOL bRedraw);
       int GetWindowRgn(HRGN hRgn);
@@ -232,9 +223,7 @@ namespace win
       virtual ::ca::graphics * GetDCEx(::ca::rgn* prgnClip, DWORD flags);
       virtual WINBOOL LockWindowUpdate();
       virtual void UnlockWindowUpdate();
-      virtual WINBOOL RedrawWindow(LPCRECT lpRectUpdate = NULL,
-         ::ca::rgn* prgnUpdate = NULL,
-         UINT flags = RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
+      virtual WINBOOL RedrawWindow(LPCRECT lpRectUpdate = NULL, ::ca::rgn* prgnUpdate = NULL, UINT flags = RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
       virtual WINBOOL EnableScrollBar(int nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
 
       virtual WINBOOL DrawAnimatedRects(int idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo);
@@ -257,8 +246,7 @@ namespace win
    #if(_WIN32_WINNT >= 0x0500)
 
       virtual WINBOOL SetLayeredWindowAttributes(COLORREF crKey, BYTE bAlpha, DWORD dwFlags);
-      virtual WINBOOL UpdateLayeredWindow(::ca::graphics * pDCDst, POINT *pptDst, SIZE *psize,
-         ::ca::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags);
+      virtual WINBOOL UpdateLayeredWindow(::ca::graphics * pDCDst, POINT *pptDst, SIZE *psize, ::ca::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags);
 
    #endif   // _WIN32_WINNT >= 0x0500
 
@@ -270,8 +258,7 @@ namespace win
 
 
    // Timer Functions
-      virtual uint_ptr SetTimer(uint_ptr nIDEvent, UINT nElapse,
-         void (CALLBACK* lpfnTimer)(HWND, UINT, uint_ptr, DWORD));
+      virtual uint_ptr SetTimer(uint_ptr nIDEvent, UINT nElapse, void (CALLBACK* lpfnTimer)(HWND, UINT, uint_ptr, DWORD));
       virtual WINBOOL KillTimer(uint_ptr nIDEvent);
 
    // Window State Functions
@@ -360,7 +347,7 @@ namespace win
       virtual ::ca::window * ChildWindowFromPoint(POINT point);
       virtual ::ca::window * ChildWindowFromPoint(POINT point, UINT nFlags);
       static ::ca::window * PASCAL FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      static ::ca::window * FindWindowEx(HWND hwndParent, HWND hwndChildAfter, const char * lpszClass, const char * lpszWindow);
+      static ::ca::window * FindWindowEx(void * hwndParent, void * hwndChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual ::user::interaction * GetNextWindow(UINT nFlag = GW_HWNDNEXT);
       virtual ::user::interaction * GetTopWindow();
@@ -391,8 +378,8 @@ namespace win
    #endif   // WINVER >= 0x0500
 
    // Clipboard Functions
-      virtual WINBOOL ChangeClipboardChain(HWND hWndNext);
-      virtual HWND SetClipboardViewer();
+      virtual WINBOOL ChangeClipboardChain(void * hWndNext);
+      virtual void * SetClipboardViewer();
       virtual WINBOOL OpenClipboard();
       static ::ca::window * PASCAL GetClipboardOwner();
       static ::ca::window * PASCAL GetClipboardViewer();
@@ -563,7 +550,7 @@ namespace win
 
    // Clipboard message handler member functions
       afx_msg void OnAskCbFormatName(__in UINT nMaxCount, __out_ecount_z(nMaxCount) LPTSTR lpszString);
-      afx_msg void OnChangeCbChain(HWND hWndRemove, HWND hWndAfter);
+      afx_msg void OnChangeCbChain(void * hWndRemove, void * hWndAfter);
       afx_msg void OnDestroyClipboard();
       afx_msg void OnDrawClipboard();
       afx_msg void OnHScrollClipboard(::ca::window * pClipAppWnd, UINT nSBCode, UINT nPos);
@@ -626,7 +613,7 @@ namespace win
       virtual WINBOOL OnChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
          // return TRUE if parent should not process this message
       WINBOOL ReflectChildNotify(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
-      static WINBOOL PASCAL ReflectLastMsg(HWND hWndChild, LRESULT* pResult = NULL);
+      static WINBOOL PASCAL ReflectLastMsg(void * hWndChild, LRESULT* pResult = NULL);
 
    // Implementation
       virtual ~window();
@@ -635,7 +622,7 @@ namespace win
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
    #endif
-      static WINBOOL PASCAL GrayCtlColor(HDC hDC, HWND hWnd, UINT nCtlColor,
+      static WINBOOL PASCAL GrayCtlColor(HDC hDC, void * hWnd, UINT nCtlColor,
          HBRUSH hbrGray, COLORREF clrText);
 
 
@@ -643,19 +630,19 @@ namespace win
       WINBOOL HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       WINBOOL IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(HWND hWndStop, gen::signal_object * pobj);
+      virtual void WalkPreTranslateTree(void * hWndStop, gen::signal_object * pobj);
       static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * hWnd, id id);
-      static void PASCAL SendMessageToDescendants(HWND hWnd, UINT message,
+      static void PASCAL SendMessageToDescendants(void * hWnd, UINT message,
          WPARAM wParam, LPARAM lParam, WINBOOL bDeep, WINBOOL bOnlyPerm);
       virtual WINBOOL IsFrameWnd(); // is_kind_of(&typeid(frame_window)))
       virtual void on_final_release();
-      static WINBOOL PASCAL ModifyStyle(HWND hWnd, DWORD dwRemove, DWORD dwAdd,
+      static WINBOOL PASCAL ModifyStyle(void * hWnd, DWORD dwRemove, DWORD dwAdd,
          UINT nFlags);
-      static WINBOOL PASCAL ModifyStyleEx(HWND hWnd, DWORD dwRemove, DWORD dwAdd,
+      static WINBOOL PASCAL ModifyStyleEx(void * hWnd, DWORD dwRemove, DWORD dwAdd,
          UINT nFlags);
       static void PASCAL _FilterToolTipMessage(MSG* pMsg, ::ca::window * pWnd);
       WINBOOL _EnableToolTips(WINBOOL bEnable, UINT nFlag);
-      static HWND PASCAL GetSafeOwner_(HWND hWnd, HWND* pWndTop);
+      static void * PASCAL GetSafeOwner_(void * hWnd, void ** pWndTop);
       void PrepareForHelp();
 
       //UINT m_nFlags;      // see WF_ flags above
@@ -676,18 +663,16 @@ namespace win
 
       // implementation of message dispatch/hooking
       CLASS_DECL_VMSWIN friend LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
-      //CLASS_DECL_VMSWIN friend void _AfxStandardSubclass(HWND);
+      //CLASS_DECL_VMSWIN friend void _AfxStandardSubclass(void *);
       CLASS_DECL_VMSWIN friend LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
-      CLASS_DECL_VMSWIN friend LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_VMSWIN friend LRESULT AfxCallWndProc(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       afx_msg LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);
       afx_msg LRESULT OnDisplayChange(WPARAM, LPARAM);
       afx_msg LRESULT OnDragList(WPARAM, LPARAM);
 
-      static WINBOOL CALLBACK GetAppsEnumWindowsProc(
-            HWND hwnd,
-            LPARAM lParam);
+      static WINBOOL CALLBACK GetAppsEnumWindowsProc(void * hwnd, PARAM lParam);
 
       static void get_app_wnda(user::HWNDArray & wnda);
 
@@ -702,4 +687,10 @@ namespace win
 
    };
 
+
+
+
 } // namespace win
+
+
+
