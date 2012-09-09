@@ -523,6 +523,12 @@ typedef struct tagBITMAPINFOHEADER{
         DWORD      biClrImportant;
 } BITMAPINFOHEADER, FAR *LPBITMAPINFOHEADER, *PBITMAPINFOHEADER;
 
+typedef struct tagBITMAPINFO {
+  BITMAPINFOHEADER bmiHeader;
+  RGBQUAD          bmiColors[1];
+} BITMAPINFO, *PBITMAPINFO;
+
+
 #if(WINVER >= 0x0400)
 typedef struct {
         DWORD        bV4Size;
@@ -575,6 +581,29 @@ typedef struct {
         DWORD        bV5ProfileSize;
         DWORD        bV5Reserved;
 } BITMAPV5HEADER, FAR *LPBITMAPV5HEADER, *PBITMAPV5HEADER;
+
+
+
+typedef struct tagBITMAPINFOHEADER{
+  DWORD biSize;
+  LONG  biWidth;
+  LONG  biHeight;
+  WORD  biPlanes;
+  WORD  biBitCount;
+  DWORD biCompression;
+  DWORD biSizeImage;
+  LONG  biXPelsPerMeter;
+  LONG  biYPelsPerMeter;
+  DWORD biClrUsed;
+  DWORD biClrImportant;
+} BITMAPINFOHEADER, *PBITMAPINFOHEADER;
+
+typedef struct tagBITMAPINFO {
+  BITMAPINFOHEADER bmiHeader;
+  RGBQUAD          bmiColors[1];
+} BITMAPINFO, *PBITMAPINFO;
+
+
 
 // Values for bV5CSType
 #define PROFILE_LINKED          'LINK'
