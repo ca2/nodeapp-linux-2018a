@@ -6,7 +6,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // ::ca::graphics_object subclasses (drawing tools)
 
-   class CLASS_DECL_VMSWIN pen :
+   class CLASS_DECL_VMSLNX pen :
       virtual public ::win::graphics_object,
       virtual public ::ca::pen
    {

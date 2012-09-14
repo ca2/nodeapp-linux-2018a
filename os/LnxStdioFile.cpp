@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "WinStdioFile.h"
 
 #include <errno.h>

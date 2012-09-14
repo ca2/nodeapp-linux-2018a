@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN graphics :
+   class CLASS_DECL_VMSLNX graphics :
       virtual public ::ca::graphics,
       virtual public hdc_handle
    {

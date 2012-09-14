@@ -6,7 +6,7 @@ namespace win
    /////////////////////////////////////////////////////////////////////////////
    // graphics_object abstract class for ::ca::graphics_sp SelectObject
 
-   class CLASS_DECL_VMSWIN graphics_object :
+   class CLASS_DECL_VMSLNX graphics_object :
       virtual public ::ca::graphics_object,
       virtual public hgdiobj_handle
    {

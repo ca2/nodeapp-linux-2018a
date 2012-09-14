@@ -2,8 +2,8 @@
 
 
 
-#include <Natupnp.h>
-#include <UPnP.h>
+//#include <Natupnp.h>
+//#include <UPnP.h>
 
 
 namespace win

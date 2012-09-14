@@ -5,13 +5,13 @@ namespace win
 {
 
 
-   CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
-   //CLASS_DECL_VMSWIN void _AfxStandardSubclass(void * );
-   CLASS_DECL_VMSWIN LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
-   CLASS_DECL_VMSWIN LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_VMSLNX LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
+   //CLASS_DECL_VMSLNX void _AfxStandardSubclass(void * );
+   CLASS_DECL_VMSLNX LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
+   CLASS_DECL_VMSLNX LRESULT AfxCallWndProc(::user::interaction * pWnd, HWND * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
-   class CLASS_DECL_VMSWIN window :
+   class CLASS_DECL_VMSLNX window :
       virtual public ::ca::window,
       virtual public hwnd_handle
    {
@@ -662,10 +662,10 @@ namespace win
 
 
       // implementation of message dispatch/hooking
-      CLASS_DECL_VMSWIN friend LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
-      //CLASS_DECL_VMSWIN friend void _AfxStandardSubclass(void *);
-      CLASS_DECL_VMSWIN friend LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
-      CLASS_DECL_VMSWIN friend LRESULT AfxCallWndProc(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_VMSLNX friend LRESULT CALLBACK _AfxSendMsgHook(int, WPARAM, LPARAM);
+      //CLASS_DECL_VMSLNX friend void _AfxStandardSubclass(void *);
+      CLASS_DECL_VMSLNX friend LRESULT CALLBACK _AfxCbtFilterHook(int, WPARAM, LPARAM);
+      CLASS_DECL_VMSLNX friend LRESULT AfxCallWndProc(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       afx_msg LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);

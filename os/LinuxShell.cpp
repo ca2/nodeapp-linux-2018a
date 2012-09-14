@@ -1,9 +1,4 @@
-// WindowsShell.cpp: implementation of the WindowsShell class.
-//
-//////////////////////////////////////////////////////////////////////
-
-#include "StdAfx.h"
-#include "WindowsShell.h"
+#include "framework.h"
 
 /***
 *int _validdrive( unsigned drive ) -

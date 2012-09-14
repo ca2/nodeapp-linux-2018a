@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN brush :
+   class CLASS_DECL_VMSLNX brush :
       virtual public ::win::graphics_object,
       virtual public ::ca::brush
    {

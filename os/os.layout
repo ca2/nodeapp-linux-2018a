@@ -40,14 +40,14 @@
 	<File name="../operational_system/cross/win/win_nls.h" open="0" top="0" tabpos="0">
 		<Cursor position="90255" topLine="2538" />
 	</File>
-	<File name="../operational_system/cross/win/win_nt.h" open="0" top="0" tabpos="1">
-		<Cursor position="167314" topLine="5301" />
+	<File name="../operational_system/cross/win/win_nt.h" open="1" top="0" tabpos="55">
+		<Cursor position="21004" topLine="647" />
 	</File>
 	<File name="../operational_system/cross/win/win_user.h" open="0" top="0" tabpos="1">
 		<Cursor position="33496" topLine="1185" />
 	</File>
-	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="10">
-		<Cursor position="334" topLine="0" />
+	<File name="../operational_system/get_platform.h" open="1" top="0" tabpos="83">
+		<Cursor position="15" topLine="0" />
 	</File>
 	<File name="../operational_system/operational_system.h" open="0" top="0" tabpos="25">
 		<Cursor position="40" topLine="0" />
@@ -62,201 +62,255 @@
 		<Cursor position="17331" topLine="488" />
 	</File>
 	<File name="LinuxShell.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="19135" topLine="583" />
+		<Cursor position="24" topLine="0" />
 	</File>
-	<File name="LinuxShell.h" open="0" top="0" tabpos="0">
-		<Cursor position="7892" topLine="190" />
+	<File name="LinuxShell.h" open="1" top="0" tabpos="56">
+		<Cursor position="73" topLine="4" />
 	</File>
 	<File name="LnxBrush.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="155" topLine="0" />
 	</File>
 	<File name="LnxFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="42325" topLine="1346" />
+		<Cursor position="41609" topLine="1329" />
 	</File>
-	<File name="LnxFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="4351" topLine="110" />
+	<File name="LnxFile.h" open="1" top="0" tabpos="57">
+		<Cursor position="3007" topLine="63" />
 	</File>
-	<File name="LnxFileSystem.h" open="0" top="0" tabpos="0">
-		<Cursor position="41" topLine="0" />
+	<File name="LnxFileSet.cpp" open="1" top="0" tabpos="8">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="LnxResource.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="5667" topLine="178" />
+	<File name="LnxFileSet.h" open="1" top="0" tabpos="54">
+		<Cursor position="39" topLine="0" />
 	</File>
-	<File name="LnxStdioFile.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="411" topLine="0" />
+	<File name="LnxFileSystem.cpp" open="1" top="0" tabpos="9">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="LnxFileSystem.h" open="1" top="0" tabpos="58">
+		<Cursor position="317" topLine="0" />
+	</File>
+	<File name="LnxResource.cpp" open="1" top="0" tabpos="10">
+		<Cursor position="5467" topLine="176" />
+	</File>
+	<File name="LnxResource.h" open="1" top="0" tabpos="59">
+		<Cursor position="241" topLine="0" />
+	</File>
+	<File name="LnxStdioFile.cpp" open="1" top="0" tabpos="11">
+		<Cursor position="22" topLine="0" />
 	</File>
 	<File name="LnxStdioFile.h" open="0" top="0" tabpos="0">
-		<Cursor position="924" topLine="0" />
+		<Cursor position="16" topLine="0" />
 	</File>
-	<File name="UACTools.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="11115" topLine="350" />
+	<File name="StdAfx.cpp" open="1" top="0" tabpos="12">
+		<Cursor position="207" topLine="0" />
 	</File>
-	<File name="UACTools.h" open="0" top="0" tabpos="0">
-		<Cursor position="7424" topLine="158" />
+	<File name="UACTools.cpp" open="1" top="0" tabpos="13">
+		<Cursor position="3680" topLine="97" />
 	</File>
-	<File name="WFileFind.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="5494" topLine="190" />
+	<File name="UACTools.h" open="1" top="0" tabpos="60">
+		<Cursor position="7442" topLine="164" />
 	</File>
-	<File name="WFileFind.h" open="0" top="0" tabpos="0">
-		<Cursor position="2453" topLine="31" />
+	<File name="WFileFind.cpp" open="1" top="0" tabpos="14">
+		<Cursor position="156" topLine="4" />
 	</File>
-	<File name="afxmem.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="965" topLine="0" />
+	<File name="WFileFind.h" open="1" top="0" tabpos="61">
+		<Cursor position="39" topLine="2" />
 	</File>
-	<File name="afxstate.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="11415" topLine="362" />
+	<File name="afxabort.cpp" open="1" top="0" tabpos="15">
+		<Cursor position="113" topLine="0" />
 	</File>
-	<File name="appinit.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="198" topLine="0" />
+	<File name="afxmem.cpp" open="1" top="0" tabpos="16">
+		<Cursor position="986" topLine="0" />
 	</File>
-	<File name="application.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="25774" topLine="824" />
+	<File name="afxstate.cpp" open="1" top="0" tabpos="17">
+		<Cursor position="11796" topLine="387" />
 	</File>
-	<File name="application.h" open="0" top="0" tabpos="0">
-		<Cursor position="5129" topLine="140" />
+	<File name="appcore.cpp" open="1" top="0" tabpos="18">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="appmodul.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="807" topLine="0" />
+	<File name="appinit.cpp" open="1" top="0" tabpos="19">
+		<Cursor position="531" topLine="0" />
 	</File>
-	<File name="appterm.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1300" topLine="2" />
+	<File name="application.cpp" open="1" top="0" tabpos="20">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="bitmap.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2615" topLine="11" />
+	<File name="application.h" open="1" top="0" tabpos="62">
+		<Cursor position="311" topLine="10" />
 	</File>
-	<File name="bitmap.h" open="0" top="0" tabpos="0">
-		<Cursor position="149" topLine="0" />
+	<File name="appmodul.cpp" open="1" top="0" tabpos="21">
+		<Cursor position="780" topLine="0" />
 	</File>
-	<File name="brush.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2311" topLine="21" />
+	<File name="appterm.cpp" open="1" top="0" tabpos="22">
+		<Cursor position="1129" topLine="2" />
 	</File>
-	<File name="brush.h" open="0" top="0" tabpos="0">
-		<Cursor position="1003" topLine="0" />
+	<File name="bitmap.cpp" open="1" top="0" tabpos="23">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="dib.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4255" topLine="128" />
+	<File name="bitmap.h" open="1" top="0" tabpos="63">
+		<Cursor position="62" topLine="0" />
 	</File>
-	<File name="dib.h" open="0" top="0" tabpos="0">
-		<Cursor position="2897" topLine="41" />
+	<File name="brush.cpp" open="1" top="0" tabpos="24">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="dir.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="23765" topLine="733" />
+	<File name="brush.h" open="1" top="0" tabpos="64">
+		<Cursor position="62" topLine="0" />
 	</File>
-	<File name="draw_dib.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3826" topLine="91" />
+	<File name="dib.cpp" open="1" top="0" tabpos="25">
+		<Cursor position="1030" topLine="8" />
+	</File>
+	<File name="dib.h" open="1" top="0" tabpos="65">
+		<Cursor position="337" topLine="11" />
+	</File>
+	<File name="dir.cpp" open="1" top="0" tabpos="26">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="dir.h" open="1" top="0" tabpos="81">
+		<Cursor position="36" topLine="0" />
+	</File>
+	<File name="draw_dib.cpp" open="1" top="0" tabpos="27">
+		<Cursor position="22" topLine="0" />
 	</File>
 	<File name="draw_dib.h" open="0" top="0" tabpos="0">
-		<Cursor position="543" topLine="4" />
+		<Cursor position="373" topLine="0" />
 	</File>
-	<File name="dumpinit.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4073" topLine="108" />
+	<File name="dumpinit.cpp" open="1" top="0" tabpos="28">
+		<Cursor position="3739" topLine="108" />
 	</File>
-	<File name="except.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1545" topLine="3" />
+	<File name="except.cpp" open="1" top="0" tabpos="29">
+		<Cursor position="1455" topLine="6" />
 	</File>
-	<File name="font.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3972" topLine="58" />
+	<File name="factory_exchange.cpp" open="1" top="0" tabpos="30">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="font.h" open="0" top="0" tabpos="0">
-		<Cursor position="920" topLine="0" />
+	<File name="factory_exchange.h" open="1" top="0" tabpos="66">
+		<Cursor position="62" topLine="0" />
 	</File>
-	<File name="genResource.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4008" topLine="104" />
+	<File name="folder_watch.cpp" open="1" top="0" tabpos="31">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="graphics.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="85017" topLine="2051" />
+	<File name="folder_watch.h" open="1" top="0" tabpos="67">
+		<Cursor position="62" topLine="0" />
 	</File>
-	<File name="graphics.h" open="0" top="0" tabpos="0">
-		<Cursor position="20476" topLine="399" />
+	<File name="font.cpp" open="1" top="0" tabpos="32">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="graphics_object.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="4355" topLine="101" />
+	<File name="font.h" open="1" top="0" tabpos="68">
+		<Cursor position="62" topLine="0" />
 	</File>
-	<File name="graphics_object.h" open="0" top="0" tabpos="0">
-		<Cursor position="277" topLine="0" />
+	<File name="framework.h" open="1" top="0" tabpos="7">
+		<Cursor position="151" topLine="0" />
 	</File>
-	<File name="handle.h" open="0" top="0" tabpos="0">
-		<Cursor position="12314" topLine="369" />
+	<File name="genResource.cpp" open="1" top="0" tabpos="33">
+		<Cursor position="3802" topLine="102" />
 	</File>
-	<File name="implementation.h" open="0" top="0" tabpos="0">
-		<Cursor position="1437" topLine="0" />
+	<File name="graphics.cpp" open="1" top="0" tabpos="34">
+		<Cursor position="84805" topLine="2047" />
 	</File>
-	<File name="lnx.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="105" topLine="0" />
+	<File name="graphics.h" open="1" top="0" tabpos="69">
+		<Cursor position="62" topLine="5" />
 	</File>
-	<File name="lnx.h" open="0" top="0" tabpos="0">
-		<Cursor position="4102" topLine="73" />
+	<File name="graphics_object.cpp" open="1" top="0" tabpos="35">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="lnx1.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2029" topLine="19" />
+	<File name="graphics_object.h" open="1" top="0" tabpos="70">
+		<Cursor position="219" topLine="0" />
 	</File>
-	<File name="lnx1.h" open="0" top="0" tabpos="0">
-		<Cursor position="4924" topLine="77" />
+	<File name="handle.cpp" open="1" top="0" tabpos="36">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="lnx2.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1669" topLine="2" />
+	<File name="handle.h" open="1" top="0" tabpos="85">
+		<Cursor position="12340" topLine="376" />
 	</File>
-	<File name="main.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="2079" topLine="24" />
+	<File name="implementation.h" open="1" top="0" tabpos="71">
+		<Cursor position="1517" topLine="0" />
 	</File>
-	<File name="palette.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="1796" topLine="0" />
+	<File name="lnx.cpp" open="1" top="0" tabpos="37">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="palette.h" open="0" top="0" tabpos="0">
-		<Cursor position="943" topLine="0" />
+	<File name="lnx.h" open="1" top="0" tabpos="82">
+		<Cursor position="800" topLine="10" />
 	</File>
-	<File name="pen.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="664" topLine="20" />
+	<File name="lnx1.cpp" open="1" top="0" tabpos="38">
+		<Cursor position="2433" topLine="38" />
 	</File>
-	<File name="pen.h" open="0" top="0" tabpos="0">
-		<Cursor position="867" topLine="0" />
+	<File name="lnx1.h" open="1" top="0" tabpos="72">
+		<Cursor position="2990" topLine="62" />
 	</File>
-	<File name="port_forward.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="39997" topLine="1289" />
+	<File name="lnx2.cpp" open="1" top="0" tabpos="39">
+		<Cursor position="1064" topLine="0" />
+	</File>
+	<File name="lnx_error.cpp" open="1" top="0" tabpos="40">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="lnx_internal.h" open="0" top="0" tabpos="0">
+		<Cursor position="264" topLine="0" />
+	</File>
+	<File name="main.cpp" open="1" top="0" tabpos="41">
+		<Cursor position="946" topLine="0" />
+	</File>
+	<File name="osi.cpp" open="1" top="0" tabpos="42">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="osi.h" open="1" top="0" tabpos="73">
+		<Cursor position="62" topLine="0" />
+	</File>
+	<File name="palette.cpp" open="1" top="0" tabpos="43">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="palette.h" open="1" top="0" tabpos="74">
+		<Cursor position="62" topLine="0" />
+	</File>
+	<File name="pen.cpp" open="1" top="0" tabpos="44">
+		<Cursor position="22" topLine="0" />
+	</File>
+	<File name="pen.h" open="1" top="0" tabpos="75">
+		<Cursor position="202" topLine="0" />
+	</File>
+	<File name="port_forward.cpp" open="1" top="0" tabpos="45">
+		<Cursor position="22" topLine="0" />
 	</File>
 	<File name="port_forward.h" open="0" top="0" tabpos="0">
-		<Cursor position="5317" topLine="82" />
+		<Cursor position="46" topLine="0" />
 	</File>
-	<File name="preview_dc.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="25034" topLine="806" />
+	<File name="preview_dc.cpp" open="1" top="0" tabpos="46">
+		<Cursor position="29596" topLine="949" />
 	</File>
-	<File name="rgn.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="3469" topLine="17" />
+	<File name="rgn.cpp" open="1" top="0" tabpos="47">
+		<Cursor position="22" topLine="0" />
 	</File>
 	<File name="rgn.h" open="0" top="0" tabpos="0">
 		<Cursor position="1520" topLine="0" />
 	</File>
-	<File name="state.h" open="0" top="0" tabpos="0">
-		<Cursor position="9370" topLine="293" />
+	<File name="state.h" open="1" top="0" tabpos="76">
+		<Cursor position="9519" topLine="304" />
 	</File>
-	<File name="thread.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="39876" topLine="1355" />
+	<File name="thread.cpp" open="1" top="0" tabpos="48">
+		<Cursor position="82512" topLine="2839" />
 	</File>
-	<File name="thread.h" open="0" top="0" tabpos="0">
-		<Cursor position="6387" topLine="132" />
+	<File name="thread.h" open="1" top="0" tabpos="77">
+		<Cursor position="6469" topLine="143" />
 	</File>
-	<File name="thread_local_storage.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="12635" topLine="394" />
+	<File name="thread_local_storage.cpp" open="1" top="0" tabpos="49">
+		<Cursor position="13109" topLine="418" />
 	</File>
-	<File name="thread_slots.h" open="0" top="0" tabpos="0">
-		<Cursor position="4688" topLine="119" />
+	<File name="thread_slots.h" open="1" top="1" tabpos="78">
+		<Cursor position="1493" topLine="15" />
 	</File>
-	<File name="trace.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="13520" topLine="350" />
+	<File name="trace.cpp" open="1" top="0" tabpos="50">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="util.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="5564" topLine="128" />
+	<File name="util.cpp" open="1" top="0" tabpos="51">
+		<Cursor position="4075" topLine="93" />
 	</File>
-	<File name="window.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="196176" topLine="5804" />
+	<File name="window.cpp" open="1" top="0" tabpos="52">
+		<Cursor position="195741" topLine="5793" />
 	</File>
-	<File name="window.h" open="0" top="0" tabpos="0">
-		<Cursor position="451" topLine="0" />
+	<File name="window.h" open="1" top="0" tabpos="79">
+		<Cursor position="31044" topLine="627" />
 	</File>
-	<File name="window_draw.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="18285" topLine="585" />
+	<File name="window_draw.cpp" open="1" top="0" tabpos="53">
+		<Cursor position="22" topLine="0" />
 	</File>
-	<File name="window_draw.h" open="0" top="0" tabpos="0">
-		<Cursor position="3758" topLine="88" />
+	<File name="window_draw.h" open="1" top="0" tabpos="80">
+		<Cursor position="140" topLine="10" />
 	</File>
 </CodeBlocks_layout_file>

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 extern thread_slot_data* _afxThreadData;
 

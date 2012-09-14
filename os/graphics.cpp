@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 namespace win
 {
@@ -2079,13 +2079,13 @@ namespace win
 
 
    // resource failure
-   void CLASS_DECL_VMSWIN AfxThrowResourceException()
+   void CLASS_DECL_VMSLNX AfxThrowResourceException()
    {
       throw resource_exception();
    }
 
    // ::fontopus::user alert
-   void CLASS_DECL_VMSWIN AfxThrowUserException()
+   void CLASS_DECL_VMSLNX AfxThrowUserException()
    {
       throw user_exception();
    }

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // __EXCEPTION_CONTEXT (thread global state)
@@ -27,7 +27,7 @@ __EXCEPTION_LINK::__EXCEPTION_LINK()
 
 
 // out-of-line cleanup called from inline __EXCEPTION_LINK destructor
-CLASS_DECL_VMSWIN void AfxTryCleanup()
+CLASS_DECL_VMSLNX void AfxTryCleanup()
 {
    __EXCEPTION_CONTEXT* pContext = AfxGetExceptionContext();
    __EXCEPTION_LINK* pLinkTop = pContext->m_pLinkTop;
@@ -44,7 +44,7 @@ CLASS_DECL_VMSWIN void AfxTryCleanup()
 }
 
 // special out-of-line implementation of THROW_LAST (for auto-delete behavior)
-void CLASS_DECL_VMSWIN AfxThrowLastCleanup()
+void CLASS_DECL_VMSLNX AfxThrowLastCleanup()
 {
    __EXCEPTION_CONTEXT* pContext = AfxGetExceptionContext();
    __EXCEPTION_LINK* pLinkTop = pContext->m_pLinkTop;

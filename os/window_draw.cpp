@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 class keep_event_reset
 {

@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN palette :
+   class CLASS_DECL_VMSLNX palette :
       virtual public ::win::graphics_object,
       virtual public ::ca::palette
    {

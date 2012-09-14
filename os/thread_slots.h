@@ -6,7 +6,6 @@
 
 // Classes declared in this file
 
-class simple_list;
 class thread_slot_data;                  // for manipulationg thread local storage
 class thread_local_object;               // for storing thread local data
 class process_local_object;              // for storing thread local data
@@ -22,7 +21,7 @@ class no_track_object;
 struct thread_data; // private to implementation
 struct slot_data;   // private to implementation
 
-class CLASS_DECL_VMSWIN thread_slot_data
+class CLASS_DECL_VMSLNX thread_slot_data
 {
 public:
    thread_slot_data();
@@ -55,7 +54,7 @@ public:
    ~thread_slot_data();
 };
 
-class CLASS_DECL_VMSWIN __NOVTABLE no_track_object
+class CLASS_DECL_VMSLNX __NOVTABLE no_track_object
 {
 public:
 #undef new
@@ -72,7 +71,7 @@ public:
     virtual ~no_track_object() {};
 };
 
-class CLASS_DECL_VMSWIN __NOVTABLE thread_local_object
+class CLASS_DECL_VMSLNX __NOVTABLE thread_local_object
 {
 public:
 // Attributes
@@ -84,7 +83,7 @@ public:
    ~thread_local_object();
 };
 
-class CLASS_DECL_VMSWIN __NOVTABLE process_local_object
+class CLASS_DECL_VMSLNX __NOVTABLE process_local_object
 {
 public:
 // Attributes
@@ -129,7 +128,7 @@ public:
 #define THREAD_LOCAL(class_name, ident_name) \
    __COMDAT thread_local<class_name> ident_name;
 #define EXTERN_THREAD_LOCAL(class_name, ident_name) \
-   extern CLASS_DECL_VMSWIN thread_local<class_name> ident_name;
+   extern CLASS_DECL_VMSLNX thread_local<class_name> ident_name;
 
 template<class TYPE>
 class process_local : public process_local_object
@@ -162,10 +161,10 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CLASS_DECL_VMSWIN AfxInitLocalData(HINSTANCE hInstInit);
-void CLASS_DECL_VMSWIN AfxTermLocalData(HINSTANCE hInstTerm, WINBOOL bAll = FALSE);
-void CLASS_DECL_VMSWIN AfxTlsAddRef();
-void CLASS_DECL_VMSWIN AfxTlsRelease();
+void CLASS_DECL_VMSLNX AfxInitLocalData(HINSTANCE hInstInit);
+void CLASS_DECL_VMSLNX AfxTermLocalData(HINSTANCE hInstTerm, WINBOOL bAll = FALSE);
+void CLASS_DECL_VMSLNX AfxTlsAddRef();
+void CLASS_DECL_VMSLNX AfxTlsRelease();
 
 #endif //__AFXTLS_H__
 

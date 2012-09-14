@@ -8,7 +8,7 @@ namespace user
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN window_draw :
+   class CLASS_DECL_VMSLNX window_draw :
       virtual public ::ca::window_draw,
       virtual public ::ca::message_window_simple_callback
    {

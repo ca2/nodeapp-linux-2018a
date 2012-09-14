@@ -2,35 +2,35 @@
 
 #define AfxDeferRegisterClass(fClass) AfxEndDeferRegisterClass(fClass)
 
-CLASS_DECL_VMSWIN WINBOOL AfxEndDeferRegisterClass(LONG fToRegister, const char ** ppszClass);
+CLASS_DECL_VMSLNX WINBOOL AfxEndDeferRegisterClass(LONG fToRegister, const char ** ppszClass);
 
 
 // Temporary ::collection::map management (locks temp ::collection::map on current thread)
-//CLASS_DECL_VMSWIN void AfxLockTempMaps(::radix::application * papp);
-//CLASS_DECL_VMSWIN WINBOOL AfxUnlockTempMaps(::radix::application * papp, WINBOOL bDeleteTemps = TRUE);
+//CLASS_DECL_VMSLNX void AfxLockTempMaps(::radix::application * papp);
+//CLASS_DECL_VMSLNX WINBOOL AfxUnlockTempMaps(::radix::application * papp, WINBOOL bDeleteTemps = TRUE);
 
 
 
 // from wincore.cpp
-extern CLASS_DECL_VMSWIN const char _afxWnd[];           // simple child windows/controls
-extern CLASS_DECL_VMSWIN const char _afxWndControlBar[]; // controls with gray backgrounds
-extern CLASS_DECL_VMSWIN const char _afxWndMDIFrame[];
-extern CLASS_DECL_VMSWIN const char _afxWndFrameOrView[];
-extern CLASS_DECL_VMSWIN const char _afxWndOleControl[];
+extern CLASS_DECL_VMSLNX const char _afxWnd[];           // simple child windows/controls
+extern CLASS_DECL_VMSLNX const char _afxWndControlBar[]; // controls with gray backgrounds
+extern CLASS_DECL_VMSLNX const char _afxWndMDIFrame[];
+extern CLASS_DECL_VMSLNX const char _afxWndFrameOrView[];
+extern CLASS_DECL_VMSLNX const char _afxWndOleControl[];
 
 
 /////////////////////////////////////////////////////////////////////////////
 // Special helpers
 
-CLASS_DECL_VMSWIN void AfxCancelModes(HWND hWndRcvr);
-CLASS_DECL_VMSWIN WINBOOL AfxHelpEnabled();  // determine if ID_HELP handler exists
-CLASS_DECL_VMSWIN WINBOOL AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont);
-CLASS_DECL_VMSWIN WINBOOL AfxGetPropSheetFont(string & strFace, WORD& wSize, WINBOOL bWizard);
+CLASS_DECL_VMSLNX void AfxCancelModes(HWND hWndRcvr);
+CLASS_DECL_VMSLNX WINBOOL AfxHelpEnabled();  // determine if ID_HELP handler exists
+CLASS_DECL_VMSLNX WINBOOL AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont);
+CLASS_DECL_VMSLNX WINBOOL AfxGetPropSheetFont(string & strFace, WORD& wSize, WINBOOL bWizard);
 
-CLASS_DECL_VMSWIN WINBOOL _AfxIsComboBoxControl(HWND hWnd, UINT nStyle);
-CLASS_DECL_VMSWIN WINBOOL _AfxCheckCenterDialog(const char * lpszResource);
-CLASS_DECL_VMSWIN WINBOOL _AfxCompareClassName(HWND hWnd, const char * lpszClassName);
-CLASS_DECL_VMSWIN HWND _AfxChildWindowFromPoint(HWND, POINT);
+CLASS_DECL_VMSLNX WINBOOL _AfxIsComboBoxControl(HWND hWnd, UINT nStyle);
+CLASS_DECL_VMSLNX WINBOOL _AfxCheckCenterDialog(const char * lpszResource);
+CLASS_DECL_VMSLNX WINBOOL _AfxCompareClassName(HWND hWnd, const char * lpszClassName);
+CLASS_DECL_VMSLNX HWND _AfxChildWindowFromPoint(HWND, POINT);
 
 // for determining version of COMCTL32.DLL
 #define VERSION_WIN4    MAKELONG(0, 4)

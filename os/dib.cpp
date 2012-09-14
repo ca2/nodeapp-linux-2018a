@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include <math.h>
 
 namespace win
@@ -46,7 +46,7 @@ namespace win
    }
 
 
-   CLASS_DECL_VMSWIN void dib::s_initialize()
+   CLASS_DECL_VMSLNX void dib::s_initialize()
    {
       double dCos;
       double dSin;

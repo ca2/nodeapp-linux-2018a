@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -135,7 +135,7 @@ _AFX_DEBUG_STATE::~_AFX_DEBUG_STATE()
 
 PROCESS_LOCAL(_AFX_DEBUG_STATE, afxDebugState)
 
-WINBOOL CLASS_DECL_VMSWIN AfxDiagnosticInit(void)
+WINBOOL CLASS_DECL_VMSLNX AfxDiagnosticInit(void)
 {
    // just get the debug state to cause initialization
    _AFX_DEBUG_STATE* pState = afxDebugState.get_data();
@@ -146,7 +146,7 @@ WINBOOL CLASS_DECL_VMSWIN AfxDiagnosticInit(void)
 
 
 
-#include "StdAfx.h"
+#include "framework.h"
 #include "sal.h"
 
 

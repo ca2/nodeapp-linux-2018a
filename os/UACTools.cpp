@@ -95,7 +95,7 @@ MODIFICATIONS:
       The first release.
 */
 
-#include "StdAfx.h"
+#include "framework.h"
 
 #ifdef IMPLEMENT_VISTA_TOOLS
 

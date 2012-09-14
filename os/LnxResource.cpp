@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 
 WinResource::WinResource(::ca::application * papp) :
@@ -151,7 +151,7 @@ bool WinResource::ReadResource(
 //} //namespace gen
 
 
-HINSTANCE CLASS_DECL_VMSWIN vfxFindResourceHandle(const char * lpszName, const char * lpszType)
+HINSTANCE CLASS_DECL_VMSLNX vfxFindResourceHandle(const char * lpszName, const char * lpszType)
 {
    ASSERT(lpszName != NULL);
    ASSERT(lpszType != NULL);
@@ -214,7 +214,7 @@ HINSTANCE CLASS_DECL_VMSWIN vfxFindResourceHandle(const char * lpszName, const c
    return CaSys(::win::get_thread()).m_hInstance;
 }
 
-/*HINSTANCE CLASS_DECL_VMSWIN vfxFindResourceHandle(const char * lpszName, const char * lpszType)
+/*HINSTANCE CLASS_DECL_VMSLNX vfxFindResourceHandle(const char * lpszName, const char * lpszType)
 {
    ASSERT(lpszName != NULL);
    ASSERT(lpszType != NULL);

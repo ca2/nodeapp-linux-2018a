@@ -1,6 +1,6 @@
 #pragma once
 
-class CLASS_DECL_VMSWIN WinFileSet : 
+class CLASS_DECL_VMSLNX WinFileSet :
    public ex2::file_set
 {
 public:

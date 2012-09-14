@@ -86,7 +86,7 @@ public:
 } // namespace win
 
 
-#include "radix/fixed_alloc.h"
+#include "radix/radix_fixed_alloc.h"
 
 template<class TYPE>
 struct ConstructDestruct
@@ -154,13 +154,13 @@ public:
    friend class ::radix::thread;
 };
 
-class CLASS_DECL_VMSWIN hwnd_map :
+class CLASS_DECL_VMSLNX hwnd_map :
    public handle_map < ::win::hwnd_handle, ::win::window >
 {
 public:
 };
 
-class CLASS_DECL_VMSWIN hdc_map :
+class CLASS_DECL_VMSLNX hdc_map :
    public handle_map < ::win::hdc_handle, ::win::graphics >
 {
 public:
@@ -409,8 +409,8 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 }
 
 
-CLASS_DECL_VMSWIN hwnd_map * PASCAL afxMapHWND(WINBOOL bCreate = FALSE);
-CLASS_DECL_VMSWIN himagelist_map * PASCAL afxMapHIMAGELIST(WINBOOL bCreate = FALSE);
-CLASS_DECL_VMSWIN hdc_map * PASCAL afxMapHDC(WINBOOL bCreate = FALSE);
-CLASS_DECL_VMSWIN hgdiobj_map * PASCAL afxMapHGDIOBJ(WINBOOL bCreate = FALSE);
-CLASS_DECL_VMSWIN hmenu_map * PASCAL afx_map_HMENU(WINBOOL bCreate = FALSE);
+CLASS_DECL_VMSLNX hwnd_map * PASCAL afxMapHWND(WINBOOL bCreate = FALSE);
+CLASS_DECL_VMSLNX himagelist_map * PASCAL afxMapHIMAGELIST(WINBOOL bCreate = FALSE);
+CLASS_DECL_VMSLNX hdc_map * PASCAL afxMapHDC(WINBOOL bCreate = FALSE);
+CLASS_DECL_VMSLNX hgdiobj_map * PASCAL afxMapHGDIOBJ(WINBOOL bCreate = FALSE);
+CLASS_DECL_VMSLNX hmenu_map * PASCAL afx_map_HMENU(WINBOOL bCreate = FALSE);

@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN bitmap :
+   class CLASS_DECL_VMSLNX bitmap :
       virtual public ::win::graphics_object,
       virtual public ::ca::bitmap
    {

@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "win1.h"
 
 namespace win
@@ -13,7 +13,7 @@ namespace win
       return ::LoadLibraryW(gen::international::utf8_to_unicode(lpsz));
    }
 
-   WINBOOL CLASS_DECL_VMSWIN SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, WINBOOL fCreate)
+   WINBOOL CLASS_DECL_VMSLNX SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, WINBOOL fCreate)
    {
       return ::SHGetSpecialFolderPathW(hwnd, wstringtou(str, MAX_PATH * 8), csidl, fCreate);
    }
@@ -76,7 +76,7 @@ namespace win
       return iLen;
    }*/
 
-   CLASS_DECL_VMSWIN void TimeToFileTime(::ca::application * papp, const class time& time, LPFILETIME pFileTime)
+   CLASS_DECL_VMSLNX void TimeToFileTime(::ca::application * papp, const class time& time, LPFILETIME pFileTime)
    {
          SYSTEMTIME sysTime;
          sysTime.wYear           = (WORD)time.GetYear();

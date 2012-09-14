@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 #undef USERNAME_LENGTH // mysql one
 

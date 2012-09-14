@@ -78,7 +78,7 @@ public:
 };
 
 // __MODULE_THREAD_STATE (local to thread *and* module)
-class CLASS_DECL_VMSWIN __MODULE_THREAD_STATE : public no_track_object
+class CLASS_DECL_VMSLNX __MODULE_THREAD_STATE : public no_track_object
 {
 public:
    __MODULE_THREAD_STATE();
@@ -140,7 +140,7 @@ class CComCtlWrapper;
 #endif
 class CCommDlgWrapper;
 
-class CLASS_DECL_VMSWIN CTypeLibCacheMap : public CMapPtrToPtr
+class CLASS_DECL_VMSLNX CTypeLibCacheMap : public CMapPtrToPtr
 {
 public:
    virtual void remove_all(void * pExcept);
@@ -148,7 +148,7 @@ public:
 
 
 // __MODULE_STATE (global data for a module)
-class CLASS_DECL_VMSWIN __MODULE_STATE : public no_track_object
+class CLASS_DECL_VMSLNX __MODULE_STATE : public no_track_object
 {
 public:
 #ifdef _ApplicationFrameworkDLL
@@ -224,17 +224,17 @@ public:
    void CreateActivationContext();
 };
 
-//CLASS_DECL_VMSWIN __MODULE_STATE* AfxGetAppModuleState();
+//CLASS_DECL_VMSLNX __MODULE_STATE* AfxGetAppModuleState();
 #ifdef _ApplicationFrameworkDLL
-CLASS_DECL_VMSWIN __MODULE_STATE* AfxSetModuleState(__MODULE_STATE* pNewState);
+CLASS_DECL_VMSLNX __MODULE_STATE* AfxSetModuleState(__MODULE_STATE* pNewState);
 #endif
-CLASS_DECL_VMSWIN __MODULE_STATE* AfxGetModuleState();
-CLASS_DECL_VMSWIN WINBOOL AfxIsModuleDll();
-CLASS_DECL_VMSWIN WINBOOL AfxInitCurrentStateApp();
-CLASS_DECL_VMSWIN __MODULE_STATE* AfxGetStaticModuleState();
-CLASS_DECL_VMSWIN HINSTANCE AfxGetInstanceHandleHelper();
+CLASS_DECL_VMSLNX __MODULE_STATE* AfxGetModuleState();
+CLASS_DECL_VMSLNX WINBOOL AfxIsModuleDll();
+CLASS_DECL_VMSLNX WINBOOL AfxInitCurrentStateApp();
+CLASS_DECL_VMSLNX __MODULE_STATE* AfxGetStaticModuleState();
+CLASS_DECL_VMSLNX HINSTANCE AfxGetInstanceHandleHelper();
 
-CLASS_DECL_VMSWIN __MODULE_THREAD_STATE* AfxGetModuleThreadState();
+CLASS_DECL_VMSLNX __MODULE_THREAD_STATE* AfxGetModuleThreadState();
 
 #ifdef _ApplicationFrameworkDLL
 #define _AFX_CMDTARGET_GETSTATE() (m_pModuleState)
@@ -246,7 +246,7 @@ CLASS_DECL_VMSWIN __MODULE_THREAD_STATE* AfxGetModuleThreadState();
 // macros & classes to manage pushing/popping the module state
 
 #ifdef _ApplicationFrameworkDLL
-struct CLASS_DECL_VMSWIN __MAINTAIN_STATE
+struct CLASS_DECL_VMSLNX __MAINTAIN_STATE
 {
    explicit __MAINTAIN_STATE(__MODULE_STATE* pModuleState) throw();
    ~__MAINTAIN_STATE();
@@ -257,7 +257,7 @@ protected:
 #endif
 
 class _AFX_THREAD_STATE;
-struct CLASS_DECL_VMSWIN __MAINTAIN_STATE2
+struct CLASS_DECL_VMSLNX __MAINTAIN_STATE2
 {
    explicit __MAINTAIN_STATE2(__MODULE_STATE* pModuleState);
    ~__MAINTAIN_STATE2();
@@ -284,7 +284,7 @@ class push_routing_frame;
 class CPushRoutingView;
 
 #define _AFX_TEMP_CLASS_NAME_SIZE 96
-class CLASS_DECL_VMSWIN _AFX_THREAD_STATE : public no_track_object
+class CLASS_DECL_VMSLNX _AFX_THREAD_STATE : public no_track_object
 {
 public:
    _AFX_THREAD_STATE();
@@ -342,4 +342,4 @@ public:
 
 EXTERN_THREAD_LOCAL(_AFX_THREAD_STATE, _afxThreadState)
 
-CLASS_DECL_VMSWIN _AFX_THREAD_STATE* AfxGetThreadState();
+CLASS_DECL_VMSLNX _AFX_THREAD_STATE* AfxGetThreadState();

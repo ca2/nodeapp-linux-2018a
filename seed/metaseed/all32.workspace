@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
-		<Project filename="../../os/os.cbp">
+		<Project filename="../../os/os.cbp" active="1">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/c/_.cbp" />
-		<Project filename="../../../app/appseed/ca/ca.cbp" active="1">
+		<Project filename="../../../app/appseed/ca/ca.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
 	</Workspace>

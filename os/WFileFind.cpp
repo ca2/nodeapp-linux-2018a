@@ -2,7 +2,7 @@
 //
 //////////////////////////////////////////////////////////////////////
 
-#include "StdAfx.h"
+#include "framework.h"
 #include "WFileFind.h"
 
 #include "WindowsShell.h"

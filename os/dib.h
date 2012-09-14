@@ -9,7 +9,7 @@ namespace win
    //   Date : 09-04-98
    //////////////////////////////////////////////////////////////////////
 
-   class CLASS_DECL_VMSWIN dib :
+   class CLASS_DECL_VMSLNX dib :
       virtual public ::ca::dib
    {
    public:

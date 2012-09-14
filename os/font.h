@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN font :
+   class CLASS_DECL_VMSLNX font :
       virtual public ::win::graphics_object,
       virtual public ::ca::font
    {

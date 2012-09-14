@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 #include "WinFile.h"
 #include "WindowsShell.h"
@@ -360,7 +360,7 @@ void PASCAL WinFile::remove(const char * lpszFileName)
 */
 
 
-string CLASS_DECL_VMSWIN vfxStringFromCLSID(REFCLSID rclsid)
+string CLASS_DECL_VMSLNX vfxStringFromCLSID(REFCLSID rclsid)
 {
    WCHAR szCLSID[256];
    wsprintfW(szCLSID, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
@@ -370,7 +370,7 @@ string CLASS_DECL_VMSWIN vfxStringFromCLSID(REFCLSID rclsid)
    return szCLSID;
 }
 
-WINBOOL CLASS_DECL_VMSWIN vfxGetInProcServer(const char * lpszCLSID, string & str)
+WINBOOL CLASS_DECL_VMSLNX vfxGetInProcServer(const char * lpszCLSID, string & str)
 {
    HKEY hKey = NULL;
    WINBOOL b = FALSE;
@@ -400,7 +400,7 @@ WINBOOL CLASS_DECL_VMSWIN vfxGetInProcServer(const char * lpszCLSID, string & st
 }
 
 
-WINBOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t * lpszFileIn,
+WINBOOL CLASS_DECL_VMSLNX vfxResolveShortcut(::ca::window * pWnd, const wchar_t * lpszFileIn,
    wchar_t * lpszFileOut, int cchPath)
 {
    UNREFERENCED_PARAMETER(pWnd);
@@ -527,7 +527,7 @@ WINBOOL CLASS_DECL_VMSWIN vfxResolveShortcut(::ca::window * pWnd, const wchar_t 
 }
 
 // turn a file, relative path or other into an absolute path
-WINBOOL CLASS_DECL_VMSWIN vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileIn)
+WINBOOL CLASS_DECL_VMSLNX vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileIn)
    // lpszPathOut = buffer of _MAX_PATH
    // lpszFileIn = file, relative path or absolute path
    // (both in ANSI character set)
@@ -576,7 +576,7 @@ WINBOOL CLASS_DECL_VMSWIN vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lps
    return TRUE;
 }
 
-/*void CLASS_DECL_VMSWIN AfxGetRoot(const char * lpszPath, string & strRoot)
+/*void CLASS_DECL_VMSLNX AfxGetRoot(const char * lpszPath, string & strRoot)
 {
    ASSERT(lpszPath != NULL);
    // determine the root name of the volume
@@ -619,7 +619,7 @@ WINBOOL CLASS_DECL_VMSWIN vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lps
    strRoot.ReleaseBuffer();
 }*/
 
-/*WINBOOL CLASS_DECL_VMSWIN AfxComparePath(const char * lpszPath1, const char * lpszPath2)
+/*WINBOOL CLASS_DECL_VMSLNX AfxComparePath(const char * lpszPath1, const char * lpszPath2)
 {
    // use case insensitive compare as a starter
    if (lstrcmpi(lpszPath1, lpszPath2) != 0)
@@ -672,7 +672,7 @@ WINBOOL CLASS_DECL_VMSWIN vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lps
    return TRUE; // otherwise file name is truly the same
 }*/
 
-/*UINT CLASS_DECL_VMSWIN AfxGetFileTitle(const char * lpszPathName, LPTSTR lpszTitle, UINT nMax)
+/*UINT CLASS_DECL_VMSLNX AfxGetFileTitle(const char * lpszPathName, LPTSTR lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       fx_is_valid_address(lpszTitle, _MAX_FNAME));
@@ -694,7 +694,7 @@ WINBOOL CLASS_DECL_VMSWIN vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lps
    return lpszTitle == NULL ? lstrlen(lpszTemp)+1 : 0;
 }*/
 
-void CLASS_DECL_VMSWIN vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortName)
+void CLASS_DECL_VMSLNX vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortName)
 {
    WCHAR szLongPathName[_MAX_PATH];
    wstring wstrShortName;
@@ -739,7 +739,7 @@ void WinFile::dump(dump_context & dumpcontext) const
 
 #define _wcsinc(_pc)    ((_pc)+1)
 
-void CLASS_DECL_VMSWIN vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
+void CLASS_DECL_VMSLNX vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 {
    ASSERT(lpszPath != NULL);
    wstring wstrRoot;
@@ -784,7 +784,7 @@ void CLASS_DECL_VMSWIN vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 }
 
 
-/*WINBOOL CLASS_DECL_VMSWIN vfxFullPath(char * lpszPathOut, const char * lpszFileIn)
+/*WINBOOL CLASS_DECL_VMSLNX vfxFullPath(char * lpszPathOut, const char * lpszFileIn)
    // lpszPathOut = buffer of _MAX_PATH
    // lpszFileIn = file, relative path or absolute path
    // (both in ANSI character set)
@@ -861,7 +861,7 @@ static const char szUnknown[] = "unknown";
 #endif
 
 
-/*void CLASS_DECL_VMSWIN vfxThrowFileException(int cause, LONG lOsError,
+/*void CLASS_DECL_VMSLNX vfxThrowFileException(int cause, LONG lOsError,
 //   const char * lpszFileName /* == NULL */
 /*{
 #ifdef _DEBUG
@@ -958,7 +958,7 @@ string WinFile::GetFilePath() const
 }
 
 
-UINT CLASS_DECL_VMSWIN vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
+UINT CLASS_DECL_VMSLNX vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       fx_is_valid_address(lpszTitle, _MAX_FNAME));
@@ -1053,7 +1053,7 @@ void WinFileException::dump(dump_context & dumpcontext) const
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException helpers
 
-void CLASS_DECL_VMSWIN vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName /* == NULL */)
+void CLASS_DECL_VMSLNX vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
 #ifdef _DEBUG
    const char * lpsz;
@@ -1367,7 +1367,7 @@ WINBOOL PASCAL WinFile::GetStatus(const char * lpszFileName, ::ex1::file_status&
 
 
 /*
-UINT CLASS_DECL_VMSWIN vfxGetFileTitle(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
+UINT CLASS_DECL_VMSLNX vfxGetFileTitle(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       fx_is_valid_address(lpszTitle, _MAX_FNAME));

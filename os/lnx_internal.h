@@ -1,13 +1,13 @@
 #pragma once
 
-#include "radix/implementation.h"
+
 #include "dir.h"
 #include "WFileFind.h"
-#include "WinFileSystem.h"
-#include "WinFile.h"
-#include "WindowsShell.h"
+#include "LnxFileSystem.h"
+#include "LnxFile.h"
+#include "LinuxShell.h"
 //#include "ca2/ex1_resource.h"
-#include "WinResource.h"
+#include "LnxResource.h"
 #include "application.h"
-#include "WinStdioFile.h"
-#include "WinFileSet.h"
+#include "LnxStdioFile.h"
+#include "LnxFileSet.h"

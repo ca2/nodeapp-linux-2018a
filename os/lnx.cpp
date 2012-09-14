@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "ca2/radix/cafxdllx.h"
 
 #pragma comment(lib, "version.lib")

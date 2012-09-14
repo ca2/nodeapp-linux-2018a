@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 
 string get_error_message(DWORD dwError)
 {

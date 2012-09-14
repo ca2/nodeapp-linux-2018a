@@ -19,7 +19,7 @@ namespace ca
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN thread :
+   class CLASS_DECL_VMSLNX thread :
       virtual public ::radix::thread,
       virtual public ::ca::message_window_simple_callback
    {
@@ -181,7 +181,7 @@ namespace win
       operator pthread_t() const;
    };
 
-   CLASS_DECL_VMSWIN ::ca::thread * get_thread();
+   CLASS_DECL_VMSLNX ::ca::thread * get_thread();
 
 } // namespace win
 

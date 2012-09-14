@@ -8,7 +8,7 @@ namespace gen
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN main_init_data
+   class CLASS_DECL_VMSLNX main_init_data
    {
    public:
       HINSTANCE   m_hInstance;
@@ -17,7 +17,7 @@ namespace win
       int         m_nCmdShow;
    };
 
-   class CLASS_DECL_VMSWIN application :
+   class CLASS_DECL_VMSLNX application :
       virtual public ::ex2::application
    {
    public:

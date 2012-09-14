@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vfw.h>
+//#include <vfw.h>
 
 namespace win
 {
@@ -13,7 +13,7 @@ namespace win
    //
    //////////////////////////////////////////////////////////////////////
 
-   class CLASS_DECL_VMSWIN draw_dib :
+   class CLASS_DECL_VMSLNX draw_dib :
       virtual public ::ca::draw_dib
    {
    public:

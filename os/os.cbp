@@ -16,17 +16,20 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-fPIC" />
-					<Add option="-D_DEBUG" />
 					<Add directory="." />
+					<Add directory=".." />
 					<Add directory="../.." />
-					<Add directory="../../app/appseed" />
 					<Add directory="../../app/appseed/ca" />
+					<Add directory="../../app/appseed" />
+					<Add directory="../../app" />
+					<Add directory="../../app/thirdparty/include" />
 				</Compiler>
 			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
+			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Unit filename="../operational_system/_.h" />
 		<Unit filename="../operational_system/bare_operational_system.h" />
@@ -68,7 +71,6 @@
 		<Unit filename="LnxStdioFile.cpp" />
 		<Unit filename="LnxStdioFile.h" />
 		<Unit filename="StdAfx.cpp" />
-		<Unit filename="StdAfx.h" />
 		<Unit filename="UACTools.cpp" />
 		<Unit filename="UACTools.h" />
 		<Unit filename="WFileFind.cpp" />
@@ -100,6 +102,10 @@
 		<Unit filename="folder_watch.h" />
 		<Unit filename="font.cpp" />
 		<Unit filename="font.h" />
+		<Unit filename="framework.h">
+			<Option compile="1" />
+			<Option weight="0" />
+		</Unit>
 		<Unit filename="genResource.cpp" />
 		<Unit filename="gen_1.h" />
 		<Unit filename="graphics.cpp" />

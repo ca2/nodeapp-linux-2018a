@@ -1,4 +1,4 @@
-#include "StdAfx.h"
+#include "framework.h"
 #include "sal.h"
 
 
@@ -6,7 +6,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Helper functions
 
-__STATIC long CLASS_DECL_VMSWIN _AfxMultMultDivDiv(
+__STATIC long CLASS_DECL_VMSLNX _AfxMultMultDivDiv(
    int factor, int num1, int num2,
    int den1, int den2)
 {
@@ -476,7 +476,7 @@ size preview_dc::ScaleWindowExt(int xNum, int xDenom, int yNum, int yDenom)
 
 // private helpers for TextOut functions
 
-__STATIC int CLASS_DECL_VMSWIN _AfxComputeNextTab(int x, UINT nTabStops, LPINT lpnTabStops, int nTabOrigin, int nTabWidth)
+__STATIC int CLASS_DECL_VMSLNX _AfxComputeNextTab(int x, UINT nTabStops, LPINT lpnTabStops, int nTabOrigin, int nTabWidth)
 {
    ENSURE(nTabWidth!=0);
    x -= nTabOrigin;        // normalize position to tab origin
@@ -987,7 +987,7 @@ void preview_dc::PrinterDPtoScreenDP(LPPOINT lpPoint) const
 ////////////////////////////////////////////////////////////////////////////
 // AfxCreateDC
 
-HDC CLASS_DECL_VMSWIN AfxCreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
+HDC CLASS_DECL_VMSLNX AfxCreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 {
    if (hDevNames == NULL)
       return NULL;

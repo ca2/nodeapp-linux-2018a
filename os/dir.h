@@ -3,13 +3,13 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSWIN dir :
+   class CLASS_DECL_VMSLNX dir :
       virtual public ::ca::dir::system
    {
    public:
 
       dir(::ca::application * papp);
-      class CLASS_DECL_VMSWIN path :
+      class CLASS_DECL_VMSLNX path :
          virtual public ::ca::dir::system::path
       {
       public:

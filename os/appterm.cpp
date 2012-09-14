@@ -8,7 +8,7 @@
 //
 //
 
-#include "StdAfx.h"
+#include "framework.h"
 #include <ddeml.h> // for MSGF_DDEMGR
 
 
@@ -19,7 +19,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Standard cleanup called by WinMain and AfxAbort
 
-void CLASS_DECL_VMSWIN AfxUnregisterWndClasses()
+void CLASS_DECL_VMSLNX AfxUnregisterWndClasses()
 {
    // unregister Window classes
    __MODULE_STATE* pModuleState = AfxGetModuleState();
@@ -39,7 +39,7 @@ void CLASS_DECL_VMSWIN AfxUnregisterWndClasses()
    AfxUnlockGlobals(CRIT_REGCLASSLIST);
 
 }
-void CLASS_DECL_VMSWIN AfxWinTerm(void)
+void CLASS_DECL_VMSLNX AfxWinTerm(void)
 {
    AfxUnregisterWndClasses();
    // cleanup OLE if required
