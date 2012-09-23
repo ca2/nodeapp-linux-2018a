@@ -65,12 +65,11 @@ CLASS_DECL_LNX void AfxResetMsgCache();
 
 #include "lnx1.h"
 #include "implementation.h"
-#include "state.h"
+#include "lnx_state.h"
 #include "handle.h"
 #include "dir.h"
 #include "folder_watch.h"
 #include "factory_exchange.h"
-#include "UACTools.h"
 #include "window_draw.h"
 #include "graphics.h"
 #include "graphics_object.h"
