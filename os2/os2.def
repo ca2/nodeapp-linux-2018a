@@ -1,0 +1,5 @@
+LIBRARY "os2"
+
+EXPORTS
+ca2_factory_exchange
+

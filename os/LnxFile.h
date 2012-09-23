@@ -4,12 +4,12 @@
 class FileException;
 struct FileStatus;
 
-void CLASS_DECL_VMSLNX vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
+void CLASS_DECL_LNX vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
 
 /////////////////////////////////////////////////////////////////////////////
 // File - raw unbuffered disk file I/O
 
-class CLASS_DECL_VMSLNX WinFile :
+class CLASS_DECL_LNX lnx_file :
    virtual public ex1::file
 {
 public:
@@ -31,9 +31,9 @@ public:
    zip::Util  * m_pziputil;
 
 // Constructors
-   WinFile(::ca::application * papp);
-   WinFile(::ca::application * papp, int hFile);
-   WinFile(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags);
+   lnx_file(::ca::application * papp);
+   lnx_file(::ca::application * papp, int hFile);
+   lnx_file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags);
 
 // Attributes
    UINT m_hFile;
@@ -87,7 +87,7 @@ public:
 // ementation
 public:
    virtual bool IsOpened();
-   virtual ~WinFile();
+   virtual ~lnx_file();
 #ifdef _DEBUG
    virtual void assert_valid() const;
    virtual void dump(dump_context & dumpcontext) const;
@@ -101,7 +101,7 @@ protected:
    string m_strFileName;
 };
 
-class CLASS_DECL_VMSLNX WinFileException :
+class CLASS_DECL_LNX lnx_fileException :
    virtual public ex1::file_exception
 {
 public:
@@ -125,7 +125,7 @@ public:
    };
 
 // Constructor
-   WinFileException(::ca::application * papp, int cause = none, LONG lOsError = -1,
+   lnx_fileException(::ca::application * papp, int cause = none, LONG lOsError = -1,
       const char * lpszArchiveName = NULL);
 
 // Attributes
@@ -150,33 +150,33 @@ public:
 
 // ementation
 public:
-   virtual ~WinFileException();
+   virtual ~lnx_fileException();
 #ifdef _DEBUG
    virtual void dump(dump_context&) const;
 #endif
    virtual WINBOOL GetErrorMessage(string & str, PUINT pnHelpContext = NULL);
 };
 
-inline WinFileException::WinFileException(::ca::application * papp, int cause, LONG lOsError,
+inline lnx_fileException::lnx_fileException(::ca::application * papp, int cause, LONG lOsError,
                                           const char * pstrFileName /* = NULL */) :
    ca(papp),
    ex1::file_exception(papp)
    { m_cause = cause; m_lOsError = lOsError; m_strFileName = pstrFileName; }
-inline WinFileException::~WinFileException()
+inline lnx_fileException::~lnx_fileException()
    { }
 
 
 // ex1::filesp
-inline WinFile::operator HFILE() const
+inline lnx_file::operator HFILE() const
    { return m_hFile; }
-inline DWORD_PTR WinFile::ReadHuge(void * lpBuffer, DWORD_PTR dwCount)
+inline DWORD_PTR lnx_file::ReadHuge(void * lpBuffer, DWORD_PTR dwCount)
    { return (DWORD_PTR) read(lpBuffer, (UINT)dwCount); }
-inline void WinFile::WriteHuge(const void * lpBuffer, DWORD_PTR dwCount)
+inline void lnx_file::WriteHuge(const void * lpBuffer, DWORD_PTR dwCount)
    { write(lpBuffer, (UINT)dwCount); }
-inline DWORD_PTR WinFile::seek_to_end()
-   { return seek(0, WinFile::end); }
-inline void WinFile::seek_to_begin()
-   { seek(0, WinFile::begin); }
+inline DWORD_PTR lnx_file::seek_to_end()
+   { return seek(0, lnx_file::end); }
+inline void lnx_file::seek_to_begin()
+   { seek(0, lnx_file::begin); }
 
 /////////////////////////////////////////////////////////////////////////////
 // File status

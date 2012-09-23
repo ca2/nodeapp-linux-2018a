@@ -5,10 +5,10 @@ namespace user
    class ::user::window_interface;
 } // namespace user
 
-namespace win
+namespace lnx
 {
 
-   class CLASS_DECL_VMSLNX window_draw :
+   class CLASS_DECL_LNX window_draw :
       virtual public ::ca::window_draw,
       virtual public ::ca::message_window_simple_callback
    {
@@ -23,7 +23,6 @@ namespace win
       };
 
       user::LPWndArray                       m_wndpaOut;
-      user::window_draw_client_tool          m_twrenderclienttool;
       mutex                                  m_mutexRendering;
       mutex                                  m_mutexRgnUpdate;
       semaphore                              m_semaphoreBuffer;
@@ -32,11 +31,12 @@ namespace win
       mutex                                  m_mutexRender;
       critical_section                       m_csWndInterfaceMap;
       typed_pointer_map <
-         CMapPtrToPtr,
-         HWND,
+         map_ptr_to_ptr,
+         void *,
          ::user::window_interface *>
                                              m_wndinterfacemap;
       DWORD                                  m_dwLastUpdate;
+      DWORD                                  m_dwLastDelay;
 
 
       window_draw(::ca::application * papp);
@@ -46,21 +46,18 @@ namespace win
       virtual bool start();
 
       bool UpdateBuffer(LPCRECT lpcrect);
-      //void OnPaint(HWND hwnd, CPaintDC & spgraphics);
+      //void OnPaint(void * hwnd, CPaintDC & spgraphics);
 
       semaphore * TwfGetBufferSemaphore();
 
       // Bit blitting spread functions
       virtual bool ScreenOutput(
          user::buffer *,
-         ::ca::rgn & rgnUpdate);
+         ::ca::region & rgnUpdate);
 
       virtual bool ScreenOutput();
 
-      virtual bool ScreenOutput(
-         user::buffer *,
-         ::user::interaction* pwnd,
-         ::ca::rgn & rgnUpdate);
+      virtual bool ScreenOutput(user::buffer *, ::user::interaction* pwnd);
 
       // Transparent drawing operations
       // controllers
@@ -98,28 +95,28 @@ namespace win
          LPCRECT lpcrect);
 
       void TwfGetTopWindow(
-         HWND hwnd,
+         void * hwnd,
          user::HWNDArray & hwnda,
          base_array < HRGN, HRGN > & hrgna,
          user::HwndTree::Array & hwndtreea,
          LPCRECT lpcrect);
 
       bool TwfGetTopWindow(
-         HWND hwnd,
+         void * hwnd,
          user::HWNDArray & hwnda,
          base_array < HRGN, HRGN > & hrgna,
          user::HwndTree::Array & hwndtreea,
          HRGN hrgn);
 
       bool TwfGetTopWindow(
-         HWND hwnd,
+         void * hwnd,
          user::HWNDArray & hwnda,
          base_array < HRGN, HRGN > & hrgna,
          user::HwndTree & hwndtree,
          HRGN hrgn);
 
       void TwfGetTopWindowOptimizeOpaque(
-         HWND hwndOpaque,
+         void * hwndOpaque,
          user::HWNDArray & hwnda,
          base_array < HRGN, HRGN > & hrgna);
 
@@ -132,7 +129,7 @@ namespace win
       void get_wnda(user::LPWndArray & wndpa);
       void get_wnda(user::HWNDArray & hwnda);
 
-      static UINT __CDECL ThreadProcRedraw(LPVOID lpv);
+      static UINT c_cdecl ThreadProcRedraw(LPVOID lpv);
 
       virtual UINT RedrawProc();
 
@@ -145,4 +142,4 @@ namespace win
 
    };
 
-} // namespace win
+} // namespace lnx

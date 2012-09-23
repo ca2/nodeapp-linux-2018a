@@ -7,12 +7,12 @@ namespace lnx
    class thread;
 } // namespace lnx
 
-WINBOOL CLASS_DECL_VMSLNX AfxInternalPumpMessage();
-LRESULT CLASS_DECL_VMSLNX AfxInternalProcessWndProcException(base_exception*, const MSG* pMsg);
+WINBOOL CLASS_DECL_LNX AfxInternalPumpMessage();
+LRESULT CLASS_DECL_LNX AfxInternalProcessWndProcException(base_exception*, const MSG* pMsg);
 WINBOOL AfxInternalPreTranslateMessage(MSG* pMsg);
 WINBOOL AfxInternalIsIdleMessage(MSG* pMsg);
-__STATIC void CLASS_DECL_VMSLNX _AfxPreInitDialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-__STATIC void CLASS_DECL_VMSLNX _AfxPostInitDialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
+__STATIC void CLASS_DECL_LNX _AfxPreInitDialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
+__STATIC void CLASS_DECL_LNX _AfxPostInitDialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
 
 namespace ca
 {
@@ -123,7 +123,7 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
 
 #endif //_MT
 
-CLASS_DECL_VMSLNX ::lnx::thread * AfxGetThread()
+CLASS_DECL_LNX ::lnx::thread * AfxGetThread()
 {
    // check for current thread in module thread state
    __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
@@ -132,7 +132,7 @@ CLASS_DECL_VMSLNX ::lnx::thread * AfxGetThread()
 }
 
 
-CLASS_DECL_VMSLNX void AfxSetThread(::radix::thread * pthread)
+CLASS_DECL_LNX void AfxSetThread(::radix::thread * pthread)
 {
    // check for current thread in module thread state
    __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
@@ -141,7 +141,7 @@ CLASS_DECL_VMSLNX void AfxSetThread(::radix::thread * pthread)
 
 
 
-CLASS_DECL_VMSLNX MSG * AfxGetCurrentMessage()
+CLASS_DECL_LNX MSG * AfxGetCurrentMessage()
 {
    _AFX_THREAD_STATE* pState = AfxGetThreadState();
    ASSERT(pState);
@@ -150,7 +150,7 @@ CLASS_DECL_VMSLNX MSG * AfxGetCurrentMessage()
 
 
 
-CLASS_DECL_VMSLNX void AfxInternalProcessWndProcException(base_exception*, gen::signal_object * pobj)
+CLASS_DECL_LNX void AfxInternalProcessWndProcException(base_exception*, gen::signal_object * pobj)
 {
    SCAST_PTR(user::lnx::message::base, pbase, pobj);
    if (pbase->m_uiMessage == WM_CREATE)
@@ -168,7 +168,7 @@ CLASS_DECL_VMSLNX void AfxInternalProcessWndProcException(base_exception*, gen::
    return;   // sensible default for rest of commands
 }
 
-CLASS_DECL_VMSLNX void AfxProcessWndProcException(base_exception* e, gen::signal_object * pobj)
+CLASS_DECL_LNX void AfxProcessWndProcException(base_exception* e, gen::signal_object * pobj)
 {
    ::radix::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
@@ -346,7 +346,7 @@ WINBOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 }
 
 
-/*thread* CLASS_DECL_VMSLNX AfxBeginThread(::ca::application * papp, __THREADPROC pfnThreadProc, LPVOID pParam,
+/*thread* CLASS_DECL_LNX AfxBeginThread(::ca::application * papp, __THREADPROC pfnThreadProc, LPVOID pParam,
                               int nPriority, UINT nStackSize, DWORD dwCreateFlags,
                               LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
@@ -367,7 +367,7 @@ WINBOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 
    return pThread;
 }*/
-void CLASS_DECL_VMSLNX AfxEndThread(::radix::application * papp, UINT nExitCode, WINBOOL bDelete)
+void CLASS_DECL_LNX AfxEndThread(::radix::application * papp, UINT nExitCode, WINBOOL bDelete)
 {
    // remove current thread object from primitive::memory
    __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
@@ -390,7 +390,7 @@ void CLASS_DECL_VMSLNX AfxEndThread(::radix::application * papp, UINT nExitCode,
 }
 
 extern thread_slot_data* _afxThreadData;
-void CLASS_DECL_VMSLNX AfxTermThread(::radix::application * papp, HINSTANCE hInstTerm)
+void CLASS_DECL_LNX AfxTermThread(::radix::application * papp, HINSTANCE hInstTerm)
 {
 
    try
@@ -424,7 +424,7 @@ void CLASS_DECL_VMSLNX AfxTermThread(::radix::application * papp, HINSTANCE hIns
 
 LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam);
 
-void CLASS_DECL_VMSLNX AfxInitThread()
+void CLASS_DECL_LNX AfxInitThread()
 {
    if (!afxContextIsDLL)
    {
@@ -1582,7 +1582,7 @@ void thread::Delete()
    }
 
 
-   CLASS_DECL_VMSLNX ::ca::thread * get_thread()
+   CLASS_DECL_LNX ::ca::thread * get_thread()
    {
       ::lnx::thread * pwinthread = AfxGetThread();
       if(pwinthread == NULL)
@@ -2285,14 +2285,14 @@ namespace gen { namespace pal {
 
 
 
-WINBOOL CLASS_DECL_VMSLNX AfxInternalPumpMessage();
-LRESULT CLASS_DECL_VMSLNX AfxInternalProcessWndProcException(base_exception*, const MSG* pMsg);
+WINBOOL CLASS_DECL_LNX AfxInternalPumpMessage();
+LRESULT CLASS_DECL_LNX AfxInternalProcessWndProcException(base_exception*, const MSG* pMsg);
 void AfxInternalPreTranslateMessage(gen::signal_object * pobj);
 WINBOOL AfxInternalIsIdleMessage(gen::signal_object * pobj);
 WINBOOL AfxInternalIsIdleMessage(LPMSG lpmsg);
 
 
-/*thread* CLASS_DECL_VMSLNX System.GetThread()
+/*thread* CLASS_DECL_LNX System.GetThread()
 {
 // check for current thread in module thread state
 __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
@@ -2300,14 +2300,14 @@ __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
 return pThread;
 }
 
-MSG* CLASS_DECL_VMSLNX AfxGetCurrentMessage()
+MSG* CLASS_DECL_LNX AfxGetCurrentMessage()
 {
 _AFX_THREAD_STATE* pState = AfxGetThreadState();
 ASSERT(pState);
 return &(pState->m_msgCur);
 }
 
-WINBOOL CLASS_DECL_VMSLNX AfxInternalPumpMessage()
+WINBOOL CLASS_DECL_LNX AfxInternalPumpMessage()
 {
 _AFX_THREAD_STATE *pState = AfxGetThreadState();
 
@@ -2344,7 +2344,7 @@ if (pState->m_msgCur.message != WM_KICKIDLE && !AfxPreTranslateMessage(&(pState-
 return TRUE;
 }
 
-WINBOOL CLASS_DECL_VMSLNX AfxPumpMessage()
+WINBOOL CLASS_DECL_LNX AfxPumpMessage()
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2353,7 +2353,7 @@ else
 return AfxInternalPumpMessage();
 }
 
-LRESULT CLASS_DECL_VMSLNX AfxInternalProcessWndProcException(base_exception*, const MSG* pMsg)
+LRESULT CLASS_DECL_LNX AfxInternalProcessWndProcException(base_exception*, const MSG* pMsg)
 {
 if (pMsg->message == WM_CREATE)
 {
@@ -2368,7 +2368,7 @@ return 0;
 return 0;   // sensible default for rest of commands
 }
 
-LRESULT CLASS_DECL_VMSLNX AfxProcessWndProcException(base_exception* e, const MSG* pMsg)
+LRESULT CLASS_DECL_LNX AfxProcessWndProcException(base_exception* e, const MSG* pMsg)
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2448,7 +2448,7 @@ return AfxInternalIsIdleMessage( pMsg );
 }
 
 /*
-thread* CLASS_DECL_VMSLNX AfxBeginThread(::ca::type_info pThreadClass,
+thread* CLASS_DECL_LNX AfxBeginThread(::ca::type_info pThreadClass,
 int nPriority, UINT nStackSize, DWORD dwCreateFlags,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
@@ -2482,7 +2482,7 @@ return NULL;
 }*/
 
 /*
-void CLASS_DECL_VMSLNX AfxEndThread(UINT nExitCode, WINBOOL bDelete)
+void CLASS_DECL_LNX AfxEndThread(UINT nExitCode, WINBOOL bDelete)
 {
 #ifndef _MT
 nExitCode;
@@ -2514,7 +2514,7 @@ _endthreadex(nExitCode);
 
 LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam);
 
-void CLASS_DECL_VMSLNX AfxInitThread()
+void CLASS_DECL_LNX AfxInitThread()
 {
 if (!afxContextIsDLL)
 {
@@ -2877,7 +2877,7 @@ LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam)
    return lresult;
 }
 
-__STATIC WINBOOL CLASS_DECL_VMSLNX IsHelpKey(LPMSG lpMsg)
+__STATIC WINBOOL CLASS_DECL_LNX IsHelpKey(LPMSG lpMsg)
 // return TRUE only for non-repeat F1 keydowns.
 {
    return lpMsg->message == WM_KEYDOWN &&

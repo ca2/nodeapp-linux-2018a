@@ -2,7 +2,7 @@
 
 #define WH_SHSTDAPI(type) type
 
-class CLASS_DECL_VMSLNX WindowsShell
+class CLASS_DECL_LNX WindowsShell
 {
 public:
    WindowsShell();

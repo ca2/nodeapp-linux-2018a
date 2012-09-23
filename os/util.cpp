@@ -3,7 +3,7 @@
 
 
 // interesting function
-/*WINBOOL CLASS_DECL_VMSLNX AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont)
+/*WINBOOL CLASS_DECL_LNX AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont)
 {
    ENSURE_ARG(pLogFont != NULL);
    ASSERT(nIDS != 0);
@@ -25,7 +25,7 @@
    return TRUE;
 }*/
 
-WINBOOL CLASS_DECL_VMSLNX _AfxIsComboBoxControl(HWND hWnd, UINT nStyle)
+WINBOOL CLASS_DECL_LNX _AfxIsComboBoxControl(HWND hWnd, UINT nStyle)
 {
    if (hWnd == NULL)
       return FALSE;
@@ -39,7 +39,7 @@ WINBOOL CLASS_DECL_VMSLNX _AfxIsComboBoxControl(HWND hWnd, UINT nStyle)
    return ::AfxInvariantStrICmp(szCompare, "combobox") == 0;
 }
 
-WINBOOL CLASS_DECL_VMSLNX _AfxCompareClassName(HWND hWnd, const char * lpszClassName)
+WINBOOL CLASS_DECL_LNX _AfxCompareClassName(HWND hWnd, const char * lpszClassName)
 {
    ASSERT(::IsWindow(hWnd));
    char szTemp[32];
@@ -47,7 +47,7 @@ WINBOOL CLASS_DECL_VMSLNX _AfxCompareClassName(HWND hWnd, const char * lpszClass
    return ::AfxInvariantStrICmp(szTemp, lpszClassName) == 0;
 }
 
-HWND CLASS_DECL_VMSLNX _AfxChildWindowFromPoint(HWND hWnd, POINT pt)
+HWND CLASS_DECL_LNX _AfxChildWindowFromPoint(HWND hWnd, POINT pt)
 {
    ASSERT(hWnd != NULL);
 
@@ -70,7 +70,7 @@ HWND CLASS_DECL_VMSLNX _AfxChildWindowFromPoint(HWND hWnd, POINT pt)
    return NULL;    // not found
 }
 
-void CLASS_DECL_VMSLNX AfxSetWindowText(::user::interaction * hWndCtrl, const char * lpszNew)
+void CLASS_DECL_LNX AfxSetWindowText(::user::interaction * hWndCtrl, const char * lpszNew)
 {
    hWndCtrl->SetWindowText(lpszNew);
    /*ENSURE(hWndCtrl);
@@ -88,7 +88,7 @@ void CLASS_DECL_VMSLNX AfxSetWindowText(::user::interaction * hWndCtrl, const ch
    }*/
 }
 
-void CLASS_DECL_VMSLNX AfxDeleteObject(HGDIOBJ* pObject)
+void CLASS_DECL_LNX AfxDeleteObject(HGDIOBJ* pObject)
 {
    ENSURE_ARG(pObject != NULL);
    if (*pObject != NULL)
@@ -98,7 +98,7 @@ void CLASS_DECL_VMSLNX AfxDeleteObject(HGDIOBJ* pObject)
    }
 }
 /*
-void CLASS_DECL_VMSLNX AfxCancelModes(HWND hWndRcvr)
+void CLASS_DECL_LNX AfxCancelModes(HWND hWndRcvr)
 {
    // if we receive a message destined for a ::ca::window, cancel any combobox
    //  popups that could be in toolbars or dialog bars
@@ -131,7 +131,7 @@ void CLASS_DECL_VMSLNX AfxCancelModes(HWND hWndRcvr)
    ::SendMessage(hWndCancel, CB_SHOWDROPDOWN, FALSE, 0L);
 }*/
 
-void CLASS_DECL_VMSLNX AfxGlobalFree(HGLOBAL hGlobal)
+void CLASS_DECL_LNX AfxGlobalFree(HGLOBAL hGlobal)
 {
    if (hGlobal == NULL)
       return;

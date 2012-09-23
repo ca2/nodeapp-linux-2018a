@@ -16,10 +16,10 @@ namespace ca
 
 } // namespace ca
 
-namespace win
+namespace lnx
 {
 
-   class CLASS_DECL_VMSLNX thread :
+   class CLASS_DECL_LNX thread :
       virtual public ::radix::thread,
       virtual public ::ca::message_window_simple_callback
    {
@@ -45,24 +45,24 @@ namespace win
 		/// true if waiting should be done on all items
 		bool				waitForAllItems_;
 		/// a list of items this threads waits for
-		std::list<WaitableItem *>	itemsToWaitFor_;
+		::collection::list < waitable * >	itemsToWaitFor_;
 
 
       // list of frame_window objects for thread
-      typed_simple_list<frame_window*> m_frameList;
+      simple_list < frame_window * > m_frameList;
 
       // temporary/permanent ::collection::map state
       DWORD m_nTempMapLock;           // if not 0, temp maps locked
-      hmenu_map      * m_pmapHMENU;
-      hdc_map        * m_pmapHDC;
-      hgdiobj_map    * m_pmapHGDIOBJ;
+      //hmenu_map      * m_pmapHMENU;
+      //hdc_map        * m_pmapHDC;
+      //hgdiobj_map    * m_pmapHGDIOBJ;
 
 
 
       LPVOID                              m_pThreadParams; // generic parameters passed to starting function
       __THREADPROC                      m_pfnThreadProc;
 
-      CEvent                              m_evFinish;
+      ::event                              m_evFinish;
       UINT                                m_nDisablePumpCount;
       mutex                               m_mutexUiPtra;
 
@@ -82,12 +82,9 @@ namespace win
 
       virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
-      virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
-         DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool Begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), UINT nStackSize = 0, DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      WINBOOL CreateThread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
-         LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
-
+      bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
       virtual ::user::interaction * SetMainWnd(::user::interaction * pui);
 
@@ -98,13 +95,13 @@ namespace win
 
       virtual void add(::user::interaction * pui);
       virtual void remove(::user::interaction * pui);
-      virtual int get_ui_count();
+      virtual ::count get_ui_count();
       virtual ::user::interaction * get_ui(int iIndex);
       virtual void set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse);
       virtual void unset_timer(::user::interaction * pui, uint_ptr nIDEvent);
       virtual void set_auto_delete(bool bAutoDelete = true);
       virtual void set_run(bool bRun = true);
-      virtual CEvent & get_finish_event();
+      virtual event & get_finish_event();
       virtual bool get_run();
       virtual ::ca::thread * get_app_thread();
       virtual ::user::interaction * get_active_ui();
@@ -120,7 +117,7 @@ namespace win
    // Operations
       DWORD SuspendThread();
       DWORD ResumeThread();
-      WINBOOL PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam);
+      bool PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam);
       bool post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam);
 
       virtual bool PreInitInstance();
@@ -133,14 +130,14 @@ namespace win
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::user::win::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual gen::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
       // running and idle processing
       virtual int run();
       virtual void pre_translate_message(gen::signal_object * pobj);
-      virtual WINBOOL pump_message();     // low level message pump
-      virtual WINBOOL on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual WINBOOL is_idle_message(gen::signal_object * pobj);  // checks for special messages
+      virtual bool pump_message();     // low level message pump
+      virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
+      virtual bool is_idle_message(gen::signal_object * pobj);  // checks for special messages
       virtual WINBOOL is_idle_message(LPMSG lpmsg);  // checks for special messages
       virtual void message_handler(gen::signal_object * pobj);
 
@@ -181,9 +178,9 @@ namespace win
       operator pthread_t() const;
    };
 
-   CLASS_DECL_VMSLNX ::ca::thread * get_thread();
+   CLASS_DECL_LNX ::ca::thread * get_thread();
 
-} // namespace win
+} // namespace lnx
 
 
 

@@ -1,10 +1,10 @@
 #pragma once
 
 
-CLASS_DECL_VMSLNX HINSTANCE  vfxFindResourceHandle(const char * lpszName, const char * lpszType);
-CLASS_DECL_VMSLNX HINSTANCE  vfxFindResourceHandle(const char * lpszName, const char * lpszType);
+CLASS_DECL_LNX HINSTANCE  vfxFindResourceHandle(const char * lpszName, const char * lpszType);
+CLASS_DECL_LNX HINSTANCE  vfxFindResourceHandle(const char * lpszName, const char * lpszType);
 
-class CLASS_DECL_VMSLNX WinResource :
+class CLASS_DECL_LNX WinResource :
    virtual public ex1::resource
 {
 public:

@@ -1,6 +1,6 @@
 #pragma once
 
-class CLASS_DECL_VMSLNX WinFileSet :
+class CLASS_DECL_LNX lnx_fileSet :
    public ex2::file_set
 {
 public:
@@ -10,8 +10,8 @@ public:
    stringa      m_straFilter;
    stringa      m_straFile;
 
-   WinFileSet(::ca::application * papp);
-   virtual ~WinFileSet();
+   lnx_fileSet(::ca::application * papp);
+   virtual ~lnx_fileSet();
 
    virtual void add_search(stringa & stra, bool_array & baRecursive);
    virtual void add_filter(stringa & stra);

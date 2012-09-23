@@ -1,48 +1,62 @@
 #pragma once
 
-namespace win
+
+namespace lnx
 {
 
-   class CLASS_DECL_VMSLNX bitmap :
-      virtual public ::win::graphics_object,
+
+   class CLASS_DECL_LNX bitmap :
       virtual public ::ca::bitmap
    {
    public:
-      static bitmap * PASCAL from_handle(::ca::application * papp, HBITMAP hBitmap);
+
+
+      //::Gdiplus::Bitmap *  m_pbitmap;
+      //void *               m_pdata;
+
+   Display *               m_pdisplay;
+   Pixmap                  m_pixmap;
+   ::primitive::memory           m_mem;
 
       bitmap(::ca::application * papp);
+      virtual ~bitmap();
 
-      WINBOOL LoadBitmap(const char * lpszResourceName);
-      WINBOOL LoadBitmap(UINT nIDResource);
-      WINBOOL LoadOEMBitmap(UINT nIDBitmap); // for OBM_/OCR_/OIC_
-   #ifndef _AFX_NO_AFXCMN_SUPPORT
-      WINBOOL LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0,
-         LPCOLORMAP lpColorMap = NULL, int nMapSize = 0);
+
+      void * get_os_data() const;
+
+
+      bool LoadBitmap(const char * lpszResourceName);
+      bool LoadBitmap(UINT nIDResource);
+      bool LoadOEMBitmap(UINT nIDBitmap); // for OBM_/OCR_/OIC_
+   #ifndef ___NO_AFXCMN_SUPPORT
+// xxx      bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int nMapSize = 0);
    #endif
-      WINBOOL CreateBitmap(int nWidth, int nHeight, UINT nPlanes, UINT nBitcount,
+      bool CreateBitmap(int nWidth, int nHeight, UINT nPlanes, UINT nBitcount,
             const void * lpBits);
-      WINBOOL CreateBitmapIndirect(LPBITMAP lpBitmap);
-      WINBOOL CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
-      WINBOOL CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
-      WINBOOL CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset);
-      WINBOOL CreateDIBitmap(::ca::graphics * pdc, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
+      bool CreateBitmapIndirect(LPBITMAP lpBitmap);
+      bool CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
+      bool CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
+      bool CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset);
+      bool CreateDIBitmap(::ca::graphics * pdc, const BITMAPINFOHEADER *pbmih, DWORD flInit, const void *pjBits, const BITMAPINFO *pbmi, UINT iUsage);
 
-   // Attributes
-      operator HBITMAP() const;
+
       int GetBitmap(BITMAP* pBitMap);
 
-   // Operations
+
       DWORD SetBitmapBits(DWORD dwCount, const void * lpBits);
       DWORD GetBitmapBits(DWORD dwCount, LPVOID lpBits) const;
-      size SetBitmapDimension(int nWidth, int nHeight);
-      size GetBitmapDimension() const;
+      class size SetBitmapDimension(int nWidth, int nHeight);
+      class size GetBitmapDimension() const;
 
-   // Implementation
-   public:
-      virtual ~bitmap();
-   #ifdef DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
+
+
+      virtual bool Attach(HBITMAP hbitmap);
+
+
    };
 
-} // namespace win
+
+} // namespace lnx
+
+

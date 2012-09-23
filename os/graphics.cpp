@@ -2079,13 +2079,13 @@ namespace win
 
 
    // resource failure
-   void CLASS_DECL_VMSLNX AfxThrowResourceException()
+   void CLASS_DECL_LNX AfxThrowResourceException()
    {
       throw resource_exception();
    }
 
    // ::fontopus::user alert
-   void CLASS_DECL_VMSLNX AfxThrowUserException()
+   void CLASS_DECL_LNX AfxThrowUserException()
    {
       throw user_exception();
    }

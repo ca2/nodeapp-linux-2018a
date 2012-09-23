@@ -1,28 +1,28 @@
 #include "framework.h"
 
 // Global helper functions
- CLASS_DECL_VMSLNX ::radix::application * AfxGetApp()
+ CLASS_DECL_LNX ::radix::application * AfxGetApp()
 { return dynamic_cast < ::radix::application * > (afxCurrentWinApp); }
 
- CLASS_DECL_VMSLNX HINSTANCE AfxGetInstanceHandle()
+ CLASS_DECL_LNX HINSTANCE AfxGetInstanceHandle()
    { ASSERT(afxCurrentInstanceHandle != NULL);
       return afxCurrentInstanceHandle; }
- CLASS_DECL_VMSLNX HINSTANCE AfxGetResourceHandle()
+ CLASS_DECL_LNX HINSTANCE AfxGetResourceHandle()
    { ASSERT(afxCurrentResourceHandle != NULL);
       return afxCurrentResourceHandle; }
- CLASS_DECL_VMSLNX void AfxSetResourceHandle(HINSTANCE hInstResource)
+ CLASS_DECL_LNX void AfxSetResourceHandle(HINSTANCE hInstResource)
    { ASSERT(hInstResource != NULL); afxCurrentResourceHandle = hInstResource; }
- CLASS_DECL_VMSLNX const char * AfxGetAppName()
+ CLASS_DECL_LNX const char * AfxGetAppName()
    { ASSERT(afxCurrentAppName != NULL); return afxCurrentAppName; }
- CLASS_DECL_VMSLNX ::user::interaction * AfxGetMainWnd()
+ CLASS_DECL_LNX ::user::interaction * AfxGetMainWnd()
 {
       ::radix::thread* pThread = dynamic_cast < ::radix::thread * > (::win::get_thread());
       return pThread != NULL ? pThread->GetMainWnd() : NULL;
  }
 
- CLASS_DECL_VMSLNX WINBOOL AfxGetAmbientActCtx()
+ CLASS_DECL_LNX WINBOOL AfxGetAmbientActCtx()
    {    return afxAmbientActCtx; }
- CLASS_DECL_VMSLNX void AfxSetAmbientActCtx(WINBOOL bSet)
+ CLASS_DECL_LNX void AfxSetAmbientActCtx(WINBOOL bSet)
    {  afxAmbientActCtx = bSet; }
 
 

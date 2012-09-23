@@ -19,7 +19,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Standard cleanup called by WinMain and AfxAbort
 
-void CLASS_DECL_VMSLNX AfxUnregisterWndClasses()
+void CLASS_DECL_LNX AfxUnregisterWndClasses()
 {
    // unregister Window classes
    __MODULE_STATE* pModuleState = AfxGetModuleState();
@@ -39,7 +39,7 @@ void CLASS_DECL_VMSLNX AfxUnregisterWndClasses()
    AfxUnlockGlobals(CRIT_REGCLASSLIST);
 
 }
-void CLASS_DECL_VMSLNX AfxWinTerm(void)
+void CLASS_DECL_LNX AfxWinTerm(void)
 {
    AfxUnregisterWndClasses();
    // cleanup OLE if required

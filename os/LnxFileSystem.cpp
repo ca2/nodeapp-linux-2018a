@@ -1,21 +1,21 @@
 #include "framework.h"
-#include "WinFileSystem.h"
+#include "lnx_fileSystem.h"
 
 
-#include "WinFile.h"
+#include "lnx_file.h"
 
-WinFileSystem::WinFileSystem(::ca::application * papp) :
+lnx_fileSystem::lnx_fileSystem(::ca::application * papp) :
    ca(papp)
 {
 
 }
 
-WinFileSystem::~WinFileSystem()
+lnx_fileSystem::~lnx_fileSystem()
 {
 
 }
 
-bool WinFileSystem::FullPath(string &str, const char * lpszFileIn)
+bool lnx_fileSystem::FullPath(string &str, const char * lpszFileIn)
 {
    if(::ex1::file_system::FullPath(str, lpszFileIn))
       return true;
@@ -41,7 +41,7 @@ bool WinFileSystem::FullPath(string &str, const char * lpszFileIn)
 }
 
 
-UINT WinFileSystem::GetFileName(const char * lpszPathName, string & str)
+UINT lnx_fileSystem::GetFileName(const char * lpszPathName, string & str)
 {
    int nMax = MAX_PATH * 8;
    wstring wstrPathName;
@@ -52,7 +52,7 @@ UINT WinFileSystem::GetFileName(const char * lpszPathName, string & str)
    return user;
 }
 
-void WinFileSystem::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
+void lnx_fileSystem::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
 {
    vfxGetModuleShortFileName(hInst, strShortName);
 }

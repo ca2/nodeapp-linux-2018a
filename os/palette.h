@@ -1,18 +1,17 @@
 #pragma once
 
-namespace win
+namespace lnx
 {
 
-   class CLASS_DECL_VMSLNX palette :
-      virtual public ::win::graphics_object,
+   class CLASS_DECL_LNX palette :
+      virtual public ::lnx::graphics_object,
       virtual public ::ca::palette
    {
    public:
-      static palette* PASCAL from_handle(::ca::application * papp, HPALETTE hPalette);
 
       palette(::ca::application * papp);
-      WINBOOL CreatePalette(LPLOGPALETTE lpLogPalette);
-      WINBOOL CreateHalftonePalette(::ca::graphics * pgraphics);
+      bool CreatePalette(LPLOGPALETTE lpLogPalette);
+      bool CreateHalftonePalette(::ca::graphics * pgraphics);
 
    // Attributes
       operator HPALETTE() const;
@@ -26,10 +25,10 @@ namespace win
       void AnimatePalette(UINT nStartIndex, UINT nNumEntries,
             LPPALETTEENTRY lpPaletteColors);
       UINT GetNearestPaletteIndex(COLORREF crColor) const;
-      WINBOOL ResizePalette(UINT nNumEntries);
+      bool ResizePalette(UINT nNumEntries);
 
    // Implementation
       virtual ~palette();
    };
 
-} // namespace win
+} // namespace lnx

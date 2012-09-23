@@ -1,38 +1,55 @@
 #pragma once
 
-namespace win
+
+namespace lnx
 {
 
-   class CLASS_DECL_VMSLNX font :
-      virtual public ::win::graphics_object,
+
+   class CLASS_DECL_LNX font :
       virtual public ::ca::font
    {
    public:
-      static font * PASCAL from_handle(::ca::application * papp, HFONT hFont);
+
+
+      //Gdiplus::Font *   m_pfont;
+   vsstring                m_strFamily;
+   int                     m_iWeight;
+   int                     m_iSize;
+   XFontSet                m_fontset;
+   bool                    m_bUpdated;
+   Display *               m_pdisplay;
+   int                     m_iAscent;
+   int                     m_iDescent;
+
+
 
       font(::ca::application * papp);
       virtual ~font();
 
-      virtual void font::construct(const ::ca::font & fontParam);
 
-      virtual WINBOOL CreateFontIndirect(const LOGFONT* lpLogFont);
-      virtual WINBOOL CreateFont(int nHeight, int nWidth, int nEscapement,
+      virtual void * get_os_data() const;
+
+
+      virtual void construct(const ::ca::font & fontParam);
+
+      virtual bool CreateFontIndirect(const LOGFONT* lpLogFont);
+      virtual bool CreateFont(int nHeight, int nWidth, int nEscapement,
             int nOrientation, int nWeight, BYTE bItalic, BYTE bUnderline,
             BYTE cStrikeOut, BYTE nCharSet, BYTE nOutPrecision,
             BYTE nClipPrecision, BYTE nQuality, BYTE nPitchAndFamily,
             const char * lpszFacename);
-      virtual WINBOOL CreatePointFont(int nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics = NULL);
-      virtual WINBOOL CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics = NULL);
+      virtual bool CreatePointFont(int nPointSize, const char * lpszFaceName, ::ca::graphics * pgraphics = NULL);
+      virtual bool CreatePointFontIndirect(const LOGFONT* lpLogFont, ::ca::graphics * pgraphics = NULL);
 
-   // Attributes
-      operator HFONT() const;
       virtual int GetLogFont(LOGFONT* pLogFont);
 
-      // Implementation
-      public:
-      #ifdef DEBUG
          virtual void dump(dump_context & dumpcontext) const;
-      #endif
+
+
    };
 
+
 } // namespace win
+
+
+

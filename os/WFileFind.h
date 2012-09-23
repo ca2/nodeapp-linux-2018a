@@ -1,6 +1,6 @@
 #pragma once
 
-class CLASS_DECL_VMSLNX FileFind : public ::radix::object
+class CLASS_DECL_LNX FileFind : public ::radix::object
 {
 public:
    FileFind();

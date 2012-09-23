@@ -7,10 +7,10 @@ namespace win
       ca(papp)
    {
       System.factory().cloneable_large < WinStdioFile         >  (typeid(::ex1::text_file        ));
-      System.factory().cloneable_large < WinFile              >  (typeid(::ex1::file             ));
-      System.factory().cloneable_large < WinFileSet           >  (typeid(::ex2::file_set         ));
-      System.factory().cloneable < WinFileSystem        >  (typeid(::ex1::file_system      ), 1);
-      System.factory().cloneable_small < WinFileException     >  (typeid(::ex1::file_exception   ));
+      System.factory().cloneable_large < lnx_file              >  (typeid(::ex1::file             ));
+      System.factory().cloneable_large < lnx_fileSet           >  (typeid(::ex2::file_set         ));
+      System.factory().cloneable < lnx_fileSystem        >  (typeid(::ex1::file_system      ), 1);
+      System.factory().cloneable_small < lnx_fileException     >  (typeid(::ex1::file_exception   ));
       System.factory().cloneable < WinResource          >  (typeid(::ex1::resource         ), 1);
       System.factory().cloneable < application          >  (typeid(::ex2::application      ), 1);
       System.factory().cloneable < dir                  >  (typeid(::ca::dir::system            ), 1);

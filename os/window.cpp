@@ -6,9 +6,9 @@
 #include "sal.h"
 
 
-__STATIC void CLASS_DECL_VMSLNX _AfxPreInitDialog(
+__STATIC void CLASS_DECL_LNX _AfxPreInitDialog(
    ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-__STATIC void CLASS_DECL_VMSLNX _AfxPostInitDialog(
+__STATIC void CLASS_DECL_LNX _AfxPostInitDialog(
    ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
 LRESULT CALLBACK
 _AfxActivationWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
@@ -114,7 +114,7 @@ namespace win
 
    // Change a window's style
 
-   __STATIC WINBOOL CLASS_DECL_VMSLNX _AfxModifyStyle(HWND hWnd, int nStyleOffset,
+   __STATIC WINBOOL CLASS_DECL_LNX _AfxModifyStyle(HWND hWnd, int nStyleOffset,
       DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       ASSERT(hWnd != NULL);
@@ -1927,7 +1927,7 @@ namespace win
       return NULL;
    }
 
-   /* trans HWND CLASS_DECL_VMSLNX AfxGetParentOwner(::user::interaction * hWnd)
+   /* trans HWND CLASS_DECL_LNX AfxGetParentOwner(::user::interaction * hWnd)
    {
       // check for permanent-owned window first
       ::ca::window * pWnd = ::win::window::FromHandlePermanent(hWnd);
@@ -5105,7 +5105,7 @@ int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
    /////////////////////////////////////////////////////////////////////////////
    // Official way to send message to a window
 
-   CLASS_DECL_VMSLNX LRESULT AfxCallWndProc(::user::interaction * pinteraction, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
+   CLASS_DECL_LNX LRESULT AfxCallWndProc(::user::interaction * pinteraction, HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
    {
       _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
@@ -5404,7 +5404,7 @@ LRESULT CALLBACK AfxWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 }
 
 // always indirectly accessed via AfxGetAfxWndProc
-WNDPROC CLASS_DECL_VMSLNX AfxGetAfxWndProc()
+WNDPROC CLASS_DECL_LNX AfxGetAfxWndProc()
 {
 #ifdef _ApplicationFrameworkDLL
    return AfxGetModuleState()->m_pfnAfxWndProc;
@@ -5415,7 +5415,7 @@ WNDPROC CLASS_DECL_VMSLNX AfxGetAfxWndProc()
    /////////////////////////////////////////////////////////////////////////////
    // Special helpers for certain windows messages
 
-   __STATIC void CLASS_DECL_VMSLNX _AfxPreInitDialog(
+   __STATIC void CLASS_DECL_LNX _AfxPreInitDialog(
       ::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld)
    {
       ASSERT(lpRectOld != NULL);
@@ -5425,7 +5425,7 @@ WNDPROC CLASS_DECL_VMSLNX AfxGetAfxWndProc()
       *pdwStyleOld = WIN_WINDOW(pWnd)->GetStyle();
    }
 
-   __STATIC void CLASS_DECL_VMSLNX _AfxPostInitDialog(
+   __STATIC void CLASS_DECL_LNX _AfxPostInitDialog(
       ::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld)
    {
       // must be hidden to start with
@@ -5456,7 +5456,7 @@ WNDPROC CLASS_DECL_VMSLNX AfxGetAfxWndProc()
 
 
 
-CLASS_DECL_VMSLNX void AfxHookWindowCreate(::user::interaction * pWnd)
+CLASS_DECL_LNX void AfxHookWindowCreate(::user::interaction * pWnd)
 {
    _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
    if (pThreadState->m_pWndInit == pWnd)
@@ -5477,7 +5477,7 @@ CLASS_DECL_VMSLNX void AfxHookWindowCreate(::user::interaction * pWnd)
    pThreadState->m_pWndInit = pWnd;
 }
 
-CLASS_DECL_VMSLNX WINBOOL AfxUnhookWindowCreate()
+CLASS_DECL_LNX WINBOOL AfxUnhookWindowCreate()
 {
    _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
 #ifndef _ApplicationFrameworkDLL
@@ -5497,7 +5497,7 @@ CLASS_DECL_VMSLNX WINBOOL AfxUnhookWindowCreate()
 
 
 
-CLASS_DECL_VMSLNX const char * AfxRegisterWndClass(UINT nClassStyle,
+CLASS_DECL_LNX const char * AfxRegisterWndClass(UINT nClassStyle,
    HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
 {
    // Returns a temporary string name for the class
@@ -5550,7 +5550,7 @@ CLASS_DECL_VMSLNX const char * AfxRegisterWndClass(UINT nClassStyle,
 }
 
 
-   __STATIC void CLASS_DECL_VMSLNX
+   __STATIC void CLASS_DECL_LNX
 _AfxHandleActivate(::ca::window * pWnd, WPARAM nState, ::ca::window * pWndOther)
 {
    ASSERT(pWnd != NULL);
@@ -5579,7 +5579,7 @@ _AfxHandleActivate(::ca::window * pWnd, WPARAM nState, ::ca::window * pWndOther)
    }
 }
 
-__STATIC WINBOOL CLASS_DECL_VMSLNX
+__STATIC WINBOOL CLASS_DECL_LNX
 _AfxHandleSetCursor(::ca::window * pWnd, UINT nHitTest, UINT nMsg)
 {
    if (nHitTest == HTERROR &&
@@ -5606,7 +5606,7 @@ _AfxHandleSetCursor(::ca::window * pWnd, UINT nHitTest, UINT nMsg)
 /////////////////////////////////////////////////////////////////////////////
 // Standard init called by WinMain
 
-__STATIC WINBOOL CLASS_DECL_VMSLNX _AfxRegisterWithIcon(WNDCLASS* pWndCls,
+__STATIC WINBOOL CLASS_DECL_LNX _AfxRegisterWithIcon(WNDCLASS* pWndCls,
    const char * lpszClassName, UINT nIDIcon)
 {
    pWndCls->lpszClassName = lpszClassName;
@@ -5621,7 +5621,7 @@ __STATIC WINBOOL CLASS_DECL_VMSLNX _AfxRegisterWithIcon(WNDCLASS* pWndCls,
 }
 
 
-WINBOOL CLASS_DECL_VMSLNX AfxEndDeferRegisterClass(LONG fToRegisterParam, const char ** ppszClass)
+WINBOOL CLASS_DECL_LNX AfxEndDeferRegisterClass(LONG fToRegisterParam, const char ** ppszClass)
 {
    // mask off all classes that are already registered
    __MODULE_STATE* pModuleState = AfxGetModuleState();
@@ -5831,7 +5831,7 @@ _AfxActivationWndProc(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam)
 // Additional helpers for WNDCLASS init
 
 // like RegisterClass, except will automatically call UnregisterClass
-WINBOOL CLASS_DECL_VMSLNX AfxRegisterClass(WNDCLASS* lpWndClass)
+WINBOOL CLASS_DECL_LNX AfxRegisterClass(WNDCLASS* lpWndClass)
 {
    WNDCLASS wndcls;
    if (GetClassInfo(lpWndClass->hInstance, lpWndClass->lpszClassName,

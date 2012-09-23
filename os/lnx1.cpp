@@ -13,7 +13,7 @@ namespace win
       return ::LoadLibraryW(gen::international::utf8_to_unicode(lpsz));
    }
 
-   WINBOOL CLASS_DECL_VMSLNX SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, WINBOOL fCreate)
+   WINBOOL CLASS_DECL_LNX SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, WINBOOL fCreate)
    {
       return ::SHGetSpecialFolderPathW(hwnd, wstringtou(str, MAX_PATH * 8), csidl, fCreate);
    }
@@ -76,7 +76,7 @@ namespace win
       return iLen;
    }*/
 
-   CLASS_DECL_VMSLNX void TimeToFileTime(::ca::application * papp, const class time& time, LPFILETIME pFileTime)
+   CLASS_DECL_LNX void TimeToFileTime(::ca::application * papp, const class time& time, LPFILETIME pFileTime)
    {
          SYSTEMTIME sysTime;
          sysTime.wYear           = (WORD)time.GetYear();
@@ -90,11 +90,11 @@ namespace win
          // convert system time to local file time
          FILETIME localTime;
          if (!SystemTimeToFileTime((LPSYSTEMTIME)&sysTime, &localTime))
-               WinFileException::ThrowOsError(papp, (LONG)::GetLastError());
+               lnx_fileException::ThrowOsError(papp, (LONG)::GetLastError());
 
          // convert local file time to UTC file time
          if (!LocalFileTimeToFileTime(&localTime, pFileTime))
-               WinFileException::ThrowOsError(papp, (LONG)::GetLastError());
+               lnx_fileException::ThrowOsError(papp, (LONG)::GetLastError());
    }
 
 

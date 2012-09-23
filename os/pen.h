@@ -1,38 +1,40 @@
 #pragma once
 
-namespace win
+
+
+namespace lnx
 {
 
-   /////////////////////////////////////////////////////////////////////////////
-   // ::ca::graphics_object subclasses (drawing tools)
 
-   class CLASS_DECL_VMSLNX pen :
-      virtual public ::win::graphics_object,
+   class CLASS_DECL_LNX pen :
+      virtual public ::lnx::graphics_object,
       virtual public ::ca::pen
    {
    public:
-      static pen* PASCAL from_handle(::ca::application * papp, HPEN hPen);
+
+
+
+   int                  m_iStock;
+   int                  m_iStyle;
+   int                  m_iWidth;
+   COLORREF             m_cr;
+
 
       pen(::ca::application * papp);
-      virtual void construct(int nPenStyle, int nWidth, COLORREF crColor);
-      virtual void construct(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
-         int nStyleCount = 0, const DWORD* lpStyle = NULL);
-      WINBOOL CreatePen(int nPenStyle, int nWidth, COLORREF crColor);
-      WINBOOL CreatePen(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
-         int nStyleCount = 0, const DWORD* lpStyle = NULL);
-      WINBOOL CreatePenIndirect(LPLOGPEN lpLogPen);
+      /*virtual void construct(int nPenStyle, double nWidth, COLORREF crColor);
+      virtual void construct(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const DWORD* lpStyle = NULL);
+      bool CreatePen(int nPenStyle, double nWidth, COLORREF crColor);
+      bool CreatePen(int nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int nStyleCount = 0, const DWORD* lpStyle = NULL);*/
 
-   // Attributes
-      operator HPEN() const;
-      int GetLogPen(LOGPEN* pLogPen);
-      int GetExtLogPen(EXTLOGPEN* pLogPen);
 
-   // Implementation
-   public:
+      virtual void * get_os_data() const;
+
+
       virtual ~pen();
-   #ifdef DEBUG
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
+
    };
 
-} // namespace win
+
+} // namespace lnx
+

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace win
+namespace lnx
 {
 
    //////////////////////////////////////////////////////////////////////
@@ -9,7 +9,7 @@ namespace win
    //   Date : 09-04-98
    //////////////////////////////////////////////////////////////////////
 
-   class CLASS_DECL_VMSLNX dib :
+   class CLASS_DECL_LNX dib :
       virtual public ::ca::dib
    {
    public:
@@ -27,7 +27,7 @@ namespace win
       ::ca::bitmap_sp      m_spbitmap;
       ::ca::graphics_sp    m_spgraphics;
       class size           m_size;
-      HBITMAP              m_hbitmapOriginal;
+      //HBITMAP              m_hbitmapOriginal;
 
       virtual ::ca::graphics * get_graphics();
       virtual ::ca::bitmap_sp get_bitmap();
@@ -55,14 +55,15 @@ namespace win
       int sin10(int i, int iAngle);
 
       bool is_rgb_black();
-      void xor(::ca::dib * pdib);
+      void _xor(::ca::dib * pdib);
 
       void ToAlpha(int i);
       void ToAlphaAndFill(int i, COLORREF cr);
       void GrayToARGB(COLORREF cr);
 
       void from_alpha();
-      void mult_alpha();
+      void mult_alpha(::ca::dib * pdibWork, bool bPreserveAlpha = true);
+      void set_rgb(int R, int G, int B);
 
       void rotate(::ca::dib * pdib, LPCRECT lpcrect, double dAngle, double dScale);
       void rotate(::ca::dib * pdib, double dAngle, double dScale);
@@ -82,10 +83,10 @@ namespace win
       void transparent_color(color color);
 
 
-      WINBOOL create(class size size);
-      WINBOOL create(int iWidth, int iHeight);
-      WINBOOL create(::ca::graphics * pdc);
-      WINBOOL Destroy();
+      bool create(class size size);
+      bool create(int iWidth, int iHeight);
+      bool create(::ca::graphics * pdc);
+      bool Destroy();
 
 
       void DivideRGB(int iDivide);
@@ -145,6 +146,13 @@ namespace win
       int width();
       int height();
       double pi();
+
+      virtual bool from(::ca::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI);
+
    };
 
-} // namespace win
+
+} // namespace lnx
+
+
+

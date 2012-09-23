@@ -13,11 +13,11 @@
 
 
 #ifdef LINUX
-    #define CLASS_DECL_VMSLNX
+    #define CLASS_DECL_LNX
 #elif defined(_VMSWIN_DLL)
-    #define CLASS_DECL_VMSLNX  _declspec(dllexport)
+    #define CLASS_DECL_LNX  _declspec(dllexport)
 #else
-    #define CLASS_DECL_VMSLNX  _declspec(dllimport)
+    #define CLASS_DECL_LNX  _declspec(dllimport)
 #endif
 
 string get_error_message(DWORD dwError);
@@ -27,37 +27,37 @@ string get_error_message(DWORD dwError);
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
 
-//CLASS_DECL_VMSLNX WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = _MFC_VER);
-CLASS_DECL_VMSLNX WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = 0);
+//CLASS_DECL_LNX WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = _MFC_VER);
+CLASS_DECL_LNX WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = 0);
 
 /////////////////////////////////////////////////////////////////////////////
 // stop on a specific primitive::memory request
 
 // Debugger hook on specified allocation request - Obsolete
-CLASS_DECL_VMSLNX void AfxSetAllocStop(LONG lRequestNumber);
+CLASS_DECL_LNX void AfxSetAllocStop(LONG lRequestNumber);
 
 // Return TRUE if primitive::memory is sane or print out what is wrong
-CLASS_DECL_VMSLNX WINBOOL AfxCheckMemory();
+CLASS_DECL_LNX WINBOOL AfxCheckMemory();
 
 // Return TRUE if valid primitive::memory block of nBytes
-CLASS_DECL_VMSLNX WINBOOL AfxIsMemoryBlock(const void * p, UINT nBytes,
+CLASS_DECL_LNX WINBOOL AfxIsMemoryBlock(const void * p, UINT nBytes,
    LONG* plRequestNumber = NULL);
 
 // helper routines for non-C++ EH implementations
 // for THROW_LAST auto-delete backward compatiblity
-CLASS_DECL_VMSLNX void AfxThrowLastCleanup();
+CLASS_DECL_LNX void AfxThrowLastCleanup();
 
 // other out-of-line helper functions
-CLASS_DECL_VMSLNX void AfxTryCleanup();
+CLASS_DECL_LNX void AfxTryCleanup();
 
 
 /////////////////////////////////////////////////////////////////////////////
 // Global implementation helpers
 
 // window creation hooking
-CLASS_DECL_VMSLNX void AfxHookWindowCreate(::user::interaction * pWnd);
-CLASS_DECL_VMSLNX WINBOOL AfxUnhookWindowCreate();
-CLASS_DECL_VMSLNX void AfxResetMsgCache();
+CLASS_DECL_LNX void AfxHookWindowCreate(::user::interaction * pWnd);
+CLASS_DECL_LNX WINBOOL AfxUnhookWindowCreate();
+CLASS_DECL_LNX void AfxResetMsgCache();
 
 // for backward compatibility to previous versions
 #define _AfxHookWindowCreate    AfxHookWindowCreate
@@ -80,15 +80,15 @@ CLASS_DECL_VMSLNX void AfxResetMsgCache();
 #include "pen.h"
 #include "font.h"
 #include "brush.h"
-#include "rgn.h"
-#include "draw_dib.h"
+#include "lnx_region.h"
+//xxx #include "draw_dib.h"
 #include "thread.h"
 #include "window.h"
 #include "osi.h"
 #include "port_forward.h"
 
 #define NULL_REF(class) (*((class *) NULL))
-CLASS_DECL_VMSLNX WNDPROC AfxGetAfxWndProc();
+CLASS_DECL_LNX WNDPROC AfxGetAfxWndProc();
 #define AfxWndProc (*AfxGetAfxWndProc())
 
 #define WIN_THREAD(pthread) (dynamic_cast < ::win::thread * > (dynamic_cast < ::ca::thread * >(pthread)))
@@ -101,15 +101,15 @@ CLASS_DECL_VMSLNX WNDPROC AfxGetAfxWndProc();
 
 
 
-CLASS_DECL_VMSLNX void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj);
-CLASS_DECL_VMSLNX void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg);
+CLASS_DECL_LNX void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj);
+CLASS_DECL_LNX void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg);
 
-CLASS_DECL_VMSLNX WINBOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj);
-CLASS_DECL_VMSLNX WINBOOL __cdecl AfxIsIdleMessage(MSG* pMsg);
+CLASS_DECL_LNX WINBOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj);
+CLASS_DECL_LNX WINBOOL __cdecl AfxIsIdleMessage(MSG* pMsg);
 
 
-CLASS_DECL_VMSLNX void AfxProcessWndProcException(base_exception*, gen::signal_object * pobj);
-CLASS_DECL_VMSLNX void __cdecl AfxPreTranslateMessage(gen::signal_object * pobj);
+CLASS_DECL_LNX void AfxProcessWndProcException(base_exception*, gen::signal_object * pobj);
+CLASS_DECL_LNX void __cdecl AfxPreTranslateMessage(gen::signal_object * pobj);
 
 
 #include "application.h"

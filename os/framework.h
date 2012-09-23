@@ -9,4 +9,4 @@
 #include "lnx.h"
 #include "lnx_internal.h"
 
-CLASS_DECL_VMSLNX void vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName = NULL);
+CLASS_DECL_LNX void vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName = NULL);

@@ -1,43 +1,41 @@
-// This is ca2 API library.
-//
-//
-//
-//
-//
-//
-//
-//
-
-/////////////////////////////////////////////////////////////////////////////
-// CHandleMap
-//
-//  Note: Do not access the members of this class directly.
-//      Use ::win::window::from_handle, ::win::graphics::from_handle, etc.
-//      The actual definition is only included because it is
-//      necessary for the definition of WindowsThread.
-//
-//  Most Windows objects are represented with a HANDLE, including
-//      the most important ones, HWND, HDC, HPEN, HFONT etc.
-//  We want C++ objects to wrap these handle based objects whenever we can.
-//  Since Windows objects can be created outside of C++ (eg: calling
-//      ::CreateWindow will return an HWND with no C++ wrapper) we must
-//      support a reasonably uniform mapping from permanent handles
-//      (i.e. the ones allocated in C++) and temporary handles (i.e.
-//      the ones allocated in C, but passed through a C++ interface.
-//  We keep two dictionaries for this purpose.  The permanent dictionary
-//      stores those C++ objects that have been explicitly created by
-//      the developer.  The C++ constructor for the wrapper class will
-//      insert the mapping into the permanent dictionary and the C++
-//      destructor will remove it and possibly free up the associated
-//      Windows object.
-//  When a handle passes through a C++ interface that doesn't exist in
-//      the permanent dictionary, we allocate a temporary wrapping object
-//      and store that mapping into the temporary dictionary.
-//  At idle time the temporary wrapping objects are flushed (since you better
-//      not be holding onto something you didn't create).
-//
-
 #pragma once
+
+/* xxx
+template <>
+inline UINT HashKey < HWND >(HWND key)
+{
+   // default identity hash - works for most primitive values
+   return (DWORD)((dword_ptr)key);
+}
+
+template <>
+inline UINT HashKey < HMENU >(HMENU key)
+{
+   // default identity hash - works for most primitive values
+   return (DWORD)((dword_ptr)key);
+}
+
+template <>
+inline UINT HashKey < HDC >(HDC key)
+{
+   // default identity hash - works for most primitive values
+   return (DWORD)((dword_ptr)key);
+}
+
+template <>
+inline UINT HashKey < HGDIOBJ >(HGDIOBJ key)
+{
+   // default identity hash - works for most primitive values
+   return (DWORD)((dword_ptr)key);
+}
+
+template <>
+nline UINT HashKey < HIMAGELIST >(HIMAGELIST key)
+{
+   // default identity hash - works for most primitive values
+   return (DWORD)((dword_ptr)key);
+}
+
 
 namespace win
 {
@@ -46,36 +44,36 @@ namespace win
    class graphics;
    class graphics_object;
 
-template < int t_iHandleCount >
-class handle_base
-{
-public:
-   HANDLE m_handlea[t_iHandleCount];
-   static const int s_iHandleCount = t_iHandleCount;
-};
+   template < int t_iHandleCount >
+   class handle_base
+   {
+   public:
+      HANDLE m_handlea[t_iHandleCount];
+      static const int s_iHandleCount = t_iHandleCount;
+   };
 
-template < class H >
-class handle1 : public handle_base < 1 >
-{
-public:
-   handle1() { m_handlea[0] = NULL; }
-   typedef handle_base < 1 > HANDLE_BASE_TYPE;
-   inline H get_handle() const { return static_cast < H > (m_handlea[0]); }
-   inline operator H () const { return get_handle(); }
-   inline H set_handle(H h) { return static_cast < H > (m_handlea[0] = static_cast < HANDLE > (h)); }
-};
+   template < class H >
+   class handle1 : public handle_base < 1 >
+   {
+   public:
+      handle1() { m_handlea[0] = NULL; }
+      typedef handle_base < 1 > HANDLE_BASE_TYPE;
+      inline H get_handle() const { return static_cast < H > (m_handlea[0]); }
+      inline operator H () const { return get_handle(); }
+      inline H set_handle(H h) { return static_cast < H > (m_handlea[0] = static_cast < HANDLE > (h)); }
+   };
 
-template < class H1, class H2 >
-class handle2 : public handle_base < 2 >
-{
-public:
-   handle2() { m_handlea[0] = NULL; m_handlea[1] = NULL; }
-   typedef handle_base < 2 > HANDLE_BASE_TYPE;
-   inline H1 get_os_data() const { return static_cast < H1 > (m_handlea[0]); }
-   inline H2 get_handle2() const { return static_cast < H2 > (m_handlea[0]); }
-   inline H1 set_handle1(H1 h) { return static_cast < H1 > (m_handlea[0] = static_cast < HANDLE > (h)); }
-   inline H2 set_handle2(H2 h) { return static_cast < H2 > (m_handlea[1] = static_cast < HANDLE > (h)); }
-};
+   template < class H1, class H2 >
+   class handle2 : public handle_base < 2 >
+   {
+   public:
+      handle2() { m_handlea[0] = NULL; m_handlea[1] = NULL; }
+      typedef handle_base < 2 > HANDLE_BASE_TYPE;
+      inline H1 get_os_data() const { return static_cast < H1 > (m_handlea[0]); }
+      inline H2 get_handle2() const { return static_cast < H2 > (m_handlea[0]); }
+      inline H1 set_handle1(H1 h) { return static_cast < H1 > (m_handlea[0] = static_cast < HANDLE > (h)); }
+      inline H2 set_handle2(H2 h) { return static_cast < H2 > (m_handlea[1] = static_cast < HANDLE > (h)); }
+   };
 
    typedef handle1 < HWND > hwnd_handle;
    typedef handle1 < HMENU > hmenu_handle;
@@ -86,7 +84,7 @@ public:
 } // namespace win
 
 
-#include "radix/radix_fixed_alloc.h"
+#include "ca/radix/radix_fixed_alloc.h"
 
 template<class TYPE>
 struct ConstructDestruct
@@ -120,25 +118,20 @@ template < class HT, class CT >
 class handle_map
 {
 public:
-    // implementation
+
+
    fixed_alloc_no_sync     m_alloc;
    mutex                   m_mutex;
    void (PASCAL* m_pfnConstructObject)(CT* pObject);
    void (PASCAL* m_pfnDestructObject)(CT* pObject);
    ::collection::map < HANDLE, HANDLE, CT *, CT *> m_permanentMap;
    ::collection::map < HANDLE, HANDLE, CT *, CT *> m_temporaryMap;
-   //::ca::type_info m_pClass;
-   //size_t m_nOffset;       // offset of handles in the object
-   //int m_nHandles;         // 1 or 2 (for ::ca::graphics_sp)
 
-// Constructor/Destructor
    handle_map();
-#ifdef _ApplicationFrameworkDLL
-   ~handle_map()
-#else
    virtual ~handle_map()
-#endif
-      { delete_temp(); }
+   {
+      delete_temp();
+   }
 
 // Operations
 public:
@@ -154,65 +147,66 @@ public:
    friend class ::radix::thread;
 };
 
-class CLASS_DECL_VMSLNX hwnd_map :
+class CLASS_DECL_win hwnd_map :
    public handle_map < ::win::hwnd_handle, ::win::window >
 {
 public:
 };
 
-class CLASS_DECL_VMSLNX hdc_map :
+/*class CLASS_DECL_win hdc_map :
    public handle_map < ::win::hdc_handle, ::win::graphics >
 {
 public:
-};
+};*/
 
-class hgdiobj_map :
+/*class hgdiobj_map :
    public handle_map < ::win::hgdiobj_handle, ::win::graphics_object >
 {
 public:
+};*/
+
+/*
+class CLASS_DECL_win hdc_map :
+   public handle_map < ::win::hmenu_handle, ::win::menu >
+{
+public:
 };
+*/
 
-
-
-/////////////////////////////////////////////////////////////////////////////
-// CHandleMap implementation
+/* xxx
 
 template < class HT, class CT >
 handle_map < HT, CT > ::handle_map() :
-      m_permanentMap(10),
-      m_temporaryMap(4), // small block size for temporary ::collection::map
-      m_alloc(sizeof(CT), 64)
+      m_permanentMap(1024),
+      m_temporaryMap(1024),
+      m_alloc(sizeof(CT), 1024)
 {
 
-   /*ENSURE_ARG(pClass != NULL);
-   ENSURE_ARG(pfnConstructObject != NULL);
-   ENSURE_ARG(pfnDestructObject != NULL);*/
    ASSERT(HT::s_iHandleCount == 1 || HT::s_iHandleCount == 2);
 
-   m_temporaryMap.InitHashTable(7, FALSE); // small table for temporary ::collection::map
-//   m_pClass = &typeid(CT);
-   m_pfnConstructObject = ConstructDestruct<CT>::Construct;
-   m_pfnDestructObject = ConstructDestruct<CT>::Destruct;
-//   m_nOffset = nOffset;
-//   m_nHandles = nHandles;
+   m_permanentMap.InitHashTable(1024, TRUE);
+   m_temporaryMap.InitHashTable(1024, TRUE);
+
+   m_pfnConstructObject    = ConstructDestruct<CT>::Construct;
+   m_pfnDestructObject     = ConstructDestruct<CT>::Destruct;
+
 }
 
 template < class HT, class CT >
 CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::application *, HANDLE), ::ca::application * papp)
 {
 
-   CSingleLock sl(&m_mutex, TRUE);
+   single_lock sl(&m_mutex, TRUE);
 
-//   ASSERT(m_pClass != NULL);
    ASSERT(HT::s_iHandleCount == 1 || HT::s_iHandleCount == 2);
 
    if (h == NULL)
       return NULL;
 
    CT* pObject = lookup_permanent(h);
-   if (pObject != NULL && pObject->get_os_data() == h)
+   if (pObject != NULL && pObject->get_os_data() == (void *) h)
       return pObject;   // return permanent one
-   else if ((pObject = lookup_temporary(h)) != NULL && pObject->get_os_data() == h)
+   else if ((pObject = lookup_temporary(h)) != NULL && pObject->get_os_data() == (void *) h)
    {
       HANDLE* ph = pObject->m_handlea;
       ASSERT(ph[0] == h || ph[0] == NULL);
@@ -229,9 +223,9 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    // C++ object to wrap it.  We don't want the ::fontopus::user to see this primitive::memory
    // allocation, so we turn tracing off.
 
-   WINBOOL bEnable = AfxEnableMemoryTracking(FALSE);
-#ifndef _AFX_PORTABLE
-   _PNH pnhOldHandler = AfxSetNewHandler(&AfxCriticalNewHandler);
+   //bool bEnable = __enable_memory_tracking(FALSE);
+#ifndef ___PORTABLE
+   _PNH pnhOldHandler = __set_new_handler(&__critical_new_handler);
 #endif
 
    CT* pTemp = NULL;
@@ -241,7 +235,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
       {
          pTemp = pfnAllocator(papp, h);
          if (pTemp == NULL)
-            AfxThrowMemoryException();
+            throw memory_exception();
       }
       else
       {
@@ -249,7 +243,7 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    //      ASSERT((UINT)m_pClass->m_nObjectSize == m_alloc.GetAllocSize());
          pTemp = (CT*)m_alloc.Alloc();
          if (pTemp == NULL)
-            AfxThrowMemoryException();
+            throw memory_exception();
 
          // now construct the object in place
          ASSERT(m_pfnConstructObject != NULL);
@@ -261,18 +255,18 @@ CT* handle_map < HT, CT >::from_handle(HANDLE h, CT * (*pfnAllocator) (::ca::app
    }
    catch(base_exception * pe)
    {
-#ifndef _AFX_PORTABLE
-      AfxSetNewHandler(pnhOldHandler);
+#ifndef ___PORTABLE
+      __set_new_handler(pnhOldHandler);
 #endif
-      AfxEnableMemoryTracking(bEnable);
+      //__enable_memory_tracking(bEnable);
       ::ca::rethrow(pe);
    }
 
 
-#ifndef _AFX_PORTABLE
-   AfxSetNewHandler(pnhOldHandler);
+#ifndef ___PORTABLE
+   __set_new_handler(pnhOldHandler);
 #endif
-   AfxEnableMemoryTracking(bEnable);
+   //__enable_memory_tracking(bEnable);
 
    // now set the handle in the object
    HANDLE* ph = pTemp->m_handlea;  // after ::radix::object
@@ -288,11 +282,11 @@ template < class HT, class CT >
 void handle_map < HT, CT >::set_permanent(HANDLE h, CT * permOb)
 {
 
-   CSingleLock sl(&m_mutex, TRUE);
+   single_lock sl(&m_mutex, TRUE);
 
-   WINBOOL bEnable = AfxEnableMemoryTracking(FALSE);
+   //bool bEnable = __enable_memory_tracking(FALSE);
    m_permanentMap[(LPVOID)h] = permOb;
-   AfxEnableMemoryTracking(bEnable);
+   //__enable_memory_tracking(bEnable);
 
 }
 #endif //DEBUG
@@ -302,7 +296,7 @@ template < class HT, class CT >
 void handle_map < HT, CT > ::remove_handle(HANDLE h)
 {
 
-   CSingleLock sl(&m_mutex, TRUE);
+   single_lock sl(&m_mutex, TRUE);
 
    // make sure the handle entry is consistent before deleting
    CT* pTemp = lookup_temporary(h);
@@ -333,9 +327,9 @@ template < class HT, class CT >
 void handle_map < HT, CT >::delete_temp()
 {
 
-   CSingleLock sl(&m_mutex, TRUE);
+   single_lock sl(&m_mutex, TRUE);
 
-   if (gen::is_null(this))
+   if (::ca::is_null(this))
       return;
 
    POSITION pos = m_temporaryMap.get_start_position();
@@ -357,6 +351,7 @@ void handle_map < HT, CT >::delete_temp()
       }
 
       ASSERT(m_pfnDestructObject != NULL);
+      pTemp->m_papp = NULL;
       (*m_pfnDestructObject)(pTemp);   // destruct the object
    }
 
@@ -384,10 +379,10 @@ template < class HT, class CT >
 inline CT* handle_map <HT, CT>::lookup_permanent(HANDLE h)
 {
 
-   CSingleLock sl(&m_mutex, TRUE);
+   single_lock sl(&m_mutex, TRUE);
 
    CT * pt = m_permanentMap.get(h, (CT*) NULL);
-   if(pt != NULL && pt->get_os_data() == h)
+   if(pt != NULL && pt->get_os_data() == (void *) h)
       return pt;
    else
       return NULL;
@@ -398,10 +393,10 @@ template < class HT, class CT >
 inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 {
 
-   CSingleLock sl(&m_mutex, TRUE);
+   single_lock sl(&m_mutex, TRUE);
 
    CT * pt = m_temporaryMap.get(h, (CT*) NULL);
-   if(pt != NULL && pt->get_os_data() == h)
+   if(pt != NULL && pt->get_os_data() == (void *) h)
       return pt;
    else
       return NULL;
@@ -409,8 +404,11 @@ inline CT* handle_map <HT, CT>::lookup_temporary(HANDLE h)
 }
 
 
-CLASS_DECL_VMSLNX hwnd_map * PASCAL afxMapHWND(WINBOOL bCreate = FALSE);
-CLASS_DECL_VMSLNX himagelist_map * PASCAL afxMapHIMAGELIST(WINBOOL bCreate = FALSE);
-CLASS_DECL_VMSLNX hdc_map * PASCAL afxMapHDC(WINBOOL bCreate = FALSE);
-CLASS_DECL_VMSLNX hgdiobj_map * PASCAL afxMapHGDIOBJ(WINBOOL bCreate = FALSE);
-CLASS_DECL_VMSLNX hmenu_map * PASCAL afx_map_HMENU(WINBOOL bCreate = FALSE);
+CLASS_DECL_win hwnd_map * PASCAL afxMapHWND(bool bCreate = FALSE);
+CLASS_DECL_win mutex * PASCAL afxMutexHwnd();
+CLASS_DECL_win himagelist_map * PASCAL afxMapHIMAGELIST(bool bCreate = FALSE);
+//CLASS_DECL_win hdc_map * PASCAL afxMapHDC(bool bCreate = FALSE);
+//CLASS_DECL_win hgdiobj_map * PASCAL afxMapHGDIOBJ(bool bCreate = FALSE);
+//CLASS_DECL_win hmenu_map * PASCAL afx_map_HMENU(bool bCreate = FALSE);
+
+*/

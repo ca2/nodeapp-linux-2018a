@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_VMSLNX osi :
+   class CLASS_DECL_LNX osi :
       public ::ca::osi
    {
    public:

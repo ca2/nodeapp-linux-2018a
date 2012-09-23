@@ -1,62 +1,62 @@
 #include "framework.h"
-#include "WinFileSet.h"
+#include "lnx_fileSet.h"
 #include "WFileFind.h"
 
 
-WinFileSet::WinFileSet(::ca::application * papp) :
+lnx_fileSet::lnx_fileSet(::ca::application * papp) :
    ca(papp)
 {
 }
 
-WinFileSet::~WinFileSet()
+lnx_fileSet::~lnx_fileSet()
 {
 
 }
 
-void WinFileSet::add_search(stringa & stra, bool_array & baRecursive)
+void lnx_fileSet::add_search(stringa & stra, bool_array & baRecursive)
 {
    m_straSearch.add(stra);
    m_baRecursive.add(baRecursive);
    refresh();
 }
 
-void WinFileSet::add_filter(stringa & stra)
+void lnx_fileSet::add_filter(stringa & stra)
 {
    m_straFilter.add(stra);
    refresh();
 }
 
-int WinFileSet::get_file_count()
+int lnx_fileSet::get_file_count()
 {
    return m_straFile.get_size();
 }
 
-void WinFileSet::file_at(int i, string & str)
+void lnx_fileSet::file_at(int i, string & str)
 {
    str = m_straFile[i];
 }
 
-int WinFileSet::find_first_file(const char * lpcsz)
+int lnx_fileSet::find_first_file(const char * lpcsz)
 {
    return m_straFile.find_first_ci(lpcsz);
 }
 
-void WinFileSet::clear_search()
+void lnx_fileSet::clear_search()
 {
   m_straSearch.remove_all();
 }
 
-void WinFileSet::clear_filter()
+void lnx_fileSet::clear_filter()
 {
   m_straFilter.remove_all();
 }
 
-void WinFileSet::clear_file()
+void lnx_fileSet::clear_file()
 {
    m_straFile.remove_all();
 }
 
-void WinFileSet::refresh()
+void lnx_fileSet::refresh()
 {
    clear_file();
    string strFilter;

@@ -4,7 +4,7 @@
 // STDIO file implementation
 
 class WinStdioFile :
-   virtual public WinFile,
+   virtual public lnx_file,
    virtual public ex1::text_file
 {
 public:

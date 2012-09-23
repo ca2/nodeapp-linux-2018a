@@ -124,6 +124,8 @@
 		<Unit filename="lnx2.cpp" />
 		<Unit filename="lnx_error.cpp" />
 		<Unit filename="lnx_internal.h" />
+		<Unit filename="lnx_region.cpp" />
+		<Unit filename="lnx_region.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="osi.cpp" />
 		<Unit filename="osi.h" />
@@ -134,8 +136,6 @@
 		<Unit filename="port_forward.cpp" />
 		<Unit filename="port_forward.h" />
 		<Unit filename="preview_dc.cpp" />
-		<Unit filename="rgn.cpp" />
-		<Unit filename="rgn.h" />
 		<Unit filename="state.h" />
 		<Unit filename="thread.cpp" />
 		<Unit filename="thread.h" />

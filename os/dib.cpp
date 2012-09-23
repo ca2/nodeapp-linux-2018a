@@ -46,7 +46,7 @@ namespace win
    }
 
 
-   CLASS_DECL_VMSLNX void dib::s_initialize()
+   CLASS_DECL_LNX void dib::s_initialize()
    {
       double dCos;
       double dSin;
