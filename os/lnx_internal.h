@@ -1,13 +1,12 @@
 #pragma once
 
 
-#include "dir.h"
-#include "WFileFind.h"
-#include "LnxFileSystem.h"
-#include "LnxFile.h"
-#include "LinuxShell.h"
-//#include "ca2/ex1_resource.h"
-#include "LnxResource.h"
-#include "application.h"
-#include "LnxStdioFile.h"
-#include "LnxFileSet.h"
+#include "lnx_dir.h"
+#include "lnx_file_system.h"
+#include "lnx_file.h"
+#include "lnx_shell.h"
+#include "lnx_resource.h"
+#include "lnx_stdio_file.h"
+#include "lnx_fileset.h"
+
+

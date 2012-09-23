@@ -1,19 +1,18 @@
 #pragma once
 
 
-namespace win
+namespace lnx
 {
 
 
-   CLASS_DECL_win LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-   //CLASS_DECL_win void _gen::StandardSubclass(void *);
-   CLASS_DECL_win LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-   CLASS_DECL_win LRESULT __call_window_procedure(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_LNX LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
+   //CLASS_DECL_LNX void _gen::StandardSubclass(void *);
+   CLASS_DECL_LNX LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
+   CLASS_DECL_LNX LRESULT __call_window_procedure(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
-   class CLASS_DECL_win window :
-      virtual public ::ca::window,
-      virtual public hwnd_handle
+   class CLASS_DECL_LNX window :
+      virtual public ::ca::window
    {
    public:
 
@@ -311,15 +310,15 @@ namespace win
       virtual void CheckRadioButton(int nIDFirstButton, int nIDLastButton,
                   int nIDCheckButton);
       virtual int GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton);
-      virtual int DlgDirList(__inout_z LPTSTR lpPathSpec, __in int nIDListBox,
-                  __in int nIDStaticPath, __in UINT nFileType);
-      virtual int DlgDirListComboBox(__inout_z LPTSTR lpPathSpec, __in int nIDComboBox,
-                  __in int nIDStaticPath, __in UINT nFileType);
-      virtual bool DlgDirSelect(__out_ecount_z(nSize) LPTSTR lpString, __in int nSize, __in int nIDListBox);
-      virtual bool DlgDirSelectComboBox(__out_ecount_z(nSize) LPTSTR lpString, __in int nSize, __in int nIDComboBox);
+      virtual int DlgDirList(LPTSTR lpPathSpec, int nIDListBox,
+                  int nIDStaticPath, UINT nFileType);
+      virtual int DlgDirListComboBox(LPTSTR lpPathSpec, int nIDComboBox,
+                  int nIDStaticPath, UINT nFileType);
+      virtual bool DlgDirSelect(LPTSTR lpString, int nSize, int nIDListBox);
+      virtual bool DlgDirSelectComboBox(LPTSTR lpString, int nSize, int nIDComboBox);
 
-      virtual UINT GetChildByIdInt(int nID, BOOL * lpTrans = NULL, bool bSigned = TRUE) const;
-      virtual int GetChildByIdText(__in int nID, __out_ecount_part_z(nMaxCount, return + 1) LPTSTR lpStr, __in int nMaxCount) const;
+      virtual UINT GetChildByIdInt(int nID, bool * lpTrans = NULL, bool bSigned = TRUE) const;
+      virtual int GetChildByIdText(int nID, LPTSTR lpStr, int nMaxCount) const;
       virtual int GetChildByIdText(int nID, string & rString) const;
       virtual ::ca::window * GetNextDlgGroupItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
       virtual ::ca::window * GetNextDlgTabItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
@@ -345,9 +344,9 @@ namespace win
       virtual int ScrollWindowEx(int dx, int dy,
                LPCRECT lpRectScroll, LPCRECT lpRectClip,
                ::ca::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags);
-      virtual bool SetScrollInfo(int nBar, LPSCROLLINFO lpScrollInfo,
-         bool bRedraw = TRUE);
-      virtual bool GetScrollInfo(int nBar, LPSCROLLINFO lpScrollInfo, UINT nMask = SIF_ALL);
+//xxx      virtual bool SetScrollInfo(int nBar, LPSCROLLINFO lpScrollInfo,
+//xxx         bool bRedraw = TRUE);
+//xxx      virtual bool GetScrollInfo(int nBar, LPSCROLLINFO lpScrollInfo, UINT nMask = SIF_ALL);
       virtual int GetScrollLimit(int nBar);
 
    #if(WINVER >= 0x0500)
@@ -469,7 +468,7 @@ namespace win
       void OnEnterIdle(UINT nWhy, ::ca::window * pWho);
       bool OnEraseBkgnd(::ca::graphics * pgraphics);
       void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
-      bool OnHelpInfo(HELPINFO* lpHelpInfo);
+      //xxx bool OnHelpInfo(HELPINFO* lpHelpInfo);
       void OnIconEraseBkgnd(::ca::graphics * pgraphics);
       void OnKillFocus(::ca::window * pNewWnd);
       LRESULT OnMenuChar(UINT nChar, UINT nFlags, ::userbase::menu* pMenu);
@@ -521,7 +520,7 @@ namespace win
       void OnSysKeyDown(UINT nChar, UINT nRepCnt, UINT nFlags);
       void OnSysKeyUp(UINT nChar, UINT nRepCnt, UINT nFlags);
       void OnCompacting(UINT nCpuTime);
-      void OnDevModeChange(__in_z LPTSTR lpDeviceName);
+      void OnDevModeChange(LPTSTR lpDeviceName);
       void OnFontChange();
       void OnPaletteChanged(::ca::window * pFocusWnd);
       void OnSpoolerStatus(UINT nStatus, UINT nJobs);
@@ -558,7 +557,7 @@ namespace win
       void OnInitMenuPopup(::userbase::menu* pPopupMenu, UINT nIndex, bool bSysMenu);
 
    // Clipboard message handler member functions
-      void OnAskCbFormatName(__in UINT nMaxCount, __out_ecount_z(nMaxCount) LPTSTR lpszString);
+      void OnAskCbFormatName(UINT nMaxCount, LPTSTR lpszString);
       void OnChangeCbChain(void * hWndRemove, void * hWndAfter);
       void OnDestroyClipboard();
       void OnDrawClipboard();
@@ -570,11 +569,11 @@ namespace win
       void OnVScrollClipboard(::ca::window * pClipAppWnd, UINT nSBCode, UINT nPos);
 
    // control message handler member functions
-      int OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct);
-      void OnDeleteItem(int nIDCtl, LPDELETEITEMSTRUCT lpDeleteItemStruct);
-      void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
+//xxx      int OnCompareItem(int nIDCtl, LPCOMPAREITEMSTRUCT lpCompareItemStruct);
+//xxx      void OnDeleteItem(int nIDCtl, LPDELETEITEMSTRUCT lpDeleteItemStruct);
+//xxx      void OnDrawItem(int nIDCtl, LPDRAWITEMSTRUCT lpDrawItemStruct);
       UINT OnGetDlgCode();
-      void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
+//xxx      void OnMeasureItem(int nIDCtl, LPMEASUREITEMSTRUCT lpMeasureItemStruct);
 
    // MDI message handler member functions
       void OnMDIActivate(bool bActivate,
@@ -585,8 +584,8 @@ namespace win
       void OnExitMenuLoop(bool bIsTrackPopupMenu);
 
    // Win4 messages
-      void OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
-      void OnStyleChanging(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
+//xxx      void OnStyleChanged(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
+//xxx      void OnStyleChanging(int nStyleType, LPSTYLESTRUCT lpStyleStruct);
       void OnSizing(UINT nSide, LPRECT lpRect);
       void OnMoving(UINT nSide, LPRECT lpRect);
       void OnCaptureChanged(::ca::window * pWnd);
@@ -698,5 +697,8 @@ namespace win
    };
 
 
-} // namespace win
+} // namespace lnx
+
+
+
 

@@ -1,12 +1,9 @@
 #pragma once
 
-namespace user
-{
-   class ::user::window_interface;
-} // namespace user
 
 namespace lnx
 {
+
 
    class CLASS_DECL_LNX window_draw :
       virtual public ::ca::window_draw,
