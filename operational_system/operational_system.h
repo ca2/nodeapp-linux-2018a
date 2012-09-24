@@ -141,7 +141,8 @@ typedef std::type_info std_type_info;
 
 // for global data that should be in COMDATs (packaged data)
 #ifndef __COMDAT
-#define __COMDAT __declspec(selectany)
+//#define __COMDAT __declspec(selectany)
+#define __COMDAT
 #endif
 
 // The following macros are used on data declarations/definitions

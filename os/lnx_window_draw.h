@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_LNX window_draw :
+   class CLASS_DECL_lnx window_draw :
       virtual public ::ca::window_draw,
       virtual public ::ca::message_window_simple_callback
    {

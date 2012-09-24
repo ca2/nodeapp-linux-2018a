@@ -3,11 +3,11 @@
 
 // Note: in separate module so it can be replaced if needed
 
-void CLASS_DECL_LNX AfxAbort()
+void CLASS_DECL_lnx __abort()
 {
-//   TRACE(::radix::trace::category_AppMsg, 0, "AfxAbort called.\n");
+//   TRACE(::radix::trace::category_AppMsg, 0, "__abort called.\n");
 
-   AfxWinTerm();
+   __lnx_term();
    abort();
 }
 

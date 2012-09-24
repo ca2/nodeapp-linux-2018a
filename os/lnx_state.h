@@ -32,17 +32,17 @@ EXTERN_PROCESS_LOCAL(___DEBUG_STATE, afxDebugState)
 #endif //DEBUG
 
 /////////////////////////////////////////////////////////////////////////////
-// ___WIN_STATE
+// ___LNX_STATE
 
 
-class ___WIN_STATE : public no_track_object
+class ___LNX_STATE : public no_track_object
 {
 public:
    // printing abort
    bool m_bUserAbort;
 };
 
-EXTERN_PROCESS_LOCAL(___WIN_STATE, gen_WinState)
+EXTERN_PROCESS_LOCAL(___LNX_STATE, gen_WinState)
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -80,7 +80,7 @@ public:
 };
 
 // __MODULE_THREAD_STATE (local to thread *and* module)
-class CLASS_DECL_LNX __MODULE_THREAD_STATE :
+class CLASS_DECL_lnx __MODULE_THREAD_STATE :
    public no_track_object
 {
 public:
@@ -88,7 +88,7 @@ public:
    virtual ~__MODULE_THREAD_STATE();
 
    // current thread pointer
-   class ::win::thread* m_pCurrentWinThread;
+   class ::lnx::thread* m_pCurrentWinThread;
 
 
 
@@ -100,7 +100,7 @@ public:
    CToolTipCtrl* m_pToolTip;
    ::ca::window * m_pLastHit;       // last ::ca::window to own tooltip
    int_ptr m_nLastHit;         // last hittest code
-//xxx   TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
+// xxx   TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
    int_ptr m_nLastStatus;      // last flyby status message
    ::userbase::control_bar* m_pLastStatus; // last flyby status control bar
 };
@@ -120,11 +120,11 @@ class CComCtlWrapper;
 class CCommDlgWrapper;
 
 // __MODULE_STATE (global data for a module)
-class CLASS_DECL_LNX __MODULE_STATE : public no_track_object
+class CLASS_DECL_lnx __MODULE_STATE : public no_track_object
 {
 public:
-   //xxx __MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion,
-     //xxx bool bSystem = FALSE);
+// xxx  __MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion,
+  // xxx   bool bSystem = FALSE);
    __MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem = FALSE);
    ~__MODULE_STATE();
 
@@ -157,7 +157,7 @@ public:
 
    string * m_pstrUnregisterList;
 
-   //xxx WNDPROC m_pfn_window_procedure;
+   // xxx WNDPROC m_pfn_window_procedure;
    DWORD m_dwVersion;  // version that module linked against
 
    // variables related to a given process in a module
@@ -177,21 +177,21 @@ public:
    void CreateActivationContext();
 };
 
-CLASS_DECL_LNX __MODULE_STATE* __set_module_state(__MODULE_STATE* pNewState);
-CLASS_DECL_LNX __MODULE_STATE* __get_module_state();
-CLASS_DECL_LNX bool __is_module_dll();
-CLASS_DECL_LNX bool __init_current_state_app();
-CLASS_DECL_LNX __MODULE_STATE* __get_static_module_state();
-CLASS_DECL_LNX HINSTANCE __get_instance_handle_helper();
+CLASS_DECL_lnx __MODULE_STATE* __set_module_state(__MODULE_STATE* pNewState);
+CLASS_DECL_lnx __MODULE_STATE* __get_module_state();
+CLASS_DECL_lnx bool __is_module_dll();
+CLASS_DECL_lnx bool __init_current_state_app();
+CLASS_DECL_lnx __MODULE_STATE* __get_static_module_state();
+CLASS_DECL_lnx HINSTANCE __get_instance_handle_helper();
 
-CLASS_DECL_LNX __MODULE_THREAD_STATE* __get_module_thread_state();
+CLASS_DECL_lnx __MODULE_THREAD_STATE* __get_module_thread_state();
 
 #define ___CMDTARGET_GETSTATE() (m_pModuleState)
 
 /////////////////////////////////////////////////////////////////////////////
 // macros & classes to manage pushing/popping the module state
 
-struct CLASS_DECL_LNX __MAINTAIN_STATE
+struct CLASS_DECL_lnx __MAINTAIN_STATE
 {
    explicit __MAINTAIN_STATE(__MODULE_STATE* pModuleState) throw();
    ~__MAINTAIN_STATE();
@@ -201,7 +201,7 @@ protected:
 };
 
 class ___THREAD_STATE;
-struct CLASS_DECL_LNX __MAINTAIN_STATE2
+struct CLASS_DECL_lnx __MAINTAIN_STATE2
 {
    explicit __MAINTAIN_STATE2(__MODULE_STATE* pModuleState);
    ~__MAINTAIN_STATE2();
@@ -226,7 +226,7 @@ class push_routing_frame;
 class CPushRoutingView;
 
 #define ___TEMP_CLASS_NAME_SIZE 96
-class CLASS_DECL_LNX ___THREAD_STATE :
+class CLASS_DECL_lnx ___THREAD_STATE :
    public no_track_object,
    public ::ca::thread_state
 {
@@ -286,4 +286,4 @@ public:
 
 EXTERN_THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
 
-CLASS_DECL_LNX ___THREAD_STATE* __get_thread_state();
+CLASS_DECL_lnx ___THREAD_STATE* __get_thread_state();

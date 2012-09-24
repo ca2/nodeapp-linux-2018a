@@ -9,7 +9,7 @@ namespace lnx
    //   Date : 09-04-98
    //////////////////////////////////////////////////////////////////////
 
-   class CLASS_DECL_LNX dib :
+   class CLASS_DECL_lnx dib :
       virtual public ::ca::dib
    {
    public:

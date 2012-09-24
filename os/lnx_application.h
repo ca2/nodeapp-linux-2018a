@@ -1,31 +1,30 @@
 #pragma once
 
-namespace gen
-{
-   class command_line;
-}
 
-namespace win
+namespace lnx
 {
 
-   class CLASS_DECL_LNX main_init_data
+
+   class CLASS_DECL_lnx main_init_data :
+      public ::ca::main_init_data
    {
    public:
+
+
       HINSTANCE   m_hInstance;
       HINSTANCE   m_hPrevInstance;
-      string      m_strCmdLine;
       int         m_nCmdShow;
+
+
    };
 
-   class CLASS_DECL_LNX application :
+
+   class CLASS_DECL_lnx application :
       virtual public ::ex2::application
    {
    public:
 
-      WCHAR *              m_pszCmdLine;
-      int                  m_argc;
-      WCHAR **             m_argv;
-      WCHAR *              m_pwszExeName;
+
 
       USHORT               m_atomApp;
       USHORT               m_atomSystemTopic;
@@ -37,13 +36,10 @@ namespace win
       virtual ~application();
 
       virtual HINSTANCE GetHinstance();
-      WINBOOL _001OnDDECommand(const char * lpcsz);
+      bool _001OnDDECommand(const char * lpcsz);
       virtual void _001EnableShellOpen();
-      virtual ::document * _001OpenDocumentFile(var varFile);
+      virtual ::user::document_interface * _001OpenDocumentFile(var varFile);
       virtual void _001OnFileNew();
-
-      virtual void _001ParseCommandLine(gen::command_line& rCmdInfo);
-      virtual bool _001ProcessShellCommand(gen::command_line& rCmdInfo);
 
       // Loads a cursor resource.
       HCURSOR LoadCursor(const char * lpszResourceName) const;
@@ -70,16 +66,16 @@ namespace win
       virtual bool Ex2OnAppInstall();
       virtual bool Ex2OnAppUninstall();
 
-      virtual WINBOOL DeferRegisterClass(LONG fToRegister, const char ** ppszClass);
+      virtual bool DeferRegisterClass(LONG fToRegister, const char ** ppszClass);
       virtual void LockTempMaps();
-      virtual WINBOOL UnlockTempMaps(WINBOOL bDeleteTemps = TRUE);
+      virtual bool UnlockTempMaps(bool bDeleteTemps = TRUE);
       virtual void TermThread(HINSTANCE hInstTerm);
       virtual const char * RegisterWndClass(UINT nClassStyle, HCURSOR hCursor = 0, HBRUSH hbrBackground = 0, HICON hIcon = 0);
 
 
       virtual void SetCurrentHandles();
 
-      virtual bool set_main_init_data(void * pdata);
+      virtual bool set_main_init_data(::ca::main_init_data * pdata);
 
       virtual bool process_initialize();
       virtual bool initialize1();
@@ -127,25 +123,25 @@ namespace win
       virtual bool Begin(int nPriority = THREAD_PRIORITY_NORMAL, UINT nStackSize = 0,
          DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      WINBOOL CreateThread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
+      bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0,
          LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      virtual void * get_os_data();
+      virtual int_ptr get_os_data();
       virtual int_ptr get_os_int();
 
 
       int GetThreadPriority();
-      WINBOOL SetThreadPriority(int nPriority);
+      bool SetThreadPriority(int nPriority);
 
    // Operations
       DWORD SuspendThread();
       DWORD ResumeThread();
-      WINBOOL PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam);
+      bool PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam);
       bool post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam);
 
       virtual bool PreInitInstance();
 
-      // called when occurs an se_exception exception in run
+      // called when occurs an standard_exception exception in run
       // return true to call run again
       virtual bool on_run_exception(::ca::exception & e);
 
@@ -153,14 +149,14 @@ namespace win
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::user::win::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual ::gen::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
       // running and idle processing
       virtual int run();
       virtual void pre_translate_message(gen::signal_object * pobj);
-      virtual WINBOOL pump_message();     // low level message pump
-      virtual WINBOOL on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual WINBOOL is_idle_message(MSG* pMsg);  // checks for special messages
+      virtual bool pump_message();     // low level message pump
+      virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
+      virtual bool is_idle_message(MSG* pMsg);  // checks for special messages
 
       // thread termination
       virtual int exit_instance(); // default will 'delete this'
@@ -169,24 +165,22 @@ namespace win
       virtual LRESULT ProcessWndProcException(base_exception* e, const MSG* pMsg);
 
       // Advanced: handling messages sent to message filter hook
-      virtual WINBOOL ProcessMessageFilter(int code, LPMSG lpMsg);
+      virtual bool ProcessMessageFilter(int code, LPMSG lpMsg);
 
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
 
-   #ifdef DEBUG
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
-   #endif
       virtual void CommonConstruct();
       virtual void Delete();
          // 'delete this' only if m_bAutoDelete == TRUE
 
 
 
-      WINBOOL DispatchThreadMessageEx(MSG* msg);  // helper*/
+      bool DispatchThreadMessageEx(MSG* msg);  // helper*/
 
-      ::ca::graphics * graphics_from_os_data(void * pdata);
+      //::ca::graphics * graphics_from_os_data(void * pdata);
 
       ::ca::window * window_from_os_data(void * pdata);
       ::ca::window * window_from_os_data_permanent(void * pdata);
@@ -199,7 +193,17 @@ namespace win
 
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);
-      virtual unsigned long application::get_thread_id();
+      virtual unsigned long get_thread_id();
+
+
    };
 
-} // namespace win
+
+
+} // namespace lnx
+
+
+
+
+
+

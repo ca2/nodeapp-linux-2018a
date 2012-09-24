@@ -1,34 +1,31 @@
 # depslib dependency file v1.0
-1348430326 source:/ca2/nodeapp/os/framework.h
+1348448141 source:/ca2/nodeapp/os/framework.h
 	"lnx.h"
 	"lnx_internal.h"
 
-1348432264 /ca2/nodeapp/os/lnx.h
+1348448061 /ca2/nodeapp/os/lnx.h
 	"ca.h"
 	"lnx1.h"
 	"implementation.h"
-	"state.h"
-	"handle.h"
-	"dir.h"
-	"folder_watch.h"
-	"factory_exchange.h"
-	"UACTools.h"
-	"window_draw.h"
-	"graphics.h"
-	"graphics_object.h"
-	"bitmap.h"
-	"dib.h"
-	"palette.h"
-	"pen.h"
-	"font.h"
-	"brush.h"
+	"lnx_state.h"
+	"lnx_dir.h"
+	"lnx_folder_watch.h"
+	"lnx_factory_exchange.h"
+	"lnx_window_draw.h"
+	"lnx_graphics.h"
+	"lnx_graphics_object.h"
+	"lnx_bitmap.h"
+	"lnx_dib.h"
+	"lnx_palette.h"
+	"lnx_pen.h"
+	"lnx_font.h"
+	"lnx_brush.h"
 	"lnx_region.h"
-	"draw_dib.h"
-	"thread.h"
-	"window.h"
-	"osi.h"
-	"port_forward.h"
-	"application.h"
+	"lnx_thread.h"
+	"lnx_window.h"
+	"lnx_os.h"
+	"lnx_port_forward.h"
+	"lnx_application.h"
 
 1342864881 /ca2/app/appseed/ca/ca.h
 	"plane/plane.h"
@@ -956,9 +953,14 @@
 	"c_os_cross_win_file.h"
 	"c_os_file.h"
 
-1348411718 /ca2/app/appseed/c/linux/c_os_gdi.h
+1348449183 /ca2/app/appseed/c/linux/c_os_gdi.h
 	<X11/Xlib.h>
 	<X11/Xutil.h>
+	"c_os_simple_brush.h"
+	"c_os_simple_bitmap.h"
+	"c_os_simple_font.h"
+	"c_os_simple_pen.h"
+	"c_os_simple_graphics.h"
 	<X11/Xlib.h>
 
 1342864691 /ca2/app/appseed/c/linux/c_os_http_lib.h
@@ -1008,7 +1010,7 @@
 	"c_os_file.h"
 	"c_os_graphics_round_rect.h"
 
-1348390788 /ca2/app/appseed/c/windows/c_os_gdi.h
+1348442183 /ca2/app/appseed/c/windows/c_os_gdi.h
 
 1347621934 /ca2/app/appseed/c/windows/c_os_http.h
 
@@ -1127,7 +1129,7 @@
 
 1342864685 /ca2/app/appseed/c/c/simple_app.h
 
-1345878529 /ca2/nodeapp/operational_system/operational_system.h
+1348445634 /ca2/nodeapp/operational_system/operational_system.h
 	<typeinfo>
 	<math.h>
 	<netinet/in.h>
@@ -1411,7 +1413,7 @@
 
 1342864850 /ca2/app/appseed/ca/x/x_tables.h
 
-1348427771 /ca2/app/appseed/ca/gen/gen_str.h
+1348442181 /ca2/app/appseed/ca/gen/gen_str.h
 	"gen_strn.h"
 	"gen_hex.h"
 
@@ -1782,7 +1784,7 @@
 
 1342864737 /ca2/app/appseed/ca/ca/ca_pen.h
 
-1342864737 /ca2/app/appseed/ca/ca/ca_bitmap.h
+1348449947 /ca2/app/appseed/ca/ca/ca_bitmap.h
 	"ca_graphics_object.h"
 
 1346980282 /ca2/app/appseed/ca/ca/ca_brush.h
@@ -3542,9 +3544,9 @@
 
 1342864820 /ca2/app/appseed/ca/plugin/plugin_instance.h
 
-1348430327 /ca2/nodeapp/os/lnx1.h
+1348448062 /ca2/nodeapp/os/lnx1.h
 
-1348430327 /ca2/nodeapp/os/implementation.h
+1348448061 /ca2/nodeapp/os/implementation.h
 
 1348430641 /ca2/nodeapp/os/state.h
 	"thread_slots.h"
@@ -3580,7 +3582,7 @@
 
 1348431994 /ca2/nodeapp/os/brush.h
 
-1348432283 /ca2/nodeapp/os/lnx_region.h
+1348448062 /ca2/nodeapp/os/lnx_region.h
 
 1348430326 /ca2/nodeapp/os/draw_dib.h
 
@@ -3594,16 +3596,15 @@
 
 1348430326 /ca2/nodeapp/os/application.h
 
-1347617183 /ca2/nodeapp/os/lnx_internal.h
-	"dir.h"
-	"WFileFind.h"
-	"LnxFileSystem.h"
-	"LnxFile.h"
-	"LinuxShell.h"
-	"LnxResource.h"
-	"application.h"
-	"LnxStdioFile.h"
-	"LnxFileSet.h"
+1348446742 /ca2/nodeapp/os/lnx_internal.h
+	"lnx_dir.h"
+	"lnx_file_system.h"
+	"lnx_file.h"
+	"lnx_shell.h"
+	"lnx_resource.h"
+	"lnx_stdio_file.h"
+	"lnx_file_set.h"
+	"lnx_state.h"
 
 1348430326 /ca2/nodeapp/os/WFileFind.h
 
@@ -3618,4 +3619,102 @@
 1347617194 /ca2/nodeapp/os/LnxStdioFile.h
 
 1348430326 /ca2/nodeapp/os/LnxFileSet.h
+
+1348450231 /ca2/nodeapp/os/lnx_state.h
+	"lnx_thread_slots.h"
+
+1348448063 /ca2/nodeapp/os/lnx_thread_slots.h
+
+1348448062 /ca2/nodeapp/os/lnx_dir.h
+
+1348448062 /ca2/nodeapp/os/lnx_folder_watch.h
+
+1348448062 /ca2/nodeapp/os/lnx_factory_exchange.h
+
+1348448063 /ca2/nodeapp/os/lnx_window_draw.h
+
+1348448062 /ca2/nodeapp/os/lnx_graphics.h
+
+1348448062 /ca2/nodeapp/os/lnx_graphics_object.h
+
+1348487446 /ca2/nodeapp/os/lnx_bitmap.h
+
+1348448062 /ca2/nodeapp/os/lnx_dib.h
+
+1348448062 /ca2/nodeapp/os/lnx_palette.h
+
+1348448062 /ca2/nodeapp/os/lnx_pen.h
+
+1348448062 /ca2/nodeapp/os/lnx_font.h
+
+1348448062 /ca2/nodeapp/os/lnx_brush.h
+
+1348448063 /ca2/nodeapp/os/lnx_thread.h
+
+1348448063 /ca2/nodeapp/os/lnx_window.h
+
+1348448062 /ca2/nodeapp/os/lnx_os.h
+
+1348442865 /ca2/nodeapp/os/lnx_port_forward.h
+
+1348448112 /ca2/nodeapp/os/lnx_application.h
+
+1348448062 /ca2/nodeapp/os/lnx_file_system.h
+
+1348448062 /ca2/nodeapp/os/lnx_file.h
+
+1348448063 /ca2/nodeapp/os/lnx_shell.h
+
+1348448062 /ca2/nodeapp/os/lnx_resource.h
+
+1348444690 /ca2/nodeapp/os/lnx_stdio_file.h
+
+1348448062 /ca2/nodeapp/os/lnx_file_set.h
+
+1348448062 source:/ca2/nodeapp/os/lnx_afxabort.cpp
+	"framework.h"
+
+1348448141 /ca2/nodeapp/os/framework.h
+	"lnx.h"
+	"lnx_internal.h"
+
+1348448061 source:/ca2/nodeapp/os/lnx1.cpp
+	"framework.h"
+	"lnx1.h"
+
+1348448062 source:/ca2/nodeapp/os/lnx_afxmem.cpp
+	"framework.h"
+
+1348448062 source:/ca2/nodeapp/os/lnx2.cpp
+	"framework.h"
+
+1348446001 source:/ca2/nodeapp/os/lnx_appcore.cpp
+	"framework.h"
+
+1348448062 source:/ca2/nodeapp/os/lnx_afxstate.cpp
+	"framework.h"
+	"lnx_thread_slots.h"
+	<stddef.h>
+
+1348448784 /ca2/app/appseed/c/linux/c_os_simple_brush.h
+
+1348448784 /ca2/app/appseed/c/linux/c_os_simple_bitmap.h
+
+1348448784 /ca2/app/appseed/c/linux/c_os_simple_font.h
+
+1348448900 /ca2/app/appseed/c/linux/c_os_simple_pen.h
+
+1348448973 /ca2/app/appseed/c/linux/c_os_simple_graphics.h
+
+1348449529 source:/ca2/nodeapp/os/lnx_appmodul.cpp
+	"framework.h"
+
+1348450731 source:/ca2/nodeapp/os/lnx_appterm.cpp
+	"framework.h"
+
+1348450753 source:/ca2/nodeapp/os/lnx_application.cpp
+	"framework.h"
+
+1348487548 source:/ca2/nodeapp/os/lnx_bitmap.cpp
+	"framework.h"
 

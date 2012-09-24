@@ -16,7 +16,7 @@ namespace win
 
    ::ca::window * graphics::GetWindow() const
    {
-      ASSERT(get_handle1() != NULL); return ::win::window::from_handle(::WindowFromDC(get_handle1()));
+      ASSERT(get_handle1() != NULL); return ::lnx::window::from_handle(::WindowFromDC(get_handle1()));
    }
 
    WINBOOL graphics::IsPrinting() const
@@ -50,7 +50,7 @@ namespace win
    int graphics::ExcludeUpdateRgn(::ca::window * pWnd)
    {
       ASSERT(get_handle1() != NULL);
-      return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle());
+      return ::ExcludeUpdateRgn(get_handle1(), LNX_WINDOW(pWnd)->get_handle());
    }
 
    int graphics::GetDeviceCaps(int nIndex) const
@@ -352,14 +352,14 @@ namespace win
    {
       if(get_handle1() == NULL)
          return FALSE;
-      return ::BitBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, dwRop);
+      return ::BitBlt(get_handle1(), x, y, nWidth, nHeight, LNX_HDC(pgraphicsSrc), xSrc, ySrc, dwRop);
    }
 
 
    WINBOOL graphics::StretchBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc,
       int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, DWORD dwRop)
    { ASSERT(get_handle1() != NULL); return ::StretchBlt(get_handle1(), x, y, nWidth, nHeight,
-   WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight,
+   LNX_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth, nSrcHeight,
    dwRop); }
    COLORREF graphics::GetPixel(int x, int y) const
    { ASSERT(get_handle1() != NULL); return ::GetPixel(get_handle1(), x, y); }
@@ -421,7 +421,7 @@ namespace win
                bf.SourceConstantAlpha = 0xFF;
                bf.AlphaFormat = AC_SRC_ALPHA;
                return ::AlphaBlend(get_handle1(), x, y,
-                  rectText.width(), rectText.height(), WIN_HDC(dib1->get_graphics()), 0, 0, rectText.width(),
+                  rectText.width(), rectText.height(), LNX_HDC(dib1->get_graphics()), 0, 0, rectText.width(),
                   rectText.height(), bf) != FALSE;
             }
          }
@@ -574,11 +574,11 @@ namespace win
 
    WINBOOL graphics::MaskBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc,
       int xSrc, int ySrc, ::ca::bitmap& maskBitmap, int xMask, int yMask, DWORD dwRop)
-   { ASSERT(get_handle1() != NULL); return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, WIN_HDC(pgraphicsSrc),
+   { ASSERT(get_handle1() != NULL); return ::MaskBlt(get_handle1(), x, y, nWidth, nHeight, LNX_HDC(pgraphicsSrc),
    xSrc, ySrc,  (HBITMAP)maskBitmap.get_os_data(), xMask, yMask, dwRop); }
    WINBOOL graphics::PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc,
       int nWidth, int nHeight, ::ca::bitmap& maskBitmap, int xMask, int yMask)
-   { ASSERT(get_handle1() != NULL); return ::PlgBlt(get_handle1(), lpPoint, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nWidth,
+   { ASSERT(get_handle1() != NULL); return ::PlgBlt(get_handle1(), lpPoint, LNX_HDC(pgraphicsSrc), xSrc, ySrc, nWidth,
    nHeight, (HBITMAP)maskBitmap.get_os_data(), xMask, yMask); }
    WINBOOL graphics::SetPixelV(int x, int y, COLORREF crColor)
    { ASSERT(get_handle1() != NULL); return ::SetPixelV(get_handle1(), x, y, crColor); }
@@ -598,15 +598,15 @@ namespace win
    WINBOOL graphics::GetColorAdjustment(LPCOLORADJUSTMENT lpColorAdjust) const
    { ASSERT(get_handle2() != NULL); return ::GetColorAdjustment(get_handle2(), lpColorAdjust); }
    ::ca::pen* graphics::GetCurrentPen() const
-   { ASSERT(get_handle2() != NULL); return ::win::pen::from_handle(get_app(), (HPEN)::GetCurrentObject(get_handle2(), OBJ_PEN)); }
+   { ASSERT(get_handle2() != NULL); return ::lnx::pen::from_handle(get_app(), (HPEN)::GetCurrentObject(get_handle2(), OBJ_PEN)); }
    ::ca::brush* graphics::GetCurrentBrush() const
-   { ASSERT(get_handle2() != NULL); return ::win::brush::from_handle(get_app(), (HBRUSH)::GetCurrentObject(get_handle2(), OBJ_BRUSH)); }
+   { ASSERT(get_handle2() != NULL); return ::lnx::brush::from_handle(get_app(), (HBRUSH)::GetCurrentObject(get_handle2(), OBJ_BRUSH)); }
    ::ca::palette* graphics::GetCurrentPalette() const
-   { ASSERT(get_handle2() != NULL); return ::win::palette::from_handle(get_app(), (HPALETTE)::GetCurrentObject(get_handle2(), OBJ_PAL)); }
+   { ASSERT(get_handle2() != NULL); return ::lnx::palette::from_handle(get_app(), (HPALETTE)::GetCurrentObject(get_handle2(), OBJ_PAL)); }
    ::ca::font* graphics::GetCurrentFont() const
-   { ASSERT(get_handle2() != NULL); return ::win::font::from_handle(get_app(), (HFONT)::GetCurrentObject(get_handle2(), OBJ_FONT)); }
+   { ASSERT(get_handle2() != NULL); return ::lnx::font::from_handle(get_app(), (HFONT)::GetCurrentObject(get_handle2(), OBJ_FONT)); }
    ::ca::bitmap* graphics::GetCurrentBitmap() const
-   { ASSERT(get_handle2() != NULL); return ::win::bitmap::from_handle(get_app(), (HBITMAP)::GetCurrentObject(get_handle2(), OBJ_BITMAP)); }
+   { ASSERT(get_handle2() != NULL); return ::lnx::bitmap::from_handle(get_app(), (HBITMAP)::GetCurrentObject(get_handle2(), OBJ_BITMAP)); }
    WINBOOL graphics::PolyBezier(const POINT* lpPoints, int nCount)
    { ASSERT(get_handle1() != NULL); return ::PolyBezier(get_handle1(), lpPoints, nCount); }
 
@@ -686,12 +686,12 @@ namespace win
             bf.SourceConstantAlpha = 0xFF;
             bf.AlphaFormat = AC_SRC_ALPHA;
             return ::AlphaBlend(get_handle1(), xDest, yDest,
-               nDestWidth, nDestHeight, WIN_HDC(dib1->get_graphics()), 0, 0, nDestWidth,
+               nDestWidth, nDestHeight, LNX_HDC(dib1->get_graphics()), 0, 0, nDestWidth,
                nDestHeight, bf) != FALSE;
          }
       }
       return ::AlphaBlend(get_handle1(), xDest, yDest,
-         nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth,
+         nDestWidth, nDestHeight, LNX_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth,
          nSrcHeight, blend) != FALSE;
    }
 
@@ -700,7 +700,7 @@ namespace win
       int nDestHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth,
       int nSrcHeight, UINT crTransparent)
    { ASSERT(get_handle1() != NULL); return ::TransparentBlt(get_handle1(), xDest, yDest,
-   nDestWidth, nDestHeight, WIN_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth,
+   nDestWidth, nDestHeight, LNX_HDC(pgraphicsSrc), xSrc, ySrc, nSrcWidth,
    nSrcHeight, crTransparent); }
    WINBOOL graphics::GradientFill(TRIVERTEX* pVertices, ULONG nVertices,
       void * pMesh, ULONG nMeshElements, DWORD dwMode)
@@ -873,7 +873,7 @@ namespace win
          _afxWingdixTerm = (char)!atexit(&AfxWingdixTerm);
       AfxUnlockGlobals(CRIT_HALFTONEBRUSH);
 
-      return ::win::brush::from_handle(papp, _afxHalftoneBrush);
+      return ::lnx::brush::from_handle(papp, _afxHalftoneBrush);
    }
 
    void graphics::DrawDragRect(LPCRECT lpRect, SIZE size,
@@ -1025,7 +1025,7 @@ namespace win
 #endif //DEBUG
 
 
-   ::ca::graphics * PASCAL ::win::graphics::from_handle(HDC hDC)
+   ::ca::graphics * PASCAL ::lnx::graphics::from_handle(HDC hDC)
    {
       hdc_map* pMap = afxMapHDC(TRUE); //create ::collection::map if not exist
       ASSERT(pMap != NULL);
@@ -1153,7 +1153,7 @@ namespace win
 
    ::ca::graphics_object* PASCAL graphics::SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h)
    {
-      return ::win::graphics_object::from_handle(papp, ::SelectObject(hDC, h));
+      return ::lnx::graphics_object::from_handle(papp, ::SelectObject(hDC, h));
    }
 
    ::ca::graphics_object* graphics::SelectStockObject(int nIndex)
@@ -1165,7 +1165,7 @@ namespace win
          hOldObj = ::SelectObject(get_handle1(), hObject);
       if(get_handle2() != NULL)
          hOldObj = ::SelectObject(get_handle2(), hObject);
-      return ::win::graphics_object::from_handle(get_app(), hOldObj);
+      return ::lnx::graphics_object::from_handle(get_app(), hOldObj);
    }
 
    ::ca::pen* graphics::SelectObject(::ca::pen* pPen)
@@ -1967,9 +1967,9 @@ namespace win
 
    CClientDC::CClientDC(window * pWnd)
    {
-      ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
+      ASSERT(pWnd == NULL || ::IsWindow(LNX_WINDOW(pWnd)->get_handle1()));
 
-      if (!Attach(::GetDC(m_hWnd = WIN_WINDOW(pWnd)->GetSafeHwnd())))
+      if (!Attach(::GetDC(m_hWnd = LNX_WINDOW(pWnd)->GetSafeHwnd())))
          AfxThrowResourceException();
    }
 
@@ -1997,9 +1997,9 @@ namespace win
 
    CWindowDC::CWindowDC(window * pWnd)
    {
-      ASSERT(pWnd == NULL || ::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
+      ASSERT(pWnd == NULL || ::IsWindow(LNX_WINDOW(pWnd)->get_handle1()));
 
-      if (!Attach(::GetWindowDC(m_hWnd = WIN_WINDOW(pWnd)->GetSafeHwnd())))
+      if (!Attach(::GetWindowDC(m_hWnd = LNX_WINDOW(pWnd)->GetSafeHwnd())))
          AfxThrowResourceException();
    }
 
@@ -2032,9 +2032,9 @@ namespace win
    CPaintDC::CPaintDC(window * pWnd)
    {
       ASSERT_VALID(pWnd);
-      ASSERT(::IsWindow(WIN_WINDOW(pWnd)->get_handle1()));
+      ASSERT(::IsWindow(LNX_WINDOW(pWnd)->get_handle1()));
 
-      if (!Attach(::BeginPaint(m_hWnd = WIN_WINDOW(pWnd)->get_handle1(), &m_ps)))
+      if (!Attach(::BeginPaint(m_hWnd = LNX_WINDOW(pWnd)->get_handle1(), &m_ps)))
          AfxThrowResourceException();
    }
 
@@ -2079,13 +2079,13 @@ namespace win
 
 
    // resource failure
-   void CLASS_DECL_LNX AfxThrowResourceException()
+   void CLASS_DECL_lnx AfxThrowResourceException()
    {
       throw resource_exception();
    }
 
    // ::fontopus::user alert
-   void CLASS_DECL_LNX AfxThrowUserException()
+   void CLASS_DECL_lnx AfxThrowUserException()
    {
       throw user_exception();
    }

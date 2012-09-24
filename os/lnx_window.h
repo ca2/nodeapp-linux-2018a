@@ -5,13 +5,13 @@ namespace lnx
 {
 
 
-   CLASS_DECL_LNX LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-   //CLASS_DECL_LNX void _gen::StandardSubclass(void *);
-   CLASS_DECL_LNX LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-   CLASS_DECL_LNX LRESULT __call_window_procedure(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_lnx LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
+   //CLASS_DECL_lnx void _gen::StandardSubclass(void *);
+   CLASS_DECL_lnx LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
+   CLASS_DECL_lnx LRESULT __call_window_procedure(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
-   class CLASS_DECL_LNX window :
+   class CLASS_DECL_lnx window :
       virtual public ::ca::window
    {
    public:
@@ -234,7 +234,7 @@ namespace lnx
       virtual bool RedrawWindow(LPCRECT lpRectUpdate = NULL,
          ::ca::region* prgnUpdate = NULL,
          UINT flags = RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
-      virtual bool EnableScrollBar(int nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
+// xxx      virtual bool EnableScrollBar(int nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
 
       virtual bool DrawAnimatedRects(int idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo);
       virtual bool DrawCaption(::ca::graphics * pgraphics, LPCRECT lprc, UINT uFlags);
@@ -423,9 +423,9 @@ namespace lnx
       void OnHelpIndex();     // ID_HELP_INDEX
       void OnHelpFinder();    // ID_HELP_FINDER, ID_DEFAULT_HELP
       void OnHelpUsing();     // ID_HELP_USING
-      virtual void WinHelp(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
+      // xxx virtual void WinHelp(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
       //virtual void HtmlHelp(dword_ptr dwData, UINT nCmd = 0x000F);
-      virtual void WinHelpInternal(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
+      // xxx virtual void WinHelpInternal(dword_ptr dwData, UINT nCmd = HELP_CONTEXT);
 
    // layout and other functions
    /*   void RepositionBars(const char * pszPrefix, const char * pszIdLeftOver,
@@ -593,7 +593,7 @@ namespace lnx
 
    // Overridables and other helpers (for implementation of derived classes)
       // for deriving from a standard control
-      virtual WNDPROC* GetSuperWndProcAddr();
+// xxx      virtual WNDPROC* GetSuperWndProcAddr();
 
       // for dialog data exchange and validation
 //      virtual void do_data_exchange(CDataExchange* pDX);
@@ -650,7 +650,7 @@ namespace lnx
 
       //UINT m_nFlags;      // see WF_ flags above
 
-      WNDPROC m_pfnSuper; // for subclassing of controls
+// xxx      WNDPROC m_pfnSuper; // for subclassing of controls
       static const UINT m_nMsgDragList;
       int m_nModalResult; // for return values from ::ca::window::RunModalLoop
 
@@ -665,17 +665,17 @@ namespace lnx
 
 
       // implementation of message dispatch/hooking
-      CLASS_DECL_win friend LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
-      //CLASS_DECL_win friend void _gen::StandardSubclass(void *);
-      CLASS_DECL_win friend LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
-      CLASS_DECL_win friend LRESULT __call_window_procedure(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_lnx friend LRESULT CALLBACK __send_message_hook(int, WPARAM, LPARAM);
+      //CLASS_DECL_lnx friend void _gen::StandardSubclass(void *);
+      CLASS_DECL_lnx friend LRESULT CALLBACK __cbt_filter_hook(int, WPARAM, LPARAM);
+      CLASS_DECL_lnx friend LRESULT __call_window_procedure(::user::interaction * pWnd, void * hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);
       LRESULT OnDisplayChange(WPARAM, LPARAM);
       LRESULT OnDragList(WPARAM, LPARAM);
 
-      static BOOL CALLBACK GetAppsEnumWindowsProc(HWND hwnd, LPARAM lParam);
+      static bool CALLBACK GetAppsEnumWindowsProc(HWND hwnd, LPARAM lParam);
 
 
       static void get_app_wnda(user::HWNDArray & wnda);

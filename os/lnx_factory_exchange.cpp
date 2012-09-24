@@ -7,10 +7,10 @@ namespace win
       ca(papp)
    {
       System.factory().cloneable_large < WinStdioFile         >  (typeid(::ex1::text_file        ));
-      System.factory().cloneable_large < lnx_file              >  (typeid(::ex1::file             ));
-      System.factory().cloneable_large < lnx_fileSet           >  (typeid(::ex2::file_set         ));
-      System.factory().cloneable < lnx_fileSystem        >  (typeid(::ex1::file_system      ), 1);
-      System.factory().cloneable_small < lnx_fileException     >  (typeid(::ex1::file_exception   ));
+      System.factory().cloneable_large < ::lnx::file              >  (typeid(::ex1::file             ));
+      System.factory().cloneable_large < ::lnx::fileSet           >  (typeid(::ex2::file_set         ));
+      System.factory().cloneable < ::lnx::fileSystem        >  (typeid(::ex1::file_system      ), 1);
+      System.factory().cloneable_small < ::lnx::fileException     >  (typeid(::ex1::file_exception   ));
       System.factory().cloneable < WinResource          >  (typeid(::ex1::resource         ), 1);
       System.factory().cloneable < application          >  (typeid(::ex2::application      ), 1);
       System.factory().cloneable < dir                  >  (typeid(::ca::dir::system            ), 1);
@@ -29,7 +29,7 @@ namespace win
       System.factory().cloneable_small < draw_dib             >  (typeid(::ca::draw_dib          ));
       System.factory().creatable < osi                  >  (typeid(::ca::osi               ), 1);
       System.factory().creatable < port_forward         >  (typeid(::ca4::port_forward            ), 1);
-      ::win::dib::s_initialize();
+      ::lnx::dib::s_initialize();
    }
 
    factory_exchange::~factory_exchange()

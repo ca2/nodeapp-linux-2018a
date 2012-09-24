@@ -6,7 +6,7 @@
 //#include <UPnP.h>
 
 
-namespace win
+namespace lnx
 {
 
 
@@ -17,7 +17,7 @@ namespace win
 
 	   // forward declarations
 
-	   interface IDerivedNATExternalIPAddressCallback;
+/* xxx	   interface IDerivedNATExternalIPAddressCallback;
 	   interface IDerivedNATNumberOfEntriesCallback;
 
 
@@ -156,11 +156,11 @@ namespace win
 	   HWND m_hWndForDeviceInfoThread;
 	   HWND m_hWndForAddMappingThread;
 	   HWND m_hWndForEditMappingThread;
-	   HWND m_hWndForDeleteMappingThread;
+	   HWND m_hWndForDeleteMappingThread;*/
 
 
    };
 
 
-} // namespace ca4
+} // namespace lnx
 

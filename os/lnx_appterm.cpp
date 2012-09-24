@@ -1,15 +1,4 @@
-// This is ca2 API library.
-//
-//
-//
-//
-//
-//
-//
-//
-
 #include "framework.h"
-#include <ddeml.h> // for MSGF_DDEMGR
 
 
 
@@ -17,16 +6,19 @@
 // other globals (internal library use)
 
 /////////////////////////////////////////////////////////////////////////////
-// Standard cleanup called by WinMain and AfxAbort
+// Standard cleanup called by WinMain and __abort
 
-void CLASS_DECL_LNX AfxUnregisterWndClasses()
+void CLASS_DECL_lnx __gen_unregister_window_classes()
 {
+
    // unregister Window classes
-   __MODULE_STATE* pModuleState = AfxGetModuleState();
-   AfxLockGlobals(CRIT_REGCLASSLIST);
+   __MODULE_STATE* pModuleState = __get_module_state();
+
+   single_lock sl(&pModuleState->m_mutexRegClassList, TRUE);
+
    if(pModuleState->m_pstrUnregisterList != NULL)
    {
-      int start = 0;
+      strsize start = 0;
       string className = pModuleState->m_pstrUnregisterList->Tokenize("\n",start);
       while (!className.is_empty())
       {
@@ -36,27 +28,27 @@ void CLASS_DECL_LNX AfxUnregisterWndClasses()
       pModuleState->m_pstrUnregisterList->Empty();
       pModuleState->m_pstrUnregisterList = NULL;
    }
-   AfxUnlockGlobals(CRIT_REGCLASSLIST);
 
 }
-void CLASS_DECL_LNX AfxWinTerm(void)
+void CLASS_DECL_lnx __win_term()
 {
-   AfxUnregisterWndClasses();
+   __gen_unregister_window_classes();
    // cleanup OLE if required
 //   thread* pThread = &System;
 
    // cleanup thread local tooltip ::ca::window
-//   __MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
+//   __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
 /*   if (pModuleThreadState->m_pToolTip != NULL)
    {
       if (pModuleThreadState->m_pToolTip->DestroyToolTipCtrl())
          pModuleThreadState->m_pToolTip = NULL;
    }*/
 
-   _AFX_THREAD_STATE* pThreadState = AfxGetThreadState();
+   ___THREAD_STATE* pThreadState = __get_thread_state();
    if (!afxContextIsDLL)
    {
       // unhook windows hooks
+/*
       if (pThreadState->m_hHookOldMsgFilter != NULL)
       {
          ::UnhookWindowsHookEx(pThreadState->m_hHookOldMsgFilter);
@@ -67,10 +59,13 @@ void CLASS_DECL_LNX AfxWinTerm(void)
          ::UnhookWindowsHookEx(pThreadState->m_hHookOldCbtFilter);
          pThreadState->m_hHookOldCbtFilter = NULL;
       }
+*/
+
    }
+
+
     // We used to suppress all exceptions here. But that's the wrong thing
     // to do. If this process crashes, we should allow Windows to crash
     // the process and invoke watson.
 }
 
-/////////////////////////////////////////////////////////////////////////////

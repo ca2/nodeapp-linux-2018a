@@ -2,19 +2,23 @@
 
 #define WH_SHSTDAPI(type) type
 
-class CLASS_DECL_LNX WindowsShell
+
+namespace lnx
+{
+
+class CLASS_DECL_lnx shell
 {
 public:
-   WindowsShell();
-   virtual ~WindowsShell();
+   shell();
+   virtual ~shell();
 
 
-   static WindowsShell theWindowsShell;
+   static shell theLinuxShell;
 
    static bool Initialize();
-   static WINBOOL WINAPI _SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath);
-   static HANDLE WINAPI _FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata);
-   static WINBOOL WINAPI _FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata);
+// xxx   static WINBOOL WINAPI _SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath);
+// xxx   static HANDLE WINAPI _FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata);
+// xxx   static WINBOOL WINAPI _FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata);
    static WINBOOL WINAPI _MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName);
    static DWORD WINAPI _GetFullPathName(const wchar_t * lpFileName, DWORD nBufferLength, wchar_t * lpBuffer, wchar_t ** lpFilePart);
    static WCHAR * __cdecl __fullpath(WCHAR *UserBuf, const WCHAR *path, size_t maxlen);
@@ -27,12 +31,12 @@ public:
       LPDWORD lpFileSystemFlags,        // file system options
       wchar_t * lpFileSystemNameBuffer,    // file system name buffer
       DWORD nFileSystemNameSize);         // length of file system name buffer
-   static DWORD_PTR __stdcall _SHGetFileInfo(
-      const wchar_t * pszPath,
-      DWORD dwFileAttributes,
-      SHFILEINFOW *psfi,
-      UINT cbFileInfo,
-      UINT uFlags);
+// xxx   static DWORD_PTR __stdcall _SHGetFileInfo(
+      // xxx const wchar_t * pszPath,
+      // xxx DWORD dwFileAttributes,
+      // xxx SHFILEINFOW *psfi,
+      // xxx UINT cbFileInfo,
+      // xxx UINT uFlags);
    static WINBOOL __stdcall _GetStringTypeEx(
       LCID Locale,
       DWORD dwInfoType,
@@ -61,12 +65,12 @@ public:
        wchar_t * lpFilename,
        DWORD nSize
        );
-   static WINBOOL WINAPI _GetClassInfo(
-       HINSTANCE hInstance ,
-       const wchar_t * lpClassName,
-       LPWNDCLASSW lpWndClass);
-   static ATOM WINAPI _RegisterClass(
-         CONST WNDCLASSW *lpWndClass);
+// xxx    static WINBOOL WINAPI _GetClassInfo(
+// xxx        HINSTANCE hInstance ,
+// xxx        const wchar_t * lpClassName,
+// xxx        LPWNDCLASSW lpWndClass);
+// xxx    static ATOM WINAPI _RegisterClass(
+         // xxx CONST WNDCLASSW *lpWndClass);
 
    static HWND WINAPI _CreateWindowEx(
       DWORD dwExStyle,
@@ -86,9 +90,9 @@ public:
 
 
 
-   WINBOOL (WINAPI * m_pfnSHGetPathFromIDList)(LPCITEMIDLIST pidl, wchar_t * pszPath);
-   HANDLE (WINAPI * m_pfnFindFirstFile)(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata);
-   WINBOOL (WINAPI * m_pfnFindNextFile)(HANDLE handle, WIN32_FIND_DATAW * lpdata);
+// xxx    WINBOOL (WINAPI * m_pfnSHGetPathFromIDList)(LPCITEMIDLIST pidl, wchar_t * pszPath);
+// xxx    HANDLE (WINAPI * m_pfnFindFirstFile)(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata);
+// xxx    WINBOOL (WINAPI * m_pfnFindNextFile)(HANDLE handle, WIN32_FIND_DATAW * lpdata);
    WINBOOL (WINAPI * m_pfnMoveFile)(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName);
    WCHAR * (__cdecl * m_pfn_fullpath)(WCHAR *UserBuf, const WCHAR *path, size_t maxlen);
    DWORD (WINAPI * m_pfnGetFullPathName)(const wchar_t * lpFileName, DWORD nBufferLength, wchar_t * lpBuffer, wchar_t ** lpFilePart);
@@ -102,12 +106,12 @@ public:
       wchar_t * lpFileSystemNameBuffer,    // file system name buffer
       DWORD nFileSystemNameSize);         // length of file system name buffer
 
-   DWORD_PTR (__stdcall * m_pfnSHGetFileInfo)(
-      const wchar_t * pszPath,
-      DWORD dwFileAttributes,
-      SHFILEINFOW *psfi,
-      UINT cbFileInfo,
-      UINT uFlags);
+// xxx    DWORD_PTR (__stdcall * m_pfnSHGetFileInfo)(
+// xxx       const wchar_t * pszPath,
+// xxx       DWORD dwFileAttributes,
+// xxx       SHFILEINFOW *psfi,
+// xxx       UINT cbFileInfo,
+// xxx       UINT uFlags);
    WINBOOL (__stdcall * m_pfnGetStringTypeEx)(
       LCID Locale,
       DWORD dwInfoType,
@@ -138,13 +142,13 @@ public:
        DWORD nSize
        );
 
-   WINBOOL (WINAPI * m_pfnGetClassInfo)(
-       HINSTANCE hInstance ,
-       const wchar_t * lpClassName,
-       LPWNDCLASSW lpWndClass);
+// xxx    WINBOOL (WINAPI * m_pfnGetClassInfo)(
+       // xxx HINSTANCE hInstance ,
+// xxx        const wchar_t * lpClassName,
+// xxx        LPWNDCLASSW lpWndClass);
 
-   ATOM (WINAPI * m_pfnRegisterClass)(
-         CONST WNDCLASSW *lpWndClass);
+   // xxx ATOM (WINAPI * m_pfnRegisterClass)(
+         // xxx CONST WNDCLASSW *lpWndClass);
 
    HWND (WINAPI * m_pfnCreateWindowEx)(
       DWORD dwExStyle,
@@ -167,10 +171,10 @@ public:
 
 
 
-   static WINBOOL SHGetPathFromIDList(LPCITEMIDLIST pidl, string & str);
-   static WINBOOL SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath);
-   static HANDLE FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata);
-   static WINBOOL WINAPI FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata);
+// xxx    static WINBOOL SHGetPathFromIDList(LPCITEMIDLIST pidl, string & str);
+// xxx    static WINBOOL SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath);
+// xxx    static HANDLE FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata);
+// xxx    static WINBOOL WINAPI FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata);
    static WINBOOL MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName);
    static WCHAR * __cdecl _fullpath(WCHAR *UserBuf, const WCHAR *path, size_t maxlen);
    static DWORD GetFullPathName(const wchar_t * lpFileName, DWORD nBufferLength, wchar_t * lpBuffer, wchar_t ** lpFilePart);
@@ -184,12 +188,12 @@ public:
       wchar_t * lpFileSystemNameBuffer,    // file system name buffer
       DWORD nFileSystemNameSize);         // length of file system name buffer
 
-   static WH_SHSTDAPI(DWORD) SHGetFileInfo(
-      const wchar_t * pszPath,
-      DWORD dwFileAttributes,
-      SHFILEINFOW *psfi,
-      UINT cbFileInfo,
-      UINT uFlags);
+// xxx    static WH_SHSTDAPI(DWORD) SHGetFileInfo(
+// xxx       const wchar_t * pszPath,
+// xxx       DWORD dwFileAttributes,
+// xxx       SHFILEINFOW *psfi,
+// xxx       UINT cbFileInfo,
+// xxx       UINT uFlags);
 
    static WINBOOL  GetStringTypeEx(
       LCID Locale,
@@ -219,17 +223,17 @@ public:
 
    static DWORD WINAPI GetModuleFileName(
        HMODULE hModule,
-       wchar_t * lpFilename,
-       DWORD nSize
+        wchar_t * lpFilename,
+        DWORD nSize
        );
 
-   static WINBOOL WINAPI GetClassInfo(
-       HINSTANCE hInstance ,
-       const wchar_t * lpClassName,
-       LPWNDCLASSW lpWndClass);
+// xxx    static WINBOOL WINAPI GetClassInfo(
+// xxx        HINSTANCE hInstance ,
+// xxx        const wchar_t * lpClassName,
+// xxx        LPWNDCLASSW lpWndClass);
 
-   static ATOM WINAPI RegisterClass(
-         CONST WNDCLASSW *lpWndClass);
+// xxx    static ATOM WINAPI RegisterClass(
+// xxx          CONST WNDCLASSW *lpWndClass);
 
    static HWND WINAPI CreateWindowEx(
       DWORD dwExStyle,
@@ -246,12 +250,12 @@ public:
       LPVOID lpParam);
 
 
-   static WH_SHSTDAPI(DWORD) SHGetFileInfo(
-      const char * pszPath,
-      DWORD dwFileAttributes,
-      SHFILEINFO *psfi,
-      UINT cbFileInfo,
-      UINT uFlags);
+// xxx    static WH_SHSTDAPI(DWORD) SHGetFileInfo(
+// xxx       const char * pszPath,
+// xxx       DWORD dwFileAttributes,
+// xxx       SHFILEINFO *psfi,
+// xxx       UINT cbFileInfo,
+// xxx       UINT uFlags);
 
    static DWORD GetTempPath(string & str);
 
@@ -265,10 +269,10 @@ public:
 
 };
 
-inline WINBOOL WindowsShell::SHGetPathFromIDList(LPCITEMIDLIST pidl, string & str)
+/*inline WINBOOL shell::SHGetPathFromIDList(LPCITEMIDLIST pidl, string & str)
 {
    wchar_t * pwszPath = (wchar_t *) malloc(sizeof(wchar_t) * MAX_PATH * 4);
-   if(!(*theWindowsShell.m_pfnSHGetPathFromIDList)(pidl, pwszPath))
+   if(!(*theLinuxShell.m_pfnSHGetPathFromIDList)(pidl, pwszPath))
    {
       free(pwszPath);
       return FALSE;
@@ -277,40 +281,44 @@ inline WINBOOL WindowsShell::SHGetPathFromIDList(LPCITEMIDLIST pidl, string & st
    free(pwszPath);
    return TRUE;
 }
+*/
+/*
 
-
-inline WINBOOL WindowsShell::SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath)
+inline WINBOOL shell::SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath)
 {
-   return (*theWindowsShell.m_pfnSHGetPathFromIDList)(pidl, pszPath);
+   return (*theLinuxShell.m_pfnSHGetPathFromIDList)(pidl, pszPath);
+}
+*/
+/*
+inline HANDLE shell::FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata)
+{
+   return (*theLinuxShell.m_pfnFindFirstFile)(lpcsz, lpdata);
 }
 
-inline HANDLE WindowsShell::FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata)
+inline WINBOOL shell::FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
 {
-   return (*theWindowsShell.m_pfnFindFirstFile)(lpcsz, lpdata);
+   return (*theLinuxShell.m_pfnFindNextFile)(handle, lpdata);
 }
 
-inline WINBOOL WindowsShell::FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
+*/
+
+inline WCHAR * shell::_fullpath(WCHAR *UserBuf, const WCHAR *path, size_t maxlen)
 {
-   return (*theWindowsShell.m_pfnFindNextFile)(handle, lpdata);
+   return (*theLinuxShell.m_pfn_fullpath)(UserBuf, path, maxlen);
 }
 
-inline WCHAR * WindowsShell::_fullpath(WCHAR *UserBuf, const WCHAR *path, size_t maxlen)
+inline DWORD shell::GetFullPathName(const wchar_t * lpFileName, DWORD nBufferLength, wchar_t * lpBuffer, wchar_t ** lpFilePart)
 {
-   return (*theWindowsShell.m_pfn_fullpath)(UserBuf, path, maxlen);
-}
-
-inline DWORD WindowsShell::GetFullPathName(const wchar_t * lpFileName, DWORD nBufferLength, wchar_t * lpBuffer, wchar_t ** lpFilePart)
-{
-   return (*theWindowsShell.m_pfnGetFullPathName)(lpFileName, nBufferLength, lpBuffer, lpFilePart);
+   return (*theLinuxShell.m_pfnGetFullPathName)(lpFileName, nBufferLength, lpBuffer, lpFilePart);
 }
 
 
-inline WINBOOL WindowsShell::MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName)
+inline WINBOOL shell::MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName)
 {
-   return (*theWindowsShell.m_pfnMoveFile)(lpExistingFileName, lpNewFileName);
+   return (*theLinuxShell.m_pfnMoveFile)(lpExistingFileName, lpNewFileName);
 }
 
-inline WINBOOL WindowsShell::GetVolumeInformation(
+inline WINBOOL shell::GetVolumeInformation(
       const wchar_t * lpRootPathName,           // root directory
       wchar_t * lpVolumeNameBuffer,        // volume name buffer
       DWORD nVolumeNameSize,            // length of name buffer
@@ -320,7 +328,7 @@ inline WINBOOL WindowsShell::GetVolumeInformation(
       wchar_t * lpFileSystemNameBuffer,    // file system name buffer
       DWORD nFileSystemNameSize)         // length of file system name buffer
 {
-   return (*theWindowsShell.m_pfnGetVolumeInformation)(
+   return (*theLinuxShell.m_pfnGetVolumeInformation)(
       lpRootPathName,           // root directory
       lpVolumeNameBuffer,        // volume name buffer
       nVolumeNameSize,            // length of name buffer
@@ -331,44 +339,46 @@ inline WINBOOL WindowsShell::GetVolumeInformation(
       nFileSystemNameSize);         // length of file system name buffer
 }
 
-inline DWORD WindowsShell::SHGetFileInfo(
+/*
+inline DWORD shell::SHGetFileInfo(
    const wchar_t * pszPath,
    DWORD dwFileAttributes,
    SHFILEINFOW *psfi,
    UINT cbFileInfo,
    UINT uFlags)
 {
-   return (*theWindowsShell.m_pfnSHGetFileInfo)(
+   return (*theLinuxShell.m_pfnSHGetFileInfo)(
       pszPath,
       dwFileAttributes,
       psfi,
       cbFileInfo,
       uFlags);
 }
+*/
 
-inline DWORD WindowsShell::GetTempPathW(
+inline DWORD shell::GetTempPathW(
    DWORD nBufferLength,
    wchar_t * lpBuffer)
 {
-     return (*theWindowsShell.m_pfnGetTempPath)(
+     return (*theLinuxShell.m_pfnGetTempPath)(
       nBufferLength,
       lpBuffer);
 }
 
-inline UINT WindowsShell::GetTempFileNameW(
+inline UINT shell::GetTempFileNameW(
    const wchar_t * lpPathName,
    const wchar_t * lpPrefixString,
    UINT uUnique,
    wchar_t * lpTempFileName)
 {
-   return (*theWindowsShell.m_pfnGetTempFileName)(
+   return (*theLinuxShell.m_pfnGetTempFileName)(
       lpPathName,
       lpPrefixString,
       uUnique,
       lpTempFileName);
 }
 
-inline HANDLE WindowsShell::CreateFile(
+inline HANDLE shell::CreateFile(
    const wchar_t * lpFileName,
    DWORD dwDesiredAccess,
    DWORD dwShareMode,
@@ -377,7 +387,7 @@ inline HANDLE WindowsShell::CreateFile(
    DWORD dwFlagsAndAttributes,
    HANDLE hTemplateFile)
 {
-   return (*theWindowsShell.m_pfnCreateFile)(
+   return (*theLinuxShell.m_pfnCreateFile)(
       lpFileName,
       dwDesiredAccess,
       dwShareMode,
@@ -387,37 +397,37 @@ inline HANDLE WindowsShell::CreateFile(
       hTemplateFile);
 }
 
-inline DWORD WindowsShell::GetModuleFileName(
+inline DWORD shell::GetModuleFileName(
     HMODULE hModule,
     wchar_t * lpFilename,
     DWORD nSize
     )
 {
-   return (*theWindowsShell.m_pfnGetModuleFileName)(
+   return (*theLinuxShell.m_pfnGetModuleFileName)(
       hModule,
       lpFilename,
       nSize);
 }
 
-inline WINBOOL WindowsShell::GetClassInfo(
+/*inline WINBOOL shell::GetClassInfo(
    HINSTANCE hInstance ,
    const wchar_t * lpClassName,
    LPWNDCLASSW lpWndClass)
 {
-   return (*theWindowsShell.m_pfnGetClassInfo)(
+   return (*theLinuxShell.m_pfnGetClassInfo)(
       hInstance ,
       lpClassName,
       lpWndClass);
 }
 
-inline ATOM WindowsShell::RegisterClass(
+inline ATOM shell::RegisterClass(
    CONST WNDCLASSW *lpWndClass)
 {
-   return (*theWindowsShell.m_pfnRegisterClass)(
+   return (*theLinuxShell.m_pfnRegisterClass)(
       lpWndClass);
-}
+}*/
 
-inline HWND WindowsShell::CreateWindowEx(
+inline HWND shell::CreateWindowEx(
    DWORD dwExStyle,
    const wchar_t * lpClassName,
    const wchar_t * lpWindowName,
@@ -431,7 +441,7 @@ inline HWND WindowsShell::CreateWindowEx(
    HINSTANCE hInstance,
    LPVOID lpParam)
 {
-   return (*theWindowsShell.m_pfnCreateWindowEx)(
+   return (*theLinuxShell.m_pfnCreateWindowEx)(
       dwExStyle,
       lpClassName,
       lpWindowName,
@@ -447,32 +457,37 @@ inline HWND WindowsShell::CreateWindowEx(
 
 }
 
-inline DWORD WindowsShell::GetTempPath(string & str)
+inline DWORD shell::GetTempPath(string & str)
 {
    wchar_t * pwsz = (wchar_t *) malloc(sizeof(wchar_t) * MAX_PATH * 4);
-   DWORD dwResult = (*theWindowsShell.m_pfnGetTempPath)(sizeof(wchar_t) * MAX_PATH * 4, pwsz);
+   DWORD dwResult = (*theLinuxShell.m_pfnGetTempPath)(sizeof(wchar_t) * MAX_PATH * 4, pwsz);
    gen::international::unicode_to_utf8(str, pwsz);
    free(pwsz);
    return dwResult;
 }
 
-inline UINT WindowsShell::GetTempFileName(const char * lpPathName, const char * lpPrefixString, UINT uUnique, string & str)
+inline UINT shell::GetTempFileName(const char * lpPathName, const char * lpPrefixString, UINT uUnique, string & str)
 {
    wstring wstrPathName = gen::international::utf8_to_unicode(lpPathName);
    wstring wstrPrefixString = gen::international::utf8_to_unicode(lpPrefixString);
    wstring wstr;
    wstr.alloc(MAX_PATH * 4);
-   UINT uiResult = (*theWindowsShell.m_pfnGetTempFileName)(
+   UINT uiResult = (*theLinuxShell.m_pfnGetTempFileName)(
       wstrPathName,
       wstrPrefixString,
       uUnique,
-      wstr.m_pwsz);
+      wstr);
    gen::international::unicode_to_utf8(str, wstr);
    return uiResult;
 }
 
-inline WINBOOL WindowsShell::MoveFile(const char * lpExistingFileName, const char * lpNewFileName)
+inline WINBOOL shell::MoveFile(const char * lpExistingFileName, const char * lpNewFileName)
 {
    return MoveFile(gen::international::utf8_to_unicode(lpExistingFileName), gen::international::utf8_to_unicode(lpNewFileName));
 }
+
+
+
+
+} // namespace lnx
 

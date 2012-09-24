@@ -1,8 +1,5 @@
-
-#ifndef __AFXTLS_H__
-#define __AFXTLS_H__
-
 #pragma once
+
 
 // Classes declared in this file
 
@@ -24,7 +21,7 @@ struct thread_data; // private to implementation
 struct slot_data;   // private to implementation
 
 
-class CLASS_DECL_LNX thread_slot_data
+class CLASS_DECL_lnx thread_slot_data
 {
 public:
 
@@ -38,7 +35,7 @@ public:
 };
 
 
-class CLASS_DECL_LNX thread_local_storage
+class CLASS_DECL_lnx thread_local_storage
 {
 public:
 
@@ -62,7 +59,7 @@ extern BYTE _gen_ThreadData[sizeof(thread_local_storage)];
 extern thread_local_storage * gen_ThreadData;
 
 
-class CLASS_DECL_LNX no_track_object
+class CLASS_DECL_lnx no_track_object
 {
 public:
 #undef new
@@ -136,7 +133,7 @@ thread_local_object < iSlot > ::~thread_local_object()
 }
 
 
-class CLASS_DECL_LNX process_local_object
+class CLASS_DECL_lnx process_local_object
 {
 public:
 
@@ -183,9 +180,9 @@ public:
 };
 
 #define THREAD_LOCAL(class_name, ident_name, slot) \
-   __COMDAT thread_local<class_name, slot> ident_name;
+   thread_local < class_name, slot > ident_name;
 #define EXTERN_THREAD_LOCAL(class_name, ident_name, slot) \
-   extern CLASS_DECL_LNX thread_local<class_name, slot> ident_name;
+   extern CLASS_DECL_lnx thread_local<class_name, slot> ident_name;
 
 template<class TYPE>
 class process_local : public process_local_object
@@ -212,17 +209,14 @@ public:
 };
 
 #define PROCESS_LOCAL(class_name, ident_name) \
-   __COMDAT process_local<class_name> ident_name;
+   process_local < class_name > ident_name;
 #define EXTERN_PROCESS_LOCAL(class_name, ident_name) \
-   extern process_local<class_name> ident_name;
+   extern process_local < class_name > ident_name;
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CLASS_DECL_LNX __init_local_data(HINSTANCE hInstInit);
-void CLASS_DECL_LNX __term_local_data(HINSTANCE hInstTerm, bool bAll = FALSE);
-void CLASS_DECL_LNX __tls_add_ref();
-void CLASS_DECL_LNX __tls_release();
+void CLASS_DECL_lnx __init_local_data(HINSTANCE hInstInit);
+void CLASS_DECL_lnx __term_local_data(HINSTANCE hInstTerm, bool bAll = FALSE);
+void CLASS_DECL_lnx __tls_add_ref();
+void CLASS_DECL_lnx __tls_release();
 
-#endif //__AFXTLS_H__
-
-/////////////////////////////////////////////////////////////////////////////

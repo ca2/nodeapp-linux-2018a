@@ -5,7 +5,7 @@
 #include "framework.h"
 #include "WFileFind.h"
 
-#include "WindowsShell.h"
+#include "::win::shell.h"
 
 ////////////////////////////////////////////////////////////////////////////
 // FileFind implementation
@@ -63,7 +63,7 @@ WINBOOL FileFind::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /*
 
    wstring wstrName = gen::international::utf8_to_unicode(pstrName);
 
-   m_hContext = WindowsShell::FindFirstFile(wstrName, (WIN32_FIND_DATAW*) m_pNextInfo);
+   m_hContext = ::lnx::shell::FindFirstFile(wstrName, (WIN32_FIND_DATAW*) m_pNextInfo);
 
    if (m_hContext == INVALID_HANDLE_VALUE)
    {
@@ -75,7 +75,7 @@ WINBOOL FileFind::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /*
    wstring wstrRoot;
 
    wchar_t * pstrRoot = wstrRoot.alloc(_MAX_PATH);
-   const wchar_t * pstr = WindowsShell::_fullpath(pstrRoot, wstrName, _MAX_PATH);
+   const wchar_t * pstr = ::lnx::shell::_fullpath(pstrRoot, wstrName, _MAX_PATH);
 
    // passed name isn't a valid path but was found by the API
    ASSERT(pstr != NULL);
@@ -249,7 +249,7 @@ WINBOOL FileFind::FindNextFile()
    m_pFoundInfo = m_pNextInfo;
    m_pNextInfo = pTemp;
 
-   return WindowsShell::FindNextFile(m_hContext, (LPWIN32_FIND_DATAW) m_pNextInfo);
+   return ::lnx::shell::FindNextFile(m_hContext, (LPWIN32_FIND_DATAW) m_pNextInfo);
 }
 
 string FileFind::GetFileURL() const

@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_LNX graphics_object :
+   class CLASS_DECL_lnx graphics_object :
       virtual public ::ca::graphics_object
    {
    public:

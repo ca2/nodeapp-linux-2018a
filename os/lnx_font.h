@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_LNX font :
+   class CLASS_DECL_lnx font :
       virtual public ::ca::font
    {
    public:

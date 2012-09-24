@@ -36,7 +36,7 @@ namespace win
 
    void font::construct(const ::ca::font & fontParam)
       {
-         class font & font = const_cast < ::win::font & > (dynamic_cast < const ::win::font & > (fontParam));
+         class font & font = const_cast < ::lnx::font & > (dynamic_cast < const ::lnx::font & > (fontParam));
          if(get_handle() != NULL)
             delete_object();
          if(font.get_handle() != NULL)

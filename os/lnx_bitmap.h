@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_LNX bitmap :
+   class CLASS_DECL_lnx bitmap :
       virtual public ::ca::bitmap
    {
    public:
@@ -14,9 +14,10 @@ namespace lnx
       //::Gdiplus::Bitmap *  m_pbitmap;
       //void *               m_pdata;
 
-   Display *               m_pdisplay;
-   Pixmap                  m_pixmap;
-   ::primitive::memory           m_mem;
+      Display *               m_pdisplay;
+      Pixmap                  m_pixmap;
+      ::primitive::memory     m_mem;
+      ::size                  m_size;
 
       bitmap(::ca::application * papp);
       virtual ~bitmap();
@@ -31,9 +32,9 @@ namespace lnx
    #ifndef ___NO_AFXCMN_SUPPORT
 // xxx      bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int nMapSize = 0);
    #endif
-      bool CreateBitmap(int nWidth, int nHeight, UINT nPlanes, UINT nBitcount,
+      bool CreateBitmap(::ca::graphics * pdc, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount,
             const void * lpBits);
-      bool CreateBitmapIndirect(LPBITMAP lpBitmap);
+      bool CreateBitmapIndirect(::ca::graphics * pdc, LPBITMAP lpBitmap);
       bool CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
       bool CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
       bool CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void **ppvBits, HANDLE hSection, DWORD offset);
@@ -51,7 +52,10 @@ namespace lnx
       virtual void dump(dump_context & dumpcontext) const;
 
 
-      virtual bool Attach(HBITMAP hbitmap);
+      virtual bool Attach(Pixmap pixmap);
+
+
+      void destroy();
 
 
    };

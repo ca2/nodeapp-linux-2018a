@@ -4,194 +4,119 @@
 class FileException;
 struct FileStatus;
 
-void CLASS_DECL_LNX vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
+
+void CLASS_DECL_lnx vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
+void CLASS_DECL_lnx vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath);
+
 
 /////////////////////////////////////////////////////////////////////////////
 // File - raw unbuffered disk file I/O
 
-class CLASS_DECL_LNX lnx_file :
-   virtual public ex1::file
-{
-public:
 
-   enum Attribute {
-      normal =    0x00,
-      readOnly =  0x01,
-      hidden =    0x02,
-      system =    0x04,
-      volume =    0x08,
-      directory = 0x10,
-      archive =   0x20
+namespace lnx
+{
+
+
+   class CLASS_DECL_lnx file :
+      virtual public ex1::file
+   {
+   public:
+
+
+      enum Attribute
+      {
+         normal =    0x00,
+         readOnly =  0x01,
+         hidden =    0x02,
+         system =    0x04,
+         volume =    0x08,
+         directory = 0x10,
+         archive =   0x20
       };
 
-   enum SeekPosition { begin = 0x0, current = 0x1, end = 0x2 };
+      enum
+      {
 
-   enum { hFileNull = -1 };
+         hFileNull = -1
 
-   zip::Util  * m_pziputil;
+      };
 
-// Constructors
-   lnx_file(::ca::application * papp);
-   lnx_file(::ca::application * papp, int hFile);
-   lnx_file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags);
+      enum BufferCommand
+      {
 
-// Attributes
-   UINT m_hFile;
-   operator HFILE() const;
+         bufferRead,
+         bufferWrite,
+         bufferCommit,
+         bufferCheck
 
-   virtual DWORD_PTR GetPosition() const;
-   WINBOOL GetStatus(ex1::file_status & rStatus) const;
-   virtual string GetFileName() const;
-   virtual string GetFileTitle() const;
-   virtual string GetFilePath() const;
-   virtual void SetFilePath(const char * lpszNewName);
+      };
 
-// Operations
-   virtual WINBOOL open(const char * lpszFileName, UINT nOpenFlags,
-      ex1::file_exception_sp * pError = NULL);
+      zip::Util *    m_pziputil;
+      bool           m_bCloseOnDelete;
+      string         m_strFileName;
+      wstring        m_wstrFileName;
+      int            m_iFile;
 
-/*
-   static void PASCAL Rename(const char * lpszOldName,
-            const char * lpszNewName);
-   static void PASCAL remov(const char * lpszFileName);*/
-   virtual WINBOOL PASCAL GetStatus(const char * lpszFileName,
-            ::ex1::file_status& rStatus);
-   /*static void PASCAL SetStatus(const char * lpszFileName,
-            const ::ex1::file_status& status);
-*/
 
-   DWORD_PTR seek_to_end();
-   void seek_to_begin();
+      file(::ca::application * papp);
+      file(::ca::application * papp, int hFile);
+      file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags);
+      virtual ~file();
 
-   // backward compatible ReadHuge and WriteHuge
-   DWORD_PTR ReadHuge(void * lpBuffer, DWORD_PTR dwCount);
-   void WriteHuge(const void * lpBuffer, DWORD_PTR dwCount);
 
-// Overridables
-   virtual ex1::file * Duplicate() const;
+      operator HFILE() const;
 
-   virtual INT_PTR seek(INT_PTR lOff, UINT nFrom);
-   virtual void SetLength(DWORD_PTR dwNewLen);
-   virtual DWORD_PTR get_length() const;
+      virtual file_position get_position() const;
+      bool GetStatus(ex1::file_status & rStatus) const;
+      virtual string GetFileName() const;
+      virtual string GetFileTitle() const;
+      virtual string GetFilePath() const;
+      virtual void SetFilePath(const char * lpszNewName);
 
-   virtual DWORD_PTR read(void * lpBuf, DWORD_PTR nCount);
-   virtual void write(const void * lpBuf, DWORD_PTR nCount);
+      virtual bool open(const char * lpszFileName, UINT nOpenFlags);
 
-   virtual void LockRange(DWORD_PTR dwPos, DWORD_PTR dwCount);
-   virtual void UnlockRange(DWORD_PTR dwPos, DWORD_PTR dwCount);
+      virtual bool PASCAL GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus);
 
-   virtual void Abort();
-   virtual void Flush();
-   virtual void close();
+      uint64_t ReadHuge(void * lpBuffer, uint64_t dwCount);
+      void WriteHuge(const void * lpBuffer, uint64_t dwCount);
 
-// ementation
-public:
-   virtual bool IsOpened();
-   virtual ~lnx_file();
-#ifdef _DEBUG
-   virtual void assert_valid() const;
-   virtual void dump(dump_context & dumpcontext) const;
-#endif
-   enum BufferCommand { bufferRead, bufferWrite, bufferCommit, bufferCheck };
-   virtual DWORD_PTR GetBufferPtr(UINT nCommand, DWORD_PTR nCount = 0,
-      void ** ppBufStart = NULL, void ** ppBufMax = NULL);
+      virtual ex1::file * Duplicate() const;
 
-protected:
-   WINBOOL m_bCloseOnDelete;
-   string m_strFileName;
-};
+      virtual file_position seek(file_offset lOff, ::ex1::e_seek nFrom);
+      virtual void set_length(file_size dwNewLen);
+      virtual file_size get_length() const;
 
-class CLASS_DECL_LNX lnx_fileException :
-   virtual public ex1::file_exception
-{
-public:
-   enum
-   {
-      none,
-      generic,
-      fileNotFound,
-      badPath,
-      tooManyOpenFiles,
-      accessDenied,
-      invalidFile,
-      removeCurrentDir,
-      directoryFull,
-      badSeek,
-      hardIO,
-      sharingViolation,
-      lockViolation,
-      diskFull,
-      endOfFile
+      virtual ::primitive::memory_size read(void * lpBuf, ::primitive::memory_size nCount);
+      virtual void write(const void * lpBuf, ::primitive::memory_size nCount);
+
+      virtual void LockRange(file_position dwPos, file_size dwCount);
+      virtual void UnlockRange(file_position dwPos, file_size dwCount);
+
+      virtual void Abort();
+      virtual void Flush();
+      virtual void close();
+
+      virtual bool IsOpened();
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
+
+      virtual uint64_t GetBufferPtr(UINT nCommand, uint64_t nCount = 0, void ** ppBufStart = NULL, void ** ppBufMax = NULL);
+
+
    };
 
-// Constructor
-   lnx_fileException(::ca::application * papp, int cause = none, LONG lOsError = -1,
-      const char * lpszArchiveName = NULL);
 
-// Attributes
-   int      m_cause;
-   LONG     m_lOsError;
-   string   m_strFileName;
+   namespace file_exception
+   {
 
 
-   virtual int get_cause();
-   virtual LONG get_os_error();
-   virtual string get_file_path();
+      int PASCAL OsErrorToException(LONG lOsError);
+      int PASCAL ErrnoToException(int nErrno);
+      void PASCAL ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName = NULL);
+      void PASCAL ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName = NULL);
 
 
-// Operations
-   // convert a App dependent error code to a Cause
-   static int PASCAL OsErrorToException(LONG lOsError);
-   static int PASCAL ErrnoToException(int nErrno);
-
-   // helper functions to throw exception after converting to a Cause
-   static void PASCAL ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName = NULL);
-   static void PASCAL ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName = NULL);
-
-// ementation
-public:
-   virtual ~lnx_fileException();
-#ifdef _DEBUG
-   virtual void dump(dump_context&) const;
-#endif
-   virtual WINBOOL GetErrorMessage(string & str, PUINT pnHelpContext = NULL);
-};
-
-inline lnx_fileException::lnx_fileException(::ca::application * papp, int cause, LONG lOsError,
-                                          const char * pstrFileName /* = NULL */) :
-   ca(papp),
-   ex1::file_exception(papp)
-   { m_cause = cause; m_lOsError = lOsError; m_strFileName = pstrFileName; }
-inline lnx_fileException::~lnx_fileException()
-   { }
+   }  // namespace file_exception
 
 
-// ex1::filesp
-inline lnx_file::operator HFILE() const
-   { return m_hFile; }
-inline DWORD_PTR lnx_file::ReadHuge(void * lpBuffer, DWORD_PTR dwCount)
-   { return (DWORD_PTR) read(lpBuffer, (UINT)dwCount); }
-inline void lnx_file::WriteHuge(const void * lpBuffer, DWORD_PTR dwCount)
-   { write(lpBuffer, (UINT)dwCount); }
-inline DWORD_PTR lnx_file::seek_to_end()
-   { return seek(0, lnx_file::end); }
-inline void lnx_file::seek_to_begin()
-   { seek(0, lnx_file::begin); }
-
-/////////////////////////////////////////////////////////////////////////////
-// File status
-
-/*struct FileStatus
-{
-   class time m_ctime;          // creation date/time of file
-   class time m_mtime;          // last modification date/time of file
-   class time m_atime;          // last access date/time of file
-   LONG m_size;            // logical size of file in bytes
-   BYTE m_attribute;       // logical OR of ex1::filesp::Attribute enum values
-   BYTE _m_padding;        // pad the structure to a WORD
-   WCHAR m_szFullName[_MAX_PATH]; // absolute path name
-
-#ifdef _DEBUG
-   void dump(dump_context & dumpcontext) const;
-#endif
-};*/
+} // namepsace lnx

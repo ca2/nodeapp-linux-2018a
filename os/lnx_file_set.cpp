@@ -1,62 +1,62 @@
 #include "framework.h"
-#include "lnx_fileSet.h"
+#include "::lnx::fileSet.h"
 #include "WFileFind.h"
 
 
-lnx_fileSet::lnx_fileSet(::ca::application * papp) :
+::lnx::fileSet::::lnx::fileSet(::ca::application * papp) :
    ca(papp)
 {
 }
 
-lnx_fileSet::~lnx_fileSet()
+::lnx::fileSet::~::lnx::fileSet()
 {
 
 }
 
-void lnx_fileSet::add_search(stringa & stra, bool_array & baRecursive)
+void ::lnx::fileSet::add_search(stringa & stra, bool_array & baRecursive)
 {
    m_straSearch.add(stra);
    m_baRecursive.add(baRecursive);
    refresh();
 }
 
-void lnx_fileSet::add_filter(stringa & stra)
+void ::lnx::fileSet::add_filter(stringa & stra)
 {
    m_straFilter.add(stra);
    refresh();
 }
 
-int lnx_fileSet::get_file_count()
+int ::lnx::fileSet::get_file_count()
 {
    return m_straFile.get_size();
 }
 
-void lnx_fileSet::file_at(int i, string & str)
+void ::lnx::fileSet::file_at(int i, string & str)
 {
    str = m_straFile[i];
 }
 
-int lnx_fileSet::find_first_file(const char * lpcsz)
+int ::lnx::fileSet::find_first_file(const char * lpcsz)
 {
    return m_straFile.find_first_ci(lpcsz);
 }
 
-void lnx_fileSet::clear_search()
+void ::lnx::fileSet::clear_search()
 {
   m_straSearch.remove_all();
 }
 
-void lnx_fileSet::clear_filter()
+void ::lnx::fileSet::clear_filter()
 {
   m_straFilter.remove_all();
 }
 
-void lnx_fileSet::clear_file()
+void ::lnx::fileSet::clear_file()
 {
    m_straFile.remove_all();
 }
 
-void lnx_fileSet::refresh()
+void ::lnx::fileSet::refresh()
 {
    clear_file();
    string strFilter;

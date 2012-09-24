@@ -1,21 +1,21 @@
 #include "framework.h"
-#include "lnx_fileSystem.h"
+#include "::lnx::fileSystem.h"
 
 
-#include "lnx_file.h"
+#include "::lnx::file.h"
 
-lnx_fileSystem::lnx_fileSystem(::ca::application * papp) :
+::lnx::fileSystem::::lnx::fileSystem(::ca::application * papp) :
    ca(papp)
 {
 
 }
 
-lnx_fileSystem::~lnx_fileSystem()
+::lnx::fileSystem::~::lnx::fileSystem()
 {
 
 }
 
-bool lnx_fileSystem::FullPath(string &str, const char * lpszFileIn)
+bool ::lnx::fileSystem::FullPath(string &str, const char * lpszFileIn)
 {
    if(::ex1::file_system::FullPath(str, lpszFileIn))
       return true;
@@ -41,7 +41,7 @@ bool lnx_fileSystem::FullPath(string &str, const char * lpszFileIn)
 }
 
 
-UINT lnx_fileSystem::GetFileName(const char * lpszPathName, string & str)
+UINT ::lnx::fileSystem::GetFileName(const char * lpszPathName, string & str)
 {
    int nMax = MAX_PATH * 8;
    wstring wstrPathName;
@@ -52,7 +52,7 @@ UINT lnx_fileSystem::GetFileName(const char * lpszPathName, string & str)
    return user;
 }
 
-void lnx_fileSystem::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
+void ::lnx::fileSystem::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
 {
    vfxGetModuleShortFileName(hInst, strShortName);
 }

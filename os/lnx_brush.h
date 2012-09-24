@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_LNX brush :
+   class CLASS_DECL_lnx brush :
       virtual public ::ca::brush
    {
    public:

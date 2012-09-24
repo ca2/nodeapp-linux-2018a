@@ -3,7 +3,7 @@
 namespace win
 {
 
-   class CLASS_DECL_LNX folder_watch :
+   class CLASS_DECL_lnx folder_watch :
       virtual public ::ex2::folder_watch,
       virtual public ::radix::thread
    {

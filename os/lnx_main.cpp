@@ -7,7 +7,7 @@ CLASS_DECL_ca int ca2_main();
 
 //CLASS_DECL_ca fixed_alloc_array * new_wstring_manager();
 
-void CLASS_DECL_LNX __cdecl _ca2_purecall(void)
+void CLASS_DECL_lnx __cdecl _ca2_purecall(void)
 {
     throw simple_exception();
 }
@@ -15,15 +15,15 @@ void CLASS_DECL_LNX __cdecl _ca2_purecall(void)
 void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers);
 
 
-//::ca::application *     win_application_create(::ca::application * pappSystem, const char * pszId);
-::ca::application *     win_instantiate_application(::ca::application * pappSystem, const char * pszId);
-//int                     win_application_procedure(::ca::application * pappSystem)
-//UINT __CDECL          win_application_thread_proc(LPVOID);
+//::ca::application *     lnx_application_create(::ca::application * pappSystem, const char * pszId);
+::ca::application *     lnx_instantiate_application(::ca::application * pappSystem, const char * pszId);
+//int                     lnx_application_procedure(::ca::application * pappSystem)
+//UINT __CDECL          lnx_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
 //  Can be replaced as long as 'AfxWinInit' is called first
 
-int CLASS_DECL_LNX AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int CLASS_DECL_lnx AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
    _set_purecall_handler(_ca2_purecall);
 
@@ -38,7 +38,7 @@ int CLASS_DECL_LNX AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
    int nReturnCode = 0;
 
-   ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
+   ::lnx::main_init_data * pinitmaindata  = new ::lnx::main_init_data;
 
    pinitmaindata->m_hInstance             = hInstance;
    pinitmaindata->m_hPrevInstance         = hPrevInstance;
@@ -91,7 +91,7 @@ void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppoin
 
 
 
-::ca::application * win_instantiate_application(::ca::application * pappSystem, const char * pszId)
+::ca::application * lnx_instantiate_application(::ca::application * pappSystem, const char * pszId)
 {
 
    ::ca::application * papp = NULL;

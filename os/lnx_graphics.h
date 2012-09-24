@@ -8,7 +8,7 @@ namespace lnx
    class pen;
    class font;
 
-   class CLASS_DECL_LNX graphics :
+   class CLASS_DECL_lnx graphics :
       virtual public ::ca::graphics
    {
       // // DECLARE_DYNCREATE(::ca::graphics_sp)
@@ -81,9 +81,9 @@ namespace lnx
       ::ca::bitmap & GetCurrentBitmap() const;
 
 
-      lnx::pen *       lnx_pen();
-      lnx::brush *     lnx_brush();
-      lnx::font *      lnx_font();
+      pen *       lnx_pen();
+      brush *     lnx_brush();
+      font *      lnx_font();
 
       // for bidi and mirrored localization
       DWORD GetLayout() const;

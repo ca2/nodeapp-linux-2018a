@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_LNX region :
+   class CLASS_DECL_lnx region :
       virtual public ::ca::region
    {
    public:

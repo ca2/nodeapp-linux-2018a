@@ -46,7 +46,7 @@ namespace win
    }
 
 
-   CLASS_DECL_LNX void dib::s_initialize()
+   CLASS_DECL_lnx void dib::s_initialize()
    {
       double dCos;
       double dSin;
@@ -205,23 +205,23 @@ namespace win
    {
       ::ca::bitmap_sp bitmap(get_app());
       bitmap->CreateCompatibleBitmap(pdc, 1, 1);
-      ::ca::bitmap * pbitmap = WIN_DC(pdc)->SelectObject(bitmap);
+      ::ca::bitmap * pbitmap = LNX_DC(pdc)->SelectObject(bitmap);
       if(pbitmap == NULL)
          return false;
       BITMAP bm;
       memset(&bm, 0, sizeof(bm));
       if(!pbitmap->GetBitmap(&bm))
       {
-         WIN_DC(pdc)->SelectObject(pbitmap);
+         LNX_DC(pdc)->SelectObject(pbitmap);
          return false;
       }
       if(!create(bm.bmWidth, bm.bmHeight))
       {
-         WIN_DC(pdc)->SelectObject(pbitmap);
+         LNX_DC(pdc)->SelectObject(pbitmap);
          return false;
       }
-      bool bOk = GetDIBits(WIN_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
-      WIN_DC(pdc)->SelectObject(pbitmap);
+      bool bOk = GetDIBits(LNX_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
+      LNX_DC(pdc)->SelectObject(pbitmap);
       return bOk;
    }
 
@@ -416,7 +416,7 @@ namespace win
       if(op == 123) // zero dest RGB, invert alpha, and OR src RGB
       {
          int isize=m_size.cx*m_size.cy;
-         LPDWORD lpbitsSrc= (LPDWORD) WIN_DIB(pdib)->m_pcolorref;
+         LPDWORD lpbitsSrc= (LPDWORD) LNX_DIB(pdib)->m_pcolorref;
          LPDWORD lpbitsDest= (LPDWORD) m_pcolorref;
 
          COLORREF _colorref = RGB ( 0, 0, 0 ) | (255 << 24);
@@ -539,20 +539,20 @@ namespace win
    void dib::copy(::ca::dib * pdib)
    {
       // If DibSize Wrong Re-create dib
-      if ( (WIN_DIB(pdib)->m_size.cx!=m_size.cx) || (WIN_DIB(pdib)->m_size.cy!=m_size.cy) )
-         WIN_DIB(pdib)->create ( m_size.cx, m_size.cy );
+      if ( (LNX_DIB(pdib)->m_size.cx!=m_size.cx) || (LNX_DIB(pdib)->m_size.cy!=m_size.cy) )
+         LNX_DIB(pdib)->create ( m_size.cx, m_size.cy );
       // do copy
-      memcpy ( WIN_DIB(pdib)->m_pcolorref, m_pcolorref, m_size.cx*m_size.cy*4 );
+      memcpy ( LNX_DIB(pdib)->m_pcolorref, m_pcolorref, m_size.cx*m_size.cy*4 );
    }
 
 
    void dib::Paste ( ::ca::dib * pdib )
    {
       // If DibSize Wrong Re-create dib
-      if ( (m_size.cx!=WIN_DIB(pdib)->m_size.cx) || (m_size.cy!=WIN_DIB(pdib)->m_size.cy) )
-         create ( WIN_DIB(pdib)->m_size.cx, WIN_DIB(pdib)->m_size.cy );
+      if ( (m_size.cx!=LNX_DIB(pdib)->m_size.cx) || (m_size.cy!=LNX_DIB(pdib)->m_size.cy) )
+         create ( LNX_DIB(pdib)->m_size.cx, LNX_DIB(pdib)->m_size.cy );
       // do Paste
-      memcpy ( m_pcolorref, WIN_DIB(pdib)->m_pcolorref, m_size.cx*m_size.cy*4 );
+      memcpy ( m_pcolorref, LNX_DIB(pdib)->m_pcolorref, m_size.cx*m_size.cy*4 );
    }
 
    bool dib::color_blend(COLORREF cr, BYTE bAlpha)
@@ -582,10 +582,10 @@ namespace win
 
    void dib::Blend (::ca::dib * pdib, int A )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( m_size!=LNX_DIB(pdib)->m_size )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
 
@@ -601,13 +601,13 @@ namespace win
 
    bool dib::Blend(::ca::dib *pdib, ::ca::dib *pdibA, int A)
    {
-      if(m_size != WIN_DIB(pdib)->m_size ||
-         m_size != WIN_DIB(pdibA)->m_size)
+      if(m_size != LNX_DIB(pdib)->m_size ||
+         m_size != LNX_DIB(pdibA)->m_size)
          return false;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      BYTE *alf=(BYTE*)WIN_DIB(pdibA)->m_pcolorref;
+      BYTE *alf=(BYTE*)LNX_DIB(pdibA)->m_pcolorref;
       int size=m_size.cx*m_size.cy;
 
       A = 2 - A;
@@ -627,10 +627,10 @@ namespace win
 
    void dib::Darken (::ca::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( m_size!=LNX_DIB(pdib)->m_size )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
 
@@ -646,10 +646,10 @@ namespace win
 
    void dib::Difference (::ca::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( m_size!=LNX_DIB(pdib)->m_size )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
 
@@ -669,10 +669,10 @@ namespace win
 
    void dib::Lighten (::ca::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( m_size!=LNX_DIB(pdib)->m_size )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
 
@@ -689,10 +689,10 @@ namespace win
 
    void dib::Multiply (::ca::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( m_size!=LNX_DIB(pdib)->m_size )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
 
@@ -708,10 +708,10 @@ namespace win
 
    void dib::Screen (::ca::dib * pdib )
    {
-      if ( m_size!=WIN_DIB(pdib)->m_size )
+      if ( m_size!=LNX_DIB(pdib)->m_size )
          return;
 
-      BYTE *src=(BYTE*)WIN_DIB(pdib)->m_pcolorref;
+      BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       int size=m_size.cx*m_size.cy;
 
@@ -734,8 +734,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
+      int dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -743,12 +743,12 @@ namespace win
       if ( (dx<=0) || (dy<=0) )
          return;
       // If DibSize Wrong Re-create dib
-      if ( (dx!=WIN_DIB(pdib)->m_size.cx) || (dy!=WIN_DIB(pdib)->m_size.cy) )
-         WIN_DIB(pdib)->create ( dx, dy );
+      if ( (dx!=LNX_DIB(pdib)->m_size.cx) || (dy!=LNX_DIB(pdib)->m_size.cy) )
+         LNX_DIB(pdib)->create ( dx, dy );
 
       // Prepare buffer Addresses
       COLORREF *src=m_pcolorref+(py*m_size.cx)+px;
-      COLORREF *dst=WIN_DIB(pdib)->m_pcolorref;
+      COLORREF *dst=LNX_DIB(pdib)->m_pcolorref;
 
       // Do copy
       while ( dy-- )
@@ -756,7 +756,7 @@ namespace win
          for ( int i=0; i<dx; i++ )
             dst[i]=src[i];
          src+=m_size.cx;
-         dst+=WIN_DIB(pdib)->m_size.cx;
+         dst+=LNX_DIB(pdib)->m_size.cx;
       }
    }
 
@@ -765,8 +765,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
+      int dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -775,7 +775,7 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      COLORREF *src=WIN_DIB(pdib)->m_pcolorref+((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x;
+      COLORREF *src=LNX_DIB(pdib)->m_pcolorref+((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x;
       COLORREF *dst=m_pcolorref+(py*m_size.cx)+px;
 
       // Do Paste
@@ -783,7 +783,7 @@ namespace win
       {
          for ( int i=0; i<dx; i++ )
             dst[i]=src[i];
-         src+=WIN_DIB(pdib)->m_size.cx;
+         src+=LNX_DIB(pdib)->m_size.cx;
          dst+=m_size.cx;
       }
    }
@@ -882,8 +882,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
+      int dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -892,7 +892,7 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
 
       // Do Blend
@@ -907,7 +907,7 @@ namespace win
             src+=4;
          }
          dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
       }
    }
 
@@ -916,8 +916,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
+      int dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -926,7 +926,7 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
 
       // Do Darken
@@ -941,7 +941,7 @@ namespace win
             src+=4;
          }
          dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
       }
    }
 
@@ -950,8 +950,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
+      int dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -960,7 +960,7 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
 
       // Do Difference
@@ -979,7 +979,7 @@ namespace win
             src+=4;
          }
          dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
       }
    }
 
@@ -988,8 +988,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
+      int dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -998,7 +998,7 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
 
       // Do Lighten
@@ -1013,7 +1013,7 @@ namespace win
             src+=4;
          }
          dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
       }
    }
 
@@ -1022,8 +1022,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
+      int dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1032,7 +1032,7 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
 
       // Do Multiply
@@ -1047,7 +1047,7 @@ namespace win
             src+=4;
          }
          dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
       }
    }
 
@@ -1056,8 +1056,8 @@ namespace win
       // Clip Rect
       int px=(x>=0) ? x : 0;
       int py=(y>=0) ? y : 0;
-      int dx=((x+WIN_DIB(pdib)->m_size.cx)<m_size.cx) ? WIN_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int dy=((y+WIN_DIB(pdib)->m_size.cy)<m_size.cy) ? WIN_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
+      int dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1066,7 +1066,7 @@ namespace win
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)WIN_DIB(pdib)->m_pcolorref+(((py-y)*WIN_DIB(pdib)->m_size.cx)+px-x)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
       BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
 
       // Do Screen
@@ -1081,7 +1081,7 @@ namespace win
             src+=4;
          }
          dst+=(m_size.cx-dx)<<2;
-         src+=(WIN_DIB(pdib)->m_size.cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
       }
    }
 
@@ -1757,7 +1757,7 @@ namespace win
 
 
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               WIN_DIB(pdib)->m_pcolorref[y * cx + x];
+               LNX_DIB(pdib)->m_pcolorref[y * cx + x];
             k++;
          }
       }
@@ -1828,7 +1828,7 @@ namespace win
 
 
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               WIN_DIB(pdib)->m_pcolorref[y * cx + x];
+               LNX_DIB(pdib)->m_pcolorref[y * cx + x];
             k++;
          }
       }
@@ -1921,7 +1921,7 @@ namespace win
 
 
             m_pcolorref[(j+joff)*m_size.cx+(i+ioff)]=
-               WIN_DIB(pdib)->m_pcolorref[y * m_size.cx + x];
+               LNX_DIB(pdib)->m_pcolorref[y * m_size.cx + x];
             k++;
          }
       }
@@ -2036,14 +2036,14 @@ namespace win
 
    void dib::xor(::ca::dib * pdib)
    {
-      if(m_size.cx != WIN_DIB(pdib)->m_size.cx
-      || m_size.cy != WIN_DIB(pdib)->m_size.cy)
+      if(m_size.cx != LNX_DIB(pdib)->m_size.cx
+      || m_size.cy != LNX_DIB(pdib)->m_size.cy)
       {
          return;
       }
       int iCount = m_size.cx * m_size.cy;
       LPDWORD lpd1 = (LPDWORD) m_pcolorref;
-      LPDWORD lpd2 = (LPDWORD) WIN_DIB(pdib)->m_pcolorref;
+      LPDWORD lpd2 = (LPDWORD) LNX_DIB(pdib)->m_pcolorref;
       for(int i = 0; i < iCount; i++)
       {
          *lpd1 = *lpd1 ^ *lpd2;
@@ -2267,9 +2267,9 @@ namespace win
          0, 0,
          m_size.cx, m_size.cy,
          0, 0,
-         WIN_DIB(pdib)->m_size.cx, WIN_DIB(pdib)->m_size.cy,
-         WIN_DIB(pdib)->m_pcolorref,
-         &WIN_DIB(pdib)->m_info,
+         LNX_DIB(pdib)->m_size.cx, LNX_DIB(pdib)->m_size.cy,
+         LNX_DIB(pdib)->m_pcolorref,
+         &LNX_DIB(pdib)->m_info,
          DIB_RGB_COLORS,
          SRCCOPY);
    }

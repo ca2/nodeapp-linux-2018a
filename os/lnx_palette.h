@@ -3,7 +3,7 @@
 namespace lnx
 {
 
-   class CLASS_DECL_LNX palette :
+   class CLASS_DECL_lnx palette :
       virtual public ::lnx::graphics_object,
       virtual public ::ca::palette
    {

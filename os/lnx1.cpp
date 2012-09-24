@@ -1,44 +1,46 @@
 #include "framework.h"
-#include "win1.h"
+#include "lnx1.h"
 
-namespace win
+
+namespace lnx
 {
-   int win::function()
+
+   int function()
    {
       return 0;
    }
 
-   HINSTANCE LoadLibrary(const char * lpsz)
+/*   HINSTANCE LoadLibrary(const char * lpsz)
    {
       return ::LoadLibraryW(gen::international::utf8_to_unicode(lpsz));
-   }
+   }*/
 
-   WINBOOL CLASS_DECL_LNX SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, WINBOOL fCreate)
+/*   WINBOOL CLASS_DECL_lnx SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, WINBOOL fCreate)
    {
       return ::SHGetSpecialFolderPathW(hwnd, wstringtou(str, MAX_PATH * 8), csidl, fCreate);
-   }
+   }*/
 
-   DWORD GetFileAttributes(const char * lpFileName)
+/*   DWORD GetFileAttributes(const char * lpFileName)
    {
       return ::GetFileAttributesW(gen::international::utf8_to_unicode(lpFileName));
-   }
+   }*/
 
-   WINBOOL CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
+/*   WINBOOL CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes)
    {
       return ::CreateDirectoryW(gen::international::utf8_to_unicode(lpPathName), lpSecurityAttributes);
-   }
+   }*/
 
-   DWORD GetCurrentDirectory(string & str)
+/*   DWORD GetCurrentDirectory(string & str)
    {
       return ::GetCurrentDirectoryW(MAX_PATH * 8, wstringtou(str, MAX_PATH * 8));
-   }
+   }*/
 
    DWORD GetTempPath(string & str)
    {
       return ::GetTempPathW(MAX_PATH * 8, wstringtou(str, MAX_PATH * 8));
    }
 
-   LONG RegQueryValue(HKEY hkey, const char * lpszSubKey, string & str)
+/*   LONG RegQueryValue(HKEY hkey, const char * lpszSubKey, string & str)
    {
       DWORD dwType = 0;
       DWORD dwSize = 0;
@@ -56,17 +58,17 @@ namespace win
       {
          return ERROR_NOT_SUPPORTED;
       }
-   }
+   }*/
 
-   HICON ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex)
+/*   HICON ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex)
    {
       return ::ExtractIconW(hInst, gen::international::utf8_to_unicode(lpszExeFileName), nIconIndex);
-   }
+   }*/
 
-   WINBOOL  DeleteFile(const char * lpFileName)
+/*   WINBOOL  DeleteFile(const char * lpFileName)
    {
       return ::DeleteFileW(gen::international::utf8_to_unicode(lpFileName));
-   }
+   }*/
 
 /*   int GetMenuString(HMENU hmenu, UINT uIDItem, string & str, UINT flags)
    {
@@ -76,7 +78,7 @@ namespace win
       return iLen;
    }*/
 
-   CLASS_DECL_LNX void TimeToFileTime(::ca::application * papp, const class time& time, LPFILETIME pFileTime)
+/*   CLASS_DECL_lnx void TimeToFileTime(::ca::application * papp, const class time& time, LPFILETIME pFileTime)
    {
          SYSTEMTIME sysTime;
          sysTime.wYear           = (WORD)time.GetYear();
@@ -90,12 +92,14 @@ namespace win
          // convert system time to local file time
          FILETIME localTime;
          if (!SystemTimeToFileTime((LPSYSTEMTIME)&sysTime, &localTime))
-               lnx_fileException::ThrowOsError(papp, (LONG)::GetLastError());
+               ::lnx::fileException::ThrowOsError(papp, (LONG)::GetLastError());
 
          // convert local file time to UTC file time
          if (!LocalFileTimeToFileTime(&localTime, pFileTime))
-               lnx_fileException::ThrowOsError(papp, (LONG)::GetLastError());
+               ::lnx::fileException::ThrowOsError(papp, (LONG)::GetLastError());
    }
 
+*/
+} // namespace lnx
 
-} // namespace win
+

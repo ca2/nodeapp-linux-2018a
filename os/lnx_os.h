@@ -1,13 +1,19 @@
 #pragma once
 
-namespace win
+
+namespace lnx
 {
 
-   class CLASS_DECL_LNX osi :
-      public ::ca::osi
+
+   class CLASS_DECL_lnx os :
+      public ::ca::os
    {
    public:
-      osi(::ca::application * papp);
+
+
+      os(::ca::application * papp);
+      virtual ~os();
+
 
       virtual bool reboot();
       virtual bool shutdown(bool bPowerOff);
@@ -18,6 +24,13 @@ namespace win
       virtual bool get_pid_by_title(const char * pszName, DWORD & dwPid);
       virtual void get_all_processes(dword_array & dwa);
       virtual string get_process_path(DWORD dwPid);
+
+
    };
 
-} // namespace win
+
+} // namespace lnx
+
+
+
+

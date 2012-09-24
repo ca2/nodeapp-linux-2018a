@@ -1,46 +1,55 @@
 #pragma once
 
+
 /////////////////////////////////////////////////////////////////////////////
 // STDIO file implementation
 
-class WinStdioFile :
-   virtual public lnx_file,
-   virtual public ex1::text_file
+
+namespace lnx
 {
-public:
-   WinStdioFile(::ca::application * papp);
 
-// Attributes
-   FILE* m_pStream;    // stdio FILE
-                  // m_hFile from base class is _fileno(m_pStream)
 
-// Operations
-   // reading and writing strings
-   virtual void write_string(const char * lpsz);
-   virtual char * read_string(char * lpsz, UINT nMax);
-//   virtual void write_string(const char * lpsz);
-//   virtual wchar_t * read_string(wchar_t * lpsz, UINT nMax);
-   virtual UINT read_string(string & rString);
+   class stdio_file :
+      virtual public ::lnx::file,
+      virtual public ex1::text_file
+   {
+   public:
 
-// ementation
-public:
-   virtual ~WinStdioFile();
-#ifdef _DEBUG
-   void dump(dump_context & dumpcontext) const;
-#endif
-   virtual DWORD_PTR GetPosition() const;
-   virtual WINBOOL open(const char * lpszFileName, UINT nOpenFlags,
-      ex1::file_exception_sp * pError = NULL);
-   virtual DWORD_PTR read(void * lpBuf, DWORD_PTR nCount);
-   virtual void write(const void * lpBuf, DWORD_PTR nCount);
-   virtual INT_PTR seek(INT_PTR lOff, UINT nFrom);
-   virtual void Abort();
-   virtual void Flush();
-   virtual void close();
-   virtual DWORD_PTR get_length() const;
 
-   // Unsupported APIs
-   virtual ex1::file * Duplicate() const;
-   virtual void LockRange(DWORD_PTR dwPos, DWORD_PTR dwCount);
-   virtual void UnlockRange(DWORD_PTR dwPos, DWORD_PTR dwCount);
-};
+      FILE* m_pStream;    // stdio FILE
+      // m_hFile from base class is _fileno(m_pStream)
+
+
+
+      stdio_file(::ca::application * papp);
+      virtual ~stdio_file();
+
+      virtual void write_string(const char * lpsz);
+      virtual char * read_string(char * lpsz, UINT nMax);
+      virtual UINT read_string(string & rString);
+
+
+      void dump(dump_context & dumpcontext) const;
+      virtual file_position get_position() const;
+      virtual bool open(const char * lpszFileName, UINT nOpenFlags);
+      virtual ::primitive::memory_size read(void * lpBuf, ::primitive::memory_size nCount);
+      virtual void write(const void * lpBuf, ::primitive::memory_size nCount);
+      virtual file_position seek(file_offset lOff, ::ex1::e_seek nFrom);
+      virtual void Abort();
+      virtual void Flush();
+      virtual void close();
+      virtual file_size get_length() const;
+
+      // Unsupported APIs
+      virtual ex1::file * Duplicate() const;
+      virtual void LockRange(file_position dwPos, file_size dwCount);
+      virtual void UnlockRange(file_position dwPos, file_size dwCount);
+
+
+   };
+
+
+
+} // namespace lnx
+
+

@@ -5,7 +5,7 @@
 namespace VistaTools
 {
 
-WINBOOL CLASS_DECL_LNX IsVista();
+WINBOOL CLASS_DECL_lnx IsVista();
 
 /*
 Use IsVista() to determine whether the current process is running under Windows Vista or
@@ -21,7 +21,7 @@ Return Values:
 
 #ifndef WIN64
 
-WINBOOL CLASS_DECL_LNX
+WINBOOL CLASS_DECL_lnx
 IsWow64();
 
 /*
@@ -42,7 +42,7 @@ when required.
 #endif//WIN64
 
 
-HRESULT CLASS_DECL_LNX
+HRESULT CLASS_DECL_lnx
 GetElevationType( __out TOKEN_ELEVATION_TYPE * ptet );
 
 /*
@@ -72,7 +72,7 @@ Return Values:
    call GetLastError().
 */
 
-HRESULT CLASS_DECL_LNX
+HRESULT CLASS_DECL_lnx
 IsElevated( __out_opt WINBOOL * pbElevated = NULL );
 
 /*
@@ -101,7 +101,7 @@ Return Values
    call GetLastError().
 */
 
-WINBOOL CLASS_DECL_LNX
+WINBOOL CLASS_DECL_lnx
 RunElevated(
    __in      HWND   hwnd,
    __in      const char * pszPath,
@@ -152,7 +152,7 @@ there is no such attribute at all.
 #endif//NO_DLL_IMPORTS
 
 
-WINBOOL CLASS_DECL_LNX
+WINBOOL CLASS_DECL_lnx
 RunNonElevated(
    __in      HWND   hwnd,
    __in      const char * pszPath,
@@ -202,7 +202,7 @@ as requireAdministrator, it will be started elevated!
 // MyShellExec is just a wrapper around a call to ShellExecuteEx,
 // to be able to specify the verb easily.
 
-WINBOOL CLASS_DECL_LNX
+WINBOOL CLASS_DECL_lnx
 MyShellExec(   HWND hwnd,
             const char * pszVerb,
             const char * pszPath,

@@ -6,7 +6,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_LNX pen :
+   class CLASS_DECL_lnx pen :
       virtual public ::lnx::graphics_object,
       virtual public ::ca::pen
    {

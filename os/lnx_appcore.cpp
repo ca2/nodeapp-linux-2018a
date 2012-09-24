@@ -1,3 +1,3 @@
 #include "framework.h"
 
-PROCESS_LOCAL(_AFX_WIN_STATE, _afxWinState)
+PROCESS_LOCAL(___LNX_STATE, gen_LnxState)

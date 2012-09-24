@@ -7,7 +7,7 @@
 
 WinStdioFile::WinStdioFile(::ca::application * papp) :
    ca(papp),
-   lnx_file(papp)
+   ::lnx::file(papp)
 {
    m_pStream = NULL;
 }
@@ -35,7 +35,7 @@ WINBOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags,
    }
 
    m_pStream = NULL;
-   if (!lnx_file::open(lpszFileName, (nOpenFlags & ~::ex1::file::type_text), pException))
+   if (!::lnx::file::open(lpszFileName, (nOpenFlags & ~::ex1::file::type_text), pException))
       return FALSE;
 
    ASSERT(m_hFile != hFileNull);
@@ -92,7 +92,7 @@ WINBOOL WinStdioFile::open(const char * lpszFileName, UINT nOpenFlags,
 //         pException->m_cause = ::ex1::file_exception::OsErrorToException(_doserrno);
       }
 
-      lnx_file::Abort(); // close m_hFile
+      ::lnx::file::Abort(); // close m_hFile
       return FALSE;
    }
 
@@ -314,7 +314,7 @@ void WinStdioFile::UnlockRange(DWORD_PTR /* dwPos */, DWORD_PTR /* dwCount */)
 #ifdef _DEBUG
 void WinStdioFile::dump(dump_context & dumpcontext) const
 {
-   lnx_file::dump(dumpcontext);
+   ::lnx::file::dump(dumpcontext);
 
    dumpcontext << "m_pStream = " << (void *)m_pStream;
    dumpcontext << "\n";

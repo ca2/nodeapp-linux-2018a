@@ -1,20 +1,20 @@
 #include "framework.h"
 
-lnx_file::lnx_file(::ca::application * papp) :
+::lnx::file::::lnx::file(::ca::application * papp) :
    ca(papp)
 {
    m_hFile = (UINT) hFileNull;
    m_bCloseOnDelete = FALSE;
 }
 
-lnx_file::lnx_file(::ca::application * papp, int hFile) :
+::lnx::file::::lnx::file(::ca::application * papp, int hFile) :
    ca(papp)
 {
    m_hFile = hFile;
    m_bCloseOnDelete = FALSE;
 }
 
-lnx_file::lnx_file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags) :
+::lnx::file::::lnx::file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags) :
    ca(papp)
 {
    ASSERT(AfxIsValidString(lpszFileName));
@@ -25,18 +25,18 @@ lnx_file::lnx_file(::ca::application * papp, const char * lpszFileName, UINT nOp
       throw &e;
 }
 
-lnx_file::~lnx_file()
+::lnx::file::~::lnx::file()
 {
    if (m_hFile != (UINT)hFileNull && m_bCloseOnDelete)
       close();
 }
 
-ex1::file * lnx_file::Duplicate() const
+ex1::file * ::lnx::file::Duplicate() const
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
 
-   lnx_file* pFile = new lnx_file(get_app(), hFileNull);
+   ::lnx::file* pFile = new ::lnx::file(get_app(), hFileNull);
    HANDLE hFile;
    if (!::DuplicateHandle(::GetCurrentProcess(), (HANDLE)m_hFile,
       ::GetCurrentProcess(), &hFile, 0, FALSE, DUPLICATE_SAME_ACCESS))
@@ -51,7 +51,7 @@ ex1::file * lnx_file::Duplicate() const
    return pFile;
 }
 
-WINBOOL lnx_file::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
+WINBOOL ::lnx::file::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exception_sp* pException)
 {
    if (m_hFile != (UINT)hFileNull)
       close();
@@ -61,7 +61,7 @@ WINBOOL lnx_file::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exc
       fx_is_valid_address(pException, sizeof(ex1::file_exception_sp)));
    ASSERT((nOpenFlags & type_text) == 0);   // text mode not supported
 
-   // lnx_file objects are always binary and CreateFile does not need flag
+   // ::lnx::file objects are always binary and CreateFile does not need flag
    nOpenFlags &= ~(UINT)type_binary;
 
 
@@ -147,16 +147,16 @@ WINBOOL lnx_file::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exc
       dwCreateFlag = OPEN_EXISTING;
 
    // attempt file creation
-   HANDLE hFile = WindowsShell::CreateFile(gen::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+   HANDLE hFile = ::lnx::shell::CreateFile(gen::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
    if (hFile == INVALID_HANDLE_VALUE)
    {
       if (pException != NULL)
       {
-         lnx_fileException * pfe = dynamic_cast < lnx_fileException * > (pException->m_p);
+         ::lnx::fileException * pfe = dynamic_cast < ::lnx::fileException * > (pException->m_p);
          if(pfe != NULL)
          {
             pfe->m_lOsError = ::GetLastError();
-            pfe->m_cause = lnx_fileException::OsErrorToException(pfe->m_lOsError);
+            pfe->m_cause = ::lnx::fileException::OsErrorToException(pfe->m_lOsError);
             pfe->m_strFileName = lpszFileName;
          }
          return FALSE;
@@ -164,7 +164,7 @@ WINBOOL lnx_file::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exc
       else
       {
          DWORD dwLastError = ::GetLastError();
-         vfxThrowFileException(get_app(), lnx_fileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+         vfxThrowFileException(get_app(), ::lnx::fileException::OsErrorToException(dwLastError), dwLastError, m_strFileName);
       }
    }
    m_hFile = (HFILE)hFile;
@@ -173,7 +173,7 @@ WINBOOL lnx_file::open(const char * lpszFileName, UINT nOpenFlags, ex1::file_exc
    return TRUE;
 }
 
-DWORD_PTR lnx_file::read(void * lpBuf, DWORD_PTR nCount)
+DWORD_PTR ::lnx::file::read(void * lpBuf, DWORD_PTR nCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
@@ -186,12 +186,12 @@ DWORD_PTR lnx_file::read(void * lpBuf, DWORD_PTR nCount)
 
    DWORD dwRead;
    if (!::ReadFile((HANDLE)m_hFile, lpBuf, nCount, &dwRead, NULL))
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 
    return (UINT)dwRead;
 }
 
-void lnx_file::write(const void * lpBuf, DWORD_PTR nCount)
+void ::lnx::file::write(const void * lpBuf, DWORD_PTR nCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
@@ -204,18 +204,18 @@ void lnx_file::write(const void * lpBuf, DWORD_PTR nCount)
 
    DWORD nWritten;
    if (!::WriteFile((HANDLE)m_hFile, lpBuf, nCount, &nWritten, NULL))
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
 
    // Win32s will not return an error all the time (usually DISK_FULL)
    if (nWritten != nCount)
       vfxThrowFileException(get_app(), ::ex1::file_exception::diskFull, -1, m_strFileName);
 }
 
-INT_PTR lnx_file::seek(INT_PTR lOff, UINT nFrom)
+INT_PTR ::lnx::file::seek(INT_PTR lOff, UINT nFrom)
 {
 
    if(m_hFile == (UINT)hFileNull)
-      lnx_fileException::ThrowOsError(get_app(), (LONG)0);
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)0);
 
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
@@ -224,24 +224,24 @@ INT_PTR lnx_file::seek(INT_PTR lOff, UINT nFrom)
 
    DWORD dwNew = ::SetFilePointer((HANDLE)m_hFile, lOff, NULL, (DWORD)nFrom);
    if (dwNew  == (DWORD)-1)
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 
    return dwNew;
 }
 
-DWORD_PTR lnx_file::GetPosition() const
+DWORD_PTR ::lnx::file::GetPosition() const
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
 
    DWORD dwPos = ::SetFilePointer((HANDLE)m_hFile, 0, NULL, FILE_CURRENT);
    if (dwPos  == (DWORD)-1)
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 
    return dwPos;
 }
 
-void lnx_file::Flush()
+void ::lnx::file::Flush()
 {
    ASSERT_VALID(this);
 
@@ -249,10 +249,10 @@ void lnx_file::Flush()
       return;
 
    if (!::FlushFileBuffers((HANDLE)m_hFile))
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 }
 
-void lnx_file::close()
+void ::lnx::file::close()
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
@@ -266,10 +266,10 @@ void lnx_file::close()
    m_strFileName.Empty();
 
    if (bError)
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 }
 
-void lnx_file::Abort()
+void ::lnx::file::Abort()
 {
    ASSERT_VALID(this);
    if (m_hFile != (UINT)hFileNull)
@@ -281,25 +281,25 @@ void lnx_file::Abort()
    m_strFileName.Empty();
 }
 
-void lnx_file::LockRange(DWORD_PTR dwPos, DWORD_PTR dwCount)
+void ::lnx::file::LockRange(DWORD_PTR dwPos, DWORD_PTR dwCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
 
    if (!::LockFile((HANDLE)m_hFile, dwPos, 0, dwCount, 0))
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 }
 
-void lnx_file::UnlockRange(DWORD_PTR dwPos, DWORD_PTR dwCount)
+void ::lnx::file::UnlockRange(DWORD_PTR dwPos, DWORD_PTR dwCount)
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
 
    if (!::UnlockFile((HANDLE)m_hFile, dwPos, 0, dwCount, 0))
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 }
 
-void lnx_file::SetLength(DWORD_PTR dwNewLen)
+void ::lnx::file::SetLength(DWORD_PTR dwNewLen)
 {
    ASSERT_VALID(this);
    ASSERT(m_hFile != (UINT)hFileNull);
@@ -307,17 +307,17 @@ void lnx_file::SetLength(DWORD_PTR dwNewLen)
    seek((LONG)dwNewLen, (UINT)begin);
 
    if (!::SetEndOfFile((HANDLE)m_hFile))
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 }
 
-DWORD_PTR lnx_file::get_length() const
+DWORD_PTR ::lnx::file::get_length() const
 {
    ASSERT_VALID(this);
 
    DWORD_PTR dwLen, dwCur;
 
    // seek is a non const operation
-   lnx_file* pFile = (lnx_file*)this;
+   ::lnx::file* pFile = (::lnx::file*)this;
    dwCur = pFile->seek(0L, current);
    dwLen = pFile->seek_to_end();
    VERIFY(dwCur == (DWORD_PTR)pFile->seek(dwCur, begin));
@@ -325,8 +325,8 @@ DWORD_PTR lnx_file::get_length() const
    return dwLen;
 }
 
-// lnx_file does not support direct buffering (CMemFile does)
-DWORD_PTR lnx_file::GetBufferPtr(UINT nCommand, DWORD_PTR /*nCount*/,
+// ::lnx::file does not support direct buffering (CMemFile does)
+DWORD_PTR ::lnx::file::GetBufferPtr(UINT nCommand, DWORD_PTR /*nCount*/,
    void ** /*ppBufStart*/, void ** /*ppBufMax*/)
 {
    ASSERT(nCommand == bufferCheck);
@@ -336,21 +336,21 @@ DWORD_PTR lnx_file::GetBufferPtr(UINT nCommand, DWORD_PTR /*nCount*/,
 }
 
 /*
-void PASCAL lnx_file::Rename(const char * lpszOldName, const char * lpszNewName)
+void PASCAL ::lnx::file::Rename(const char * lpszOldName, const char * lpszNewName)
 {
    if (!::MoveFile((LPTSTR)lpszOldName, (LPTSTR)lpszNewName))
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 }
 
-void PASCAL lnx_file::remove(const char * lpszFileName)
+void PASCAL ::lnx::file::remove(const char * lpszFileName)
 {
    if (!::DeleteFile((LPTSTR)lpszFileName))
-      lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 }
 */
 
 
-string CLASS_DECL_LNX vfxStringFromCLSID(REFCLSID rclsid)
+string CLASS_DECL_lnx vfxStringFromCLSID(REFCLSID rclsid)
 {
    WCHAR szCLSID[256];
    wsprintfW(szCLSID, L"{%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X}",
@@ -360,7 +360,7 @@ string CLASS_DECL_LNX vfxStringFromCLSID(REFCLSID rclsid)
    return szCLSID;
 }
 
-WINBOOL CLASS_DECL_LNX vfxGetInProcServer(const char * lpszCLSID, string & str)
+WINBOOL CLASS_DECL_lnx vfxGetInProcServer(const char * lpszCLSID, string & str)
 {
    HKEY hKey = NULL;
    WINBOOL b = FALSE;
@@ -390,7 +390,7 @@ WINBOOL CLASS_DECL_LNX vfxGetInProcServer(const char * lpszCLSID, string & str)
 }
 
 
-WINBOOL CLASS_DECL_LNX vfxResolveShortcut(::ca::window * pWnd, const wchar_t * lpszFileIn,
+WINBOOL CLASS_DECL_lnx vfxResolveShortcut(::ca::window * pWnd, const wchar_t * lpszFileIn,
    wchar_t * lpszFileOut, int cchPath)
 {
    UNREFERENCED_PARAMETER(pWnd);
@@ -433,7 +433,7 @@ WINBOOL CLASS_DECL_LNX vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
       *lpszFileOut = 0;   // assume failure
 
       SHFILEINFOW info;
-      if ((WindowsShell::SHGetFileInfo(lpszFileIn, 0, &info, sizeof(info),
+      if ((::win::shell::SHGetFileInfo(lpszFileIn, 0, &info, sizeof(info),
          SHGFI_ATTRIBUTES) == 0) || !(info.dwAttributes & SFGAO_LINK))
       {
          return FALSE;
@@ -451,7 +451,7 @@ WINBOOL CLASS_DECL_LNX vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
          if (SUCCEEDED(ppf->Load(lpszFileIn, STGM_READ)))
          {
             /* Resolve the link, this may post UI to find the link */
-/*            if (SUCCEEDED(psl->Resolve(WIN_WINDOW(pWnd)->GetSafeHwnd(),
+/*            if (SUCCEEDED(psl->Resolve(LNX_WINDOW(pWnd)->GetSafeHwnd(),
                SLR_ANY_MATCH)))
             {
                psl->GetPath(lpszFileOut, cchPath, NULL, 0);
@@ -495,7 +495,7 @@ WINBOOL CLASS_DECL_LNX vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
          if (SUCCEEDED(ppf->Load(lpszFileIn, STGM_READ)))
          {
             /* Resolve the link, this may post UI to find the link */
-/*            if (SUCCEEDED(psl->Resolve(WIN_WINDOW(pWnd)->GetSafeHwnd(),
+/*            if (SUCCEEDED(psl->Resolve(LNX_WINDOW(pWnd)->GetSafeHwnd(),
                SLR_ANY_MATCH)))
             {
                psl->GetPath(strFileOut.GetBuffer(cchPath), cchPath, NULL, 0);
@@ -517,7 +517,7 @@ WINBOOL CLASS_DECL_LNX vfxResolveShortcut(::ca::window * pWnd, const wchar_t * l
 }
 
 // turn a file, relative path or other into an absolute path
-WINBOOL CLASS_DECL_LNX vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileIn)
+WINBOOL CLASS_DECL_lnx vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFileIn)
    // lpszPathOut = buffer of _MAX_PATH
    // lpszFileIn = file, relative path or absolute path
    // (both in ANSI character set)
@@ -566,7 +566,7 @@ WINBOOL CLASS_DECL_LNX vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFi
    return TRUE;
 }
 
-/*void CLASS_DECL_LNX AfxGetRoot(const char * lpszPath, string & strRoot)
+/*void CLASS_DECL_lnx AfxGetRoot(const char * lpszPath, string & strRoot)
 {
    ASSERT(lpszPath != NULL);
    // determine the root name of the volume
@@ -609,7 +609,7 @@ WINBOOL CLASS_DECL_LNX vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFi
    strRoot.ReleaseBuffer();
 }*/
 
-/*WINBOOL CLASS_DECL_LNX AfxComparePath(const char * lpszPath1, const char * lpszPath2)
+/*WINBOOL CLASS_DECL_lnx AfxComparePath(const char * lpszPath1, const char * lpszPath2)
 {
    // use case insensitive compare as a starter
    if (lstrcmpi(lpszPath1, lpszPath2) != 0)
@@ -662,7 +662,7 @@ WINBOOL CLASS_DECL_LNX vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFi
    return TRUE; // otherwise file name is truly the same
 }*/
 
-/*UINT CLASS_DECL_LNX AfxGetFileTitle(const char * lpszPathName, LPTSTR lpszTitle, UINT nMax)
+/*UINT CLASS_DECL_lnx AfxGetFileTitle(const char * lpszPathName, LPTSTR lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       fx_is_valid_address(lpszTitle, _MAX_FNAME));
@@ -684,7 +684,7 @@ WINBOOL CLASS_DECL_LNX vfxFullPath(wchar_t * lpszPathOut, const wchar_t * lpszFi
    return lpszTitle == NULL ? lstrlen(lpszTemp)+1 : 0;
 }*/
 
-void CLASS_DECL_LNX vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortName)
+void CLASS_DECL_lnx vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortName)
 {
    WCHAR szLongPathName[_MAX_PATH];
    wstring wstrShortName;
@@ -701,16 +701,16 @@ void CLASS_DECL_LNX vfxGetModuleShortFileName(HINSTANCE hInst, string& strShortN
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// lnx_file diagnostics
+// ::lnx::file diagnostics
 
 #ifdef _DEBUG
-void lnx_file::assert_valid() const
+void ::lnx::file::assert_valid() const
 {
    ::radix::object::assert_valid();
    // we permit the descriptor m_hFile to be any value for derived classes
 }
 
-void lnx_file::dump(dump_context & dumpcontext) const
+void ::lnx::file::dump(dump_context & dumpcontext) const
 {
    ::radix::object::dump(dumpcontext);
 
@@ -721,7 +721,7 @@ void lnx_file::dump(dump_context & dumpcontext) const
 #endif
 
 
-// IMPLEMENT_DYNAMIC(lnx_file, ::radix::object)
+// IMPLEMENT_DYNAMIC(::lnx::file, ::radix::object)
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -729,7 +729,7 @@ void lnx_file::dump(dump_context & dumpcontext) const
 
 #define _wcsinc(_pc)    ((_pc)+1)
 
-void CLASS_DECL_LNX vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
+void CLASS_DECL_lnx vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 {
    ASSERT(lpszPath != NULL);
    wstring wstrRoot;
@@ -774,7 +774,7 @@ void CLASS_DECL_LNX vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 }
 
 
-/*WINBOOL CLASS_DECL_LNX vfxFullPath(char * lpszPathOut, const char * lpszFileIn)
+/*WINBOOL CLASS_DECL_lnx vfxFullPath(char * lpszPathOut, const char * lpszFileIn)
    // lpszPathOut = buffer of _MAX_PATH
    // lpszFileIn = file, relative path or absolute path
    // (both in ANSI character set)
@@ -783,7 +783,7 @@ void CLASS_DECL_LNX vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 
    // first, fully qualify the path name
    wchar_t * lpszFilePart;
-   if (!WindowsShell::GetFullPathName(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
+   if (!::win::shell::GetFullPathName(lpszFileIn, _MAX_PATH, lpszPathOut, &lpszFilePart))
    {
 #ifdef _DEBUG
       if (lpszFileIn[0] != '\0')
@@ -799,7 +799,7 @@ void CLASS_DECL_LNX vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
 
    // get file system information for the volume
    DWORD dwFlags, dwDummy;
-   if (!WindowsShell::GetVolumeInformation(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags,
+   if (!::win::shell::GetVolumeInformation(wstrRoot, NULL, 0, NULL, &dwDummy, &dwFlags,
       NULL, 0))
    {
       TRACE1("Warning: could not get volume information '%S'.\n",
@@ -815,7 +815,7 @@ void CLASS_DECL_LNX vfxGetRoot(const wchar_t * lpszPath, string& strRoot)
    if (!(dwFlags & FS_UNICODE_STORED_ON_DISK))
    {
       WIN32_FIND_DATAW data;
-      HANDLE h = WindowsShell::FindFirstFile(lpszFileIn, &data);
+      HANDLE h = ::lnx::shell::FindFirstFile(lpszFileIn, &data);
       if (h != INVALID_HANDLE_VALUE)
       {
          FindClose(h);
@@ -851,7 +851,7 @@ static const char szUnknown[] = "unknown";
 #endif
 
 
-/*void CLASS_DECL_LNX vfxThrowFileException(int cause, LONG lOsError,
+/*void CLASS_DECL_lnx vfxThrowFileException(int cause, LONG lOsError,
 //   const char * lpszFileName /* == NULL */
 /*{
 #ifdef _DEBUG
@@ -860,7 +860,7 @@ static const char szUnknown[] = "unknown";
       lpsz = rgszFileExceptionCause[cause];
    else
       lpsz = szUnknown;
-   TRACE3("lnx_file exception: %hs, lnx_file %W, App error information = %ld.\n",
+   TRACE3("::lnx::file exception: %hs, ::lnx::file %W, App error information = %ld.\n",
       lpsz, (lpszFileName == NULL) ? L"Unknown" : lpszFileName, lOsError);
 #endif
    THROW(new FileException(cause, lOsError, lpszFileName));
@@ -914,9 +914,9 @@ static const char szUnknown[] = "unknown";
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lnx_file name handlers
+// ::lnx::file name handlers
 
-string lnx_file::GetFileName() const
+string ::lnx::file::GetFileName() const
 {
    ASSERT_VALID(this);
 
@@ -927,7 +927,7 @@ string lnx_file::GetFileName() const
    return wstrResult;
 }
 
-string lnx_file::GetFileTitle() const
+string ::lnx::file::GetFileTitle() const
 {
    ASSERT_VALID(this);
 
@@ -938,7 +938,7 @@ string lnx_file::GetFileTitle() const
    return wstrResult;
 }
 
-string lnx_file::GetFilePath() const
+string ::lnx::file::GetFilePath() const
 {
    ASSERT_VALID(this);
 
@@ -948,7 +948,7 @@ string lnx_file::GetFilePath() const
 }
 
 
-UINT CLASS_DECL_LNX vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
+UINT CLASS_DECL_lnx vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       fx_is_valid_address(lpszTitle, _MAX_FNAME));
@@ -977,35 +977,35 @@ UINT CLASS_DECL_LNX vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszT
 // FileException
 
 
-int lnx_fileException::get_cause()
+int ::lnx::fileException::get_cause()
 {
    return m_cause;
 }
 
-LONG lnx_fileException::get_os_error()
+LONG ::lnx::fileException::get_os_error()
 {
    return m_lOsError;
 }
 
-string lnx_fileException::get_file_path()
+string ::lnx::fileException::get_file_path()
 {
    return m_strFileName;
 }
 
 
-void PASCAL lnx_fileException::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
+void PASCAL ::lnx::fileException::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
 {
    if (lOsError != 0)
-      vfxThrowFileException(papp, lnx_fileException::OsErrorToException(lOsError), lOsError, lpszFileName);
+      vfxThrowFileException(papp, ::lnx::fileException::OsErrorToException(lOsError), lOsError, lpszFileName);
 }
 
-void PASCAL lnx_fileException::ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName /* = NULL */)
+void PASCAL ::lnx::fileException::ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName /* = NULL */)
 {
    if (nErrno != 0)
-      vfxThrowFileException(papp, lnx_fileException::ErrnoToException(nErrno), _doserrno, lpszFileName);
+      vfxThrowFileException(papp, ::lnx::fileException::ErrnoToException(nErrno), _doserrno, lpszFileName);
 }
 
-WINBOOL lnx_fileException::GetErrorMessage(string & str, PUINT pnHelpContext)
+WINBOOL ::lnx::fileException::GetErrorMessage(string & str, PUINT pnHelpContext)
 {
 
    if (pnHelpContext != NULL)
@@ -1022,10 +1022,10 @@ WINBOOL lnx_fileException::GetErrorMessage(string & str, PUINT pnHelpContext)
 }
 
 /////////////////////////////////////////////////////////////////////////////
-// lnx_fileException diagnostics
+// ::lnx::fileException diagnostics
 
 #ifdef _DEBUG
-void lnx_fileException::dump(dump_context & dumpcontext) const
+void ::lnx::fileException::dump(dump_context & dumpcontext) const
 {
    ::radix::object::dump(dumpcontext);
 
@@ -1041,9 +1041,9 @@ void lnx_fileException::dump(dump_context & dumpcontext) const
 #endif
 
 /////////////////////////////////////////////////////////////////////////////
-// lnx_fileException helpers
+// ::lnx::fileException helpers
 
-void CLASS_DECL_LNX vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName /* == NULL */)
+void CLASS_DECL_lnx vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
 #ifdef _DEBUG
    const char * lpsz;
@@ -1051,12 +1051,12 @@ void CLASS_DECL_LNX vfxThrowFileException(::ca::application * papp, int cause, L
       lpsz = rgszFileExceptionCause[cause];
    else
       lpsz = szUnknown;
-//   TRACE3("lnx_file exception: %hs, lnx_file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
+//   TRACE3("::lnx::file exception: %hs, ::lnx::file %s, App error information = %ld.\n", lpsz, (lpszFileName == NULL) ? "Unknown" : lpszFileName, lOsError);
 #endif
-   throw new lnx_fileException(papp, cause, lOsError, lpszFileName);
+   throw new ::lnx::fileException(papp, cause, lOsError, lpszFileName);
 }
 
-int PASCAL lnx_fileException::ErrnoToException(int nErrno)
+int PASCAL ::lnx::fileException::ErrnoToException(int nErrno)
 {
    switch(nErrno)
    {
@@ -1082,7 +1082,7 @@ int PASCAL lnx_fileException::ErrnoToException(int nErrno)
    }
 }
 
-int PASCAL lnx_fileException::OsErrorToException(LONG lOsErr)
+int PASCAL ::lnx::fileException::OsErrorToException(LONG lOsErr)
 {
    // NT Error codes
    switch ((UINT)lOsErr)
@@ -1251,7 +1251,7 @@ int PASCAL lnx_fileException::OsErrorToException(LONG lOsErr)
 }
 
 
-// IMPLEMENT_DYNAMIC(lnx_fileException, base_exception)
+// IMPLEMENT_DYNAMIC(::lnx::fileException, base_exception)
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -1259,9 +1259,9 @@ int PASCAL lnx_fileException::OsErrorToException(LONG lOsErr)
 
 
 /////////////////////////////////////////////////////////////////////////////
-// lnx_file Status implementation
+// ::lnx::file Status implementation
 
-WINBOOL lnx_file::GetStatus(::ex1::file_status& rStatus) const
+WINBOOL ::lnx::file::GetStatus(::ex1::file_status& rStatus) const
 {
    ASSERT_VALID(this);
 
@@ -1295,7 +1295,7 @@ WINBOOL lnx_file::GetStatus(::ex1::file_status& rStatus) const
 #ifdef _DEBUG
             // ca2 API BUG: m_attribute is only a BYTE wide
             if (dwAttribute & ~0xFF)
-               TRACE0("Warning: lnx_file::GetStatus() returns m_attribute without high-order flags.\n");
+               TRACE0("Warning: ::lnx::file::GetStatus() returns m_attribute without high-order flags.\n");
 #endif
          }
       }
@@ -1315,7 +1315,7 @@ WINBOOL lnx_file::GetStatus(::ex1::file_status& rStatus) const
 }
 
 
-WINBOOL PASCAL lnx_file::GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus)
+WINBOOL PASCAL ::lnx::file::GetStatus(const char * lpszFileName, ::ex1::file_status& rStatus)
 {
    // attempt to fully qualify path first
    wstring wstrFullName;
@@ -1357,7 +1357,7 @@ WINBOOL PASCAL lnx_file::GetStatus(const char * lpszFileName, ::ex1::file_status
 
 
 /*
-UINT CLASS_DECL_LNX vfxGetFileTitle(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
+UINT CLASS_DECL_lnx vfxGetFileTitle(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       fx_is_valid_address(lpszTitle, _MAX_FNAME));
@@ -1435,7 +1435,7 @@ WINBOOL vfxComparePath(const wchar_t * lpszPath1, const wchar_t * lpszPath2)
 */
 
 /*
-void PASCAL lnx_file::SetStatus(const char * lpszFileName, const ::ex1::file_status& status)
+void PASCAL ::lnx::file::SetStatus(const char * lpszFileName, const ::ex1::file_status& status)
 {
    DWORD wAttr;
    FILETIME creationTime;
@@ -1446,7 +1446,7 @@ void PASCAL lnx_file::SetStatus(const char * lpszFileName, const ::ex1::file_sta
    LPFILETIME lpLastWriteTime = NULL;
 
    if ((wAttr = GetFileAttributes((LPTSTR)lpszFileName)) == (DWORD)-1L)
-      lnx_fileException::ThrowOsError(get_app(), (LONG)GetLastError());
+      ::lnx::fileException::ThrowOsError(get_app(), (LONG)GetLastError());
 
    if ((DWORD)status.m_attribute != wAttr && (wAttr & readOnly))
    {
@@ -1455,7 +1455,7 @@ void PASCAL lnx_file::SetStatus(const char * lpszFileName, const ::ex1::file_sta
       // caller changed the file from readonly.
 
       if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-         lnx_fileException::ThrowOsError(get_app(), (LONG)GetLastError());
+         ::lnx::fileException::ThrowOsError(get_app(), (LONG)GetLastError());
    }
 
    // last modification time
@@ -1483,30 +1483,30 @@ void PASCAL lnx_file::SetStatus(const char * lpszFileName, const ::ex1::file_sta
          NULL);
 
       if (hFile == INVALID_HANDLE_VALUE)
-         lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 
       if (!SetFileTime((HANDLE)hFile, lpCreationTime, lpLastAccessTime, lpLastWriteTime))
-         lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
 
       if (!::CloseHandle(hFile))
-         lnx_fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
+         ::lnx::fileException::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    if ((DWORD)status.m_attribute != wAttr && !(wAttr & readOnly))
    {
       if (!SetFileAttributes((LPTSTR)lpszFileName, (DWORD)status.m_attribute))
-         lnx_fileException::ThrowOsError(get_app(), (LONG)GetLastError());
+         ::lnx::fileException::ThrowOsError(get_app(), (LONG)GetLastError());
    }
 }
 */
 
-bool lnx_file::IsOpened()
+bool ::lnx::file::IsOpened()
 {
    return m_hFile != hFileNull;
 }
 
 
-void lnx_file::SetFilePath(const char * lpszNewName)
+void ::lnx::file::SetFilePath(const char * lpszNewName)
 {
    ASSERT_VALID(this);
    ASSERT(AfxIsValidString(lpszNewName));

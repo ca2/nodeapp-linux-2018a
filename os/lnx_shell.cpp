@@ -150,7 +150,7 @@ int __cdecl _validdrive (
             drvstr[1] = ':';
             drvstr[2] = '.';
             drvstr[3] = '\0';
-            len = WindowsShell::GetFullPathName( drvstr,
+            len = ::lnx::shell::GetFullPathName( drvstr,
                                    sizeof(dirbuf) / sizeof(_TSCHAR),
                                    dirbuf,
                                    &pname );
@@ -236,23 +236,23 @@ int __cdecl _validdrive (
 
 
 
-WindowsShell WindowsShell::theWindowsShell;
+::lnx::shell ::lnx::shell::theLinuxShell;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-WindowsShell::WindowsShell()
+::lnx::shell::::win::shell()
 {
 
 }
 
-WindowsShell::~WindowsShell()
+::lnx::shell::~::win::shell()
 {
 
 }
 
-bool WindowsShell::Initialize()
+bool ::lnx::shell::Initialize()
 {
    DWORD dwVersion = GetVersion();
 
@@ -283,47 +283,47 @@ bool WindowsShell::Initialize()
 
    if(bNativeUnicode)
    {
-      theWindowsShell.m_pfnSHGetPathFromIDList = ::SHGetPathFromIDListW;
-      theWindowsShell.m_pfnFindFirstFile = ::FindFirstFileW;
-      theWindowsShell.m_pfnFindNextFile = ::FindNextFileW;
-      theWindowsShell.m_pfnMoveFile = ::MoveFileW;
-      theWindowsShell.m_pfn_fullpath = ::_wfullpath;
-      theWindowsShell.m_pfnGetFullPathName = ::GetFullPathNameW;
-      theWindowsShell.m_pfnGetVolumeInformation = ::GetVolumeInformationW;
-      theWindowsShell.m_pfnSHGetFileInfo = ::SHGetFileInfoW;
-      theWindowsShell.m_pfnGetStringTypeEx = ::GetStringTypeExW;
-      theWindowsShell.m_pfnGetTempPath = ::GetTempPathW;
-      theWindowsShell.m_pfnGetTempFileName = ::GetTempFileNameW;
-      theWindowsShell.m_pfnCreateFile = ::CreateFileW;
-      theWindowsShell.m_pfnGetModuleFileName = ::GetModuleFileNameW;
-      theWindowsShell.m_pfnGetClassInfo = ::GetClassInfoW;
-      theWindowsShell.m_pfnRegisterClass = ::RegisterClassW;
-      theWindowsShell.m_pfnCreateWindowEx = ::CreateWindowExW;
+      theLinuxShell.m_pfnSHGetPathFromIDList = ::SHGetPathFromIDListW;
+      theLinuxShell.m_pfnFindFirstFile = ::FindFirstFileW;
+      theLinuxShell.m_pfnFindNextFile = ::FindNextFileW;
+      theLinuxShell.m_pfnMoveFile = ::MoveFileW;
+      theLinuxShell.m_pfn_fullpath = ::_wfullpath;
+      theLinuxShell.m_pfnGetFullPathName = ::GetFullPathNameW;
+      theLinuxShell.m_pfnGetVolumeInformation = ::GetVolumeInformationW;
+      theLinuxShell.m_pfnSHGetFileInfo = ::SHGetFileInfoW;
+      theLinuxShell.m_pfnGetStringTypeEx = ::GetStringTypeExW;
+      theLinuxShell.m_pfnGetTempPath = ::GetTempPathW;
+      theLinuxShell.m_pfnGetTempFileName = ::GetTempFileNameW;
+      theLinuxShell.m_pfnCreateFile = ::CreateFileW;
+      theLinuxShell.m_pfnGetModuleFileName = ::GetModuleFileNameW;
+      theLinuxShell.m_pfnGetClassInfo = ::GetClassInfoW;
+      theLinuxShell.m_pfnRegisterClass = ::RegisterClassW;
+      theLinuxShell.m_pfnCreateWindowEx = ::CreateWindowExW;
    }
    else
    {
-      theWindowsShell.m_pfnSHGetPathFromIDList = _SHGetPathFromIDList;
-      theWindowsShell.m_pfnFindFirstFile = _FindFirstFile;
-      theWindowsShell.m_pfnFindNextFile = _FindNextFile;
-      theWindowsShell.m_pfnMoveFile = _MoveFile;
-      theWindowsShell.m_pfn_fullpath = __fullpath;
-      theWindowsShell.m_pfnGetFullPathName = _GetFullPathName;
-      theWindowsShell.m_pfnGetVolumeInformation = _GetVolumeInformation;
-      theWindowsShell.m_pfnSHGetFileInfo = _SHGetFileInfo;
-      theWindowsShell.m_pfnGetStringTypeEx = _GetStringTypeEx;
-      theWindowsShell.m_pfnGetTempPath = _GetTempPath;
-      theWindowsShell.m_pfnGetTempFileName = _GetTempFileName;
-      theWindowsShell.m_pfnCreateFile = _CreateFile;
-      theWindowsShell.m_pfnGetModuleFileName = _GetModuleFileName;
-      theWindowsShell.m_pfnGetClassInfo = _GetClassInfo;
-      theWindowsShell.m_pfnRegisterClass = _RegisterClass;
-      theWindowsShell.m_pfnCreateWindowEx = _CreateWindowEx;
+      theLinuxShell.m_pfnSHGetPathFromIDList = _SHGetPathFromIDList;
+      theLinuxShell.m_pfnFindFirstFile = _FindFirstFile;
+      theLinuxShell.m_pfnFindNextFile = _FindNextFile;
+      theLinuxShell.m_pfnMoveFile = _MoveFile;
+      theLinuxShell.m_pfn_fullpath = __fullpath;
+      theLinuxShell.m_pfnGetFullPathName = _GetFullPathName;
+      theLinuxShell.m_pfnGetVolumeInformation = _GetVolumeInformation;
+      theLinuxShell.m_pfnSHGetFileInfo = _SHGetFileInfo;
+      theLinuxShell.m_pfnGetStringTypeEx = _GetStringTypeEx;
+      theLinuxShell.m_pfnGetTempPath = _GetTempPath;
+      theLinuxShell.m_pfnGetTempFileName = _GetTempFileName;
+      theLinuxShell.m_pfnCreateFile = _CreateFile;
+      theLinuxShell.m_pfnGetModuleFileName = _GetModuleFileName;
+      theLinuxShell.m_pfnGetClassInfo = _GetClassInfo;
+      theLinuxShell.m_pfnRegisterClass = _RegisterClass;
+      theLinuxShell.m_pfnCreateWindowEx = _CreateWindowEx;
    }
 
    return true;
 }
 
-WINBOOL WindowsShell::_SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath)
+WINBOOL ::lnx::shell::_SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath)
 {
    CHAR pszPathA[MAX_PATH * 2];
    if(!::SHGetPathFromIDListA(pidl, pszPathA))
@@ -331,7 +331,7 @@ WINBOOL WindowsShell::_SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath
    return gen::international::ACPToUnicode(pszPath, MAX_PATH * 2, pszPathA) ? TRUE : FALSE;
 }
 
-WINBOOL WindowsShell::_MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName)
+WINBOOL ::lnx::shell::_MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName)
 {
    string str1, str2;
    gen::international::UnicodeToACP(str1, lpExistingFileName);
@@ -339,7 +339,7 @@ WINBOOL WindowsShell::_MoveFile(const wchar_t * lpExistingFileName, const wchar_
    return ::MoveFileA(str1, str2);
 }
 
-HANDLE WindowsShell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata)
+HANDLE ::lnx::shell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata)
 {
    CHAR pszPathA[MAX_PATH * 2];
    gen::international::UnicodeToACP(pszPathA, MAX_PATH * 2, lpcsz);
@@ -362,7 +362,7 @@ HANDLE WindowsShell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lp
    return handle;
 }
 
-WINBOOL WindowsShell::_FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
+WINBOOL ::lnx::shell::_FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
 {
    WIN32_FIND_DATAA data;
    WINBOOL b = ::FindNextFileA(handle, &data);
@@ -384,7 +384,7 @@ WINBOOL WindowsShell::_FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
 }
 
 
-WCHAR * __cdecl WindowsShell::__fullpath (
+WCHAR * __cdecl ::lnx::shell::__fullpath (
         WCHAR *UserBuf,
         const WCHAR *path,
         size_t maxlen
@@ -433,7 +433,7 @@ WCHAR * __cdecl WindowsShell::__fullpath (
 }
 
 
-DWORD WINAPI WindowsShell::_GetFullPathName(
+DWORD WINAPI ::lnx::shell::_GetFullPathName(
    const wchar_t * lpFileName,
    DWORD nBufferLength,
    wchar_t * lpBuffer,
@@ -451,7 +451,7 @@ DWORD WINAPI WindowsShell::_GetFullPathName(
    return dw;
 }
 
-WINBOOL WINAPI WindowsShell::_GetVolumeInformation(
+WINBOOL WINAPI ::lnx::shell::_GetVolumeInformation(
       const wchar_t * lpRootPathName,           // root directory
       wchar_t * lpVolumeNameBuffer,        // volume name buffer
       DWORD nVolumeNameSize,            // length of name buffer
@@ -488,7 +488,7 @@ WINBOOL WINAPI WindowsShell::_GetVolumeInformation(
    return b;
 }
 
-DWORD_PTR WindowsShell::_SHGetFileInfo(
+DWORD_PTR ::lnx::shell::_SHGetFileInfo(
    const wchar_t * pszPath,
    DWORD dwFileAttributes,
    SHFILEINFOW *psfi,
@@ -516,7 +516,7 @@ DWORD_PTR WindowsShell::_SHGetFileInfo(
 }
 
 
-WINBOOL WindowsShell::_GetStringTypeEx(
+WINBOOL ::lnx::shell::_GetStringTypeEx(
    LCID uiCodePage,
    DWORD dwInfoType,
    const wchar_t * lpSrcStr,
@@ -545,7 +545,7 @@ WINBOOL WindowsShell::_GetStringTypeEx(
 }
 
 
-DWORD WindowsShell::_GetTempPath(
+DWORD ::lnx::shell::_GetTempPath(
       DWORD nBufferLength,
       wchar_t * lpBuffer)
 {
@@ -556,7 +556,7 @@ DWORD WindowsShell::_GetTempPath(
    return dw;
 }
 
-UINT WindowsShell::_GetTempFileName(
+UINT ::lnx::shell::_GetTempFileName(
    const wchar_t * lpPathName,
    const wchar_t * lpPrefixString,
    UINT uUnique,
@@ -585,7 +585,7 @@ UINT WindowsShell::_GetTempFileName(
 }
 
 
-HANDLE WindowsShell::_CreateFile(
+HANDLE ::lnx::shell::_CreateFile(
    const wchar_t * lpFileName,
    DWORD dwDesiredAccess,
    DWORD dwShareMode,
@@ -609,7 +609,7 @@ HANDLE WindowsShell::_CreateFile(
 }
 
 
-DWORD WindowsShell::_GetModuleFileName(
+DWORD ::lnx::shell::_GetModuleFileName(
    HMODULE hModule,
    wchar_t * lpFilename,
    DWORD nSize
@@ -622,7 +622,7 @@ DWORD WindowsShell::_GetModuleFileName(
    return dw;
 }
 
-WINBOOL WindowsShell::_GetClassInfo(
+WINBOOL ::lnx::shell::_GetClassInfo(
     HINSTANCE hInstance ,
     const wchar_t * lpClassName,
     LPWNDCLASSW lpWndClass)
@@ -671,7 +671,7 @@ WINBOOL WindowsShell::_GetClassInfo(
    return TRUE;
 
 }
-ATOM WindowsShell::_RegisterClass(
+ATOM ::lnx::shell::_RegisterClass(
    CONST WNDCLASSW *lpWndClass)
 {
    WNDCLASS wndclass;
@@ -698,7 +698,7 @@ ATOM WindowsShell::_RegisterClass(
 }
 
 
-HWND WindowsShell::_CreateWindowEx(
+HWND ::lnx::shell::_CreateWindowEx(
    DWORD dwExStyle,
    const wchar_t * lpClassName,
    const wchar_t * lpWindowName,

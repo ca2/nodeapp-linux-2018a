@@ -19,7 +19,7 @@ namespace ca
 namespace lnx
 {
 
-   class CLASS_DECL_LNX thread :
+   class CLASS_DECL_lnx thread :
       virtual public ::radix::thread,
       virtual public ::ca::message_window_simple_callback
    {
@@ -178,7 +178,7 @@ namespace lnx
       operator pthread_t() const;
    };
 
-   CLASS_DECL_LNX ::ca::thread * get_thread();
+   CLASS_DECL_lnx ::ca::thread * get_thread();
 
 } // namespace lnx
 

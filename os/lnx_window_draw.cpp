@@ -59,7 +59,7 @@ namespace win
 
    void window_draw::message_window_message_handler(gen::signal_object * pobj)
    {
-      SCAST_PTR(user::win::message::base, pbase, pobj);
+      SCAST_PTR(user::lnx::message::base, pbase, pobj);
       if(pbase->m_uiMessage == (WM_USER + 1984 + 1977))
       {
          _synch_redraw();
@@ -322,7 +322,7 @@ namespace win
          TRACE("Could not initialize ca2::twf - ca2 Transparent Window Framework!");
          return 0;
       }
-      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca::thread_sp::m_p)->m_nThreadID, TRUE);
+      ::AttachThreadInput(::GetCurrentThreadId(), LNX_THREAD(System.::ca::thread_sp::m_p)->m_nThreadID, TRUE);
       MSG msg;
       s_bRunning = true;
       while(m_bRun)
@@ -575,7 +575,7 @@ namespace win
             ::SendMessageTimeout(
                hwnda[i],
                WM_PRINTCLIENT,
-               (WPARAM) (HDC) *dynamic_cast < ::win::graphics *> (dib->get_graphics()),
+               (WPARAM) (HDC) *dynamic_cast < ::lnx::graphics *> (dib->get_graphics()),
                0,
                0,
                184,
@@ -586,13 +586,13 @@ namespace win
             if(pwnd == NULL)
             {
                ::UpdateLayeredWindowX(hwnda[i], NULL, NULL, NULL,
-                  *dynamic_cast < ::win::graphics *> (dib->get_graphics()),
+                  *dynamic_cast < ::lnx::graphics *> (dib->get_graphics()),
                   &ptDc, 0, NULL, ULW_OPAQUE);
             }
             else
             {
                ::UpdateLayeredWindowX(hwnda[i], NULL, &pt, &sz,
-                  *dynamic_cast < ::win::graphics *> (dib->get_graphics()),
+                  *dynamic_cast < ::lnx::graphics *> (dib->get_graphics()),
                   &ptDc, 0, NULL, ULW_OPAQUE);
             }
 
@@ -1038,7 +1038,7 @@ namespace win
       ::GetWindowRect(hwnd, rectWindow);
 
 
-   //   ::ca::window * pwnd = ::win::window::from_handle(hwnd);
+   //   ::ca::window * pwnd = ::lnx::window::from_handle(hwnd);
 
       if(!TwfGetTopWindow(
             hwndParam,
