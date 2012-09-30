@@ -1,58 +1,97 @@
 #include "framework.h"
-#include "::lnx::fileSystem.h"
 
 
-#include "::lnx::file.h"
 
-::lnx::fileSystem::::lnx::fileSystem(::ca::application * papp) :
-   ca(papp)
+namespace lnx
 {
 
-}
 
-::lnx::fileSystem::~::lnx::fileSystem()
-{
-
-}
-
-bool ::lnx::fileSystem::FullPath(string &str, const char * lpszFileIn)
-{
-   if(::ex1::file_system::FullPath(str, lpszFileIn))
-      return true;
-   if(gen::str::begins_ci(lpszFileIn, "http://"))
+   file_system::file_system(::ca::application * papp) :
+      ca(papp)
    {
-      str = lpszFileIn;
-      return true;
+
    }
-   else if(gen::str::begins_ci(lpszFileIn, "https://"))
+
+
+   file_system::~file_system()
    {
-      str = lpszFileIn;
-      return true;
+
    }
-   wstring wstrFileIn;
-   wstrFileIn = gen::international::utf8_to_unicode(lpszFileIn);
-   wstring wstrFileOut;
-   bool b = vfxFullPath(wstrFileOut.alloc(MAX_PATH * 8), wstrFileIn) != FALSE;
-   if(b)
+
+
+   bool file_system::FullPath(string &str, const char * lpszFileIn)
    {
-      gen::international::unicode_to_utf8(str, wstrFileOut);
+
+      if(::ex1::file_system::FullPath(str, lpszFileIn))
+         return true;
+
+      if(gen::str::begins_ci(lpszFileIn, "http://"))
+      {
+
+         str = lpszFileIn;
+
+         return true;
+
+      }
+      else if(gen::str::begins_ci(lpszFileIn, "https://"))
+      {
+
+         str = lpszFileIn;
+
+         return true;
+
+      }
+      wstring wstrFileIn;
+      wstrFileIn = gen::international::utf8_to_unicode(lpszFileIn);
+      wstring wstrFileOut;
+      bool b = vfxFullPath(wstrFileOut.alloc(MAX_PATH * 8), wstrFileIn) != FALSE;
+      if(b)
+      {
+         gen::international::unicode_to_utf8(str, wstrFileOut);
+      }
+      return b;
    }
-   return b;
-}
+
+   bool file_system::FullPath(string & wstrFullPath, const string & wstrPath)
+   {
+
+      if(::ex1::file_system::FullPath(wstrFullPath, wstrPath))
+         return true;
+
+      if(gen::str::begins_ci(wstrPath, L"http://"))
+      {
+         wstrFullPath = wstrPath;
+         return true;
+      }
+      else if(gen::str::begins_ci(wstrPath, L"https://"))
+      {
+         wstrFullPath = wstrPath;
+         return true;
+      }
+
+      return vfxFullPath(wstrFullPath, wstrPath) != FALSE;
+
+   }
 
 
-UINT ::lnx::fileSystem::GetFileName(const char * lpszPathName, string & str)
-{
-   int nMax = MAX_PATH * 8;
-   wstring wstrPathName;
-   wstrPathName = gen::international::utf8_to_unicode(lpszPathName);
-   wstring wstrTitle;
-   UINT user = vfxGetFileName(wstrPathName, wstrTitle.alloc(nMax), nMax);
-   str = gen::international::unicode_to_utf8(wstrTitle);
-   return user;
-}
+   UINT file_system::GetFileName(const char * lpszPathName, string & str)
+   {
+      int nMax = MAX_PATH * 8;
+      wstring wstrPathName;
+      wstrPathName = gen::international::utf8_to_unicode(lpszPathName);
+      wstring wstrTitle;
+      UINT user = vfxGetFileName(wstrPathName, wstrTitle.alloc(nMax), nMax);
+      str = gen::international::unicode_to_utf8(wstrTitle);
+      return user;
+   }
 
-void ::lnx::fileSystem::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
-{
-   vfxGetModuleShortFileName(hInst, strShortName);
-}
+   void file_system::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
+   {
+      vfxGetModuleShortFileName(hInst, strShortName);
+   }
+
+
+
+} // namespace win
+
+

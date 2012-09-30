@@ -1,8 +1,11 @@
 #include "framework.h"
 #include <math.h>
+#include "include/freeimage.h"
 
-namespace win
+
+namespace lnx
 {
+
 
    //   Creator : El Barto (ef00@luc.ac.be)
    //   Location : http://www.luc.ac.be/~ef00/ebgfx
@@ -10,16 +13,21 @@ namespace win
    //////////////////////////////////////////////////////////////////////
 
 
+
    float dib::Cosines[360];
    float dib::Sines[360];
+
 
    int64_t dib::CosN[360]; // * 1 << 31
    int64_t dib::SinN[360];
 
+
    int64_t dib::Cos10N[10]; // until 10 degress
    int64_t dib::Sin10N[10]; // more precision * 1 << 34
 
+
    double dib::dPi;
+
 
    dib::dib(::ca::application * papp) :
       ca(papp),
@@ -27,8 +35,7 @@ namespace win
       m_spgraphics(papp)
    {
       m_pcolorref          = NULL;
-      m_size               = class size(0, 0);
-      m_hbitmapOriginal    = NULL;
+      m_size               = ::size(0, 0);
    }
 
    COLORREF * dib::get_data()
@@ -76,25 +83,26 @@ namespace win
    void    dib::construct (int cx,  int cy)
    {
       m_pcolorref    = NULL;
-      m_size         = class size(0, 0);
+      m_size         = ::size(0, 0);
       create(cx, cy);
    }
 
    dib::~dib ()
    {
-      Destroy ();
+//      Destroy ();
    }
 
-   WINBOOL dib::create(class size size)
+   bool dib::create(class size size)
    {
       return create(size.cx, size.cy);
    }
 
-   WINBOOL dib::create(int width, int height)
+   bool dib::create(int width, int height)
    {
       if(m_spbitmap.is_set()
       && m_spbitmap->get_os_data() != NULL
-      && class size(width, height) == m_size)
+      && width == m_size.cx
+      && height == m_size.cy)
          return TRUE;
 
       Destroy();
@@ -102,7 +110,7 @@ namespace win
       if(width <= 0 || height <= 0)
          return FALSE;
 
-      ZeroMemory(&m_info, sizeof (BITMAPINFO));
+      memset(&m_info, 0, sizeof (BITMAPINFO));
 
       m_info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
       m_info.bmiHeader.biWidth         = width;
@@ -112,30 +120,33 @@ namespace win
       m_info.bmiHeader.biCompression   = BI_RGB;
       m_info.bmiHeader.biSizeImage     = width * height * 4;
 
+      m_spbitmap.create(get_app());
+      m_spgraphics.create(get_app());
+
       if(m_spbitmap.m_p == NULL)
       {
-         m_size = class size(0, 0);
+         m_size = ::size(0, 0);
          return FALSE;
       }
 
-      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, NULL, NULL))
+      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, NULL, 0))
       {
-         m_size = class size(0, 0);
+         m_size = ::size(0, 0);
          return FALSE;
       }
 
       if(m_spbitmap->get_os_data() != NULL)
       {
-         m_spgraphics->CreateCompatibleDC(NULL);
+         //m_spgraphics->CreateCompatibleDC(NULL);
          ::ca::bitmap * pbitmap = m_spgraphics->SelectObject(m_spbitmap);
-         if(pbitmap == NULL ||
-            pbitmap->get_os_data() == NULL)
+         //m_hbitmapOriginal
+         /*if(pbitmap == NULL || pbitmap->get_os_data() == NULL)
          {
             Destroy();
             return FALSE;
          }
-         m_hbitmapOriginal = (HBITMAP) pbitmap->get_os_data();
-         m_size = class size(width, height);
+         ((Gdiplus::Bitmap *)pbitmap->get_os_data())->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &m_hbitmapOriginal);*/
+         m_size = ::size(width, height);
          return TRUE;
       }
       else
@@ -147,24 +158,24 @@ namespace win
 
    bool dib::dc_select(bool bSelect)
    {
-      if(bSelect)
+/*      if(bSelect)
       {
          return m_spgraphics->SelectObject(m_spbitmap) != NULL;
       }
       else
       {
          return m_spgraphics->SelectObject(m_hbitmapOriginal) != NULL;
-      }
+      }*/
+      return true;
    }
 
-   WINBOOL dib::create(::ca::graphics * pdc)
+   bool dib::create(::ca::graphics * pdc)
    {
-      ::ca::bitmap * pbitmap = (dynamic_cast<::win::graphics * >(pdc))->GetCurrentBitmap();
+      ::ca::bitmap * pbitmap = & (dynamic_cast < ::lnx::graphics * > (pdc))->GetCurrentBitmap();
       if(pbitmap == NULL)
          return FALSE;
-      BITMAP bm;
-      pbitmap->GetObject(sizeof(bm), &bm);
-      if(!create(bm.bmWidth, bm.bmHeight))
+      ::size size = pbitmap->get_size();
+      if(!create(size.cx, size.cy))
       {
          return FALSE;
       }
@@ -172,33 +183,34 @@ namespace win
       return TRUE;
    }
 
-   WINBOOL dib::Destroy ()
+   bool dib::Destroy ()
    {
-      if(m_spbitmap.m_p != NULL && m_spbitmap->get_os_data() != NULL)
-         m_spbitmap->delete_object();
+      if(m_spbitmap.is_set())
+         gen::release(m_spbitmap.m_p);
 
 
-      if(m_spgraphics.is_set() && m_spgraphics->is_set())
-      {
-         m_spgraphics->SelectObject(m_hbitmapOriginal);
-         m_spgraphics->DeleteDC();
-      }
+      if(m_spgraphics.is_set())
+         gen::release(m_spgraphics.m_p);
 
-      m_size         = class size(0, 0);
+      m_size         = ::size(0, 0);
       m_pcolorref    = NULL;
 
       return TRUE;
    }
 
-   bool dib::to(::ca::graphics * pgraphics, point pt, class size size, point ptSrc)
+   bool dib::to(::ca::graphics * pgraphics, point pt, ::size size, point ptSrc)
    {
-      return SetDIBitsToDevice(
+
+      return pgraphics->BitBlt(pt.x, pt.y, size.cx, size.cy, get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY) != FALSE;
+
+    /*  return SetDIBitsToDevice(
          (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(),
          pt.x, pt.y,
          size.cx, size.cy,
          ptSrc.x, ptSrc.y, ptSrc.y, m_size.cy - ptSrc.y,
          m_pcolorref, &m_info, 0)
-            != FALSE;
+            != FALSE; */
+
    }
 
    bool dib::from(::ca::graphics * pdc)
@@ -208,21 +220,16 @@ namespace win
       ::ca::bitmap * pbitmap = LNX_DC(pdc)->SelectObject(bitmap);
       if(pbitmap == NULL)
          return false;
-      BITMAP bm;
-      memset(&bm, 0, sizeof(bm));
-      if(!pbitmap->GetBitmap(&bm))
+      class size size = pbitmap->get_size();
+      if(!create(size))
       {
          LNX_DC(pdc)->SelectObject(pbitmap);
          return false;
       }
-      if(!create(bm.bmWidth, bm.bmHeight))
-      {
-         LNX_DC(pdc)->SelectObject(pbitmap);
-         return false;
-      }
-      bool bOk = GetDIBits(LNX_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
-      LNX_DC(pdc)->SelectObject(pbitmap);
-      return bOk;
+      throw todo();
+      // xxx bool bOk = GetDIBits(LNX_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
+      // xxx LNX_DC(pdc)->SelectObject(pbitmap);
+      // xxx return bOk;
    }
 
    bool dib::from(point ptDest, ::ca::graphics * pdc, point pt, class size sz)
@@ -282,6 +289,22 @@ namespace win
       }
    }
 
+   void dib::set_rgb(int R, int G, int B)
+   {
+      int size=m_size.cx*m_size.cy;
+
+      BYTE * pbyte = (BYTE *) m_pcolorref;
+
+      int i;
+      for (i=0; i<size; i++ )
+      {
+         *pbyte++ = (BYTE) R;
+         *pbyte++ = (BYTE) G;
+         *pbyte++ = (BYTE) B;
+         pbyte++;
+      }
+   }
+
    void dib::ToAlpha(int i)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
@@ -308,55 +331,55 @@ namespace win
       }
    }
 
-   void dib::mult_alpha()
+   //DIB = DIB * SRC_ALPHA
+
+   void dib::mult_alpha(::ca::dib * pdibWork, bool bPreserveAlpha)
    {
-      BYTE *dst=(BYTE*)m_pcolorref;
-      int64_t size = m_size.area();
+      ::ca::dib::mult_alpha(pdibWork, bPreserveAlpha);
+      return ;
+      /*
+      if(area() <= 0)
+         return;
 
-      while (size >= 8)
+      //return ::ca::dib::mult_alpha(NULL, true);
+      ::ca::dib_sp dibWork;
+
+      if(pdibWork == NULL)
       {
-         dst[0] = LOBYTE(((int)dst[0] * (int)dst[3]) / 255);
-         dst[1] = LOBYTE(((int)dst[1] * (int)dst[3]) / 255);
-         dst[2] = LOBYTE(((int)dst[2] * (int)dst[3]) / 255);
-
-         dst[4+0] = LOBYTE(((int)dst[4+0] * (int)dst[4+3]) / 255);
-         dst[4+1] = LOBYTE(((int)dst[4+1] * (int)dst[4+3]) / 255);
-         dst[4+2] = LOBYTE(((int)dst[4+2] * (int)dst[4+3]) / 255);
-
-         dst[8+0] = LOBYTE(((int)dst[8+0] * (int)dst[8+3]) / 255);
-         dst[8+1] = LOBYTE(((int)dst[8+1] * (int)dst[8+3]) / 255);
-         dst[8+2] = LOBYTE(((int)dst[8+2] * (int)dst[8+3]) / 255);
-
-         dst[12+0] = LOBYTE(((int)dst[12+0] * (int)dst[12+3]) / 255);
-         dst[12+1] = LOBYTE(((int)dst[12+1] * (int)dst[12+3]) / 255);
-         dst[12+2] = LOBYTE(((int)dst[12+2] * (int)dst[12+3]) / 255);
-
-         dst[16+0] = LOBYTE(((int)dst[16+0] * (int)dst[16+3]) / 255);
-         dst[16+1] = LOBYTE(((int)dst[16+1] * (int)dst[16+3]) / 255);
-         dst[16+2] = LOBYTE(((int)dst[16+2] * (int)dst[16+3]) / 255);
-
-         dst[20+0] = LOBYTE(((int)dst[20+0] * (int)dst[20+3]) / 255);
-         dst[20+1] = LOBYTE(((int)dst[20+1] * (int)dst[20+3]) / 255);
-         dst[20+2] = LOBYTE(((int)dst[20+2] * (int)dst[20+3]) / 255);
-
-         dst[24+0] = LOBYTE(((int)dst[24+0] * (int)dst[24+3]) / 255);
-         dst[24+1] = LOBYTE(((int)dst[24+1] * (int)dst[24+3]) / 255);
-         dst[24+2] = LOBYTE(((int)dst[24+2] * (int)dst[24+3]) / 255);
-
-         dst[28+0] = LOBYTE(((int)dst[28+0] * (int)dst[28+3]) / 255);
-         dst[28+1] = LOBYTE(((int)dst[28+1] * (int)dst[28+3]) / 255);
-         dst[28+2] = LOBYTE(((int)dst[28+2] * (int)dst[28+3]) / 255);
-
-         dst += 4 * 8;
-         size -= 8;
+         dibWork.create(get_app());
+         pdibWork = dibWork;
       }
-      while(size--)
+
+      if(pdibWork->create(width(), height()))
+         return;
+
+      pdibWork->FillByte(0);
+
+      pdibWork->channel_from(visual::rgba::channel_alpha, this);
+
+      pdibWork->channel_invert(visual::rgba::channel_alpha);
+
+
+      BLENDFUNCTION bf;
+
+      bf.BlendOp = AC_SRC_OVER;
+      bf.BlendFlags = 0;
+      bf.SourceConstantAlpha = 255;
+      bf.AlphaFormat = AC_SRC_ALPHA;
+
+      get_graphics()->alpha_blend(size(), pdibWork->get_graphics(), bf);
+
+      if(bPreserveAlpha)
       {
-         dst[0] = LOBYTE(((int)dst[0] * (int)dst[3]) / 255);
-         dst[1] = LOBYTE(((int)dst[1] * (int)dst[3]) / 255);
-         dst[2] = LOBYTE(((int)dst[2] * (int)dst[3]) / 255);
-         dst += 4;
+
+         pdibWork->channel_invert(visual::rgba::channel_alpha);
+
+         channel_from(visual::rgba::channel_alpha, pdibWork);
+
       }
+
+      */
+
    }
 
    void dib::Map(int ToRgb, int FromRgb)
@@ -428,7 +451,7 @@ namespace win
          COLORREF colorrefaN[2];
          colorrefaN[0] = _colorrefN;
          colorrefaN[1] = _colorrefN;
-   #ifdef _AMD64_
+   #ifdef AMD64
 
          //x64
    #else
@@ -480,10 +503,83 @@ namespace win
 
    void dib::channel_invert(visual::rgba::echannel echannel)
    {
-      int64_t size=m_size.area();
+      int64_t size   = m_size.area();
+      register int64_t size64 = size / 64;
       LPBYTE lpb = (LPBYTE) m_pcolorref;
       lpb += ((int)echannel) % 4;
-      for ( int i=0; i<size; i++ )
+      register int64_t i = 0;
+      for(; i < size64; i++)
+      {
+         lpb[4 *  0] = 255 - lpb[4 *  0];
+         lpb[4 *  1] = 255 - lpb[4 *  1];
+         lpb[4 *  2] = 255 - lpb[4 *  2];
+         lpb[4 *  3] = 255 - lpb[4 *  3];
+         lpb[4 *  4] = 255 - lpb[4 *  4];
+         lpb[4 *  5] = 255 - lpb[4 *  5];
+         lpb[4 *  6] = 255 - lpb[4 *  6];
+         lpb[4 *  7] = 255 - lpb[4 *  7];
+         lpb[4 *  8] = 255 - lpb[4 *  8];
+         lpb[4 *  9] = 255 - lpb[4 *  9];
+         lpb[4 * 10] = 255 - lpb[4 * 10];
+         lpb[4 * 11] = 255 - lpb[4 * 11];
+         lpb[4 * 12] = 255 - lpb[4 * 12];
+         lpb[4 * 13] = 255 - lpb[4 * 13];
+         lpb[4 * 14] = 255 - lpb[4 * 14];
+         lpb[4 * 15] = 255 - lpb[4 * 15];
+         lpb[4 * 16] = 255 - lpb[4 * 16];
+         lpb[4 * 17] = 255 - lpb[4 * 17];
+         lpb[4 * 18] = 255 - lpb[4 * 18];
+         lpb[4 * 19] = 255 - lpb[4 * 19];
+         lpb[4 * 20] = 255 - lpb[4 * 20];
+         lpb[4 * 21] = 255 - lpb[4 * 21];
+         lpb[4 * 22] = 255 - lpb[4 * 22];
+         lpb[4 * 23] = 255 - lpb[4 * 23];
+         lpb[4 * 24] = 255 - lpb[4 * 24];
+         lpb[4 * 25] = 255 - lpb[4 * 25];
+         lpb[4 * 26] = 255 - lpb[4 * 26];
+         lpb[4 * 27] = 255 - lpb[4 * 27];
+         lpb[4 * 28] = 255 - lpb[4 * 28];
+         lpb[4 * 29] = 255 - lpb[4 * 29];
+         lpb[4 * 30] = 255 - lpb[4 * 30];
+         lpb[4 * 31] = 255 - lpb[4 * 31];
+
+         lpb[4 * 32] = 255 - lpb[4 * 32];
+         lpb[4 * 33] = 255 - lpb[4 * 33];
+         lpb[4 * 34] = 255 - lpb[4 * 34];
+         lpb[4 * 35] = 255 - lpb[4 * 35];
+         lpb[4 * 36] = 255 - lpb[4 * 36];
+         lpb[4 * 37] = 255 - lpb[4 * 37];
+         lpb[4 * 38] = 255 - lpb[4 * 38];
+         lpb[4 * 39] = 255 - lpb[4 * 39];
+         lpb[4 * 40] = 255 - lpb[4 * 40];
+         lpb[4 * 41] = 255 - lpb[4 * 41];
+         lpb[4 * 42] = 255 - lpb[4 * 42];
+         lpb[4 * 43] = 255 - lpb[4 * 43];
+         lpb[4 * 44] = 255 - lpb[4 * 44];
+         lpb[4 * 45] = 255 - lpb[4 * 45];
+         lpb[4 * 46] = 255 - lpb[4 * 46];
+         lpb[4 * 47] = 255 - lpb[4 * 47];
+         lpb[4 * 48] = 255 - lpb[4 * 48];
+         lpb[4 * 49] = 255 - lpb[4 * 49];
+         lpb[4 * 50] = 255 - lpb[4 * 50];
+         lpb[4 * 51] = 255 - lpb[4 * 51];
+         lpb[4 * 52] = 255 - lpb[4 * 52];
+         lpb[4 * 53] = 255 - lpb[4 * 53];
+         lpb[4 * 54] = 255 - lpb[4 * 54];
+         lpb[4 * 55] = 255 - lpb[4 * 55];
+         lpb[4 * 56] = 255 - lpb[4 * 56];
+         lpb[4 * 57] = 255 - lpb[4 * 57];
+         lpb[4 * 58] = 255 - lpb[4 * 58];
+         lpb[4 * 59] = 255 - lpb[4 * 59];
+         lpb[4 * 60] = 255 - lpb[4 * 60];
+         lpb[4 * 61] = 255 - lpb[4 * 61];
+         lpb[4 * 62] = 255 - lpb[4 * 62];
+         lpb[4 * 63] = 255 - lpb[4 * 63];
+
+         lpb += 4 * 64;
+      }
+      i *= 64;
+      for(; i < size; i++ )
       {
          *lpb = 255 - *lpb;
          lpb += 4;
@@ -1267,9 +1363,9 @@ namespace win
       return RGB(rgba_get_b(dw), rgba_get_g(dw), rgba_get_r(dw));
    }
 
-   // too slow for animation on AMD XP Atlhon.
+   // too slow for animation on AMD XP gen_hon.
    // TOP SUGGESTION:
-   // The gradient can´t have more then 256 levels of the most bright color
+   // The gradient can\B4t have more then 256 levels of the most bright color
    // (white). So creating a radial fill of radius 256 and then using fasting
    // stretching algorithms is much faster than calculating radial fill.
    void dib::RadialFill(BYTE alpha, BYTE red, BYTE green, BYTE blue, int xCenter, int yCenter, int iRadius)
@@ -1361,7 +1457,7 @@ namespace win
       {
 
          LPBYTE lpbAlloc = (LPBYTE) malloc((iRadius * iRadius) + 4);
-         LPBYTE lpb = (LPBYTE) (((int) lpbAlloc + 3) & ~3);
+         LPBYTE lpb = (LPBYTE) (((int_ptr) lpbAlloc + 3) & ~3);
 
 
          int x, y;
@@ -1521,7 +1617,7 @@ namespace win
       {
 
          LPBYTE lpbAlloc = (LPBYTE) malloc((iRadius * iRadius) + 4);
-         LPBYTE lpb = (LPBYTE) (((int) lpbAlloc + 3) & ~3);
+         LPBYTE lpb = (LPBYTE) (((int_ptr) lpbAlloc + 3) & ~3);
 
 
          int x, y;
@@ -2034,7 +2130,7 @@ namespace win
    }
 
 
-   void dib::xor(::ca::dib * pdib)
+   void dib::_xor(::ca::dib * pdib)
    {
       if(m_size.cx != LNX_DIB(pdib)->m_size.cx
       || m_size.cy != LNX_DIB(pdib)->m_size.cy)
@@ -2262,6 +2358,20 @@ namespace win
 
    void dib::stretch_dib(::ca::dib * pdib)
    {
+
+      throw todo();
+
+      /* xxx
+
+      Gdiplus::RectF rectDest(0, 0, (Gdiplus::REAL) width(), (Gdiplus::REAL) height());
+
+      Gdiplus::RectF rectSource(0, 0, (Gdiplus::REAL) pdib->width(), (Gdiplus::REAL) pdib->height());
+
+      ((Gdiplus::Graphics * ) m_spgraphics->get_os_data())->DrawImage(((Gdiplus::Bitmap *)pdib->get_bitmap()->get_os_data()), rectDest, rectSource, Gdiplus::UnitPixel);
+
+      */
+
+      /*
       ::StretchDIBits(
          SP_HDC(m_spgraphics),
          0, 0,
@@ -2271,7 +2381,8 @@ namespace win
          LNX_DIB(pdib)->m_pcolorref,
          &LNX_DIB(pdib)->m_info,
          DIB_RGB_COLORS,
-         SRCCOPY);
+         SRCCOPY);*/
+
    }
 
    ::ca::graphics * dib::get_graphics()
@@ -2339,22 +2450,22 @@ namespace win
 
    int dib::cos(int i, int iAngle)
    {
-      return (int) (((_int64) i * CosN[iAngle]) >> 31);
+      return (int) (((int64_t) i * CosN[iAngle]) >> 31);
    }
 
    int dib::sin(int i, int iAngle)
    {
-      return (int) (((_int64) i * SinN[iAngle]) >> 31);
+      return (int) (((int64_t) i * SinN[iAngle]) >> 31);
    }
 
    int dib::cos10(int i, int iAngle)
    {
-      return (int) (((_int64) i * Cos10N[iAngle]) >> 34);
+      return (int) (((int64_t) i * Cos10N[iAngle]) >> 34);
    }
 
    int dib::sin10(int i, int iAngle)
    {
-      return (int) (((_int64) i * Sin10N[iAngle]) >> 34);
+      return (int) (((int64_t) i * Sin10N[iAngle]) >> 34);
    }
 
    int dib::width()
@@ -2367,6 +2478,81 @@ namespace win
       return m_size.cy;
    }
 
+#undef new
+
+   bool dib::from(::ca::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI)
+   {
+
+      if(pfibitmap == NULL)
+           return false;
+
+      BITMAPINFO * pbi = FreeImage_GetInfo(pfibitmap);
+      void * pdata = FreeImage_GetBits(pfibitmap);
+
+      if(!create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight))
+         return false;
+
+
+      COLORREF * pcolorref = NULL;
+
+      HBITMAP hbitmap = ::CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, NULL);
+
+      if(hbitmap == NULL)
+      {
+         Destroy();
+         return false;
+      }
+
+      HDC hdc = ::CreateCompatibleDC(NULL);
+
+
+      throw todo();
+
+/*   xxx   if(pbi->bmiHeader.biHeight != SetDIBits(
+         hdc,
+         hbitmap,
+         0,
+         pbi->bmiHeader.biHeight,
+         pdata,
+         pbi,
+         DIB_RGB_COLORS))
+      {
+         Destroy();
+         if(bUnloadFI)
+         {
+            FreeImage_Unload(pfibitmap);
+         }
+         return false;
+      } */
+
+      memcpy(m_pcolorref, pcolorref, (size_t) (area() * sizeof(COLORREF)));
+
+
+      RGBQUAD bkcolor;
+
+      if(pbi->bmiHeader.biBitCount == 32)
+      {
+      }
+      else if(pbi->bmiHeader.biBitCount <= 24 && FreeImage_GetTransparencyCount(pfibitmap) <= 0)
+      {
+         fill_channel(0xff, ::visual::rgba::channel_alpha);
+      }
+      else if(FreeImage_GetBackgroundColor(pfibitmap, &bkcolor))
+      {
+         transparent_color(bkcolor);
+      }
+
+      if(bUnloadFI)
+      {
+         FreeImage_Unload(pfibitmap);
+      }
+
+
+      return true;
+   }
+
+
+#define new DEBUG_NEW
 
 
 }

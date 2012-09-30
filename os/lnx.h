@@ -67,6 +67,7 @@ CLASS_DECL_lnx void AfxResetMsgCache();
 #include "implementation.h"
 #include "lnx_state.h"
 // xxx #include "handle.h"
+#include "lnx_file_find.h"
 #include "lnx_dir.h"
 #include "lnx_folder_watch.h"
 #include "lnx_factory_exchange.h"
@@ -85,6 +86,9 @@ CLASS_DECL_lnx void AfxResetMsgCache();
 #include "lnx_window.h"
 #include "lnx_os.h"
 #include "lnx_port_forward.h"
+#include "lnx_copydesk.h"
+#include "lnx_crypt.h"
+#include "lnx_ip_enum.h"
 
 #define NULL_REF(class) (*((class *) NULL))
 // xxx CLASS_DECL_lnx WNDPROC AfxGetAfxWndProc();

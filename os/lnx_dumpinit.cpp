@@ -2,22 +2,24 @@
 
 
 /////////////////////////////////////////////////////////////////////////////
-// _AFX_DEBUG_STATE implementation
+// ___DEBUG_STATE implementation
 
-#ifndef _AFX_NO_DEBUG_CRT
+#ifndef ___NO_DEBUG_CRT
 static _CRT_DUMP_CLIENT pfnOldCrtDumpClient = NULL;
 
+#ifdef DEBUG
 
-void __cdecl _AfxCrtDumpClient(void * pvData, size_t nBytes)
+
+void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
 {
    char sz[1024];
    try
    {
 
-      if(_CrtReportBlockType(pvData) != _AFX_CLIENT_BLOCK)
+      if(_CrtReportBlockType(pvData) != ___CLIENT_BLOCK)
          return;
 
-      ::radix::object * pca = (::radix::object * ) pvData;
+//      ::radix::object * pca = (::radix::object * ) pvData;
 
       ::radix::object * pobject = NULL;
 
@@ -41,116 +43,118 @@ void __cdecl _AfxCrtDumpClient(void * pvData, size_t nBytes)
 
       if(pobject == NULL)
       {
-            ATL_CRT_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "unknown object at $%p, %u bytes long\n", pvData, nBytes));
+// xxx            C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "unknown object at $%p, %u bytes long\n", pvData, nBytes));
       }
-      else if(afxdump.GetDepth() > 0)
+      else if(g_dumpcontext.GetDepth() > 0)
       {
          // long form
-         pobject->dump(afxdump);
-         afxdump << "\n";
+         pobject->dump(g_dumpcontext);
+         g_dumpcontext << "\n";
       }
       if(false) // else
       {
          ::radix::object & obj = *pobject;
          // short form
-         ATL_CRT_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "a %hs object at $%p, %u bytes long\n", typeid(obj).name(), pvData, nBytes));
-         afxdump << sz;
+// xxx         C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "a %hs object at $%p, %u bytes long\n", typeid(obj).name(), pvData, nBytes));
+         g_dumpcontext << sz;
       }
    }
-   catch(std::__non_rtti_object & e)
+/* xxx   catch(std::__non_rtti_object & e)
    {
-      afxdump << "_AfxCrtdumpClient __non_rtti_object ";
-      afxdump << e.what();
-   }
+      g_dumpcontext << "_gen::CrtdumpClient __non_rtti_object ";
+      g_dumpcontext << e.what();
+   } */
    catch(...)
    {
       // short form for trashed objects
-      sprintf_s(sz, _countof(sz), "faulted while dumping object at $%p, %u bytes long\n", pvData, nBytes);
-      afxdump << sz;
+// xxx      sprintf_s(sz, _countof(sz), "faulted while dumping object at $%p, %u bytes long\n", pvData, nBytes);
+      g_dumpcontext << sz;
    }
    if (pfnOldCrtDumpClient != NULL)
       (*pfnOldCrtDumpClient)(pvData, nBytes);
 }
 
-int __cdecl _AfxCrtReportHook(int nRptType, __in char *szMsg, int* pResult)
+int __cdecl __crt_report_hook(int nRptType, char *szMsg, int* pResult)
 {
    // no hook on asserts or when m_pFile is NULL
-   if (nRptType == _CRT_ASSERT || afxdump.m_pFile == NULL)
+   if (nRptType == _CRT_ASSERT || g_dumpcontext.m_pFile == NULL)
       return FALSE;
 
    ASSERT( pResult != NULL );
    if( pResult == NULL )
-      AfxThrowInvalidArgException();
+      throw invalid_argument_exception();
 
    ASSERT( szMsg != NULL );
    if( szMsg == NULL )
-      AfxThrowInvalidArgException();
+      throw invalid_argument_exception();
 
-   // non-NULL m_pFile, so go through afxdump for the message
+   // non-NULL m_pFile, so go through g_dumpcontext for the message
    *pResult = FALSE;
-   afxdump << szMsg;
+   g_dumpcontext << szMsg;
    //Allow other report hooks to be called.
    return FALSE;
 }
-#endif // _AFX_NO_DEBUG_CRT
+
+#endif
+#endif // ___NO_DEBUG_CRT
 
 
+#ifdef DEBUG
 
-
-_AFX_DEBUG_STATE::_AFX_DEBUG_STATE()
+___DEBUG_STATE::___DEBUG_STATE()
 {
-#ifndef _AFX_NO_DEBUG_CRT
+#ifndef ___NO_DEBUG_CRT
    ASSERT(pfnOldCrtDumpClient == NULL);
-   pfnOldCrtDumpClient = _CrtSetDumpClient(_AfxCrtDumpClient);
+   pfnOldCrtDumpClient = _CrtSetDumpClient(__crt_dump_client);
 
-   ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_INSTALL,_AfxCrtReportHook) != -1);
+   ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_INSTALL,__crt_report_hook) != -1);
    _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_WNDW);
-#endif // _AFX_NO_DEBUG_CRT
+#endif // ___NO_DEBUG_CRT
 }
 
-_AFX_DEBUG_STATE::~_AFX_DEBUG_STATE()
+___DEBUG_STATE::~___DEBUG_STATE()
 {
-#ifndef _AFX_NO_DEBUG_CRT
-   try
+#ifndef ___NO_DEBUG_CRT
+   if(::is_debugger_attached() && false)
    {
-      _CrtDumpMemoryLeaks();
-   }
-   catch(std::__non_rtti_object & e)
-   {
-      ::OutputDebugString("~_AFX_DEBUG_STATE _CrtdumpMemoryLeaks std::__non_rtti_object\n");
-      ::OutputDebugString(e.what());
-      ::OutputDebugString("\n");
-   }
-   catch(...)
-   {
-      ::OutputDebugString("~_AFX_DEBUG_STATE _CrtdumpMemoryLeaks exception\n");
+      try
+      {
+         _CrtDumpMemoryLeaks();
+      }
+/*  xxx     catch(std::__non_rtti_object & e)
+      {
+         ::OutputDebugString("~___DEBUG_STATE _CrtdumpMemoryLeaks std::__non_rtti_object\n");
+         ::OutputDebugString(e.what());
+         ::OutputDebugString("\n");
+      } */
+      catch(...)
+      {
+         ::OutputDebugString("~___DEBUG_STATE _CrtdumpMemoryLeaks exception\n");
+      }
    }
    int nOldState = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
    _CrtSetDbgFlag(nOldState & ~_CRTDBG_LEAK_CHECK_DF);
 
-   ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE,_AfxCrtReportHook) != -1);
+   ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE,__crt_report_hook) != -1);
    _CrtSetDumpClient(pfnOldCrtDumpClient);
-#endif // _AFX_NO_DEBUG_CRT
+#endif // ___NO_DEBUG_CRT
 }
 
-PROCESS_LOCAL(_AFX_DEBUG_STATE, afxDebugState)
+PROCESS_LOCAL(___DEBUG_STATE, afxDebugState)
 
-WINBOOL CLASS_DECL_lnx AfxDiagnosticInit(void)
+bool CLASS_DECL_lnx __diagnostic_init()
 {
    // just get the debug state to cause initialization
-   _AFX_DEBUG_STATE* pState = afxDebugState.get_data();
+   ___DEBUG_STATE* pState = afxDebugState.get_data();
    ASSERT(pState != NULL);
 
    return TRUE;
 }
 
+#endif
 
 
-#include "framework.h"
-#include "sal.h"
 
-
-//__DATADEF WINBOOL afxTraceEnabled = TRUE;
-//__DATADEF UINT afxTraceFlags = 0;
-static WINBOOL _afxDiagnosticInit = AfxDiagnosticInit();
-
+//__DATADEF bool g_bTraceEnabled = TRUE;
+//__DATADEF UINT g_uiTraceFlags = 0;
+static bool gen_DiagnosticInit = __diagnostic_init();

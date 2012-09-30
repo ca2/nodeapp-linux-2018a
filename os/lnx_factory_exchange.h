@@ -1,6 +1,7 @@
 #pragma once
 
-namespace win
+
+namespace lnx
 {
 
    class CLASS_DECL_lnx factory_exchange :
@@ -11,4 +12,6 @@ namespace win
       virtual ~factory_exchange();
    };
 
-} // namespace win
+
+} // namespace lnx
+

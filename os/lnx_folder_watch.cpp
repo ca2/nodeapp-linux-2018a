@@ -1,16 +1,21 @@
 #include "framework.h"
 
-namespace win
+
+namespace lnx
 {
+
 
    folder_watch::folder_watch(::ca::application * papp) :
       ca(papp),
       ::radix::thread(papp)
    {
+
    }
+
 
    bool folder_watch::watch(const char * pszPath)
    {
+
       if(!::ex2::folder_watch::watch(pszPath))
          return false;
 
@@ -18,14 +23,14 @@ namespace win
          return false;
 
       return true;
+
    }
+
 
    int folder_watch::run() // thread procedure
    {
-      HANDLE hDirectory = ::CreateFileW(gen::international::utf8_to_unicode(m_strPath),
-                      FILE_LIST_DIRECTORY,
-                      FILE_SHARE_READ|FILE_SHARE_WRITE|FILE_SHARE_DELETE,
-                      NULL, OPEN_EXISTING, FILE_FLAG_BACKUP_SEMANTICS, NULL);
+
+      DIR * pdir = ::opendir(m_strPath);
 
       if(INVALID_HANDLE_VALUE == hDirectory)
       {

@@ -64,9 +64,9 @@ namespace lnx
       virtual ~file();
 
 
-      operator HFILE() const;
-
       virtual file_position get_position() const;
+
+
       bool GetStatus(ex1::file_status & rStatus) const;
       virtual string GetFileName() const;
       virtual string GetFileTitle() const;

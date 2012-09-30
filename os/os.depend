@@ -3,11 +3,12 @@
 	"lnx.h"
 	"lnx_internal.h"
 
-1348448061 /ca2/nodeapp/os/lnx.h
+1348999492 /ca2/nodeapp/os/lnx.h
 	"ca.h"
 	"lnx1.h"
 	"implementation.h"
 	"lnx_state.h"
+	"lnx_file_find.h"
 	"lnx_dir.h"
 	"lnx_folder_watch.h"
 	"lnx_factory_exchange.h"
@@ -25,6 +26,9 @@
 	"lnx_window.h"
 	"lnx_os.h"
 	"lnx_port_forward.h"
+	"lnx_copydesk.h"
+	"lnx_crypt.h"
+	"lnx_ip_enum.h"
 	"lnx_application.h"
 
 1342864881 /ca2/app/appseed/ca/ca.h
@@ -642,7 +646,7 @@
 1347082010 /ca2/nodeapp/operational_system/_.h
 	"get_platform.h"
 
-1347085629 /ca2/nodeapp/operational_system/get_platform.h
+1349003145 /ca2/nodeapp/operational_system/get_platform.h
 	<features.h>
 	"bare_operational_system.h"
 
@@ -1546,7 +1550,7 @@
 
 1342864809 /ca2/app/appseed/ca/collection/collection_comparable_primitive_array.h
 
-1348390792 /ca2/app/appseed/ca/ex1/ex1_byte_serializable.h
+1348987602 /ca2/app/appseed/ca/ex1/ex1_byte_serializable.h
 	"ex1_byte_stream.h"
 
 1348412728 /ca2/app/appseed/ca/ex1/ex1_byte_stream.h
@@ -3219,7 +3223,7 @@
 
 1342864835 /ca2/app/appseed/ca/ca4/ca4_copydesk.h
 
-1342864835 /ca2/app/appseed/ca/ca4/ca4_crypt.h
+1348998839 /ca2/app/appseed/ca/ca4/ca4_crypt.h
 
 1342864835 /ca2/app/appseed/ca/ca4/ca4_email.h
 
@@ -3532,7 +3536,7 @@
 
 1342864820 /ca2/app/appseed/ca/plugin/plugin_gen.h
 
-1342864820 /ca2/app/appseed/ca/plugin/plugin_plugin.h
+1348987602 /ca2/app/appseed/ca/plugin/plugin_plugin.h
 
 1342864820 /ca2/app/appseed/ca/plugin/plugin_history.h
 
@@ -3627,9 +3631,9 @@
 
 1348448062 /ca2/nodeapp/os/lnx_dir.h
 
-1348448062 /ca2/nodeapp/os/lnx_folder_watch.h
+1348990867 /ca2/nodeapp/os/lnx_folder_watch.h
 
-1348448062 /ca2/nodeapp/os/lnx_factory_exchange.h
+1348990483 /ca2/nodeapp/os/lnx_factory_exchange.h
 
 1348448063 /ca2/nodeapp/os/lnx_window_draw.h
 
@@ -3661,7 +3665,7 @@
 
 1348448062 /ca2/nodeapp/os/lnx_file_system.h
 
-1348448062 /ca2/nodeapp/os/lnx_file.h
+1349014885 /ca2/nodeapp/os/lnx_file.h
 
 1348448063 /ca2/nodeapp/os/lnx_shell.h
 
@@ -3716,5 +3720,53 @@
 	"framework.h"
 
 1348487548 source:/ca2/nodeapp/os/lnx_bitmap.cpp
+	"framework.h"
+
+1348487592 source:/ca2/nodeapp/os/lnx_brush.cpp
+	"framework.h"
+
+1348989378 /ca2/nodeapp/os/lnx_file_find.h
+	<dirent.h>
+	<sys/types.h>
+	<sys/stat.h>
+	<unistd.h>
+
+1348989798 source:/ca2/nodeapp/os/lnx_dib.cpp
+	"framework.h"
+	<math.h>
+	"include/freeimage.h"
+
+1347196399 /ca2/app/appseed/include/freeimage.h
+	"thirdparty/include/FreeImage/FreeImage.h"
+
+1342865898 /ca2/app/thirdparty/include/FreeImage/FreeImage.h
+	<wchar.h>
+	<inttypes.h>
+
+1348989861 source:/ca2/nodeapp/os/lnx_dumpinit.cpp
+	"framework.h"
+
+1348990051 source:/ca2/nodeapp/os/lnx_error.cpp
+	"framework.h"
+
+1348990062 source:/ca2/nodeapp/os/lnx_exception.cpp
+	"framework.h"
+
+1348990952 source:/ca2/nodeapp/os/lnx_dir.cpp
+	"framework.h"
+
+1348992311 /ca2/nodeapp/os/lnx_copydesk.h
+
+1348997915 source:/ca2/nodeapp/os/lnx_copydesk.cpp
+	"framework.h"
+
+1348999450 /ca2/nodeapp/os/lnx_crypt.h
+
+1348999568 /ca2/nodeapp/os/lnx_ip_enum.h
+
+1348999268 source:/ca2/nodeapp/os/lnx_crypt.cpp
+	"framework.h"
+
+1348999666 source:/ca2/nodeapp/os/lnx_file_set.cpp
 	"framework.h"
 
