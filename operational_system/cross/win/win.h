@@ -238,7 +238,7 @@ MY_EXTERN_C DWORD SetLastError(DWORD dw);
 
 #include "win_file.h"
 
-
+#include "win_mmeapi.h"
 #include "win_mmsystem.h"
 
 
