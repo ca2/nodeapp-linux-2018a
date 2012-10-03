@@ -23,6 +23,20 @@ typedef struct tWAVEFORMATEX
 #endif /* _WAVEFORMATEX_ */
 
 
+#if !defined(WINDOWS)
+
+
+typedef struct tag_WAVEHDR
+{
+   LPBYTE   lpbyte;
+   UINT     uiCount;
+} WAVEHDR, * LPWAVEHDR;
+
+
+
+#endif
+
+
 
 #if !defined(WINDOWS)
 
