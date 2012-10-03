@@ -21,3 +21,20 @@ typedef struct tWAVEFORMATEX
 } WAVEFORMATEX, *PWAVEFORMATEX, NEAR *NPWAVEFORMATEX, FAR *LPWAVEFORMATEX;
 
 #endif /* _WAVEFORMATEX_ */
+
+
+
+#if !defined(WINDOWS)
+
+
+
+typedef void * HWAVEOUT;
+
+
+typedef int MMRESULT;
+
+
+
+
+#endif
+
