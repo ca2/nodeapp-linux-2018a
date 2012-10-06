@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="../operational_system/get_platform.h" open="1" top="0" tabpos="29">
+	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="29">
 		<Cursor position="215" topLine="0" />
 	</File>
 	<File name="framework.h" open="0" top="0" tabpos="0">
@@ -10,7 +10,7 @@
 	<File name="implementation.h" open="0" top="0" tabpos="0">
 		<Cursor position="1469" topLine="0" />
 	</File>
-	<File name="lnx.h" open="1" top="0" tabpos="5">
+	<File name="lnx.h" open="0" top="0" tabpos="5">
 		<Cursor position="2696" topLine="57" />
 	</File>
 	<File name="lnx1.cpp" open="0" top="0" tabpos="0">
@@ -58,76 +58,76 @@
 	<File name="lnx_brush.h" open="0" top="0" tabpos="0">
 		<Cursor position="56" topLine="0" />
 	</File>
-	<File name="lnx_copydesk.cpp" open="1" top="0" tabpos="14">
+	<File name="lnx_copydesk.cpp" open="0" top="0" tabpos="14">
 		<Cursor position="6207" topLine="222" />
 	</File>
-	<File name="lnx_copydesk.h" open="1" top="0" tabpos="15">
+	<File name="lnx_copydesk.h" open="0" top="0" tabpos="15">
 		<Cursor position="56" topLine="0" />
 	</File>
-	<File name="lnx_crypt.cpp" open="1" top="0" tabpos="18">
+	<File name="lnx_crypt.cpp" open="0" top="0" tabpos="18">
 		<Cursor position="43" topLine="0" />
 	</File>
-	<File name="lnx_crypt.h" open="1" top="0" tabpos="17">
+	<File name="lnx_crypt.h" open="0" top="0" tabpos="17">
 		<Cursor position="487" topLine="0" />
 	</File>
-	<File name="lnx_dib.cpp" open="1" top="0" tabpos="1">
+	<File name="lnx_dib.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="65212" topLine="2494" />
 	</File>
 	<File name="lnx_dib.h" open="0" top="0" tabpos="0">
 		<Cursor position="323" topLine="0" />
 	</File>
-	<File name="lnx_dir.cpp" open="1" top="0" tabpos="2">
+	<File name="lnx_dir.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="31584" topLine="1097" />
 	</File>
 	<File name="lnx_dir.h" open="0" top="0" tabpos="0">
 		<Cursor position="263" topLine="0" />
 	</File>
-	<File name="lnx_dumpinit.cpp" open="1" top="0" tabpos="3">
+	<File name="lnx_dumpinit.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="3802" topLine="120" />
 	</File>
-	<File name="lnx_error.cpp" open="1" top="0" tabpos="8">
+	<File name="lnx_error.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="374" topLine="0" />
 	</File>
-	<File name="lnx_exception.cpp" open="1" top="0" tabpos="7">
+	<File name="lnx_exception.cpp" open="0" top="0" tabpos="7">
 		<Cursor position="1406" topLine="26" />
 	</File>
-	<File name="lnx_factory_exchange.cpp" open="1" top="0" tabpos="9">
+	<File name="lnx_factory_exchange.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="3409" topLine="17" />
 	</File>
-	<File name="lnx_factory_exchange.h" open="1" top="0" tabpos="10">
+	<File name="lnx_factory_exchange.h" open="0" top="0" tabpos="10">
 		<Cursor position="55" topLine="0" />
 	</File>
-	<File name="lnx_file.cpp" open="1" top="0" tabpos="16">
+	<File name="lnx_file.cpp" open="0" top="0" tabpos="16">
 		<Cursor position="49324" topLine="1689" />
 	</File>
-	<File name="lnx_file.h" open="1" top="0" tabpos="25">
+	<File name="lnx_file.h" open="0" top="0" tabpos="25">
 		<Cursor position="1221" topLine="46" />
 	</File>
-	<File name="lnx_file_find.cpp" open="1" top="1" tabpos="12">
+	<File name="lnx_file_find.cpp" open="0" top="0" tabpos="12">
 		<Cursor position="922" topLine="29" />
 	</File>
-	<File name="lnx_file_find.h" open="1" top="0" tabpos="4">
+	<File name="lnx_file_find.h" open="0" top="0" tabpos="4">
 		<Cursor position="250" topLine="0" />
 	</File>
-	<File name="lnx_file_set.cpp" open="1" top="0" tabpos="21">
+	<File name="lnx_file_set.cpp" open="0" top="0" tabpos="21">
 		<Cursor position="38" topLine="0" />
 	</File>
 	<File name="lnx_file_set.h" open="0" top="0" tabpos="0">
 		<Cursor position="56" topLine="0" />
 	</File>
-	<File name="lnx_file_system.cpp" open="1" top="0" tabpos="22">
+	<File name="lnx_file_system.cpp" open="0" top="0" tabpos="22">
 		<Cursor position="967" topLine="34" />
 	</File>
-	<File name="lnx_file_system.h" open="1" top="0" tabpos="28">
+	<File name="lnx_file_system.h" open="0" top="0" tabpos="28">
 		<Cursor position="762" topLine="0" />
 	</File>
-	<File name="lnx_folder_watch.cpp" open="1" top="0" tabpos="23">
+	<File name="lnx_folder_watch.cpp" open="0" top="0" tabpos="23">
 		<Cursor position="448" topLine="3" />
 	</File>
-	<File name="lnx_folder_watch.h" open="1" top="0" tabpos="13">
+	<File name="lnx_folder_watch.h" open="0" top="0" tabpos="13">
 		<Cursor position="378" topLine="0" />
 	</File>
-	<File name="lnx_font.cpp" open="1" top="0" tabpos="24">
+	<File name="lnx_font.cpp" open="0" top="0" tabpos="24">
 		<Cursor position="7367" topLine="228" />
 	</File>
 	<File name="lnx_font.h" open="0" top="0" tabpos="0">
@@ -139,7 +139,7 @@
 	<File name="lnx_graphics.h" open="0" top="0" tabpos="0">
 		<Cursor position="101" topLine="10" />
 	</File>
-	<File name="lnx_graphics_object.cpp" open="1" top="0" tabpos="30">
+	<File name="lnx_graphics_object.cpp" open="0" top="0" tabpos="30">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="lnx_graphics_object.h" open="0" top="0" tabpos="0">
@@ -148,10 +148,10 @@
 	<File name="lnx_internal.h" open="0" top="0" tabpos="0">
 		<Cursor position="218" topLine="0" />
 	</File>
-	<File name="lnx_ip_enum.cpp" open="1" top="0" tabpos="20">
+	<File name="lnx_ip_enum.cpp" open="0" top="0" tabpos="20">
 		<Cursor position="0" topLine="0" />
 	</File>
-	<File name="lnx_ip_enum.h" open="1" top="0" tabpos="19">
+	<File name="lnx_ip_enum.h" open="0" top="0" tabpos="19">
 		<Cursor position="322" topLine="0" />
 	</File>
 	<File name="lnx_main.cpp" open="0" top="0" tabpos="0">
