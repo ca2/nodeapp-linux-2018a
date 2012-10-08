@@ -82,11 +82,11 @@ int __cdecl __crt_report_hook(int nRptType, char *szMsg, int* pResult)
 
    ASSERT( pResult != NULL );
    if( pResult == NULL )
-      throw invalid_argument_exception();
+      throw invalid_argument_exception(get_app());
 
    ASSERT( szMsg != NULL );
    if( szMsg == NULL )
-      throw invalid_argument_exception();
+      throw invalid_argument_exception(get_app());
 
    // non-NULL m_pFile, so go through g_dumpcontext for the message
    *pResult = FALSE;

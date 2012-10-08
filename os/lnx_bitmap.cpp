@@ -126,7 +126,7 @@ namespace lnx
    {
 
 
-      throw not_implemented_exception();
+      throw not_implemented(get_app());
 
       //SIZE size;
       //VERIFY(::SetBitmapDimensionEx((HBITMAP)get_handle(), nWidth, nHeight, &size));
@@ -260,7 +260,7 @@ namespace lnx
       m_pixmap = pixmap;
 
 
-      throw todo();
+      throw todo(get_app());
 
       // missing get m_size from Pixmap
 

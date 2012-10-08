@@ -24,12 +24,12 @@ namespace lnx
       System.factory().cloneable_large < palette               >  (System. type_info < ::ca::palette            > ());
       System.factory().cloneable_large < region                >  (System. type_info < ::ca::region             > ());
       System.factory().cloneable_large < font                  >  (System. type_info < ::ca::font               > ());
-      //throw todo();
+      //throw todo(get_app());
 // xxx       System.factory().cloneable_large < graphics_path         >  (System. type_info < ::ca::graphics_path      > ());
       System.factory().creatable < window_draw                 >  (System. type_info < ::ca::window_draw        > (), 1);
       System.factory().creatable_large < thread                >  (System. type_info < ::ca::thread             > ());
       System.factory().creatable_large < window                >  (System. type_info < ::ca::window             > ());
-      throw todo();
+      throw todo(get_app());
 //xxx      System.factory().cloneable_small < draw_dib              >  (System. type_info < ::ca::draw_dib           > ());
       System.factory().creatable < os                          >  (System. type_info < ::ca::os                 > (), 1);
       System.factory().creatable < port_forward                >  (System. type_info < ::ca4::port_forward      > (), 1);

@@ -21,7 +21,7 @@ namespace lnx
       if(!m_p->OpenClipboard())
          return 0;
       int iCount = 0;
-      throw todo();
+      throw todo(get_app());
       /* xxx HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
       if(hdrop != NULL)
       {
@@ -39,7 +39,7 @@ namespace lnx
          return;
       if(!m_p->OpenClipboard())
          return;
-      throw todo();
+      throw todo(get_app());
       /* HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
       string str;
       for(int i = 0; i < iCount; i++)
@@ -66,7 +66,7 @@ namespace lnx
          iLen += gen::international::utf8_to_unicode_count(stra[i]) + 1;
       }
 
-      throw todo();
+      throw todo(get_app());
 
 /* xxx
 
@@ -158,7 +158,7 @@ namespace lnx
          return;
       }
 
-      throw todo();
+      throw todo(get_app());
 
 /*
 
@@ -188,7 +188,7 @@ namespace lnx
 
    string copydesk::get_plain_text()
    {
-      throw todo();
+      throw todo(get_app());
       return "";
 /* xxx
       if (IsClipboardFormatAvailable(CF_UNICODETEXT))
@@ -223,7 +223,7 @@ namespace lnx
       if(!m_p->OpenClipboard())
          return false;
       bool bOk = false;
-      throw todo();
+      throw todo(get_app());
 /* xxx
       HBITMAP hbitmap = (HBITMAP) ::GetClipboardData(CF_BITMAP);
       try

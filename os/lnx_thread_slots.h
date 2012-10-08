@@ -137,15 +137,22 @@ class CLASS_DECL_lnx process_local_object
 {
 public:
 
-   mutex          m_mutex;
+
+   mutex                         m_mutex;
+   no_track_object * volatile    m_pObject;
+
+
+// Implementation
+   process_local_object();
+   ~process_local_object();
+
 
 // Attributes
    no_track_object* get_data(no_track_object* (* pfnCreateObject)());
 
-// Implementation
-   no_track_object* volatile m_pObject;
-   ~process_local_object();
+
 };
+
 
 template < class TYPE, int iSlot >
 class thread_local :

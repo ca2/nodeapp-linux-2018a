@@ -155,7 +155,8 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure,
 }*/
 
 
-__MODULE_STATE::__MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem)
+__MODULE_STATE::__MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem) :
+   m_mutexRegClassList(NULL)
 {
    m_pmapHWND              = NULL;
 //   m_pmapHDC               = NULL;

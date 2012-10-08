@@ -226,7 +226,7 @@ namespace lnx
          LNX_DC(pdc)->SelectObject(pbitmap);
          return false;
       }
-      throw todo();
+      throw todo(get_app());
       // xxx bool bOk = GetDIBits(LNX_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
       // xxx LNX_DC(pdc)->SelectObject(pbitmap);
       // xxx return bOk;
@@ -2359,7 +2359,7 @@ namespace lnx
    void dib::stretch_dib(::ca::dib * pdib)
    {
 
-      throw todo();
+      throw todo(get_app());
 
       /* xxx
 
@@ -2506,7 +2506,7 @@ namespace lnx
       HDC hdc = ::CreateCompatibleDC(NULL);
 
 
-      throw todo();
+      throw todo(get_app());
 
 /*   xxx   if(pbi->bmiHeader.biHeight != SetDIBits(
          hdc,

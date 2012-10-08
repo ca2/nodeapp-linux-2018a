@@ -461,7 +461,7 @@
 	"ex1_simple_tree_item_data.h"
 	"ex1_simple_tree_data.h"
 
-1347621935 /ca2/app/appseed/ca/radix/radix.h
+1349512031 /ca2/app/appseed/ca/radix/radix.h
 	"app/appseed/ca/ca/ca.h"
 	<new.h>
 	<malloc/malloc.h>
@@ -582,11 +582,11 @@
 	"ca/primitive/count.h"
 	"ca/api/api.h"
 
-1348405667 /ca2/app/appseed/c/c/c.h
+1349626334 /ca2/app/appseed/c/c/c.h
 	"c/_/ThomasGustavoCecynLundgrenVidaEternaDeCamiloSasukeTsumanuma.h"
 	"nodeapp/operational_system/_.h"
 	"c/vms/vms.h"
-	"c/version.h"
+	"c/version/version.h"
 	"types.h"
 	"natural.h"
 	"cpu_architecture.h"
@@ -674,7 +674,7 @@
 
 1345878529 /ca2/nodeapp/operational_system/version_cpu.h
 
-1347086780 /ca2/nodeapp/operational_system/cross/win/win.h
+1349512048 /ca2/nodeapp/operational_system/cross/win/win.h
 	"base_tsd.h"
 	"win_def.h"
 	"win_crt.h"
@@ -686,6 +686,7 @@
 	"win_crtdefs.h"
 	"win_nls.h"
 	"win_file.h"
+	"win_mmeapi.h"
 	"win_mmsystem.h"
 	"ntstatus.h"
 
@@ -815,7 +816,7 @@
 
 1342864685 /ca2/app/appseed/c/c/cpu_architecture.h
 
-1342864685 /ca2/app/appseed/c/c/_libct.h
+1349543423 /ca2/app/appseed/c/c/_libct.h
 	<tchar.h>
 	"c_heap.h"
 
@@ -833,9 +834,9 @@
 
 1342864685 /ca2/app/appseed/c/c/sprintf.h
 
-1342864685 /ca2/app/appseed/c/c/str.h
+1349543423 /ca2/app/appseed/c/c/str.h
 
-1347082836 /ca2/app/appseed/c/c/std_file.h
+1349547262 /ca2/app/appseed/c/c/std_file.h
 
 1342864685 /ca2/app/appseed/c/c/atol.h
 
@@ -852,7 +853,7 @@
 
 1342864685 /ca2/app/appseed/c/c/geometric_types.h
 
-1347211999 /ca2/app/appseed/c/c/verisimple_string.h
+1349613170 /ca2/app/appseed/c/c/verisimple_string.h
 
 1347082799 /ca2/app/appseed/c/c/verisimple_wstring.h
 
@@ -878,7 +879,7 @@
 
 1342864685 /ca2/app/appseed/c/c/xmlite.h
 
-1347011861 /ca2/app/appseed/c/c/file.h
+1349547262 /ca2/app/appseed/c/c/file.h
 
 1342864685 /ca2/app/appseed/c/c/launcher.h
 
@@ -902,7 +903,7 @@
 
 1342864685 /ca2/app/appseed/c/c/library.h
 
-1342864685 /ca2/app/appseed/c/c/simple_memory.h
+1349547262 /ca2/app/appseed/c/c/simple_memory.h
 
 1347166164 /ca2/app/appseed/c/os/os.h
 	"os_thread.h"
@@ -927,9 +928,10 @@
 
 1342864656 /ca2/app/appseed/c/os/os_binreloc.h
 
-1342864676 /ca2/app/appseed/c/macos/c_os.h
+1349512029 /ca2/app/appseed/c/macos/c_os.h
 	<stdarg.h>
 	<wchar.h>
+	"c_os_gdi.h"
 	"c_os_http_lib.h"
 	"c_os_http.h"
 	"c_os_process.h"
@@ -946,7 +948,7 @@
 
 1342864676 /ca2/app/appseed/c/macos/c_os_cross_win_file.h
 
-1348391537 /ca2/app/appseed/c/linux/c_os.h
+1349626334 /ca2/app/appseed/c/linux/c_os.h
 	<stdarg.h>
 	<wchar.h>
 	"c_os_gdi.h"
@@ -979,8 +981,9 @@
 
 1347141615 /ca2/app/appseed/c/linux/c_os_file.h
 
-1348390788 /ca2/app/appseed/c/merdes_windows/windows_merde.h
+1349512029 /ca2/app/appseed/c/merdes_windows/windows_merde.h
 	"c/os/os.h"
+	"c_os_gdi.h"
 	"c_os_thread.h"
 	"c_os_http.h"
 	"c_os_registry.h"
@@ -999,7 +1002,7 @@
 
 1348390788 /ca2/app/appseed/c/merdes_windows/c_os_simple_hold_handle.h
 
-1348390788 /ca2/app/appseed/c/merdes_windows/c_os_file.h
+1349543423 /ca2/app/appseed/c/merdes_windows/c_os_file.h
 
 1348390788 /ca2/app/appseed/c/merdes_windows/c_os_graphics_round_rect.h
 	<D2d1.h>
@@ -1038,7 +1041,7 @@
 
 1348390791 /ca2/app/appseed/c/hotplugin/hotplugin_plugin.h
 
-1348390791 /ca2/app/appseed/c/hotplugin/hotplugin_host.h
+1349512030 /ca2/app/appseed/c/hotplugin/hotplugin_host.h
 
 1342864694 /ca2/app/appseed/c/hotplugin/hotplugin_container_launcher.h
 
@@ -1204,7 +1207,7 @@
 
 1347034803 /ca2/app/appseed/ca/api/api_linux.h
 
-1347192712 /ca2/app/appseed/ca/exception/exception.h
+1349512044 /ca2/app/appseed/ca/exception/exception.h
 	"ca/ca_exception.h"
 	"exception_engine.h"
 	"exception_call_stack.h"
@@ -1221,7 +1224,9 @@
 	"exception_not_implemented.h"
 	"exception_void_implementation.h"
 	"exception_interface_only.h"
+	"exception_not_installed.h"
 	"exception_not_supported.h"
+	"exception_exit.h"
 	"exception_not_licensed.h"
 	"exception_temporary.h"
 	"exception_installing.h"
@@ -1244,24 +1249,24 @@
 
 1342864737 /ca2/app/appseed/ca/ca/ca_exception.h
 
-1347195457 /ca2/app/appseed/ca/exception/exception_engine.h
+1349552187 /ca2/app/appseed/ca/exception/exception_engine.h
 	<imagehlp.h>
 
-1342864819 /ca2/app/appseed/ca/exception/exception_call_stack.h
+1349512037 /ca2/app/appseed/ca/exception/exception_call_stack.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_base.h
+1349512039 /ca2/app/appseed/ca/exception/exception_base.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_simple.h
+1349512043 /ca2/app/appseed/ca/exception/exception_simple.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_memory.h
+1349512044 /ca2/app/appseed/ca/exception/exception_memory.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_invalid_argument.h
+1349512044 /ca2/app/appseed/ca/exception/exception_invalid_argument.h
 
 1342864819 /ca2/app/appseed/ca/exception/exception_standard_translator.h
 	<eh.h>
 	<signal.h>
 
-1342864819 /ca2/app/appseed/ca/exception/exception_standard.h
+1349548034 /ca2/app/appseed/ca/exception/exception_standard.h
 	<eh.h>
 	<ucontext.h>
 	<sys/ucontext.h>
@@ -1269,40 +1274,40 @@
 	<ucontext.h>
 	<sys/ucontext.h>
 
-1342864819 /ca2/app/appseed/ca/exception/exception_error.h
+1349512044 /ca2/app/appseed/ca/exception/exception_error.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_overflow_error.h
+1349512036 /ca2/app/appseed/ca/exception/exception_overflow_error.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_runtime_error.h
+1349512044 /ca2/app/appseed/ca/exception/exception_runtime_error.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_range_error.h
+1349512044 /ca2/app/appseed/ca/exception/exception_range_error.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_not_implemented.h
+1349512037 /ca2/app/appseed/ca/exception/exception_not_implemented.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_void_implementation.h
+1349512044 /ca2/app/appseed/ca/exception/exception_void_implementation.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_interface_only.h
+1349512044 /ca2/app/appseed/ca/exception/exception_interface_only.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_not_supported.h
+1349512044 /ca2/app/appseed/ca/exception/exception_not_supported.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_not_licensed.h
+1349512044 /ca2/app/appseed/ca/exception/exception_not_licensed.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_temporary.h
+1349512042 /ca2/app/appseed/ca/exception/exception_temporary.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_installing.h
+1349512044 /ca2/app/appseed/ca/exception/exception_installing.h
 	"exception_installing.h"
 
-1342864819 /ca2/app/appseed/ca/exception/exception_assert.h
+1349512044 /ca2/app/appseed/ca/exception/exception_assert.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_misc.h
+1349512037 /ca2/app/appseed/ca/exception/exception_misc.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_resource.h
+1349512044 /ca2/app/appseed/ca/exception/exception_resource.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_user.h
+1349512039 /ca2/app/appseed/ca/exception/exception_user.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_vms.h
+1349512038 /ca2/app/appseed/ca/exception/exception_vms.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_hresult.h
+1349512037 /ca2/app/appseed/ca/exception/exception_hresult.h
 
 1345878356 /ca2/app/appseed/ca/exception/exception_memory_state.h
 
@@ -1310,25 +1315,25 @@
 
 1342864819 /ca2/app/appseed/ca/exception/exception_debug.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_last_error.h
+1349512037 /ca2/app/appseed/ca/exception/exception_last_error.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_os.h
+1349512042 /ca2/app/appseed/ca/exception/exception_os.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_invalid_index.h
+1349512037 /ca2/app/appseed/ca/exception/exception_invalid_index.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_invalid_handle.h
+1349512044 /ca2/app/appseed/ca/exception/exception_invalid_handle.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_operation_canceled.h
+1349512044 /ca2/app/appseed/ca/exception/exception_operation_canceled.h
 
-1346980285 /ca2/app/appseed/ca/exception/exception_invalid_character.h
+1349512044 /ca2/app/appseed/ca/exception/exception_invalid_character.h
 
-1347192712 /ca2/app/appseed/ca/exception/exception_todo.h
+1349512044 /ca2/app/appseed/ca/exception/exception_todo.h
 
-1342864855 /ca2/app/appseed/ca/primitive/primitive_numeric_info.h
+1349548073 /ca2/app/appseed/ca/primitive/primitive_numeric_info.h
 
 1342864726 /ca2/app/appseed/ca/gen/gen_c_number.h
 
-1342864784 /ca2/app/appseed/ca/multithreading/multithreading_wait_result.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_wait_result.h
 
 1342864853 /ca2/app/appseed/ca/primitive/datetime/datetime_duration.h
 
@@ -1379,9 +1384,10 @@
 
 1342864855 /ca2/app/appseed/ca/primitive/primitive_check.h
 
-1342864853 /ca2/app/appseed/ca/primitive/datetime/datetime.h
+1349512050 /ca2/app/appseed/ca/primitive/datetime/datetime.h
 	"ca/api/mktime.h"
 	"datetime_windows_file_time.h"
+	"datetime_float_time.h"
 
 1342864856 /ca2/app/appseed/ca/api/mktime.h
 
@@ -1401,7 +1407,7 @@
 
 1347754848 /ca2/app/appseed/ca/radix/radix_fixed_alloc.h
 
-1342864855 /ca2/app/appseed/ca/primitive/primitive_simple_string.h
+1349512050 /ca2/app/appseed/ca/primitive/primitive_simple_string.h
 	"wstringtou.h"
 
 1342864855 /ca2/app/appseed/ca/primitive/wstringtou.h
@@ -1415,7 +1421,7 @@
 
 1342864850 /ca2/app/appseed/ca/x/x_defines.h
 
-1342864850 /ca2/app/appseed/ca/x/x_tables.h
+1349547837 /ca2/app/appseed/ca/x/x_tables.h
 
 1348442181 /ca2/app/appseed/ca/gen/gen_str.h
 	"gen_strn.h"
@@ -1427,7 +1433,7 @@
 
 1348427704 /ca2/app/appseed/ca/primitive/primitive_id.h
 
-1342864855 /ca2/app/appseed/ca/primitive/primitive_string_format.h
+1349552223 /ca2/app/appseed/ca/primitive/primitive_string_format.h
 
 1342864855 /ca2/app/appseed/ca/primitive/primitive_fixed_string.h
 
@@ -1469,9 +1475,9 @@
 
 1342864726 /ca2/app/appseed/ca/gen/gen_template.h
 
-1345878356 /ca2/app/appseed/ca/collection/collection_base_array.h
+1349512035 /ca2/app/appseed/ca/collection/collection_base_array.h
 
-1348412509 /ca2/app/appseed/ca/ca/ca_smart_pointer.h
+1349512032 /ca2/app/appseed/ca/ca/ca_smart_pointer.h
 
 1342864717 /ca2/app/appseed/ca/radix/radix.inl
 
@@ -1540,7 +1546,7 @@
 	"collection_queue.h"
 	"collection_priority_queue.h"
 
-1342864809 /ca2/app/appseed/ca/collection/collection_raw_array.h
+1349512035 /ca2/app/appseed/ca/collection/collection_raw_array.h
 
 1342864809 /ca2/app/appseed/ca/collection/collection_comparable_eq_array.h
 
@@ -1610,21 +1616,21 @@
 
 1342864809 /ca2/app/appseed/ca/collection/collection_class_sort_array.h
 
-1345878356 /ca2/app/appseed/ca/collection/collection_map.h
+1349512035 /ca2/app/appseed/ca/collection/collection_map.h
 
 1347035410 /ca2/app/appseed/ca/collection/collection_fifo_map.h
 
 1348390792 /ca2/app/appseed/ca/collection/collection_sort_map.h
 
-1342864809 /ca2/app/appseed/ca/collection/collection_pointer_list.h
+1349512035 /ca2/app/appseed/ca/collection/collection_pointer_list.h
 
-1342864809 /ca2/app/appseed/ca/collection/collection_object_list.h
+1349512035 /ca2/app/appseed/ca/collection/collection_object_list.h
 
 1342864809 /ca2/app/appseed/ca/collection/collection_typed_ptr_list.h
 
 1342864809 /ca2/app/appseed/ca/collection/collection_typed_pointer_list.h
 
-1345878356 /ca2/app/appseed/ca/collection/collection_string_list.h
+1349512035 /ca2/app/appseed/ca/collection/collection_string_list.h
 
 1347035583 /ca2/app/appseed/ca/collection/collection_string_to_string_map.h
 
@@ -1713,15 +1719,15 @@
 
 1347219408 /ca2/app/appseed/ca/multithreading/multithreading_event_base.h
 
-1342864784 /ca2/app/appseed/ca/multithreading/multithreading_event_collection.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_event_collection.h
 
-1342864784 /ca2/app/appseed/ca/multithreading/multithreading_semaphore.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_semaphore.h
 
-1347128311 /ca2/app/appseed/ca/multithreading/multithreading_mutex.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_mutex.h
 
-1347219428 /ca2/app/appseed/ca/multithreading/multithreading_event.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_event.h
 
-1342864784 /ca2/app/appseed/ca/multithreading/multithreading_file_change_event.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_file_change_event.h
 
 1342864784 /ca2/app/appseed/ca/multithreading/multithreading_socket_event.h
 
@@ -1739,13 +1745,13 @@
 
 1342864784 /ca2/app/appseed/ca/multithreading/multithreading.inl
 
-1342864784 /ca2/app/appseed/ca/multithreading/multithreading_manual_reset_event.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_manual_reset_event.h
 
 1347195457 /ca2/app/appseed/ca/multithreading/multithreading_service_status.h
 
-1342864784 /ca2/app/appseed/ca/multithreading/multithreading_thread_pool.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_thread_pool.h
 
-1347195457 /ca2/app/appseed/ca/multithreading/multithreading_service_base.h
+1349512034 /ca2/app/appseed/ca/multithreading/multithreading_service_base.h
 
 1342864784 /ca2/app/appseed/ca/multithreading/multithreading_plain_service.h
 
@@ -1759,7 +1765,7 @@
 
 1347167725 /ca2/app/appseed/ca/ca/ca_type_info.h
 
-1342864717 /ca2/app/appseed/ca/radix/radix_factory.h
+1349512031 /ca2/app/appseed/ca/radix/radix_factory.h
 	"radix_fixed_alloc.h"
 
 1342864881 /ca2/app/appseed/ca/user/user_str.h
@@ -1801,12 +1807,12 @@
 
 1342864737 /ca2/app/appseed/ca/ca/ca_igui.h
 
-1342864737 /ca2/app/appseed/ca/ca/ca_dib.h
+1349512032 /ca2/app/appseed/ca/ca/ca_dib.h
 
 1348390791 /ca2/app/appseed/ca/ca/ca_draw_dib.h
 	<vfw.h>
 
-1348390791 /ca2/app/appseed/ca/ca/ca_graphics.h
+1349512032 /ca2/app/appseed/ca/ca/ca_graphics.h
 	"user/user_draw_context.h"
 	"ca_bitmap.h"
 	"ca_pen.h"
@@ -1831,7 +1837,7 @@
 	"ca/user/user_create_context.h"
 	"ca/user/user_check_interface.h"
 
-1348417844 /ca2/app/appseed/ca/gen/gen_message.h
+1349543423 /ca2/app/appseed/ca/gen/gen_message.h
 
 1342864881 /ca2/app/appseed/ca/user/user_create_context.h
 	"ca/ca_type_info.h"
@@ -1884,7 +1890,7 @@
 
 1342864881 /ca2/app/appseed/ca/user/user_window_id.h
 
-1347220815 /ca2/app/appseed/ca/user/user_interaction.h
+1349512054 /ca2/app/appseed/ca/user/user_interaction.h
 	"gen/gen_holder.h"
 	"ca/user/user_window_interface.h"
 
@@ -1901,7 +1907,7 @@
 
 1342864830 /ca2/app/appseed/ca/database/database_update_hint.h
 
-1347221383 /ca2/app/appseed/ca/ca/ca_window.h
+1349512032 /ca2/app/appseed/ca/ca/ca_window.h
 	"ca/user/user_interaction.h"
 
 1342864737 /ca2/app/appseed/ca/ca/ca_message_window.h
@@ -1909,7 +1915,7 @@
 
 1347080797 /ca2/app/appseed/ca/ca/ca_profiler.h
 
-1342864737 /ca2/app/appseed/ca/ca/ca_window_draw.h
+1349512032 /ca2/app/appseed/ca/ca/ca_window_draw.h
 	"user/user_window_util.h"
 
 1342864726 /ca2/app/appseed/ca/gen/gen_timer.h
@@ -1980,7 +1986,7 @@
 
 1342864786 /ca2/app/appseed/ca/os/os_cross_windows_shared_memory.h
 
-1347620498 /ca2/app/appseed/ca/os/os_cross_windows_time.h
+1349551218 /ca2/app/appseed/ca/os/os_cross_windows_time.h
 
 1342864786 /ca2/app/appseed/ca/os/os_cross_windows_crt.h
 
@@ -2002,7 +2008,7 @@
 
 1342864717 /ca2/app/appseed/ca/radix/radix_process_data.h
 
-1342864814 /ca2/app/appseed/ca/ex1/ex1_exception.h
+1349512035 /ca2/app/appseed/ca/ex1/ex1_exception.h
 
 1342864814 /ca2/app/appseed/ca/ex1/ex1_tree_item_data.h
 
@@ -2026,7 +2032,7 @@
 
 1342864814 /ca2/app/appseed/ca/ex1/ex1_file_composite.h
 
-1342864814 /ca2/app/appseed/ca/ex1/ex1_file_exception.h
+1349512035 /ca2/app/appseed/ca/ex1/ex1_file_exception.h
 	"ca/OpenedFiles.h"
 
 1342864737 /ca2/app/appseed/ca/ca/OpenedFiles.h
@@ -2052,8 +2058,8 @@
 
 1342864855 /ca2/app/appseed/ca/primitive/primitive_shared_file.h
 
-1342864709 /ca2/app/appseed/ca/zlib/zconf.h
-	"c/c/c_c.h"
+1349512031 /ca2/app/appseed/ca/zlib/zconf.h
+	"c/c/c.h"
 	<windows.h>
 	<sys/types.h>
 	<unistd.h>
@@ -2105,17 +2111,17 @@
 	"../Common/Types.h"
 	"IDecl.h"
 
-1342864814 /ca2/app/appseed/ca/ex1/ex1_system_exception.h
+1349512035 /ca2/app/appseed/ca/ex1/ex1_system_exception.h
 
 1342864814 /ca2/app/appseed/ca/ex1/ex1_buffer.h
 
 1342864814 /ca2/app/appseed/ca/ex1/ex1_dynamic_buffer.h
 
-1342864814 /ca2/app/appseed/ca/ex1/ex1_in_buffer.h
+1349512035 /ca2/app/appseed/ca/ex1/ex1_in_buffer.h
 	"../../Common/MyCom.h"
 	"../../Common/MyException.h"
 
-1342864814 /ca2/app/appseed/ca/ex1/ex1_out_buffer.h
+1349512035 /ca2/app/appseed/ca/ex1/ex1_out_buffer.h
 	"../../Common/MyCom.h"
 	"../../Common/MyException.h"
 
@@ -2139,7 +2145,7 @@
 
 1342864814 /ca2/app/appseed/ca/ex1/ex1_limited_writer.h
 
-1342864814 /ca2/app/appseed/ca/ex1/ex1_stream_binder.h
+1349512035 /ca2/app/appseed/ca/ex1/ex1_stream_binder.h
 
 1342864814 /ca2/app/appseed/ca/ex1/ex1_locked_in_stream.h
 
@@ -2350,7 +2356,7 @@
 
 1342864831 /ca2/app/appseed/ca/html/html_lite/html_lite_html_common.h
 
-1342864831 /ca2/app/appseed/ca/html/html_lite/html_lite_html_attributes.h
+1349512047 /ca2/app/appseed/ca/html/html_lite/html_lite_html_attributes.h
 
 1342864831 /ca2/app/appseed/ca/html/html_lite/html_lite_html_entity_resolver.h
 
@@ -2370,7 +2376,7 @@
 
 1348390791 /ca2/app/appseed/ca/ca/ca_dir_application.h
 
-1348390791 /ca2/app/appseed/ca/ca/ca_dir_system.h
+1349512032 /ca2/app/appseed/ca/ca/ca_dir_system.h
 
 1342864833 /ca2/app/appseed/ca/ca2/ca2_stra.h
 
@@ -2387,7 +2393,7 @@
 
 1346980284 /ca2/app/appseed/ca/install/install_install.h
 
-1342864737 /ca2/app/appseed/ca/ca/ca_os.h
+1349512032 /ca2/app/appseed/ca/ca/ca_os.h
 
 1342864833 /ca2/app/appseed/ca/ca2/ca2_log.h
 
@@ -2400,9 +2406,9 @@
 
 1342864853 /ca2/app/appseed/ca/primitive/datetime/datetime_value.h
 
-1342864833 /ca2/app/appseed/ca/ca2/ca2_datetime.h
+1349512047 /ca2/app/appseed/ca/ca2/ca2_datetime.h
 
-1347166165 /ca2/app/appseed/ca/ca2/ca2_net.h
+1349512047 /ca2/app/appseed/ca/ca2/ca2_net.h
 	<ws2tcpip.h>
 	<tpipv6.h>
 	"ca2_sockets_address.h"
@@ -2457,7 +2463,7 @@
 
 1342864738 /ca2/app/appseed/ca/calculator/numeric_token.h
 
-1342864738 /ca2/app/appseed/ca/calculator/numeric_scanner.h
+1349512032 /ca2/app/appseed/ca/calculator/numeric_scanner.h
 
 1342864738 /ca2/app/appseed/ca/calculator/numeric_element.h
 
@@ -2465,7 +2471,7 @@
 
 1342864738 /ca2/app/appseed/ca/calculator/datetime_token.h
 
-1342864738 /ca2/app/appseed/ca/calculator/datetime_scanner.h
+1349512032 /ca2/app/appseed/ca/calculator/datetime_scanner.h
 
 1342864738 /ca2/app/appseed/ca/calculator/datetime_element.h
 
@@ -2485,7 +2491,7 @@
 
 1342864744 /ca2/app/appseed/ca/colorertake5/features.h
 
-1342864745 /ca2/app/appseed/ca/colorertake5/exception.h
+1349512033 /ca2/app/appseed/ca/colorertake5/exception.h
 
 1342864744 /ca2/app/appseed/ca/colorertake5/memory_chunks.h
 
@@ -2508,7 +2514,7 @@
 
 1342864745 /ca2/app/appseed/ca/colorertake5/error_handler.h
 
-1342864744 /ca2/app/appseed/ca/colorertake5/hrc_parser.h
+1349512033 /ca2/app/appseed/ca/colorertake5/hrc_parser.h
 
 1342864745 /ca2/app/appseed/ca/colorertake5/hrc_parser_helpers.h
 	"ca/gen/gen_memory_operator.h"
@@ -2530,9 +2536,9 @@
 
 1342864744 /ca2/app/appseed/ca/colorertake5/region_mapper.h
 
-1342864744 /ca2/app/appseed/ca/colorertake5/styled_region.h
+1349512033 /ca2/app/appseed/ca/colorertake5/styled_region.h
 
-1342864745 /ca2/app/appseed/ca/colorertake5/text_region.h
+1349512033 /ca2/app/appseed/ca/colorertake5/text_region.h
 
 1342864745 /ca2/app/appseed/ca/colorertake5/line_region.h
 
@@ -2550,7 +2556,7 @@
 
 1342864745 /ca2/app/appseed/ca/colorertake5/text_hrd_mapper.h
 
-1342864744 /ca2/app/appseed/ca/colorertake5/parser_factory_exception.h
+1349611552 /ca2/app/appseed/ca/colorertake5/parser_factory_exception.h
 
 1342864744 /ca2/app/appseed/ca/colorertake5/parser_factory.h
 
@@ -2814,7 +2820,7 @@
 
 1342864805 /ca2/app/appseed/ca/compress/compress_method_properties.h
 
-1342864805 /ca2/app/appseed/ca/compress/compress_out_handler.h
+1349512034 /ca2/app/appseed/ca/compress/compress_out_handler.h
 
 1342864805 /ca2/app/appseed/ca/compress/compress_coder.h
 
@@ -2831,7 +2837,7 @@
 
 1342864805 /ca2/app/appseed/ca/compress/compress_coder_mixer2.h
 
-1342864805 /ca2/app/appseed/ca/compress/compress_coder_mixer2mt.h
+1349512034 /ca2/app/appseed/ca/compress/compress_coder_mixer2mt.h
 
 1342864805 /ca2/app/appseed/ca/compress/compress_gzip_helper.h
 	"GZipHelper.h"
@@ -2855,20 +2861,20 @@
 
 1342864795 /ca2/app/appseed/ca/compress/7z/7zItem.h
 
-1342864795 /ca2/app/appseed/ca/compress/7z/7zIn.h
+1349512034 /ca2/app/appseed/ca/compress/7z/7zIn.h
 
 1342864795 /ca2/app/appseed/ca/compress/7z/7zCompressionMode.h
 
-1342864795 /ca2/app/appseed/ca/compress/7z/7zEncode.h
+1349512034 /ca2/app/appseed/ca/compress/7z/7zEncode.h
 
-1342864795 /ca2/app/appseed/ca/compress/7z/7zOut.h
+1349512034 /ca2/app/appseed/ca/compress/7z/7zOut.h
 
 1342864795 /ca2/app/appseed/ca/compress/7z/7zUpdate.h
 	"7zIn.h"
 	"7zOut.h"
 	"../IArchive.h"
 
-1342864795 /ca2/app/appseed/ca/compress/7z/7zDecode.h
+1349512034 /ca2/app/appseed/ca/compress/7z/7zDecode.h
 
 1342864795 /ca2/app/appseed/ca/compress/7z/7zFolderInStream.h
 
@@ -2927,7 +2933,7 @@
 
 1342864800 /ca2/app/appseed/ca/compress/rar/aes.h
 
-1342864800 /ca2/app/appseed/ca/compress/rar/input_file.h
+1349512034 /ca2/app/appseed/ca/compress/rar/input_file.h
 	"Common/DynamicBuffer.h"
 	"Common/MyCom.h"
 	"../../ICoder.h"
@@ -3100,7 +3106,7 @@
 
 1342864871 /ca2/app/appseed/ca/sockets/basic/socket_handler.h
 
-1348427845 /ca2/app/appseed/ca/sockets/basic/listen_socket.h
+1349512052 /ca2/app/appseed/ca/sockets/basic/listen_socket.h
 	<stdlib.h>
 	<errno.h>
 
@@ -3223,7 +3229,7 @@
 
 1342864835 /ca2/app/appseed/ca/ca4/ca4_copydesk.h
 
-1348998839 /ca2/app/appseed/ca/ca4/ca4_crypt.h
+1349512030 /ca2/app/appseed/ca/ca4/ca4_crypt.h
 
 1342864835 /ca2/app/appseed/ca/ca4/ca4_email.h
 
@@ -3233,7 +3239,7 @@
 
 1342864835 /ca2/app/appseed/ca/ca4/ca4_http_application.h
 
-1342864835 /ca2/app/appseed/ca/ca4/ca4_http_system.h
+1349512030 /ca2/app/appseed/ca/ca4/ca4_http_system.h
 
 1342864835 /ca2/app/appseed/ca/ca4/ca4_http_get_socket.h
 
@@ -3280,7 +3286,7 @@
 
 1342864703 /ca2/app/appseed/ca/simpledb/simpledb_socket.h
 
-1342864703 /ca2/app/appseed/ca/simpledb/simpledb_socket_thread.h
+1349512031 /ca2/app/appseed/ca/simpledb/simpledb_socket_thread.h
 
 1342864703 /ca2/app/appseed/ca/simpledb/simpledb_server.h
 
@@ -3340,7 +3346,7 @@
 
 1342864829 /ca2/app/appseed/ca/visual/visual_rgb_quad_array.h
 
-1342864829 /ca2/app/appseed/ca/visual/visual_imaging.h
+1349512046 /ca2/app/appseed/ca/visual/visual_imaging.h
 
 1347202028 /ca2/app/appseed/ca/visual/visual_image_list.h
 
@@ -3493,7 +3499,7 @@
 
 1346980287 /ca2/app/appseed/ca/dynamic_source/dynamic_source_httpd_socket.h
 
-1342864849 /ca2/app/appseed/ca/dynamic_source/dynamic_source_script_manager.h
+1349512049 /ca2/app/appseed/ca/dynamic_source/dynamic_source_script_manager.h
 
 1342864700 /ca2/app/appseed/ca/plane/plane_library.h
 
@@ -3506,7 +3512,7 @@
 
 1342864700 /ca2/app/appseed/ca/plane/plane_session.h
 
-1348390791 /ca2/app/appseed/ca/plane/plane_system.h
+1349512031 /ca2/app/appseed/ca/plane/plane_system.h
 	"ca/collection/collection_gen_lemon_array.h"
 
 1342864809 /ca2/app/appseed/ca/collection/collection_gen_lemon_array.h
@@ -3544,7 +3550,7 @@
 
 1342864820 /ca2/app/appseed/ca/plugin/plugin_host_interaction.h
 
-1342864820 /ca2/app/appseed/ca/plugin/plugin_system.h
+1349512045 /ca2/app/appseed/ca/plugin/plugin_system.h
 
 1342864820 /ca2/app/appseed/ca/plugin/plugin_instance.h
 
@@ -3627,7 +3633,7 @@
 1348450231 /ca2/nodeapp/os/lnx_state.h
 	"lnx_thread_slots.h"
 
-1348448063 /ca2/nodeapp/os/lnx_thread_slots.h
+1349647857 /ca2/nodeapp/os/lnx_thread_slots.h
 
 1348448062 /ca2/nodeapp/os/lnx_dir.h
 
@@ -3695,7 +3701,7 @@
 1348446001 source:/ca2/nodeapp/os/lnx_appcore.cpp
 	"framework.h"
 
-1348448062 source:/ca2/nodeapp/os/lnx_afxstate.cpp
+1349647553 source:/ca2/nodeapp/os/lnx_afxstate.cpp
 	"framework.h"
 	"lnx_thread_slots.h"
 	<stddef.h>
@@ -3716,7 +3722,7 @@
 1348450731 source:/ca2/nodeapp/os/lnx_appterm.cpp
 	"framework.h"
 
-1348450753 source:/ca2/nodeapp/os/lnx_application.cpp
+1349647896 source:/ca2/nodeapp/os/lnx_application.cpp
 	"framework.h"
 
 1348487548 source:/ca2/nodeapp/os/lnx_bitmap.cpp
@@ -3731,7 +3737,7 @@
 	<sys/stat.h>
 	<unistd.h>
 
-1348989798 source:/ca2/nodeapp/os/lnx_dib.cpp
+1349647450 source:/ca2/nodeapp/os/lnx_dib.cpp
 	"framework.h"
 	<math.h>
 	"include/freeimage.h"
@@ -3757,7 +3763,7 @@
 
 1348992311 /ca2/nodeapp/os/lnx_copydesk.h
 
-1348997915 source:/ca2/nodeapp/os/lnx_copydesk.cpp
+1349647450 source:/ca2/nodeapp/os/lnx_copydesk.cpp
 	"framework.h"
 
 1348999450 /ca2/nodeapp/os/lnx_crypt.h
@@ -3769,4 +3775,51 @@
 
 1348999666 source:/ca2/nodeapp/os/lnx_file_set.cpp
 	"framework.h"
+
+1349512048 /ca2/nodeapp/operational_system/cross/win/win_mmeapi.h
+
+1349512030 /ca2/app/appseed/c/version/version.h
+	"version.config.h"
+
+1349512030 /ca2/app/appseed/c/version/version.config.h
+	"include/product.version.config.h"
+
+1349512060 /ca2/app/appseed/include/product.version.config.h
+
+1349547261 /ca2/app/appseed/c/macos/c_os_gdi.h
+	"c_os_simple_bitmap.h"
+	"c_os_simple_brush.h"
+	"c_os_simple_pen.h"
+	"c_os_simple_font.h"
+	"c_os_simple_graphics.h"
+
+1349547261 /ca2/app/appseed/c/macos/c_os_simple_bitmap.h
+
+1349543423 /ca2/app/appseed/c/macos/c_os_simple_brush.h
+
+1349543423 /ca2/app/appseed/c/macos/c_os_simple_pen.h
+
+1349547261 /ca2/app/appseed/c/macos/c_os_simple_font.h
+
+1349547261 /ca2/app/appseed/c/macos/c_os_simple_graphics.h
+
+1349512029 /ca2/app/appseed/c/merdes_windows/c_os_gdi.h
+	<D2D1.h>
+	<DWRITE.h>
+	"c_os_simple_graphics.h"
+	"c_os_simple_brush.h"
+	"c_os_simple_bitmap.h"
+
+1349512029 /ca2/app/appseed/c/merdes_windows/c_os_simple_graphics.h
+
+1349512029 /ca2/app/appseed/c/merdes_windows/c_os_simple_brush.h
+
+1349512029 /ca2/app/appseed/c/merdes_windows/c_os_simple_bitmap.h
+
+1349512044 /ca2/app/appseed/ca/exception/exception_not_installed.h
+
+1349512039 /ca2/app/appseed/ca/exception/exception_exit.h
+
+1349551120 /ca2/app/appseed/ca/primitive/datetime/datetime_float_time.h
+	<math.h>
 

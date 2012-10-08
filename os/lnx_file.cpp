@@ -818,7 +818,7 @@ namespace lnx
 
 
          //if (m_strFileName.is_empty())
-         // throw todo();
+         // throw todo(get_app());
             rStatus.m_attribute = 0;
 /*         else
          {

@@ -951,7 +951,7 @@ namespace win
    {
       UNREFERENCED_PARAMETER(dwData);
       UNREFERENCED_PARAMETER(nCmd);
-      throw not_implemented_exception();
+      throw not_implemented(get_app());
 
 /*      application* pApp = &System;
       ASSERT_VALID(pApp);
@@ -977,7 +977,7 @@ namespace win
 
    //void window::HtmlHelp(dword_ptr dwData, UINT nCmd)
    //{
-     // throw not_implemented_exception();
+     // throw not_implemented(get_app());
       /*
       application* pApp = &System;
       ASSERT_VALID(pApp);
@@ -1076,7 +1076,7 @@ namespace win
    {
       UNREFERENCED_PARAMETER(dwData);
       UNREFERENCED_PARAMETER(nCmd);
-      throw not_implemented_exception();
+      throw not_implemented(get_app());
       /*
       application* pApp = &System;
       ASSERT_VALID(pApp);
@@ -2717,7 +2717,7 @@ namespace win
 
    void window::OnSysColorChange()
    {
-      throw not_implemented_exception();
+      throw not_implemented(get_app());
 
 /*      application* pApp = &System;
       if (pApp != NULL && pApp->GetMainWnd() == this)
@@ -2750,7 +2750,7 @@ namespace win
    void window::OnDevModeChange(__in LPTSTR lpDeviceName)
    {
       UNREFERENCED_PARAMETER(lpDeviceName);
-      throw not_implemented_exception();
+      throw not_implemented(get_app());
       /*application* pApp = &System;
       if (pApp != NULL && pApp->GetMainWnd() == this)
          pApp->DevModeChange(lpDeviceName);

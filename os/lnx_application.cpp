@@ -84,7 +84,7 @@ namespace lnx
    string application::get_version()
    {
 
-      throw todo();
+      throw todo(get_app());
 
 /*      char lpszModuleFilePath[MAX_PATH + 1];
       GetModuleFileName(NULL, lpszModuleFilePath, MAX_PATH + 1);
@@ -178,7 +178,7 @@ namespace lnx
    bool application::Ex2OnAppUninstall()
    {
 
-      throw todo();
+      throw todo(get_app());
 
 // xxx       if(VistaTools::IsVista())
 // xxx       {
@@ -194,7 +194,7 @@ namespace lnx
    bool application::DeferRegisterClass(LONG fToRegister, const char ** ppszClass)
    {
 
-      throw todo();
+      throw todo(get_app());
 // xxx       return __end_defer_register_class(fToRegister, ppszClass);
       return false;
    }
@@ -450,7 +450,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    bool application::initialize1()
    {
-      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array;
+      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
       LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::LPWndArray;
 
       LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ex2::application >::m_p);

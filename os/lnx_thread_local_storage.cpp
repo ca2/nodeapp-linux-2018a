@@ -398,12 +398,27 @@ thread_local_object::~thread_local_object()
    m_nSlot = 0;
 }
 
+
 /////////////////////////////////////////////////////////////////////////////
 // CProcessLocalData
 
-no_track_object* process_local_object::get_data(
-   no_track_object* ( * pfnCreateObject)())
+process_local_object::process_local_object() :
+   m_mutex(NULL)
 {
+
+}
+
+
+process_local_object::~process_local_object()
+{
+   if (m_pObject != NULL)
+      delete m_pObject;
+}
+
+
+no_track_object* process_local_object::get_data(no_track_object * (* pfnCreateObject)())
+{
+
    if (m_pObject == NULL)
    {
       AfxLockGlobals(CRIT_PROCESSLOCAL);
@@ -420,14 +435,12 @@ no_track_object* process_local_object::get_data(
 
       AfxUnlockGlobals(CRIT_PROCESSLOCAL);
    }
+
    return m_pObject;
+
 }
 
-process_local_object::~process_local_object()
-{
-   if (m_pObject != NULL)
-      delete m_pObject;
-}
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Init/Term for thread/process local data
