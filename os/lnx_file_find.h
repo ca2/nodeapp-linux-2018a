@@ -23,6 +23,7 @@ namespace lnx
       DIR *          m_pdir;
       bool           m_bGotLast;
       string         m_strRoot;
+      string         m_strCriteria;
       char           m_chDirSeparator;     // not '\\' for Internet classes
 
 

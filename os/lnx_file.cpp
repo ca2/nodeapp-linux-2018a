@@ -1666,27 +1666,27 @@ return TRUE;
 
 
 
-CLASS_DECL_lnx UINT vfxGetFileName(const wchar_t * lpszPathName, wchar_t * lpszTitle, UINT nMax)
+CLASS_DECL_lnx UINT vfxGetFileName(const char * lpszPathName, char * lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       __is_valid_address(lpszTitle, _MAX_FNAME));
    ASSERT(__is_valid_string(lpszPathName));
 
    // always capture the complete file name including extension (if present)
-   wchar_t * lpszTemp = (wchar_t *)lpszPathName;
-   for (const wchar_t * lpsz = lpszPathName; *lpsz != '\0'; lpsz = _wcsinc(lpsz))
+   char * lpszTemp = (char *)lpszPathName;
+   for (const char * lpsz = lpszPathName; *lpsz != '\0'; lpsz = lpsz++)
    {
       // remember last directory/drive separator
       if (*lpsz == '\\' || *lpsz == '/' || *lpsz == ':')
-         lpszTemp = (wchar_t *)_wcsinc(lpsz);
+         lpszTemp = lpsz++;
    }
 
    // lpszTitle can be NULL which just returns the number of bytes
    if (lpszTitle == NULL)
-      return lstrlen(lpszTemp)+1;
+      return strlen_dup(lpszTemp)+1;
 
    // otherwise copy it into the buffer provided
-   lstrcpyn(lpszTitle, lpszTemp, nMax);
+   strncpy(lpszTitle, lpszTemp, nMax);
    return 0;
 }
 

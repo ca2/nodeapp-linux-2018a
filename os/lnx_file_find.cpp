@@ -47,26 +47,33 @@ namespace lnx
 
    bool file_find::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /* = 0 */)
    {
-      UNUSED_ALWAYS(dwUnused);
+
       close();
-      m_pentNext = new WIN32_FIND_DATAW;
       m_bGotLast = FALSE;
 
       if (pstrName == NULL)
          pstrName = "*.*";
-      gen::international::MultiByteToUnicode(CP_UTF8, ((WIN32_FIND_DATAW*) m_pentNext)->cFileName, MAX_PATH, pstrName);
 
-      wstring wstrName = gen::international::utf8_to_unicode(pstrName);
+      string strName(pszName);
 
-      m_pdir = ::win::shell::FindFirstFile(wstrName, (WIN32_FIND_DATAW*) m_pentNext);
-
-      if (m_pdir == INVALID_HANDLE_VALUE)
+      if(!dir::is(strName))
       {
-         DWORD dwTemp = ::GetLastError();
-         close();
-         ::SetLastError(dwTemp);
-         return FALSE;
+
+         strName = dir::eat_end_level(strName, 1);
+
+         if(!dir::is(strName))
+            return false;
+
       }
+
+      m_pdir = opendir(strName);
+
+      if(m_pdir == NULL)
+         return false;
+
+
+
+
       wstring wstrRoot;
 
       wchar_t * pstrRoot = wstrRoot.alloc(_MAX_PATH);

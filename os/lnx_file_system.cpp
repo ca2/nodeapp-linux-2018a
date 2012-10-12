@@ -52,26 +52,6 @@ namespace lnx
       return b;
    }
 
-   bool file_system::FullPath(string & wstrFullPath, const string & wstrPath)
-   {
-
-      if(::ex1::file_system::FullPath(wstrFullPath, wstrPath))
-         return true;
-
-      if(gen::str::begins_ci(wstrPath, L"http://"))
-      {
-         wstrFullPath = wstrPath;
-         return true;
-      }
-      else if(gen::str::begins_ci(wstrPath, L"https://"))
-      {
-         wstrFullPath = wstrPath;
-         return true;
-      }
-
-      return vfxFullPath(wstrFullPath, wstrPath) != FALSE;
-
-   }
 
 
    UINT file_system::GetFileName(const char * lpszPathName, string & str)
