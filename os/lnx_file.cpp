@@ -777,7 +777,7 @@ namespace lnx
       case ERROR_SWAPERROR:
          return ::ex1::file_exception::accessDenied;
       default:
-         return ::ex1::file_exception::generic;
+         return ::ex1::file_exception::type_generic;
       }
    }
 
@@ -1673,7 +1673,7 @@ CLASS_DECL_lnx UINT vfxGetFileName(const char * lpszPathName, char * lpszTitle, 
    ASSERT(__is_valid_string(lpszPathName));
 
    // always capture the complete file name including extension (if present)
-   char * lpszTemp = (char *)lpszPathName;
+   const char * lpszTemp = (char *)lpszPathName;
    for (const char * lpsz = lpszPathName; *lpsz != '\0'; lpsz = lpsz++)
    {
       // remember last directory/drive separator
@@ -1733,6 +1733,6 @@ int PASCAL ::lnx::file_exception::ErrnoToException(int nErrno)
    case EIO:
       return ::ex1::file_exception::hardIO;
    default:
-      return ::ex1::file_exception::generic;
+      return ::ex1::file_exception::type_generic;
    }
 }

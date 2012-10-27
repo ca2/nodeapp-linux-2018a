@@ -49,7 +49,7 @@ namespace lnx
       virtual bool GetLastAccessTime(::datetime::time& refTime) const;
       virtual bool GetCreationTime(::datetime::time& refTime) const;
 
-      virtual bool MatchesMask(DWORD dwMask) const;
+//      virtual bool MatchesMask(DWORD dwMask) const;
 
       virtual bool IsDots() const;
       // these aren't virtual because they all use MatchesMask(), which is

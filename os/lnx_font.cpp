@@ -9,7 +9,6 @@ namespace lnx
    ca(papp)
    {
 
-      m_pfont     = NULL;
       m_bUpdated  = false;
 
    }
@@ -17,12 +16,6 @@ namespace lnx
 
    font::~font()
    {
-
-      if(m_pfont != NULL)
-      {
-         delete m_pfont;
-         m_pfont = NULL;
-      }
 
    }
 

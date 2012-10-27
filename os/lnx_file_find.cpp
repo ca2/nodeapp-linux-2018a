@@ -45,23 +45,23 @@ namespace lnx
       return;
    }
 
-   bool file_find::FindFile(const char * pstrName /* = NULL */, DWORD dwUnused /* = 0 */)
+   bool file_find::FindFile(const char * pszName, DWORD dwUnused)
    {
 
       close();
       m_bGotLast = FALSE;
 
-      if (pstrName == NULL)
-         pstrName = "*.*";
+      if (pszName == NULL)
+         pszName = "*.*";
 
       string strName(pszName);
 
-      if(!dir::is(strName))
+      if(!::dir::is(strName))
       {
 
-         strName = dir::eat_end_level(strName, 1);
+         strName = System.dir().name(strName);
 
-         if(!dir::is(strName))
+         if(!::dir::is(strName))
             return false;
 
       }
@@ -77,7 +77,7 @@ namespace lnx
       wstring wstrRoot;
 
       wchar_t * pstrRoot = wstrRoot.alloc(_MAX_PATH);
-      const wchar_t * pstr = ::win::shell::_fullpath(pstrRoot, wstrName, _MAX_PATH);
+      const wchar_t * pstr = ::lnx::shell::_fullpath(pstrRoot, wstring(strName), _MAX_PATH);
 
       // passed name isn't a valid path but was found by the API
       ASSERT(pstr != NULL);
@@ -113,18 +113,18 @@ namespace lnx
       m_strRoot = gen::international::unicode_to_utf8(wstrRoot);
       return TRUE;
    }
-
+/*
    bool file_find::MatchesMask(DWORD dwMask) const
    {
       ASSERT(m_pdir != NULL);
       ASSERT_VALID(this);
 
       if (m_pentFound != NULL)
-         return (!!(((LPWIN32_FIND_DATAW) m_pentFound)->dwFileAttributes & dwMask));
+         return (!!(((m_pentFound)->  dwMask));
       else
          return FALSE;
    }
-
+*/
    bool file_find::GetLastAccessTime(FILETIME* pTimeStamp) const
    {
       ASSERT(m_pdir != NULL);
