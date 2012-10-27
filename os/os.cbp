@@ -98,14 +98,10 @@
 		<Unit filename="lnx_factory_exchange.h" />
 		<Unit filename="lnx_file.cpp" />
 		<Unit filename="lnx_file.h" />
-		<Unit filename="lnx_file_find.cpp" />
-		<Unit filename="lnx_file_find.h" />
 		<Unit filename="lnx_file_set.cpp" />
 		<Unit filename="lnx_file_set.h" />
 		<Unit filename="lnx_file_system.cpp" />
 		<Unit filename="lnx_file_system.h" />
-		<Unit filename="lnx_folder_watch.cpp" />
-		<Unit filename="lnx_folder_watch.h" />
 		<Unit filename="lnx_font.cpp" />
 		<Unit filename="lnx_font.h" />
 		<Unit filename="lnx_graphics.cpp" />
