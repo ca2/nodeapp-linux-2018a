@@ -15,6 +15,11 @@ namespace lnx
    {
    public:
 
+
+	   port_forward(::ca::application * papp);
+	   virtual ~port_forward();
+
+
 	   // forward declarations
 
 /* xxx	   interface IDerivedNATExternalIPAddressCallback;
@@ -79,8 +84,6 @@ namespace lnx
 
 	   // public functions -- there are only a few
 
-	   port_forward(::ca::application * papp);
-	   virtual ~port_forward();
 
 	   virtual HRESULT ListenForUpnpChanges(::ca4::port_forward_change_callbacks *pCallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
 	   virtual HRESULT StopListeningForUpnpChanges( );  // Stops listenting for UPnP change events on the router and deletes any port_forward_change_callbacks-derived objects
