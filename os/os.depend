@@ -3,14 +3,12 @@
 	"lnx.h"
 	"lnx_internal.h"
 
-1348999492 /ca2/nodeapp/os/lnx.h
+1351379696 /ca2/nodeapp/os/lnx.h
 	"ca.h"
 	"lnx1.h"
 	"implementation.h"
 	"lnx_state.h"
-	"lnx_file_find.h"
 	"lnx_dir.h"
-	"lnx_folder_watch.h"
 	"lnx_factory_exchange.h"
 	"lnx_window_draw.h"
 	"lnx_graphics.h"
@@ -937,10 +935,10 @@
 
 1342864656 /ca2/app/appseed/c/os/os_binreloc.h
 
-1350075065 /ca2/app/appseed/c/macos/c_os.h
+1351371728 /ca2/app/appseed/c/macos/c_os.h
 	<stdarg.h>
 	<wchar.h>
-	"c_os_gdi.h"
+	"c_os_graphics.h"
 	"c_os_http_lib.h"
 	"c_os_http.h"
 	"c_os_process.h"
@@ -1816,7 +1814,7 @@
 
 1346980282 /ca2/app/appseed/ca/ca/ca_brush.h
 
-1342864737 /ca2/app/appseed/ca/ca/ca_font.h
+1351383143 /ca2/app/appseed/ca/ca/ca_font.h
 
 1342864737 /ca2/app/appseed/ca/ca/ca_palette.h
 
@@ -3775,7 +3773,7 @@
 1348990062 source:/ca2/nodeapp/os/lnx_exception.cpp
 	"framework.h"
 
-1348990952 source:/ca2/nodeapp/os/lnx_dir.cpp
+1351382214 source:/ca2/nodeapp/os/lnx_dir.cpp
 	"framework.h"
 
 1348992311 /ca2/nodeapp/os/lnx_copydesk.h
@@ -3790,7 +3788,7 @@
 1348999268 source:/ca2/nodeapp/os/lnx_crypt.cpp
 	"framework.h"
 
-1348999666 source:/ca2/nodeapp/os/lnx_file_set.cpp
+1351382242 source:/ca2/nodeapp/os/lnx_file_set.cpp
 	"framework.h"
 
 1349512048 /ca2/nodeapp/operational_system/cross/win/win_mmeapi.h
@@ -3812,13 +3810,13 @@
 
 1350025623 /ca2/app/appseed/c/macos/c_os_simple_bitmap.h
 
-1349543423 /ca2/app/appseed/c/macos/c_os_simple_brush.h
+1350807661 /ca2/app/appseed/c/macos/c_os_simple_brush.h
 
-1349543423 /ca2/app/appseed/c/macos/c_os_simple_pen.h
+1350807661 /ca2/app/appseed/c/macos/c_os_simple_pen.h
 
-1349547261 /ca2/app/appseed/c/macos/c_os_simple_font.h
+1350807661 /ca2/app/appseed/c/macos/c_os_simple_font.h
 
-1350025623 /ca2/app/appseed/c/macos/c_os_simple_graphics.h
+1350807661 /ca2/app/appseed/c/macos/c_os_simple_graphics.h
 
 1349512029 /ca2/app/appseed/c/merdes_windows/c_os_gdi.h
 	<D2D1.h>
@@ -4068,4 +4066,14 @@
 	<link.h>
 	<ctype.h>
 	<dlfcn.h>
+
+1351371728 /ca2/app/appseed/c/macos/c_os_graphics.h
+	"c_os_simple_bitmap.h"
+	"c_os_simple_brush.h"
+	"c_os_simple_pen.h"
+	"c_os_simple_font.h"
+	"c_os_simple_path.h"
+	"c_os_simple_graphics.h"
+
+1350807661 /ca2/app/appseed/c/macos/c_os_simple_path.h
 

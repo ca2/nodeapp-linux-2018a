@@ -96,8 +96,6 @@ namespace lnx{
 
       int i, j;
 
-      file_find file_find;
-
       string strFile;
 
       string str;

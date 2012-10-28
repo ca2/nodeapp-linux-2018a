@@ -15,7 +15,6 @@ namespace lnx
       System.factory().cloneable < WinResource                 >  (System. type_info < ::ex1::resource          > (), 1);
       System.factory().cloneable < application                 >  (System. type_info < ::ex2::application       > (), 1);
       System.factory().cloneable < dir                         >  (System. type_info < ::ca::dir::system        > (), 1);
-      System.factory().cloneable_small < folder_watch          >  (System. type_info < ::ex2::folder_watch      > ());
       System.factory().cloneable_large < dib                   >  (System. type_info < ::ca::dib                > ());
       System.factory().cloneable_large < graphics              >  (System. type_info < ::ca::graphics           > ());
       System.factory().cloneable_large < bitmap                >  (System. type_info < ::ca::bitmap             > ());

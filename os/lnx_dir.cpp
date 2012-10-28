@@ -211,36 +211,90 @@ namespace lnx
 
    void dir::ls_pattern(::ca::application * papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, base_array < bool, bool > * pbaIsDir, base_array < int64_t, int64_t > * piaSize)
    {
+
       if(::ca::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
       {
+
          return ::ca::dir::system::ls_pattern(papp, lpcsz, pszPattern, pstraPath, pstraTitle, pbaIsDir, piaSize);
+
       }
-      file_find file_find;
-      bool bWorking;
-      bWorking = file_find.FindFile(System.dir().path(lpcsz, pszPattern));
-      while(bWorking)
+
+      string strDir(lpcsz);
+
+      if(!gen::str::ends(strDir, "/"))
       {
-         bWorking = file_find.FindNextFile();
-         if(!file_find.IsDots())
-         {
-            if(pstraPath != NULL)
-            {
-               pstraPath->add(file_find.GetFilePath());
-            }
-            if(pstraTitle != NULL)
-            {
-               pstraTitle->add(file_find.GetFileName());
-            }
-            if(pbaIsDir != NULL)
-            {
-               pbaIsDir->add(file_find.IsDirectory() != FALSE);
-            }
-            if(piaSize != NULL)
-            {
-               piaSize->add(file_find.get_length());
-            }
-         }
+
+         strDir += "/";
+
       }
+
+      stra_dup stra;
+
+      ::dir::ls(stra, lpcsz);
+
+      for(int i = 0; i < stra.get_count(); i++)
+      {
+
+         string strPath = stra[i];
+
+         string strName = strPath;
+
+         if(!gen::str::begins_eat(strName, strDir))
+            continue;
+
+         if(!matches_wildcard_criteria(pszPattern, strName))
+            continue;
+
+         if(pstraPath != NULL)
+         {
+
+            pstraPath->add(strPath);
+
+         }
+
+         if(pstraTitle != NULL)
+         {
+
+            pstraTitle->add(strName);
+
+         }
+
+         bool bIsDir;
+
+         if(pbaIsDir != NULL || piaSize != NULL)
+         {
+
+            bIsDir = ::dir::is(strPath);
+
+         }
+
+         if(pbaIsDir != NULL)
+         {
+
+            pbaIsDir->add(bIsDir);
+
+         }
+
+         if(piaSize != NULL)
+         {
+
+            if(bIsDir)
+            {
+
+               piaSize->add(0);
+
+            }
+            else
+            {
+
+               piaSize->add(file_length_dup(strPath));
+
+            }
+
+         }
+
+      }
+
    }
 
    void dir::rls(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, e_extract eextract)
@@ -248,179 +302,377 @@ namespace lnx
       rls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pstraRelative, NULL, NULL, eextract);
    }
 
-   void dir::rls_pattern(::ca::application * papp, const char * lpcsz, const char * lpszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, base_array < bool, bool > * pbaIsDir, base_array < int64_t, int64_t > * piaSize, e_extract eextract)
+   void dir::rls_pattern(::ca::application * papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, base_array < bool, bool > * pbaIsDir, base_array < int64_t, int64_t > * piaSize, e_extract eextract)
    {
-      stringa straDir;
-      ls_dir(papp, lpcsz, &straDir);
+
+      stra_dup straDir;
+
+      ::dir::ls_dir(straDir, lpcsz);
+
       for(int i = 0; i < straDir.get_count(); i++)
       {
+
          string strDir = straDir[i];
+
          if(strDir == lpcsz)
             continue;
+
          index iStart = 0;
+
          if(pstraRelative != NULL)
          {
             iStart = pstraRelative->get_size();
          }
-         rls_pattern(papp, strDir, lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize, eextract == extract_all ? extract_all : extract_none);
+
+         rls_pattern(papp, strDir, pszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize, eextract == extract_all ? extract_all : extract_none);
+
          if(pstraRelative != NULL)
          {
+
             for(index i = iStart; i < pstraRelative->get_size(); i++)
             {
+
                pstraRelative->element_at(i) = System.dir().path(System.file().name_(strDir), pstraRelative->element_at(i));
+
             }
+
          }
+
       }
 
-      file_find file_find;
-      bool bWorking = file_find.FindFile(System.dir().path(lpcsz, lpszPattern)) != FALSE;
-      if(bWorking)
+      string strDir(lpcsz);
+
+      if(!gen::str::ends(strDir, "/"))
       {
-         while(bWorking)
+
+         strDir += "/";
+
+      }
+
+      stra_dup stra;
+
+      ::dir::ls(stra, lpcsz);
+
+      for(int i = 0; i < stra.get_count(); i++)
+      {
+
+         string strPath = stra[i];
+
+         string strName = strPath;
+
+         if(!gen::str::begins_eat(strName, strDir))
+            continue;
+
+         if(!matches_wildcard_criteria(pszPattern, strName))
+            continue;
+
+         if(pstraPath != NULL)
          {
-            bWorking = file_find.FindNextFile() != FALSE;
-            if(!file_find.IsDots() && file_find.GetFilePath() != lpcsz)
-            {
-               if(pstraPath != NULL)
-               {
-                  pstraPath->add(file_find.GetFilePath());
-               }
-               if(pstraTitle != NULL)
-               {
-                  pstraTitle->add(file_find.GetFileName());
-               }
-               if(pstraRelative != NULL)
-               {
-                  pstraRelative->add(file_find.GetFileName());
-               }
-               if(pbaIsDir != NULL)
-               {
-                  pbaIsDir->add(file_find.IsDirectory() != FALSE);
-               }
-               if(piaSize != NULL)
-               {
-                  piaSize->add(file_find.get_length());
-               }
-               /*if(file_find.IsDirectory())
-               {
-                  int iStart = 0;
-                  if(pstraRelative != NULL)
-                  {
-                     iStart = pstraRelative->get_size();
-                  }
-                  rls_pattern(file_find.GetFilePath(), lpszPattern, pstraPath, pstraTitle, pstraRelative, pbaIsDir, piaSize);
-                  if(pstraRelative != NULL)
-                  {
-                     for(int i = iStart; i < pstraRelative->get_size(); i++)
-                     {
-                        pstraRelative->element_at(i) = System.dir().path(file_find.GetFileName(), pstraRelative->element_at(i));
-                     }
-                  }
-               }*/
-            }
+
+            pstraPath->add(strPath);
+
          }
+
+         if(pstraTitle != NULL)
+         {
+
+            pstraTitle->add(strName);
+
+         }
+
+         bool bIsDir;
+
+         if(pbaIsDir != NULL || piaSize != NULL)
+         {
+
+            bIsDir = ::dir::is(strPath);
+
+         }
+
+         if(pbaIsDir != NULL)
+         {
+
+            pbaIsDir->add(bIsDir);
+
+         }
+
+         if(piaSize != NULL)
+         {
+
+            if(bIsDir)
+            {
+
+               piaSize->add(0);
+
+            }
+            else
+            {
+
+               piaSize->add(file_length_dup(strPath));
+
+            }
+
+         }
+
       }
-      else
-      {
-         ::ca::dir::system::rls(papp, lpcsz, pstraPath, pstraTitle, pstraRelative, eextract == extract_all ? extract_all : extract_none);
-      }
+
    }
 
    void dir::rls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative)
    {
-      file_find file_find;
-      bool bWorking;
-      bWorking = file_find.FindFile(System.dir().path(lpcsz, "*.*"));
-      while(bWorking)
+
+      stra_dup stra;
+
+      ::dir::ls(stra, lpcsz);
+
+      string strDir(lpcsz);
+
+      if(!gen::str::ends(strDir, "/"))
       {
-         bWorking = file_find.FindNextFile();
-         if(!file_find.IsDots() && file_find.IsDirectory())
-         {
-            if(pstraPath != NULL)
-            {
-               pstraPath->add(file_find.GetFilePath());
-            }
-            if(pstraTitle != NULL)
-            {
-               pstraTitle->add(file_find.GetFileName());
-            }
-            if(pstraRelative != NULL)
-            {
-               pstraRelative->add(file_find.GetFileName());
-            }
-            if(file_find.IsDirectory())
-            {
-               index iStart = 0;
-               if(pstraRelative != NULL)
-               {
-                  iStart = pstraRelative->get_size();
-               }
-               rls_dir(papp, file_find.GetFilePath(), pstraPath, pstraTitle, pstraRelative);
-               if(pstraRelative != NULL)
-               {
-                  for(index i = iStart; i < pstraRelative->get_size(); i++)
-                  {
-                     pstraRelative->element_at(i) = System.dir().path(file_find.GetFileName(), pstraRelative->element_at(i));
-                  }
-               }
-            }
-         }
+
+         strDir += "/";
+
       }
+
+
+      for(int i = 0; i < stra.get_count(); i++)
+      {
+
+         string strPath = stra[i];
+
+         string strName = strPath;
+
+         if(!gen::str::begins_eat(strName, strDir))
+            continue;
+
+         if(!System.dir().is(strPath, papp))
+            continue;
+
+         if(pstraPath != NULL)
+         {
+
+            pstraPath->add((const char *) stra[i]);
+
+         }
+
+         if(pstraTitle != NULL)
+         {
+
+            pstraTitle->add(strName);
+
+         }
+
+         if(pstraRelative != NULL)
+         {
+
+            pstraRelative->add(strName);
+
+         }
+
+         index iStart = 0;
+
+         if(pstraRelative != NULL)
+         {
+
+            iStart = pstraRelative->get_size();
+
+         }
+
+         rls_dir(papp, strPath, pstraPath, pstraTitle, pstraRelative);
+
+         if(pstraRelative != NULL)
+         {
+
+            for(index i = iStart; i < pstraRelative->get_size(); i++)
+            {
+
+               pstraRelative->element_at(i) = System.dir().path(strPath, pstraRelative->element_at(i));
+
+            }
+
+         }
+
+      }
+
    }
+
 
    void dir::ls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
 
-      file_find file_find;
-      bool bWorking;
-      bWorking = file_find.FindFile(System.dir().path(lpcsz, "*.*"));
-      if(!bWorking)
+      stra_dup stra;
+
+      ::dir::ls(stra, lpcsz);
+
+      string strDir(lpcsz);
+
+      if(!gen::str::ends(strDir, "/"))
       {
-         ::ca::dir::system::ls_dir(papp, lpcsz, pstraPath, pstraTitle);
-         return;
+
+         strDir += "/";
+
       }
-      while(bWorking)
+
+
+      for(int i = 0; i < stra.get_count(); i++)
       {
-         bWorking = file_find.FindNextFile();
-         if(file_find.IsDirectory() && !file_find.IsDots())
+
+         string strPath = stra[i];
+
+         string strName = strPath;
+
+         if(!gen::str::begins_eat(strName, strDir))
+            continue;
+
+         if(!System.dir().is(strPath, papp))
+            continue;
+
+         if(pstraPath != NULL)
          {
-            if(pstraPath != NULL)
-            {
-               pstraPath->add(file_find.GetFilePath());
-            }
-            if(pstraTitle != NULL)
-            {
-               pstraTitle->add(file_find.GetFileName());
-            }
+
+            pstraPath->add((const char *) stra[i]);
+
          }
+
+         if(pstraTitle != NULL)
+         {
+
+            pstraTitle->add(strName);
+
+         }
+
       }
+
    }
 
    void dir::ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle)
    {
-      file_find file_find;
-      bool bWorking;
-      bWorking = file_find.FindFile(System.dir().path(lpcsz, "*.*"));
-      while(bWorking)
+
+      stra_dup stra;
+
+      ::dir::ls(stra, lpcsz);
+
+      string strDir(lpcsz);
+
+      if(!gen::str::ends(strDir, "/"))
       {
-         bWorking = file_find.FindNextFile();
-         if(!file_find.IsDirectory() && !file_find.IsDots())
-         {
-            if(pstraPath != NULL)
-            {
-               pstraPath->add(file_find.GetFilePath());
-            }
-            if(pstraTitle != NULL)
-            {
-               pstraTitle->add(file_find.GetFileName());
-            }
-         }
+
+         strDir += "/";
+
       }
+
+
+      for(int i = 0; i < stra.get_count(); i++)
+      {
+
+         string strPath = stra[i];
+
+         string strName = strPath;
+
+         if(!gen::str::begins_eat(strName, strDir))
+            continue;
+
+         if(System.dir().is(strPath, papp))
+            continue;
+
+
+         if(pstraPath != NULL)
+         {
+
+            pstraPath->add((const char *) stra[i]);
+
+         }
+
+         if(pstraTitle != NULL)
+         {
+
+            pstraTitle->add(strName);
+
+         }
+
+      }
+
    }
 
    void dir::ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, base_array < bool, bool > * pbaIsDir, base_array < int64_t, int64_t > * piaSize)
    {
-      return ls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pbaIsDir, piaSize);
+
+      stra_dup stra;
+
+      ::dir::ls(stra, lpcsz);
+
+      string strDir(lpcsz);
+
+      if(!gen::str::ends(strDir, "/"))
+      {
+
+         strDir += "/";
+
+      }
+
+
+      for(int i = 0; i < stra.get_count(); i++)
+      {
+
+         string strPath = stra[i];
+
+         string strName = strPath;
+
+         if(!gen::str::begins_eat(strName, strDir))
+            continue;
+
+         if(pstraPath != NULL)
+         {
+
+            pstraPath->add((const char *) stra[i]);
+
+         }
+
+         if(pstraTitle != NULL)
+         {
+
+            pstraTitle->add(strName);
+
+         }
+
+
+         bool bIsDir;
+
+         if(pbaIsDir != NULL || piaSize != NULL)
+         {
+
+            bIsDir = System.dir().is(strPath, papp);
+
+         }
+
+         if(pbaIsDir != NULL)
+         {
+
+            pbaIsDir->add(bIsDir);
+
+         }
+
+         if(piaSize != NULL)
+         {
+
+            if(bIsDir)
+            {
+
+               piaSize->add(0);
+
+            }
+            else
+            {
+
+               piaSize->add(file_length_dup(strPath));
+
+            }
+
+         }
+
+
+      }
+
    }
 
    bool dir::is(const char * lpcszPath, ::ca::application * papp)
@@ -447,15 +699,8 @@ namespace lnx
             strPath = "\\\\?\\" + strPath;
          }
       }
-      DWORD dwAttrib;
-      //dwAttrib = GetFileAttributes(gen::international::utf8_to_unicode(strPath));
-      dwAttrib = GetFileAttributes(strPath);
-      /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
-      {
-         dwAttrib = GetFileAttributes(lpcszPath);
-      }*/
 
-      bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
+      bIsDir = ::dir::is(strPath);
 
       m_isdirmap.set(lpcszPath, bIsDir);
 
@@ -1120,18 +1365,10 @@ namespace lnx
 
    bool dir::has_subdir(::ca::application * papp, const char * pszDir)
    {
-      file_find file_find;
-      bool bWorking;
-      bWorking = file_find.FindFile(path(pszDir, "*.*"));
-      while(bWorking)
-      {
-         bWorking = file_find.FindNextFile();
-         if(file_find.IsDirectory() && !file_find.IsDots())
-         {
-            return true;
-         }
-      }
-      return false;
+      stringa stra;
+      ls_dir(papp, pszDir, &stra);
+      return stra.get_size() > 0;
+
    }
 
 } // namespace win

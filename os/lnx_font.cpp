@@ -68,30 +68,20 @@ namespace lnx
       /////////////////////////////////////////////////////////////////////////////
 
    void font::construct(const ::ca::font & fontParam)
-      {
-         class font & font = const_cast < ::win::font & > (dynamic_cast < const ::win::font & > (fontParam));
-         if(font.m_pfont == NULL)
-         {
-            if(m_pfont != NULL)
-            {
-               delete m_pfont;
-               m_pfont = NULL;
-            }
-         }
-         else
-         {
-            m_pfont = font.m_pfont->Clone();
-         }
-//         if(get_handle() != NULL)
-  //          delete_object();
-    //     if(font.get_handle() != NULL)
-      /*   {
-            LOGFONT lf;
-            memset(&lf, 0, sizeof(lf));
-            font.GetLogFont(&lf);
-            CreateFontIndirect(&lf);
-         }*/
-      }
+   {
+
+      m_strFontFamilyName  = fontParam.m_strFontFamilyName;
+      m_dFontSize          = fontParam.m_dFontSize;
+      m_dFontWeight        = fontParam.m_dFontWeight;
+      m_dFontWidth         = fontParam.m_dFontWidth;
+      m_eunitFontSize      = fontParam.m_eunitFontSize;
+      m_bBold              = fontParam.m_bBold;
+      m_bItalic            = fontParam.m_bItalic;
+      m_bUnderline         = fontParam.m_bUnderline;
+      m_bStrikeout         = fontParam.m_bStrikeout;
+      m_bUpdated           = false;
+
+   }
 
 
       void font::dump(dump_context & dumpcontext) const
