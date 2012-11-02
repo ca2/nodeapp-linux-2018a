@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "sal.h"
+
 
 CLASS_DECL_ca int ca2_main();
 
@@ -7,77 +7,244 @@ CLASS_DECL_ca int ca2_main();
 
 //CLASS_DECL_ca fixed_alloc_array * new_wstring_manager();
 
-void CLASS_DECL_lnx __cdecl _ca2_purecall(void)
+void CLASS_DECL_lnx __cdecl _ca2_purecall()
 {
     throw simple_exception();
 }
 
+
 void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers);
 
 
-//::ca::application *     lnx_application_create(::ca::application * pappSystem, const char * pszId);
-::ca::application *     lnx_instantiate_application(::ca::application * pappSystem, const char * pszId);
-//int                     lnx_application_procedure(::ca::application * pappSystem)
-//UINT __CDECL          lnx_application_thread_proc(LPVOID);
+//::ca::application *     win_application_create(::ca::application * pappSystem, const char * pszId);
+//::ca::application *     win_instantiate_application(::ca::application * pappSystem, const char * pszId);
+//int                     win_application_procedure(::ca::application * pappSystem)
+//UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
-//  Can be replaced as long as 'AfxWinInit' is called first
+//  Can be replaced as long as 'gen::WinInit' is called first
 
-int CLASS_DECL_lnx AfxWinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int CLASS_DECL_lnx __lnx_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
 {
+
+   UNREFERENCED_PARAMETER(lpCmdLine);
+
+
+
+
+   ::CoInitialize(NULL);
+
+
+   if(!main_initialize())
+      return -1;
+
+
    _set_purecall_handler(_ca2_purecall);
 
-   set_heap_mutex(new mutex());
-
-   ::icube::set_heap_itema(new class ::icube::system::heap_item_array());
-
-   ::icube::system * psystem = ::icube::create_system();
-
+   ::plane::system * psystem = new ::plane::system();
 
    ASSERT(hPrevInstance == NULL);
 
    int nReturnCode = 0;
 
-   ::lnx::main_init_data * pinitmaindata  = new ::lnx::main_init_data;
+
+   ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
+
 
    pinitmaindata->m_hInstance             = hInstance;
    pinitmaindata->m_hPrevInstance         = hPrevInstance;
-   pinitmaindata->m_strCmdLine            = lpCmdLine;
+   pinitmaindata->m_vssCommandLine        = gen::international::unicode_to_utf8(::GetCommandLineW());
    pinitmaindata->m_nCmdShow              = nCmdShow;
+
 
    psystem->init_main_data(pinitmaindata);
 
-
-
-//   if(!AfxWinInit(hInstance, hPrevInstance, lpCmdLine, nCmdShow))
-  //    return -1;
+   //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
 
    nReturnCode = psystem->main();
 
 
-   AfxWinTerm();
-
-   // wish temporary dirty workaround to wait for other threads to exit
-   Sleep(1984);
-
-   delete AfxGetModuleState()->m_pmapHWND;
-
-   ::icube::destroy_system(psystem);
-
-   mutex * pmutex = get_heap_mutex();
-   set_heap_mutex(NULL);
-
-
-   WINBOOL bElevated = FALSE;
-   if(VistaTools::IsVista() && SUCCEEDED(VistaTools::IsElevated(&bElevated)) && bElevated)
+   try
    {
-      ::ExitProcess(nReturnCode);
+      main_finalize();
+   }
+   catch(...)
+   {
+   }
+
+   try
+   {
+      __win_term();
+   }
+   catch(...)
+   {
    }
 
 
+   try
+   {
+      delete psystem;
+   }
+   catch(...)
+   {
+   }
+
+   psystem = NULL;
+
+
+   try
+   {
+      delete __get_module_state()->m_pmapHWND;
+   }
+   catch(...)
+   {
+   }
+/*   try
+   {
+      delete __get_module_state()->m_pmapHDC;
+   }
+   catch(...)
+   {
+   }*/
+/*   try
+   {
+      delete __get_module_state()->m_pmapHGDIOBJ;
+   }
+   catch(...)
+   {
+   }*/
+//      delete __get_module_state()->m_pmapHMENU;
+
+   try
+   {
+      __get_module_state()->m_pmapHWND     = NULL;
+   }
+   catch(...)
+   {
+   }
+/*   try
+   {
+      __get_module_state()->m_pmapHDC      = NULL;
+   }
+   catch(...)
+   {
+   }*/
+/*   try
+   {
+      __get_module_state()->m_pmapHGDIOBJ  = NULL;
+   }
+   catch(...)
+   {
+   }*/
+
+
+   set_heap_mutex(NULL);
 
    return nReturnCode;
+
+
 }
+
+
+int CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int nCmdShow)
+{
+   try
+   {
+
+      _set_purecall_handler(_ca2_purecall);
+
+      ::plane::system * psystem = new ::plane::system();
+
+
+      //Sleep(30 * 1000);
+
+
+      ASSERT(hPrevInstance == NULL);
+
+      int nReturnCode = 0;
+
+      ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
+
+      pinitmaindata->m_hInstance             = hInstance;
+      pinitmaindata->m_hPrevInstance         = hPrevInstance;
+      pinitmaindata->m_vssCommandLine        = lpCmdLine;
+      pinitmaindata->m_nCmdShow              = nCmdShow;
+
+
+      psystem->init_main_data(pinitmaindata);
+
+
+      nReturnCode = psystem->main();
+
+
+      __win_term();
+
+
+      try
+      {
+         delete psystem;
+      }
+      catch(...)
+      {
+      }
+
+      psystem = NULL;
+
+      try
+      {
+         delete __get_module_state()->m_pmapHWND;
+      }
+      catch(...)
+      {
+      }
+/*      try
+      {
+         delete __get_module_state()->m_pmapHDC;
+      }
+      catch(...)
+      {
+      }*/
+/*      try
+      {
+         delete __get_module_state()->m_pmapHGDIOBJ;
+      }
+      catch(...)
+      {
+      }*/
+//      delete __get_module_state()->m_pmapHMENU;
+      try
+      {
+         __get_module_state()->m_pmapHWND     = NULL;
+      }
+      catch(...)
+      {
+      }
+/*      try
+      {
+         __get_module_state()->m_pmapHDC      = NULL;
+      }
+      catch(...)
+      {
+      }
+      try
+      {
+         __get_module_state()->m_pmapHGDIOBJ  = NULL;
+      }
+      catch(...)
+      {
+      }*/
+
+      set_heap_mutex(NULL);
+
+
+      return nReturnCode;
+   }
+   catch(...)
+   {
+   }
+   return -1;
+}
+
 
 
 void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers)
@@ -85,56 +252,3 @@ void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppoin
    UNREFERENCED_PARAMETER(uiCode);
    UNREFERENCED_PARAMETER(ppointers);
 }
-
-
-
-
-
-
-::ca::application * lnx_instantiate_application(::ca::application * pappSystem, const char * pszId)
-{
-
-   ::ca::application * papp = NULL;
-
-   string strId(pszId);
-   string strLibrary;
-   strLibrary = strId + ".dll";
-   HMODULE hmodule = LoadCa2Library(strLibrary);
-   bool bRawCube = false;
-   if(hmodule == NULL)
-   {
-      hmodule = LoadCa2Library("cube.dll");
-      bRawCube = true;
-   }
-   LP_GET_NEW_APP  lpgetnewapp = NULL;
-   if(hmodule != NULL && lpgetnewapp == NULL)
-   {
-#ifdef _M_X64
-      lpgetnewapp = (LP_GET_NEW_APP) ::GetProcAddress(hmodule, "?get_new_app@@YAPEAVapplication@ca@@XZ");
-#else
-      lpgetnewapp = (LP_GET_NEW_APP) ::GetProcAddress(hmodule, "?get_new_app@@YAPAVapplication@ca@@XZ");
-#endif
-   }
-   if(lpgetnewapp != NULL)
-   {
-
-      papp = lpgetnewapp();
-
-
-      if(pappSystem != NULL)
-         papp->set_app(pappSystem);
-      else
-         papp->set_app(papp);
-
-
-      if(bRawCube)
-      {
-         papp->construct(strId);
-      }
-
-   }
-
-   return papp;
-
-}
-

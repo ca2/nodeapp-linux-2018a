@@ -20,9 +20,6 @@ namespace lnx
    public:
 
 
-      bool     m_bWinsockInitialized;
-
-
       ip_enum(::ca::application * papp);
       virtual ~ip_enum();
 
@@ -30,9 +27,12 @@ namespace lnx
       virtual ::count enumerate(ip_array & ipa);
       virtual ::count enumerate(stringa & stra);
 
+
    };
 
 
 } // namespace win
+
+
 
 

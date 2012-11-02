@@ -1,7 +1,10 @@
 #include "framework.h"
 
-namespace win
+
+namespace lnx
 {
+
+
 
    graphics_object::graphics_object()
    {
@@ -155,7 +158,7 @@ namespace win
    }
 
 
-} // namespace win
+} // namespace lnx
 
 
 /*hgdiobj_map * PASCAL afxMapHGDIOBJ(bool bCreate)
@@ -175,3 +178,7 @@ namespace win
 
 }
 */
+
+
+
+

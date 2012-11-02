@@ -15,22 +15,7 @@ namespace lnx
    public:
 
 
-      Display *               m_pdisplay;
-      int                     m_iScreen;
-      Drawable                m_d;
-      GC                      m_gc;
-      Colormap                m_colormap;
-      simple_pen              m_pen;
-      simple_brush            m_brush;
-      simple_font             m_font;
-      simple_bitmap           m_bitmap;
-   /*   HWND                    m_hwnd;
-      HBITMAP                 m_hbitmapOld;
-      HPEN                    m_hpenOld;
-      HFONT                   m_hfontOld;
-      HBRUSH                  m_hbrushOld;
-      int                     m_iType;
-      PAINTSTRUCT             m_ps;*/
+      cairo_t *               m_pdc; // Cairo drawing context
       int                     m_iType;
       bool                    m_bForeColor;
       bool                    m_bBackColor;
@@ -60,17 +45,17 @@ namespace lnx
          return *m_pgraphics;
       }*/
 
-      ::ca::window * GetWindow() const;
+      //::ca::window * GetWindow() const;
 
       //static ::ca::graphics * PASCAL from_handle(HDC hDC);
       //static void PASCAL DeleteTempMap();
-      bool Attach(HDC hdc);   // Attach/Detach affects only the Output DC
-      HDC Detach();
+      //bool Attach(HDC hdc);   // Attach/Detach affects only the Output DC
+      //HDC Detach();
 
-      virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
-      virtual void SetOutputDC(HDC hDC);  // Set the Output DC
-      virtual void ReleaseAttribDC();     // Release the Attribute DC
-      virtual void ReleaseOutputDC();     // Release the Output DC
+      //virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
+      //virtual void SetOutputDC(HDC hDC);  // Set the Output DC
+      //virtual void ReleaseAttribDC();     // Release the Attribute DC
+      //virtual void ReleaseOutputDC();     // Release the Output DC
 
       bool IsPrinting() const;            // TRUE if being used for printing
 
@@ -93,10 +78,8 @@ namespace lnx
       virtual double get_dpix() const;
 
    // Constructors
-      bool CreateDC(const char * lpszDriverName, const char * lpszDeviceName,
-         const char * lpszOutput, const void * lpInitData);
-      bool CreateIC(const char * lpszDriverName, const char * lpszDeviceName,
-         const char * lpszOutput, const void * lpInitData);
+      bool CreateDC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData);
+      bool CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData);
       bool CreateCompatibleDC(::ca::graphics * pgraphics);
 
       bool DeleteDC();
@@ -291,6 +274,8 @@ namespace lnx
       bool FillEllipse(LPCRECT lpRect);
       bool Pie(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4);
       bool Pie(LPCRECT lpRect, POINT ptStart, POINT ptEnd);
+      virtual bool fill_polygon(const POINTD * lpPoints, int nCount);
+      virtual bool fill_polygon(const POINT* lpPoints, int nCount);
       bool Polygon(const POINT* lpPoints, int nCount);
       bool PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int nCount);
       bool Rectangle(int x1, int y1, int x2, int y2);
@@ -485,7 +470,7 @@ namespace lnx
       virtual void assert_valid() const;
       virtual void dump(dump_context & dumpcontext) const;
 
-      HGDIOBJ SelectObject(HGDIOBJ);      // do not use for regions
+//      HGDIOBJ SelectObject(HGDIOBJ);      // do not use for regions
 
       virtual void set_alpha_mode(::ca::e_alpha_mode ealphamode);
 
@@ -507,11 +492,28 @@ namespace lnx
       // used for implementation of non-virtual SelectObject calls
       //static ::ca::graphics_object* PASCAL SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h);
 
+
+      // platform-specific or platform-internals
+      bool set(const ::ca::brush * pbrush);
+      bool set(const ::ca::pen * ppen);
+      bool set(const ::ca::font * pfont);
+      bool set(const ::ca::graphics_path * ppath);
+      bool set(const ::lnx::graphics_path::arc & arc);
+      bool set(const ::lnx::graphics_path::move & move);
+      bool set(const ::lnx::graphics_path::line & line);
+      bool fill_and_draw(::ca::brush * pbrush, ::ca::pen * ppen);
+      bool fill(::ca::brush * pbrush);
+      bool draw(::ca::pen * ppen);
+      bool fill_and_draw();
+      bool fill();
+      bool draw();
+
    };
 
 
 } // namespace win
 
 
-#define new DEBUG_NEW
+
+
 

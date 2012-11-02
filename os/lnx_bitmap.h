@@ -11,13 +11,10 @@ namespace lnx
    public:
 
 
-      //::Gdiplus::Bitmap *  m_pbitmap;
-      //void *               m_pdata;
-
-      Display *               m_pdisplay;
-      Pixmap                  m_pixmap;
-      ::primitive::memory     m_mem;
+      cairo_surface_t *       m_psurface;
+      simple_memory           m_mem;
       ::size                  m_size;
+
 
       bitmap(::ca::application * papp);
       virtual ~bitmap();
@@ -32,8 +29,7 @@ namespace lnx
    #ifndef ___NO_AFXCMN_SUPPORT
 // xxx      bool LoadMappedBitmap(UINT nIDBitmap, UINT nFlags = 0, LPCOLORMAP lpColorMap = NULL, int nMapSize = 0);
    #endif
-      bool CreateBitmap(::ca::graphics * pdc, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount,
-            const void * lpBits);
+      bool CreateBitmap(::ca::graphics * pdc, int nWidth, int nHeight, UINT nPlanes, UINT nBitcount, const void * lpBits);
       bool CreateBitmapIndirect(::ca::graphics * pdc, LPBITMAP lpBitmap);
       bool CreateCompatibleBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
       bool CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight);
@@ -52,7 +48,7 @@ namespace lnx
       virtual void dump(dump_context & dumpcontext) const;
 
 
-      virtual bool Attach(Pixmap pixmap);
+      virtual bool Attach(void * posdata);
 
 
       void destroy();

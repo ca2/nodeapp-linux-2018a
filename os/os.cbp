@@ -108,6 +108,8 @@
 		<Unit filename="lnx_graphics.h" />
 		<Unit filename="lnx_graphics_object.cpp" />
 		<Unit filename="lnx_graphics_object.h" />
+		<Unit filename="lnx_graphics_path.cpp" />
+		<Unit filename="lnx_graphics_path.h" />
 		<Unit filename="lnx_internal.h" />
 		<Unit filename="lnx_ip_enum.cpp" />
 		<Unit filename="lnx_ip_enum.h" />

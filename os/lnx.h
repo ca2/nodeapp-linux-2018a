@@ -72,6 +72,7 @@ CLASS_DECL_lnx void AfxResetMsgCache();
 // xxx #include "lnx_folder_watch.h"
 #include "lnx_factory_exchange.h"
 #include "lnx_window_draw.h"
+#include "lnx_graphics_path.h"
 #include "lnx_graphics.h"
 #include "lnx_graphics_object.h"
 #include "lnx_bitmap.h"

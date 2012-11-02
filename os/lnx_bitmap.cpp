@@ -9,14 +9,14 @@ namespace lnx
       ca(papp)
    {
 
-      m_pixmap = 0;
+      m_psurface = NULL;
 
    }
 
    bitmap::~bitmap()
    {
 
-      if(m_pixmap != 0)
+      if(m_psurface != NULL)
       {
 
          destroy();
@@ -28,20 +28,52 @@ namespace lnx
    bool bitmap::CreateBitmap(::ca::graphics * pdc, int cx, int cy, UINT nPlanes, UINT nBitcount, const void * pdata)
    {
 
-      ::lnx::graphics * pg = LNX_DC(pdc);
-
-      m_pdisplay = pg->m_pdisplay;
-
-      m_pixmap = XCreatePixmapFromBitmapData(pg->m_pdisplay, pg->m_d, (char *) pdata, cx, cy, BlackPixel(pg->m_pdisplay, pg->m_iScreen), WhitePixel(pg->m_pdisplay, pg->m_iScreen),nBitcount);
-
-      if(m_pixmap == 0)
+      if(nPlanes != 1 || nBitcount != 32)
       {
 
-         m_pdisplay = NULL;
+         throw not_implemented(get_app());
+
+      }
+
+      if(m_psurface != NULL)
+      {
+
+         destroy();
+
+      }
+
+      int iStride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, cx);
+
+      m_mem.allocate(iStride * cy);
+
+      if(cx * 4 != iStride)
+      {
+
+         int iW = cx * 4;
+
+         for(int i = 0; i < cy; i++)
+         {
+
+            memcpy(&((byte *) m_mem.get_data())[iStride * i], &((byte *) pdata)[iW * i], iW);
+
+         }
+
+      }
+      else
+      {
+         memcpy(m_mem.get_data(), pdata, iStride * cy);
+      }
+
+
+      m_psurface = cairo_image_surface_create_for_data((unsigned char *) m_mem.get_data(), CAIRO_FORMAT_ARGB32, cx, cy, iStride);
+
+      if(m_psurface == NULL)
+      {
 
          return false;
 
       }
+
 
       m_size.cx = cx;
       m_size.cy = cy;
@@ -138,7 +170,7 @@ namespace lnx
    size bitmap::GetBitmapDimension() const
    {
 
-      if(m_pixmap == 0)
+      if(m_psurface == NULL)
          return ::size(0, 0);
 
       return m_size;
@@ -244,26 +276,46 @@ namespace lnx
    void * bitmap::get_os_data() const
    {
 
-      return (void *) m_pixmap;
+      return (void *) m_psurface;
 
    }
 
-   bool bitmap::Attach(Pixmap pixmap)
-   {
+   void get_surface_size (cairo_surface_t * psurface, LONG * plongWidth, LONG * plongHeight)
+	{
 
-      if(m_pixmap != 0)
+      if(plongWidth != NULL)
       {
-         destroy();
-         m_pixmap = 0;
+
+         *plongWidth = cairo_image_surface_get_width(psurface);
+
       }
 
-      m_pixmap = pixmap;
+      if(plongHeight != NULL)
+      {
+
+         *plongHeight = cairo_image_surface_get_height(psurface);
+
+      }
 
 
-      throw todo(get_app());
+	}
 
-      // missing get m_size from Pixmap
 
+   bool bitmap::Attach(void * psurface)
+   {
+
+      if(m_psurface != 0)
+      {
+
+         destroy();
+
+         m_psurface = NULL;
+
+      }
+
+      m_psurface = (cairo_surface_t *) psurface;
+
+      get_surface_size((cairo_surface_t *) psurface, &m_size.cx, &m_size.cy);
 
       return true;
 
