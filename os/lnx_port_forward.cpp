@@ -3,7 +3,7 @@
 //const UINT UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION = ::RegisterWindowMessageA("UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION-{7C29C80A_5712_40e8_A124_A82E4B2795A7}");
 #define UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION (WM_APP + 123)
 
-namespace win
+namespace lnx
 {
 
    // forward declaration of global function which is included at the end of this file
@@ -18,17 +18,18 @@ namespace win
    port_forward::port_forward(::ca::application * papp) :
       ca(papp)
    {
-	   InitializeMembersToNull();
-	   ::InitializeCriticalSection( &m_cs );
+//	   InitializeMembersToNull();
+	//   ::InitializeCriticalSection( &m_cs );
    }
 
    port_forward::~port_forward()
    {
-	   StopListeningForUpnpChanges( );
+	  // StopListeningForUpnpChanges( );
 
-	   ::DeleteCriticalSection( &m_cs );
+	   //::DeleteCriticalSection( &m_cs );
    }
 
+/*
    void port_forward::InitializeMembersToNull()
    {
 	   m_piNAT			= NULL;
@@ -85,7 +86,7 @@ namespace win
 	   CoUninitialize();  // balancing call for CoInitialize
    }
 
-   HRESULT port_forward::ListenForUpnpChanges(::ca4::port_forward_change_callbacks *pCallbacks /* =NULL */ )
+   HRESULT port_forward::ListenForUpnpChanges(::ca4::port_forward_change_callbacks *pCallbacks /* =NULL */ /*)
    {
 	   // check if we are already listening
 
@@ -530,7 +531,7 @@ namespace win
 
 
 
-   /*   static   */
+   /*   static   */ /*
    UINT port_forward::ThreadForPortRetrieval(LPVOID pVoid)
    {
 	   SetThreadName( -1, "PortRtrv" );  // helps in debugging to see a thread's name
@@ -667,7 +668,7 @@ namespace win
    }
 
 
-   /*   static   */
+   /*   static   */ /*
    UINT port_forward::ThreadForDeviceInformationRetrieval( LPVOID pVoid )
    {
 	   SetThreadName( -1, "DevInfo" );  // helps in debugging to see a thread's name
@@ -801,7 +802,7 @@ namespace win
    }
 
 
-   /*   static   */
+   /*   static   */ /*
    UINT port_forward::ThreadToEditMapping( LPVOID pVoid )
    {
 	   SetThreadName( -1, "EditMap" );  // helps in debugging to see a thread's name
@@ -923,7 +924,7 @@ namespace win
 	   return 0;
    }
 
-   /*   static   */
+   /*   static   */ /*
    UINT port_forward::ThreadToDeleteMapping( LPVOID pVoid )
    {
 	   SetThreadName( -1, "DelMap" );  // helps in debugging to see a thread's name
@@ -1009,7 +1010,7 @@ namespace win
    }
 
 
-   /*   static   */
+   /*   static   */ /*
    UINT port_forward::ThreadToAddMapping( LPVOID pVoid )
    {
 	   SetThreadName( -1, "AddMap" );  // helps in debugging to see a thread's name
@@ -1274,7 +1275,7 @@ namespace win
 
 
    HRESULT port_forward::PopulateDeviceInfoContainer( IUPnPDevice* piDevice,
-				   port_forward::device & deviceInfo, HWND hWnd /* =NULL */ )
+				   port_forward::device & deviceInfo, HWND hWnd /* =NULL */ /* )
    {
 
 	   HRESULT result=S_OK, hrReturn=S_OK;
@@ -1737,7 +1738,7 @@ namespace win
 	   {
 	   }
    }
-
+*/
 
 } // namespace win
 

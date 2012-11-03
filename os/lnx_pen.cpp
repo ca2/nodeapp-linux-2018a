@@ -1,7 +1,9 @@
 #include "framework.h"
 
-namespace win
+
+namespace lnx
 {
+
 
    pen::pen(::ca::application * papp) :
       ca(papp)
@@ -10,40 +12,41 @@ namespace win
    pen::~pen()
    {
    }
-   pen::operator HPEN() const
+/*   pen::operator HPEN() const
    {
       return (HPEN)(this == NULL ? NULL : get_handle());
-   }
-   pen* PASCAL pen::from_handle(::ca::application * papp, HPEN hPen)
+   }*/
+/*   pen* PASCAL pen::from_handle(::ca::application * papp, HPEN hPen)
    {
       return dynamic_cast < pen* > (::win::graphics_object::from_handle(papp, hPen));
-   }
-   WINBOOL pen::CreatePen(int nPenStyle, int nWidth, COLORREF crColor)
-   { return Attach(::CreatePen(nPenStyle, nWidth, crColor)); }
-   WINBOOL pen::CreatePenIndirect(LPLOGPEN lpLogPen)
-   { return Attach(::CreatePenIndirect(lpLogPen)); }
-   WINBOOL pen::CreatePen(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
+   }*/
+/*   WINBOOL pen::CreatePen(int nPenStyle, int nWidth, COLORREF crColor)
+   { return Attach(::CreatePen(nPenStyle, nWidth, crColor)); }*/
+/*   WINBOOL pen::CreatePenIndirect(LPLOGPEN lpLogPen)
+   { return Attach(::CreatePenIndirect(lpLogPen)); }*/
+/*   WINBOOL pen::CreatePen(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
       int nStyleCount, const DWORD* lpStyle)
    { return Attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
-   lpStyle)); }
-   int pen::GetExtLogPen(EXTLOGPEN* pLogPen)
+   lpStyle)); }*/
+/*   int pen::GetExtLogPen(EXTLOGPEN* pLogPen)
    { ASSERT(get_handle() != NULL);
    return ::GetObject(get_handle(), sizeof(EXTLOGPEN), pLogPen); }
-
-   int pen::GetLogPen(LOGPEN* pLogPen)
+*/
+/*   int pen::GetLogPen(LOGPEN* pLogPen)
    {
       if(get_handle() == NULL)
          return 0;
       return ::GetObject(get_handle(), sizeof(LOGPEN), pLogPen);
    }
+*/
 
-
-   void pen::construct(int nPenStyle, int nWidth, COLORREF crColor)
+/*   void pen::construct(int nPenStyle, int nWidth, COLORREF crColor)
    {
       if (!Attach(::CreatePen(nPenStyle, nWidth, crColor)))
          AfxThrowResourceException();
    }
-
+*/
+/*
    void pen::construct(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
       int nStyleCount, const DWORD* lpStyle)
    {
@@ -51,32 +54,37 @@ namespace win
          lpStyle)))
          AfxThrowResourceException();
    }
-
+*/
    /////////////////////////////////////////////////////////////////////////////
 
+
 #ifdef DEBUG
+
    void pen::dump(dump_context & dumpcontext) const
    {
+
       ::ca::graphics_object::dump(dumpcontext);
+//
+  //    if (get_handle() == NULL)
+    //     return;
 
-      if (get_handle() == NULL)
-         return;
-
-      if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_PEN)
+/*      if (!afxData.bWin95 && ::GetObjectType(get_handle()) != OBJ_PEN)
       {
          // not a valid object
          dumpcontext << "has ILLEGAL HPEN!";
          return;
       }
-
-      LOGPEN lp;
+*/
+  /*    LOGPEN lp;
       VERIFY(GetObject(sizeof(lp), &lp));
       dumpcontext << "lgpn.lopnStyle = " << lp.lopnStyle;
       dumpcontext << "\nlgpn.lopnWidth.x (width) = " << lp.lopnWidth.x;
       dumpcontext << "\nlgpn.lopnColor = " << (void *)(dword_ptr)lp.lopnColor;
 
       dumpcontext << "\n";
+*/
    }
+
 #endif
 
 
@@ -106,4 +114,8 @@ namespace win
 
 
 
-} // namespace win
+} // namespace lnx
+
+
+
+

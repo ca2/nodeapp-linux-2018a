@@ -3,7 +3,7 @@
 	"lnx.h"
 	"lnx_internal.h"
 
-1351875284 /ca2/nodeapp/os/lnx.h
+1351938153 /ca2/nodeapp/os/lnx.h
 	"ca.h"
 	"lnx1.h"
 	"implementation.h"
@@ -28,6 +28,7 @@
 	"lnx_copydesk.h"
 	"lnx_crypt.h"
 	"lnx_ip_enum.h"
+	"lnx_shell.h"
 	"lnx_application.h"
 
 1342864881 /ca2/app/appseed/ca/ca.h
@@ -91,7 +92,7 @@
 	"fs_remote_native_fs.h"
 	"fs_application.h"
 
-1347621935 /ca2/app/appseed/ca/user/user.h
+1351947035 /ca2/app/appseed/ca/user/user.h
 	"ca/visual/visual.h"
 	"user_document_interface.h"
 	"user_document.h"
@@ -122,10 +123,9 @@
 	"user_job.h"
 	"user_application.h"
 
-1342864829 /ca2/app/appseed/ca/visual/visual.h
+1351891576 /ca2/app/appseed/ca/visual/visual.h
 	"ca/userpresence/userpresence.h"
 	"ft2build.h"
-	"visual_clip.h"
 	"visual_dib.h"
 	"visual_fastblur.h"
 	"visual_rgb_quad_array.h"
@@ -581,7 +581,7 @@
 	"ca/primitive/count.h"
 	"ca/api/api.h"
 
-1351439664 /ca2/app/appseed/c/c/c.h
+1351925932 /ca2/app/appseed/c/c/c.h
 	"c/_/ThomasGustavoCecynLundgrenVidaEternaDeCamiloSasukeTsumanuma.h"
 	"nodeapp/operational_system/_.h"
 	"c/vms/vms.h"
@@ -789,7 +789,7 @@
 
 1347208666 /ca2/nodeapp/operational_system/cross/win/win_gdi.h
 
-1345878529 /ca2/nodeapp/operational_system/cross/win/win_user.h
+1351944333 /ca2/nodeapp/operational_system/cross/win/win_user.h
 
 1345878529 /ca2/nodeapp/operational_system/cross/win/win_errno.h
 
@@ -1327,7 +1327,7 @@
 
 1345878356 /ca2/app/appseed/ca/exception/exception_memory_state.h
 
-1342864819 /ca2/app/appseed/ca/exception/exception_dump_context.h
+1351925933 /ca2/app/appseed/ca/exception/exception_dump_context.h
 
 1342864819 /ca2/app/appseed/ca/exception/exception_debug.h
 
@@ -1808,18 +1808,18 @@
 
 1347219354 /ca2/app/appseed/ca/ca/ca_graphics_object.h
 
-1351863652 /ca2/app/appseed/ca/ca/ca_pen.h
+1351925932 /ca2/app/appseed/ca/ca/ca_pen.h
 
 1351848396 /ca2/app/appseed/ca/ca/ca_bitmap.h
 	"ca_graphics_object.h"
 
-1351863997 /ca2/app/appseed/ca/ca/ca_brush.h
+1351925932 /ca2/app/appseed/ca/ca/ca_brush.h
 
 1351812991 /ca2/app/appseed/ca/ca/ca_font.h
 
 1342864737 /ca2/app/appseed/ca/ca/ca_palette.h
 
-1342864737 /ca2/app/appseed/ca/ca/ca_region.h
+1351925932 /ca2/app/appseed/ca/ca/ca_region.h
 
 1342864737 /ca2/app/appseed/ca/ca/ca_igui.h
 
@@ -1853,7 +1853,7 @@
 	"ca/user/user_create_context.h"
 	"ca/user/user_check_interface.h"
 
-1350845755 /ca2/app/appseed/ca/gen/gen_message.h
+1351925933 /ca2/app/appseed/ca/gen/gen_message.h
 
 1342864881 /ca2/app/appseed/ca/user/user_create_context.h
 	"ca/ca_type_info.h"
@@ -3363,7 +3363,7 @@
 
 1342864829 /ca2/app/appseed/ca/visual/visual_rgb_quad_array.h
 
-1349512046 /ca2/app/appseed/ca/visual/visual_imaging.h
+1351925932 /ca2/app/appseed/ca/visual/visual_imaging.h
 
 1350807661 /ca2/app/appseed/ca/visual/visual_image_list.h
 
@@ -3609,7 +3609,7 @@
 
 1348431994 /ca2/nodeapp/os/brush.h
 
-1348448062 /ca2/nodeapp/os/lnx_region.h
+1351934088 /ca2/nodeapp/os/lnx_region.h
 
 1348430326 /ca2/nodeapp/os/draw_dib.h
 
@@ -3650,7 +3650,7 @@
 1348450231 /ca2/nodeapp/os/lnx_state.h
 	"lnx_thread_slots.h"
 
-1349647857 /ca2/nodeapp/os/lnx_thread_slots.h
+1351950279 /ca2/nodeapp/os/lnx_thread_slots.h
 
 1348448062 /ca2/nodeapp/os/lnx_dir.h
 
@@ -3660,7 +3660,7 @@
 
 1348448063 /ca2/nodeapp/os/lnx_window_draw.h
 
-1351878360 /ca2/nodeapp/os/lnx_graphics.h
+1351941957 /ca2/nodeapp/os/lnx_graphics.h
 
 1348448062 /ca2/nodeapp/os/lnx_graphics_object.h
 
@@ -3676,11 +3676,11 @@
 
 1348448062 /ca2/nodeapp/os/lnx_brush.h
 
-1348448063 /ca2/nodeapp/os/lnx_thread.h
+1351946533 /ca2/nodeapp/os/lnx_thread.h
 
-1348448063 /ca2/nodeapp/os/lnx_window.h
+1351953345 /ca2/nodeapp/os/lnx_window.h
 
-1348448062 /ca2/nodeapp/os/lnx_os.h
+1351936461 /ca2/nodeapp/os/lnx_os.h
 
 1351415534 /ca2/nodeapp/os/lnx_port_forward.h
 
@@ -3690,7 +3690,7 @@
 
 1349014885 /ca2/nodeapp/os/lnx_file.h
 
-1348448063 /ca2/nodeapp/os/lnx_shell.h
+1351938352 /ca2/nodeapp/os/lnx_shell.h
 
 1348448062 /ca2/nodeapp/os/lnx_resource.h
 
@@ -4060,7 +4060,7 @@
 
 1350784958 /ca2/app/appseed/c/c/c_simple_app.h
 
-1351370505 source:/ca2/nodeapp/os/lnx_file.cpp
+1351950811 source:/ca2/nodeapp/os/lnx_file.cpp
 	"framework.h"
 	<fcntl.h>
 	<unistd.h>
@@ -4099,4 +4099,57 @@
 
 1351875940 source:/ca2/nodeapp/os/lnx_graphics_path.cpp
 	"framework.h"
+
+1351935864 source:/ca2/nodeapp/os/lnx_palette.cpp
+	"framework.h"
+
+1351936784 source:/ca2/nodeapp/os/lnx_os.cpp
+	"framework.h"
+
+1351936916 source:/ca2/nodeapp/os/lnx_pen.cpp
+	"framework.h"
+
+1351936998 source:/ca2/nodeapp/os/lnx_port_forward.cpp
+	"framework.h"
+
+1351937004 source:/ca2/nodeapp/os/lnx_preview_dc.cpp
+	"framework.h"
+
+1351937660 source:/ca2/nodeapp/os/lnx_region.cpp
+	"framework.h"
+
+1351938090 source:/ca2/nodeapp/os/lnx_resource.cpp
+	"framework.h"
+
+1351938483 source:/ca2/nodeapp/os/lnx_shell.cpp
+	"framework.h"
+
+1351945032 source:/ca2/nodeapp/os/lnx_main.cpp
+	"framework.h"
+
+1351940412 source:/ca2/nodeapp/os/lnx_stdio_file.cpp
+	"framework.h"
+	<errno.h>
+	<fcntl.h>
+
+1351942103 source:/ca2/nodeapp/os/lnx_graphics.cpp
+	"framework.h"
+	<math.h>
+
+1351949041 source:/ca2/nodeapp/os/lnx_thread.cpp
+	"framework.h"
+	<unistd.h>
+	<errno.h>
+	<fcntl.h>
+
+1351950811 source:/ca2/nodeapp/os/lnx_thread_local_storage.cpp
+	"framework.h"
+	<stddef.h>
+
+1351950567 source:/ca2/nodeapp/os/lnx_trace.cpp
+	"framework.h"
+
+1351950621 source:/ca2/nodeapp/os/lnx_util.cpp
+	"framework.h"
+	<malloc.h>
 

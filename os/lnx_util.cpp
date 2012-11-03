@@ -25,6 +25,7 @@
    return TRUE;
 }*/
 
+/*
 WINBOOL CLASS_DECL_lnx _AfxIsComboBoxControl(HWND hWnd, UINT nStyle)
 {
    if (hWnd == NULL)
@@ -86,8 +87,9 @@ void CLASS_DECL_lnx AfxSetWindowText(::user::interaction * hWndCtrl, const char 
       // change it
       ::SetWindowText(hWndCtrl, lpszNew);
    }*/
-}
+//}
 
+/*
 void CLASS_DECL_lnx AfxDeleteObject(HGDIOBJ* pObject)
 {
    ENSURE_ARG(pObject != NULL);
@@ -96,7 +98,8 @@ void CLASS_DECL_lnx AfxDeleteObject(HGDIOBJ* pObject)
       ::DeleteObject(*pObject);
       *pObject = NULL;
    }
-}
+}*/
+
 /*
 void CLASS_DECL_lnx AfxCancelModes(HWND hWndRcvr)
 {
@@ -131,6 +134,7 @@ void CLASS_DECL_lnx AfxCancelModes(HWND hWndRcvr)
    ::SendMessage(hWndCancel, CB_SHOWDROPDOWN, FALSE, 0L);
 }*/
 
+/*
 void CLASS_DECL_lnx AfxGlobalFree(HGLOBAL hGlobal)
 {
    if (hGlobal == NULL)
@@ -145,7 +149,7 @@ void CLASS_DECL_lnx AfxGlobalFree(HGLOBAL hGlobal)
    // finally, really free the handle
    GlobalFree(hGlobal);
 }
-
+*/
 /////////////////////////////////////////////////////////////////////////////
 // Special new handler for safety pool on temp maps
 
@@ -159,7 +163,7 @@ int __CDECL AfxCriticalNewHandler(size_t nSize)
    // called during critical primitive::memory allocation
    //  free up part of the cast's safety cache
 //   TRACE(::radix::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
-   _AFX_THREAD_STATE* pThreadState = AfxGetThreadState();
+/*   ___THREAD_STATE* pThreadState = __get_thread_state();
    if (pThreadState != NULL && pThreadState->m_pSafetyPoolBuffer != NULL)
    {
       size_t nOldBufferSize = _msize(pThreadState->m_pSafetyPoolBuffer);
@@ -181,9 +185,9 @@ int __CDECL AfxCriticalNewHandler(size_t nSize)
       }
       return 1;       // retry it
    }
-
+*/
 //   TRACE(::radix::trace::category_Memory, 0, "ERROR: Critical primitive::memory allocation from safety pool failed!\n");
-   AfxThrowMemoryException();      // oops
+//   AfxThrowMemoryException();      // oops
 }
 #endif // !_AFX_PORTABLE
 

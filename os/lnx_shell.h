@@ -19,7 +19,7 @@ public:
 // xxx   static WINBOOL WINAPI _SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath);
 // xxx   static HANDLE WINAPI _FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata);
 // xxx   static WINBOOL WINAPI _FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata);
-   static WINBOOL WINAPI _MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName);
+/*   static WINBOOL WINAPI _MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName);
    static DWORD WINAPI _GetFullPathName(const wchar_t * lpFileName, DWORD nBufferLength, wchar_t * lpBuffer, wchar_t ** lpFilePart);
    static WCHAR * __cdecl __fullpath(WCHAR *UserBuf, const WCHAR *path, size_t maxlen);
    static WINBOOL WINAPI _GetVolumeInformation(
@@ -266,8 +266,10 @@ public:
       string & str);
 
    static WINBOOL MoveFile(const char * lpExistingFileName, const char * lpNewFileName);
-
+*/
 };
+
+
 
 /*inline WINBOOL shell::SHGetPathFromIDList(LPCITEMIDLIST pidl, string & str)
 {
@@ -302,6 +304,7 @@ inline WINBOOL shell::FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
 
 */
 
+/*
 inline WCHAR * shell::_fullpath(WCHAR *UserBuf, const WCHAR *path, size_t maxlen)
 {
    return (*theLinuxShell.m_pfn_fullpath)(UserBuf, path, maxlen);
@@ -355,7 +358,7 @@ inline DWORD shell::SHGetFileInfo(
       uFlags);
 }
 */
-
+/*
 inline DWORD shell::GetTempPathW(
    DWORD nBufferLength,
    wchar_t * lpBuffer)
@@ -426,7 +429,7 @@ inline ATOM shell::RegisterClass(
    return (*theLinuxShell.m_pfnRegisterClass)(
       lpWndClass);
 }*/
-
+/*
 inline HWND shell::CreateWindowEx(
    DWORD dwExStyle,
    const wchar_t * lpClassName,
@@ -486,7 +489,7 @@ inline WINBOOL shell::MoveFile(const char * lpExistingFileName, const char * lpN
    return MoveFile(gen::international::utf8_to_unicode(lpExistingFileName), gen::international::utf8_to_unicode(lpNewFileName));
 }
 
-
+*/
 
 
 } // namespace lnx

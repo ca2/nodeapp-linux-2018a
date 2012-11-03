@@ -103,7 +103,7 @@ CLASS_DECL_lnx void AfxResetMsgCache();
 #define SP_HDC(pgraphics) ((HDC)*(dynamic_cast < ::lnx::graphics * > ((::ca::graphics *)(pgraphics))))
 #define LNX_DIB(pdib) (dynamic_cast < ::lnx::dib * > (dynamic_cast < ::ca::dib * >(pdib)))
 
-
+#include "lnx_shell.h"
 
 CLASS_DECL_lnx void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj);
 CLASS_DECL_lnx void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg);

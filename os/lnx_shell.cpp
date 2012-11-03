@@ -12,7 +12,7 @@
 *Exceptions:
 *
 *******************************************************************************/
-
+/*
 int __cdecl _validdrive (
     unsigned drive
     )
@@ -33,7 +33,7 @@ int __cdecl _validdrive (
             return 0;
 
         return 1;
-}
+}*/
 
 /*WCHAR * __cdecl _wgetdcwd (
         int drive,
@@ -150,7 +150,7 @@ int __cdecl _validdrive (
             drvstr[1] = ':';
             drvstr[2] = '.';
             drvstr[3] = '\0';
-            len = ::lnx::shell::GetFullPathName( drvstr,
+            len = shell::GetFullPathName( drvstr,
                                    sizeof(dirbuf) / sizeof(_TSCHAR),
                                    dirbuf,
                                    &pname );
@@ -234,26 +234,30 @@ int __cdecl _validdrive (
         return 1;
 }*/
 
+namespace lnx
+{
 
 
-::lnx::shell ::lnx::shell::theLinuxShell;
+shell shell::theLinuxShell;
 
 //////////////////////////////////////////////////////////////////////
 // Construction/Destruction
 //////////////////////////////////////////////////////////////////////
 
-::lnx::shell::::win::shell()
+shell::shell()
 {
 
 }
 
-::lnx::shell::~::win::shell()
+shell::~shell()
 {
 
 }
 
-bool ::lnx::shell::Initialize()
+bool shell::Initialize()
 {
+
+   /*
    DWORD dwVersion = GetVersion();
 
    // get the Windows version.
@@ -319,11 +323,12 @@ bool ::lnx::shell::Initialize()
       theLinuxShell.m_pfnRegisterClass = _RegisterClass;
       theLinuxShell.m_pfnCreateWindowEx = _CreateWindowEx;
    }
-
+*/
    return true;
 }
 
-WINBOOL ::lnx::shell::_SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath)
+/*
+WINBOOL shell::_SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath)
 {
    CHAR pszPathA[MAX_PATH * 2];
    if(!::SHGetPathFromIDListA(pidl, pszPathA))
@@ -331,7 +336,7 @@ WINBOOL ::lnx::shell::_SHGetPathFromIDList(LPCITEMIDLIST pidl, wchar_t * pszPath
    return gen::international::ACPToUnicode(pszPath, MAX_PATH * 2, pszPathA) ? TRUE : FALSE;
 }
 
-WINBOOL ::lnx::shell::_MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName)
+WINBOOL shell::_MoveFile(const wchar_t * lpExistingFileName, const wchar_t * lpNewFileName)
 {
    string str1, str2;
    gen::international::UnicodeToACP(str1, lpExistingFileName);
@@ -339,7 +344,7 @@ WINBOOL ::lnx::shell::_MoveFile(const wchar_t * lpExistingFileName, const wchar_
    return ::MoveFileA(str1, str2);
 }
 
-HANDLE ::lnx::shell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata)
+HANDLE shell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lpdata)
 {
    CHAR pszPathA[MAX_PATH * 2];
    gen::international::UnicodeToACP(pszPathA, MAX_PATH * 2, lpcsz);
@@ -362,7 +367,7 @@ HANDLE ::lnx::shell::_FindFirstFile(const wchar_t * lpcsz, WIN32_FIND_DATAW * lp
    return handle;
 }
 
-WINBOOL ::lnx::shell::_FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
+WINBOOL shell::_FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
 {
    WIN32_FIND_DATAA data;
    WINBOOL b = ::FindNextFileA(handle, &data);
@@ -384,7 +389,7 @@ WINBOOL ::lnx::shell::_FindNextFile(HANDLE handle, WIN32_FIND_DATAW * lpdata)
 }
 
 
-WCHAR * __cdecl ::lnx::shell::__fullpath (
+WCHAR * __cdecl shell::__fullpath (
         WCHAR *UserBuf,
         const WCHAR *path,
         size_t maxlen
@@ -396,11 +401,11 @@ WCHAR * __cdecl ::lnx::shell::__fullpath (
 
 
         if ( !path || !*path )  /* no work to do */
-            return( _wgetcwd( UserBuf, maxlen ) );
+  /*          return( _wgetcwd( UserBuf, maxlen ) );
 
         /* allocate buffer if necessary */
 
-        if ( !UserBuf )
+    /*    if ( !UserBuf )
             if ( !(buf = (WCHAR *) malloc(_MAX_PATH * sizeof(WCHAR))) ) {
 //                errno = ENOMEM;
                 return( NULL );
@@ -433,7 +438,7 @@ WCHAR * __cdecl ::lnx::shell::__fullpath (
 }
 
 
-DWORD WINAPI ::lnx::shell::_GetFullPathName(
+DWORD WINAPI shell::_GetFullPathName(
    const wchar_t * lpFileName,
    DWORD nBufferLength,
    wchar_t * lpBuffer,
@@ -451,7 +456,7 @@ DWORD WINAPI ::lnx::shell::_GetFullPathName(
    return dw;
 }
 
-WINBOOL WINAPI ::lnx::shell::_GetVolumeInformation(
+WINBOOL WINAPI shell::_GetVolumeInformation(
       const wchar_t * lpRootPathName,           // root directory
       wchar_t * lpVolumeNameBuffer,        // volume name buffer
       DWORD nVolumeNameSize,            // length of name buffer
@@ -488,7 +493,7 @@ WINBOOL WINAPI ::lnx::shell::_GetVolumeInformation(
    return b;
 }
 
-DWORD_PTR ::lnx::shell::_SHGetFileInfo(
+DWORD_PTR shell::_SHGetFileInfo(
    const wchar_t * pszPath,
    DWORD dwFileAttributes,
    SHFILEINFOW *psfi,
@@ -516,7 +521,7 @@ DWORD_PTR ::lnx::shell::_SHGetFileInfo(
 }
 
 
-WINBOOL ::lnx::shell::_GetStringTypeEx(
+WINBOOL shell::_GetStringTypeEx(
    LCID uiCodePage,
    DWORD dwInfoType,
    const wchar_t * lpSrcStr,
@@ -545,7 +550,7 @@ WINBOOL ::lnx::shell::_GetStringTypeEx(
 }
 
 
-DWORD ::lnx::shell::_GetTempPath(
+DWORD shell::_GetTempPath(
       DWORD nBufferLength,
       wchar_t * lpBuffer)
 {
@@ -556,7 +561,7 @@ DWORD ::lnx::shell::_GetTempPath(
    return dw;
 }
 
-UINT ::lnx::shell::_GetTempFileName(
+UINT shell::_GetTempFileName(
    const wchar_t * lpPathName,
    const wchar_t * lpPrefixString,
    UINT uUnique,
@@ -585,7 +590,7 @@ UINT ::lnx::shell::_GetTempFileName(
 }
 
 
-HANDLE ::lnx::shell::_CreateFile(
+HANDLE shell::_CreateFile(
    const wchar_t * lpFileName,
    DWORD dwDesiredAccess,
    DWORD dwShareMode,
@@ -609,7 +614,7 @@ HANDLE ::lnx::shell::_CreateFile(
 }
 
 
-DWORD ::lnx::shell::_GetModuleFileName(
+DWORD shell::_GetModuleFileName(
    HMODULE hModule,
    wchar_t * lpFilename,
    DWORD nSize
@@ -622,7 +627,7 @@ DWORD ::lnx::shell::_GetModuleFileName(
    return dw;
 }
 
-WINBOOL ::lnx::shell::_GetClassInfo(
+WINBOOL shell::_GetClassInfo(
     HINSTANCE hInstance ,
     const wchar_t * lpClassName,
     LPWNDCLASSW lpWndClass)
@@ -664,14 +669,14 @@ WINBOOL ::lnx::shell::_GetClassInfo(
    }
  string strMenuName;*/
    //strMenuName = wndclass->lpszMenuName;
-   lpWndClass->lpszMenuName = (const wchar_t *) wndclass.lpszMenuName;
+/*   lpWndClass->lpszMenuName = (const wchar_t *) wndclass.lpszMenuName;
 
    lpWndClass->lpszClassName = (const wchar_t *) wndclass.lpszClassName;
 
    return TRUE;
 
 }
-ATOM ::lnx::shell::_RegisterClass(
+ATOM shell::_RegisterClass(
    CONST WNDCLASSW *lpWndClass)
 {
    WNDCLASS wndclass;
@@ -698,7 +703,7 @@ ATOM ::lnx::shell::_RegisterClass(
 }
 
 
-HWND ::lnx::shell::_CreateWindowEx(
+HWND shell::_CreateWindowEx(
    DWORD dwExStyle,
    const wchar_t * lpClassName,
    const wchar_t * lpWindowName,
@@ -742,3 +747,6 @@ HWND ::lnx::shell::_CreateWindowEx(
       lpParam);
 
 }
+*/
+
+} // namespace lnx

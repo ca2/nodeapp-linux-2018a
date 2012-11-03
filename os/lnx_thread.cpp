@@ -1,6 +1,48 @@
 #include "framework.h"
-#include <process.h>    // for _beginthreadex and _endthreadex
-#include <ddeml.h>  // for MSGF_DDEMGR
+//#include <process.h>    // for _beginthreadex and _endthreadex
+//#include <ddeml.h>  // for MSGF_DDEMGR
+
+/**
+* \file		src/lib/pal/src/linux/thread_linux.cpp
+* \brief	Platform independent threads and synchronization objects (linux version)
+* \author	Thomas Nass
+*/
+
+//#include "internal_linux.hpp"
+
+//#include <iostream>
+//#include <string>
+
+#include <unistd.h>
+#include <errno.h>
+#include <fcntl.h>
+
+//namespace gen { namespace pal {
+
+	//namespace internal
+	//{
+
+
+WINBOOL PeekMessage(
+    LPMSG lpMsg,
+    HWND hWnd,
+    UINT wMsgFilterMin,
+    UINT wMsgFilterMax,
+    UINT wRemoveMsg)
+    {
+
+       return TRUE;
+    }
+
+WINBOOL GetMessage(
+    LPMSG lpMsg,
+    HWND hWnd,
+    UINT wMsgFilterMin,
+    UINT wMsgFilterMax)
+    {
+
+       return TRUE;
+    }
 
 namespace lnx
 {
@@ -39,7 +81,7 @@ namespace ca
 struct _AFX_THREAD_STARTUP : ::ca::thread_startup
 {
    // following are "in" parameters to thread startup
-   _AFX_THREAD_STATE* pThreadState;    // thread state of parent thread
+   ___THREAD_STATE* pThreadState;    // thread state of parent thread
    ::lnx::thread* pThread;    // thread for new thread
    DWORD dwCreateFlags;    // thread creation flags
    _PNH pfnNewHandler;     // new handler for new thread
@@ -67,7 +109,7 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
    try
    {
       // inherit parent's module state
-      _AFX_THREAD_STATE* pThreadState = AfxGetThreadState();
+      ___THREAD_STATE* pThreadState = __get_thread_state();
       pThreadState->m_pModuleState = pStartup->pThreadState->m_pModuleState;
 
       // set current thread pointer for System.GetThread
@@ -126,7 +168,7 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
 CLASS_DECL_lnx ::lnx::thread * AfxGetThread()
 {
    // check for current thread in module thread state
-   __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
    ::lnx::thread* pThread = pState->m_pCurrentWinThread;
    return pThread;
 }
@@ -135,7 +177,7 @@ CLASS_DECL_lnx ::lnx::thread * AfxGetThread()
 CLASS_DECL_lnx void AfxSetThread(::radix::thread * pthread)
 {
    // check for current thread in module thread state
-   __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
    pState->m_pCurrentWinThread = dynamic_cast < ::lnx::thread * > (pthread->::ca::thread_sp::m_p);
 }
 
@@ -143,7 +185,7 @@ CLASS_DECL_lnx void AfxSetThread(::radix::thread * pthread)
 
 CLASS_DECL_lnx MSG * AfxGetCurrentMessage()
 {
-   _AFX_THREAD_STATE* pState = AfxGetThreadState();
+   ___THREAD_STATE* pState = __get_thread_state();
    ASSERT(pState);
    return &(pState->m_msgCur);
 }
@@ -152,7 +194,7 @@ CLASS_DECL_lnx MSG * AfxGetCurrentMessage()
 
 CLASS_DECL_lnx void AfxInternalProcessWndProcException(base_exception*, gen::signal_object * pobj)
 {
-   SCAST_PTR(user::lnx::message::base, pbase, pobj);
+   SCAST_PTR(::gen::message::base, pbase, pobj);
    if (pbase->m_uiMessage == WM_CREATE)
    {
       pbase->set_lresult(-1);
@@ -161,7 +203,7 @@ CLASS_DECL_lnx void AfxInternalProcessWndProcException(base_exception*, gen::sig
    else if (pbase->m_uiMessage == WM_PAINT)
    {
       // force validation of ::ca::window to prevent getting WM_PAINT again
-      ValidateRect(pbase->m_hwnd, NULL);
+//      ValidateRect(pbase->m_hwnd, NULL);
       pbase->set_lresult(0);
       return;
    }
@@ -181,7 +223,7 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
 {
    try
    {
-      SCAST_PTR(user::lnx::message::base, pbase, pobj);
+      SCAST_PTR(gen::message::base, pbase, pobj);
 
       //   ASSERT_VALID(this);
 
@@ -189,7 +231,7 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
       if( pThread )
       {
          // if this is a thread-message, short-circuit this function
-         if (pbase->m_hwnd == NULL)
+         if (pbase->m_pwnd == NULL)
          {
             pThread->DispatchThreadMessageEx(pobj);
             if(pobj->m_bRet)
@@ -208,7 +250,7 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
 
       // in case of modeless dialogs, last chance route through main
       //   ::ca::window's accelerator table
-      ::ca::window * pWnd = ::lnx::window::from_handle(pbase->m_hwnd);
+      ::ca::window * pWnd = pbase->m_pwnd->get_wnd();
       if (pMainWnd != NULL)
       {
          if (pWnd != NULL && LNX_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
@@ -270,7 +312,7 @@ void __cdecl AfxPreTranslateMessage(gen::signal_object * pobj)
 
 WINBOOL AfxInternalIsIdleMessage(gen::signal_object * pobj)
 {
-   SCAST_PTR(user::lnx::message::base, pbase, pobj);
+   SCAST_PTR(gen::message::base, pbase, pobj);
    // Return FALSE if the message just dispatched should _not_
    // cause on_idle to be run.  Messages which do not usually
    // affect the state of the ::fontopus::user interface and happen very
@@ -283,7 +325,7 @@ WINBOOL AfxInternalIsIdleMessage(gen::signal_object * pobj)
    if (pbase->m_uiMessage == WM_MOUSEMOVE || pbase->m_uiMessage == WM_NCMOUSEMOVE)
    {
       // mouse move at same position as last mouse move?
-      _AFX_THREAD_STATE *pState = AfxGetThreadState();
+      ___THREAD_STATE *pState = __get_thread_state();
       point ptCursor;
       App(pobj->get_app()).get_cursor_pos(&ptCursor);
       if (pState->m_ptCursorLast == ptCursor && pbase->m_uiMessage == pState->m_nMsgLast)
@@ -314,7 +356,7 @@ WINBOOL AfxInternalIsIdleMessage(LPMSG lpmsg)
    if (lpmsg->message == WM_MOUSEMOVE || lpmsg->message == WM_NCMOUSEMOVE)
    {
       // mouse move at same position as last mouse move?
-      _AFX_THREAD_STATE *pState = AfxGetThreadState();
+      ___THREAD_STATE *pState = __get_thread_state();
       if (pState->m_ptCursorLast == lpmsg->pt && lpmsg->message == pState->m_nMsgLast)
          return FALSE;
 
@@ -370,7 +412,7 @@ WINBOOL __cdecl AfxIsIdleMessage(MSG* pMsg)
 void CLASS_DECL_lnx AfxEndThread(::radix::application * papp, UINT nExitCode, WINBOOL bDelete)
 {
    // remove current thread object from primitive::memory
-   __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+   __MODULE_THREAD_STATE* pState = __get_module_thread_state();
    ::lnx::thread* pThread = pState->m_pCurrentWinThread;
    if (pThread != NULL)
    {
@@ -383,14 +425,14 @@ void CLASS_DECL_lnx AfxEndThread(::radix::application * papp, UINT nExitCode, WI
    }
 
    // allow cleanup of any thread local objects
-   AfxTermThread(papp);
+   __term_thread(papp);
 
    // allow C-runtime to cleanup, and exit the thread
-   _endthreadex(nExitCode);
+//   _endthreadex(nExitCode);
 }
 
 extern thread_slot_data* _afxThreadData;
-void CLASS_DECL_lnx AfxTermThread(::radix::application * papp, HINSTANCE hInstTerm)
+void CLASS_DECL_lnx __term_thread(::radix::application * papp, HINSTANCE hInstTerm)
 {
 
    try
@@ -398,7 +440,7 @@ void CLASS_DECL_lnx AfxTermThread(::radix::application * papp, HINSTANCE hInstTe
       // cleanup thread local tooltip window
       if (hInstTerm == NULL)
       {
-//         __MODULE_THREAD_STATE* pModuleThreadState = AfxGetModuleThreadState();
+//         __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
       }
    }
    catch( base_exception* e )
@@ -410,7 +452,8 @@ void CLASS_DECL_lnx AfxTermThread(::radix::application * papp, HINSTANCE hInstTe
    {
       // cleanup the rest of the thread local data
       if (_afxThreadData != NULL)
-         _afxThreadData->DeleteValues(hInstTerm, FALSE);
+         _afxThreadData->delete_data();
+         //_afxThreadData->DeleteValues(hInstTerm, FALSE);
    }
    catch( base_exception* e )
    {
@@ -429,10 +472,10 @@ void CLASS_DECL_lnx AfxInitThread()
    if (!afxContextIsDLL)
    {
       // set message filter proc
-      _AFX_THREAD_STATE* pThreadState = AfxGetThreadState();
-      ASSERT(pThreadState->m_hHookOldMsgFilter == NULL);
-      pThreadState->m_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER,
-         _AfxMsgFilterHook, NULL, ::GetCurrentThreadId());
+      ___THREAD_STATE* pThreadState = __get_thread_state();
+//      ASSERT(pThreadState->m_hHookOldMsgFilter == NULL);
+  //    pThreadState->m_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER,
+    //     _AfxMsgFilterHook, NULL, ::GetCurrentThreadId());
    }
 }
 
@@ -468,8 +511,9 @@ namespace lnx
    thread::thread(::ca::application * papp) :
       ca(papp),
       message_window_simple_callback(papp),//,
-      //m_evFinish(FALSE, TRUE)
-      radix::thread(NULL)
+      m_evFinish(papp, FALSE, TRUE),
+      radix::thread(NULL),
+      m_mutexUiPtra(papp)
    {
       m_evFinish.SetEvent();
       m_pAppThread = dynamic_cast < ::ca::thread * > (papp);
@@ -486,16 +530,18 @@ namespace lnx
       m_puiMain      = NULL;
       m_puiActive    = NULL;
 
-      m_pmapHDC      = NULL;
-      m_pmapHGDIOBJ  = NULL;
+//      m_peventReady  = NULL;
+
+//      m_pmapHDC      = NULL;
+  //    m_pmapHGDIOBJ  = NULL;
 
       m_nDisablePumpCount  = 0;
 
       // no HTHREAD until it is created
-      m_hThread = NULL;
-      m_nThreadID = 0;
+    //  m_hThread = NULL;
+      //m_nThreadID = 0;
 
-      _AFX_THREAD_STATE* pState = AfxGetThreadState();
+      ___THREAD_STATE* pState = __get_thread_state();
       // initialize message pump
       m_nDisablePumpCount = 0;
       pState->m_nMsgLast = WM_NULL;
@@ -505,10 +551,10 @@ namespace lnx
       m_bAutoDelete = TRUE;
       m_bRun = false;
 
-      m_pmapHDC = new hdc_map;
-      m_pmapHGDIOBJ = new hgdiobj_map;
+//      m_pmapHDC = new hdc_map;
+  //    m_pmapHGDIOBJ = new hgdiobj_map;
       m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
-      m_ptimera = new ::user::interaction::timer_array;
+      m_ptimera = new ::user::interaction::timer_array(get_app());
       m_puiptra = new user::LPWndArray;
 
    }
@@ -518,7 +564,7 @@ namespace lnx
    {
       if(m_puiptra != NULL)
       {
-         CSingleLock sl(&m_mutexUiPtra, TRUE);
+         single_lock sl(&m_mutexUiPtra, TRUE);
          ::user::LPWndArray * puiptra = m_puiptra;
          m_puiptra = NULL;
          for(int i = 0; i < puiptra->get_size(); i++)
@@ -540,10 +586,10 @@ namespace lnx
                }
             }
          }
-         sl.Unlock();
+         sl.unlock();
       }
 
-      __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+      __MODULE_THREAD_STATE* pState = __get_module_thread_state();
 /*      // clean up temp objects
       pState->m_pmapHGDIOBJ->delete_temp();
       pState->m_pmapHDC->delete_temp();
@@ -565,22 +611,24 @@ namespace lnx
       }
 
       // free thread object
-      if (m_hThread != NULL)
-         CloseHandle(m_hThread);
+//      if (m_hThread != NULL)
+  //       CloseHandle(m_hThread);
+
+
 
       // cleanup module state
       if (pState->m_pCurrentWinThread == this)
          pState->m_pCurrentWinThread = NULL;
 
       window::DeleteTempMap();
-      m_pmapHDC->delete_temp();
-      m_pmapHGDIOBJ->delete_temp();
+//      m_pmapHDC->delete_temp();
+  //    m_pmapHGDIOBJ->delete_temp();
 
       try
       {
          // cleanup temp/permanent maps (just the maps themselves)
-         delete m_pmapHDC;
-         delete m_pmapHGDIOBJ;
+         //delete m_pmapHDC;
+         //delete m_pmapHGDIOBJ;
       }
       catch(...)
       {
@@ -590,24 +638,22 @@ namespace lnx
 
    void * thread::get_os_data()
    {
-      return m_hThread;
+      return *((void **)&thread_);
    }
 
    int_ptr thread::get_os_int()
    {
-      return m_nThreadID;
+      return thread_;
    }
 
-   bool thread::Begin(int nPriority, UINT nStackSize, DWORD dwCreateFlags,
-      LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::Begin(::ca::e_thread_priority epriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
-      if (!CreateThread(dwCreateFlags|CREATE_SUSPENDED, nStackSize,
-         lpSecurityAttrs))
+      if(!create_thread(dwCreateFlags|CREATE_SUSPENDED, nStackSize, lpSecurityAttrs))
       {
          Delete();
          return false;
       }
-      VERIFY(SetThreadPriority(nPriority));
+      VERIFY(SetThreadPriority(epriority));
       if (!(dwCreateFlags & CREATE_SUSPENDED))
       {
          ENSURE(ResumeThread() != (DWORD)-1);
@@ -630,7 +676,7 @@ namespace lnx
 
    void thread::add(::user::interaction * pui)
    {
-      CSingleLock sl(&m_mutexUiPtra, TRUE);
+      single_lock sl(&m_mutexUiPtra, TRUE);
       m_puiptra->add(pui);
    }
 
@@ -642,14 +688,14 @@ namespace lnx
       {
          SetMainWnd(NULL);
       }
-      CSingleLock sl(&m_mutexUiPtra, TRUE);
+      single_lock sl(&m_mutexUiPtra, TRUE);
       if(m_puiptra != NULL)
       {
          m_puiptra->remove(pui);
          m_puiptra->remove(pui->m_pguie);
          m_puiptra->remove(pui->m_pimpl);
       }
-      sl.Unlock();
+      sl.unlock();
       if(m_ptimera != NULL)
       {
          m_ptimera->unset(pui);
@@ -695,15 +741,15 @@ namespace lnx
       }
    }
 
-   int thread::get_ui_count()
+   ::count thread::get_ui_count()
    {
-      CSingleLock sl(&m_mutexUiPtra, TRUE);
+      single_lock sl(&m_mutexUiPtra, TRUE);
       return m_puiptra->get_count();
    }
 
    ::user::interaction * thread::get_ui(int iIndex)
    {
-      CSingleLock sl(&m_mutexUiPtra, TRUE);
+      single_lock sl(&m_mutexUiPtra, TRUE);
       return m_puiptra->element_at(iIndex);
    }
 
@@ -714,7 +760,7 @@ namespace lnx
          return;
       }
       m_ptimera->set(pui, nIDEvent, nEllapse);
-      CSingleLock sl(&m_ptimera->m_mutex, TRUE);
+      single_lock sl(&m_ptimera->m_mutex, TRUE);
       int iMin = 100;
       for(int i = 0; i < m_ptimera->m_timera.get_count(); i++)
       {
@@ -723,7 +769,7 @@ namespace lnx
             iMin = m_ptimera->m_timera.element_at(i).m_uiElapse;
          }
       }
-      sl.Unlock();
+      sl.unlock();
       if(m_spwindowMessage->IsWindow())
       {
          m_spwindowMessage->SetTimer((uint_ptr)-2, iMin, NULL);
@@ -745,7 +791,7 @@ namespace lnx
       m_bRun = bRun;
    }
 
-   CEvent & thread::get_finish_event()
+   event & thread::get_finish_event()
    {
       return m_evFinish;
    }
@@ -779,8 +825,7 @@ namespace lnx
       m_ptimera->check();
    }
 
-   WINBOOL thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,
-      LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::create_thread(DWORD dwCreateFlags, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
 #ifndef _MT
    dwCreateFlags;
@@ -796,7 +841,7 @@ namespace lnx
    startup.bError = FALSE;
    startup.pfnNewHandler = NULL;
    //memset(&startup, 0, sizeof(startup));
-   startup.pThreadState = AfxGetThreadState();
+   startup.pThreadState = __get_thread_state();
    startup.pThread = this;
    startup.m_pthread = NULL;
    startup.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -868,21 +913,21 @@ void thread::Delete()
          delete m_pappDelete;
       m_evFinish.SetEvent();
       ::radix::thread * pthread = dynamic_cast < ::radix::thread * > (m_p);
-      if(pthread->m_peventReady != NULL)
-      {
-         ::SetEvent((HANDLE) pthread->m_peventReady);
-      }
-      if(m_peventReady != NULL)
-      {
-         ::SetEvent((HANDLE) m_peventReady);
-      }
+//      if(pthread->m_peventReady != NULL)
+  //    {
+    //     ::SetEvent((HANDLE) pthread->m_peventReady);
+     // }
+//      if(m_peventReady != NULL)
+  //    {
+    //     ::SetEvent((HANDLE) m_peventReady);
+      //}
       //pthread->::ca::smart_pointer < ::ca::thread >::m_p = NULL;
       gen::del(m_p);
 //      delete_this();
    }
    else
    {
-      m_hThread = NULL;
+      thread_ = NULL;
       m_evFinish.SetEvent();
    }
 }
@@ -907,7 +952,7 @@ void thread::Delete()
    {
 
       ASSERT_VALID(this);
-//      _AFX_THREAD_STATE* pState = AfxGetThreadState();
+//      ___THREAD_STATE* pState = __get_thread_state();
 
       // for tracking the idle time state
       WINBOOL bIdle = TRUE;
@@ -921,7 +966,8 @@ void thread::Delete()
       {
          // phase1: check to see if we can do idle work
          while (bIdle &&
-            !::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
+            //!::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
+            !::PeekMessage(&msg, NULL, NULL, NULL, 0))
          {
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
@@ -974,28 +1020,30 @@ void thread::Delete()
                pappThis2->m_dwAlive = m_dwAlive;
             }
          }
-         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
+//         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
+         while (::PeekMessage(&msg, NULL, NULL, NULL, 0) != FALSE);
 
       }
 
       return 0;
    }
 
-   WINBOOL thread::is_idle_message(gen::signal_object * pobj)
+   bool thread::is_idle_message(gen::signal_object * pobj)
    {
       return AfxInternalIsIdleMessage(pobj);
    }
 
-   WINBOOL thread::is_idle_message(LPMSG lpmsg)
+/*
+   bool thread::is_idle_message(LPMSG lpmsg)
    {
       return AfxInternalIsIdleMessage(lpmsg);
    }
-
+*/
    void thread::delete_temp()
    {
 
-      m_pmapHGDIOBJ->delete_temp();
-      m_pmapHDC->delete_temp();
+//      m_pmapHGDIOBJ->delete_temp();
+  //    m_pmapHDC->delete_temp();
       window::DeleteTempMap();
 
    }
@@ -1027,7 +1075,7 @@ void thread::Delete()
       {
          if(m_puiptra != NULL)
          {
-            CSingleLock sl(&m_mutexUiPtra, TRUE);
+            single_lock sl(&m_mutexUiPtra, TRUE);
             ::user::LPWndArray * puiptra = m_puiptra;
             m_puiptra = NULL;
             for(int i = 0; i < puiptra->get_size(); i++)
@@ -1044,7 +1092,7 @@ void thread::Delete()
                }
             }
             delete puiptra;
-            sl.Unlock();
+            sl.unlock();
          }
       }
       catch(...)
@@ -1063,11 +1111,11 @@ void thread::Delete()
 
 
 
-      int nResult = (int)AfxGetCurrentMessage()->wParam;  // returns the value from PostQuitMessage
+      int nResult = (int)AfxGetCurrentMessage()->wparam;  // returns the value from PostQuitMessage
       return nResult;
    }
 
-   WINBOOL thread::on_idle(LONG lCount)
+   bool thread::on_idle(LONG lCount)
    {
       ASSERT_VALID(this);
 
@@ -1088,7 +1136,7 @@ void thread::Delete()
                {
                   /*AfxCallWndProc(pMainWnd, pMainWnd->get_handle(),
                      WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
-                  pui->SendMessage(WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
+                  pui->send_message(WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
                /*   pui->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
                      (WPARAM)TRUE, 0, TRUE, TRUE);*/
                }
@@ -1137,7 +1185,7 @@ void thread::Delete()
       }
       else if (lCount >= 0)
       {
-/*         __MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+/*         __MODULE_THREAD_STATE* pState = __get_module_thread_state();
          if (pState->m_nTempMapLock == 0)
          {
             // free temp maps, OLE DLLs, etc.
@@ -1155,20 +1203,20 @@ void thread::Delete()
       return lCount < 0;  // nothing more to do if lCount >= 0
    }
 
-   ::user::lnx::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode)
+   ::gen::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode)
    {
       UNREFERENCED_PARAMETER(uiMessage);
       UNREFERENCED_PARAMETER(uiCode);
-      return ::user::lnx::message::PrototypeNone;
+    return ::gen::message::PrototypeNone;
    }
 
 
    void thread::DispatchThreadMessageEx(gen::signal_object * pobj)
    {
-      SCAST_PTR(user::lnx::message::base, pbase, pobj);
+      SCAST_PTR(gen::message::base, pbase, pobj);
       if(pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
-         gen::scoped_ptr < message > spmessage(pbase->m_lparam);
+         gen::scoped_ptr < ::user::message > spmessage(pbase->m_lparam);
          spmessage->send();
          pbase->m_bRet = true;
          return;
@@ -1222,10 +1270,10 @@ void thread::Delete()
       {
          Signal & signal = *signalptra[i];
          gen::signal * psignal = signal.m_psignal;
-         ::user::lnx::message::e_prototype eprototype = signal.m_eprototype;
-         if(eprototype == ::user::lnx::message::PrototypeNone)
+         ::gen::message::e_prototype eprototype = signal.m_eprototype;
+         if(eprototype == ::gen::message::PrototypeNone)
          {
-            //::user::lnx::message::base base(get_app());
+            //::gen::message::base base(get_app());
             pbase->m_psignal = psignal;
             lresult = 0;
             //base.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
@@ -1251,13 +1299,13 @@ void thread::Delete()
 
    __STATIC inline WINBOOL IsEnterKey(gen::signal_object * pobj)
    {
-      SCAST_PTR(user::lnx::message::base, pbase, pobj);
+      SCAST_PTR(gen::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
    }
 
    __STATIC inline WINBOOL IsButtonUp(gen::signal_object * pobj)
    {
-      SCAST_PTR(user::lnx::message::base, pbase, pobj);
+      SCAST_PTR(gen::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_LBUTTONUP;
    }
 
@@ -1267,14 +1315,14 @@ void thread::Delete()
       if(pobj == NULL)
          return;   // not handled
 
-      SCAST_PTR(::user::lnx::message::base, pbase, pobj);
+      SCAST_PTR(::gen::message::base, pbase, pobj);
 
       frame_window* pTopFrameWnd;
       ::user::interaction* pMainWnd;
       ::user::interaction* pMsgWnd;
       switch (code)
       {
-      case MSGF_DDEMGR:
+/*      case MSGF_DDEMGR:
          // Unlike other WH_MSGFILTER codes, MSGF_DDEMGR should
          //  never call the next hook.
          // By returning FALSE, the message will be dispatched
@@ -1306,7 +1354,7 @@ void thread::Delete()
             pbase->m_uiMessage >= WM_KEYFIRST && pbase->m_uiMessage <= WM_KEYLAST)
          {
             // need to translate messages for the in-place container
-            _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+            ___THREAD_STATE* pThreadState = _afxThreadState.get_data();
             ENSURE(pThreadState);
 
             if (pThreadState->m_bInMsgFilter)
@@ -1323,7 +1371,7 @@ void thread::Delete()
             }
             pThreadState->m_bInMsgFilter = FALSE;    // ok again
          }
-         break;
+         break;*/
       }
       // default to not handled
    }
@@ -1346,7 +1394,7 @@ void thread::Delete()
    /////////////////////////////////////////////////////////////////////////////
    // thread implementation helpers
 
-   WINBOOL thread::pump_message()
+   bool thread::pump_message()
    {
       try
       {
@@ -1371,10 +1419,12 @@ void thread::Delete()
          if(msg.message != WM_KICKIDLE)
          {
             {
-               ::ca::smart_pointer < ::user::lnx::message::base > spbase;
+               ::ca::smart_pointer < ::gen::message::base > spbase;
 
-               spbase(get_base(&msg));
+               throw todo(get_app());
 
+//               spbase(get_base(&msg));
+//
                if(m_p != NULL)
                {
                   m_p->pre_translate_message(spbase);
@@ -1400,8 +1450,8 @@ void thread::Delete()
                spbase.destroy();
             }
             {
-               ::TranslateMessage(&msg);
-               ::DispatchMessage(&msg);
+//               ::TranslateMessage(&msg);
+  //             ::DispatchMessage(&msg);
             }
          }
          return TRUE;
@@ -1429,24 +1479,24 @@ void thread::Delete()
    void thread::dump(dump_context & dumpcontext) const
   {
    command_target::dump(dumpcontext);
-   _AFX_THREAD_STATE *pState = AfxGetThreadState();
+   ___THREAD_STATE *pState = __get_thread_state();
 
    dumpcontext << "m_pThreadParams = " << m_pThreadParams;
    dumpcontext << "\nm_pfnThreadProc = " << (void *)m_pfnThreadProc;
    dumpcontext << "\nm_bAutoDelete = " << m_bAutoDelete;
-   dumpcontext << "\nm_hThread = " << (void *)m_hThread;
-   dumpcontext << "\nm_nThreadID = " << m_nThreadID;
+//   dumpcontext << "\nm_hThread = " << (void *)m_hThread;
+  // dumpcontext << "\nm_nThreadID = " << m_nThreadID;
    dumpcontext << "\nm_nDisablePumpCount = " << pState->m_nDisablePumpCount;
    if (AfxGetThread() == this)
       dumpcontext << "\nm_pMainWnd = " << m_puiMain;
 
    dumpcontext << "\nm_msgCur = {";
-   dumpcontext << "\n\thwnd = " << (void *)pState->m_msgCur.hwnd;
+/*   dumpcontext << "\n\thwnd = " << (void *)pState->m_msgCur.hwnd;
    dumpcontext << "\n\tmessage = " << (UINT)pState->m_msgCur.message;
    dumpcontext << "\n\twParam = " << (UINT)pState->m_msgCur.wParam;
    dumpcontext << "\n\tlParam = " << (void *)pState->m_msgCur.lParam;
    dumpcontext << "\n\ttime = " << pState->m_msgCur.time;
-   dumpcontext << "\n\tpt = " << point(pState->m_msgCur.pt);
+   dumpcontext << "\n\tpt = " << point(pState->m_msgCur.pt);*/
    dumpcontext << "\n}";
 
    dumpcontext << "\nm_pThreadParams = " << m_pThreadParams;
@@ -1460,9 +1510,9 @@ void thread::Delete()
 
    bool thread::post_message(::user::interaction * pguie, UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
-      if(m_hThread == NULL)
-         return false;
-      message * pmessage = new message;
+//      if(m_hThread == NULL)
+  //       return false;
+      ::user::message * pmessage = new ::user::message;
       pmessage->m_pguie       = pguie;
       pmessage->m_uiMessage   = uiMessage;
       pmessage->m_wparam      = wparam;
@@ -1480,7 +1530,7 @@ void thread::Delete()
 
    void thread::message_handler(gen::signal_object * pobj)
    {
-      SCAST_PTR(user::lnx::message::base, pbase, pobj);
+      SCAST_PTR(gen::message::base, pbase, pobj);
       // special message which identifies the window as using AfxWndProc
       if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
       {
@@ -1489,22 +1539,22 @@ void thread::Delete()
       }
 
       // all other messages route through message ::collection::map
-      ::ca::window * pwindow = ::lnx::window::FromHandlePermanent(pbase->m_hwnd);
+      ::ca::window * pwindow = pbase->m_pwnd->get_wnd();
 
-      ASSERT(pwindow == NULL || LNX_WINDOW(pwindow)->get_handle() == pbase->m_hwnd);
+/*      ASSERT(pwindow == NULL || LNX_WINDOW(pwindow)->get_handle() == pbase->m_hwnd);
 
       if(pwindow == NULL || LNX_WINDOW(pwindow)->get_handle() != pbase->m_hwnd)
       {
          pbase->set_lresult(::DefWindowProc(pbase->m_hwnd, pbase->m_uiMessage, pbase->m_wparam, pbase->m_lparam));
          return;
-      }
+      }*/
 
-      _AFX_THREAD_STATE* pThreadState = _afxThreadState.get_data();
+      ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
-      pThreadState->m_lastSentMsg.hwnd       = pbase->m_hwnd;
+      //pThreadState->m_lastSentMsg.       = pbase->m_hwnd;
       pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
-      pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
-      pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
+      pThreadState->m_lastSentMsg.wparam     = pbase->m_wparam;
+      pThreadState->m_lastSentMsg.lparam     = pbase->m_lparam;
 
       _AfxTraceMsg("message_handler", pobj);
 
@@ -1539,7 +1589,7 @@ void thread::Delete()
             goto run;
          if(App(get_app()).final_handle_exception((::ca::exception &) e))
             goto run;
-         AfxPostQuitMessage(-1);
+         __post_quit_message(-1);
          pbase->set_lresult(-1);
          return;
       }
@@ -1554,27 +1604,48 @@ void thread::Delete()
    }
 
 
-   thread::operator HANDLE() const
-   { return this == NULL ? NULL : m_hThread; }
+//   thread::operator HANDLE() const
+  // { return this == NULL ? NULL : m_hThread; }
    WINBOOL thread::SetThreadPriority(int nPriority)
-   { ASSERT(m_hThread != NULL); return ::SetThreadPriority(m_hThread, nPriority); }
+   {
+      throw not_implemented(get_app());
+//       return ::SetThreadPriority(thread_ nPriority);
+      }
    int thread::GetThreadPriority()
-   { ASSERT(m_hThread != NULL); return ::GetThreadPriority(m_hThread); }
+   {
+      throw not_implemented(get_app());
+      //ASSERT(m_hThread != NULL);
+      //return ::GetThreadPriority(m_hThread);
+   }
    DWORD thread::ResumeThread()
-   { ASSERT(m_hThread != NULL); return ::ResumeThread(m_hThread); }
+   {
+      throw not_implemented(get_app());
+      //ASSERT(m_hThread != NULL);
+      //return ::ResumeThread(m_hThread);
+}
    DWORD thread::SuspendThread()
-   { ASSERT(m_hThread != NULL); return ::SuspendThread(m_hThread); }
-   WINBOOL thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
-   { ASSERT(m_hThread != NULL); return ::PostThreadMessage(m_nThreadID, message, wParam, lParam); }
+   {
+   throw not_implemented(get_app());
+   //   ASSERT(m_hThread != NULL);
+     // return ::SuspendThread(m_hThread);
+
+   }
+   bool thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
+   {
+      throw not_implemented(get_app());
+      //ASSERT(m_hThread != NULL);
+      //return ::PostThreadMessage(m_nThreadID, message, wParam, lParam);
+   }
 
    void thread::set_os_data(void * pvoidOsData)
    {
-      m_hThread = (HANDLE) pvoidOsData;
+      thread_ = (pthread_t) pvoidOsData;
    }
 
    void thread::set_os_int(int_ptr iData)
    {
-      m_nThreadID = (dword_ptr) iData;
+      throw not_implemented(get_app());
+      //m_nThreadID = (dword_ptr) iData;
    }
 
    void thread::message_window_message_handler(gen::signal_object * pobj)
@@ -1602,16 +1673,16 @@ void thread::Delete()
       if (bDeleteTemp)
       {
          // clean up temp objects
-         m_pmapHGDIOBJ->delete_temp();
-         m_pmapHDC->delete_temp();
+//         m_pmapHGDIOBJ->delete_temp();
+  //       m_pmapHDC->delete_temp();
          window::DeleteTempMap();
       }
 
 
 
 #ifndef _AFX_PORTABLE
-      ::radix::application * papp = dynamic_cast < ::radix::application * > (get_app());
-      _AFX_THREAD_STATE* pThreadState = _afxThreadState.GetDataNA();
+      /*::radix::application * papp = dynamic_cast < ::radix::application * > (get_app());
+      ___THREAD_STATE* pThreadState = gen_ThreadState.GetDataNA();
       if( pThreadState != NULL )
       {
          // restore safety pool after temp objects destroyed
@@ -1653,7 +1724,7 @@ void thread::Delete()
             }
             AfxEnableMemoryTracking(bEnable);
          }
-      }
+      }*/
 #endif  // !_AFX_PORTABLE
    }
    // return TRUE if temp maps still locked
@@ -1663,22 +1734,21 @@ void thread::Delete()
    int thread::thread_entry(::ca::thread_startup * pstartup)
    {
 
-      _AFX_THREAD_STARTUP* pStartup = (_AFX_THREAD_STARTUP*)pstartup;
-      ASSERT(pStartup != NULL);
-      ASSERT(pStartup->pThreadState != NULL);
-      ASSERT(pStartup->pThread != NULL);
-      ASSERT(!pStartup->bError);
+      ASSERT(pstartup != NULL);
+//      ASSERT(pstartup->pThreadState != NULL);
+      ASSERT(pstartup->m_pthread != NULL);
+      //ASSERT(!pstartup->bError);
 
-      ::lnx::thread* pThread = pStartup->pThread;
+      ::lnx::thread* pThread = dynamic_cast < ::lnx::thread * > (pstartup->m_pthread);
 
       ::radix::application* papp = dynamic_cast < ::radix::application * > (get_app());
       m_evFinish.ResetEvent();
-      _001InstallMessageHandling(pThread);
-      m_p->_001InstallMessageHandling(pThread);
+      install_message_handling(pThread);
+      m_p->install_message_handling(pThread);
 
       ::ca::window threadWnd;
 
-      m_ptimera            = new ::user::interaction::timer_array;
+      m_ptimera            = new ::user::interaction::timer_array(get_app());
       m_puiptra            = new user::LPWndArray;
       m_bRun               = true;
 
@@ -1731,7 +1801,7 @@ void thread::Delete()
       {
          // will stop after PostQuitMessage called
          ASSERT_VALID(this);
-         se_translator::attach();
+//         se_translator::attach();
    run:
          try
          {
@@ -1781,7 +1851,7 @@ void thread::Delete()
       {
          // cleanup and shutdown the thread
 //         threadWnd.Detach();
-         AfxEndThread(dynamic_cast < ::radix::application * > (m_papp), nResult);
+         __end_thread(dynamic_cast < ::radix::application * > (m_papp), nResult);
       }
       catch(...)
       {
@@ -1789,468 +1859,449 @@ void thread::Delete()
       return nResult;
    }
 
-		///  \brief		starts thread on first call
-		void thread::start ()
-		{
-		   pthread_mutex_unlock(&startMutex_);
-		}
-
-/**
-* \file		src/lib/pal/src/linux/thread_linux.cpp
-* \brief	Platform independent threads and synchronization objects (linux version)
-* \author	Thomas Nass
-*/
-
-#include "internal_linux.hpp"
-
-#include <iostream>
-#include <string>
-
-#include <unistd.h>
-#include <errno.h>
-#include <fcntl.h>
-
-namespace gen { namespace pal {
-
-	namespace internal
-	{
-		Globals g_globals;
-
+		//  \brief		starts thread on first call
+//		void thread::start ()
+	//	{
+		//   pthread_mutex_unlock(&startMutex_);
+		//}
+//
+//		Globals g_globals;
+//
 //		inline const char *b2s(bool b) { return b ? "true" : "false"; }
-
-		//-----------------------------------------------------------------------------------------
-		thread * ThisThread ()	// returns a pointer to the thread class of the calling thread
-		{
-			pthread_t myId = pthread_self();
-			g_globals.mutex_.lock();
-			thread * thisThread = g_globals.threadMap_[myId];
-			if (!thisThread)
-			{
-				// thread must be an "external" pthread (e.g. created by a linked SIP-stack)
-				// => get instance of ExternalThread-class from pool and add it temporarily to the global thread map
-				if (!g_globals.externalThreadPool_.is_empty())
-				{
-					ExternalThread *extThread = g_globals.externalThreadPool_.front();
-					g_globals.externalThreadPool_.pop_front();
-					extThread->SetId(myId);
-					g_globals.threadMap_[myId] = thisThread = extThread;
-				}
-				else
-					thisThread = new ExternalThread;	// this will also set the thread ID and add it to the global thread map
-			}
-			g_globals.mutex_.unlock();
-			return thisThread;
-		}
-
-		//-----------------------------------------------------------------------------------------
-		FileDescWaiterThread::FileDescWaiterThread()
-		{
-			if ( pipe(fileDescs_) )
-				;	// TO DO: throw
-			int flags = fcntl( fileDescs_[1],F_GETFL );
-			fcntl( fileDescs_[1], F_SETFL, flags|O_NONBLOCK );
-			FD_ZERO(&fdRead);
-			FD_ZERO(&fdWrite);
-			FD_SET(fileDescs_[0], &fdRead);
-			//written_=read_=0;
-			start();
-		}
-
-		//-----------------------------------------------------------------------------------------
-		FileDescWaiterThread::~FileDescWaiterThread()
-		{
-			FileDescWaiterThreadCommand command(FileDescWaiterThreadCommand::terminate);
-			write(fileDescs_[1], &command, sizeof command);
-			pal::wait(*this);
-			close(fileDescs_[0]);
-			close(fileDescs_[1]);
-						//raise( SIGSEGV );
-		}
-
-		//-----------------------------------------------------------------------------------------
-		unsigned FileDescWaiterThread::operator() ()
-		{
-			fd_evmap_t Map;
-
-			for ( ;; ) {	// loop can only be stopped by "terminate" command
-				mutex_.lock();
-				fd_set actRead	= fdRead;
-				fd_set actWrite = fdWrite;
-				Map 			= evSetMap;
-				mutex_.unlock();
-
-				int	fdHigh 	= Map.is_empty() ? fileDescs_[0] : Map.rbegin()->first;
-				int nSelect = select(fdHigh + 1, &actRead, &actWrite, 0, 0);
-				if ( nSelect <= 0 )	// timeout: 0, error: -1
-					continue;
-				if ( FD_ISSET(fileDescs_[0], &actRead) ) {
-					// read command from pipe
-					FileDescWaiterThreadCommand command[ 5 ];
-					int rc = 0;
-					if ( ( rc = read(fileDescs_[0], &command, 5 * sizeof( FileDescWaiterThreadCommand ) ) ) == -1 )
-						continue;
-					//read_++;
-					for ( unsigned int i = 0; i < ( rc/sizeof( FileDescWaiterThreadCommand ) ); i++ )
-						if ( command[i]() == FileDescWaiterThreadCommand::terminate )
-							return 0;
-					if ( !--nSelect )
-						continue;
-				}
-				g_globals.mutex_.lock();
-				for ( itMap_t it=Map.begin(), ie=Map.end(); nSelect && it!=ie;  ) {
-					int fd 		= it->first;
-					bool bRead  = FD_ISSET(fd,&actRead);
-					bool bWrite = FD_ISSET(fd,&actWrite);
-					if ( bRead || bWrite ) {
-						fd_evset_t& evSet = it->second;
-						for ( itEv_t itE=evSet.begin(), itEnd=evSet.end(); itE != itEnd; ) {
-							FileDescEvent *ev = *itE++;
-							if ( !(ev->read_ ^ bRead) ) {	//	both true or both false
-								ev->set();
-								ev->set_active(false);	// prevent call to RemoveEvent for event already erased here
-								evSet.erase(ev);
-							}
-						}
-						mutex_.lock();
-						if ( bRead ) {
-							FD_CLR(fd, &fdRead);
-							--nSelect;
-						}
-						if ( bWrite ) {
-							FD_CLR(fd, &fdWrite);
-							--nSelect;
-						}
-						++it;	// must increment before erase
-						if ( evSet.is_empty() )
-							evSetMap.erase(fd);
-						mutex_.unlock();
-					} else
-						++it;
-				}
-				g_globals.mutex_.unlock();
-			}
-		}
-
-		//-----------------------------------------------------------------------------------------
-		void FileDescWaiterThread::ModifyEvent_(FileDescEvent *event, bool add /*= true*/)
-		{
-			int	fd = event->fileDesc_;
-
-			mutex_.lock();
-			if ( add ) {
-				evSetMap[fd].insert(event);
-				FD_SET(fd, event->read_ ? &fdRead : &fdWrite);
-			} else {
-				itMap_t it = evSetMap.find(fd);
-				if ( it != evSetMap.end() ) {
-					fd_evset_t& evSet = it->second;
-					evSet.erase(event);
-					unsigned nRead = 0;
-					for ( itEv_t itE=evSet.begin(); itE!=evSet.end(); ++itE )
-						nRead += (*itE)->read_;
-					if ( !nRead )
-						FD_CLR(fd, &fdRead);
-					if ( evSet.size() == nRead )
-						FD_CLR(fd, &fdWrite);
-					if ( evSet.is_empty() )
-						evSetMap.erase(fd);
-				}
-			}
-			mutex_.unlock();
-
-			// trigger thread
-			FileDescWaiterThreadCommand command(FileDescWaiterThreadCommand::events_changed);
-			int tries=30;
-			while ( tries > 0 ) {
-				if ( ::write(fileDescs_[1], &command, sizeof command) < 0 )
-				{
-					tries--;
-					usleep(100);
+//
+//		-----------------------------------------------------------------------------------------
+//	/*	thread * ThisThread ()	// returns a pointer to the thread class of the calling thread
+//		{
+//			pthread_t myId = pthread_self();
+//			g_globals.mutex_.lock();
+//			thread * thisThread = g_globals.threadMap_[myId];
+//			if (!thisThread)
+//			{
+//				 thread must be an "external" pthread (e.g. created by a linked SIP-stack)
+//				 => get instance of ExternalThread-class from pool and add it temporarily to the global thread map
+//				if (!g_globals.externalThreadPool_.is_empty())
+//				{
+//					ExternalThread *extThread = g_globals.externalThreadPool_.front();
+//					g_globals.externalThreadPool_.pop_front();
+//					extThread->SetId(myId);
+//					g_globals.threadMap_[myId] = thisThread = extThread;
+//				}
+//				else
+//					thisThread = new ExternalThread;	// this will also set the thread ID and add it to the global thread map
+//			}
+//			g_globals.mutex_.unlock();
+//			return thisThread;
+//		}*/
+//
+//		-----------------------------------------------------------------------------------------
+///*		FileDescWaiterThread::FileDescWaiterThread()
+//		{
+//			if ( pipe(fileDescs_) )
+//				;	// TO DO: throw
+//			int flags = fcntl( fileDescs_[1],F_GETFL );
+//			fcntl( fileDescs_[1], F_SETFL, flags|O_NONBLOCK );
+//			FD_ZERO(&fdRead);
+//			FD_ZERO(&fdWrite);
+//			FD_SET(fileDescs_[0], &fdRead);
+//written_=read_=0;
+//			start();
+//		}
+//
+//		-----------------------------------------------------------------------------------------
+//		FileDescWaiterThread::~FileDescWaiterThread()
+//		{
+//			FileDescWaiterThreadCommand command(FileDescWaiterThreadCommand::terminate);
+//			write(fileDescs_[1], &command, sizeof command);
+//			pal::wait(*this);
+//			close(fileDescs_[0]);
+//			close(fileDescs_[1]);
+//						raise( SIGSEGV );
+//		}
+//
+//		-----------------------------------------------------------------------------------------
+//		unsigned FileDescWaiterThread::operator() ()
+//		{
+//			fd_evmap_t Map;
+//
+//			for ( ;; ) {	// loop can only be stopped by "terminate" command
+//				mutex_.lock();
+//				fd_set actRead	= fdRead;
+//				fd_set actWrite = fdWrite;
+//				Map 			= evSetMap;
+//				mutex_.unlock();
+//
+//				int	fdHigh 	= Map.is_empty() ? fileDescs_[0] : Map.rbegin()->first;
+//				int nSelect = select(fdHigh + 1, &actRead, &actWrite, 0, 0);
+//				if ( nSelect <= 0 )	// timeout: 0, error: -1
+//					continue;
+//				if ( FD_ISSET(fileDescs_[0], &actRead) ) {
+//					 read command from pipe
+//					FileDescWaiterThreadCommand command[ 5 ];
+//					int rc = 0;
+//					if ( ( rc = read(fileDescs_[0], &command, 5 * sizeof( FileDescWaiterThreadCommand ) ) ) == -1 )
+//						continue;
+//					read_++;
+//					for ( unsigned int i = 0; i < ( rc/sizeof( FileDescWaiterThreadCommand ) ); i++ )
+//						if ( command[i]() == FileDescWaiterThreadCommand::terminate )
+//							return 0;
+//					if ( !--nSelect )
+//						continue;
+//				}
+//				g_globals.mutex_.lock();
+//				for ( itMap_t it=Map.begin(), ie=Map.end(); nSelect && it!=ie;  ) {
+//					int fd 		= it->first;
+//					bool bRead  = FD_ISSET(fd,&actRead);
+//					bool bWrite = FD_ISSET(fd,&actWrite);
+//					if ( bRead || bWrite ) {
+//						fd_evset_t& evSet = it->second;
+//						for ( itEv_t itE=evSet.begin(), itEnd=evSet.end(); itE != itEnd; ) {
+//							FileDescEvent *ev = *itE++;
+//							if ( !(ev->read_ ^ bRead) ) {	//	both true or both false
+//								ev->set();
+//								ev->set_active(false);	// prevent call to RemoveEvent for event already erased here
+//								evSet.erase(ev);
+//							}
+//						}
+//						mutex_.lock();
+//						if ( bRead ) {
+//							FD_CLR(fd, &fdRead);
+//							--nSelect;
+//						}
+//						if ( bWrite ) {
+//							FD_CLR(fd, &fdWrite);
+//							--nSelect;
+//						}
+//						++it;	// must increment before erase
+//						if ( evSet.is_empty() )
+//							evSetMap.erase(fd);
+//						mutex_.unlock();
+//					} else
+//						++it;
+//				}
+//				g_globals.mutex_.unlock();
+//			}
+//		}
+//
+//		-----------------------------------------------------------------------------------------
+//		void FileDescWaiterThread::ModifyEvent_(FileDescEvent *event, bool add /*= true*/ /*)
+//		{
+//			int	fd = event->fileDesc_;
+//
+//			mutex_.lock();
+//			if ( add ) {
+//				evSetMap[fd].insert(event);
+//				FD_SET(fd, event->read_ ? &fdRead : &fdWrite);
+//			} else {
+//				itMap_t it = evSetMap.find(fd);
+//				if ( it != evSetMap.end() ) {
+//					fd_evset_t& evSet = it->second;
+//					evSet.erase(event);
+//					unsigned nRead = 0;
+//					for ( itEv_t itE=evSet.begin(); itE!=evSet.end(); ++itE )
+//						nRead += (*itE)->read_;
+//					if ( !nRead )
+//						FD_CLR(fd, &fdRead);
+//					if ( evSet.size() == nRead )
+//						FD_CLR(fd, &fdWrite);
+//					if ( evSet.is_empty() )
+//						evSetMap.erase(fd);
+//				}
+//			}
+//			mutex_.unlock();
+//
+//			 trigger thread
+//			FileDescWaiterThreadCommand command(FileDescWaiterThreadCommand::events_changed);
+//			int tries=30;
+//			while ( tries > 0 ) {
+//				if ( ::write(fileDescs_[1], &command, sizeof command) < 0 )
+//				{
+//					tries--;
+//					usleep(100);
 //					if ( errno == EAGAIN && tries == 0 )  {
 //						void *mythis = this;
 //						char buffer[1000];
 //						int rc = read(fileDescs_[0],buffer,1000);
 //						strcpy(0,"coredump");;
 //					}
-				}
-				else
-					tries = 0;
-			}
+//				}
+//				else
+//					tries = 0;
+//			}
 //			written_++;
-			//if ( written_ - read_ > 200 )
-			//	strcpy(0,"coredump");
-		}
-
-	} // namespace internal
-
-	wait_result wait (WaitableItem & waitableItem, const boost::posix_time::time_duration& duration/*=InfiniteTime*/)
-	{
-		return internal::ThisThread()->wait(waitableItem, duration);
-	}
-
-	wait_result wait (size_t numberOfItems, WaitableItem * waitableItems[], const boost::posix_time::time_duration& duration/*=InfiniteTime*/, bool waitForAll /*= false*/)
-	{
-		return internal::ThisThread()->wait(numberOfItems, waitableItems, duration, waitForAll);
-	}
-
-	void ExternalThread::endWait()
-	{
-		internal::g_globals.threadMap_.erase(thread_);
-		internal::g_globals.externalThreadPool_.push_back(this);
-	}
-
-	thread::thread()
-		: WaitableItem(false, false), isMainThread_(false), isExternalThread_(false)
-	{
-		pthread_attr_t Attributes;
-
-		if (   pthread_attr_init(&Attributes)
-			|| pthread_attr_setdetachstate(&Attributes, PTHREAD_CREATE_DETACHED)
-			|| pthread_cond_init(&wakeUpCondition_, 0)
-			|| pthread_mutex_init(&startMutex_, 0)
-			|| pthread_mutex_lock(&startMutex_)
-			|| pthread_create(&thread_, &Attributes, reinterpret_cast<void * (*)(void *)>(thread::startExecution_), this))
-			; // throw ...
-
-		// Scheduling policy is set to round robin and priority to normal
-		struct sched_param param = {0};
-		param.sched_priority = pal::thread_priority_normal;
-		pthread_setschedparam( thread_, SCHED_RR, &param );
-
-		internal::g_globals.mutex_.lock();
-		internal::g_globals.threadMap_[thread_] = this;
-		internal::g_globals.mutex_.unlock();
-	}
-
-	thread::thread(bool isMainThread, bool isExternalThread)
-		: WaitableItem(false, false), isMainThread_(isMainThread), isExternalThread_(isExternalThread)
-	{
-		if (pthread_cond_init(&wakeUpCondition_, 0))
-			; // throw ...
-
-		thread_ = pthread_self();
-		internal::g_globals.mutex_.lock();
-		internal::g_globals.threadMap_[thread_] = this;
-		internal::g_globals.mutex_.unlock();
-	}
-
-	wait_result thread::wait (WaitableItem & item, const boost::posix_time::time_duration& duration/*=InfiniteTime*/)
-	{
-		WaitableItem * itemPtr = &item;
-		return /*thread::*/wait (1, &itemPtr, duration);
-	}
-
-	wait_result thread::wait (size_t numberOfItems, WaitableItem * items[], const boost::posix_time::time_duration& duration/*=InfiniteTime*/, bool waitForAll /*= false*/)
-	{
-		if (pthread_self() != thread_)
-			// do not call endWait() here
-			return wait_result(wait_result::BadThread);
-
-		internal::g_globals.mutex_.lock();
-
-		if (!numberOfItems)
-		{
-			endWait();
-			internal::g_globals.mutex_.unlock();
-			return wait_result(wait_result::Failure);
-		}
-
-		waitForAllItems_ = waitForAll;
-
-		if (!waitForAllItems_)
-		{
-			for (size_t i=0; i < numberOfItems; ++i)
-				if (*items[i])
-				{
-					items[i]->threadTriggered_();
-					endWait();
-					internal::g_globals.mutex_.unlock();
-					return wait_result(wait_result::Event0 + i);
-				}
-
-
-			if (duration.total_nanoseconds() == 0)
-			{
-				endWait();
-				internal::g_globals.mutex_.unlock();
-				return wait_result(wait_result::Timeout);
-			}
-		}
-
-		// add all events we wait for to itemsToWaitFor_ and the thread to WaitingThreads_ of every event we wait for
-		for (size_t i=0; i < numberOfItems; ++i)
-		{
-			itemsToWaitFor_.push_back(items[i]);
-			items[i]->addThread_(*this);
-		}
-
-		if (waitForAllItems_ && checkAllItems_())
-		{
-			cleanUpItems_();
-			endWait();
-			internal::g_globals.mutex_.unlock();
-			return wait_result(wait_result::Event0);
-		}
-		else if (!duration.total_nanoseconds())
-		{
-			cleanUpItems_();
-			endWait();
-			internal::g_globals.mutex_.unlock();
-			return wait_result(wait_result::Timeout);
-		}
-
-		waitResult_ = wait_result::Timeout;
-
-		// activate all events
-		std::list<WaitableItem *>::iterator it(itemsToWaitFor_.begin()), end(itemsToWaitFor_.end());
-		for (; it != end; ++it)
-			(*it)->init_wait();	// activate event
-
-		// The cleanUpItems_-member-function of the thread-class will set waitResult_ before setting the wakeUpCondition_
-		if (duration.is_pos_infinity())
-			while (pthread_cond_wait(&wakeUpCondition_, &internal::g_globals.mutex_()) == EINTR)
-				;	// nothing to do
-		else
-		{
-			timeval tv;
-			gettimeofday(&tv, 0);
-			struct timespec Timeout = {tv.tv_sec + duration.total_seconds(), tv.tv_usec * 1000 + duration.total_nanoseconds() % 1000000000};
-			if (Timeout.tv_nsec >= 1000000000)
-			{
-				Timeout.tv_nsec -= 1000000000;
-				++Timeout.tv_sec;
-			}
-			while (pthread_cond_timedwait(&wakeUpCondition_, &internal::g_globals.mutex_(), &Timeout) == EINTR)
-				;	// nothing to do
-		}
-
-		if (waitResult_ == wait_result::Timeout)
-			cleanUpItems_();
-
-		endWait();
-		internal::g_globals.mutex_.unlock();
-		return wait_result(waitResult_);
-	}
-
-	void thread::cleanUpItems_ (WaitableItem * signallingItem /* = 0 */)	// must be called with g_globals locked !!!
-	{
-		// remove thread from WaitingThreads_ of all events in itemsToWaitFor_
-		// except the signalling event (because it is iterating over the list and will remove it itself) !!!
-		std::list<WaitableItem *>::iterator it(itemsToWaitFor_.begin()), end(itemsToWaitFor_.end());
-
-		for (int i=0 ; it != end; ++it, ++i)
-		{
-			if (*it != signallingItem)
-				(*it)->removeThread_(*this);
-
-			if (**it && waitResult_ == wait_result::Timeout)
-				waitResult_ = wait_result::Event0 + i;
-		}
-
-		itemsToWaitFor_.clear();
-
-		if (signallingItem) {
-			pthread_cond_signal(&wakeUpCondition_);
-        }
-	}
-
-	bool thread::checkAllItems_ (WaitableItem * signallingItem /* = 0 */)	// must be called with g_globals locked !!!
-	{
-		// remove thread from WaitingThreads_ of all events in itemsToWaitFor_
-		// except the signalling event (because it is iterating over the list and will remove it itself) !!!
-		std::list<WaitableItem *>::iterator it(itemsToWaitFor_.begin()), end(itemsToWaitFor_.end());
-
-		for ( ; it != end; ++it )
-			if ( !**it ) {
-				(*it)->init_wait();	// reactivate event
-				return false;
-			}
-
-		// all events signaled => inform all events except signalling event
-		for (it = itemsToWaitFor_.begin(); it != end; ++it)
-			if (*it != signallingItem)
-				(*it)->threadTriggered_();
-
-		return true;
-	}
-
-	void thread::set_priority(int priority)
-	{
-		struct sched_param param = {0};
-
-		// Test routine
-		/*int policy;
-		memset( &param, 0, sizeof( param ) );
-		pthread_getschedparam( thread_, &policy, &param );
-		std::cout << "thread::set_priority: thread has policy " << policy << " and priority " << param.sched_priority << '\n';
-		std::cout << "thread::set_priority: Priority to set " << priority << '\n';*/
-
-		param.sched_priority = priority;
-		/*int result = */pthread_setschedparam( thread_, SCHED_RR, &param );
-
-		// TODO: We would need superuser privileges to change priority
-		/*if ( result )
-		{
-			switch ( result )
-			{
-			case EPERM:
-				std::cout << "thread::set_priority: You do not have superuser privileges\n";
-				break;
-			case ESRCH:
-				std::cout << "thread::set_priority: thread does not exist\n";
-				break;
-			case EFAULT:
-				std::cout << "thread::set_priority: Illegal parameter address\n";
-				break;
-			case EINVAL:
-				std::cout << "thread::set_priority: Priority inconsistent with policy\n";
-				break;
-			default:
-				std::cout << "thread::set_priority: Unknown error\n";
-			}
-		}*/
-	}
-
-	int thread::priority()
-	{
-		struct sched_param param = {0};
-		int policy;
-
-		/*int result = */pthread_getschedparam( thread_, &policy, &param );
-
-		// TODO: We have to decide how to react on errors
-		/*if ( result )
-		{
-			switch ( result )
-			{
-			case ESRCH:
-				std::cout << "thread::priority: thread does not exist\n";
-				break;
-			case EFAULT:
-				std::cout << "thread::priority: Illegal parameter address\n";
-				break;
-			case EINVAL:
-				std::cout << "thread::priority: Priority inconsistent with policy\n";
-				break;
-			default:
-				std::cout << "thread::priority: Unknown error\n";
-			}
-		}*/
-
-		return param.sched_priority;
-	}
-
-	thread::~thread()
-	{
-		internal::g_globals.mutex_.lock();
-		cleanUpItems_();
-		internal::g_globals.threadMap_.erase(thread_);
-		internal::g_globals.mutex_.unlock();
-
-		if (!isMainThread_)
-			pthread_mutex_destroy(&startMutex_);
-		pthread_cond_destroy(&wakeUpCondition_);
-	}
+//			if ( written_ - read_ > 200 )
+//				strcpy(0,"coredump");
+//		}
+//
+//	} // namespace internal*/
+//
+///*	wait_result wait (WaitableItem & waitableItem, const boost::posix_time::time_duration& duration/*=InfiniteTime*//*)
+//	{
+//		return internal::ThisThread()->wait(waitableItem, duration);
+//	}
+//
+//	wait_result wait (size_t numberOfItems, WaitableItem * waitableItems[], const boost::posix_time::time_duration& duration/*=InfiniteTime*//*, bool waitForAll /*= false*/ /*)
+//	{
+//		return internal::ThisThread()->wait(numberOfItems, waitableItems, duration, waitForAll);
+//	}
+//
+//	void ExternalThread::endWait()
+//	{
+//		internal::g_globals.threadMap_.erase(thread_);
+//		internal::g_globals.externalThreadPool_.push_back(this);
+//	}
+//
+//	thread::thread()
+//		: WaitableItem(false, false), isMainThread_(false), isExternalThread_(false)
+//	{
+//		pthread_attr_t Attributes;
+//
+//		if (   pthread_attr_init(&Attributes)
+//			|| pthread_attr_setdetachstate(&Attributes, PTHREAD_CREATE_DETACHED)
+//			|| pthread_cond_init(&wakeUpCondition_, 0)
+//			|| pthread_mutex_init(&startMutex_, 0)
+//			|| pthread_mutex_lock(&startMutex_)
+//			|| pthread_create(&thread_, &Attributes, reinterpret_cast<void * (*)(void *)>(thread::startExecution_), this))
+//			; // throw ...
+//
+//		 Scheduling policy is set to round robin and priority to normal
+//		struct sched_param param = {0};
+//		param.sched_priority = pal::thread_priority_normal;
+//		pthread_setschedparam( thread_, SCHED_RR, &param );
+//
+//		internal::g_globals.mutex_.lock();
+//		internal::g_globals.threadMap_[thread_] = this;
+//		internal::g_globals.mutex_.unlock();
+//	}
+//
+//	thread::thread(bool isMainThread, bool isExternalThread)
+//		: WaitableItem(false, false), isMainThread_(isMainThread), isExternalThread_(isExternalThread)
+//	{
+//		if (pthread_cond_init(&wakeUpCondition_, 0))
+//			; // throw ...
+//
+//		thread_ = pthread_self();
+//		internal::g_globals.mutex_.lock();
+//		internal::g_globals.threadMap_[thread_] = this;
+//		internal::g_globals.mutex_.unlock();
+//	}
+//
+//	wait_result thread::wait (WaitableItem & item, const boost::posix_time::time_duration& duration/*=InfiniteTime*/ /*)
+///*	{
+//		WaitableItem * itemPtr = &item;
+//		return /*thread::*/ /*wait (1, &itemPtr, duration);
+//	}
+//
+//	wait_result thread::wait (size_t numberOfItems, WaitableItem * items[], const boost::posix_time::time_duration& duration/*=InfiniteTime*//*, bool waitForAll /*= false*/ /*)
+//	{
+//		if (pthread_self() != thread_)
+//			 do not call endWait() here
+//			return wait_result(wait_result::BadThread);
+//
+//		internal::g_globals.mutex_.lock();
+//
+//		if (!numberOfItems)
+//		{
+//			endWait();
+//			internal::g_globals.mutex_.unlock();
+//			return wait_result(wait_result::Failure);
+//		}
+//
+//		waitForAllItems_ = waitForAll;
+//
+//		if (!waitForAllItems_)
+//		{
+//			for (size_t i=0; i < numberOfItems; ++i)
+//				if (*items[i])
+//				{
+//					items[i]->threadTriggered_();
+//					endWait();
+//					internal::g_globals.mutex_.unlock();
+//					return wait_result(wait_result::Event0 + i);
+//				}
+//
+//
+//			if (duration.total_nanoseconds() == 0)
+//			{
+//				endWait();
+//				internal::g_globals.mutex_.unlock();
+//				return wait_result(wait_result::Timeout);
+//			}
+//		}
+//
+//		 add all events we wait for to itemsToWaitFor_ and the thread to WaitingThreads_ of every event we wait for
+//		for (size_t i=0; i < numberOfItems; ++i)
+//		{
+//			itemsToWaitFor_.push_back(items[i]);
+//			items[i]->addThread_(*this);
+//		}
+//
+//		if (waitForAllItems_ && checkAllItems_())
+//		{
+//			cleanUpItems_();
+//			endWait();
+//			internal::g_globals.mutex_.unlock();
+//			return wait_result(wait_result::Event0);
+//		}
+//		else if (!duration.total_nanoseconds())
+//		{
+//			cleanUpItems_();
+//			endWait();
+//			internal::g_globals.mutex_.unlock();
+//			return wait_result(wait_result::Timeout);
+//		}
+//
+//		waitResult_ = wait_result::Timeout;
+//
+//		 activate all events
+//		std::list<WaitableItem *>::iterator it(itemsToWaitFor_.begin()), end(itemsToWaitFor_.end());
+//		for (; it != end; ++it)
+//			(*it)->init_wait();	// activate event
+//
+//		 The cleanUpItems_-member-function of the thread-class will set waitResult_ before setting the wakeUpCondition_
+//		if (duration.is_pos_infinity())
+//			while (pthread_cond_wait(&wakeUpCondition_, &internal::g_globals.mutex_()) == EINTR)
+//				;	// nothing to do
+//		else
+//		{
+//			timeval tv;
+//			gettimeofday(&tv, 0);
+//			struct timespec Timeout = {tv.tv_sec + duration.total_seconds(), tv.tv_usec * 1000 + duration.total_nanoseconds() % 1000000000};
+//			if (Timeout.tv_nsec >= 1000000000)
+//			{
+//				Timeout.tv_nsec -= 1000000000;
+//				++Timeout.tv_sec;
+//			}
+//			while (pthread_cond_timedwait(&wakeUpCondition_, &internal::g_globals.mutex_(), &Timeout) == EINTR)
+//				;	// nothing to do
+//		}
+//
+//		if (waitResult_ == wait_result::Timeout)
+//			cleanUpItems_();
+//
+//		endWait();
+//		internal::g_globals.mutex_.unlock();
+//		return wait_result(waitResult_);
+//	}
+//
+//	void thread::cleanUpItems_ (WaitableItem * signallingItem /* = 0 */ /*)	// must be called with g_globals locked !!!
+//	{
+//		 remove thread from WaitingThreads_ of all events in itemsToWaitFor_
+//		 except the signalling event (because it is iterating over the list and will remove it itself) !!!
+//		std::list<WaitableItem *>::iterator it(itemsToWaitFor_.begin()), end(itemsToWaitFor_.end());
+//
+//		for (int i=0 ; it != end; ++it, ++i)
+//		{
+//			if (*it != signallingItem)
+//				(*it)->removeThread_(*this);
+//
+//			if (**it && waitResult_ == wait_result::Timeout)
+//				waitResult_ = wait_result::Event0 + i;
+//		}
+//
+//		itemsToWaitFor_.clear();
+//
+//		if (signallingItem) {
+//			pthread_cond_signal(&wakeUpCondition_);
+//        }
+//	}
+//
+//	bool thread::checkAllItems_ (WaitableItem * signallingItem /* = 0 *//*)	// must be called with g_globals locked !!!
+//	{
+//		 remove thread from WaitingThreads_ of all events in itemsToWaitFor_
+//		 except the signalling event (because it is iterating over the list and will remove it itself) !!!
+//		std::list<WaitableItem *>::iterator it(itemsToWaitFor_.begin()), end(itemsToWaitFor_.end());
+//
+//		for ( ; it != end; ++it )
+//			if ( !**it ) {
+//				(*it)->init_wait();	// reactivate event
+//				return false;
+//			}
+//
+//		 all events signaled => inform all events except signalling event
+//		for (it = itemsToWaitFor_.begin(); it != end; ++it)
+//			if (*it != signallingItem)
+//				(*it)->threadTriggered_();
+//
+//		return true;
+//	}
+//
+//	void thread::set_priority(int priority)
+//	{
+//		struct sched_param param = {0};
+//
+//		 Test routine
+//		/*int policy;
+//		memset( &param, 0, sizeof( param ) );
+//		pthread_getschedparam( thread_, &policy, &param );
+//		std::cout << "thread::set_priority: thread has policy " << policy << " and priority " << param.sched_priority << '\n';
+//		std::cout << "thread::set_priority: Priority to set " << priority << '\n';*/
+//
+//		/*param.sched_priority = priority;
+//		/*int result = *//*pthread_setschedparam( thread_, SCHED_RR, &param );
+//
+//		 TODO: We would need superuser privileges to change priority
+//		/*if ( result )
+//		{
+//			switch ( result )
+//			{
+//			case EPERM:
+//				std::cout << "thread::set_priority: You do not have superuser privileges\n";
+//				break;
+//			case ESRCH:
+//				std::cout << "thread::set_priority: thread does not exist\n";
+//				break;
+//			case EFAULT:
+//				std::cout << "thread::set_priority: Illegal parameter address\n";
+//				break;
+//			case EINVAL:
+//				std::cout << "thread::set_priority: Priority inconsistent with policy\n";
+//				break;
+//			default:
+//				std::cout << "thread::set_priority: Unknown error\n";
+//			}
+//		}*/
+//	}
+//
+//	/*int thread::priority()
+//	{
+//		struct sched_param param = {0};
+//		int policy;
+//
+//		/*int result = *//*pthread_getschedparam( thread_, &policy, &param );
+//
+//		 TODO: We have to decide how to react on errors
+//		/*if ( result )
+//		{
+//			switch ( result )
+//			{
+//			case ESRCH:
+//				std::cout << "thread::priority: thread does not exist\n";
+//				break;
+//			case EFAULT:
+//				std::cout << "thread::priority: Illegal parameter address\n";
+//				break;
+//			case EINVAL:
+//				std::cout << "thread::priority: Priority inconsistent with policy\n";
+//				break;
+//			default:
+//				std::cout << "thread::priority: Unknown error\n";
+//			}
+//		}*/
+//
+//		/return param.sched_priority;
+//	}
+//
+//	thread::~thread()
+//	{
+///*		internal::g_globals.mutex_.lock();
+//		cleanUpItems_();
+//		internal::g_globals.threadMap_.erase(thread_);
+//		internal::g_globals.mutex_.unlock();
+//
+//		if (!isMainThread_)
+//			pthread_mutex_destroy(&startMutex_);
+//		pthread_cond_destroy(&wakeUpCondition_);*/
+//	}
 
 	unsigned long MillisecondCounter ()
 	{
@@ -2259,19 +2310,19 @@ namespace gen { namespace pal {
 		return tv.tv_sec * 1000 + tv.tv_usec / 1000;
 	}
 
-	void thread::wait()
-	{
+//	void thread::wait()
+//	{
+//
+//	   event_base::wait();
+//	}
 
-	   event_base::wait();
-	}
 
+//	bool thread::has_message()
+//	{
 
-	bool thread::has_message()
-	{
+//	   throw "how to know?";
 
-	   throw "how to know?";
-
-	}
+//	}
 
 //} } // namespace gen { namespace pal {
 //
@@ -2295,21 +2346,21 @@ WINBOOL AfxInternalIsIdleMessage(LPMSG lpmsg);
 /*thread* CLASS_DECL_lnx System.GetThread()
 {
 // check for current thread in module thread state
-__MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+__MODULE_THREAD_STATE* pState = __get_module_thread_state();
 //thread* pThread = pState->m_pCurrentWinThread;
 return pThread;
 }
 
 MSG* CLASS_DECL_lnx AfxGetCurrentMessage()
 {
-_AFX_THREAD_STATE* pState = AfxGetThreadState();
+___THREAD_STATE* pState = __get_thread_state();
 ASSERT(pState);
 return &(pState->m_msgCur);
 }
 
 WINBOOL CLASS_DECL_lnx AfxInternalPumpMessage()
 {
-_AFX_THREAD_STATE *pState = AfxGetThreadState();
+___THREAD_STATE *pState = __get_thread_state();
 
 if (!::GetMessage(&(pState->m_msgCur), NULL, NULL, NULL))
 {
@@ -2425,7 +2476,7 @@ WINBOOL AfxInternalIsIdleMessage(MSG* pMsg)
 if (pMsg->message == WM_MOUSEMOVE || pMsg->message == WM_NCMOUSEMOVE)
 {
 // mouse move at same position as last mouse move?
-_AFX_THREAD_STATE *pState = AfxGetThreadState();
+___THREAD_STATE *pState = __get_thread_state();
 if (pState->m_ptCursorLast == pMsg->pt && pMsg->message == pState->m_nMsgLast)
 return FALSE;
 
@@ -2489,7 +2540,7 @@ nExitCode;
 bDelete;
 #else
 // remove current thread object from primitive::memory
-__MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+__MODULE_THREAD_STATE* pState = __get_module_thread_state();
 // thread* pThread = pState->m_pCurrentWinThread;
 if (pThread != NULL)
 {
@@ -2502,7 +2553,7 @@ pThread->Delete();
 }
 
 // allow cleanup of any thread local objects
-AfxTermThread();
+__term_thread();
 
 // allow C-runtime to cleanup, and exit the thread
 _endthreadex(nExitCode);
@@ -2519,7 +2570,7 @@ void CLASS_DECL_lnx AfxInitThread()
 if (!afxContextIsDLL)
 {
 // set message filter proc
-_AFX_THREAD_STATE* pThreadState = AfxGetThreadState();
+___THREAD_STATE* pThreadState = __get_thread_state();
 ASSERT(pThreadState->m_hHookOldMsgFilter == NULL);
 pThreadState->m_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER,
 _AfxMsgFilterHook, NULL, ::GetCurrentThreadId());
@@ -2544,7 +2595,7 @@ ENSURE(m_hThread == NULL);  // already created?
 
 // setup startup structure for thread initialization
 _AFX_THREAD_STARTUP startup; memset(&startup, 0, sizeof(startup));
-startup.pThreadState = AfxGetThreadState();
+startup.pThreadState = __get_thread_state();
 startup.pThread = this;
 startup.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
 startup.hEvent2 = ::CreateEvent(NULL, TRUE, FALSE, NULL);
@@ -2640,7 +2691,7 @@ return true;   // by default enter run loop
 int thread::run()
 {
 ASSERT_VALID(this);
-_AFX_THREAD_STATE* pState = AfxGetThreadState();
+___THREAD_STATE* pState = __get_thread_state();
 
 // for tracking the idle time state
 WINBOOL bIdle = TRUE;
@@ -2750,7 +2801,7 @@ pFrameWnd = pFrameWnd->m_pNextFrameWnd;
 /*}
 else if (lCount >= 0)
 {
-__MODULE_THREAD_STATE* pState = AfxGetModuleThreadState();
+__MODULE_THREAD_STATE* pState = __get_module_thread_state();
 if (pState->m_nTempMapLock == 0)
 {
 // free temp maps, OLE DLLs, etc.
@@ -2768,9 +2819,9 @@ ASSERT(AfxCheckMemory());
 return lCount < 0;  // nothing more to do if lCount >= 0
 }
 
-::user::lnx::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode)
+::gen::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode)
 {
-return ::user::lnx::message::PrototypeNone;
+return ::gen::message::PrototypeNone;
 }
 
 
@@ -2831,10 +2882,10 @@ for(int i = 0; i < signalptra.get_size(); i++)
 {
 Signal & signal = *signalptra[i];
 gen::signal * psignal = signal.m_psignal;
-::user::lnx::message::e_prototype eprototype = signal.m_eprototype;
-if(eprototype == ::user::lnx::message::PrototypeNone)
+::gen::message::e_prototype eprototype = signal.m_eprototype;
+if(eprototype == ::gen::message::PrototypeNone)
 {
-::user::lnx::message::base base;
+::gen::message::base base;
 base.m_psignal = psignal;
 lresult = 0;
 base.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
@@ -2862,7 +2913,7 @@ return AfxInternalProcessWndProcException( e, pMsg );
 /////////////////////////////////////////////////////////////////////////////
 // Message Filter processing (WH_MSGFILTER)
 
-LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam)
+/*LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam)
 {
    ::radix::thread* pthread;
    if (afxContextIsDLL || (code < 0 && code != MSGF_DDEMGR) || (pthread = dynamic_cast < ::radix::thread * > (::lnx::get_thread())) == NULL)
@@ -2870,7 +2921,7 @@ LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam)
       return ::CallNextHookEx(_afxThreadState->m_hHookOldMsgFilter, code, wParam, lParam);
    }
    ASSERT(pthread != NULL);
-   ::ca::smart_pointer < ::user::lnx::message::base > spbase;
+   ::ca::smart_pointer < ::gen::message::base > spbase;
    spbase(pthread->get_base((LPMSG)lParam));
    pthread->ProcessMessageFilter(code, spbase);
    LRESULT lresult = spbase->m_bRet ? 1 : 0;
@@ -2894,3 +2945,4 @@ __STATIC inline WINBOOL IsEnterKey(LPMSG lpMsg)
 __STATIC inline WINBOOL IsButtonUp(LPMSG lpMsg)
 { return lpMsg->message == WM_LBUTTONUP; }
 
+*/

@@ -1,7 +1,12 @@
 #include "framework.h"
 
-namespace win
+
+/*
+
+
+namespace lnx
 {
+
 
    palette::palette(::ca::application * papp) :
       ca(papp)
@@ -42,4 +47,10 @@ namespace win
    { ASSERT(get_os_data() != NULL); WORD nEntries;
    ::GetObject(get_os_data(), sizeof(WORD), &nEntries); return (int)nEntries; }
 
+
 } // namespace win
+
+
+
+
+*/

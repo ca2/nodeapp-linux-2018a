@@ -1326,6 +1326,7 @@ typedef struct tag_MSG
    UINT     message;
    WPARAM   wparam;
    LPARAM   lparam;
+   POINT    pt;
 } MSG, * LPMSG;
 
 

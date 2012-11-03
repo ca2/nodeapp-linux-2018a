@@ -45,9 +45,9 @@ namespace lnx
    {
       ::radix::object::dump(dumpcontext);
 
-      dumpcontext << "get_handle1() = " << get_handle1();
-      dumpcontext << "\nm_hAttribDC = " << get_handle2();
-      dumpcontext << "\nm_bPrinting = " << m_bPrinting;
+//      dumpcontext << "get_handle1() = " << get_handle1();
+  //    dumpcontext << "\nm_hAttribDC = " << get_handle2();
+    //  dumpcontext << "\nm_bPrinting = " << m_bPrinting;
 
       dumpcontext << "\n";
    }
@@ -3607,13 +3607,15 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(pregion == NULL)
       {
 
-         m_pgraphics->ResetClip();
+         cairo_reset_clip(m_pdc);
 
       }
       else
       {
 
-         m_pgraphics->SetClip((Gdiplus::Region *) pregion->get_os_data());
+         *m_spregion.m_p = *pregion;
+
+         //cairo_clip(m_pdc);
 
       }
 
@@ -3632,16 +3634,28 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    int graphics::ExcludeClipRect(int x1, int y1, int x2, int y2)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::ExcludeClipRect(get_handle1(), x1, y1, x2, y2);
       if(get_handle2() != NULL)
          nRetVal = ::ExcludeClipRect(get_handle2(), x1, y1, x2, y2);
       return nRetVal;
+*/
+
    }
 
    int graphics::ExcludeClipRect(LPCRECT lpRect)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::ExcludeClipRect(get_handle1(), lpRect->left, lpRect->top,
@@ -3650,46 +3664,74 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          nRetVal = ::ExcludeClipRect(get_handle2(), lpRect->left, lpRect->top,
          lpRect->right, lpRect->bottom);
       return nRetVal;
+*/
+
    }
 
    int graphics::IntersectClipRect(int x1, int y1, int x2, int y2)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::IntersectClipRect(get_handle1(), x1, y1, x2, y2);
       if(get_handle2() != NULL)
          nRetVal = ::IntersectClipRect(get_handle2(), x1, y1, x2, y2);
       return nRetVal;
+*/
+
    }
 
    int graphics::IntersectClipRect(LPCRECT lpRect)
    {
-      int nRetVal = ERROR;
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*      int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::IntersectClipRect(get_handle1(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
       if(get_handle2() != NULL)
          nRetVal = ::IntersectClipRect(get_handle2(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
       return nRetVal;
+*/
+
    }
 
    int graphics::OffsetClipRgn(int x, int y)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::OffsetClipRgn(get_handle1(), x, y);
       if(get_handle2() != NULL)
          nRetVal = ::OffsetClipRgn(get_handle2(), x, y);
       return nRetVal;
+*/
+
    }
 
    int graphics::OffsetClipRgn(SIZE size)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       int nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::OffsetClipRgn(get_handle1(), size.cx, size.cy);
       if(get_handle2() != NULL)
          nRetVal = ::OffsetClipRgn(get_handle2(), size.cx, size.cy);
       return nRetVal;
+*/
    }
 
    /*point graphics::MoveTo(int x, int y)
@@ -3704,26 +3746,45 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    UINT graphics::SetTextAlign(UINT nFlags)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       UINT nRetVal = GDI_ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          ::SetTextAlign(get_handle1(), nFlags);
       if(get_handle2() != NULL)
          nRetVal = ::SetTextAlign(get_handle2(), nFlags);
       return nRetVal;
+*/
+
    }
 
    int graphics::SetTextJustification(int nBreakExtra, int nBreakCount)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       int nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetTextJustification(get_handle1(), nBreakExtra, nBreakCount);
       if(get_handle2() != NULL)
          nRetVal = ::SetTextJustification(get_handle2(), nBreakExtra, nBreakCount);
       return nRetVal;
+*/
+
    }
 
    int graphics::SetTextCharacterExtra(int nCharExtra)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       ASSERT(get_handle1() != NULL);
       int nRetVal = 0x8000000;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
@@ -3731,10 +3792,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(get_handle2() != NULL)
          nRetVal = ::SetTextCharacterExtra(get_handle2(), nCharExtra);
       return nRetVal;
+*/
+
    }
 
    DWORD graphics::SetMapperFlags(DWORD dwFlag)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       ASSERT(get_handle1() != NULL);
       DWORD dwRetVal = GDI_ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
@@ -3742,13 +3810,20 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(get_handle2() != NULL)
          dwRetVal = ::SetMapperFlags(get_handle2(), dwFlag);
       return dwRetVal;
+*/
+
    }
 
-   typedef DWORD (CALLBACK* __GDIGETLAYOUTPROC)(HDC);
-   typedef DWORD (CALLBACK* __GDISETLAYOUTPROC)(HDC, DWORD);
+//   typedef DWORD (CALLBACK* __GDIGETLAYOUTPROC)(HDC);
+//   typedef DWORD (CALLBACK* __GDISETLAYOUTPROC)(HDC, DWORD);
 
    DWORD graphics::GetLayout() const
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
       DWORD dwGetLayout = LAYOUT_LTR;
@@ -3764,10 +3839,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
       }
       return dwGetLayout;
+*/
+
    }
 
    DWORD graphics::SetLayout(DWORD dwSetLayout)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       HINSTANCE hInst = ::GetModuleHandleA("GDI32.DLL");
       ASSERT(hInst != NULL);
       DWORD dwGetLayout = LAYOUT_LTR;
@@ -3783,6 +3865,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          SetLastError(ERROR_CALL_NOT_IMPLEMENTED);
       }
       return dwGetLayout;
+*/
+
    }
    /*
    void window::ScreenToClient(LPRECT lpRect)
@@ -3809,6 +3893,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    bool graphics::ArcTo(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
    {
+
+      throw not_implemented(get_app());
+      return false;
+
+/*
       ASSERT(get_handle1() != NULL);
       bool bResult = ::ArcTo(get_handle1(), x1, y1, x2, y2, x3, y3, x4, y4) != FALSE;
       if (get_handle1() != get_handle2())
@@ -3818,10 +3907,18 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          VERIFY(::MoveToEx(get_handle2(), pt.x, pt.y, NULL));
       }
       return bResult;
+*/
+
    }
 
    int graphics::SetArcDirection(int nArcDirection)
    {
+
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       ASSERT(get_handle1() != NULL);
       int nResult = 0;
       if (get_handle1() != get_handle2())
@@ -3829,10 +3926,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if (get_handle2() != NULL)
          nResult = ::SetArcDirection(get_handle2(), nArcDirection);
       return nResult;
+*/
+
    }
 
    bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int nCount)
    {
+
+      throw not_implemented(get_app());
+      return false;
+
+/*
       ASSERT(get_handle1() != NULL);
       bool bResult = ::PolyDraw(get_handle1(), lpPoints, lpTypes, nCount) != FALSE;
       if (get_handle1() != get_handle2())
@@ -3842,10 +3946,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          VERIFY(::MoveToEx(get_handle2(), pt.x, pt.y, NULL));
       }
       return bResult;
+*/
+
    }
 
    bool graphics::PolylineTo(const POINT* lpPoints, int nCount)
    {
+
+      throw not_implemented(get_app());
+      return false;
+
+/*
       ASSERT(get_handle1() != NULL);
       bool bResult = ::PolylineTo(get_handle1(), lpPoints, nCount) != FALSE;
       if (get_handle1() != get_handle2())
@@ -3855,10 +3966,18 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          VERIFY(::MoveToEx(get_handle2(), pt.x, pt.y, NULL));
       }
       return bResult;
+*/
+
    }
 
+/*
    bool graphics::SetColorAdjustment(const COLORADJUSTMENT* lpColorAdjust)
    {
+
+      throw not_implemented(get_app());
+      return false;
+
+/*
       ASSERT(get_handle1() != NULL);
       bool bResult = FALSE;
       if (get_handle1() != get_handle2())
@@ -3866,10 +3985,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if (get_handle2() != NULL)
          bResult = ::SetColorAdjustment(get_handle2(), lpColorAdjust) != FALSE;
       return bResult;
-   }
+*/
+
+//   }
 
    bool graphics::PolyBezierTo(const POINT* lpPoints, int nCount)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       ASSERT(get_handle1() != NULL);
       bool bResult = ::PolyBezierTo(get_handle1(), lpPoints, nCount) != FALSE;
       if (get_handle1() != get_handle2())
@@ -3879,10 +4005,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          VERIFY(::MoveToEx(get_handle2(), pt.x, pt.y, NULL));
       }
       return bResult;
+*/
+
    }
 
    bool graphics::SelectClipPath(int nMode)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       ASSERT(get_handle1() != NULL);
 
       // output DC always holds the current path
@@ -3902,22 +4035,30 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          ::DeleteObject(hRgn);
       }
       return bResult;
+*/
+
    }
 
    int graphics::SelectClipRgn(::ca::region* pRgn, int nMode)
    {
-      ASSERT(get_handle1() != NULL);
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*      ASSERT(get_handle1() != NULL);
       int nRetVal = ERROR;
       if (get_handle1() != get_handle2())
          nRetVal = ::ExtSelectClipRgn(get_handle1(), (HRGN)pRgn->get_os_data(), nMode);
       if (get_handle2() != NULL)
          nRetVal = ::ExtSelectClipRgn(get_handle2(), (HRGN)pRgn->get_os_data(), nMode);
       return nRetVal;
+*/
+
    }
 
    /////////////////////////////////////////////////////////////////////////////
    // Special handling for metafile playback
-
+/*
    int CALLBACK __enum_meta_file_procedure(HDC hDC,
       HANDLETABLE* pHandleTable, METARECORD* pMetaRec, int nHandles, LPARAM lParam)
    {
@@ -4015,10 +4156,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
 
       return 1;
-   }
+   }*/
+
+/*
 
    bool graphics::PlayMetaFile(HMETAFILE hMF)
    {
+
+      throw not_implemented(get_app());
+      return false;
+
+/*
       if (::GetDeviceCaps(get_handle1(), TECHNOLOGY) == DT_METAFILE)
       {
          // playing metafile in metafile, just use core windows API
@@ -4027,29 +4175,45 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       // for special playback, lParam == pgraphics
       return ::EnumMetaFile(get_handle1(), hMF, __enum_meta_file_procedure, (LPARAM)this) != FALSE;
-   }
+*/
+
+//   }
 
    /////////////////////////////////////////////////////////////////////////////
    // Coordinate transforms
 
    void graphics::LPtoDP(LPSIZE lpSize) const
    {
+
+      throw not_implemented(get_app());
+      return;
+
+/*
       ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
       size sizeWinExt = GetWindowExt();
       size sizeVpExt = GetViewportExt();
       lpSize->cx = MulDiv(lpSize->cx, abs(sizeVpExt.cx), abs(sizeWinExt.cx));
       lpSize->cy = MulDiv(lpSize->cy, abs(sizeVpExt.cy), abs(sizeWinExt.cy));
+*/
+
    }
 
    void graphics::DPtoLP(LPSIZE lpSize) const
    {
+
+      throw not_implemented(get_app());
+      return;
+
+/*
       ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
       size sizeWinExt = GetWindowExt();
       size sizeVpExt = GetViewportExt();
       lpSize->cx = MulDiv(lpSize->cx, abs(sizeWinExt.cx), abs(sizeVpExt.cx));
       lpSize->cy = MulDiv(lpSize->cy, abs(sizeWinExt.cy), abs(sizeVpExt.cy));
+*/
+
    }
 
 
@@ -4079,6 +4243,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       wstring wstr = gen::international::utf8_to_unicode(str);
       return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int)wcslen(wstr), lpRect, nFormat); */
 
+/*
       try
       {
 
@@ -4109,8 +4274,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       catch(...)
       {
       }
+*/
 
-
+/*
 
       Gdiplus::StringFormat format(Gdiplus::StringFormat::GenericTypographic());
 
@@ -4171,7 +4337,20 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       m_pgraphics->SetTransform(&m);
 
-      delete pmNew;
+      delete pmNew;*/
+
+      cairo_translate(m_pdc, lpRect->left, lpRect->top);
+
+      cairo_scale(m_pdc, m_fontxyz.m_dFontWidth, 1.0);
+
+      set(m_spfont);
+
+      cairo_show_text(m_pdc, str);
+
+      cairo_scale(m_pdc, 1.0 / m_fontxyz.m_dFontWidth, 1.0);
+
+      cairo_translate(m_pdc, -lpRect->left, -lpRect->top);
+
 
       return 1;
 
@@ -4179,6 +4358,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    int graphics::draw_text_ex(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
+
+      throw not_implemented(get_app());
+      return 0 ;
+
+/*
       if(get_handle1() == NULL)
          return -1;
       // these flags would modify the string
@@ -4186,22 +4370,49 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = gen::international::utf8_to_unicode(string(lpszString, nCount));
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int)wcslen(wstr), lpRect, nFormat, lpDTParams);
+*/
    }
 
    int graphics::draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
+
+      throw not_implemented(get_app());
+      return 0;
+
+/*
       ASSERT(get_handle1() != NULL);
       // these flags would modify the string
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = gen::international::utf8_to_unicode(str);
       return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int)wcslen(wstr), lpRect, nFormat, lpDTParams);
+*/
+
    }
 
    size graphics::GetTextExtent(const char * lpszString, strsize nCount, int iIndex) const
    {
 
-      if(lpszString == NULL || *lpszString == '\0')
+
+   string str(&lpszString[iIndex], nCount);
+
+
+   ((graphics *) this)->set(m_spfont);
+
+   cairo_text_extents_t ex;
+
+   cairo_text_extents(m_pdc, str, &ex);
+
+	SIZE size;
+
+	size.cx = ex.width;
+
+	size.cy = ex.height;
+
+   return size;
+
+
+/*      if(lpszString == NULL || *lpszString == '\0')
          return size(0, 0);
 
       if(nCount < 0)
@@ -4291,7 +4502,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       rectBound.GetSize(&size);
 
       return class ::size((int64_t) (size.Width * m_fontxyz.m_dFontWidth), (int64_t) (size.Height));
-
+*/
    }
 
    size graphics::GetTextExtent(const char * lpszString, strsize nCount) const
@@ -4299,7 +4510,24 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+   string str(lpszString, nCount);
+
+
+   ((graphics *) this)->set(m_spfont);
+
+   cairo_text_extents_t ex;
+
+   cairo_text_extents(m_pdc, str, &ex);
+
+	SIZE size;
+
+	size.cx = ex.width;
+
+	size.cy = ex.height;
+
+   return size;
+
+      /*wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
       Gdiplus::RectF box;
 
@@ -4313,7 +4541,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box);
 
-      return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) (box.Height));
+      return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) (box.Height));*/
 
       /*if(get_handle2() == NULL)
          return size(0, 0);
@@ -4342,9 +4570,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       class sized size;
 
       if(!GetTextExtent(size, str, str.get_length(), str.get_length()))
-         return class size(0, 0);
+         return ::size(0, 0);
 
-      return class size((long) size.cx, (long) size.cy);
+      return ::size((long) size.cx, (long) size.cy);
 
       /*if(m_pgraphics == NULL)
          return size(0, 0);
@@ -4374,29 +4602,59 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    size graphics::GetOutputTextExtent(const char * lpszString, strsize nCount) const
    {
+
+      throw not_implemented(get_app());
+      return ::size(0, 0);
+
+/*
       ASSERT(get_handle1() != NULL);
       SIZE size;
       string str(lpszString, nCount);
       wstring wstr = gen::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int)wstr.get_length(), &size));
       return size;
+*/
+
    }
 
    size graphics::GetOutputTextExtent(const string & str) const
    {
+
+      throw not_implemented(get_app());
+      return ::size(0, 0);
+
+/*
       ASSERT(get_handle1() != NULL);
       SIZE size;
       wstring wstr = gen::international::utf8_to_unicode(str);
       VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int)wstr.get_length(), &size));
       return size;
+*/
    }
 
    bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int iIndex) const
    {
 
+   string str(&lpszString[iIndex], nCount);
+
+
+   ((graphics *) this)->set(m_spfont);
+
+   cairo_text_extents_t ex;
+
+   cairo_text_extents(m_pdc, str, &ex);
+
+	size.cx = ex.width;
+
+	size.cy = ex.height;
+
+   return size;
+
+
+
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      if(lpszString == NULL || *lpszString == '\0')
+/*      if(lpszString == NULL || *lpszString == '\0')
          return false;
 
       if(nCount < 0)
@@ -4511,7 +4769,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       size.cy = sizef.Height;
 
-      return true;
+      return true;*/
    }
 
    bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount) const
@@ -4519,7 +4777,24 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
+
+   string str(lpszString, nCount);
+
+
+   ((graphics *) this)->set(m_spfont);
+
+   cairo_text_extents_t ex;
+
+   cairo_text_extents(m_pdc, str, &ex);
+
+	size.cx = ex.width;
+
+	size.cy = ex.height;
+
+   return size;
+
+
+/*      wstring wstr = gen::international::utf8_to_unicode(lpszString, nCount);
 
       Gdiplus::RectF box;
 
@@ -4550,45 +4825,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       size.cy = box.Height;
 
       return true;
-
+*/
    }
 
    bool graphics::GetTextExtent(sized & size, const string & str) const
    {
 
-      if(m_pgraphics == NULL)
-         return false;
-
-      wstring wstr = gen::international::utf8_to_unicode(str);
-
-      Gdiplus::RectF box;
-
-      Gdiplus::PointF origin(0, 0);
-
-
-      if(m_pgraphics == NULL)
-         return false;
-
-      bool bOk = true;
-
-      try
-      {
-         if(m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box) != Gdiplus::Status::Ok)
-            bOk = false;
-      }
-      catch(...)
-      {
-         bOk = false;
-      }
-
-      if(!bOk)
-         return false;
-
-      size.cx = box.Width * m_fontxyz.m_dFontWidth;
-
-      size.cy = box.Height;
-
-      return true;
+      return GetTextExtent(size, str, str.get_length());
 
    }
 
@@ -4725,32 +4968,6 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    // IMPLEMENT_DYNAMIC(::ca::region, ::ca::graphics_object)
 
 
-} // namespace win
-
-
-
-/*hdc_map* PASCAL afxMapHDC(bool bCreate)
-{
-   UNREFERENCED_PARAMETER(bCreate);
-   try
-   {
-      __MODULE_STATE* pState = __get_module_state();
-      if(pState == NULL)
-         return NULL;
-      return pState->m_pmapHDC;
-   }
-   catch(...)
-   {
-      return NULL;
-   }
-
-}*/
-
-
-
-namespace win
-{
-
    void graphics::FillSolidRect(LPCRECT lpRect, COLORREF clr)
    {
 
@@ -4760,7 +4977,11 @@ namespace win
 
       set_color(clr);
 
-      m_pgraphics->FillRectangle(gdiplus_brush(), lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+      cairo_rectangle(m_pdc, lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+
+      cairo_fill(m_pdc);
+
+//      m_pgraphics->FillRectangle(gdiplus_brush(), lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
 
       //::SetBkColor(get_handle1(), clr);
       //::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
@@ -4773,29 +4994,27 @@ namespace win
       //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
 
 
-      try
-      {
+      set_color(clr);
 
-         if(m_pgraphics == NULL)
-            return;
+      cairo_rectangle(m_pdc, x, y, cx, cy);
 
-         set_color(clr);
-
-         m_pgraphics->FillRectangle(gdiplus_brush(), x, y, cx, cy);
-
-      }
-      catch(...)
-      {
-         return;
-      }
+      cairo_fill(m_pdc);
 
    }
 
 
    bool graphics::TextOut(int x, int y, const char * lpszString, int nCount)
    {
+   string str(lpszString, nCount);
 
-      ::Gdiplus::PointF origin(0, 0);
+
+   ((graphics *) this)->set(m_spfont);
+
+   cairo_move_to(m_pdc, x, y);
+
+   cairo_show_text(m_pdc, str);
+
+      /*::Gdiplus::PointF origin(0, 0);
 
       string str(lpszString, nCount);
 
@@ -4904,12 +5123,26 @@ namespace win
       delete pmNew;
 
       return status  == Gdiplus::Status::Ok;
-
+*/
+return true;
    }
 
    bool graphics::TextOut(double x, double y, const char * lpszString, int nCount)
    {
 
+   string str(lpszString, nCount);
+
+
+   ((graphics *) this)->set(m_spfont);
+
+   cairo_move_to(m_pdc, x, y);
+
+   cairo_show_text(m_pdc, str);
+
+   return true;
+
+   /*
+
       ::Gdiplus::PointF origin(0, 0);
 
       string str(lpszString, nCount);
@@ -5016,7 +5249,7 @@ namespace win
       delete pmNew;
 
       return status  == Gdiplus::Status::Ok;
-
+*/
    }
 
 
@@ -5026,9 +5259,17 @@ namespace win
 
 //      ::Gdiplus::Pen pen(::Gdiplus::Color(GetAValue(m_crColor), GetRValue(m_crColor), GetGValue(m_crColor), GetBValue(m_crColor)), m_dPenWidth);
 
-      gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
+      //gdiplus_pen()->SetAlignment(Gdiplus::PenAlignment::PenAlignmentCenter);
 
-      m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point((FLOAT) m_x, (FLOAT) m_y), Gdiplus::Point((FLOAT) x,(FLOAT) y));
+      //m_pgraphics->DrawLine(gdiplus_pen(), Gdiplus::Point((FLOAT) m_x, (FLOAT) m_y), Gdiplus::Point((FLOAT) x,(FLOAT) y));
+      //string str(lpszString, nCount);
+
+
+
+
+      cairo_line_to(m_pdc, x, y);
+
+      draw();
 
 
       m_x = x;
@@ -5045,17 +5286,17 @@ namespace win
       try
       {
 
-         if(m_pgraphics == NULL)
+         if(m_pdc == NULL)
             return;
 
          ::ca::graphics::set_alpha_mode(ealphamode);
          if(m_ealphamode == ::ca::alpha_mode_blend)
          {
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceOver);
+            cairo_set_operator(m_pdc, CAIRO_OPERATOR_OVER);
          }
          else if(m_ealphamode == ::ca::alpha_mode_set)
          {
-            m_pgraphics->SetCompositingMode(Gdiplus::CompositingModeSourceCopy);
+            cairo_set_operator(m_pdc, CAIRO_OPERATOR_SOURCE);
          }
 
       }
@@ -5077,12 +5318,12 @@ namespace win
    void * graphics::get_os_data() const
    {
 
-      return (void *) m_pgraphics;
+      return (void *) m_pdc;
 
    }
 
 
-   HDC graphics::get_handle() const
+/*   HDC graphics::get_handle() const
    {
       return m_hdc;
    }
@@ -5095,18 +5336,18 @@ namespace win
    HDC graphics::get_handle2() const
    {
       return get_handle();
-   }
+   }*/
 
    void graphics::attach(void * pdata)
    {
-      if(m_pgraphics != NULL)
+      if(m_pdc != NULL)
       {
-         delete m_pgraphics;
+         cairo_destroy(m_pdc);
       }
-      m_pgraphics = (Gdiplus::Graphics *) pdata;
+      m_pdc = (cairo_t *) pdata;
    }
 
-
+/*
    Gdiplus::Font * graphics::gdiplus_font()
    {
       if(m_spfont.is_null())
@@ -5150,12 +5391,13 @@ namespace win
          m_sppen->operator=(m_penxyz);
       }
       return (Gdiplus::Pen *) m_sppen->get_os_data();
-   }
+   }*/
 
-   Gdiplus::FillMode graphics::gdiplus_get_fill_mode()
-   {
-      return Gdiplus::FillModeWinding;
-   }
+
+//   ::ca::e_fill_mode graphics::gdiplus_get_fill_mode()
+  // {
+//      return ::ca::fill_mode_winding;
+  // }
 
 void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 {
@@ -5174,7 +5416,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
     // The number of times to perform the averaging. According to wikipedia,
     // three iterations is good enough to pass for a gaussian.
-    const MAX_ITERATIONS = 3;
+    const int MAX_ITERATIONS = 3;
     int iteration;
 
     memcpy( dst, src, width*height*4 );
@@ -5226,22 +5468,16 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    bool graphics::blur(bool bExpand, double dRadius, LPCRECT lpcrect)
    {
 
-      if(pgraphicsSrc == NULL)
-         return false;
-
-      if(nSrcWidth == 0 || nSrcHeight == 0 || nDstWidth == 0 || nDstHeight == 0)
-         return false;
-
-      cairo_pattern_t * ppattern = cairo_get_source((cairo_t *) m_pdc->get_os_data());
+      cairo_pattern_t * ppattern = cairo_get_source(m_pdc);
 
       if(ppattern == NULL)
          return false;
 
       cairo_surface_t * psurfaceSrc = NULL;
 
-      cairo_pattern_get_surface(ppatern, psurfaceSrc);
+      cairo_pattern_get_surface(ppattern, &psurfaceSrc);
 
-      cairo_surface_t * psurface = cairo_surface_create_for_rectangle(psurfaceSrc, lpcrect->left, lprect->top, width(lpcrect), height(lpcrect))
+      cairo_surface_t * psurface = cairo_surface_create_for_rectangle(psurfaceSrc, lpcrect->left, lpcrect->top, width(lpcrect), height(lpcrect));
 
       cairo_image_surface_blur(psurface, dRadius);
 
@@ -5253,12 +5489,13 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    double graphics::get_dpix() const
    {
 
-      return m_pgraphics->GetDpiX();
+//      return m_pgraphics->GetDpiX();
+      return 72.0;
 
    }
 
 
-   bool graphics::set(::ca::brush * pbrush)
+   bool graphics::set(const ::ca::brush * pbrush)
    {
 
       cairo_set_source_rgba(m_pdc, GetRValue(pbrush->m_cr) / 255.0, GetGValue(pbrush->m_cr) / 255.0, GetBValue(pbrush->m_cr) / 255.0, GetAValue(pbrush->m_cr) / 255.0);
@@ -5266,30 +5503,30 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    }
 
 
-   bool graphics::set(::ca::pen * ppen)
+   bool graphics::set(const ::ca::pen * ppen)
    {
 
       cairo_set_source_rgba(m_pdc, GetRValue(ppen->m_cr) / 255.0, GetGValue(ppen->m_cr) / 255.0, GetBValue(ppen->m_cr) / 255.0, GetAValue(ppen->m_cr) / 255.0);
 
-      cairo_set_line_width(m_pdc, ppen->m_iWidth);
+      cairo_set_line_width(m_pdc, ppen->m_dWidth);
 
    }
 
-   bool graphics::set(::ca::font * pfont)
+   bool graphics::set(const ::ca::font * pfont)
    {
 
-      cairo_select_font_face(m_pdc, pfont->m_strFamily, pfont->m_bItalic ? CAIRO_FONT_SLANT_ITALIC : CAIRO_FONT_SLANT_NORMAL, pfont->m_iFontWeight > 650 ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
+      cairo_select_font_face(m_pdc, pfont->m_strFontFamilyName, pfont->m_bItalic ? CAIRO_FONT_SLANT_ITALIC : CAIRO_FONT_SLANT_NORMAL, pfont->m_iFontWeight > 650 ? CAIRO_FONT_WEIGHT_BOLD : CAIRO_FONT_WEIGHT_NORMAL);
 
       if(pfont->m_eunitFontSize == ::ca::unit_pixel)
       {
 
-         cairo_set_font_size(m_pdc, pfont->m_dSize);
+         cairo_set_font_size(m_pdc, pfont->m_dFontSize);
 
       }
       else
       {
 
-         cairo_set_font_size(m_pdc, pfont->m_dSize * 96.0 / 72.0);
+         cairo_set_font_size(m_pdc, pfont->m_dFontSize * 96.0 / 72.0);
 
       }
 
@@ -5363,17 +5600,19 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    }
 
 
-   bool graphics::set(::lnx::graphics_path * ppath)
+   bool graphics::set(const ::ca::graphics_path * ppathParam)
    {
 
-      for(int i = 0; i < path.m_elementa.get_count(); i++)
+      ::lnx::graphics_path * ppath = dynamic_cast < ::lnx::graphics_path * > ((::ca::graphics_path *) ppathParam);
+
+      for(int i = 0; i < ppath->m_elementa.get_count(); i++)
       {
 
-         set(path.m_elementa[i]);
+         set(ppath->m_elementa[i]);
 
       }
 
-      if(path.m_efillmode == ::ca::fill_mode_alternate)
+      if(ppath->m_efillmode == ::ca::fill_mode_alternate)
       {
 
          cairo_set_fill_rule(m_pdc, CAIRO_FILL_RULE_EVEN_ODD);
@@ -5392,7 +5631,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    }
 
 
-   bool graphics::set(::lnx::graphics_path::element & e)
+   bool graphics::set(const ::lnx::graphics_path::element & e)
    {
 
       switch(e.m_etype)
@@ -5414,7 +5653,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
    }
 
-   bool os_simple_graphics::set(::lnx::graphics_path::arc & a)
+   bool graphics::set(const ::lnx::graphics_path::arc & a)
    {
 
       cairo_translate(m_pdc, a.m_xCenter, a.m_yCenter);
@@ -5431,23 +5670,32 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
    }
 
-   bool os_simple_graphics::set(::lnx::graphics_path::line & l)
+   bool graphics::set(const ::lnx::graphics_path::line & l)
    {
 
-      if(cairo_has_current_point(m_pdc))
+      if(!cairo_has_current_point(m_pdc))
       {
 
-         cairo_move_to(m_pdc, l.m_x1, l.m_y1);
+         cairo_move_to(m_pdc, l.m_x, l.m_y);
 
       }
       else
       {
 
-         cairo_line_to(m_pdc, l.m_x1, l.m_y1);
+         cairo_line_to(m_pdc, l.m_x, l.m_y);
 
       }
 
-      cairo_line_to(m_pdc, l.m_x2, l.m_y2);
+      return true;
+
+   }
+
+
+   bool graphics::set(const ::lnx::graphics_path::move & p)
+   {
+
+      cairo_move_to(m_pdc, p.m_x, p.m_y);
+
 
       return true;
 
@@ -5455,14 +5703,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
 
 
-   bool graphics::fill_and_draw()
-   {
-
-      return fill_and_draw(m_spbrush, m_sppen);
-
-   }
-
-   bool graphics::fill_and_draw()
+   bool graphics::fill()
    {
 
       return fill(m_spbrush);

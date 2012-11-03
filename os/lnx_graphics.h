@@ -66,9 +66,9 @@ namespace lnx
       ::ca::bitmap & GetCurrentBitmap() const;
 
 
-      pen *       lnx_pen();
-      brush *     lnx_brush();
-      font *      lnx_font();
+      //pen *       lnx_pen();
+      //brush *     lnx_brush();
+      //font *      lnx_font();
 
       // for bidi and mirrored localization
       DWORD GetLayout() const;
@@ -477,9 +477,9 @@ namespace lnx
       virtual void set_text_rendering(::ca::e_text_rendering etextrendering);
 
       virtual void * get_os_data() const;
-      virtual HDC get_handle() const;
-      virtual HDC get_handle1() const;
-      virtual HDC get_handle2() const;
+//      virtual HDC get_handle() const;
+  //    virtual HDC get_handle1() const;
+    //  virtual HDC get_handle2() const;
 
       virtual void attach(void * pdata);
 
@@ -498,6 +498,7 @@ namespace lnx
       bool set(const ::ca::pen * ppen);
       bool set(const ::ca::font * pfont);
       bool set(const ::ca::graphics_path * ppath);
+      bool set(const ::lnx::graphics_path::element & e);
       bool set(const ::lnx::graphics_path::arc & arc);
       bool set(const ::lnx::graphics_path::move & move);
       bool set(const ::lnx::graphics_path::line & line);

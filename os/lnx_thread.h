@@ -63,12 +63,32 @@ namespace lnx
       __THREADPROC                      m_pfnThreadProc;
 
       ::event                              m_evFinish;
+      //::event                              m_peventReady;
       UINT                                m_nDisablePumpCount;
       mutex                               m_mutexUiPtra;
 
       ::ca::thread *                      m_pAppThread;
 
       UINT                                m_dwFinishTimeout;
+
+
+      thread(::ca::application * papp);
+      virtual ~thread();
+
+
+      void CommonConstruct();
+      virtual void Delete();
+
+
+      virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
+
+
+   #ifdef DEBUG
+      virtual void assert_valid() const;
+      virtual void dump(dump_context & dumpcontext) const;
+   #endif
+
+
 
       virtual void * get_os_data();
       virtual int_ptr get_os_int();
@@ -78,9 +98,6 @@ namespace lnx
 
       virtual void set_p(::radix::thread * p);
 
-      thread(::ca::application * papp);
-
-      virtual void construct(__THREADPROC pfnThreadProc, LPVOID pParam);
 
       virtual bool Begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), UINT nStackSize = 0, DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
@@ -153,15 +170,6 @@ namespace lnx
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
 
-   // Implementation
-   public:
-      virtual ~thread();
-   #ifdef DEBUG
-      virtual void assert_valid() const;
-      virtual void dump(dump_context & dumpcontext) const;
-   #endif
-      void CommonConstruct();
-      virtual void Delete();
          // 'delete this' only if m_bAutoDelete == TRUE
 
 

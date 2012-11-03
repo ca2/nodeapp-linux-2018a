@@ -9,7 +9,7 @@ CLASS_DECL_ca int ca2_main();
 
 void CLASS_DECL_lnx __cdecl _ca2_purecall()
 {
-    throw simple_exception();
+    throw simple_exception(::ca::get_thread_app());
 }
 
 
@@ -32,14 +32,16 @@ int CLASS_DECL_lnx __lnx_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
 
 
-   ::CoInitialize(NULL);
+//   ::CoInitialize(NULL);
 
 
-   if(!main_initialize())
-      return -1;
+throw todo(::ca::get_thread_app());
+
+//   if(!main_initialize())
+  //    return -1;
 
 
-   _set_purecall_handler(_ca2_purecall);
+//   _set_purecall_handler(_ca2_purecall);
 
    ::plane::system * psystem = new ::plane::system();
 
@@ -48,7 +50,7 @@ int CLASS_DECL_lnx __lnx_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
    int nReturnCode = 0;
 
 
-   ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
+   ::lnx::main_init_data * pinitmaindata  = new ::lnx::main_init_data;
 
 
    pinitmaindata->m_hInstance             = hInstance;
@@ -66,7 +68,7 @@ int CLASS_DECL_lnx __lnx_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
    try
    {
-      main_finalize();
+//      main_finalize();
    }
    catch(...)
    {
@@ -74,7 +76,7 @@ int CLASS_DECL_lnx __lnx_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
    try
    {
-      __win_term();
+      __lnx_term();
    }
    catch(...)
    {
@@ -94,7 +96,7 @@ int CLASS_DECL_lnx __lnx_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTS
 
    try
    {
-      delete __get_module_state()->m_pmapHWND;
+//      delete __get_module_state()->m_pmapHWND;
    }
    catch(...)
    {
@@ -151,7 +153,7 @@ int CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const 
    try
    {
 
-      _set_purecall_handler(_ca2_purecall);
+//      _set_purecall_handler(_ca2_purecall);
 
       ::plane::system * psystem = new ::plane::system();
 
@@ -163,7 +165,7 @@ int CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const 
 
       int nReturnCode = 0;
 
-      ::win::main_init_data * pinitmaindata  = new ::win::main_init_data;
+      ::lnx::main_init_data * pinitmaindata  = new ::lnx::main_init_data;
 
       pinitmaindata->m_hInstance             = hInstance;
       pinitmaindata->m_hPrevInstance         = hPrevInstance;
@@ -177,7 +179,7 @@ int CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const 
       nReturnCode = psystem->main();
 
 
-      __win_term();
+      __lnx_term();
 
 
       try
@@ -192,7 +194,7 @@ int CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const 
 
       try
       {
-         delete __get_module_state()->m_pmapHWND;
+//         delete __get_module_state()->m_pmapHWND;
       }
       catch(...)
       {

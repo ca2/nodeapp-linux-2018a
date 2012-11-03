@@ -1,5 +1,5 @@
 #include "framework.h"
-#include "dde.h"
+//#include "dde.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -13,6 +13,7 @@ struct CLASS_DECL_ca __MAP_MESSAGE
 
 #define DEFINE_MESSAGE(wm)  { wm, #wm }
 
+/*
 static const __MAP_MESSAGE allMessages[] =
 {
    DEFINE_MESSAGE(WM_CREATE),
@@ -196,16 +197,17 @@ static const __MAP_MESSAGE allMessages[] =
    DEFINE_MESSAGE(WM_DEVICECHANGE),
    { 0, NULL, }    // end of message list
 };
-
+*/
 #undef DEFINE_MESSAGE
 
 /////////////////////////////////////////////////////////////////////////////
 // DDE special case
 
+/*
 static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
 {
    ENSURE_ARG(pMsg != NULL);
-   if (pMsg->message == WM_DDE_EXECUTE)
+  if (pMsg->message == WM_DDE_EXECUTE)
    {
       uint_ptr nDummy;
       HGLOBAL hCommands;
@@ -267,9 +269,9 @@ static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
       ::GlobalUnlock(hAdvise);
    }
 }
-
+*/
 /////////////////////////////////////////////////////////////////////////////
-
+/*
 void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
 {
    ENSURE_ARG(AfxIsValidString(lpszPrefix));
@@ -313,7 +315,7 @@ void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
    {
       // a system windows message
       const __MAP_MESSAGE* pMapMsg = allMessages;
-      for (/*null*/; pMapMsg->lpszMsg != NULL; pMapMsg++)
+      for (/*null*/ /*; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == pbase->m_uiMessage)
          {
@@ -350,8 +352,9 @@ void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
 
    /*if (pbase->m_uiMessage >= WM_DDE_FIRST && pbase->m_uiMessage <= WM_DDE_LAST)
       TraceDDE(lpszPrefix, pMsg);*/
-}
+//}
 
+/*
 
 void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg)
 {
@@ -395,7 +398,7 @@ void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg)
    {
       // a system windows message
       const __MAP_MESSAGE* pMapMsg = allMessages;
-      for (/*null*/; pMapMsg->lpszMsg != NULL; pMapMsg++)
+      for (/*null*/ /*; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == lpmsg->message)
          {
@@ -432,4 +435,6 @@ void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg)
 
    /*if (lpmsg->message >= WM_DDE_FIRST && lpmsg->message <= WM_DDE_LAST)
       TraceDDE(lpszPrefix, pMsg);*/
-}
+//}
+
+

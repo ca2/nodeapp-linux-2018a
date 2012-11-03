@@ -78,13 +78,14 @@ bool WinResource::ReadResource(
    UINT nID,
    const char * lpcszType)
 {
-   gen::memory_file file(get_app());
+/*   gen::memory_file file(get_app());
    if(!ReadResource(file, nID, lpcszType))
       return false;
    file.AllocateAddUp(1);
    ((char * )file.GetAllocation())[file.get_length() -1 ] = '\0';
    str = ((char * )file.GetAllocation());
-   return true;
+   return true;*/
+   return false;
 }
 
 
@@ -94,11 +95,12 @@ bool WinResource::ReadResource(
    UINT nID,
    const char * lpcszType)
 {
-
+/*
    HINSTANCE hinst = vfxFindResourceHandle(MAKEINTRESOURCE(nID), lpcszType);
    if(hinst == NULL)
       return false;
-   return ReadResource(hinst, file, nID, lpcszType);
+   return ReadResource(hinst, file, nID, lpcszType);*/
+   return false;
 }
 
 bool WinResource::ReadResource(
@@ -107,7 +109,7 @@ bool WinResource::ReadResource(
    UINT nID,
    const char * lpcszType)
 {
-
+/*
    HRSRC hrsrc = ::FindResource(
       hinst,
       MAKEINTRESOURCE(nID),
@@ -144,7 +146,9 @@ bool WinResource::ReadResource(
       #endif
             ::FreeResource(hres);
    }
-   return true;
+   return true;*/
+
+   return false;
 
 }
 
@@ -153,6 +157,9 @@ bool WinResource::ReadResource(
 
 HINSTANCE CLASS_DECL_lnx vfxFindResourceHandle(const char * lpszName, const char * lpszType)
 {
+   return NULL;
+
+   /*
    ASSERT(lpszName != NULL);
    ASSERT(lpszType != NULL);
 
@@ -211,7 +218,7 @@ HINSTANCE CLASS_DECL_lnx vfxFindResourceHandle(const char * lpszName, const char
    AfxUnlockGlobals(CRIT_DYNLINKLIST);
 
    // if failed to find resource, return application resource
-   return CaSys(::win::get_thread()).m_hInstance;
+   return CaSys(::win::get_thread()).m_hInstance;*/
 }
 
 /*HINSTANCE CLASS_DECL_lnx vfxFindResourceHandle(const char * lpszName, const char * lpszType)
