@@ -212,7 +212,7 @@ namespace lnx{
       for(int_ptr i = hwndtreea.get_size() - 1; i >= 0; i--)
       {
          user::oswindow_tree & hwndtreeChild = hwndtreea[i];
-         void * hwndChild = hwndtreeChild.m_hwnd;
+         void * hwndChild = hwndtreeChild.m_oswindow;
          ::GetWindowRect((oswindow) hwndChild, rectChild);
          if(rectNewUpdate.intersect(rectChild, rectUpdate))
          {
@@ -235,7 +235,7 @@ namespace lnx{
 
 //      DWORD dwTimeIn = GetTickCount();
 
-      void * hwndParam = hwndtree.m_hwnd;
+      void * hwndParam = hwndtree.m_oswindow;
 
       if(hwndParam == NULL)
       {
@@ -314,7 +314,7 @@ namespace lnx{
       return to(
          pdc,
          rectUpdate,
-         hwndtree.m_hwndtreea,
+         hwndtree.m_oswindowtreea,
          true,
          false);
 
@@ -343,7 +343,8 @@ namespace lnx{
          catch(...)
          {
          }
-         while(::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
+//         while(::PeekMessage(&msg, ::ca::null(), NULL, NULL, PM_NOREMOVE))
+         while(::PeekMessage(&msg, ::ca::null(), NULL, NULL, 0))
          {
             __get_thread()->pump_message();
          }
@@ -408,7 +409,7 @@ namespace lnx{
       if(m_pbuffer->GetBuffer()->get_os_data() == NULL)
          return true;
 
-      ::ca::graphics * pdc = (dynamic_cast<::win::graphics * >(m_pbuffer->GetBuffer()));
+      ::ca::graphics * pdc = (dynamic_cast < ::win::graphics * > (m_pbuffer->GetBuffer()));
 
       if(pdc == NULL)
       {
@@ -427,7 +428,7 @@ namespace lnx{
       get_wnda(wndpa);
 
 
-      user::WndUtil::SortByZOrder(hwnda);
+      user::window_util::SortByZOrder(hwnda);
 
       user::oswindow_tree::Array hwndtreea;
       //hwndtreea = hwnda;
@@ -1059,7 +1060,7 @@ namespace lnx{
 
       get_wnda(hwnda);
 
-      user::WndUtil::SortByZOrder(hwnda);
+      user::window_util::SortByZOrder(hwnda);
 
       ASSERT(FALSE);
       /*for(int i = 0; i  < hwnda.get_size(); i++)

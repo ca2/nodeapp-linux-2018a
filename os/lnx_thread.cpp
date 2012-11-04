@@ -967,7 +967,7 @@ void thread::Delete()
          // phase1: check to see if we can do idle work
          while (bIdle &&
             //!::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
-            !::PeekMessage(&msg, ::ca::null(), NULL, NULL, 0))
+            !::PeekMessage(&msg, ::ca::null(), 0, 0, 0))
          {
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
@@ -1021,7 +1021,7 @@ void thread::Delete()
             }
          }
 //         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
-         while (::PeekMessage(&msg, ::ca::null(), NULL, NULL, 0) != FALSE);
+         while (::PeekMessage(&msg, ::ca::null(),0, 0, 0) != FALSE);
 
       }
 
@@ -1399,7 +1399,7 @@ void thread::Delete()
       try
       {
          MSG msg;
-         if(!::GetMessage(&msg, ::ca::null(), NULL, NULL))
+         if(!::GetMessage(&msg, ::ca::null(), 0, 0))
          {
             TRACE(::radix::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
             m_nDisablePumpCount++; // application must die

@@ -117,3 +117,18 @@ CLASS_DECL_lnx void __cdecl AfxPreTranslateMessage(gen::signal_object * pobj);
 
 
 #include "lnx_application.h"
+
+
+
+WINBOOL PeekMessage(
+    LPMSG lpMsg,
+    oswindow hWnd,
+    UINT wMsgFilterMin,
+    UINT wMsgFilterMax,
+    UINT wRemoveMsg);
+
+WINBOOL GetMessage(
+    LPMSG lpMsg,
+    oswindow hWnd,
+    UINT wMsgFilterMin,
+    UINT wMsgFilterMax);

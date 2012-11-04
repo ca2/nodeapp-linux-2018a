@@ -79,9 +79,9 @@ namespace lnx
       virtual ::ca::window * from_os_data(void * pdata);
       virtual void * get_os_data() const;
 
-      static window * PASCAL from_handle(oswindow hWnd);
-      static window * PASCAL FromHandlePermanent(oswindow hWnd);
-      static void PASCAL DeleteTempMap();
+      static window * from_handle(oswindow hWnd);
+      static window * FromHandlePermanent(oswindow hWnd);
+      static void DeleteTempMap();
       bool Attach(oswindow hWndNew);
       oswindow Detach();
 

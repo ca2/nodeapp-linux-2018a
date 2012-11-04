@@ -3,7 +3,7 @@
 	"lnx.h"
 	"lnx_internal.h"
 
-1351938153 /ca2/nodeapp/os/lnx.h
+1352027228 /ca2/nodeapp/os/lnx.h
 	"ca.h"
 	"lnx1.h"
 	"implementation.h"
@@ -657,7 +657,7 @@
 	<features.h>
 	"bare_operational_system.h"
 
-1352009538 /ca2/nodeapp/operational_system/bare_operational_system.h
+1352011652 /ca2/nodeapp/operational_system/bare_operational_system.h
 	<features.h>
 	<stdlib.h>
 	<stdio.h>
@@ -675,6 +675,7 @@
 	<sys/resource.h>
 	<X11/Xlib.h>
 	<X11/Xutil.h>
+	"oswindow.h"
 	"version_linux.h"
 	"version_cpu.h"
 	"cross/win/win.h"
@@ -959,10 +960,9 @@
 
 1350025623 /ca2/app/appseed/c/macos/c_os_cross_win_file.h
 
-1351982991 /ca2/app/appseed/c/linux/c_os.h
+1352011709 /ca2/app/appseed/c/linux/c_os.h
 	<stdarg.h>
 	<wchar.h>
-	"c_os_window.h"
 	"c_os_graphics.h"
 	"c_os_http_lib.h"
 	"c_os_http.h"
@@ -1874,7 +1874,7 @@
 
 1342864881 /ca2/app/appseed/ca/user/user_elemental.h
 
-1352007094 /ca2/app/appseed/ca/user/user_window_util.h
+1352014623 /ca2/app/appseed/ca/user/user_window_util.h
 
 1351322634 /ca2/app/appseed/ca/user/user_text_interface.h
 
@@ -3681,7 +3681,7 @@
 
 1351946533 /ca2/nodeapp/os/lnx_thread.h
 
-1352009033 /ca2/nodeapp/os/lnx_window.h
+1352029727 /ca2/nodeapp/os/lnx_window.h
 
 1351936461 /ca2/nodeapp/os/lnx_os.h
 
@@ -4139,7 +4139,7 @@
 	"framework.h"
 	<math.h>
 
-1352009459 source:/ca2/nodeapp/os/lnx_thread.cpp
+1352027400 source:/ca2/nodeapp/os/lnx_thread.cpp
 	"framework.h"
 	<unistd.h>
 	<errno.h>
@@ -4157,4 +4157,6 @@
 	<malloc.h>
 
 1351983846 /ca2/app/appseed/c/linux/c_os_window.h
+
+1352030601 /ca2/nodeapp/operational_system/oswindow.h
 
