@@ -54,7 +54,7 @@ namespace lnx
       //virtual ::user::interaction * GetOwner();
       virtual void set_owner(::user::interaction * pOwnerWnd);
 
-      virtual oswindow get_handle();
+      virtual oswindow get_handle() const;
 
       virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);
 

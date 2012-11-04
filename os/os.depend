@@ -581,7 +581,7 @@
 	"ca/primitive/count.h"
 	"ca/api/api.h"
 
-1351983119 /ca2/app/appseed/c/c/c.h
+1352061263 /ca2/app/appseed/c/c/c.h
 	"c/_/ThomasGustavoCecynLundgrenVidaEternaDeCamiloSasukeTsumanuma.h"
 	"nodeapp/operational_system/_.h"
 	"c/vms/vms.h"
@@ -657,7 +657,7 @@
 	<features.h>
 	"bare_operational_system.h"
 
-1352011652 /ca2/nodeapp/operational_system/bare_operational_system.h
+1352049884 /ca2/nodeapp/operational_system/bare_operational_system.h
 	<features.h>
 	<stdlib.h>
 	<stdio.h>
@@ -675,6 +675,7 @@
 	<sys/resource.h>
 	<X11/Xlib.h>
 	<X11/Xutil.h>
+	"osdisplay.h"
 	"oswindow.h"
 	"version_linux.h"
 	"version_cpu.h"
@@ -702,10 +703,10 @@
 
 1345878529 /ca2/nodeapp/operational_system/cross/win/base_tsd.h
 
-1352004466 /ca2/nodeapp/operational_system/cross/win/win_def.h
+1352055671 /ca2/nodeapp/operational_system/cross/win/win_def.h
 	"win_nt.h"
 
-1347084097 /ca2/nodeapp/operational_system/cross/win/win_nt.h
+1352053647 /ca2/nodeapp/operational_system/cross/win/win_nt.h
 	"base_tsd.h"
 	"win_guid_def.h"
 	<ctype.h>
@@ -792,7 +793,7 @@
 
 1352004467 /ca2/nodeapp/operational_system/cross/win/win_gdi.h
 
-1352004455 /ca2/nodeapp/operational_system/cross/win/win_user.h
+1352039540 /ca2/nodeapp/operational_system/cross/win/win_user.h
 
 1345878529 /ca2/nodeapp/operational_system/cross/win/win_errno.h
 
@@ -3549,7 +3550,7 @@
 
 1342864700 /ca2/app/appseed/ca/plane/plane_system_radix_factory.h
 
-1342864700 /ca2/app/appseed/ca/plane/plane_system_primitive_string_format_spec.h
+1352033295 /ca2/app/appseed/ca/plane/plane_system_primitive_string_format_spec.h
 
 1342864820 /ca2/app/appseed/ca/plugin/plugin.h
 	"plugin_gen.h"
@@ -3679,15 +3680,15 @@
 
 1348448062 /ca2/nodeapp/os/lnx_brush.h
 
-1351946533 /ca2/nodeapp/os/lnx_thread.h
+1352033050 /ca2/nodeapp/os/lnx_thread.h
 
-1352029727 /ca2/nodeapp/os/lnx_window.h
+1352058130 /ca2/nodeapp/os/lnx_window.h
 
 1351936461 /ca2/nodeapp/os/lnx_os.h
 
 1352004475 /ca2/nodeapp/os/lnx_port_forward.h
 
-1352004473 /ca2/nodeapp/os/lnx_application.h
+1352033050 /ca2/nodeapp/os/lnx_application.h
 
 1348448062 /ca2/nodeapp/os/lnx_file_system.h
 
@@ -3742,7 +3743,7 @@
 1348450731 source:/ca2/nodeapp/os/lnx_appterm.cpp
 	"framework.h"
 
-1352008054 source:/ca2/nodeapp/os/lnx_application.cpp
+1352033050 source:/ca2/nodeapp/os/lnx_application.cpp
 	"framework.h"
 
 1351857199 source:/ca2/nodeapp/os/lnx_bitmap.cpp
@@ -3757,7 +3758,7 @@
 	<sys/stat.h>
 	<unistd.h>
 
-1349647450 source:/ca2/nodeapp/os/lnx_dib.cpp
+1352053612 source:/ca2/nodeapp/os/lnx_dib.cpp
 	"framework.h"
 	<math.h>
 	"include/freeimage.h"
@@ -3884,7 +3885,7 @@
 
 1350784940 /ca2/app/appseed/c/simple_graphics/simple_graphics_first_phase.h
 
-1350784958 /ca2/app/appseed/c/c/c_mem.h
+1352061254 /ca2/app/appseed/c/c/c_mem.h
 
 1350784958 /ca2/app/appseed/c/c/c_math.h
 
@@ -4106,13 +4107,13 @@
 1351935864 source:/ca2/nodeapp/os/lnx_palette.cpp
 	"framework.h"
 
-1351936784 source:/ca2/nodeapp/os/lnx_os.cpp
+1352033050 source:/ca2/nodeapp/os/lnx_os.cpp
 	"framework.h"
 
 1351936916 source:/ca2/nodeapp/os/lnx_pen.cpp
 	"framework.h"
 
-1352004474 source:/ca2/nodeapp/os/lnx_port_forward.cpp
+1352033682 source:/ca2/nodeapp/os/lnx_port_forward.cpp
 	"framework.h"
 
 1351937004 source:/ca2/nodeapp/os/lnx_preview_dc.cpp
@@ -4139,7 +4140,7 @@
 	"framework.h"
 	<math.h>
 
-1352027400 source:/ca2/nodeapp/os/lnx_thread.cpp
+1352055373 source:/ca2/nodeapp/os/lnx_thread.cpp
 	"framework.h"
 	<unistd.h>
 	<errno.h>
@@ -4158,5 +4159,14 @@
 
 1351983846 /ca2/app/appseed/c/linux/c_os_window.h
 
-1352030601 /ca2/nodeapp/operational_system/oswindow.h
+1352055657 /ca2/nodeapp/operational_system/oswindow.h
+	<inttypes.h>
+
+1352049950 /ca2/nodeapp/operational_system/osdisplay.h
+
+1352058005 source:/ca2/nodeapp/os/lnx_window_draw.cpp
+	"framework.h"
+
+1352061584 source:/ca2/nodeapp/os/lnx_window.cpp
+	"framework.h"
 

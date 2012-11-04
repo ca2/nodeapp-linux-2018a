@@ -366,7 +366,7 @@ return NULL;
    }
    bool application::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
    {
-      return ::win::thread::PostThreadMessage(message, wParam, lParam);
+      return ::win::thread::post_thread_message(message, wParam, lParam);
    }
    bool application::post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam)
    {
@@ -396,7 +396,7 @@ return NULL;
    {
       return ::win::thread::GetMessagePrototype(uiMessage, uiCode);
    }
-
+post_thread_message
    // running and idle processing
    int application::run()
    {

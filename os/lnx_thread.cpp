@@ -927,7 +927,7 @@ void thread::Delete()
    }
    else
    {
-      thread_ = NULL;
+      thread_ = 0;
       m_evFinish.SetEvent();
    }
 }
@@ -1517,7 +1517,7 @@ void thread::Delete()
       pmessage->m_uiMessage   = uiMessage;
       pmessage->m_wparam      = wparam;
       pmessage->m_lparam      = lparam;
-      return PostThreadMessage(WM_APP + 1984, 77, (LPARAM) pmessage) != FALSE;
+      return post_thread_message(WM_APP + 1984, 77, (LPARAM) pmessage) != FALSE;
    }
 
 
@@ -1630,11 +1630,11 @@ void thread::Delete()
      // return ::SuspendThread(m_hThread);
 
    }
-   bool thread::PostThreadMessage(UINT message, WPARAM wParam, LPARAM lParam)
+   bool thread::post_thread_message(UINT message, WPARAM wParam, LPARAM lParam)
    {
       throw not_implemented(get_app());
       //ASSERT(m_hThread != NULL);
-      //return ::PostThreadMessage(m_nThreadID, message, wParam, lParam);
+      //return ::post_thread_message(m_nThreadID, message, wParam, lParam);
    }
 
    void thread::set_os_data(void * pvoidOsData)

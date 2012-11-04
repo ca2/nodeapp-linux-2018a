@@ -86,7 +86,7 @@ typedef uint_ptr            WPARAM;
 typedef long_ptr            LPARAM;
 typedef long_ptr            LRESULT;
 
-
+#include "osdisplay.h"
 #include "oswindow.h"
 
 

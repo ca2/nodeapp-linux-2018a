@@ -55,6 +55,7 @@
 		<Unit filename="../operational_system/cross/win/win_user.h" />
 		<Unit filename="../operational_system/get_platform.h" />
 		<Unit filename="../operational_system/operational_system.h" />
+		<Unit filename="../operational_system/osdisplay.h" />
 		<Unit filename="../operational_system/oswindow.h" />
 		<Unit filename="../operational_system/version.h" />
 		<Unit filename="../operational_system/version_configuration.h" />

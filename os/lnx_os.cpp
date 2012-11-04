@@ -858,7 +858,7 @@ namespace lnx
          try
          {
             repeat:
-            if(::PostThreadMessage(::GetThreadId(::win::thread::s_haThread[i]), message, wparam, lparam))
+            if(::post_thread_message(::GetThreadId(::win::thread::s_haThread[i]), message, wparam, lparam))
             {
                if(message == WM_QUIT)
                {

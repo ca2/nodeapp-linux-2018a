@@ -2495,7 +2495,7 @@ namespace lnx
 
       COLORREF * pcolorref = NULL;
 
-      HBITMAP hbitmap = ::CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, NULL);
+      HBITMAP hbitmap = ::CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, 0);
 
       if(hbitmap == NULL)
       {

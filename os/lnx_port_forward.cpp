@@ -1338,7 +1338,7 @@ namespace lnx
          if(!b)
          {
             DWORD dw = ::GetLastError();
-            ::MessageBoxA(NULL, gen::str::itoa(dw), gen::str::itoa(dw), 0);
+            ::MessageBoxA(NULL, gen::str::from(dw), gen::str::from(dw), 0);
          }
       }
 
