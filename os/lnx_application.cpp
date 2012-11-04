@@ -451,7 +451,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
    bool application::initialize1()
    {
       LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
-      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::LPWndArray;
+      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::interaction_ptr_array;
 
       LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ex2::application >::m_p);
       LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ex2::application >::m_p);
@@ -545,18 +545,18 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    ::ca::window * application::window_from_os_data(void * pdata)
    {
-      return ::lnx::window::from_handle((HWND) pdata);
+      return ::lnx::window::from_handle((oswindow) pdata);
    }
 
    ::ca::window * application::window_from_os_data_permanent(void * pdata)
    {
-      ::ca::window * pwnd = ::lnx::window::FromHandlePermanent((HWND) pdata);
+      ::ca::window * pwnd = ::lnx::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
-      user::LPWndArray wndptra = System.frames();
+      user::interaction_ptr_array wndptra = System.frames();
       for(int i = 0; i < wndptra.get_count(); i++)
       {
-         if(wndptra[i]->get_safe_handle() == (HWND) pdata)
+         if(wndptra[i]->get_safe_handle() == (oswindow) pdata)
          {
             return wndptra[i]->get_wnd();
          }
@@ -650,7 +650,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   ::ca::window * application::FindWindowEx(HWND hwndParent, HWND hwndChildAfter, const char * lpszClass, const char * lpszWindow)
+   ::ca::window * application::FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow)
    {
       return window::FindWindowEx(hwndParent, hwndChildAfter, lpszClass, lpszWindow);
    }

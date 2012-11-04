@@ -201,18 +201,18 @@ typedef LPMIXERCAPS2A LPMIXERCAPS2;
 
 #define MIXER_GETLINECONTROLSF_QUERYMASK    0x0000000FL
 
-
+/*
 typedef struct tMIXERCONTROLDETAILS {
     DWORD           cbStruct;       /* size in bytes of MIXERCONTROLDETAILS */
-    DWORD           dwControlID;    /* control id to get/set details on */
-    DWORD           cChannels;      /* number of channels in paDetails array */
-    union {
-        HWND        hwndOwner;      /* for MIXER_SETCONTROLDETAILSF_CUSTOM */
-        DWORD       cMultipleItems; /* if _MULTIPLE, the number of items per channel */
-    } DUMMYUNIONNAME;
-    DWORD           cbDetails;      /* size of _one_ details_XX struct */
-    LPVOID          paDetails;      /* pointer to array of details_XX structs */
-} MIXERCONTROLDETAILS, *PMIXERCONTROLDETAILS, FAR *LPMIXERCONTROLDETAILS;
+  //  DWORD           dwControlID;    /* control id to get/set details on */
+    //DWORD           cChannels;      /* number of channels in paDetails array */
+//    union {
+  //      oswindow        hwndOwner;      /* for MIXER_SETCONTROLDETAILSF_CUSTOM */
+    //    DWORD       cMultipleItems; /* if _MULTIPLE, the number of items per channel */
+//    } DUMMYUNIONNAME;
+  //  DWORD           cbDetails;      /* size of _one_ details_XX struct */
+    //LPVOID          paDetails;      /* pointer to array of details_XX structs */
+//} MIXERCONTROLDETAILS, *PMIXERCONTROLDETAILS, FAR *LPMIXERCONTROLDETAILS;
 
 
 

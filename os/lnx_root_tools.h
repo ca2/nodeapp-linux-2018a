@@ -103,7 +103,7 @@ Return Values
 
 WINBOOL CLASS_DECL_lnx
 RunElevated(
-   __in      HWND   hwnd,
+   __in      oswindow   hwnd,
    __in      const char * pszPath,
    __in_opt   const char * pszParameters   = NULL,
    __in_opt   const char * pszDirectory   = NULL,
@@ -154,7 +154,7 @@ there is no such attribute at all.
 
 WINBOOL CLASS_DECL_lnx
 RunNonElevated(
-   __in      HWND   hwnd,
+   __in      oswindow   hwnd,
    __in      const char * pszPath,
    __in_opt   const char * pszParameters   = NULL,
    __in_opt   const char * pszDirectory   = NULL,
@@ -203,7 +203,7 @@ as requireAdministrator, it will be started elevated!
 // to be able to specify the verb easily.
 
 WINBOOL CLASS_DECL_lnx
-MyShellExec(   HWND hwnd,
+MyShellExec(   oswindow hwnd,
             const char * pszVerb,
             const char * pszPath,
             const char * pszParameters   = NULL,

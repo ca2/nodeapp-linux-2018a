@@ -108,7 +108,7 @@ namespace lnx
 
    void * window::get_os_data() const
    {
-      return *((void **)&m_window);
+      return m_oswindow;
    }
 
 
@@ -263,7 +263,7 @@ namespace lnx
    bool window::CreateEx(DWORD dwExStyle, const char * lpszClassName,
       const char * lpszWindowName, DWORD dwStyle,
       int x, int y, int nWidth, int nHeight,
-      void * hWndParent, id id, LPVOID lpParam)
+      oswindow hWndParent, id id, LPVOID lpParam)
    {
       UNREFERENCED_PARAMETER(id);
 //      ASSERT(lpszClassName == NULL || __is_valid_string(lpszClassName) ||
@@ -325,7 +325,7 @@ namespace lnx
       scr=DefaultScreen(dpy);
       rootwin=RootWindow(dpy, scr);
 
-      m_window = XCreateSimpleWindow(dpy, rootwin, 1, 1, cs.cx, cs.cy, 0, BlackPixel(dpy, scr), BlackPixel(dpy, scr));
+      Window window = XCreateSimpleWindow(dpy, rootwin, 1, 1, cs.cx, cs.cy, 0, BlackPixel(dpy, scr), BlackPixel(dpy, scr));
 
 
 
@@ -335,7 +335,7 @@ namespace lnx
          cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);*/
 
 #ifdef DEBUG
-      if (m_window == NULL)
+      if (window == NULL)
       {
          DWORD dwLastError = GetLastError();
          string strLastError = FormatMessageFromSystem(dwLastError);
@@ -362,9 +362,11 @@ namespace lnx
       }
 #endif
 
-      XStoreName(dpy, m_window, "hello");
-      XSelectInput(dpy, m_window, ExposureMask|ButtonPressMask);
-      XMapWindow(dpy, m_window);
+      m_oswindow = oswindow(dpy, window);
+
+      XStoreName(m_oswindow.display(), m_oswindow.window(), "hello");
+      XSelectInput(m_oswindow.display(), m_oswindow.window(), ExposureMask|ButtonPressMask);
+      XMapWindow(m_oswindow.display(), m_oswindow.window());
 
 
       if (!unhook_window_create())
@@ -1359,8 +1361,8 @@ restart_mouse_hover_check:
                return;
             }
          }
-         user::WindowArray hwnda;
-         user::LPWndArray wnda;
+         user::oswindow_array hwnda;
+         user::interaction_ptr_array wnda;
          wnda = System.frames();
          wnda.get_wnda(hwnda);
          user::WndUtil::SortByZOrder(hwnda);
@@ -2906,12 +2908,12 @@ return 0;
 
    BOOL CALLBACK window::GetAppsEnumWindowsProc(Window hwnd, LPARAM lparam)
    {
-      user::WindowArray * phwnda = (user::WindowArray *) lparam;
+      user::oswindow_array * phwnda = (user::oswindow_array *) lparam;
       phwnda->add(hwnd);
       return TRUE;
    }
 
-   void window::get_app_wnda(user::WindowArray & wnda)
+   void window::get_app_wnda(user::oswindow_array & wnda)
    {
       EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
    }
@@ -2980,7 +2982,7 @@ return 0;
       rect rectPaint;
       rectPaint = rectUpdate;
       ScreenToClient(rectPaint);
-      user::WindowArray wndaApp;
+      user::oswindow_array wndaApp;
 
 
       HRGN rgnWindow;

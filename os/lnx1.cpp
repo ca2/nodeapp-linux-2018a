@@ -15,7 +15,7 @@ namespace lnx
       return ::LoadLibraryW(gen::international::utf8_to_unicode(lpsz));
    }*/
 
-/*   WINBOOL CLASS_DECL_lnx SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, WINBOOL fCreate)
+/*   WINBOOL CLASS_DECL_lnx SHGetSpecialFolderPath(oswindow hwnd, string &str, int csidl, WINBOOL fCreate)
    {
       return ::SHGetSpecialFolderPathW(hwnd, wstringtou(str, MAX_PATH * 8), csidl, fCreate);
    }*/

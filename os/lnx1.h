@@ -13,7 +13,7 @@ namespace lnx
    };
 
    CLASS_DECL_lnx HINSTANCE   LoadLibrary(const char * lpsz);
-   CLASS_DECL_lnx bool        SHGetSpecialFolderPath(HWND hwnd, string &str, int csidl, bool fCreate);
+   CLASS_DECL_lnx bool        SHGetSpecialFolderPath(oswindow hwnd, string &str, int csidl, bool fCreate);
    CLASS_DECL_lnx DWORD       GetFileAttributes(const char * lpFileName);
    CLASS_DECL_lnx bool        CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes);
    CLASS_DECL_lnx DWORD       GetCurrentDirectory(string & str);
@@ -68,7 +68,7 @@ CLASS_DECL_lnx const char * __register_window_class(UINT nClassStyle, HCURSOR hC
 // xxx CLASS_DECL_lnx bool __register_class(WNDCLASS* lpWndClass);
 
 
-CLASS_DECL_lnx LRESULT CALLBACK __window_procedure(HWND hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+CLASS_DECL_lnx LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 // xxx CLASS_DECL_lnx WNDPROC __get_window_procedure();
 // xxx #define __window_procedure (*__get_window_procedure())
 

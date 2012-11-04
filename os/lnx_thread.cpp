@@ -25,7 +25,7 @@
 
 WINBOOL PeekMessage(
     LPMSG lpMsg,
-    HWND hWnd,
+    oswindow hWnd,
     UINT wMsgFilterMin,
     UINT wMsgFilterMax,
     UINT wRemoveMsg)
@@ -36,7 +36,7 @@ WINBOOL PeekMessage(
 
 WINBOOL GetMessage(
     LPMSG lpMsg,
-    HWND hWnd,
+    oswindow hWnd,
     UINT wMsgFilterMin,
     UINT wMsgFilterMax)
     {
@@ -123,7 +123,7 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
       // thread inherits cast's main ::ca::window if not already set
       //if (papp != NULL && GetMainWnd() == NULL)
       {
-         // just attach the HWND
+         // just attach the oswindow
          // trans         threadWnd.Attach(pApp->GetMainWnd()->get_handle());
          //GetMainWnd() = pApp->GetMainWnd();
       }
@@ -260,7 +260,7 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
                return;
          }
       }
-      user::LPWndArray wnda = Sys(pThread->get_app()).frames();
+      user::interaction_ptr_array wnda = Sys(pThread->get_app()).frames();
       for(int i = 0; i < wnda.get_count(); i++)
       {
          ::user::interaction * pui = wnda[i];
@@ -555,7 +555,7 @@ namespace lnx
   //    m_pmapHGDIOBJ = new hgdiobj_map;
       m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
       m_ptimera = new ::user::interaction::timer_array(get_app());
-      m_puiptra = new user::LPWndArray;
+      m_puiptra = new user::interaction_ptr_array;
 
    }
 
@@ -565,7 +565,7 @@ namespace lnx
       if(m_puiptra != NULL)
       {
          single_lock sl(&m_mutexUiPtra, TRUE);
-         ::user::LPWndArray * puiptra = m_puiptra;
+         ::user::interaction_ptr_array * puiptra = m_puiptra;
          m_puiptra = NULL;
          for(int i = 0; i < puiptra->get_size(); i++)
          {
@@ -967,7 +967,7 @@ void thread::Delete()
          // phase1: check to see if we can do idle work
          while (bIdle &&
             //!::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
-            !::PeekMessage(&msg, NULL, NULL, NULL, 0))
+            !::PeekMessage(&msg, ::ca::null(), NULL, NULL, 0))
          {
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
@@ -1021,7 +1021,7 @@ void thread::Delete()
             }
          }
 //         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
-         while (::PeekMessage(&msg, NULL, NULL, NULL, 0) != FALSE);
+         while (::PeekMessage(&msg, ::ca::null(), NULL, NULL, 0) != FALSE);
 
       }
 
@@ -1076,7 +1076,7 @@ void thread::Delete()
          if(m_puiptra != NULL)
          {
             single_lock sl(&m_mutexUiPtra, TRUE);
-            ::user::LPWndArray * puiptra = m_puiptra;
+            ::user::interaction_ptr_array * puiptra = m_puiptra;
             m_puiptra = NULL;
             for(int i = 0; i < puiptra->get_size(); i++)
             {
@@ -1399,7 +1399,7 @@ void thread::Delete()
       try
       {
          MSG msg;
-         if(!::GetMessage(&msg, NULL, NULL, NULL))
+         if(!::GetMessage(&msg, ::ca::null(), NULL, NULL))
          {
             TRACE(::radix::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
             m_nDisablePumpCount++; // application must die
@@ -1749,7 +1749,7 @@ void thread::Delete()
       ::ca::window threadWnd;
 
       m_ptimera            = new ::user::interaction::timer_array(get_app());
-      m_puiptra            = new user::LPWndArray;
+      m_puiptra            = new user::interaction_ptr_array;
       m_bRun               = true;
 
       m_ptimera->m_papp    = m_papp;

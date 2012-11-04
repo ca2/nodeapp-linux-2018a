@@ -72,7 +72,7 @@ public:
 // xxx    static ATOM WINAPI _RegisterClass(
          // xxx CONST WNDCLASSW *lpWndClass);
 
-   static HWND WINAPI _CreateWindowEx(
+   static oswindow WINAPI _CreateWindowEx(
       DWORD dwExStyle,
       const wchar_t * lpClassName,
       const wchar_t * lpWindowName,
@@ -81,7 +81,7 @@ public:
       int y,
       int nWidth,
       int nHeight,
-      HWND hWndParent,
+      oswindow hWndParent,
       HMENU hMenu,
       HINSTANCE hInstance,
       LPVOID lpParam);
@@ -150,7 +150,7 @@ public:
    // xxx ATOM (WINAPI * m_pfnRegisterClass)(
          // xxx CONST WNDCLASSW *lpWndClass);
 
-   HWND (WINAPI * m_pfnCreateWindowEx)(
+   oswindow (WINAPI * m_pfnCreateWindowEx)(
       DWORD dwExStyle,
       const wchar_t * lpClassName,
       const wchar_t * lpWindowName,
@@ -159,7 +159,7 @@ public:
       int y,
       int nWidth,
       int nHeight,
-      HWND hWndParent,
+      oswindow hWndParent,
       HMENU hMenu,
       HINSTANCE hInstance,
       LPVOID lpParam);
@@ -235,7 +235,7 @@ public:
 // xxx    static ATOM WINAPI RegisterClass(
 // xxx          CONST WNDCLASSW *lpWndClass);
 
-   static HWND WINAPI CreateWindowEx(
+   static oswindow WINAPI CreateWindowEx(
       DWORD dwExStyle,
       const wchar_t * lpClassName,
       const wchar_t * lpWindowName,
@@ -244,7 +244,7 @@ public:
       int y,
       int nWidth,
       int nHeight,
-      HWND hWndParent,
+      oswindow hWndParent,
       HMENU hMenu,
       HINSTANCE hInstance,
       LPVOID lpParam);
@@ -430,7 +430,7 @@ inline ATOM shell::RegisterClass(
       lpWndClass);
 }*/
 /*
-inline HWND shell::CreateWindowEx(
+inline oswindow shell::CreateWindowEx(
    DWORD dwExStyle,
    const wchar_t * lpClassName,
    const wchar_t * lpWindowName,
@@ -439,7 +439,7 @@ inline HWND shell::CreateWindowEx(
    int y,
    int nWidth,
    int nHeight,
-   HWND hWndParent,
+   oswindow hWndParent,
    HMENU hMenu,
    HINSTANCE hInstance,
    LPVOID lpParam)

@@ -703,7 +703,7 @@ ATOM shell::_RegisterClass(
 }
 
 
-HWND shell::_CreateWindowEx(
+oswindow shell::_CreateWindowEx(
    DWORD dwExStyle,
    const wchar_t * lpClassName,
    const wchar_t * lpWindowName,
@@ -712,7 +712,7 @@ HWND shell::_CreateWindowEx(
    int y,
    int nWidth,
    int nHeight,
-   HWND hWndParent,
+   oswindow hWndParent,
    HMENU hMenu,
    HINSTANCE hInstance,
    LPVOID lpParam)

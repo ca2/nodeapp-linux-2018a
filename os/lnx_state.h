@@ -251,7 +251,7 @@ public:
    ::ca::window * m_pAlternateWndInit;      // special case commdlg hooking
    DWORD m_dwPropStyle;
    DWORD m_dwPropExStyle;
-   HWND m_hWndInit;
+   oswindow m_hWndInit;
 // xxx   HHOOK m_hHookOldCbtFilter;
 // xxx   HHOOK m_hHookOldMsgFilter;
 
@@ -266,10 +266,10 @@ public:
 
    // other ::ca::window modal data
    MSG m_lastSentMsg;              // see ::ca::window::message_handler
-   HWND m_hTrackingWindow;         // see ::ca::window::TrackPopupMenu
+   oswindow m_hTrackingWindow;         // see ::ca::window::TrackPopupMenu
    HMENU m_hTrackingMenu;
    char m_szTempClassName[___TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass
-   HWND m_hLockoutNotifyWindow;    // see ::ca::window::OnCommand
+   oswindow m_hLockoutNotifyWindow;    // see ::ca::window::OnCommand
    bool m_bInMsgFilter;
 
    // other framework modal data

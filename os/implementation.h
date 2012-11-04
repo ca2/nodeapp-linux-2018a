@@ -22,15 +22,15 @@ extern CLASS_DECL_lnx const char _afxWndOleControl[];
 /////////////////////////////////////////////////////////////////////////////
 // Special helpers
 
-CLASS_DECL_lnx void AfxCancelModes(HWND hWndRcvr);
+CLASS_DECL_lnx void AfxCancelModes(oswindow hWndRcvr);
 CLASS_DECL_lnx WINBOOL AfxHelpEnabled();  // determine if ID_HELP handler exists
 CLASS_DECL_lnx WINBOOL AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont);
 CLASS_DECL_lnx WINBOOL AfxGetPropSheetFont(string & strFace, WORD& wSize, WINBOOL bWizard);
 
-CLASS_DECL_lnx WINBOOL _AfxIsComboBoxControl(HWND hWnd, UINT nStyle);
+CLASS_DECL_lnx WINBOOL _AfxIsComboBoxControl(oswindow hWnd, UINT nStyle);
 CLASS_DECL_lnx WINBOOL _AfxCheckCenterDialog(const char * lpszResource);
-CLASS_DECL_lnx WINBOOL _AfxCompareClassName(HWND hWnd, const char * lpszClassName);
-CLASS_DECL_lnx HWND _AfxChildWindowFromPoint(HWND, POINT);
+CLASS_DECL_lnx WINBOOL _AfxCompareClassName(oswindow hWnd, const char * lpszClassName);
+CLASS_DECL_lnx oswindow _AfxChildWindowFromPoint(oswindow, POINT);
 
 // for determining version of COMCTL32.DLL
 #define VERSION_WIN4    MAKELONG(0, 4)

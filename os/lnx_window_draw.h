@@ -19,7 +19,7 @@ namespace lnx
          OptimizeAllNext,
       };
 
-      user::LPWndArray                       m_wndpaOut;
+      user::interaction_ptr_array                       m_wndpaOut;
       mutex                                  m_mutexRendering;
       mutex                                  m_mutexRgnUpdate;
       semaphore                              m_semaphoreBuffer;
@@ -63,68 +63,68 @@ namespace lnx
       virtual bool to(
          ::ca::graphics *       pdc,
          LPCRECT     lprectUpdate,
-         user::HwndTree & hwndtree,
+         user::oswindow_tree & hwndtree,
          bool        bGdiLocked,
          bool        bExcludeParamWnd);
 
       virtual bool to(
          ::ca::graphics *       pdc,
          LPCRECT     lprectUpdate,
-         user::HwndTree::Array & hwndtreea,
+         user::oswindow_tree::Array & hwndtreea,
          bool        bGdiLocked,
          bool        bExcludeParamWnd);
 
    /*     EOptimize TwfOptimizeRender2(
-         user::HwndTree::Array & hwndtreea,
+         user::oswindow_tree::Array & hwndtreea,
          LPCRECT lpcrect);
 
       EOptimize TwfOptimizeRender2(
-         user::HwndTree & hwndtree,
+         user::oswindow_tree & hwndtree,
          LPCRECT lpcrect);*/
 
 
       EOptimize TwfOptimizeRender(
-         user::HwndTree::Array & hwndtreea,
+         user::oswindow_tree::Array & hwndtreea,
          LPCRECT lpcrect);
 
       EOptimize TwfOptimizeRender(
-         user::HwndTree & hwndtree,
+         user::oswindow_tree & hwndtree,
          LPCRECT lpcrect);
 
       void TwfGetTopWindow(
          void * hwnd,
-         user::HWNDArray & hwnda,
+         user::oswindow_array & hwnda,
          base_array < HRGN, HRGN > & hrgna,
-         user::HwndTree::Array & hwndtreea,
+         user::oswindow_tree::Array & hwndtreea,
          LPCRECT lpcrect);
 
       bool TwfGetTopWindow(
          void * hwnd,
-         user::HWNDArray & hwnda,
+         user::oswindow_array & hwnda,
          base_array < HRGN, HRGN > & hrgna,
-         user::HwndTree::Array & hwndtreea,
+         user::oswindow_tree::Array & hwndtreea,
          HRGN hrgn);
 
       bool TwfGetTopWindow(
          void * hwnd,
-         user::HWNDArray & hwnda,
+         user::oswindow_array & hwnda,
          base_array < HRGN, HRGN > & hrgna,
-         user::HwndTree & hwndtree,
+         user::oswindow_tree & hwndtree,
          HRGN hrgn);
 
       void TwfGetTopWindowOptimizeOpaque(
          void * hwndOpaque,
-         user::HWNDArray & hwnda,
+         user::oswindow_array & hwnda,
          base_array < HRGN, HRGN > & hrgna);
 
 
       EOptimize TwfOptimizeRenderRemoveNextProper(
-         user::HwndTree::Array & hwndtreea,
+         user::oswindow_tree::Array & hwndtreea,
          int iIndex,
          LPCRECT lpcrect);
 
-      void get_wnda(user::LPWndArray & wndpa);
-      void get_wnda(user::HWNDArray & hwnda);
+      void get_wnda(user::interaction_ptr_array & wndpa);
+      void get_wnda(user::oswindow_array & hwnda);
 
       static UINT c_cdecl ThreadProcRedraw(LPVOID lpv);
 
