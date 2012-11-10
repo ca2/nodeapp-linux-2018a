@@ -26,7 +26,7 @@
 		<Cursor position="21083" topLine="647" />
 	</File>
 	<File name="../operational_system/cross/win/win_user.h" open="0" top="0" tabpos="9">
-		<Cursor position="36043" topLine="1305" />
+		<Cursor position="36080" topLine="1305" />
 	</File>
 	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="29">
 		<Cursor position="215" topLine="0" />
@@ -266,10 +266,10 @@
 		<Cursor position="3098" topLine="67" />
 	</File>
 	<File name="lnx_window.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="201682" topLine="6701" />
+		<Cursor position="162594" topLine="5429" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="8">
-		<Cursor position="1869" topLine="36" />
+		<Cursor position="27422" topLine="603" />
 	</File>
 	<File name="lnx_window_draw.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="37253" topLine="1298" />

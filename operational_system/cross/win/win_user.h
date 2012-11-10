@@ -784,15 +784,15 @@ RegisterWindowMessageW(
 #define WS_EX_TOPMOST           0x00000008L
 #define WS_EX_ACCEPTFILES       0x00000010L
 #define WS_EX_TRANSPARENT       0x00000020L
-#if(WINVER >= 0x0400)
+//#if(WINVER >= 0x0400)
 #define WS_EX_MDICHILD          0x00000040L
 #define WS_EX_TOOLWINDOW        0x00000080L
 #define WS_EX_WINDOWEDGE        0x00000100L
 #define WS_EX_CLIENTEDGE        0x00000200L
 #define WS_EX_CONTEXTHELP       0x00000400L
 
-#endif /* WINVER >= 0x0400 */
-#if(WINVER >= 0x0400)
+//#endif /* WINVER >= 0x0400 */
+//#if(WINVER >= 0x0400)
 
 #define WS_EX_RIGHT             0x00001000L
 #define WS_EX_LEFT              0x00000000L
@@ -809,7 +809,7 @@ RegisterWindowMessageW(
 #define WS_EX_OVERLAPPEDWINDOW  (WS_EX_WINDOWEDGE | WS_EX_CLIENTEDGE)
 #define WS_EX_PALETTEWINDOW     (WS_EX_WINDOWEDGE | WS_EX_TOOLWINDOW | WS_EX_TOPMOST)
 
-#endif /* WINVER >= 0x0400 */
+//#endif /* WINVER >= 0x0400 */
 
 #define WS_EX_LAYERED           0x00080000
 
@@ -1319,10 +1319,11 @@ typedef WINDOWPLACEMENT *PWINDOWPLACEMENT, *LPWINDOWPLACEMENT;
 
 typedef struct tag_MSG
 {
-   UINT     message;
-   WPARAM   wparam;
-   LPARAM   lparam;
-   POINT    pt;
+   oswindow    hwnd;
+   UINT        message;
+   WPARAM      wparam;
+   LPARAM      lparam;
+   POINT       pt;
 } MSG, * LPMSG;
 
 
