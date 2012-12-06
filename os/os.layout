@@ -25,8 +25,8 @@
 	<File name="../operational_system/cross/win/win_nt.h" open="0" top="0" tabpos="1">
 		<Cursor position="21083" topLine="647" />
 	</File>
-	<File name="../operational_system/cross/win/win_user.h" open="0" top="0" tabpos="9">
-		<Cursor position="36080" topLine="1305" />
+	<File name="../operational_system/cross/win/win_user.h" open="1" top="0" tabpos="1">
+		<Cursor position="34846" topLine="1197" />
 	</File>
 	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="29">
 		<Cursor position="215" topLine="0" />

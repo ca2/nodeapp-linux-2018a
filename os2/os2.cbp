@@ -31,6 +31,7 @@
 			<Add option="-fexceptions" />
 			<Add option="-D_DEBUG" />
 		</Compiler>
+		<Unit filename="../../app/appseed/c/multithreading/multithreading_waitable.cpp" />
 		<Unit filename="application.h" />
 		<Unit filename="factory_exchange.h" />
 		<Unit filename="framework.cpp" />
