@@ -204,7 +204,7 @@ static const __MAP_MESSAGE allMessages[] =
 // DDE special case
 
 /*
-static void TraceDDE(const char * lpszPrefix, const MSG* pMsg)
+static void TraceDDE(const char * lpszPrefix, const MESSAGE* pMsg)
 {
    ENSURE_ARG(pMsg != NULL);
   if (pMsg->message == WM_DDE_EXECUTE)
@@ -356,7 +356,7 @@ void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
 
 /*
 
-void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg)
+void _AfxTraceMsg(const char * lpszPrefix, LPMESSAGE lpmsg)
 {
    ENSURE_ARG(AfxIsValidString(lpszPrefix));
    ENSURE_ARG(lpmsg != NULL);

@@ -162,7 +162,7 @@ public:
 
    // variables related to a given process in a module
    //  (used to be __MODULE_PROCESS_STATE)
-   void (PASCAL *m_pfnFilterToolTipMessage)(MSG*, ::ca::window *);
+   void (PASCAL *m_pfnFilterToolTipMessage)(MESSAGE*, ::ca::window *);
 
 
    // define thread local portions of module state
@@ -256,7 +256,7 @@ public:
 // xxx   HHOOK m_hHookOldMsgFilter;
 
    // message pump for run
-   MSG m_msgCur;                   // current message
+   MESSAGE m_msgCur;                   // current message
    point m_ptCursorLast;          // last mouse position
    UINT m_nMsgLast;                // last mouse message
 
@@ -265,7 +265,7 @@ public:
 #endif
 
    // other ::ca::window modal data
-   MSG m_lastSentMsg;              // see ::ca::window::message_handler
+   MESSAGE m_lastSentMsg;              // see ::ca::window::message_handler
    oswindow m_hTrackingWindow;         // see ::ca::window::TrackPopupMenu
    HMENU m_hTrackingMenu;
    char m_szTempClassName[___TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass

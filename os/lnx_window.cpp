@@ -29,7 +29,7 @@ struct __CTLCOLOR
 };
 
 WINBOOL PeekMessage(
-    LPMSG lpMsg,
+    LPMESSAGE lpMsg,
     oswindow hWnd,
     UINT wMsgFilterMin,
     UINT wMsgFilterMax,
@@ -37,7 +37,7 @@ WINBOOL PeekMessage(
 
 
 WINBOOL GetMessage(
-    LPMSG lpMsg,
+    LPMESSAGE lpMsg,
     oswindow hWnd,
     UINT wMsgFilterMin,
     UINT wMsgFilterMax);
@@ -146,7 +146,7 @@ namespace lnx
 
 
 */
-   const MSG* PASCAL window::GetCurrentMessage()
+   const MESSAGE* PASCAL window::GetCurrentMessage()
    {
       // fill in time and position when asked for
   /*    ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
@@ -2810,7 +2810,7 @@ return 0;
       // forward this message to all other child windows
       if (!(GetStyle() & WS_CHILD))
       {
-      const MSG* pMsg = GetCurrentMessage();
+      const MESSAGE* pMsg = GetCurrentMessage();
       SendMessageToDescendants(pMsg->message, pMsg->wparam, pMsg->lparam,
       TRUE, TRUE);
       }*/
@@ -2847,7 +2847,7 @@ return 0;
       // forward this message to all other child windows
       if (!(GetStyle() & WS_CHILD))
       {
-         const MSG* pMsg = GetCurrentMessage();
+         const MESSAGE* pMsg = GetCurrentMessage();
          SendMessageToDescendants(pMsg->message, pMsg->wparam, pMsg->lparam,
             TRUE, TRUE);
       }
@@ -3298,7 +3298,7 @@ throw not_implemented(get_app());
       // when the first one is received, we trick oswindows into thinking
       // that only one was really sent and dispatched.
       {
-         MSG msg;
+         MESSAGE msg;
          throw not_implemented(get_app());
          //while (PeekMessage(&msg, NULL, WM_ENTERIDLE, WM_ENTERIDLE, PM_REMOVE))
          //while (PeekMessage(&msg, ::ca::null(), WM_ENTERIDLE, WM_ENTERIDLE, TRUE))
@@ -3686,7 +3686,7 @@ throw not_implemented(get_app());
 //      ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (m_pthread->m_p);
 //      ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_pthread);
 //      // acquire and dispatch messages until the modal state is done
-//      MSG msg;
+//      MESSAGE msg;
 //      for (;;)
 //      {
 //         ASSERT(ContinueModal(iLevel));
@@ -3708,10 +3708,10 @@ throw not_implemented(get_app());
 //            if (!(dwFlags & MLF_NOIDLEMSG) && hWndParent != NULL && lIdleCount == 0)
 //            {
 //               // send WM_ENTERIDLE to the parent
-//               ::SendMessage(hWndParent, WM_ENTERIDLE, MSGF_DIALOGBOX, (LPARAM)get_os_data());
+//               ::SendMessage(hWndParent, WM_ENTERIDLE, MESSAGEF_DIALOGBOX, (LPARAM)get_os_data());
 //            }
 //            if ((dwFlags & MLF_NOKICKIDLE) ||
-//               !__call_window_procedure(this, get_os_data(), WM_KICKIDLE, MSGF_DIALOGBOX, lIdleCount++))
+//               !__call_window_procedure(this, get_os_data(), WM_KICKIDLE, MESSAGEF_DIALOGBOX, lIdleCount++))
 //            {
 //               // stop idle processing next time
 //               bIdle = FALSE;
@@ -5754,7 +5754,7 @@ throw not_implemented(get_app());
    CLASS_DECL_lnx LRESULT __call_window_procedure(::user::interaction * pinteraction, oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam)
    {
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
-      MSG oldState = pThreadState->m_lastSentMsg;   // save for nesting
+      MESSAGE oldState = pThreadState->m_lastSentMsg;   // save for nesting
 
       throw not_implemented(pinteraction->get_app());
 
@@ -6491,7 +6491,7 @@ LRESULT CALLBACK
 //   catch(base_exception * pe)
 //   {
 //      // handle exception
-//      MSG msg;
+//      MESSAGE msg;
 //      msg.hwnd = hWnd;
 //      msg.message = nMsg;
 //      msg.wparam = wparam;

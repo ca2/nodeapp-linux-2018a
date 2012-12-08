@@ -39,7 +39,7 @@ namespace lnx
 
       bool create_message_window(const char * pszName, ::ca::window_callback * pcallback = NULL);
 
-      static const MSG* PASCAL GetCurrentMessage();
+      static const MESSAGE* PASCAL GetCurrentMessage();
 
       virtual void install_message_handling(::gen::message::dispatch * pinterface);
 
@@ -645,7 +645,7 @@ namespace lnx
       virtual void on_final_release();
       static bool PASCAL ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
       static bool PASCAL ModifyStyleEx(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
-      static void PASCAL _FilterToolTipMessage(MSG* pMsg, ::ca::window * pWnd);
+      static void PASCAL _FilterToolTipMessage(MESSAGE* pMsg, ::ca::window * pWnd);
       bool _EnableToolTips(bool bEnable, UINT nFlag);
       static oswindow PASCAL GetSafeOwner_(oswindow hWnd, oswindow* pWndTop);
       void PrepareForHelp();

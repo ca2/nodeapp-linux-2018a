@@ -414,7 +414,7 @@ post_thread_message
    {
       return ::win::thread::on_idle(lCount);
    }
-   bool application::is_idle_message(MSG* pMsg)  // checks for special messages
+   bool application::is_idle_message(MESSAGE* pMsg)  // checks for special messages
    {
       return ::win::thread::is_idle_message(pMsg);
    }
@@ -491,14 +491,14 @@ if(__get_module_state()->m_pmapHWND == NULL)
    }
 /*
    // Advanced: exception handling
-   LRESULT application::ProcessWndProcException(base_exception* e, const MSG* pMsg)
+   LRESULT application::ProcessWndProcException(base_exception* e, const MESSAGE* pMsg)
    {
       return   ::win::thread::ProcessWndProcException(e, pMsg);
    }
 
 
    // Advanced: handling messages sent to message filter hook
-   bool application::ProcessMessageFilter(int code, LPMSG lpMsg)
+   bool application::ProcessMessageFilter(int code, LPMESSAGE lpMsg)
    {
       return  ::win::thread::ProcessMessageFilter(code, lpMsg);
    }
@@ -533,7 +533,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
    }
    // 'delete this' only if m_bAutoDelete == TRUE
 
-   bool application::DispatchThreadMessageEx(MSG* msg)  // helper
+   bool application::DispatchThreadMessageEx(MESSAGE* msg)  // helper
    {
       return ::win::thread::DispatchThreadMessageEx(msg);
    }*/

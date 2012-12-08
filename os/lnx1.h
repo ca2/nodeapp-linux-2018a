@@ -90,7 +90,7 @@ typedef void (__MSG_CALL ::radix::thread::*__PMSGT)();
 
 CLASS_DECL_lnx ::lnx::thread * __get_thread();
 CLASS_DECL_lnx void __set_thread(::radix::thread * pthread);
-CLASS_DECL_lnx MSG* __get_current_message();
+CLASS_DECL_lnx MESSAGE * __get_current_message();
 
 CLASS_DECL_lnx void __end_thread(::radix::application * papp, UINT nExitCode, bool bDelete = TRUE);
 

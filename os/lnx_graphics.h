@@ -481,7 +481,7 @@ namespace lnx
   //    virtual HDC get_handle1() const;
     //  virtual HDC get_handle2() const;
 
-      virtual void attach(void * pdata);
+      virtual bool attach(void * pdata);
 
 
 //xxx      virtual Gdiplus::FillMode gdiplus_get_fill_mode();

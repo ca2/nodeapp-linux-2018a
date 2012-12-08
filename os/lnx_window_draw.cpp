@@ -329,7 +329,7 @@ namespace lnx{
          return 0;
       }
 //      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca::thread_sp::m_p)->m_nThreadID, TRUE);
-      MSG msg;
+      MESSAGE msg;
       s_bRunning = true;
       while(m_bRun && ::ca::get_thread()->m_bRun)
       {

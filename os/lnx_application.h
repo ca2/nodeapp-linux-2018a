@@ -156,16 +156,16 @@ namespace lnx
       virtual void pre_translate_message(gen::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual bool is_idle_message(MSG* pMsg);  // checks for special messages
+      virtual bool is_idle_message(MESSAGE* pMsg);  // checks for special messages
 
       // thread termination
       virtual int exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
-      virtual LRESULT ProcessWndProcException(base_exception* e, const MSG* pMsg);
+      virtual LRESULT ProcessWndProcException(base_exception* e, const MESSAGE* pMsg);
 
       // Advanced: handling messages sent to message filter hook
-      virtual bool ProcessMessageFilter(int code, LPMSG lpMsg);
+      virtual bool ProcessMessageFilter(int code, LPMESSAGE lpMsg);
 
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
@@ -178,7 +178,7 @@ namespace lnx
 
 
 
-      bool DispatchThreadMessageEx(MSG* msg);  // helper*/
+      bool DispatchThreadMessageEx(MESSAGE* msg);  // helper*/
 
       //::ca::graphics * graphics_from_os_data(void * pdata);
 

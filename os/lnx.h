@@ -106,10 +106,10 @@ CLASS_DECL_lnx void AfxResetMsgCache();
 #include "lnx_shell.h"
 
 CLASS_DECL_lnx void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj);
-CLASS_DECL_lnx void _AfxTraceMsg(const char * lpszPrefix, LPMSG lpmsg);
+CLASS_DECL_lnx void _AfxTraceMsg(const char * lpszPrefix, LPMESSAGE lpmsg);
 
 CLASS_DECL_lnx WINBOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj);
-CLASS_DECL_lnx WINBOOL __cdecl AfxIsIdleMessage(MSG* pMsg);
+CLASS_DECL_lnx WINBOOL __cdecl AfxIsIdleMessage(MESSAGE* pMsg);
 
 
 CLASS_DECL_lnx void AfxProcessWndProcException(base_exception*, gen::signal_object * pobj);
@@ -121,14 +121,14 @@ CLASS_DECL_lnx void __cdecl AfxPreTranslateMessage(gen::signal_object * pobj);
 
 
 WINBOOL PeekMessage(
-    LPMSG lpMsg,
+    LPMESSAGE lpMsg,
     oswindow hWnd,
     UINT wMsgFilterMin,
     UINT wMsgFilterMax,
     UINT wRemoveMsg);
 
 WINBOOL GetMessage(
-    LPMSG lpMsg,
+    LPMESSAGE lpMsg,
     oswindow hWnd,
     UINT wMsgFilterMin,
     UINT wMsgFilterMax);

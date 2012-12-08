@@ -1,6 +1,6 @@
 #pragma once
 
-WINBOOL AfxInternalPreTranslateMessage(MSG* pMsg);
+WINBOOL AfxInternalPreTranslateMessage(MESSAGE* pMsg);
 
 namespace ca
 {
@@ -155,7 +155,7 @@ namespace lnx
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
       virtual bool is_idle_message(gen::signal_object * pobj);  // checks for special messages
-      virtual WINBOOL is_idle_message(LPMSG lpmsg);  // checks for special messages
+      virtual WINBOOL is_idle_message(LPMESSAGE lpmsg);  // checks for special messages
       virtual void message_handler(gen::signal_object * pobj);
 
       // thread termination
