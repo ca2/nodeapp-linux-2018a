@@ -24,7 +24,6 @@ namespace lnx
       virtual ~ip_enum();
 
 
-      virtual ::count enumerate(ip_array & ipa);
       virtual ::count enumerate(stringa & stra);
 
 
