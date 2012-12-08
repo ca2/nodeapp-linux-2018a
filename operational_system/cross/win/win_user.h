@@ -1343,7 +1343,7 @@ typedef struct tagCREATESTRUCTW {
     LPVOID      lpCreateParams;
     HINSTANCE   hInstance;
     HMENU       hMenu;
-    oswindow        hwndParent;
+    oswindow    hwndParent;
     int         cy;
     int         cx;
     int         y;
@@ -1387,10 +1387,10 @@ typedef struct tag_MSG
 {
    oswindow    hwnd;
    UINT        message;
-   WPARAM      wparam;
-   LPARAM      lparam;
+   WPARAM      wParam;
+   LPARAM      lParam;
    POINT       pt;
-} MSG, * LPMSG;
+} MESSAGE, * LPMESSAGE;
 
 
 
