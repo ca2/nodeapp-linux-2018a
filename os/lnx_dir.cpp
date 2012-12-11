@@ -182,7 +182,7 @@ namespace lnx
 
    bool path::is_equal(const char * lpcsz1, const char * lpcsz2)
    {
-      return System.file_system().ComparePath(lpcsz1, lpcsz2);
+      return strcmp(lpcsz1, lpcsz2) == 0;
    }
 
    void dir::root_ones(stringa & stra, ::ca::application * papp)
@@ -680,8 +680,22 @@ namespace lnx
 
       bool bIsDir;
 
-      if(m_isdirmap.lookup(lpcszPath, bIsDir))
+      DWORD dwLastError;
+
+      if(m_isdirmap.lookup(lpcszPath, bIsDir, dwLastError))
+      {
+
+         if(!bIsDir)
+         {
+
+            SetLastError(dwLastError);
+
+         }
+
          return bIsDir;
+
+      }
+
 
       if(::ca::dir::system::is(lpcszPath, papp))
          return true;
@@ -702,7 +716,7 @@ namespace lnx
 
       bIsDir = ::dir::is(strPath);
 
-      m_isdirmap.set(lpcszPath, bIsDir);
+      m_isdirmap.set(lpcszPath, bIsDir, bIsDir ? 0 : ::GetLastError());
 
       return bIsDir;
    }
@@ -715,8 +729,22 @@ namespace lnx
 
       bool bIsDir;
 
-      if(m_isdirmap.lookup(strPath, bIsDir))
+      DWORD dwLastError;
+
+      if(m_isdirmap.lookup(strPath, bIsDir, dwLastError))
+      {
+
+         if(!bIsDir)
+         {
+
+            SetLastError(dwLastError);
+
+         }
+
          return bIsDir;
+
+      }
+
 
       wstring wstrPath;
 
@@ -744,7 +772,7 @@ namespace lnx
 
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 
-      m_isdirmap.set(strPath, bIsDir);
+      m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::GetLastError());
 
       return bIsDir;
    }
@@ -785,14 +813,15 @@ namespace lnx
 
       bool bIsDir;
 
+      DWORD dwLastError;
 
-      if(m_isdirmap.lookup(str, bIsDir, (int) iLast))
+      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int) iLast))
          return bIsDir;
 
 
       if(papp->m_bZipIsDir && iLast >= 3  && !strnicmp_dup(&((const char *) str)[iLast - 3], ".zip", 4))
       {
-         m_isdirmap.set(str.Left(iLast + 1), true);
+         m_isdirmap.set(str.Left(iLast + 1), true, 0);
          return true;
       }
 
@@ -801,10 +830,10 @@ namespace lnx
       if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
          bool bHasSubFolder;
-         if(m_isdirmap.lookup(str, bHasSubFolder))
+         if(m_isdirmap.lookup(str, bHasSubFolder, dwLastError))
             return bHasSubFolder;
          bHasSubFolder = m_pziputil->HasSubFolder(papp, str);
-         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder);
+         m_isdirmap.set(str.Left(iLast + 1), bHasSubFolder, bHasSubFolder ? 0 : ::GetLastError());
          return bHasSubFolder;
       }
 
@@ -840,7 +869,7 @@ namespace lnx
 
       bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
 
-      m_isdirmap.set(str.Left(iLast + 1), bIsDir);
+      m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
 
       return bIsDir;
    }
@@ -993,7 +1022,7 @@ namespace lnx
                   //if(::CreateDirectory(gen::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                   if(::dir::mk("\\\\?\\" + stra[i]))
                   {
-                     m_isdirmap.set(stra[i], true);
+                     m_isdirmap.set(stra[i], true, 0);
                      goto try1;
                   }
                   else
@@ -1010,7 +1039,7 @@ namespace lnx
             }
             else
             {
-               m_isdirmap.set(stra[i], true);
+               m_isdirmap.set(stra[i], true, 0);
             }
             try1:
 

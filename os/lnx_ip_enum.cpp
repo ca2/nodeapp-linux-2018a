@@ -20,7 +20,7 @@ namespace lnx
    }
 
 
-   ::count ip_enum::enumerate(ip_array & ipa)
+   ::count ip_enum::enumerate(stringa & stra)
    {
       //get this machines host name
       char szHostname[256];
@@ -49,6 +49,8 @@ namespace lnx
 
       int nAdapter = 0;
 
+      string str;
+
       while(phostent->h_addr_list[nAdapter])
       {
 
@@ -56,7 +58,14 @@ namespace lnx
 
          memcpy(&addr.s_addr, phostent->h_addr_list[nAdapter], phostent->h_length);
 
-         ipa.add(ip_item(nAdapter, addr));
+         str = to_string(&addr);
+
+         if(str.has_char())
+         {
+
+            stra.add(str);
+
+         }
 
          nAdapter++;
 
@@ -65,23 +74,6 @@ namespace lnx
       return TRUE;
    }
 
-   ::count ip_enum::enumerate(stringa & stra)
-   {
-
-      ip_array ipa;
-
-      ::count c = enumerate(ipa);
-
-      for(int i = 0; i < ipa.get_count(); i++)
-      {
-
-         stra.add(inet_ntoa(ipa[i].m_addr));
-
-      }
-
-      return c;
-
-   }
 
 
 } // namespace win

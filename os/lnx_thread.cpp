@@ -553,7 +553,7 @@ namespace lnx
 
 //      m_pmapHDC = new hdc_map;
   //    m_pmapHGDIOBJ = new hgdiobj_map;
-      m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
+//      m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
       m_ptimera = new ::user::interaction::timer_array(get_app());
       m_puiptra = new user::interaction_ptr_array;
 
@@ -1111,7 +1111,7 @@ void thread::Delete()
 
 
 
-      int nResult = (int)AfxGetCurrentMessage()->wparam;  // returns the value from PostQuitMessage
+      int nResult = (int)AfxGetCurrentMessage()->wParam;  // returns the value from PostQuitMessage
       return nResult;
    }
 
@@ -1553,8 +1553,8 @@ void thread::Delete()
       MESSAGE oldState = pThreadState->m_lastSentMsg;   // save for nesting
       //pThreadState->m_lastSentMsg.       = pbase->m_hwnd;
       pThreadState->m_lastSentMsg.message    = pbase->m_uiMessage;
-      pThreadState->m_lastSentMsg.wparam     = pbase->m_wparam;
-      pThreadState->m_lastSentMsg.lparam     = pbase->m_lparam;
+      pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
+      pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
 
       _AfxTraceMsg("message_handler", pobj);
 

@@ -5338,13 +5338,20 @@ return true;
       return get_handle();
    }*/
 
-   void graphics::attach(void * pdata)
+   bool graphics::attach(void * pdata)
    {
+
       if(m_pdc != NULL)
       {
+
          cairo_destroy(m_pdc);
+
       }
+
       m_pdc = (cairo_t *) pdata;
+
+      return true;
+
    }
 
 /*

@@ -22,8 +22,8 @@ namespace lnx
    bool file_system::FullPath(string &str, const char * lpszFileIn)
    {
 
-      if(::ex1::file_system::FullPath(str, lpszFileIn))
-         return true;
+      //if(::ex1::file_system::FullPath(str, lpszFileIn))
+        // return true;
 
       if(gen::str::begins_ci(lpszFileIn, "http://"))
       {

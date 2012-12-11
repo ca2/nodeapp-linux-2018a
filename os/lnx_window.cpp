@@ -1228,17 +1228,17 @@ namespace lnx
          ::gen::message::mouse * pmouse = (::gen::message::mouse *) pbase;
 
          Application.m_ptCursor = pmouse->m_pt;
-         if(m_psession != NULL)
+         if(m_papp->m_psession != NULL)
          {
             Session.m_ptCursor = pmouse->m_pt;
-            if(m_psession->m_pbergedgeInterface != NULL)
+            if(m_papp->m_psession->m_pbergedgeInterface != NULL)
             {
-               m_psession->m_pbergedgeInterface->m_ptCursor = pmouse->m_pt;
+               m_papp->m_psession->m_pbergedgeInterface->m_ptCursor = pmouse->m_pt;
             }
          }
-         if(m_pguie != NULL && m_pguie != this && m_pguie->m_psession != NULL && m_pguie->m_psession != m_psession)
+         if(m_pguie != NULL && m_pguie != this && m_pguie->m_papp->m_psession != NULL && m_pguie->m_papp->m_psession != m_papp->m_psession)
          {
-            Sess(m_pguie->m_psession).m_ptCursor = pmouse->m_pt;
+            Sess(m_pguie->m_papp->m_psession).m_ptCursor = pmouse->m_pt;
          }
 
          ::plane::session * psession = NULL;
@@ -2630,8 +2630,7 @@ return 0;
    bool window::SendChildNotifyLastMsg(LRESULT* pResult)
    {
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
-      return OnChildNotify(pThreadState->m_lastSentMsg.message,
-         pThreadState->m_lastSentMsg.wparam, pThreadState->m_lastSentMsg.lparam, pResult);
+      return OnChildNotify(pThreadState->m_lastSentMsg.message, pThreadState->m_lastSentMsg.wParam, pThreadState->m_lastSentMsg.lParam, pResult);
    }
 
    bool PASCAL window::ReflectLastMsg(oswindow hWndChild, LRESULT* pResult)
@@ -2848,8 +2847,7 @@ return 0;
       if (!(GetStyle() & WS_CHILD))
       {
          const MESSAGE* pMsg = GetCurrentMessage();
-         SendMessageToDescendants(pMsg->message, pMsg->wparam, pMsg->lparam,
-            TRUE, TRUE);
+         SendMessageToDescendants(pMsg->message, pMsg->wParam, pMsg->lParam, TRUE, TRUE);
       }
 
       return Default();
@@ -5760,8 +5758,8 @@ throw not_implemented(get_app());
 
 //      pThreadState->m_lastSentMsg.m_pwnd = pinteraction;
       pThreadState->m_lastSentMsg.message = nMsg;
-      pThreadState->m_lastSentMsg.wparam = wparam;
-      pThreadState->m_lastSentMsg.lparam = lparam;
+      pThreadState->m_lastSentMsg.wParam = wparam;
+      pThreadState->m_lastSentMsg.lParam = lparam;
 
       // Catch exceptions thrown outside the scope of a callback
       // in debug builds and warn the ::fontopus::user.

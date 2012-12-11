@@ -1284,11 +1284,11 @@
 
 1354886571 /ca2/app/appseed/ca/exception/exception_invalid_argument.h
 
-1354886571 /ca2/app/appseed/ca/exception/exception_standard_translator.h
+1354997259 /ca2/app/appseed/ca/exception/exception_standard_translator.h
 	<eh.h>
 	<signal.h>
 
-1354974459 /ca2/app/appseed/ca/exception/exception_standard.h
+1355256145 /ca2/app/appseed/ca/exception/exception_standard.h
 	<eh.h>
 	<ucontext.h>
 	<sys/ucontext.h>
@@ -1487,7 +1487,7 @@
 1354886568 /ca2/app/appseed/ca/gen/gen_str2.h
 	<string.h>
 
-1354886572 /ca2/app/appseed/ca/primitive/datetime/datetime_time.h
+1354997260 /ca2/app/appseed/ca/primitive/datetime/datetime_time.h
 
 1354886568 /ca2/app/appseed/ca/gen/gen_hash.h
 
@@ -1501,7 +1501,7 @@
 
 1354886570 /ca2/app/appseed/ca/collection/collection_base_array.h
 
-1354886568 /ca2/app/appseed/ca/ca/ca_smart_pointer.h
+1355256145 /ca2/app/appseed/ca/ca/ca_smart_pointer.h
 
 1354886567 /ca2/app/appseed/ca/radix/radix.inl
 
@@ -1662,7 +1662,7 @@
 
 1354886568 /ca2/app/appseed/ca/gen/gen_variable_strict_compare.h
 
-1354886572 /ca2/app/appseed/ca/primitive/primitive_var.h
+1355260562 /ca2/app/appseed/ca/primitive/primitive_var.h
 
 1354886568 /ca2/app/appseed/ca/gen/gen_var.h
 
@@ -1838,7 +1838,7 @@
 1354886568 /ca2/app/appseed/ca/ca/ca_draw_dib.h
 	<vfw.h>
 
-1354886568 /ca2/app/appseed/ca/ca/ca_graphics.h
+1355256145 /ca2/app/appseed/ca/ca/ca_graphics.h
 	"user/user_draw_context.h"
 	"ca_bitmap.h"
 	"ca_pen.h"
@@ -1854,7 +1854,7 @@
 
 1354886568 /ca2/app/appseed/ca/gen/gen_request_signal.h
 
-1354886571 /ca2/app/appseed/ca/visual/visual_const.h
+1355256145 /ca2/app/appseed/ca/visual/visual_const.h
 
 1354886567 /ca2/app/appseed/ca/radix/radix_command.h
 
@@ -1863,7 +1863,7 @@
 	"ca/user/user_create_context.h"
 	"ca/user/user_check_interface.h"
 
-1354986014 /ca2/app/appseed/ca/gen/gen_message.h
+1355256145 /ca2/app/appseed/ca/gen/gen_message.h
 	<agile.h>
 
 1354886573 /ca2/app/appseed/ca/user/user_create_context.h
@@ -1886,7 +1886,7 @@
 
 1354886573 /ca2/app/appseed/ca/user/user_text_interface.h
 
-1354886573 /ca2/app/appseed/ca/user/user_window_interface.h
+1355256146 /ca2/app/appseed/ca/user/user_window_interface.h
 	"user/user_buffer.h"
 	"user/user_window_map.h"
 	"gen/gen_keeper.h"
@@ -2077,7 +2077,7 @@
 
 1354886572 /ca2/app/appseed/ca/primitive/primitive_memory.h
 
-1354886572 /ca2/app/appseed/ca/primitive/primitive_virtual_memory.h
+1354997260 /ca2/app/appseed/ca/primitive/primitive_virtual_memory.h
 
 1354886572 /ca2/app/appseed/ca/primitive/primitive_shared_memory.h
 
@@ -2108,7 +2108,7 @@
 
 1354886566 /ca2/app/appseed/c/c/c_natural.h
 
-1354886567 /ca2/app/appseed/ca/zlib/zlib.h
+1355256145 /ca2/app/appseed/ca/zlib/zlib.h
 	"zconf.h"
 
 1354886567 /ca2/app/appseed/ca/zlib/zutil.h
@@ -2298,7 +2298,7 @@
 
 1354986014 /ca2/app/appseed/ca/gen/gen_application.h
 
-1354886568 /ca2/app/appseed/ca/gen/gen_istring.h
+1355260153 /ca2/app/appseed/ca/gen/gen_istring.h
 
 1354886571 /ca2/app/appseed/ca/ex2/ex2_file_set.h
 
@@ -2345,7 +2345,7 @@
 
 1354886571 /ca2/app/appseed/ca/xml/xml_attr.h
 
-1354886571 /ca2/app/appseed/ca/xml/xml_node.h
+1354997260 /ca2/app/appseed/ca/xml/xml_node.h
 
 1354886571 /ca2/app/appseed/ca/xml/xml_document.h
 
@@ -3192,7 +3192,7 @@
 
 1354886571 /ca2/app/appseed/ca/ca4/ca4_copydesk.h
 
-1354886571 /ca2/app/appseed/ca/ca4/ca4_crypt.h
+1355256145 /ca2/app/appseed/ca/ca4/ca4_crypt.h
 
 1354886571 /ca2/app/appseed/ca/ca4/ca4_email.h
 
@@ -3309,7 +3309,7 @@
 
 1354886571 /ca2/app/appseed/ca/visual/visual_rgb_quad_array.h
 
-1354886571 /ca2/app/appseed/ca/visual/visual_imaging.h
+1354997259 /ca2/app/appseed/ca/visual/visual_imaging.h
 
 1354886571 /ca2/app/appseed/ca/visual/visual_image_list.h
 
@@ -3317,7 +3317,7 @@
 
 1354886571 /ca2/app/appseed/ca/visual/visual_cursor.h
 
-1354886571 /ca2/app/appseed/ca/visual/visual_api.h
+1355256145 /ca2/app/appseed/ca/visual/visual_api.h
 
 1354886571 /ca2/app/appseed/ca/visual/visual_graphics_extension.h
 
@@ -3439,7 +3439,7 @@
 
 1354886573 /ca2/app/appseed/ca/fontopus/fontopus_license.h
 
-1354886573 /ca2/app/appseed/ca/fontopus/fontopus_validate.h
+1355256146 /ca2/app/appseed/ca/fontopus/fontopus_validate.h
 
 1354886573 /ca2/app/appseed/ca/fontopus/fontopus_application.h
 
@@ -3475,7 +3475,7 @@
 
 1354886567 /ca2/app/appseed/ca/plane/plane_session.h
 
-1354886567 /ca2/app/appseed/ca/plane/plane_system.h
+1355256145 /ca2/app/appseed/ca/plane/plane_system.h
 	<agile.h>
 	"ca/collection/collection_gen_lemon_array.h"
 
@@ -3686,7 +3686,7 @@
 1348450731 source:/ca2/nodeapp/os/lnx_appterm.cpp
 	"framework.h"
 
-1352033050 source:/ca2/nodeapp/os/lnx_application.cpp
+1354986026 source:/ca2/nodeapp/os/lnx_application.cpp
 	"framework.h"
 
 1351857199 source:/ca2/nodeapp/os/lnx_bitmap.cpp
@@ -3701,7 +3701,7 @@
 	<sys/stat.h>
 	<unistd.h>
 
-1352053612 source:/ca2/nodeapp/os/lnx_dib.cpp
+1355258511 source:/ca2/nodeapp/os/lnx_dib.cpp
 	"framework.h"
 	<math.h>
 	"include/freeimage.h"
@@ -3722,7 +3722,7 @@
 1348990062 source:/ca2/nodeapp/os/lnx_exception.cpp
 	"framework.h"
 
-1351382214 source:/ca2/nodeapp/os/lnx_dir.cpp
+1355258676 source:/ca2/nodeapp/os/lnx_dir.cpp
 	"framework.h"
 
 1348992311 /ca2/nodeapp/os/lnx_copydesk.h
@@ -3732,7 +3732,7 @@
 
 1348999450 /ca2/nodeapp/os/lnx_crypt.h
 
-1351857429 /ca2/nodeapp/os/lnx_ip_enum.h
+1354995329 /ca2/nodeapp/os/lnx_ip_enum.h
 
 1348999268 source:/ca2/nodeapp/os/lnx_crypt.cpp
 	"framework.h"
@@ -3787,7 +3787,7 @@
 1354886572 /ca2/app/appseed/ca/primitive/datetime/datetime_float_time.h
 	<math.h>
 
-1350051107 source:/ca2/nodeapp/os/lnx_file_system.cpp
+1355257002 source:/ca2/nodeapp/os/lnx_file_system.cpp
 	"framework.h"
 
 1350060744 /ca2/app/appseed/c/c/file_watcher.h
@@ -4007,7 +4007,7 @@
 
 1354888015 /ca2/app/appseed/c/c/c_simple_app.h
 
-1352004474 source:/ca2/nodeapp/os/lnx_file.cpp
+1355258816 source:/ca2/nodeapp/os/lnx_file.cpp
 	"framework.h"
 	<fcntl.h>
 	<unistd.h>
@@ -4038,7 +4038,7 @@
 1351847674 source:/ca2/nodeapp/os/lnx_graphics_object.cpp
 	"framework.h"
 
-1351873120 source:/ca2/nodeapp/os/lnx_ip_enum.cpp
+1355258440 source:/ca2/nodeapp/os/lnx_ip_enum.cpp
 	"framework.h"
 	<netdb.h>
 
@@ -4079,11 +4079,11 @@
 	<errno.h>
 	<fcntl.h>
 
-1351942103 source:/ca2/nodeapp/os/lnx_graphics.cpp
+1355258930 source:/ca2/nodeapp/os/lnx_graphics.cpp
 	"framework.h"
 	<math.h>
 
-1352055373 source:/ca2/nodeapp/os/lnx_thread.cpp
+1355258953 source:/ca2/nodeapp/os/lnx_thread.cpp
 	"framework.h"
 	<unistd.h>
 	<errno.h>
@@ -4093,7 +4093,7 @@
 	"framework.h"
 	<stddef.h>
 
-1351950567 source:/ca2/nodeapp/os/lnx_trace.cpp
+1354986028 source:/ca2/nodeapp/os/lnx_trace.cpp
 	"framework.h"
 
 1352004479 source:/ca2/nodeapp/os/lnx_util.cpp
@@ -4107,10 +4107,10 @@
 
 1352049950 /ca2/nodeapp/operational_system/osdisplay.h
 
-1352058005 source:/ca2/nodeapp/os/lnx_window_draw.cpp
+1354978446 source:/ca2/nodeapp/os/lnx_window_draw.cpp
 	"framework.h"
 
-1352061584 source:/ca2/nodeapp/os/lnx_window.cpp
+1355259047 source:/ca2/nodeapp/os/lnx_window.cpp
 	"framework.h"
 
 1354974458 /ca2/app/appseed/c/ansios/ansios_thread.h
@@ -4137,7 +4137,7 @@
 
 1354901616 /ca2/app/appseed/ca/multithreading/multithreading_condition.h
 
-1354977273 /ca2/app/appseed/ca/sockets/bsd/sockets.h
+1354995363 /ca2/app/appseed/ca/sockets/bsd/sockets.h
 	"internal/SSLInitializer.h"
 	<sys/param.h>
 	<stdlib.h>
@@ -4223,14 +4223,14 @@
 
 1354886572 /ca2/app/appseed/ca/sockets/bsd/basic/sockets_ssl_client_context_map.h
 
-1354904729 /ca2/app/appseed/ca/sockets/bsd/basic/socket.h
+1355256146 /ca2/app/appseed/ca/sockets/bsd/basic/socket.h
 
 1354886572 /ca2/app/appseed/ca/sockets/bsd/basic/stream_socket.h
 
 1354886572 /ca2/app/appseed/ca/sockets/bsd/basic/sctp_socket.h
 	<netinet/sctp.h>
 
-1354974459 /ca2/app/appseed/ca/sockets/bsd/basic/tcp_socket.h
+1355256146 /ca2/app/appseed/ca/sockets/bsd/basic/tcp_socket.h
 	<openssl/bio.h>
 
 1354886572 /ca2/app/appseed/ca/sockets/bsd/basic/udp_socket.h
@@ -4257,11 +4257,11 @@
 
 1354886572 /ca2/app/appseed/ca/sockets/bsd/webserver/http_response.h
 
-1354886572 /ca2/app/appseed/ca/sockets/bsd/http/http_socket.h
+1355256146 /ca2/app/appseed/ca/sockets/bsd/http/http_socket.h
 
 1354886572 /ca2/app/appseed/ca/sockets/bsd/http/http_tunnel.h
 
-1354886572 /ca2/app/appseed/ca/sockets/bsd/http/http_client_socket.h
+1355256146 /ca2/app/appseed/ca/sockets/bsd/http/http_client_socket.h
 
 1354886572 /ca2/app/appseed/ca/sockets/bsd/http/http_request_socket.h
 

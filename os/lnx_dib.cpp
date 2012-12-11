@@ -1713,7 +1713,7 @@ namespace lnx
       // Black blend dib
       ::ca::dib_sp spdib2(get_app());
       spdib2->create(cx, cy);
-      spdib2->Fill(0, 0, 0);
+      spdib2->Fill(0, 0, 0, 0);
 
       spdib2->get_graphics()->DrawIcon(
          0, 0,

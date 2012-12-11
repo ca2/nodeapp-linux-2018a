@@ -187,9 +187,9 @@ namespace lnx
 
          }
 
-         try
+         /*try
          {
-            m_psystem->m_spfilesystem.m_p->FullPath(m_wstrFileName, m_wstrFileName);
+            m_papp->m_psystem->m_spfilesystem.m_p->FullPath(m_wstrFileName, m_wstrFileName);
          }
          catch(...)
          {
@@ -198,7 +198,7 @@ namespace lnx
 
          m_strFileName = ::gen::international::unicode_to_utf8(m_wstrFileName);
 
-         hFile = ::open(m_strFileName, nOpenFlags);
+         hFile = ::open(m_strFileName, nOpenFlags);*/
 
          if (hFile == -1)
          {
@@ -565,9 +565,7 @@ namespace lnx
 
       ::ex1::file_status status;
       GetStatus(status);
-      string wstrResult;
-      System.file_system().GetFileName(status.m_strFullName, wstrResult);
-      return wstrResult;
+      return System.file().name_(status.m_strFullName);
    }
 
    string file::GetFileTitle() const
@@ -576,9 +574,7 @@ namespace lnx
 
       ::ex1::file_status status;
       GetStatus(status);
-      string wstrResult;
-      System.file_system().GetFileTitle(status.m_strFullName, wstrResult);
-      return wstrResult;
+      return System.file().title_(status.m_strFullName);
    }
 
    string file::GetFilePath() const
