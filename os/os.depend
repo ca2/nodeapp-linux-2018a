@@ -4118,7 +4118,8 @@
 1354899562 /ca2/app/appseed/c/cross/cross.h
 	"c/cross/windows/windows.h"
 
-1354909044 /ca2/app/appseed/c/cross/windows/windows.h
+1355266169 /ca2/app/appseed/c/cross/windows/windows.h
+	"windows_gdi.h"
 	"windows_user.h"
 	"windows_thread.h"
 
@@ -4520,4 +4521,6 @@
 1354886572 /ca2/app/appseed/ca/sockets/metrowin/sockets_application_interface.h
 
 1354886572 /ca2/app/appseed/ca/sockets/sockets_application.h
+
+1355266172 /ca2/app/appseed/c/cross/windows/windows_gdi.h
 
