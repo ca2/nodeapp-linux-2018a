@@ -247,7 +247,7 @@
 	<File name="lnx_stdio_file.h" open="0" top="0" tabpos="0">
 		<Cursor position="933" topLine="15" />
 	</File>
-	<File name="lnx_thread.cpp" open="1" top="0" tabpos="1">
+	<File name="lnx_thread.cpp" open="1" top="1" tabpos="1">
 		<Cursor position="29615" topLine="1066" />
 	</File>
 	<File name="lnx_thread.h" open="0" top="0" tabpos="10">
@@ -265,8 +265,8 @@
 	<File name="lnx_util.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="3098" topLine="67" />
 	</File>
-	<File name="lnx_window.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="97658" topLine="3115" />
+	<File name="lnx_window.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="97734" topLine="3115" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="8">
 		<Cursor position="27731" topLine="607" />
