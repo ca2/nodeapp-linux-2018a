@@ -27,11 +27,52 @@ typedef struct tagPOINT
 } POINT, *PPOINT, NEAR *NPPOINT, FAR *LPPOINT;
 
 
+class simple_event;
+
+
+namespace radix
+{
+
+   class thread;
+
+}
+
+namespace ca
+{
+
+   class CLASS_DECL_c thread_base
+   {
+   public:
+
+
+      ::radix::thread      * m_pthread;
+
+
+      virtual simple_event * get_os_handle() const = 0;
+
+   };
+
+};
+
 
 namespace user
 {
 
+
    class interaction;
+
+
+   class CLASS_DECL_c interaction_base
+   {
+   public:
+
+
+      ::ca::thread_base *     m_pthread;
+      ::user::interaction *   m_pui;
+
+
+   };
+
 
 } // namespace user
 
@@ -51,9 +92,9 @@ public:
    {
    public:
 
-      osdisplay               m_osdisplay;
-      Window                  m_window;
-      ::user::interaction *   m_pui;
+      osdisplay                     m_osdisplay;
+      Window                        m_window;
+      ::user::interaction_base *    m_pui;
 
    };
 
@@ -150,7 +191,9 @@ public:
    int select_all_input();
    int map_window();
 
-   void set_user_interaction(::user::interaction * pui);
+   void set_user_interaction(::user::interaction_base * pui);
+   ::user::interaction_base * get_user_interaction_base();
+   ::user::interaction_base * get_user_interaction_base() const;
    ::user::interaction * get_user_interaction();
    ::user::interaction * get_user_interaction() const;
 
