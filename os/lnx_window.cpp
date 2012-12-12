@@ -426,7 +426,7 @@ namespace lnx
          Sys(m_papp).m_pwindowmap->m_map.remove_key((int_ptr) get_os_data());
       }
 
-      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
+      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
       if(m_pfont != NULL)
       {
          delete m_pfont;
@@ -538,7 +538,7 @@ namespace lnx
    // WM_NCDESTROY is the absolute LAST message sent.
    void window::_001OnNcDestroy(gen::signal_object * pobj)
    {
-      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
+      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
       pobj->m_bRet = true;
       // cleanup main and active windows
       ::ca::thread* pThread = System.GetThread();
@@ -706,7 +706,7 @@ namespace lnx
 
    bool window::DestroyWindow()
    {
-      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
+      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
       ::ca::window * pWnd;
       hwnd_map * pMap;
       oswindow hWndOrig;
@@ -1160,7 +1160,7 @@ namespace lnx
       }
       if(pbase->m_uiMessage == WM_TIMER)
       {
-         m_pthread->step_timer();
+         m_pthread->m_pthread->step_timer();
       }
       else if(pbase->m_uiMessage == WM_LBUTTONDOWN)
       {
@@ -2099,7 +2099,7 @@ return NULL;
 
    ::user::interaction * PASCAL window::GetDescendantWindow(::user::interaction * hWnd, id id)
    {
-      single_lock sl(&hWnd->m_pthread->m_mutex, TRUE);
+      single_lock sl(&hWnd->m_pthread->m_pthread->m_mutex, TRUE);
       // GetDlgItem recursive (return first found)
       // breadth-first for 1 level, then depth-first for next level
 
@@ -3133,7 +3133,7 @@ throw not_implemented(get_app());
    void window::_001OnProdevianSynch(gen::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-      System.get_event(m_pthread)->SetEvent();
+      System.get_event(m_pthread->m_pthread)->SetEvent();
       System.get_event(System.get_twf())->wait(millis(8400));
    }
 

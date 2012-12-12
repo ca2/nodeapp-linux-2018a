@@ -574,9 +574,9 @@ namespace lnx
             {
                try
                {
-                  if(LNX_THREAD(pui->m_pthread) == this
-                  || LNX_THREAD(pui->m_pthread->m_p) == LNX_THREAD(m_p)
-                  || LNX_THREAD(pui->m_pthread) == LNX_THREAD(m_p))
+                  if(LNX_THREAD(pui->m_pthread->m_pthread) == this
+                  || LNX_THREAD(pui->m_pthread->m_pthread->m_p) == LNX_THREAD(m_p)
+                  || LNX_THREAD(pui->m_pthread->m_pthread) == LNX_THREAD(m_p))
                   {
                      pui->m_pthread = NULL;
                   }
@@ -1083,9 +1083,9 @@ void thread::Delete()
                ::user::interaction * pui = puiptra->element_at(i);
                if(pui->m_pthread != NULL)
                {
-                  if(LNX_THREAD(pui->m_pthread) == this
-                  || LNX_THREAD(pui->m_pthread->m_p) == LNX_THREAD(m_p)
-                  || LNX_THREAD(pui->m_pthread) == LNX_THREAD(m_p))
+                  if(LNX_THREAD(pui->m_pthread->m_pthread) == this
+                  || LNX_THREAD(pui->m_pthread->m_pthread->m_p) == LNX_THREAD(m_p)
+                  || LNX_THREAD(pui->m_pthread->m_pthread) == LNX_THREAD(m_p))
                   {
                      pui->m_pthread = NULL;
                   }
