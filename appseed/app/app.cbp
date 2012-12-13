@@ -2,7 +2,7 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="os2" />
+		<Option title="app" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
@@ -14,36 +14,29 @@
 				<Option createDefFile="1" />
 				<Option createStaticLib="1" />
 				<Compiler>
+					<Add option="-std=c++0x" />
 					<Add option="-g" />
 					<Add option="-fPIC" />
 					<Add directory="." />
 					<Add directory=".." />
 					<Add directory="../.." />
-					<Add directory="../../app/appseed/ca" />
-					<Add directory="../../app/appseed/ca2" />
-					<Add directory="../../app/appseed" />
-					<Add directory="../../app" />
-					<Add directory="../../app/thirdparty/include" />
+					<Add directory="../../../app/appseed/ca" />
+					<Add directory="../../../app/appseed/ca2" />
+					<Add directory="../../../app/appseed" />
+					<Add directory="../../../app" />
+					<Add directory="../../../app/thirdparty/include" />
 				</Compiler>
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
 			<Add option="-D_DEBUG" />
 		</Compiler>
-		<Unit filename="application.h" />
-		<Unit filename="factory_exchange.h" />
+		<Unit filename="app.cpp" />
 		<Unit filename="framework.h">
 			<Option compile="1" />
 			<Option weight="0" />
 		</Unit>
-		<Unit filename="os2.cpp" />
-		<Unit filename="os2.h" />
-		<Unit filename="win2_application.cpp" />
-		<Unit filename="win2_factory_exchange.cpp" />
-		<Unit filename="win2_printer.cpp" />
-		<Unit filename="win2_printer.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />

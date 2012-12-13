@@ -27,7 +27,7 @@ void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppoin
 int CLASS_DECL_lnx __lnx_main(int argc, char * argv[])
 {
 
-   UNREFERENCED_PARAMETER(lpCmdLine);
+//   UNREFERENCED_PARAMETER(lpCmdLine);
 
 
 
@@ -45,7 +45,7 @@ throw todo(::ca::get_thread_app());
 
    ::plane::system * psystem = new ::plane::system();
 
-   ASSERT(hPrevInstance == NULL);
+//   ASSERT(hPrevInstance == NULL);
 
    int nReturnCode = 0;
 
@@ -53,10 +53,10 @@ throw todo(::ca::get_thread_app());
    ::lnx::main_init_data * pinitmaindata  = new ::lnx::main_init_data;
 
 
-   pinitmaindata->m_hInstance             = hInstance;
-   pinitmaindata->m_hPrevInstance         = hPrevInstance;
+   pinitmaindata->m_hInstance             = NULL;
+   pinitmaindata->m_hPrevInstance         = NULL;
    pinitmaindata->m_vssCommandLine        = gen::international::unicode_to_utf8(::GetCommandLineW());
-   pinitmaindata->m_nCmdShow              = nCmdShow;
+   pinitmaindata->m_nCmdShow              = SW_SHOW;
 
 
    psystem->init_main_data(pinitmaindata);

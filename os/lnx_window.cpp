@@ -3133,8 +3133,8 @@ throw not_implemented(get_app());
    void window::_001OnProdevianSynch(gen::signal_object * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-      System.get_event(m_pthread->m_pthread)->SetEvent();
-      System.get_event(System.get_twf())->wait(millis(8400));
+//      System.get_event(m_pthread->m_pthread)->SetEvent();
+  //    System.get_event(System.get_twf())->wait(millis(8400));
    }
 
    void window::_001OnPaint(gen::signal_object * pobj)
