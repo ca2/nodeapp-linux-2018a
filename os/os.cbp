@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../stage/x86/os" prefix_auto="1" extension_auto="1" />
+				<Option output="../../stage/x86/libos.so" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="../../stage/x86/" />
 				<Option object_output="../../time/intermediate/nodeapp/os" />
 				<Option type="3" />
@@ -32,6 +32,12 @@
 			<Add option="-fexceptions" />
 			<Add option="-D_DEBUG" />
 		</Compiler>
+		<Linker>
+			<Add option="-Wl,-rpath,." />
+			<Add option="-lc" />
+			<Add option="-lca" />
+			<Add directory="../../stage/x86" />
+		</Linker>
 		<Unit filename="../operational_system/_.h" />
 		<Unit filename="../operational_system/bare_operational_system.h" />
 		<Unit filename="../operational_system/cross/win/base_tsd.h" />
