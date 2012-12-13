@@ -389,6 +389,7 @@ typedef struct {
 #endif /* _WIN32_WINNT >= 0x0501 */
 
 
+/*
 
 UINT
 WINAPI
@@ -404,6 +405,7 @@ RegisterWindowMessageW(
 #else
 #define RegisterWindowMessage  RegisterWindowMessageA
 #endif // !UNICODE
+*/
 
 
 /*
@@ -670,26 +672,6 @@ FindWindowW(
 #define SIZEZOOMSHOW        SIZE_MAXSHOW
 #define SIZEZOOMHIDE        SIZE_MAXHIDE
 
-/*
- * WM_WINDOWPOSCHANGING/CHANGED struct pointed to by lParam
- */
-typedef struct tagWINDOWPOS {
-    oswindow    hwnd;
-    oswindow    hwndInsertAfter;
-    int     x;
-    int     y;
-    int     cx;
-    int     cy;
-    UINT    flags;
-} WINDOWPOS, *LPWINDOWPOS, *PWINDOWPOS;
-
-/*
- * WM_NCCALCSIZE parameter structure
- */
-typedef struct tagNCCALCSIZE_PARAMS {
-    RECT       rgrc[3];
-    PWINDOWPOS lppos;
-} NCCALCSIZE_PARAMS, *LPNCCALCSIZE_PARAMS;
 
 /*
  * WM_NCCALCSIZE "window valid rect" return values

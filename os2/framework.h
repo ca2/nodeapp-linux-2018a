@@ -1,9 +1,7 @@
+#ifndef __GNUC__
 #pragma once
-
-
-#pragma once
+#endif
 
 
 #include "os2.h"
-//#include "win_internal.h"
 

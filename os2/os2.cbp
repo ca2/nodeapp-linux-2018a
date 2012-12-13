@@ -20,6 +20,7 @@
 					<Add directory=".." />
 					<Add directory="../.." />
 					<Add directory="../../app/appseed/ca" />
+					<Add directory="../../app/appseed/ca2" />
 					<Add directory="../../app/appseed" />
 					<Add directory="../../app" />
 					<Add directory="../../app/thirdparty/include" />
@@ -31,10 +32,8 @@
 			<Add option="-fexceptions" />
 			<Add option="-D_DEBUG" />
 		</Compiler>
-		<Unit filename="../../app/appseed/c/multithreading/multithreading_waitable.cpp" />
 		<Unit filename="application.h" />
 		<Unit filename="factory_exchange.h" />
-		<Unit filename="framework.cpp" />
 		<Unit filename="framework.h">
 			<Option compile="1" />
 			<Option weight="0" />

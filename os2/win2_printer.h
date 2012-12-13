@@ -17,7 +17,7 @@ namespace win2
       public:
 
 
-         DEVMODE *      m_pdevmode;
+//         DEVMODE *      m_pdevmode;
          HDC            m_hdc;
 
 
@@ -25,7 +25,8 @@ namespace win2
          virtual ~document_properties();
 
 
-         virtual bool initialize(::win2::printer * pprinter, DEVMODE * pdevmode = NULL);
+  //       virtual bool initialize(::win2::printer * pprinter, DEVMODE * pdevmode = NULL);
+         virtual bool initialize(::win2::printer * pprinter);
          virtual bool close();
          virtual ::ca::graphics * create_graphics();
 

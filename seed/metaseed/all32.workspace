@@ -13,11 +13,6 @@
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 		</Project>
-		<Project filename="../../os2/os2.cbp" active="1">
-			<Depends filename="../../os/os.cbp" />
-			<Depends filename="../../../app/appseed/c/_.cbp" />
-			<Depends filename="../../../app/appseed/ca/ca.cbp" />
-			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-		</Project>
+		<Project filename="../../os2/os2.cbp" active="1" />
 	</Workspace>
 </CodeBlocks_workspace_file>

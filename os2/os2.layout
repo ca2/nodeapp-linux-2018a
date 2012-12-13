@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_layout_file>
 	<ActiveTarget name="Debug" />
-	<File name="../../app/appseed/c/multithreading/multithreading_waitable.cpp" open="1" top="0" tabpos="0">
-		<Cursor position="0" topLine="0" />
+	<File name="application.h" open="1" top="0" tabpos="4">
+		<Cursor position="81" topLine="0" />
+	</File>
+	<File name="framework.h" open="1" top="0" tabpos="2">
+		<Cursor position="61" topLine="0" />
+	</File>
+	<File name="os2.h" open="1" top="0" tabpos="1">
+		<Cursor position="67" topLine="0" />
 	</File>
 	<File name="win2_factory_exchange.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="228" topLine="0" />
+	</File>
+	<File name="win2_printer.cpp" open="1" top="1" tabpos="5">
+		<Cursor position="24" topLine="0" />
+	</File>
+	<File name="win2_printer.h" open="1" top="0" tabpos="3">
+		<Cursor position="115" topLine="0" />
 	</File>
 </CodeBlocks_layout_file>
