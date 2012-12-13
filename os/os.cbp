@@ -34,7 +34,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath,." />
-			<Add option="-lc" />
+			<Add option="-l_" />
 			<Add option="-lca" />
 			<Add directory="../../stage/x86" />
 		</Linker>

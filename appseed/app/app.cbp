@@ -24,18 +24,8 @@
 					<Add directory="../../../app/appseed" />
 					<Add directory="../../../app" />
 					<Add directory="../../../app/thirdparty/include" />
+					<Add directory="../../.." />
 				</Compiler>
-				<Linker>
-					<Add option="-Wl,-rpath,." />
-					<Add option="-lc" />
-					<Add option="-lca" />
-					<Add option="-lca2" />
-					<Add option="-lcairo" />
-					<Add option="-lfreetype" />
-					<Add option="-lmysqlclient" />
-					<Add option="-lssl" />
-					<Add directory="../../../stage/x86" />
-				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
@@ -43,6 +33,14 @@
 			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Linker>
+			<Add option="-Wl,-rpath,." />
+			<Add option="-lc" />
+			<Add option="-lca" />
+			<Add option="-lca2" />
+			<Add option="-lcairo" />
+			<Add option="-lfreetype" />
+			<Add option="-lmysqlclient" />
+			<Add option="-lssl" />
 			<Add directory="../../../stage/x86" />
 		</Linker>
 		<Unit filename="app.cpp" />
