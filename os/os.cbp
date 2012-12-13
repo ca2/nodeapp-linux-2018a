@@ -7,7 +7,7 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../stage/x86/libos.so" prefix_auto="0" extension_auto="0" />
+				<Option output="../../stage/x86/libca2os.so" prefix_auto="0" extension_auto="0" />
 				<Option working_dir="../../stage/x86/" />
 				<Option object_output="../../time/intermediate/nodeapp/os" />
 				<Option type="3" />
@@ -33,9 +33,9 @@
 			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Linker>
-			<Add option="-Wl,-rpath,." />
-			<Add option="-l_" />
-			<Add option="-lca" />
+			<Add option="-Wl,-rpath,\\$$ORIGIN" />
+			<Add option="-lca2c" />
+			<Add option="-lca2ca" />
 			<Add directory="../../stage/x86" />
 		</Linker>
 		<Unit filename="../operational_system/_.h" />

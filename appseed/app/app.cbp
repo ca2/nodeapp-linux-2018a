@@ -33,9 +33,9 @@
 			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Linker>
-			<Add option="-Wl,-rpath,." />
-			<Add option="-lc" />
-			<Add option="-lca" />
+			<Add option="-Wl,-rpath,\\$$ORIGIN" />
+			<Add option="-lca2c" />
+			<Add option="-lca2ca" />
 			<Add option="-lca2" />
 			<Add option="-lcairo" />
 			<Add option="-lfreetype" />
