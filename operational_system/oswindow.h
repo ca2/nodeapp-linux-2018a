@@ -27,55 +27,15 @@ typedef struct tagPOINT
 } POINT, *PPOINT, NEAR *NPPOINT, FAR *LPPOINT;
 
 
-class simple_event;
-
-
-namespace radix
-{
-
-   class thread;
-
-}
-
-namespace ca
-{
-
-   class CLASS_DECL_c thread_base
-   {
-   public:
-
-
-      ::radix::thread      * m_pthread;
-
-
-      virtual simple_event * get_os_handle() const = 0;
-
-   };
-
-};
-
-
 namespace user
 {
 
 
+   class interaction_base;
    class interaction;
 
 
-   class CLASS_DECL_c interaction_base
-   {
-   public:
-
-
-      ::ca::thread_base *     m_pthread;
-      ::user::interaction *   m_pui;
-
-
-   };
-
-
 } // namespace user
-
 
 
 class oswindow_dataptra;

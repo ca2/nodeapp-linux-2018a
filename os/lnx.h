@@ -124,3 +124,7 @@ WINBOOL GetMessage(
     oswindow hWnd,
     UINT wMsgFilterMin,
     UINT wMsgFilterMax);
+
+
+
+int CLASS_DECL_lnx __lnx_main(int argc, char * argv[]);

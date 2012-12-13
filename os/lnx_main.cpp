@@ -24,7 +24,7 @@ void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppoin
 // Standard WinMain implementation
 //  Can be replaced as long as 'gen::WinInit' is called first
 
-int CLASS_DECL_lnx __lnx_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPTSTR lpCmdLine, int nCmdShow)
+int CLASS_DECL_lnx __lnx_main(int argc, char * argv[])
 {
 
    UNREFERENCED_PARAMETER(lpCmdLine);
