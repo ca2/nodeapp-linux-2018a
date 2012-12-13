@@ -1,24 +1,16 @@
 #pragma once
 
+
 #define SECURITY_WIN32
 
+
 #include "ca.h"
-//#include <shlobj.h>
-//#include <Security.h>
-//#include <shlobj.h>
-
-
-
-
 
 
 #ifdef LINUX
     #define CLASS_DECL_lnx
-#elif defined(_VMSWIN_DLL)
-    #define CLASS_DECL_lnx  _declspec(dllexport)
-#else
-    #define CLASS_DECL_lnx  _declspec(dllimport)
 #endif
+
 
 string get_error_message(DWORD dwError);
 

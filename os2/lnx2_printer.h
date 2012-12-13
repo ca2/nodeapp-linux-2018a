@@ -5,13 +5,13 @@ namespace win2
 {
 
 
-   class CLASS_DECL_win2 printer :
+   class CLASS_DECL_lnx2 printer :
       virtual public ::user::printer
    {
    public:
 
 
-      class CLASS_DECL_win2 document_properties :
+      class CLASS_DECL_lnx2 document_properties :
          virtual public ::radix::object
       {
       public:

@@ -5,7 +5,7 @@ namespace win2
 {
 
 
-   class CLASS_DECL_win2 application :
+   class CLASS_DECL_lnx2 application :
       virtual public ::cubebase::application
    {
    public:
@@ -13,7 +13,7 @@ namespace win2
 
       application(::ca::application * papp);
       virtual ~application();
-      
+
       virtual ::user::printer * get_printer(const char * pszDeviceName);
 
    };

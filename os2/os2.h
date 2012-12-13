@@ -8,24 +8,19 @@
 #include "nodeapp/os/lnx.h"
 
 
-#ifdef WINDOWS
-#ifdef _VMSWIN2_DLL
-    #define CLASS_DECL_win2  _declspec(dllexport)
-#else
-    #define CLASS_DECL_win2  _declspec(dllimport)
+#ifdef LINUX
+    #define CLASS_DECL_lnx2
 #endif
-#else
-    #define CLASS_DECL_win2
-#endif
-
 
 
 #include "factory_exchange.h"
 
 
-#include "win2_printer.h"
-
-
+#include "lnx2_printer.h"
 
 
 #include "application.h"
+
+
+
+
