@@ -7,12 +7,11 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../stage/x86/liblinux" prefix_auto="1" extension_auto="1" />
-				<Option object_output="../../time/intermediate/nodeapp/linux" />
-				<Option type="3" />
+				<Option output="../../stage/x86/app" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="../../stage/x86/" />
+				<Option object_output="../../time/intermediate/nodeapp/app" />
+				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option createDefFile="1" />
-				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-std=c++0x" />
 					<Add option="-g" />
@@ -26,6 +25,17 @@
 					<Add directory="../../../app" />
 					<Add directory="../../../app/thirdparty/include" />
 				</Compiler>
+				<Linker>
+					<Add option="-Wl,-rpath,." />
+					<Add option="-lc" />
+					<Add option="-lca" />
+					<Add option="-lca2" />
+					<Add option="-lcairo" />
+					<Add option="-lfreetype" />
+					<Add option="-lmysqlclient" />
+					<Add option="-lssl" />
+					<Add directory="../../../stage/x86" />
+				</Linker>
 			</Target>
 		</Build>
 		<Compiler>
