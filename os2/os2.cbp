@@ -7,8 +7,8 @@
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="Debug">
-				<Option output="../../stage/x86/liblinux" prefix_auto="1" extension_auto="1" />
-				<Option object_output="../../time/intermediate/nodeapp/linux" />
+				<Option output="../../stage/x86/os2" prefix_auto="1" extension_auto="1" />
+				<Option object_output="../../time/intermediate/nodeapp/os2" />
 				<Option type="3" />
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
@@ -38,12 +38,12 @@
 			<Option compile="1" />
 			<Option weight="0" />
 		</Unit>
+		<Unit filename="lnx2_application.cpp" />
+		<Unit filename="lnx2_factory_exchange.cpp" />
+		<Unit filename="lnx2_printer.cpp" />
+		<Unit filename="lnx2_printer.h" />
 		<Unit filename="os2.cpp" />
 		<Unit filename="os2.h" />
-		<Unit filename="win2_application.cpp" />
-		<Unit filename="win2_factory_exchange.cpp" />
-		<Unit filename="win2_printer.cpp" />
-		<Unit filename="win2_printer.h" />
 		<Extensions>
 			<code_completion />
 			<debugger />
