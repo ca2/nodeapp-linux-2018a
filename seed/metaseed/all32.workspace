@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
-		<Project filename="../../appseed/app/app.cbp" active="1">
+		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
@@ -17,11 +17,13 @@
 		<Project filename="../../../app/appseed/c/_.cbp" />
 		<Project filename="../../../app/appseed/ca/ca.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
+			<Depends filename="../../../app/appseed/optca/optca.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/ca2/ca2.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 		</Project>
+		<Project filename="../../../app/appseed/optca/optca.cbp" active="1" />
 		<Project filename="../../os/os.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />

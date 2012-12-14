@@ -40,7 +40,7 @@
 	<File name="../operational_system/version.h" open="0" top="0" tabpos="9">
 		<Cursor position="8158" topLine="286" />
 	</File>
-	<File name="framework.h" open="0" top="0" tabpos="4">
+	<File name="framework.h" open="1" top="1" tabpos="8">
 		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="gen_1.h" open="0" top="0" tabpos="0">
@@ -148,7 +148,7 @@
 	<File name="lnx_file_set.h" open="0" top="0" tabpos="0">
 		<Cursor position="56" topLine="0" />
 	</File>
-	<File name="lnx_file_system.cpp" open="1" top="1" tabpos="5">
+	<File name="lnx_file_system.cpp" open="1" top="0" tabpos="5">
 		<Cursor position="1215" topLine="29" />
 	</File>
 	<File name="lnx_file_system.h" open="1" top="0" tabpos="6">
