@@ -37,6 +37,7 @@
 			<Add option="-lca2c" />
 			<Add option="-lca2ca" />
 			<Add option="-lca2" />
+			<Add option="-lca2os" />
 			<Add option="-lcairo" />
 			<Add option="-lfreetype" />
 			<Add option="-lmysqlclient" />
