@@ -321,6 +321,16 @@ namespace lnx
 
    }
 
+   void bitmap::destroy()
+   {
+
+      if(m_psurface == NULL)
+         return;
+
+      cairo_surface_destroy(m_psurface);
+
+   }
+
 
 } // namespace lnx
 

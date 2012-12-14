@@ -1,6 +1,6 @@
 #include "framework.h"
 
-extern thread_local_storage * gen_ThreadData;
+extern thread_local_storage * __thread_data;
 
 namespace lnx
 {
@@ -247,8 +247,8 @@ namespace lnx
       try
       {
          // cleanup the rest of the thread local data
-         if (gen_ThreadData != NULL)
-            gen_ThreadData->delete_data();
+         if (__thread_data != NULL)
+            __thread_data->delete_data();
       }
       catch( base_exception* e )
       {

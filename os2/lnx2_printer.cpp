@@ -85,7 +85,8 @@ namespace win2
    {
       if(m_hdc != NULL)
       {
-         ::DeleteDC(m_hdc);
+         throw todo(get_app());
+//         ::DeleteDC(m_hdc);
          m_hdc = NULL;
       }
 //      if(m_pdevmode != NULL)

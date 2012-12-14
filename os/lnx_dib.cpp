@@ -2495,7 +2495,11 @@ namespace lnx
 
       COLORREF * pcolorref = NULL;
 
-      HBITMAP hbitmap = ::CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, 0);
+      HBITMAP hbitmap;
+
+      throw todo(get_app());
+
+      //HBITMAP hbitmap = ::CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, 0);
 
       if(hbitmap == NULL)
       {
@@ -2503,10 +2507,11 @@ namespace lnx
          return false;
       }
 
-      HDC hdc = ::CreateCompatibleDC(NULL);
-
-
       throw todo(get_app());
+
+//      HDC hdc = ::CreateCompatibleDC(NULL);
+
+
 
 /*   xxx   if(pbi->bmiHeader.biHeight != SetDIBits(
          hdc,

@@ -10,6 +10,7 @@ namespace lnx
 
       m_bFill        = false;
       m_efillmode    = ::ca::fill_mode_winding;
+      m_bHasPoint    = false;
 
    }
 
@@ -19,9 +20,20 @@ namespace lnx
    }
 
 
-   bool has_current_point();
-   point last_point()
+   bool graphics_path::has_current_point()
    {
+
+      return m_bHasPoint;
+
+   }
+
+   point graphics_path::last_point()
+   {
+
+      if(!m_bHasPoint)
+         throw "there is no point";
+
+      return m_pt;
 
    }
 
@@ -45,6 +57,10 @@ namespace lnx
 
       m_elementa.add(e);
 
+      m_bHasPoint = true;
+      m_pt.x = e.m_arc.m_xCenter + e.m_arc.m_dRadiusX * cos(e.m_arc.m_dAngle2);
+      m_pt.y = e.m_arc.m_yCenter + e.m_arc.m_dRadiusY * sin(e.m_arc.m_dAngle2);
+
       return true;
 
    }
@@ -59,6 +75,10 @@ namespace lnx
       e.m_move.m_y            = y;
 
       m_elementa.add(e);
+
+      m_bHasPoint = true;
+      m_pt.x = x;
+      m_pt.y = y;
 
       return true;
 
@@ -75,6 +95,11 @@ namespace lnx
 
       m_elementa.add(e);
 
+      m_bHasPoint = true;
+      m_pt.x = x;
+      m_pt.y = y;
+
+
       return true;
 
    }
@@ -86,6 +111,7 @@ namespace lnx
 
       m_efillmode = efillmode;
 
+      m_bHasPoint = false;
 
    }
 

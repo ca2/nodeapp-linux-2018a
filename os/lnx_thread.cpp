@@ -431,7 +431,7 @@ void CLASS_DECL_lnx AfxEndThread(::radix::application * papp, UINT nExitCode, WI
 //   _endthreadex(nExitCode);
 }
 
-extern thread_slot_data* _afxThreadData;
+extern thread_local_storage * __thread_data;
 void CLASS_DECL_lnx __term_thread(::radix::application * papp, HINSTANCE hInstTerm)
 {
 
@@ -451,9 +451,9 @@ void CLASS_DECL_lnx __term_thread(::radix::application * papp, HINSTANCE hInstTe
    try
    {
       // cleanup the rest of the thread local data
-      if (_afxThreadData != NULL)
-         _afxThreadData->delete_data();
-         //_afxThreadData->DeleteValues(hInstTerm, FALSE);
+      if (__thread_data != NULL)
+         __thread_data->delete_data();
+         //__thread_data->DeleteValues(hInstTerm, FALSE);
    }
    catch( base_exception* e )
    {
@@ -620,7 +620,7 @@ namespace lnx
       if (pState->m_pCurrentWinThread == this)
          pState->m_pCurrentWinThread = NULL;
 
-      window::DeleteTempMap();
+      //window::DeleteTempMap();
 //      m_pmapHDC->delete_temp();
   //    m_pmapHGDIOBJ->delete_temp();
 
@@ -1044,7 +1044,7 @@ void thread::Delete()
 
 //      m_pmapHGDIOBJ->delete_temp();
   //    m_pmapHDC->delete_temp();
-      window::DeleteTempMap();
+      //window::DeleteTempMap();
 
    }
 
@@ -1675,7 +1675,7 @@ void thread::Delete()
          // clean up temp objects
 //         m_pmapHGDIOBJ->delete_temp();
   //       m_pmapHDC->delete_temp();
-         window::DeleteTempMap();
+       //  window::DeleteTempMap();
       }
 
 
@@ -2560,25 +2560,29 @@ _endthreadex(nExitCode);
 #endif //!_MT
 }
 
+*/
+
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for thread initialization and thread cleanup
 
-LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam);
+//LRESULT CALLBACK _AfxMsgFilterHook(int code, WPARAM wParam, LPARAM lParam);
 
-void CLASS_DECL_lnx AfxInitThread()
+void CLASS_DECL_lnx __init_thread()
 {
-if (!afxContextIsDLL)
-{
-// set message filter proc
-___THREAD_STATE* pThreadState = __get_thread_state();
-ASSERT(pThreadState->m_hHookOldMsgFilter == NULL);
-pThreadState->m_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER,
-_AfxMsgFilterHook, NULL, ::GetCurrentThreadId());
+
+   /*if (!afxContextIsDLL)
+   {
+      // set message filter proc
+      ___THREAD_STATE* pThreadState = __get_thread_state();
+      ASSERT(pThreadState->m_hHookOldMsgFilter == NULL);
+      pThreadState->m_hHookOldMsgFilter = ::SetWindowsHookEx(WH_MSGFILTER,
+      _AfxMsgFilterHook, NULL, ::GetCurrentThreadId());
+   }*/
+
 }
-}
 
 
-
+/*
 
 
 WINBOOL thread::CreateThread(DWORD dwCreateFlags, UINT nStackSize,

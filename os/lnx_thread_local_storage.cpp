@@ -171,14 +171,14 @@ process_local_object::~process_local_object()
 
 /*void CLASS_DECL_lnx gen::InitLocalData(HINSTANCE hInst)
 {
-   if (gen_ThreadData != NULL)
-      gen_ThreadData->AssignInstance(hInst);
+   if (__thread_data != NULL)
+      __thread_data->AssignInstance(hInst);
 }
 
 void CLASS_DECL_lnx __term_local_data(HINSTANCE hInst, bool bAll)
 {
-   if (gen_ThreadData != NULL)
-      gen_ThreadData->DeleteValues(hInst, bAll);
+   if (__thread_data != NULL)
+      __thread_data->DeleteValues(hInst, bAll);
 }*/
 
 // This reference count is needed to support Win32s, such that the
@@ -197,10 +197,10 @@ void CLASS_DECL_lnx __tls_release()
 {
    if (gen_TlsRef == 0 || --gen_TlsRef == 0)
    {
-      if (gen_ThreadData != NULL)
+      if (__thread_data != NULL)
       {
-         gen_ThreadData->~thread_local_storage();
-         gen_ThreadData = NULL;
+         __thread_data->~thread_local_storage();
+         __thread_data = NULL;
       }
    }
 }
@@ -211,8 +211,8 @@ void CLASS_DECL_lnx __tls_release()
 /////////////////////////////////////////////////////////////////////////////
 // thread_slot_data
 
-// global gen_ThreadData used to allocate thread local indexes
+// global __thread_data used to allocate thread local indexes
 BYTE _gen_ThreadData[sizeof(thread_local_storage)];
-thread_local_storage * gen_ThreadData;
+thread_local_storage * __thread_data;
 
 

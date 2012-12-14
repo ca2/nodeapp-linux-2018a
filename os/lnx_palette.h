@@ -1,5 +1,6 @@
 #pragma once
 
+
 namespace lnx
 {
 
@@ -31,4 +32,6 @@ namespace lnx
       virtual ~palette();
    };
 
+
 } // namespace lnx
+

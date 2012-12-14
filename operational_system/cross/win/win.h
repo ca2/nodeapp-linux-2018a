@@ -1,6 +1,15 @@
 #pragma once
 
 
+
+struct win_handle;
+
+
+typedef struct win_handle * HANDLE;
+typedef HANDLE *PHANDLE, *LPHANDLE;
+
+
+
 #define WINE_NO_UNICODE_MACROS
 #define WINE_UNICODE_NATIVE
 #define _WCTYPE_T_DEFINED

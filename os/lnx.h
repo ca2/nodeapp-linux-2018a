@@ -128,3 +128,6 @@ WINBOOL GetMessage(
 
 
 int CLASS_DECL_lnx __lnx_main(int argc, char * argv[]);
+
+
+CLASS_DECL_lnx void vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName = NULL);

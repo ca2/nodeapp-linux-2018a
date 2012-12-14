@@ -79,6 +79,8 @@ namespace lnx
       simple_array < element >      m_elementa;
       bool                          m_bFill;
       ::ca::e_fill_mode             m_efillmode;
+      bool                          m_bHasPoint;
+      point                         m_pt;
 
 
       graphics_path(::ca::application * papp);

@@ -1,6 +1,11 @@
 #pragma once
 
 
+
+#ifdef _DEBUG
+#define DEBUG
+#endif
+
 #define LINUX
 
 #undef _GNU_SOURCE

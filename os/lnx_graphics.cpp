@@ -3057,17 +3057,21 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    }
 */
 
-/*
    bool graphics::DeleteDC()
    {
 
-      if(get_handle() == NULL)
-         return FALSE;
+      if(m_pdc == NULL)
+         return true;
 
-      return ::DeleteDC(Detach()) != FALSE;
+
+      cairo_destroy(m_pdc);
+
+      return true;
+
    }
 
 
+/*
 
    void graphics::SetAttribDC(HDC hDC)  // Set the Attribute DC
    {

@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <cairo/cairo-xlib.h>
 
 //#define COMPILE_MULTIMON_STUBS
 //#include <multimon.h>
@@ -133,19 +134,28 @@ namespace lnx
       return TRUE;
    }*/
 
-/*   bool  window::ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool  window::ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
-      return __modify_style(hWnd, GWL_STYLE, dwRemove, dwAdd, nFlags);
+      DWORD dw = hWnd.get_window_long(GWL_STYLE);
+      dw &= ~dwRemove;
+      dw |= dwAdd;
+      hWnd.set_window_long(GWL_STYLE, dw);
+      //return __modify_style(hWnd, GWL_STYLE, dwRemove, dwAdd, nFlags);
+      return true;
    }
 
-   bool PASCAL
-      window::ModifyStyleEx(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
+   bool window::ModifyStyleEx(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
-      return __modify_style(hWnd, GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
+      DWORD dw = hWnd.get_window_long(GWL_EXSTYLE);
+      dw &= ~dwRemove;
+      dw |= dwAdd;
+      hWnd.set_window_long(GWL_EXSTYLE, dw);
+      return true;
+//      return __modify_style(hWnd, GWL_EXSTYLE, dwRemove, dwAdd, nFlags);
    }
 
 
-*/
+
    const MESSAGE* PASCAL window::GetCurrentMessage()
    {
       // fill in time and position when asked for
@@ -200,23 +210,21 @@ namespace lnx
       return TRUE;
    }*/
 
-   /*
-
    oswindow window::Detach()
    {
       oswindow hWnd = get_os_data();
       if (hWnd != NULL)
       {
-         single_lock sl(afxMutexHwnd(), TRUE);
-         hwnd_map * pMap = afxMapHWND(); // don't create if not exist
-         if (pMap != NULL)
-            pMap->remove_handle(get_os_data());
-         set_handle(NULL);
+//         single_lock sl(afxMutexHwnd(), TRUE);
+//  ;;       hwnd_map * pMap = afxMapHWND(); // don't create if not exist
+    //     if (pMap != NULL)
+      //      pMap->remove_handle(get_os_data());
+//         set_handle(NULL);
+         m_oswindow = ::ca::null();
       }
 
       return hWnd;
    }
-   */
 
    void window::pre_subclass_window()
    {
@@ -4563,14 +4571,23 @@ throw not_implemented(get_app());
    ::ca::graphics * window::GetDC()
    {
       ::ca::graphics_sp g(get_app());
+      oswindow oswindow;
       if(get_os_data() == NULL)
       {
-         (dynamic_cast < ::lnx::graphics * >(g.m_p))->attach(::GetDC(::ca::null()));
+         oswindow = GetDesktopWindow();
+
       }
       else
       {
-         (dynamic_cast < ::lnx::graphics * >(g.m_p))->attach(::GetDC(get_os_data()));
+         oswindow = (::oswindow) get_os_data();
       }
+      rect rectClient;
+      //oswindow.get_client_rect(rectClient);
+      rectClient.left = 0;
+      rectClient.top = 0;
+      rectClient.right = 500;
+      rectClient.bottom = 500;
+      (dynamic_cast < ::lnx::graphics * >(g.m_p))->attach(cairo_create(cairo_xlib_surface_create(oswindow.display(), oswindow.window(), DefaultVisual(oswindow.display(), 0), rectClient.width(), rectClient.height())));
       return g.detach();
    }
 
@@ -4587,6 +4604,14 @@ throw not_implemented(get_app());
 
       if(pgraphics == NULL)
          return false;
+
+      cairo_t * pcairo = (cairo_t *) pgraphics->get_os_data();
+
+      cairo_surface_t * psurface = cairo_get_target(pcairo);
+
+      cairo_destroy(pcairo);
+
+      cairo_surface_destroy(psurface);
 
 //      if(((Gdiplus::Graphics *)(dynamic_cast<::lnx::graphics * >(pgraphics))->get_os_data()) == NULL)
   //       return false;

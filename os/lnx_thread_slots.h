@@ -56,7 +56,7 @@ public:
 
 
 extern BYTE _gen_ThreadData[sizeof(thread_local_storage)];
-extern thread_local_storage * gen_ThreadData;
+extern thread_local_storage * __thread_data;
 
 
 class CLASS_DECL_lnx no_track_object
@@ -94,15 +94,15 @@ template < int iSlot >
 no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pfnCreateObject)())
 {
 
-   if (gen_ThreadData == NULL)
+   if (__thread_data == NULL)
    {
 #undef new
-      gen_ThreadData = new(_gen_ThreadData) thread_local_storage;
+      __thread_data = new(_gen_ThreadData) thread_local_storage;
 #define new DEBUG_NEW
-      ENSURE(gen_ThreadData != NULL);
+      ENSURE(__thread_data != NULL);
    }
 
-   no_track_object * pValue = (no_track_object *) gen_ThreadData->get_slot_data()->m_pa[iSlot];
+   no_track_object * pValue = (no_track_object *) __thread_data->get_slot_data()->m_pa[iSlot];
 
    if(pValue == NULL)
    {
@@ -111,8 +111,8 @@ no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pf
       pValue =  (*pfnCreateObject)();
 
       // set tls data to newly created object
-      gen_ThreadData->get_slot_data()->m_pa[iSlot] = pValue;
-      ASSERT(gen_ThreadData->get_slot_data()->m_pa[iSlot] == pValue);
+      __thread_data->get_slot_data()->m_pa[iSlot] = pValue;
+      ASSERT(__thread_data->get_slot_data()->m_pa[iSlot] == pValue);
 
    }
 
@@ -122,13 +122,13 @@ no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pf
 template < int iSlot >
 no_track_object* thread_local_object < iSlot > ::GetDataNA()
 {
-   return gen_ThreadData->get_slot_data()->m_pa[iSlot];
+   return __thread_data->get_slot_data()->m_pa[iSlot];
 }
 template < int iSlot >
 thread_local_object < iSlot > ::~thread_local_object()
 {
-//   if (m_nSlot != 0 && gen_ThreadData != NULL)
-  //    gen_ThreadData->FreeSlot(m_nSlot);
+//   if (m_nSlot != 0 && __thread_data != NULL)
+  //    __thread_data->FreeSlot(m_nSlot);
    //m_nSlot = 0;
 }
 

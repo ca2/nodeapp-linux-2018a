@@ -163,6 +163,9 @@ public:
 
    bool is_child(oswindow oswindowCandidateChildOrDescendant); // or descendant
    oswindow get_parent();
+   oswindow set_parent(oswindow oswindowNewParent);
+   long get_state();
+   bool is_iconic();
    bool show_window(int nCmdShow);
    LONG get_window_long(int nIndex);
    LONG set_window_long(int nIndex, LONG l);
@@ -192,6 +195,11 @@ inline oswindow GetParent(::oswindow oswindow)
    return oswindow.get_parent();
 }
 
+inline oswindow SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
+{
+   return oswindow.set_parent(oswindowNewParent);
+}
+
 inline bool ShowWindow(::oswindow oswindow, int nCmdShow)
 {
    return oswindow.show_window(nCmdShow);
@@ -215,4 +223,9 @@ inline bool ClientToScreen(::oswindow oswindow, LPPOINT lppoint)
 inline bool ScreenToClient(::oswindow oswindow, LPPOINT lppoint)
 {
    return oswindow.screen_to_client(lppoint);
+}
+
+inline int IsIconic(::oswindow oswindow)
+{
+   return oswindow.is_iconic();
 }

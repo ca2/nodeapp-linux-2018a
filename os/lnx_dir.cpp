@@ -762,15 +762,8 @@ namespace lnx
             ::gen::str::begin(wstrPath, L"\\\\?\\");
          }
       }
-      DWORD dwAttrib;
-      //dwAttrib = GetFileAttributes(wstrPath);
-      dwAttrib = GetFileAttributes(gen::international::unicode_to_utf8(wstrPath));
-      /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
-      {
-         dwAttrib = GetFileAttributes(strPath);
-      }*/
 
-      bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
+      bIsDir = ::dir::is(gen::international::unicode_to_utf8(wstrPath));
 
       m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::GetLastError());
 
@@ -859,15 +852,8 @@ namespace lnx
             ::gen::str::begin(wstrPath, L"\\\\?\\");
          }
       }
-      DWORD dwAttrib;
-      //dwAttrib = GetFileAttributes(wstrPath);
-      dwAttrib = GetFileAttributes(gen::international::unicode_to_utf8(wstrPath));
-      /*if(dwAttrib == INVALID_FILE_ATTRIBUTES)
-      {
-         dwAttrib = GetFileAttributes(strPath);
-      }*/
 
-      bIsDir = (dwAttrib != INVALID_FILE_ATTRIBUTES) && (dwAttrib & FILE_ATTRIBUTE_DIRECTORY);
+      bIsDir = ::dir::is(gen::international::unicode_to_utf8(wstrPath));
 
       m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
 

@@ -12,17 +12,6 @@ namespace lnx
       int function();
    };
 
-   CLASS_DECL_lnx HINSTANCE   LoadLibrary(const char * lpsz);
-   CLASS_DECL_lnx bool        SHGetSpecialFolderPath(oswindow hwnd, string &str, int csidl, bool fCreate);
-   CLASS_DECL_lnx DWORD       GetFileAttributes(const char * lpFileName);
-   CLASS_DECL_lnx bool        CreateDirectory(const char * lpPathName, LPSECURITY_ATTRIBUTES lpSecurityAttributes);
-   CLASS_DECL_lnx DWORD       GetCurrentDirectory(string & str);
-   CLASS_DECL_lnx DWORD       GetTempPath(string & str);
-// xxx   CLASS_DECL_lnx LONG        RegQueryValue(HKEY hkey, const char * lpszSubKey, string & str);
-   CLASS_DECL_lnx HICON       ExtractIcon(HINSTANCE hInst, const char * lpszExeFileName, UINT nIconIndex);
-   CLASS_DECL_lnx bool        DeleteFile(const char * lpFileName);
-   CLASS_DECL_lnx int         GetMenuStringW(HMENU hMenu, UINT uIDItem, string & str, UINT flags);
-   CLASS_DECL_lnx void        TimeToFileTime(::ca::application * papp, const ::datetime::time& time, LPFILETIME pFileTime);
 
 
 } // namespace lnx

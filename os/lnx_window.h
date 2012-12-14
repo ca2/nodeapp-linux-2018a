@@ -81,7 +81,7 @@ namespace lnx
 
       static window * from_handle(oswindow hWnd);
       static window * FromHandlePermanent(oswindow hWnd);
-      static void DeleteTempMap();
+      //static void DeleteTempMap();
       bool Attach(oswindow hWndNew);
       oswindow Detach();
 

@@ -30,7 +30,7 @@ void CLASS_DECL_lnx __gen_unregister_window_classes()
    }
 
 }
-void CLASS_DECL_lnx __win_term()
+void CLASS_DECL_lnx __lnx_term()
 {
    __gen_unregister_window_classes();
    // cleanup OLE if required
