@@ -187,28 +187,30 @@ namespace lnx
       return dynamic_cast < ::lnx::window * > (oswindow.get_user_interaction()->m_pimpl);
    }
 
-   /*
-
    bool window::Attach(oswindow hWndNew)
    {
+
       ASSERT(get_os_data() == NULL);     // only attach once, detach on destroy
-      ASSERT(FromHandlePermanent(hWndNew) == NULL);
+    //  ASSERT(FromHandlePermanent(hWndNew) == NULL);
       // must not already be in permanent ::collection::map
 
       if (hWndNew == NULL)
          return FALSE;
-      single_lock sl(afxMutexHwnd(), TRUE);
-      hwnd_map * pMap = afxMapHWND(TRUE); // create ::collection::map if not exist
-      ASSERT(pMap != NULL);
+      //single_lock sl(afxMutexHwnd(), TRUE);
+      //hwnd_map * pMap = afxMapHWND(TRUE); // create ::collection::map if not exist
+      //ASSERT(pMap != NULL);
 
-      pMap->set_permanent(set_handle(hWndNew), this);
-      if(m_pguie == NULL)
+      //pMap->set_permanent(set_handle(hWndNew), this);
+      //if(m_pguie == NULL)
       {
-         m_pguie = this;
+         //m_pguie = this;
       }
 
+      m_oswindow = hWndNew;
+
       return TRUE;
-   }*/
+
+   }
 
    oswindow window::Detach()
    {

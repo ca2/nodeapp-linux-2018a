@@ -174,7 +174,7 @@ CLASS_DECL_lnx ::lnx::thread * AfxGetThread()
 }
 
 
-CLASS_DECL_lnx void AfxSetThread(::radix::thread * pthread)
+CLASS_DECL_lnx void __set_thread(::radix::thread * pthread)
 {
    // check for current thread in module thread state
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
@@ -2581,6 +2581,8 @@ void CLASS_DECL_lnx __init_thread()
 
 }
 
+namespace lnx
+{
 
 /*
 
@@ -2735,10 +2737,14 @@ m_ptimera->check();
 }
 }
 
+*/
+
 WINBOOL thread::is_idle_message(MESSAGE* pMsg)
 {
 return AfxInternalIsIdleMessage(pMsg);
 }
+
+/*
 
 int thread::exit_instance()
 {
@@ -2913,6 +2919,12 @@ LRESULT thread::ProcessWndProcException(base_exception* e, const MESSAGE* pMsg)
 return AfxInternalProcessWndProcException( e, pMsg );
 }
 */
+
+
+
+} // namespace lnx
+
+
 
 /////////////////////////////////////////////////////////////////////////////
 // Message Filter processing (WH_MSGFILTER)

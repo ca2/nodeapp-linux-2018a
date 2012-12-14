@@ -4083,7 +4083,7 @@
 	"framework.h"
 	<math.h>
 
-1355473606 source:/ca2/nodeapp/os/lnx_thread.cpp
+1355496673 source:/ca2/nodeapp/os/lnx_thread.cpp
 	"framework.h"
 	<unistd.h>
 	<errno.h>
@@ -4110,7 +4110,7 @@
 1354978446 source:/ca2/nodeapp/os/lnx_window_draw.cpp
 	"framework.h"
 
-1355476271 source:/ca2/nodeapp/os/lnx_window.cpp
+1355496012 source:/ca2/nodeapp/os/lnx_window.cpp
 	"framework.h"
 	<cairo/cairo-xlib.h>
 
