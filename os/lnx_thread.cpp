@@ -165,7 +165,7 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
 
 #endif //_MT
 
-CLASS_DECL_lnx ::lnx::thread * AfxGetThread()
+CLASS_DECL_lnx ::lnx::thread * __get_thread()
 {
    // check for current thread in module thread state
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
@@ -380,7 +380,7 @@ WINBOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj)
 
 WINBOOL __cdecl AfxIsIdleMessage(MESSAGE* pMsg)
 {
-   lnx::thread * pThread = AfxGetThread();
+   lnx::thread * pThread = __get_thread();
    if(pThread)
       return pThread->is_idle_message( pMsg );
    else
@@ -496,7 +496,7 @@ namespace lnx
       m_evFinish.SetEvent();
       if(System.GetThread() != NULL)
       {
-         m_pAppThread = AfxGetThread()->m_pAppThread;
+         m_pAppThread = __get_thread()->m_pAppThread;
       }
       else
       {
@@ -1487,7 +1487,7 @@ void thread::Delete()
 //   dumpcontext << "\nm_hThread = " << (void *)m_hThread;
   // dumpcontext << "\nm_nThreadID = " << m_nThreadID;
    dumpcontext << "\nm_nDisablePumpCount = " << pState->m_nDisablePumpCount;
-   if (AfxGetThread() == this)
+   if (__get_thread() == this)
       dumpcontext << "\nm_pMainWnd = " << m_puiMain;
 
    dumpcontext << "\nm_msgCur = {";
@@ -1655,7 +1655,7 @@ void thread::Delete()
 
    CLASS_DECL_lnx ::ca::thread * get_thread()
    {
-      ::lnx::thread * pwinthread = AfxGetThread();
+      ::lnx::thread * pwinthread = __get_thread();
       if(pwinthread == NULL)
          return NULL;
       return pwinthread->m_p;
