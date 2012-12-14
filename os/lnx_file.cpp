@@ -1662,7 +1662,7 @@ return TRUE;
 
 
 
-CLASS_DECL_lnx UINT vfxGetFileName(const char * lpszPathName, char * lpszTitle, UINT nMax)
+/*CLASS_DECL_lnx UINT vfxGetFileName(const char * lpszPathName, char * lpszTitle, UINT nMax)
 {
    ASSERT(lpszTitle == NULL ||
       __is_valid_address(lpszTitle, _MAX_FNAME));
@@ -1684,7 +1684,7 @@ CLASS_DECL_lnx UINT vfxGetFileName(const char * lpszPathName, char * lpszTitle, 
    // otherwise copy it into the buffer provided
    strncpy(lpszTitle, lpszTemp, nMax);
    return 0;
-}
+}*/
 
 
 

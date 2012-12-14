@@ -18,7 +18,7 @@ namespace lnx
 
    }
 
-
+/*
    bool file_system::FullPath(string &str, const char * lpszFileIn)
    {
 
@@ -56,13 +56,11 @@ namespace lnx
 
    UINT file_system::GetFileName(const char * lpszPathName, string & str)
    {
-      int nMax = MAX_PATH * 8;
-      wstring wstrPathName;
-      wstrPathName = gen::international::utf8_to_unicode(lpszPathName);
-      wstring wstrTitle;
-      UINT user = vfxGetFileName(wstrPathName, wstrTitle.alloc(nMax), nMax);
-      str = gen::international::unicode_to_utf8(wstrTitle);
-      return user;
+
+      str = System.file().name_(lpszPathName);
+
+      return str.get_length();
+
    }
 
    void file_system::GetModuleShortFileName(HINSTANCE hInst, string & strShortName)
@@ -70,7 +68,7 @@ namespace lnx
       vfxGetModuleShortFileName(hInst, strShortName);
    }
 
-
+*/
 
 } // namespace win
 

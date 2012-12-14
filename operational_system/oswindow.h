@@ -172,6 +172,8 @@ public:
    bool client_to_screen(LPPOINT lppoint);
    bool screen_to_client(LPPOINT lppoint);
 
+
+
    bool is_null() const
    {
       return m_pdata == NULL;
@@ -205,12 +207,12 @@ inline bool ShowWindow(::oswindow oswindow, int nCmdShow)
    return oswindow.show_window(nCmdShow);
 }
 
-inline LONG GetWindowLong(::oswindow oswindow, int nIndex)
+inline LONG GetWindowLongA(::oswindow oswindow, int nIndex)
 {
    return oswindow.get_window_long(nIndex);
 }
 
-inline LONG SetWindowLong(::oswindow oswindow, int nIndex, LONG l)
+inline LONG SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
 {
    return oswindow.set_window_long(nIndex, l);
 }
@@ -229,3 +231,8 @@ inline int IsIconic(::oswindow oswindow)
 {
    return oswindow.is_iconic();
 }
+
+
+
+#define GetWindowLong GetWindowLongA
+#define SetWindowLong SetWindowLongA

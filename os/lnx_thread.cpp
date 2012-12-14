@@ -53,8 +53,8 @@ WINBOOL CLASS_DECL_lnx AfxInternalPumpMessage();
 LRESULT CLASS_DECL_lnx AfxInternalProcessWndProcException(base_exception*, const MESSAGE* pMsg);
 WINBOOL AfxInternalPreTranslateMessage(MESSAGE* pMsg);
 WINBOOL AfxInternalIsIdleMessage(MESSAGE* pMsg);
-__STATIC void CLASS_DECL_lnx _AfxPreInitDialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-__STATIC void CLASS_DECL_lnx _AfxPostInitDialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
+__STATIC void CLASS_DECL_lnx __pre_init_dialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
+__STATIC void CLASS_DECL_lnx __post_init_dialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
 
 namespace ca
 {
@@ -301,7 +301,7 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
    // no special processing
 }
 
-void __cdecl AfxPreTranslateMessage(gen::signal_object * pobj)
+void __cdecl __pre_translate_message(gen::signal_object * pobj)
 {
    ::radix::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
@@ -369,7 +369,7 @@ WINBOOL AfxInternalIsIdleMessage(LPMESSAGE lpmsg)
    return lpmsg->message != WM_PAINT && lpmsg->message != 0x0118;
 }
 
-WINBOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj)
+WINBOOL __cdecl __is_idle_message(gen::signal_object * pobj)
 {
    ::radix::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
@@ -378,7 +378,7 @@ WINBOOL __cdecl AfxIsIdleMessage(gen::signal_object * pobj)
       return AfxInternalIsIdleMessage(pobj);
 }
 
-WINBOOL __cdecl AfxIsIdleMessage(MESSAGE* pMsg)
+WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg)
 {
    lnx::thread * pThread = __get_thread();
    if(pThread)
@@ -1414,7 +1414,7 @@ void thread::Delete()
             ASSERT(FALSE);
          }
 
-         _AfxTraceMsg("pump_message", &msg);
+         __trace_message("pump_message", &msg);
 
          if(msg.message != WM_KICKIDLE)
          {
@@ -1443,7 +1443,7 @@ void thread::Delete()
                      return TRUE;
                }
 
-               AfxPreTranslateMessage(spbase);
+               __pre_translate_message(spbase);
                if(spbase->m_bRet)
                   return TRUE;
 
@@ -1556,7 +1556,7 @@ void thread::Delete()
       pThreadState->m_lastSentMsg.wParam     = pbase->m_wparam;
       pThreadState->m_lastSentMsg.lParam     = pbase->m_lparam;
 
-      _AfxTraceMsg("message_handler", pobj);
+      __trace_message("message_handler", pobj);
 
       // Catch exceptions thrown outside the scope of a callback
       // in debug builds and warn the ::fontopus::user.
@@ -1567,7 +1567,7 @@ void thread::Delete()
          rect rectOld;
          DWORD dwStyle = 0;
          if(pbase->m_uiMessage == WM_INITDIALOG)
-            _AfxPreInitDialog(pwindow, &rectOld, &dwStyle);
+            __pre_init_dialog(pwindow, &rectOld, &dwStyle);
 
          // delegate to object's message_handler
          if(pwindow->m_pguie != NULL && pwindow->m_pguie != pwindow)
@@ -1581,7 +1581,7 @@ void thread::Delete()
 
          // more special case for WM_INITDIALOG
          if(pbase->m_uiMessage == WM_INITDIALOG)
-            _AfxPostInitDialog(pwindow, rectOld, dwStyle);
+            __post_init_dialog(pwindow, rectOld, dwStyle);
       }
       catch(const ::ca::exception & e)
       {
@@ -2382,12 +2382,12 @@ ASSERT(FALSE);
 #endif
 
 #ifdef DEBUG
-_AfxTraceMsg("pump_message", &(pState->m_msgCur));
+__trace_message("pump_message", &(pState->m_msgCur));
 #endif
 
 // process this message
 
-if (pState->m_msgCur.message != WM_KICKIDLE && !AfxPreTranslateMessage(&(pState->m_msgCur)))
+if (pState->m_msgCur.message != WM_KICKIDLE && !__pre_translate_message(&(pState->m_msgCur)))
 {
 ::TranslateMessage(&(pState->m_msgCur));
 ::DispatchMessage(&(pState->m_msgCur));
@@ -2456,7 +2456,7 @@ return pMainWnd->pre_translate_message(pMsg);
 return FALSE;   // no special processing
 }
 
-WINBOOL __cdecl AfxPreTranslateMessage(MESSAGE* pMsg)
+WINBOOL __cdecl __pre_translate_message(MESSAGE* pMsg)
 {
 thread *pThread = System.GetThread();
 if( pThread )
@@ -2489,7 +2489,7 @@ return TRUE;
 return pMsg->message != WM_PAINT && pMsg->message != 0x0118;
 }
 
-WINBOOL __cdecl AfxIsIdleMessage(MESSAGE* pMsg)
+WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg)
 {
 thread *pThread = System.GetThread();
 if( pThread )

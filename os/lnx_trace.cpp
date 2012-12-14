@@ -13,7 +13,7 @@ struct CLASS_DECL_ca __MAP_MESSAGE
 
 #define DEFINE_MESSAGE(wm)  { wm, #wm }
 
-/*
+
 static const __MAP_MESSAGE allMessages[] =
 {
    DEFINE_MESSAGE(WM_CREATE),
@@ -148,7 +148,7 @@ static const __MAP_MESSAGE allMessages[] =
    DEFINE_MESSAGE(WM_QUERYNEWPALETTE),
    DEFINE_MESSAGE(WM_PALETTEISCHANGING),
    DEFINE_MESSAGE(WM_PALETTECHANGED),
-   DEFINE_MESSAGE(WM_DDE_INITIATE),
+/*   DEFINE_MESSAGE(WM_DDE_INITIATE),
    DEFINE_MESSAGE(WM_DDE_TERMINATE),
    DEFINE_MESSAGE(WM_DDE_ADVISE),
    DEFINE_MESSAGE(WM_DDE_UNADVISE),
@@ -156,7 +156,7 @@ static const __MAP_MESSAGE allMessages[] =
    DEFINE_MESSAGE(WM_DDE_DATA),
    DEFINE_MESSAGE(WM_DDE_REQUEST),
    DEFINE_MESSAGE(WM_DDE_POKE),
-   DEFINE_MESSAGE(WM_DDE_EXECUTE),
+   DEFINE_MESSAGE(WM_DDE_EXECUTE),*/
    DEFINE_MESSAGE(WM_DROPFILES),
    DEFINE_MESSAGE(WM_POWER),
    DEFINE_MESSAGE(WM_WINDOWPOSCHANGED),
@@ -197,7 +197,7 @@ static const __MAP_MESSAGE allMessages[] =
    DEFINE_MESSAGE(WM_DEVICECHANGE),
    { 0, NULL, }    // end of message list
 };
-*/
+
 #undef DEFINE_MESSAGE
 
 /////////////////////////////////////////////////////////////////////////////
@@ -271,12 +271,12 @@ static void TraceDDE(const char * lpszPrefix, const MESSAGE* pMsg)
 }
 */
 /////////////////////////////////////////////////////////////////////////////
-/*
-void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
+
+void __trace_message(const char * lpszPrefix, gen::signal_object * pobj)
 {
-   ENSURE_ARG(AfxIsValidString(lpszPrefix));
+//   ENSURE_ARG(AfxIsValidString(lpszPrefix));
    ENSURE_ARG(pobj != NULL);
-   SCAST_PTR(user::lnx::message::base, pbase, pobj);
+   SCAST_PTR(gen::message::base, pbase, pobj);
 
    if (pbase->m_uiMessage == WM_MOUSEMOVE || pbase->m_uiMessage == WM_NCMOUSEMOVE ||
       pbase->m_uiMessage == WM_NCHITTEST || pbase->m_uiMessage == WM_SETCURSOR ||
@@ -302,20 +302,20 @@ void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
    {
       // Window message registered with 'RegisterWindowMessage'
       //  (actually a USER atom)
-      if (::GetClipboardFormatNameA(pbase->m_uiMessage, szBuf, _countof(szBuf)))
-         lpszMsgName = szBuf;
+//      if (::GetClipboardFormatNameA(pbase->m_uiMessage, szBuf, _countof(szBuf)))
+  //       lpszMsgName = szBuf;
    }
    else if (pbase->m_uiMessage >= WM_USER)
    {
       // User message
-      sprintf_s(szBuf, _countof(szBuf), "WM_USER+0x%04X", pbase->m_uiMessage - WM_USER);
+      sprintf(szBuf, "WM_USER+0x%04X", pbase->m_uiMessage - WM_USER);
       lpszMsgName = szBuf;
    }
    else
    {
       // a system windows message
       const __MAP_MESSAGE* pMapMsg = allMessages;
-      for (/*null*/ /*; pMapMsg->lpszMsg != NULL; pMapMsg++)
+      for (/*null*/ ; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == pbase->m_uiMessage)
          {
@@ -350,15 +350,15 @@ void _AfxTraceMsg(const char * lpszPrefix, gen::signal_object * pobj)
 #endif
    }
 
-   /*if (pbase->m_uiMessage >= WM_DDE_FIRST && pbase->m_uiMessage <= WM_DDE_LAST)
-      TraceDDE(lpszPrefix, pMsg);*/
-//}
+/*   if (pbase->m_uiMessage >= WM_DDE_FIRST && pbase->m_uiMessage <= WM_DDE_LAST)
+      TraceDDE(lpszPrefix, pMsg);  */
+}
 
-/*
 
-void _AfxTraceMsg(const char * lpszPrefix, LPMESSAGE lpmsg)
+
+void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg)
 {
-   ENSURE_ARG(AfxIsValidString(lpszPrefix));
+   //ENSURE_ARG(AfxIsValidString(lpszPrefix));
    ENSURE_ARG(lpmsg != NULL);
 
    if (lpmsg->message == WM_MOUSEMOVE || lpmsg->message == WM_NCMOUSEMOVE ||
@@ -385,20 +385,20 @@ void _AfxTraceMsg(const char * lpszPrefix, LPMESSAGE lpmsg)
    {
       // Window message registered with 'RegisterWindowMessage'
       //  (actually a USER atom)
-      if (::GetClipboardFormatNameA(lpmsg->message, szBuf, _countof(szBuf)))
-         lpszMsgName = szBuf;
+//      if (::GetClipboardFormatNameA(lpmsg->message, szBuf, _countof(szBuf)))
+  //       lpszMsgName = szBuf;
    }
    else if (lpmsg->message >= WM_USER)
    {
       // User message
-      sprintf_s(szBuf, _countof(szBuf), "WM_USER+0x%04X", lpmsg->message - WM_USER);
+      sprintf(szBuf, "WM_USER+0x%04X", lpmsg->message - WM_USER);
       lpszMsgName = szBuf;
    }
    else
    {
       // a system windows message
       const __MAP_MESSAGE* pMapMsg = allMessages;
-      for (/*null*/ /*; pMapMsg->lpszMsg != NULL; pMapMsg++)
+      for (/*null*/ ; pMapMsg->lpszMsg != NULL; pMapMsg++)
       {
          if (pMapMsg->nMsg == lpmsg->message)
          {
@@ -433,8 +433,8 @@ void _AfxTraceMsg(const char * lpszPrefix, LPMESSAGE lpmsg)
 #endif
    }
 
-   /*if (lpmsg->message >= WM_DDE_FIRST && lpmsg->message <= WM_DDE_LAST)
+/*   if (lpmsg->message >= WM_DDE_FIRST && lpmsg->message <= WM_DDE_LAST)
       TraceDDE(lpszPrefix, pMsg);*/
-//}
+}
 
 

@@ -266,10 +266,10 @@ CLASS_DECL_lnx bool __deactivate_act_ctx(DWORD dwFlags, ulong_ptr ulCookie)
    return rc;
 }
 
-
+*/
 void __MODULE_STATE::CreateActivationContext()
 {
-   __init_context_api();
+   /*__init_context_api();
    HMODULE hModule = m_hCurrentInstanceHandle;
 
    WCHAR rgchFullModulePath[MAX_PATH + 2];
@@ -307,9 +307,9 @@ void __MODULE_STATE::CreateActivationContext()
    if (m_hActCtx == INVALID_HANDLE_VALUE)
    {
       m_hActCtx = NULL;
-   }
+   }*/
 }
-*/
+
 __MODULE_STATE::~__MODULE_STATE()
 {
 

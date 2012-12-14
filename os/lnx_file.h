@@ -120,3 +120,11 @@ namespace lnx
 
 
 } // namepsace lnx
+
+
+
+
+bool CLASS_DECL_lnx vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath);
+
+
+
