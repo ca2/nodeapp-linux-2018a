@@ -114,18 +114,50 @@ namespace lnx
    bool graphics::CreateCompatibleDC(::ca::graphics * pgraphics)
    {
 
-      cairo_surface_t * psurface = NULL;
+      if(m_pdc != NULL)
+      {
 
-      cairo_surface_get_device(psurface);
+         cairo_destroy(m_pdc);
 
-      if(psurface == NULL)
-         return false;
+         m_pdc = NULL;
 
-      cairo_surface_t * psurfaceNew = cairo_surface_create_similar(psurface, cairo_surface_get_content(psurface),
-                                                                   cairo_image_surface_get_width(psurface),
-                                                                   cairo_image_surface_get_height(psurface));
+      }
 
+      if(pgraphics == NULL)
+      {
 
+         cairo_surface_t * psurface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, 1, 1);
+
+         if(psurface == NULL)
+            return false;
+
+         m_pdc = cairo_create(psurface);
+
+         cairo_surface_destroy(psurface);
+
+         return m_pdc != NULL;
+
+      }
+      else
+      {
+
+         cairo_surface_t * psurface = cairo_get_target(LNX_DC(pgraphics)->m_pdc);
+
+         if(cairo_surface_status(psurface) != CAIRO_STATUS_SUCCESS)
+            return false;
+
+         cairo_surface_t * psurfaceNew = cairo_surface_create_similar(psurface, cairo_surface_get_content(psurface), 1, 1);
+
+         if(psurfaceNew == NULL)
+            return false;
+
+         m_pdc = cairo_create(psurfaceNew);
+
+         cairo_surface_destroy(psurfaceNew);
+
+         return m_pdc != NULL;
+
+      }
 /*
       HDC hdc = NULL;
 

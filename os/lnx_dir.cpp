@@ -981,7 +981,7 @@ namespace lnx
          if(!is(stra[i], papp))
          {
 
-            if(!::dir::mk("\\\\?\\" + stra[i]))
+            if(!::dir::mk(stra[i]))
             {
                DWORD dwError = ::GetLastError();
                if(dwError == ERROR_ALREADY_EXISTS)
@@ -1149,8 +1149,16 @@ namespace lnx
          m_strNetSeedFolder = doc.get_root()->get_child_value("netseed");
 
       }
+#ifdef LINUX
+
+      m_strTimeFolder = "/var/tmp/ca2/time";
+
+#else
+
       if(m_strTimeFolder.is_empty())
          m_strTimeFolder = appdata("time");
+
+#endif
 
       if(m_strNetSeedFolder.is_empty())
          m_strNetSeedFolder = ca2("net/netseed");

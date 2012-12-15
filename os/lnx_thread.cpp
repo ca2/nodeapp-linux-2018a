@@ -139,7 +139,7 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
 //         threadWnd.Detach();
       pStartup->bError = TRUE;
       VERIFY(::SetEvent(pStartup->hEvent));
-      AfxEndThread(dynamic_cast < ::radix::application * > (pThread->m_papp), (UINT)-1, FALSE);
+      __end_thread(dynamic_cast < ::radix::application * > (pThread->m_papp), (UINT)-1, FALSE);
       ASSERT(FALSE);  // unreachable
    }
 
@@ -409,7 +409,7 @@ WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg)
 
    return pThread;
 }*/
-void CLASS_DECL_lnx AfxEndThread(::radix::application * papp, UINT nExitCode, WINBOOL bDelete)
+void CLASS_DECL_lnx __end_thread(::radix::application * papp, UINT nExitCode, bool bDelete)
 {
    // remove current thread object from primitive::memory
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
@@ -1122,7 +1122,7 @@ void thread::Delete()
    #if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
       // check ca2 API's allocator (before idle)
       if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
-         ASSERT(AfxCheckMemory());
+         ASSERT(__check_memory());
    #endif
 
       if(lCount <= 0 && m_puiptra != NULL)
@@ -1197,7 +1197,7 @@ void thread::Delete()
    #if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
       // check ca2 API's allocator (after idle)
       if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
-         ASSERT(AfxCheckMemory());
+         ASSERT(__check_memory());
    #endif
 
       return lCount < 0;  // nothing more to do if lCount >= 0
@@ -2533,7 +2533,7 @@ return NULL;
 }*/
 
 /*
-void CLASS_DECL_lnx AfxEndThread(UINT nExitCode, WINBOOL bDelete)
+void CLASS_DECL_lnx __end_thread(UINT nExitCode, bool bDelete)
 {
 #ifndef _MT
 nExitCode;
@@ -2770,7 +2770,7 @@ ASSERT_VALID(this);
 #if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
 // check ca2 API's allocator (before idle)
 if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
-ASSERT(AfxCheckMemory());
+ASSERT(__check_memory());
 #endif
 
 if (lCount <= 0)
@@ -2823,7 +2823,7 @@ AfxUnlockTempMaps();
 #if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
 // check ca2 API's allocator (after idle)
 if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
-ASSERT(AfxCheckMemory());
+ASSERT(__check_memory());
 #endif
 
 return lCount < 0;  // nothing more to do if lCount >= 0

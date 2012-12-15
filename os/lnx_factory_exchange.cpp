@@ -27,7 +27,6 @@ namespace lnx
       System.factory().creatable < window_draw                 >  (System. type_info < ::ca::window_draw        > (), 1);
       System.factory().creatable_large < thread                >  (System. type_info < ::ca::thread             > ());
       System.factory().creatable_large < window                >  (System. type_info < ::ca::window             > ());
-      throw todo(get_app());
 //xxx      System.factory().cloneable_small < draw_dib              >  (System. type_info < ::ca::draw_dib           > ());
       System.factory().creatable < os                          >  (System. type_info < ::ca::os                 > (), 1);
       System.factory().creatable < port_forward                >  (System. type_info < ::ca4::port_forward      > (), 1);
@@ -46,7 +45,7 @@ namespace lnx
 } // namespace win
 
 
-
+extern "C"
 void ca2_factory_exchange(::ca::application * papp)
 {
    lnx::factory_exchange factoryexchange(papp);

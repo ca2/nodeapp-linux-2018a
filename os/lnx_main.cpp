@@ -35,10 +35,10 @@ int CLASS_DECL_lnx __lnx_main(int argc, char * argv[])
 //   ::CoInitialize(NULL);
 
 
-throw todo(::ca::get_thread_app());
+//throw todo(::ca::get_thread_app());
 
-//   if(!main_initialize())
-  //    return -1;
+   if(!main_initialize())
+      return -1;
 
 
 //   _set_purecall_handler(_ca2_purecall);
@@ -55,7 +55,10 @@ throw todo(::ca::get_thread_app());
 
    pinitmaindata->m_hInstance             = NULL;
    pinitmaindata->m_hPrevInstance         = NULL;
-   pinitmaindata->m_vssCommandLine        = gen::international::unicode_to_utf8(::GetCommandLineW());
+   for(int i = 0; i < argc; i++)
+   {
+      pinitmaindata->m_vssCommandLine     += argv[i];
+   }
    pinitmaindata->m_nCmdShow              = SW_SHOW;
 
 
@@ -68,7 +71,7 @@ throw todo(::ca::get_thread_app());
 
    try
    {
-//      main_finalize();
+      main_finalize();
    }
    catch(...)
    {

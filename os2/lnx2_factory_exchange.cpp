@@ -21,7 +21,7 @@ namespace win2
 } // namespace win2
 
 
-
+extern "C"
 void ca2_factory_exchange(::ca::application * papp)
 {
 

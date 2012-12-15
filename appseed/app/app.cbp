@@ -35,6 +35,7 @@
 		<Linker>
 			<Add option="-Wl,-rpath,\\$$ORIGIN" />
 			<Add option="-lca2c" />
+			<Add option="-lca2optca" />
 			<Add option="-lca2ca" />
 			<Add option="-lca2" />
 			<Add option="-lca2os" />
@@ -51,7 +52,9 @@
 		</Unit>
 		<Extensions>
 			<code_completion />
-			<debugger />
+			<debugger>
+				<search_path add="/ca2/app/appseed/ca/" />
+			</debugger>
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

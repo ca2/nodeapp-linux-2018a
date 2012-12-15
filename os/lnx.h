@@ -29,7 +29,7 @@ CLASS_DECL_lnx WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = 0);
 CLASS_DECL_lnx void AfxSetAllocStop(LONG lRequestNumber);
 
 // Return TRUE if primitive::memory is sane or print out what is wrong
-CLASS_DECL_lnx WINBOOL AfxCheckMemory();
+CLASS_DECL_lnx bool __check_memory();
 
 // Return TRUE if valid primitive::memory block of nBytes
 CLASS_DECL_lnx WINBOOL AfxIsMemoryBlock(const void * p, UINT nBytes,

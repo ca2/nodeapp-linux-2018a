@@ -10,6 +10,9 @@
 	<File name="framework.h" open="0" top="0" tabpos="2">
 		<Cursor position="0" topLine="0" />
 	</File>
+	<File name="lnx2_factory_exchange.cpp" open="0" top="0" tabpos="0">
+		<Cursor position="366" topLine="0" />
+	</File>
 	<File name="lnx2_printer.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="2293" topLine="75" />
 	</File>

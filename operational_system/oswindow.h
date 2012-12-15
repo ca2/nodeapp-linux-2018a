@@ -166,6 +166,7 @@ public:
    oswindow set_parent(oswindow oswindowNewParent);
    long get_state();
    bool is_iconic();
+   bool is_window_visible();
    bool show_window(int nCmdShow);
    LONG get_window_long(int nIndex);
    LONG set_window_long(int nIndex, LONG l);
@@ -232,6 +233,10 @@ inline int IsIconic(::oswindow oswindow)
    return oswindow.is_iconic();
 }
 
+inline int IsWindowVisible(::oswindow oswindow)
+{
+   return oswindow.is_window_visible();
+}
 
 
 #define GetWindowLong GetWindowLongA

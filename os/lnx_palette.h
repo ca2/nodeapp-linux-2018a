@@ -11,8 +11,11 @@ namespace lnx
    public:
 
       palette(::ca::application * papp);
-      bool CreatePalette(LPLOGPALETTE lpLogPalette);
-      bool CreateHalftonePalette(::ca::graphics * pgraphics);
+      virtual ~palette();
+
+
+//      bool CreatePalette(LPLOGPALETTE lpLogPalette);
+//      bool CreateHalftonePalette(::ca::graphics * pgraphics);
 
    // Attributes
       operator HPALETTE() const;
@@ -26,10 +29,9 @@ namespace lnx
       void AnimatePalette(UINT nStartIndex, UINT nNumEntries,
             LPPALETTEENTRY lpPaletteColors);
       UINT GetNearestPaletteIndex(COLORREF crColor) const;
-      bool ResizePalette(UINT nNumEntries);
+//      bool ResizePalette(UINT nNumEntries);
 
    // Implementation
-      virtual ~palette();
    };
 
 

@@ -88,7 +88,7 @@ namespace lnx
       // subclassing/unsubclassing functions
       virtual void pre_subclass_window();
       bool SubclassWindow(oswindow hWnd);
-      bool SubclassDlgItem(UINT nID, ::ca::window * pParent);
+      //bool SubclassDlgItem(UINT nID, ::ca::window * pParent);
       oswindow UnsubclassWindow();
 
       // handling of RT_DLGINIT resource (extension to RT_DIALOG)
@@ -319,9 +319,9 @@ namespace lnx
       virtual bool DlgDirSelect(LPTSTR lpString, int nSize, int nIDListBox);
       virtual bool DlgDirSelectComboBox(LPTSTR lpString, int nSize, int nIDComboBox);
 
-      virtual UINT GetChildByIdInt(int nID, bool * lpTrans = NULL, bool bSigned = TRUE) const;
-      virtual int GetChildByIdText(int nID, LPTSTR lpStr, int nMaxCount) const;
-      virtual int GetChildByIdText(int nID, string & rString) const;
+      //virtual UINT GetChildByIdInt(int nID, bool * lpTrans = NULL, bool bSigned = TRUE) const;
+      //virtual int GetChildByIdText(int nID, LPTSTR lpStr, int nMaxCount) const;
+      //virtual int GetChildByIdText(int nID, string & rString) const;
       virtual ::ca::window * GetNextDlgGroupItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
       virtual ::ca::window * GetNextDlgTabItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
       virtual UINT IsDlgButtonChecked(int nIDButton) const;

@@ -73,19 +73,20 @@ namespace lnx
       m_pguieCapture = NULL;
    }
 
-/*   void window::construct(oswindow hWnd)
+   void window::construct(oswindow hWnd)
    {
       m_pcallback = NULL;
       m_pguie = this;
-      set_handle(hWnd);
+      m_oswindow = hWnd;
+      //set_handle(hWnd);
       m_pguie->m_nFlags = 0;
-      m_pfnSuper = NULL;
+//      m_pfnSuper = NULL;
       m_nModalResult = 0;
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
    }
-*/
+
    window::window(::ca::application * papp) :
       ca(papp),
       ::user::interaction(papp)
@@ -2973,7 +2974,7 @@ return 0;
       //return;
       rect rectUpdate;
       GetWindowRect(rectUpdate);
-      SetViewportOrgEx(hdc, 0, 0, NULL);
+//      SetViewportOrgEx(hdc, 0, 0, NULL);
       rect rectPaint;
       rectPaint = rectUpdate;
       ScreenToClient(rectPaint);
@@ -4810,7 +4811,9 @@ throw not_implemented(get_app());
 
       ASSERT(::IsWindow(get_os_data()));
 
-      return ::RedrawWindow(get_os_data(), lpRectUpdate, prgnUpdate == NULL ? NULL : (HRGN)prgnUpdate->get_os_data(), flags) != FALSE;
+      throw todo(get_app());
+
+      //return ::RedrawWindow(get_os_data(), lpRectUpdate, prgnUpdate == NULL ? NULL : (HRGN)prgnUpdate->get_os_data(), flags) != FALSE;
 
    }
 
@@ -4864,10 +4867,13 @@ throw not_implemented(get_app());
    bool window::IsWindowEnabled()
    {
 
-      if(!::IsWindow(get_os_data()))
+      return true;
+
+/*      if(!::IsWindow(get_os_data()))
          return false;
 
       return ::IsWindowEnabled(get_os_data()) != FALSE;
+*/
 
    }
 
@@ -4875,9 +4881,12 @@ throw not_implemented(get_app());
    bool window::EnableWindow(bool bEnable)
    {
 
-      ASSERT(::IsWindow(get_os_data()));
+/*      ASSERT(::IsWindow(get_os_data()));
 
       return ::EnableWindow(get_os_data(), bEnable) != FALSE;
+*/
+
+      return true;
 
    }
 
@@ -4938,9 +4947,10 @@ throw not_implemented(get_app());
 
    ::ca::window * PASCAL window::GetDesktopWindow()
    {
-
+/*
       return ::lnx::window::from_handle(::GetDesktopWindow());
-
+*/
+      return NULL;
    }
 
 
@@ -5132,7 +5142,8 @@ throw not_implemented(get_app());
    {
 
 //      throw not_implemented(get_app());
-      return ::lnx::window::from_handle(::FindWindow(lpszClassName, lpszWindowName));
+//      return ::lnx::window::from_handle(::FindWindow(lpszClassName, lpszWindowName));
+      return NULL;
 
    }
 
@@ -5166,15 +5177,18 @@ throw not_implemented(get_app());
    {
 
       ASSERT(::IsWindow(get_os_data()));
-      return ::lnx::window::from_handle(::GetWindow(get_os_data(), nCmd));
+//      return ::lnx::window::from_handle(::GetWindow(get_os_data(), nCmd));
+      return NULL;
 
    }
 
    ::user::interaction* window::GetLastActivePopup()
    {
 
-      ASSERT(::IsWindow(get_os_data()));
-      return ::lnx::window::from_handle(::GetLastActivePopup(get_os_data()));
+
+      throw todo(get_app());
+//      ASSERT(::IsWindow(get_os_data()));
+//      return ::lnx::window::from_handle(::GetLastActivePopup(get_os_data()));
 
    }
 
@@ -5661,8 +5675,13 @@ throw not_implemented(get_app());
    { Default(); }
    void window::OnUpdateUIState(UINT, UINT)
    { Default(); }
+
    UINT window::OnQueryUIState()
-   { return (UINT)Default(); }
+   {
+
+      return (UINT)Default();
+
+   }
 
    // window dialog data support
    //    void window::DoDataExchange(CDataExchange*)
@@ -5673,14 +5692,18 @@ throw not_implemented(get_app());
    void window::BeginModalState()
    {
 
-      ::EnableWindow(get_os_data(), FALSE);
+      throw todo(get_app());
+
+      //::EnableWindow(get_os_data(), FALSE);
 
    }
 
    void window::EndModalState()
    {
 
-      ::EnableWindow(get_os_data(), TRUE);
+      throw todo(get_app());
+
+      //::EnableWindow(get_os_data(), TRUE);
 
    }
 
@@ -5748,20 +5771,21 @@ throw not_implemented(get_app());
          hWndTemp = ::GetParent(hWndTop);
       }
 
+      throw todo(::ca::get_thread_app());
       // get last active popup of first non-child that was found
-      if (hParent == NULL && hWnd != NULL)
-         hWnd = ::GetLastActivePopup(hWnd);
+  //    if (hParent == NULL && hWnd != NULL)
+  //       hWnd = ::GetLastActivePopup(hWnd);
 
       // disable and store top level parent ::ca::window if specified
       if (pWndTop != NULL)
       {
-         if (hWndTop != NULL && ::IsWindowEnabled(hWndTop) && hWndTop != hWnd)
+/*         if (hWndTop != NULL && ::IsWindowEnabled(hWndTop) && hWndTop != hWnd)
          {
             *pWndTop = hWndTop;
             ::EnableWindow(hWndTop, FALSE);
          }
          else
-            *pWndTop = ::ca::null();
+            *pWndTop = ::ca::null();*/
       }
 
       return hWnd;    // return the owner as oswindow
@@ -6188,17 +6212,18 @@ CLASS_DECL_lnx void hook_window_create(::user::interaction * pWnd)
 //
 //   ASSERT(pThreadState->m_pWndInit == NULL);   // hook not already in progress
 //   pThreadState->m_pWndInit = pWnd;
-//}
-//
-//CLASS_DECL_lnx bool unhook_window_create()
-//{
-//   ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
-//   if (pThreadState->m_pWndInit != NULL)
-//   {
-//      pThreadState->m_pWndInit = NULL;
-//      return FALSE;   // was not successfully hooked
-//   }
-//   return TRUE;
+}
+
+
+CLASS_DECL_lnx bool unhook_window_create()
+{
+   ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+   if (pThreadState->m_pWndInit != NULL)
+   {
+      pThreadState->m_pWndInit = NULL;
+      return FALSE;   // was not successfully hooked
+   }
+   return TRUE;
 }
 
 

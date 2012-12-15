@@ -531,7 +531,7 @@ RegisterWindowMessageW(
 #endif /* _WIN32_WINNT >= 0x0500 */
 
 
-WINBOOL
+/*WINBOOL
 WINAPI
 EnableWindow(
     oswindow hWnd,
@@ -541,7 +541,7 @@ WINBOOL
 WINAPI
 IsWindowEnabled(
     oswindow hWnd);
-
+*/
 
 
 
@@ -606,12 +606,12 @@ typedef struct tagDRAWTEXTPARAMS
 
 
 
-
+/*
 oswindow
 WINAPI
 GetDesktopWindow(
     VOID);
-
+*/
 
 
 oswindow
@@ -635,7 +635,7 @@ EnumChildWindows(
     LPARAM lParam);
 
 
-oswindow
+/*oswindow
 WINAPI
 FindWindowA(
     LPCSTR lpClassName,
@@ -645,7 +645,7 @@ oswindow
 WINAPI
 FindWindowW(
     LPCWSTR lpClassName,
-    LPCWSTR lpWindowName);
+    LPCWSTR lpWindowName);*/
 #ifdef UNICODE
 #define FindWindow  FindWindowW
 #else
@@ -732,10 +732,10 @@ FindWindowW(
 
 
 
-oswindow
-WINAPI
-GetLastActivePopup(
-    oswindow hWnd);
+//oswindow
+//WINAPI
+//GetLastActivePopup(
+//    oswindow hWnd);
 
 /*
  * GetWindow() Constants
@@ -753,13 +753,13 @@ GetLastActivePopup(
 #define GW_MAX              6
 #endif
 
-
+/*
 oswindow
 WINAPI
 GetWindow(
     oswindow hWnd,
     UINT uCmd);
-
+*/
 
 
 
@@ -1101,7 +1101,7 @@ WINBOOL IsIconic(oswindow hWnd);
 
 
 
-WINBOOL RedrawWindow(oswindow hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags);
+//WINBOOL RedrawWindow(oswindow hWnd, CONST RECT *lprcUpdate, HRGN hrgnUpdate, UINT flags);
 
 
 /*
