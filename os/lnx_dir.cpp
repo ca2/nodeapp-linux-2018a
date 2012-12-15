@@ -15,7 +15,7 @@ namespace lnx
 
       m_strCa2 = strCa2Module;
 
-      System.file().path().eat_end_level(m_strCa2, 2, "\\");
+      System.file().path().eat_end_level(m_strCa2, 2, "/");
 
    }
 
@@ -87,7 +87,7 @@ namespace lnx
       {
          lpsz = strPath.GetBufferSetLength(iLenFolder + 1 + iLenRelative);
          strncpy(lpsz, pszFolder, iLenFolder);
-         if(strnicmp_dup(&lpsz[iLenFolder - 5], ".zip:", 5) == 0)
+         if(iLenFolder >= 5 && strnicmp_dup(&lpsz[iLenFolder - 5], ".zip:", 5) == 0)
          {
             iLenFolder--;
          }
@@ -106,7 +106,7 @@ namespace lnx
             else
             {
                while(*lpsz++ != '\0')
-                  if(*lpsz == '/') *lpsz = '\\';
+                  if(*lpsz == '/') *lpsz = '/';
             }
          }
          strPath.ReleaseBuffer(iLenFolder + 1 + iLenRelative);
@@ -140,7 +140,7 @@ namespace lnx
          else
          {
             while(*lpsz++ != '\0')
-               if(*lpsz == '/') *lpsz = '\\';
+               if(*lpsz == '\\') *lpsz = '/';
          }
       }
       strPath.ReleaseBuffer(iLenFolder + 1 + iLenRelative + 1 + iLen2);
@@ -1213,16 +1213,17 @@ namespace lnx
          CSIDL_COMMON_APPDATA,
          FALSE);*/
 
-      str = "/var/data/ca2/";
+      str = path(getenv("HOME"), ".ca2/appdata");
       string strRelative;
       strRelative = ca2();
-      index iFind = strRelative.find(':');
-      if(iFind >= 0)
+      //index iFind = strRelative.find(':');
+      //if(iFind >= 0)
       {
-         strsize iFind1 = strRelative.reverse_find("\\", iFind);
-         strsize iFind2 = strRelative.reverse_find("/", iFind);
-         strsize iStart = max(iFind1 + 1, iFind2 + 1);
-         strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
+        // strsize iFind1 = strRelative.reverse_find("\\", iFind);
+         //strsize iFind2 = strRelative.reverse_find("/", iFind);
+         //strsize iStart = max(iFind1 + 1, iFind2 + 1);
+
+         //strRelative = strRelative.Left(iFind - 1) + "_" + strRelative.Mid(iStart, iFind - iStart) + strRelative.Mid(iFind + 1);
       }
       return path(path(str, "ca2", strRelative), lpcsz, lpcsz2);
    }

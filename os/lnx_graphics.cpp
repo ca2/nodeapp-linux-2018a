@@ -1645,7 +1645,7 @@ namespace lnx
 
       //retry_single_lock slGdiplus(&System.s_mutexGdiplus, millis(1), millis(1));
 
-      ((::lnx::graphics *) this)->set(m_spfont);
+      ((::lnx::graphics *) this)->set(&m_fontxyz);
 
       cairo_font_extents_t e;
 
@@ -1691,7 +1691,7 @@ namespace lnx
       /*wstr = L"";
       m_pgraphics->MeasureString(wstr.m_pwsz, -1, (Gdiplus::Font *) m_font->get_os_data(), origin, &rect2);*/
 
-      lpMetrics->tmAveCharWidth        = (LONG) (size.cx * GetCurrentFont().m_dFontWidth / (double) str.get_length());
+      lpMetrics->tmAveCharWidth        = (LONG) (size.cx * m_fontxyz.m_dFontWidth / (double) str.get_length());
 
 
       return TRUE;
@@ -3097,6 +3097,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
       cairo_destroy(m_pdc);
+
+      m_pdc = NULL;
 
       return true;
 
@@ -4671,20 +4673,19 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int iIndex) const
    {
 
-   string str(&lpszString[iIndex], nCount);
+      string str(&lpszString[iIndex], nCount);
 
+      ((graphics *) this)->set(&m_fontxyz);
 
-   ((graphics *) this)->set(m_spfont);
+      cairo_text_extents_t ex;
 
-   cairo_text_extents_t ex;
+      cairo_text_extents(m_pdc, str, &ex);
 
-   cairo_text_extents(m_pdc, str, &ex);
+      size.cx = ex.width;
 
-	size.cx = ex.width;
+      size.cy = ex.height;
 
-	size.cy = ex.height;
-
-   return size;
+      return size;
 
 
 

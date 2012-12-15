@@ -313,6 +313,11 @@ namespace lnx
       scr=DefaultScreen(dpy);
       rootwin=RootWindow(dpy, scr);
 
+      if(cs.cx <= 0)
+         cs.cx = 1;
+      if(cs.cy <= 0)
+         cs.cy = 1;
+
       Window window = XCreateSimpleWindow(dpy, rootwin, 1, 1, cs.cx, cs.cy, 0, BlackPixel(dpy, scr), BlackPixel(dpy, scr));
 
 
@@ -361,7 +366,7 @@ namespace lnx
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
   //    if (lnx == NULL)
-         return FALSE;
+         //return FALSE;
 ///      WNDCLASS wndcls;
 /*      if(lpszClassName != NULL &&
          GetClassInfo(System.m_hInstance, lpszClassName, &wndcls) &&
@@ -4849,7 +4854,7 @@ throw not_implemented(get_app());
    uint_ptr window::SetTimer(uint_ptr nIDEvent, UINT nElapse, void (CALLBACK* lpfnTimer)(oswindow, UINT, uint_ptr, DWORD))
    {
 
-      throw not_implemented(get_app());
+      //throw not_implemented(get_app());
       //ASSERT(::IsWindow(get_os_data()));
       //return ::SetTimer(get_os_data(), nIDEvent, nElapse, lpfnTimer);
 
@@ -6194,11 +6199,11 @@ __STATIC void CLASS_DECL_lnx __post_init_dialog(
 CLASS_DECL_lnx void hook_window_create(::user::interaction * pWnd)
 {
 
-      throw not_implemented(::ca::get_thread_app());
-//   ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
-//   if (pThreadState->m_pWndInit == pWnd)
-//      return;
-//
+//      throw not_implemented(::ca::get_thread_app());
+   ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
+   if (pThreadState->m_pWndInit == pWnd)
+      return;
+
 //   if (pThreadState->m_hHookOldCbtFilter == NULL)
 //   {
 //      pThreadState->m_hHookOldCbtFilter = ::SetWindowsHookEx(WH_CBT,
@@ -6210,8 +6215,8 @@ CLASS_DECL_lnx void hook_window_create(::user::interaction * pWnd)
 //   ASSERT(pWnd != NULL);
 //   // trans   ASSERT(LNX_WINDOW(pWnd)->get_os_data() == NULL);   // only do once
 //
-//   ASSERT(pThreadState->m_pWndInit == NULL);   // hook not already in progress
-//   pThreadState->m_pWndInit = pWnd;
+   ASSERT(pThreadState->m_pWndInit == NULL);   // hook not already in progress
+   //pThreadState->m_pWndInit = pWnd;
 }
 
 

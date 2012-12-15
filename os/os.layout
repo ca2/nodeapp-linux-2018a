@@ -34,8 +34,8 @@
 	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="29">
 		<Cursor position="215" topLine="0" />
 	</File>
-	<File name="../operational_system/osdisplay.h" open="0" top="0" tabpos="0">
-		<Cursor position="1633" topLine="62" />
+	<File name="../operational_system/osdisplay.h" open="1" top="0" tabpos="5">
+		<Cursor position="187" topLine="30" />
 	</File>
 	<File name="../operational_system/oswindow.h" open="0" top="0" tabpos="3">
 		<Cursor position="4398" topLine="197" />
@@ -76,8 +76,8 @@
 	<File name="lnx_appcore.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="32" topLine="0" />
 	</File>
-	<File name="lnx_application.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="12089" topLine="449" />
+	<File name="lnx_application.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="12135" topLine="449" />
 	</File>
 	<File name="lnx_application.h" open="0" top="0" tabpos="0">
 		<Cursor position="4250" topLine="140" />
@@ -118,8 +118,8 @@
 	<File name="lnx_dib.h" open="0" top="0" tabpos="0">
 		<Cursor position="323" topLine="0" />
 	</File>
-	<File name="lnx_dir.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="26101" topLine="1162" />
+	<File name="lnx_dir.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="27200" topLine="1238" />
 	</File>
 	<File name="lnx_dir.h" open="0" top="0" tabpos="0">
 		<Cursor position="263" topLine="0" />
@@ -163,8 +163,8 @@
 	<File name="lnx_font.h" open="0" top="0" tabpos="9">
 		<Cursor position="311" topLine="0" />
 	</File>
-	<File name="lnx_graphics.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="3340" topLine="127" />
+	<File name="lnx_graphics.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="43559" topLine="1647" />
 	</File>
 	<File name="lnx_graphics.h" open="0" top="0" tabpos="0">
 		<Cursor position="21019" topLine="463" />
@@ -268,8 +268,8 @@
 	<File name="lnx_util.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="3098" topLine="67" />
 	</File>
-	<File name="lnx_window.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="1998" topLine="59" />
+	<File name="lnx_window.cpp" open="1" top="1" tabpos="4">
+		<Cursor position="7139" topLine="258" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="8">
 		<Cursor position="2851" topLine="67" />

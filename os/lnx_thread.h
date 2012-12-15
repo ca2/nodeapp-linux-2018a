@@ -7,8 +7,8 @@ namespace ca
    struct  thread_startup
    {
       ::ca::thread *          m_pthread;    // thread for new thread
-      HANDLE hEvent;          // event triggered after success/non-success
-      HANDLE hEvent2;         // event triggered after thread is resumed
+      simple_event hEvent;          // event triggered after success/non-success
+      simple_event hEvent2;         // event triggered after thread is resumed
 
       thread_startup();
       ~thread_startup();
@@ -28,7 +28,10 @@ namespace lnx
 
 /// thread ID, used to ensure that the thread that calls one of the WaitForEvents
 		/// methods is really the thread represented by the Thread class
-		pthread_t			thread_;
+		//pthread_t			thread_;
+
+		HTHREAD           m_hThread;
+		UINT              m_nID;
 
 		/// true only for the main thread that is represented by pal::MainThread
 		bool				isMainThread_;
@@ -36,10 +39,10 @@ namespace lnx
 		bool				isExternalThread_;
 		/// condition used to wake up the thread if an event for which the thread
 		/// is waiting is signaled
-		pthread_cond_t		wakeUpCondition_;
+		//pthread_cond_t		wakeUpCondition_;
 		/// ensures that the thread function is not called before the Thread class
 		/// (e.g. thread_) is initialized
-		pthread_mutex_t		startMutex_;
+		//pthread_mutex_t		startMutex_;
 		/// result of last wait operation
 		int					waitResult_;
 		/// true if waiting should be done on all items
@@ -101,7 +104,7 @@ namespace lnx
 
       virtual bool Begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), UINT nStackSize = 0, DWORD dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      bool create_thread(DWORD dwCreateFlags = 0, UINT nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool create_thread(::ca::e_thread_priority epriority = get_thread_priority_normal(), DWORD dwCreateFlagsParam = 0, UINT nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
       virtual ::user::interaction * SetMainWnd(::user::interaction * pui);
 

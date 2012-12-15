@@ -640,7 +640,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
 //      dynamic_cast < ::lnx::thread * > ((smart_pointer < ::ex2::application >::m_p->::ca::thread_sp::m_p))->m_hThread = __get_thread()->m_hThread;
   //    dynamic_cast < ::lnx::thread * > ((smart_pointer < ::ex2::application >::m_p->::ca::thread_sp::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
-      dynamic_cast < class ::lnx::thread * > (::ca::thread_sp::m_p)->thread_      =  ::pthread_self();
+      dynamic_cast < class ::lnx::thread * > (::ca::thread_sp::m_p)->m_hThread      =  ::GetCurrentThread();
 
 
    }

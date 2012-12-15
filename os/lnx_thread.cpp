@@ -23,6 +23,21 @@
 	//{
 
 
+struct ___THREAD_STARTUP : ::ca::thread_startup
+{
+   // following are "in" parameters to thread startup
+   ___THREAD_STATE* pThreadState;    // thread state of parent thread
+   ::lnx::thread* pThread;    // thread for new thread
+   DWORD dwCreateFlags;    // thread creation flags
+   _PNH pfnNewHandler;     // new handler for new thread
+
+   //HANDLE hEvent;          // event triggered after success/non-success
+   //HANDLE hEvent2;         // event triggered after thread is resumed
+
+   // strictly "out" -- set after hEvent is triggered
+   bool bError;    // TRUE if error during startup
+};
+
 WINBOOL PeekMessage(
     LPMESSAGE lpMsg,
     oswindow hWnd,
@@ -59,7 +74,9 @@ __STATIC void CLASS_DECL_lnx __post_init_dialog(::user::interaction * pWnd, cons
 namespace ca
 {
 
-   thread_startup::thread_startup()
+   thread_startup::thread_startup() :
+   hEvent(false, true),
+   hEvent2(false, true)
    {
    }
 
@@ -76,8 +93,6 @@ namespace ca
 /////////////////////////////////////////////////////////////////////////////
 // thread entry point
 
-#ifdef _MT
-
 struct _AFX_THREAD_STARTUP : ::ca::thread_startup
 {
    // following are "in" parameters to thread startup
@@ -93,7 +108,7 @@ struct _AFX_THREAD_STARTUP : ::ca::thread_startup
    WINBOOL bError;    // TRUE if error during startup
 };
 
-UINT APIENTRY _AfxThreadEntry(void * pParam)
+UINT APIENTRY __thread_entry(void * pParam)
 {
    _AFX_THREAD_STARTUP* pStartup = (_AFX_THREAD_STARTUP*)pParam;
    ASSERT(pStartup != NULL);
@@ -104,7 +119,7 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
 
    ::lnx::thread* pThread = pStartup->pThread;
 
-   pThread->::se_translator::attach();
+//   pThread->::se_translator::attach();
 
    try
    {
@@ -113,12 +128,12 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
       pThreadState->m_pModuleState = pStartup->pThreadState->m_pModuleState;
 
       // set current thread pointer for System.GetThread
-      __MODULE_STATE* pModuleState = AfxGetModuleState();
-      __MODULE_THREAD_STATE* pState = pModuleState->m_thread;
-      pState->m_pCurrentWinThread = pThread;
+//      __MODULE_STATE* pModuleState = AfxGetModuleState();
+  //    __MODULE_THREAD_STATE* pState = pModuleState->m_thread;
+    //  pState->m_pCurrentWinThread = pThread;
 
       // forced initialization of the thread
-      AfxInitThread();
+      __init_thread();
 
       // thread inherits cast's main ::ca::window if not already set
       //if (papp != NULL && GetMainWnd() == NULL)
@@ -138,24 +153,22 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
       // set error flag and allow the creating thread to notice the error
 //         threadWnd.Detach();
       pStartup->bError = TRUE;
-      VERIFY(::SetEvent(pStartup->hEvent));
+      pStartup->hEvent.set_event();
       __end_thread(dynamic_cast < ::radix::application * > (pThread->m_papp), (UINT)-1, FALSE);
       ASSERT(FALSE);  // unreachable
    }
 
    pThread->thread_entry(pStartup);
 
-   // pStartup is invlaid after the following
-   // SetEvent (but hEvent2 is valid)
-   HANDLE hEvent2 = pStartup->hEvent2;
 
-   // allow the creating thread to return from thread::CreateThread
-   VERIFY(::SetEvent(pStartup->hEvent));
+   pStartup->hEvent.set_event();
 
    // wait for thread to be resumed
-   VERIFY(::WaitForSingleObject(hEvent2, INFINITE) == WAIT_OBJECT_0);
-   ::CloseHandle(hEvent2);
+   pStartup->hEvent2.wait();
 
+   delete pStartup;
+
+   pStartup = NULL;
 
 
    int n = pThread->m_p->main();
@@ -163,7 +176,6 @@ UINT APIENTRY _AfxThreadEntry(void * pParam)
    return pThread->thread_term(n);
 }
 
-#endif //_MT
 
 CLASS_DECL_lnx ::lnx::thread * __get_thread()
 {
@@ -638,26 +650,26 @@ namespace lnx
 
    void * thread::get_os_data()
    {
-      return *((void **)&thread_);
+      return m_hThread;
    }
 
    int_ptr thread::get_os_int()
    {
-      return thread_;
+      return m_nID;
    }
 
    bool thread::Begin(::ca::e_thread_priority epriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
-      if(!create_thread(dwCreateFlags|CREATE_SUSPENDED, nStackSize, lpSecurityAttrs))
+      if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
       {
          Delete();
          return false;
       }
-      VERIFY(SetThreadPriority(epriority));
-      if (!(dwCreateFlags & CREATE_SUSPENDED))
-      {
-         ENSURE(ResumeThread() != (DWORD)-1);
-      }
+      //VERIFY(SetThreadPriority(epriority));
+      //if (!(dwCreateFlags & CREATE_SUSPENDED))
+      //{
+        // ENSURE(ResumeThread() != (DWORD)-1);
+      //}
       return true;
    }
 
@@ -825,82 +837,75 @@ namespace lnx
       m_ptimera->check();
    }
 
-   bool thread::create_thread(DWORD dwCreateFlags, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+      bool thread::create_thread(::ca::e_thread_priority epriority, DWORD dwCreateFlagsParam, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
-#ifndef _MT
-   dwCreateFlags;
-   nStackSize;
-   lpSecurityAttrs;
+  DWORD dwCreateFlags = dwCreateFlagsParam;
 
-   return FALSE;
-#else
-   ENSURE(m_hThread == NULL);  // already created?
+      if(epriority != ::ca::thread_priority_normal)
+      {
+         dwCreateFlags |= CREATE_SUSPENDED;
+      }
 
-   // setup startup structure for thread initialization
-   _AFX_THREAD_STARTUP startup;
-   startup.bError = FALSE;
-   startup.pfnNewHandler = NULL;
-   //memset(&startup, 0, sizeof(startup));
-   startup.pThreadState = __get_thread_state();
-   startup.pThread = this;
-   startup.m_pthread = NULL;
-   startup.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
- startup.hEvent2 = ::CreateEvent(NULL, TRUE, FALSE, NULL);
-   startup.dwCreateFlags = dwCreateFlags;
-   if (startup.hEvent == NULL || startup.hEvent2 == NULL)
-   {
-      TRACE(::radix::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::CreateThread.\n");
-      if (startup.hEvent != NULL)
-         ::CloseHandle(startup.hEvent);
-      if (startup.hEvent2 != NULL)
-         ::CloseHandle(startup.hEvent2);
-      return FALSE;
-   }
+      ENSURE(m_hThread == NULL);  // already created?
 
-#ifdef _WIN32
-//   m_thread = ::CreateThread(NULL, 0, StartThread, this, 0, &m_dwThreadId);
-   // create the thread (it may or may not start to run)
-   m_hThread = (HANDLE)(ulong_ptr)_beginthreadex(lpSecurityAttrs, nStackSize,
-      &_AfxThreadEntry, &startup, dwCreateFlags | CREATE_SUSPENDED, (UINT*)&m_nThreadID);
-#else
-   pthread_attr_t attr;
+      // setup startup structure for thread initialization
+      ___THREAD_STARTUP * pstartup = new ___THREAD_STARTUP;
+      pstartup->bError = FALSE;
+      pstartup->pfnNewHandler = NULL;
+      //memset(&startup, 0, sizeof(startup));
+      pstartup->pThreadState = __get_thread_state();
+      pstartup->pThread = this;
+      pstartup->m_pthread = NULL;
+//      startup.hEvent = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+  //    startup.hEvent2 = ::CreateEvent(NULL, TRUE, FALSE, NULL);
+      pstartup->dwCreateFlags = dwCreateFlags;
+/*      if (startup.hEvent == NULL || startup.hEvent2 == NULL)
+      {
+         TRACE(::radix::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
+         if (startup.hEvent != NULL)
+            ::CloseHandle(startup.hEvent);
+         if (startup.hEvent2 != NULL)
+            ::CloseHandle(startup.hEvent2);
+         return FALSE;
+      }*/
 
-   pthread_attr_init(&attr);
-   pthread_attr_setdetachstate(&attr,PTHREAD_CREATE_DETACHED);
-   if (pthread_create(&m_thread,&attr, StartThread,this) == -1)
-   {
-      perror("thread: create failed");
-      SetRunning(false);
-   }
-//   pthread_attr_destroy(&attr);
-#endif
+      m_hThread = (HTHREAD) (ulong_ptr) ::create_thread(lpSecurityAttrs, nStackSize, (DWORD (__stdcall *)(LPVOID)) &::__thread_entry, pstartup, dwCreateFlags | CREATE_SUSPENDED, &m_nID);
 
-   if (m_hThread == NULL)
-      return FALSE;
+      if (m_hThread == NULL)
+         return FALSE;
 
-   // start the thread just for ca2 API initialization
-   VERIFY(ResumeThread() != (DWORD)-1);
-   VERIFY(::WaitForSingleObject(startup.hEvent, INFINITE) == WAIT_OBJECT_0);
-   ::CloseHandle(startup.hEvent);
+      // start the thread just for ca2 API initialization
+      VERIFY(ResumeThread() != (DWORD)-1);
+      pstartup->hEvent.wait();
 
-   // if created suspended, suspend it until resume thread wakes it up
-   if (dwCreateFlags & CREATE_SUSPENDED)
-      VERIFY(::SuspendThread(m_hThread) != (DWORD)-1);
+      // if created suspended, suspend it until resume thread wakes it up
+      //if (dwCreateFlags & CREATE_SUSPENDED)
+         //VERIFY(::SuspendThread(m_hThread) != (DWORD)-1);
 
-   // if error during startup, shut things down
-   if (startup.bError)
-   {
-      VERIFY(::WaitForSingleObject(m_hThread, INFINITE) == WAIT_OBJECT_0);
-      ::CloseHandle(m_hThread);
-      m_hThread = NULL;
-      ::CloseHandle(startup.hEvent2);
-      return FALSE;
-   }
+      // if error during startup, shut things down
+      if (pstartup->bError)
+      {
+         m_hThread->wait();
+         m_hThread = NULL;
+         return FALSE;
+      }
 
-   // allow thread to continue, once resumed (it may already be resumed)
-   ::SetEvent(startup.hEvent2);
-   return TRUE;
-#endif //!_MT
+      // allow thread to continue, once resumed (it may already be resumed)
+      pstartup->hEvent2.set_event();
+
+      if(epriority != ::ca::thread_priority_normal)
+      {
+
+         VERIFY(set_thread_priority(epriority));
+
+         if (!(dwCreateFlagsParam & CREATE_SUSPENDED))
+         {
+            ENSURE(ResumeThread() != (DWORD)-1);
+         }
+
+      }
+
+      return TRUE;
 }
 
 void thread::Delete()
@@ -927,7 +932,7 @@ void thread::Delete()
    }
    else
    {
-      thread_ = 0;
+      m_hThread = 0;
       m_evFinish.SetEvent();
    }
 }
@@ -1619,9 +1624,9 @@ void thread::Delete()
    }
    DWORD thread::ResumeThread()
    {
-      throw not_implemented(get_app());
-      //ASSERT(m_hThread != NULL);
-      //return ::ResumeThread(m_hThread);
+      //throw not_implemented(get_app());
+      ASSERT(m_hThread != NULL);
+      return ::ResumeThread(m_hThread);
 }
    DWORD thread::SuspendThread()
    {
@@ -1639,7 +1644,7 @@ void thread::Delete()
 
    void thread::set_os_data(void * pvoidOsData)
    {
-      thread_ = (pthread_t) pvoidOsData;
+      m_hThread = (HTHREAD) pvoidOsData;
    }
 
    void thread::set_os_int(int_ptr iData)
