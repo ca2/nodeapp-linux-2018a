@@ -158,7 +158,7 @@ namespace lnx
 
       // attempt file creation
       //HANDLE hFile = shell::CreateFile(gen::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
-      int hFile = ::open(m_strFileName, nOpenFlags); //::open(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+      int hFile = ::open(m_strFileName, dwFlags); //::open(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       if(hFile == -1)
       {
          DWORD dwLastError = ::GetLastError();
@@ -248,11 +248,21 @@ namespace lnx
 
       ::primitive::memory_position pos = 0;
       ::primitive::memory_size sizeRead = 0;
+      ::primitive::memory_size readNow;
       while(nCount > 0)
       {
-         int iRead = ::read(m_iFile, &((byte *)lpBuf)[pos], (size_t) min(0x7fffffff, nCount));
+         readNow = (size_t) min(0x7fffffff, nCount);
+         int iRead = ::read(m_iFile, &((byte *)lpBuf)[pos], readNow);
          if(iRead < 0)
-            ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         {
+            int iError = errno;
+            if(iError == EAGAIN)
+            {
+
+            }
+            ::lnx::file_exception::ThrowOsError(get_app(), errno);
+         }
+
          nCount -= iRead;
          pos += iRead;
          sizeRead += iRead;
@@ -510,50 +520,6 @@ namespace lnx
    }*/
 
    /* Error Codes */
-
-#define EPERM           1
-#define ENOENT          2
-#define ESRCH           3
-#define EINTR           4
-#define EIO             5
-#define ENXIO           6
-#define E2BIG           7
-#define ENOEXEC         8
-#define EBADF           9
-#define ECHILD          10
-#define EAGAIN          11
-#define ENOMEM          12
-#define EACCES          13
-#define EFAULT          14
-#define EBUSY           16
-#define EEXIST          17
-#define EXDEV           18
-#define ENODEV          19
-#define ENOTDIR         20
-#define EISDIR          21
-#define EINVAL          22
-#define ENFILE          23
-#define EMFILE          24
-#define ENOTTY          25
-#define EFBIG           27
-#define ENOSPC          28
-#define ESPIPE          29
-#define EROFS           30
-#define EMLINK          31
-#define EPIPE           32
-#define EDOM            33
-#define ERANGE          34
-//#define EDEADLK         36
-//#define ENAMETOOLONG    38
-//#define ENOLCK          39
-//#define ENOSYS          40
-//#define ENOTEMPTY       41
-//#define EILSEQ          42
-
-   /*
-   * Support EDEADLOCK for compatibiity with older MS-C versions.
-   */
-#define EDEADLOCK       EDEADLK
 
 
    /////////////////////////////////////////////////////////////////////////////
