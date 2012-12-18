@@ -6237,7 +6237,10 @@ CLASS_DECL_lnx const char * __register_window_class(UINT nClassStyle,
                                                     HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
 {
 
-      throw not_implemented(::ca::get_thread_app());
+   return NULL;
+
+   throw not_implemented(::ca::get_thread_app());
+
 //   // Returns a temporary string name for the class
 //   //  Save in a string if you want to use it for a long time
 //   LPTSTR lpszName = __get_thread_state()->m_szTempClassName;

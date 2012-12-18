@@ -12,6 +12,7 @@
 				<Option object_output="../../../time/intermediate/nodeapp/app" />
 				<Option type="0" />
 				<Option compiler="gcc" />
+				<Option host_application=": app=app-core/hellomultiver build_number=basis" />
 				<Compiler>
 					<Add option="-std=c++0x" />
 					<Add option="-g" />
@@ -30,6 +31,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-fexceptions" />
+			<Add option="-fnon-call-exceptions" />
 			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Linker>

@@ -16,7 +16,6 @@
 				<Option createStaticLib="1" />
 				<Compiler>
 					<Add option="-g" />
-					<Add option="-fPIC" />
 					<Add directory="." />
 					<Add directory=".." />
 					<Add directory="../.." />
@@ -30,6 +29,8 @@
 		<Compiler>
 			<Add option="-std=c++0x" />
 			<Add option="-fexceptions" />
+			<Add option="-fnon-call-exceptions" />
+			<Add option="-fPIC" />
 			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Linker>

@@ -38,6 +38,7 @@ struct ___THREAD_STARTUP : ::ca::thread_startup
    bool bError;    // TRUE if error during startup
 };
 
+/*
 WINBOOL PeekMessage(
     LPMESSAGE lpMsg,
     oswindow hWnd,
@@ -58,7 +59,7 @@ WINBOOL GetMessage(
 
        return TRUE;
     }
-
+*/
 namespace lnx
 {
    class thread;
@@ -569,6 +570,8 @@ namespace lnx
       m_ptimera = new ::user::interaction::timer_array(get_app());
       m_puiptra = new user::interaction_ptr_array;
 
+      m_hThread = NULL;
+
    }
 
 
@@ -970,9 +973,7 @@ void thread::Delete()
       while(m_bRun)
       {
          // phase1: check to see if we can do idle work
-         while (bIdle &&
-            //!::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
-            !::PeekMessage(&msg, ::ca::null(), 0, 0, 0))
+         while (bIdle && !::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE))
          {
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
@@ -987,6 +988,28 @@ void thread::Delete()
             {
                pappThis2->m_dwAlive = m_dwAlive;
             }
+            try
+            {
+               if(!m_p->verb())
+                  goto stop_run;
+            }
+            catch(::exit_exception & e)
+            {
+
+               throw e;
+
+            }
+            catch(::ca::exception & e)
+            {
+
+               if(!Application.on_run_exception(e))
+                  throw exit_exception(get_app());
+
+            }
+            catch(...)
+            {
+            }
+
          }
 
          // phase2: pump messages while available
@@ -1029,6 +1052,7 @@ void thread::Delete()
          while (::PeekMessage(&msg, ::ca::null(),0, 0, 0) != FALSE);
 
       }
+stop_run:
 
       return 0;
    }

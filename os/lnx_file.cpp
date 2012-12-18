@@ -262,6 +262,10 @@ namespace lnx
             }
             ::lnx::file_exception::ThrowOsError(get_app(), errno);
          }
+         else if(iRead == 0)
+         {
+            break;
+         }
 
          nCount -= iRead;
          pos += iRead;
