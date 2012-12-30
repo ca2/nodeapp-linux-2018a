@@ -16,11 +16,11 @@ namespace lnx
    {
    }
 
-   int copydesk::get_file_count()
+   int32_t copydesk::get_file_count()
    {
       if(!m_p->OpenClipboard())
          return 0;
-      int iCount = 0;
+      int32_t iCount = 0;
       throw todo(get_app());
       /* xxx HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
       if(hdrop != NULL)
@@ -34,7 +34,7 @@ namespace lnx
 
    void copydesk::get_filea(stringa & stra)
    {
-      int iCount = get_file_count();
+      int32_t iCount = get_file_count();
       if(iCount <= 0)
          return;
       if(!m_p->OpenClipboard())
@@ -42,7 +42,7 @@ namespace lnx
       throw todo(get_app());
       /* HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
       string str;
-      for(int i = 0; i < iCount; i++)
+      for(int32_t i = 0; i < iCount; i++)
       {
          UINT uiLen = ::DragQueryFileW(hdrop, i, NULL, 0);
          wchar_t * lpwsz = (wchar_t *) malloc(sizeof(wchar_t) * (uiLen + 1));
@@ -61,7 +61,7 @@ namespace lnx
 
       strsize iLen = 0;
 
-      for(int i = 0; i < stra.get_size(); i++)
+      for(int32_t i = 0; i < stra.get_size(); i++)
       {
          iLen += gen::international::utf8_to_unicode_count(stra[i]) + 1;
       }
@@ -81,7 +81,7 @@ namespace lnx
       LPTSTR lptstrCopy = (char *) pDropFiles;
       lptstrCopy += pDropFiles->pFiles;
       wchar_t * lpwstrCopy = (wchar_t *) lptstrCopy;
-      for(int i = 0; i < stra.get_size(); i++)
+      for(int32_t i = 0; i < stra.get_size(); i++)
       {
          ASSERT(m_p->IsWindow());
          gen::international::utf8_to_unicode(lpwstrCopy, gen::international::utf8_to_unicode_count(stra[i]) + 1, stra[i]);
@@ -145,7 +145,7 @@ namespace lnx
    void copydesk::set_plain_text(const char * psz)
    {
       ASSERT(m_p->IsWindow());
-   //   int iLen = 0;
+   //   int32_t iLen = 0;
 
       string str;
       str = gen::international::utf8_to_unicode(psz);

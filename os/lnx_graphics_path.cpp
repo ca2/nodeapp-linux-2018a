@@ -39,7 +39,7 @@ namespace lnx
 
 
 
-   bool graphics_path::add_arc(const RECT & rect, int iStart, int iAngle)
+   bool graphics_path::add_arc(const RECT & rect, int32_t iStart, int32_t iAngle)
    {
 
       if(width(rect) <= 0 || height(rect) <= 0)
@@ -65,7 +65,7 @@ namespace lnx
 
    }
 
-   bool graphics_path::add_move(int x, int y)
+   bool graphics_path::add_move(int32_t x, int32_t y)
    {
 
       element e;
@@ -84,7 +84,7 @@ namespace lnx
 
    }
 
-   bool graphics_path::add_line(int x, int y)
+   bool graphics_path::add_line(int32_t x, int32_t y)
    {
 
       element e;

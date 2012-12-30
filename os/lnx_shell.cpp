@@ -1,7 +1,7 @@
 #include "framework.h"
 
 /***
-*int _validdrive( unsigned drive ) -
+*int32_t _validdrive( unsigned drive ) -
 *
 *Purpose: returns non zero if drive is a valid drive number.
 *
@@ -13,7 +13,7 @@
 *
 *******************************************************************************/
 /*
-int __cdecl _validdrive (
+int32_t __cdecl _validdrive (
     unsigned drive
     )
 {
@@ -36,9 +36,9 @@ int __cdecl _validdrive (
 }*/
 
 /*WCHAR * __cdecl _wgetdcwd (
-        int drive,
+        int32_t drive,
         WCHAR *pnbuf,
-        int maxlen
+        int32_t maxlen
         );
 
         */
@@ -63,7 +63,7 @@ int __cdecl _validdrive (
 *
 *Entry:
 *       _TSCHAR *pnbuf = pointer to a buffer maintained by the ::fontopus::user;
-*       int maxlen = length of the buffer pointed to by pnbuf;
+*       int32_t maxlen = length of the buffer pointed to by pnbuf;
 *
 *Exit:
 *       Returns pointer to the buffer containing the c.w.d. name
@@ -76,7 +76,7 @@ int __cdecl _validdrive (
 
 /*WCHAR * __cdecl _wgetcwd (
         WCHAR *pnbuf,
-        int maxlen
+        int32_t maxlen
         )
 {
         WCHAR *retval;
@@ -103,10 +103,10 @@ int __cdecl _validdrive (
 *       side effects: no global data is used or affected
 *
 *Entry:
-*       int drive   - number of the drive being inquired about
+*       int32_t drive   - number of the drive being inquired about
 *                     0 = default, 1 = 'a:', 2 = 'b:', etc.
 *       _TSCHAR *pnbuf - pointer to a buffer maintained by the ::fontopus::user;
-*       int maxlen  - length of the buffer pointed to by pnbuf;
+*       int32_t maxlen  - length of the buffer pointed to by pnbuf;
 *
 *Exit:
 *       Returns pointer to the buffer containing the c.w.d. name
@@ -119,15 +119,15 @@ int __cdecl _validdrive (
 
 
 /*WCHAR * __cdecl _wgetdcwd (
-        int drive,
+        int32_t drive,
         WCHAR *pnbuf,
-        int maxlen
+        int32_t maxlen
         )
 {
         WCHAR *p;
         WCHAR dirbuf[_MAX_PATH];
         WCHAR drvstr[4];
-        int len;
+        int32_t len;
         WCHAR *pname; /* only used as argument to GetFullPathName */
 
         /*
@@ -200,7 +200,7 @@ int __cdecl _validdrive (
 /*#ifndef WPRFLAG
 
 /***
-*int _validdrive( unsigned drive ) -
+*int32_t _validdrive( unsigned drive ) -
 *
 *Purpose: returns non zero if drive is a valid drive number.
 *
@@ -212,7 +212,7 @@ int __cdecl _validdrive (
 *
 *******************************************************************************/
 
-/*int __cdecl _validdrive (
+/*int32_t __cdecl _validdrive (
     unsigned drive
     )
 {
@@ -452,7 +452,7 @@ DWORD WINAPI shell::_GetFullPathName(
    DWORD dw = ::GetFullPathName(pszPathA, nBufferLength, lpsz, &lpszFilePart);
    str.ReleaseBuffer();
    gen::international::ACPToUnicode(lpBuffer, nBufferLength, str);
-   *lpFilePart = lpBuffer + ((int) (lpszFilePart - lpsz));
+   *lpFilePart = lpBuffer + ((int32_t) (lpszFilePart - lpsz));
    return dw;
 }
 
@@ -525,10 +525,10 @@ WINBOOL shell::_GetStringTypeEx(
    LCID uiCodePage,
    DWORD dwInfoType,
    const wchar_t * lpSrcStr,
-   int cchSrc,
+   int32_t cchSrc,
    LPWORD lpCharType)
 {
-   int iCount = cchSrc;
+   int32_t iCount = cchSrc;
    if(iCount < 0)
       iCount = gen::international::UnicodeToMultiByteCount(uiCodePage, lpSrcStr);
    string str;
@@ -708,10 +708,10 @@ oswindow shell::_CreateWindowEx(
    const wchar_t * lpClassName,
    const wchar_t * lpWindowName,
    DWORD dwStyle,
-   int x,
-   int y,
-   int nWidth,
-   int nHeight,
+   int32_t x,
+   int32_t y,
+   int32_t nWidth,
+   int32_t nHeight,
    oswindow hWndParent,
    HMENU hMenu,
    HINSTANCE hInstance,

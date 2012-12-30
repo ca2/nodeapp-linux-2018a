@@ -25,7 +25,7 @@ namespace lnx
 
    }
 
-   bool bitmap::CreateBitmap(::ca::graphics * pdc, int cx, int cy, UINT nPlanes, UINT nBitcount, const void * pdata)
+   bool bitmap::CreateBitmap(::ca::graphics * pdc, int32_t cx, int32_t cy, UINT nPlanes, UINT nBitcount, const void * pdata)
    {
 
       if(nPlanes != 1 || nBitcount != 32)
@@ -42,16 +42,16 @@ namespace lnx
 
       }
 
-      int iStride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, cx);
+      int32_t iStride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, cx);
 
       m_mem.allocate(iStride * cy);
 
       if(cx * 4 != iStride)
       {
 
-         int iW = cx * 4;
+         int32_t iW = cx * 4;
 
-         for(int i = 0; i < cy; i++)
+         for(int32_t i = 0; i < cy; i++)
          {
 
             memcpy(&((byte *) m_mem.get_data())[iStride * i], &((byte *) pdata)[iW * i], iW);
@@ -154,7 +154,7 @@ namespace lnx
 
    }
 
-   size bitmap::SetBitmapDimension(int nWidth, int nHeight)
+   size bitmap::SetBitmapDimension(int32_t nWidth, int32_t nHeight)
    {
 
 
@@ -187,7 +187,7 @@ namespace lnx
       //return Attach(::LoadBitmap(NULL, MAKEINTRESOURCE(nIDBitmap)));
       return FALSE;
    }
-   bool bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int cx, int cy)
+   bool bitmap::CreateCompatibleBitmap(::ca::graphics * pgraphics, int32_t cx, int32_t cy)
    {
 
       m_mem.allocate(cx * cy * 4);
@@ -225,7 +225,7 @@ namespace lnx
 //      return TRUE;
 
    }
-   bool bitmap::CreateDiscardableBitmap(::ca::graphics * pgraphics, int nWidth, int nHeight)
+   bool bitmap::CreateDiscardableBitmap(::ca::graphics * pgraphics, int32_t nWidth, int32_t nHeight)
    {
 
       return CreateCompatibleBitmap(pgraphics, nWidth, nHeight);
@@ -233,7 +233,7 @@ namespace lnx
    }
 
 
-   int bitmap::GetBitmap(BITMAP* pBitMap)
+   int32_t bitmap::GetBitmap(BITMAP* pBitMap)
    {
    //   ASSERT(get_handle() != NULL);
      // return ::GetObject(get_handle(), sizeof(BITMAP), pBitMap);

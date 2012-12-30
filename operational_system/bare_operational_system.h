@@ -43,19 +43,19 @@ typedef unsigned long XID;
 
 #if defined(_LP64)
 
-    typedef long int int_ptr, *pint_ptr;
-    typedef unsigned long int uint_ptr, *puint_ptr;
+    typedef long int32_t int_ptr, *pint_ptr;
+    typedef unsigned long int32_t uint_ptr, *puint_ptr;
 
     typedef long long long_ptr, *plong_ptr;
     typedef unsigned long long ulong_ptr, *pulong_ptr;
 
 #else
 
-    typedef int int_ptr, *pint_ptr;
-    typedef unsigned int uint_ptr, *puint_ptr;
+    typedef int32_t int_ptr, *pint_ptr;
+    typedef unsigned int32_t uint_ptr, *puint_ptr;
 
     typedef long long_ptr, *plong_ptr;
-    typedef unsigned int ulong_ptr, *pulong_ptr;
+    typedef unsigned int32_t ulong_ptr, *pulong_ptr;
 
 #endif
 
@@ -63,7 +63,7 @@ typedef unsigned long XID;
 //typedef void * HANDLE;
 //typedef void * HDC;
 typedef unsigned char BYTE;
-typedef unsigned int UINT;
+typedef unsigned int32_t UINT;
 //typedef int_ptr WPARAM;
 //typedef int_ptr LPARAM;
 
@@ -134,7 +134,7 @@ typedef union _XEvent XEvent;
 #ifdef __cplusplus
 
 
-inline void __debug_break() { asm("int $3"); }
+inline void __debug_break() { asm("int32_t $3"); }
 
 
 #endif
@@ -309,7 +309,7 @@ inline void __debug_break() { asm("int $3"); }
 
 typedef unsigned char   u_char;
 typedef unsigned short  u_short;
-typedef unsigned int    u_int;
+typedef unsigned int32_t    u_int;
 typedef unsigned long   u_long;
 
 

@@ -90,9 +90,9 @@
 
 #ifndef __debug_break
 #ifdef _AFX_NO_DEBUG_CRT
-// by default, debug break is asm int 3, or a call to DebugBreak, or nothing
+// by default, debug break is asm int32_t 3, or a call to DebugBreak, or nothing
 #if defined(_M_IX86) && !defined(_AFX_PORTABLE)
-#define __debug_break() _asm { int 3 }
+#define __debug_break() _asm { int32_t 3 }
 #else
 #define __debug_break() DebugBreak()
 #endif

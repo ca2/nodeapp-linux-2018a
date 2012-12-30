@@ -34,7 +34,7 @@ namespace lnx
 
    }
 
-   file::file(::ca::application * papp, int hFile) :
+   file::file(::ca::application * papp, int32_t hFile) :
       ca(papp)
    {
 
@@ -68,7 +68,7 @@ namespace lnx
       ASSERT_VALID(this);
       ASSERT(m_iFile != (UINT)hFileNull);
 
-      int iNew = dup(m_iFile);
+      int32_t iNew = dup(m_iFile);
 
       if(iNew == -1)
          return NULL;
@@ -158,7 +158,7 @@ namespace lnx
 
       // attempt file creation
       //HANDLE hFile = shell::CreateFile(gen::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
-      int hFile = ::open(m_strFileName, dwFlags); //::open(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+      int32_t hFile = ::open(m_strFileName, dwFlags); //::open(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       if(hFile == -1)
       {
          DWORD dwLastError = ::GetLastError();
@@ -228,7 +228,7 @@ namespace lnx
 
       }
 
-      m_iFile = (int)hFile;
+      m_iFile = (int32_t)hFile;
 
       m_bCloseOnDelete = TRUE;
 
@@ -252,10 +252,10 @@ namespace lnx
       while(nCount > 0)
       {
          readNow = (size_t) min(0x7fffffff, nCount);
-         int iRead = ::read(m_iFile, &((byte *)lpBuf)[pos], readNow);
+         int32_t iRead = ::read(m_iFile, &((byte *)lpBuf)[pos], readNow);
          if(iRead < 0)
          {
-            int iError = errno;
+            int32_t iError = errno;
             if(iError == EAGAIN)
             {
 
@@ -289,7 +289,7 @@ namespace lnx
       ::primitive::memory_position pos = 0;
       while(nCount > 0)
       {
-         int iWrite = ::write(m_iFile, &((const byte *)lpBuf)[pos], (size_t) min(0x7fffffff, nCount));
+         int32_t iWrite = ::write(m_iFile, &((const byte *)lpBuf)[pos], (size_t) min(0x7fffffff, nCount));
          if(iWrite < 0)
             ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
          nCount -= iWrite;
@@ -508,7 +508,7 @@ namespace lnx
 #endif
 
 
-   /*void CLASS_DECL_lnx vfxThrowFileException(int cause, LONG lOsError,
+   /*void CLASS_DECL_lnx vfxThrowFileException(int32_t cause, LONG lOsError,
    //   const char * lpszFileName /* == NULL */
    /*{
    #ifdef DEBUG
@@ -571,7 +571,7 @@ namespace lnx
          vfxThrowFileException(papp, ::lnx::file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void PASCAL ::lnx::file_exception::ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName /* = NULL */)
+   void PASCAL ::lnx::file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
          vfxThrowFileException(papp, ::lnx::file_exception::ErrnoToException(nErrno), errno, lpszFileName);
@@ -579,7 +579,7 @@ namespace lnx
 
 
 
-   int PASCAL ::lnx::file_exception::OsErrorToException(LONG lOsErr)
+   int32_t PASCAL ::lnx::file_exception::OsErrorToException(LONG lOsErr)
    {
       // NT Error codes
       switch ((UINT)lOsErr)
@@ -909,7 +909,7 @@ namespace lnx
    // in particular, the file system is case sensitive with respect to
    // "full width" roman characters.
    // (ie. fullwidth-R is different from fullwidth-r).
-   int nLen = lstrlenW(lpszPath1);
+   int32_t nLen = lstrlenW(lpszPath1);
    if (nLen != lstrlenW(lpszPath2))
    return FALSE;
    ASSERT(nLen < _MAX_PATH);
@@ -928,7 +928,7 @@ namespace lnx
    #endif
 
    // for every C3_FULLWIDTH character, make sure it has same C1 value
-   int i = 0;
+   int32_t i = 0;
    for (const wchar_t * lpsz = lpszPath1; *lpsz != 0; lpsz = _wcsinc(lpsz))
    {
    // check for C3_FULLWIDTH characters only
@@ -1132,13 +1132,13 @@ bool CLASS_DECL_lnx vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath
       if (h != INVALID_HANDLE_VALUE)
       {
          FindClose(h);
-         int iLenFileName = lstrlenW(data.cFileName);
+         int32_t iLenFileName = lstrlenW(data.cFileName);
          if(iLenFileName >=  MAX_PATH)
          {
             wstring wstrBackup = wstrFullPath;
             strsize iFilePart = lpszFilePart - wstrFullPath;
             wstrFullPath.alloc(iFilePart + iLenFileName + 32); // arrange more space with more 32 extra wchars
-            lstrcpynW(wstrFullPath, wstrBackup, (int) iFilePart);
+            lstrcpynW(wstrFullPath, wstrBackup, (int32_t) iFilePart);
             lpszFilePart = (wchar_t *) wstrFullPath + iFilePart;
          }
          lstrcpyW(lpszFilePart, data.cFileName);
@@ -1205,7 +1205,7 @@ return TRUE;
 // in particular, the file system is case sensitive with respect to
 // "full width" roman characters.
 // (ie. fullwidth-R is different from fullwidth-r).
-int nLen = lstrlen(lpszPath1);
+int32_t nLen = lstrlen(lpszPath1);
 if (nLen != lstrlen(lpszPath2))
 return FALSE;
 ASSERT(nLen < _MAX_PATH);
@@ -1224,7 +1224,7 @@ VERIFY(GetStringTypeEx(lcid, CT_CTYPE3, lpszPath2, -1, aCharType23));
 #endif
 
 // for every C3_FULLWIDTH character, make sure it has same C1 value
-int i = 0;
+int32_t i = 0;
 for (const char * lpsz = lpszPath1; *lpsz != 0; lpsz = _tcsinc(lpsz))
 {
 // check for C3_FULLWIDTH characters only
@@ -1342,7 +1342,7 @@ CLASS_DECL_lnx bool vfxResolveShortcut(string & strTarget, const char * pszSourc
 
 
    char realname[_POSIX_PATH_MAX * 4];
-   int rc = 0;
+   int32_t rc = 0;
 
    if(realpath(pszSource, realname) == 0)
       return false;
@@ -1664,7 +1664,7 @@ return TRUE;
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException helpers
 
-void CLASS_DECL_lnx vfxThrowFileException(::ca::application * papp, int cause, LONG lOsError, const char * lpszFileName /* == NULL */)
+void CLASS_DECL_lnx vfxThrowFileException(::ca::application * papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
 #ifdef DEBUG
    const char * lpsz;
@@ -1677,7 +1677,7 @@ void CLASS_DECL_lnx vfxThrowFileException(::ca::application * papp, int cause, L
    throw ::ex1::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
-int PASCAL ::lnx::file_exception::ErrnoToException(int nErrno)
+int32_t PASCAL ::lnx::file_exception::ErrnoToException(int32_t nErrno)
 {
    switch(nErrno)
    {

@@ -71,7 +71,7 @@ namespace win2
     //     return false;
       if(m_hdc != NULL)
          return false;
-//      int iSize = DocumentProperties(NULL, pprinter->m_hPrinter, (LPSTR)(LPCSTR) pprinter->m_strName, NULL, NULL, 0);
+//      int32_t iSize = DocumentProperties(NULL, pprinter->m_hPrinter, (LPSTR)(LPCSTR) pprinter->m_strName, NULL, NULL, 0);
   //    m_pdevmode = (DEVMODE *) malloc(iSize);
     //  if(!DocumentProperties(NULL, pprinter->m_hPrinter, (LPSTR) (LPCSTR) pprinter->m_strName, m_pdevmode, NULL, DM_OUT_BUFFER))
       //{

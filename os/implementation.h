@@ -38,5 +38,5 @@ CLASS_DECL_lnx oswindow _AfxChildWindowFromPoint(oswindow, POINT);
 #define VERSION_IE4             MAKELONG(71, 4)
 #define VERSION_IE401   MAKELONG(72, 4)
 #define VERSION_6      MAKELONG(0, 6)
-extern int _afxComCtlVersion;
+extern int32_t _afxComCtlVersion;
 DWORD _AfxGetComCtlVersion();

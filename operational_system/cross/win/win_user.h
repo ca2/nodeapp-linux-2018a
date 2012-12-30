@@ -4,9 +4,9 @@
 //#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_DESKTOP)
 
 typedef VOID (CALLBACK* TIMERPROC)(oswindow, UINT, uint_ptr, DWORD);
-typedef WINBOOL (CALLBACK* GRAYSTRINGPROC)(HDC, LPARAM, int);
+typedef WINBOOL (CALLBACK* GRAYSTRINGPROC)(HDC, LPARAM, int32_t);
 typedef WINBOOL (CALLBACK* WNDENUMPROC)(oswindow, LPARAM);
-typedef LRESULT (CALLBACK* HOOKPROC)(int code, WPARAM wParam, LPARAM lParam);
+typedef LRESULT (CALLBACK* HOOKPROC)(int32_t code, WPARAM wParam, LPARAM lParam);
 typedef VOID (CALLBACK* SENDASYNCPROC)(oswindow, UINT, ulong_ptr, LRESULT);
 
 typedef WINBOOL (CALLBACK* PROPENUMPROCA)(oswindow, LPCSTR, HANDLE);
@@ -15,8 +15,8 @@ typedef WINBOOL (CALLBACK* PROPENUMPROCW)(oswindow, LPCWSTR, HANDLE);
 typedef WINBOOL (CALLBACK* PROPENUMPROCEXA)(oswindow, LPSTR, HANDLE, ulong_ptr);
 typedef WINBOOL (CALLBACK* PROPENUMPROCEXW)(oswindow, LPWSTR, HANDLE, ulong_ptr);
 
-typedef int (CALLBACK* EDITWORDBREAKPROCA)(LPSTR lpch, int ichCurrent, int cch, int code);
-typedef int (CALLBACK* EDITWORDBREAKPROCW)(LPWSTR lpch, int ichCurrent, int cch, int code);
+typedef int32_t (CALLBACK* EDITWORDBREAKPROCA)(LPSTR lpch, int32_t ichCurrent, int32_t cch, int32_t code);
+typedef int32_t (CALLBACK* EDITWORDBREAKPROCW)(LPWSTR lpch, int32_t ichCurrent, int32_t cch, int32_t code);
 
 
 #ifndef NOWINOFFSETS
@@ -592,9 +592,9 @@ IsWindowEnabled(
 typedef struct tagDRAWTEXTPARAMS
 {
    UINT    cbSize;
-   int     iTabLength;
-   int     iLeftMargin;
-   int     iRightMargin;
+   int32_t     iTabLength;
+   int32_t     iLeftMargin;
+   int32_t     iRightMargin;
    UINT    uiLengthDrawn;
 } DRAWTEXTPARAMS, FAR *LPDRAWTEXTPARAMS;
 
@@ -832,7 +832,7 @@ GetWindow(
 #define MB_MISCMASK                 0x0000C000L
 
 
-int
+int32_t
 WINAPI
 MessageBoxA(
     oswindow hWnd,
@@ -841,7 +841,7 @@ MessageBoxA(
     UINT uType);
 
 
-int
+int32_t
 WINAPI
 MessageBoxW(
     oswindow hWnd,
@@ -1015,10 +1015,10 @@ typedef struct tagCREATESTRUCTA {
     HINSTANCE   hInstance;
     HMENU       hMenu;
     oswindow        hwndParent;
-    int         cy;
-    int         cx;
-    int         y;
-    int         x;
+    int32_t         cy;
+    int32_t         cx;
+    int32_t         y;
+    int32_t         x;
     LONG        style;
     LPCSTR      lpszName;
     LPCSTR      lpszClass;
@@ -1029,10 +1029,10 @@ typedef struct tagCREATESTRUCTW {
     HINSTANCE   hInstance;
     HMENU       hMenu;
     oswindow    hwndParent;
-    int         cy;
-    int         cx;
-    int         y;
-    int         x;
+    int32_t         cy;
+    int32_t         cx;
+    int32_t         y;
+    int32_t         x;
     LONG        style;
     LPCWSTR     lpszName;
     LPCWSTR     lpszClass;
@@ -1085,7 +1085,7 @@ WINBOOL EndPaint(oswindow hwnd, PAINTSTRUCT * ps);
 
 WINBOOL GetCursorPos(LPPOINT lpptCursor);
 
-WINBOOL SetWindowPos(oswindow hWnd, oswindow hWndInsertAfter, int X, int Y, int cx, int cy, UINT uFlags);
+WINBOOL SetWindowPos(oswindow hWnd, oswindow hWndInsertAfter, int32_t X, int32_t Y, int32_t cx, int32_t cy, UINT uFlags);
 
 
 WINBOOL IsWindowVisible(oswindow hWnd);
@@ -1139,14 +1139,14 @@ LONG
 WINAPI
 GetWindowLongA(
     oswindow hWnd,
-    int nIndex);
+    int32_t nIndex);
 
 
 LONG
 WINAPI
 GetWindowLongW(
     oswindow hWnd,
-    int nIndex);
+    int32_t nIndex);
 #ifdef UNICODE
 #define GetWindowLong  GetWindowLongW
 #else

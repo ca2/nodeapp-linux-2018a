@@ -94,7 +94,7 @@ namespace lnx{
 
       string strFilter;
 
-      int i, j;
+      int32_t i, j;
 
       string strFile;
 

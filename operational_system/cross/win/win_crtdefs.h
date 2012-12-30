@@ -100,15 +100,15 @@
 #ifndef _MSVCRT_LONG_DEFINED
 #define _MSVCRT_LONG_DEFINED
 /* we need 32-bit longs even on 64-bit */
-typedef int __msvcrt_long;
-typedef unsigned int __msvcrt_ulong;
+typedef int32_t __msvcrt_long;
+typedef unsigned int32_t __msvcrt_ulong;
 #endif
 
 #ifndef _INTPTR_T_DEFINED
 #ifdef  _WIN64
 typedef __int64 intptr_t;
 #else
-typedef int intptr_t;
+typedef int32_t intptr_t;
 #endif
 #define _INTPTR_T_DEFINED
 #endif
@@ -117,7 +117,7 @@ typedef int intptr_t;
 #ifdef  _WIN64
 typedef unsigned __int64 uintptr_t;
 #else
-typedef unsigned int uintptr_t;
+typedef unsigned int32_t uintptr_t;
 #endif
 #define _UINTPTR_T_DEFINED
 #endif
@@ -126,7 +126,7 @@ typedef unsigned int uintptr_t;
 #ifdef _WIN64
 typedef __int64 ptrdiff_t;
 #else
-typedef int ptrdiff_t;
+typedef int32_t ptrdiff_t;
 #endif
 #define _PTRDIFF_T_DEFINED
 #endif
@@ -135,7 +135,7 @@ typedef int ptrdiff_t;
 #ifdef _WIN64
 typedef unsigned __int64 size_t;
 #else
-typedef unsigned int size_t;
+typedef unsigned int32_t size_t;
 #endif
 #define _SIZE_T_DEFINED
 #endif
@@ -181,7 +181,7 @@ typedef unsigned short  wctype_t;
 #endif
 
 #ifndef _ERRNO_T_DEFINED
-typedef int errno_t;
+typedef int32_t errno_t;
 #define _ERRNO_T_DEFINED
 #endif
 
@@ -207,24 +207,24 @@ typedef struct tagLC_ID {
 
 #ifndef _THREADLOCALEINFO
 typedef struct threadlocaleinfostruct {
-    int refcount;
-    unsigned int lc_codepage;
-    unsigned int lc_collate_cp;
+    int32_t refcount;
+    unsigned int32_t lc_codepage;
+    unsigned int32_t lc_collate_cp;
     unsigned long lc_handle[6];
     LC_ID lc_id[6];
     struct {
         char *locale;
         wchar_t *wlocale;
-        int *refcount;
-        int *wrefcount;
+        int32_t *refcount;
+        int32_t *wrefcount;
     } lc_category[6];
-    int lc_clike;
-    int mb_cur_max;
-    int *lconv_intl_refcount;
-    int *lconv_num_refcount;
-    int *lconv_mon_refcount;
+    int32_t lc_clike;
+    int32_t mb_cur_max;
+    int32_t *lconv_intl_refcount;
+    int32_t *lconv_num_refcount;
+    int32_t *lconv_mon_refcount;
     struct lconv *lconv;
-    int *ctype1_refcount;
+    int32_t *ctype1_refcount;
     unsigned short *ctype1;
     const unsigned short *pctype;
     const unsigned char *pclmap;

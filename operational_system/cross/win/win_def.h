@@ -125,8 +125,8 @@ typedef char *PSZ;
 #define CONST               const
 #endif
 
-typedef unsigned int       DWORD;
-typedef int                 WINBOOL;
+typedef unsigned int32_t       DWORD;
+typedef int32_t                 WINBOOL;
 typedef unsigned char       BYTE;
 typedef unsigned short      WORD;
 typedef float               FLOAT;
@@ -135,19 +135,19 @@ typedef WINBOOL near           *PBOOL;
 typedef WINBOOL far            *LPBOOL;
 typedef BYTE near           *PBYTE;
 typedef BYTE far            *LPBYTE;
-typedef int near            *PINT;
-typedef int far             *LPINT;
+typedef int32_t near            *PINT;
+typedef int32_t far             *LPINT;
 typedef WORD near           *PWORD;
 typedef WORD far            *LPWORD;
-typedef int far            *LPLONG;
+typedef int32_t far            *LPLONG;
 typedef DWORD near          *PDWORD;
 typedef DWORD far           *LPDWORD;
 typedef void far            *LPVOID;
 typedef CONST void far      *LPCVOID;
 
-typedef int                 INT;
-typedef unsigned int        UINT;
-typedef unsigned int        *PUINT;
+typedef int32_t                 INT;
+typedef unsigned int32_t        UINT;
+typedef unsigned int32_t        *PUINT;
 
 #ifndef NT_INCLUDED
 #include "win_nt.h"
@@ -192,14 +192,14 @@ typedef int_ptr (FAR WINAPI *FARPROC)();
 typedef int_ptr (NEAR WINAPI *NEARPROC)();
 typedef int_ptr (WINAPI *PROC)();
 #else
-typedef int (FAR WINAPI *FARPROC)();
-typedef int (NEAR WINAPI *NEARPROC)();
-typedef int (WINAPI *PROC)();
+typedef int32_t (FAR WINAPI *FARPROC)();
+typedef int32_t (NEAR WINAPI *NEARPROC)();
+typedef int32_t (WINAPI *PROC)();
 #endif  // _WIN64
 #else
-typedef int (CALLBACK *FARPROC)();
-typedef int (CALLBACK *NEARPROC)();
-typedef int (CALLBACK *PROC)();
+typedef int32_t (CALLBACK *FARPROC)();
+typedef int32_t (CALLBACK *NEARPROC)();
+typedef int32_t (CALLBACK *PROC)();
 #endif
 #else
 typedef int_ptr (WINAPI *FARPROC)(void);
@@ -269,7 +269,7 @@ DECLARE_HANDLE(HUMPD);
 #endif /* WINVER >= 0x0500 */
 
 /*#ifndef _MAC
-typedef int HFILE;
+typedef int32_t HFILE;
 typedef HICON HCURSOR;      /* HICONs & HCURSORs are polymorphic */
 //#else
 //typedef short HFILE;

@@ -21,9 +21,9 @@ namespace lnx
       bool delete_object();
 
 
-      int get_object(int nCount, LPVOID lpObject) const;
+      int32_t get_object(int32_t nCount, LPVOID lpObject) const;
       UINT GetObjectType() const;
-      bool CreateStockObject(int nIndex);
+      bool CreateStockObject(int32_t nIndex);
       bool UnrealizeObject();
       bool operator==(const ::ca::graphics_object& obj) const;
       bool operator!=(const ::ca::graphics_object& obj) const;

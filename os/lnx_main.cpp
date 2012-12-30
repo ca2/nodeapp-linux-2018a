@@ -1,7 +1,7 @@
 #include "framework.h"
 
 
-CLASS_DECL_ca int ca2_main();
+CLASS_DECL_ca int32_t ca2_main();
 
 //CLASS_DECL_ca extern fixed_alloc_array * g_pfixedallocaWstring;
 
@@ -13,18 +13,18 @@ void CLASS_DECL_lnx __cdecl _ca2_purecall()
 }
 
 
-void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers);
+void __cdecl _null_se_translator(unsigned int32_t uiCode, EXCEPTION_POINTERS * ppointers);
 
 
 //::ca::application *     win_application_create(::ca::application * pappSystem, const char * pszId);
 //::ca::application *     win_instantiate_application(::ca::application * pappSystem, const char * pszId);
-//int                     win_application_procedure(::ca::application * pappSystem)
+//int32_t                     win_application_procedure(::ca::application * pappSystem)
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
 //  Can be replaced as long as 'gen::WinInit' is called first
 
-int CLASS_DECL_lnx __lnx_main(int argc, char * argv[])
+int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 {
 
 //   UNREFERENCED_PARAMETER(lpCmdLine);
@@ -47,7 +47,7 @@ int CLASS_DECL_lnx __lnx_main(int argc, char * argv[])
 
 //   ASSERT(hPrevInstance == NULL);
 
-   int nReturnCode = 0;
+   int32_t nReturnCode = 0;
 
 
    ::lnx::main_init_data * pinitmaindata  = new ::lnx::main_init_data;
@@ -55,7 +55,7 @@ int CLASS_DECL_lnx __lnx_main(int argc, char * argv[])
 
    pinitmaindata->m_hInstance             = NULL;
    pinitmaindata->m_hPrevInstance         = NULL;
-   for(int i = 0; i < argc; i++)
+   for(int32_t i = 0; i < argc; i++)
    {
       pinitmaindata->m_vssCommandLine     += argv[i];
    }
@@ -151,7 +151,7 @@ int CLASS_DECL_lnx __lnx_main(int argc, char * argv[])
 }
 
 
-int CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int nCmdShow)
+int32_t CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int32_t nCmdShow)
 {
    try
    {
@@ -166,7 +166,7 @@ int CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const 
 
       ASSERT(hPrevInstance == NULL);
 
-      int nReturnCode = 0;
+      int32_t nReturnCode = 0;
 
       ::lnx::main_init_data * pinitmaindata  = new ::lnx::main_init_data;
 
@@ -252,7 +252,7 @@ int CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const 
 
 
 
-void __cdecl _null_se_translator(unsigned int uiCode, EXCEPTION_POINTERS * ppointers)
+void __cdecl _null_se_translator(unsigned int32_t uiCode, EXCEPTION_POINTERS * ppointers)
 {
    UNREFERENCED_PARAMETER(uiCode);
    UNREFERENCED_PARAMETER(ppointers);

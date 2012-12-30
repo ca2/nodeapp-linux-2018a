@@ -93,10 +93,10 @@ namespace lnx
       virtual bool begin_figure(bool bFill, ::ca::e_fill_mode efillmode);
       virtual bool end_figure(bool bClose);
 
-      virtual bool add_arc(const RECT & rect, int iStart, int iAngle);
-      virtual bool add_line(int x, int y);
+      virtual bool add_arc(const RECT & rect, int32_t iStart, int32_t iAngle);
+      virtual bool add_line(int32_t x, int32_t y);
 
-      virtual bool add_move(int x, int y);
+      virtual bool add_move(int32_t x, int32_t y);
 
 
 

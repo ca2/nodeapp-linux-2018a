@@ -47,7 +47,7 @@ namespace lnx
 
       //call the virtual callback function in a loop
 
-      int nAdapter = 0;
+      int32_t nAdapter = 0;
 
       string str;
 

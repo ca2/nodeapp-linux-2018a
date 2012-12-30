@@ -117,7 +117,7 @@ namespace lnx
 
    // Change a window's style
 
-   /*__STATIC bool CLASS_DECL_lnx __modify_style(oswindow hWnd, int nStyleOffset,
+   /*__STATIC bool CLASS_DECL_lnx __modify_style(oswindow hWnd, int32_t nStyleOffset,
       DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       ASSERT(hWnd != NULL);
@@ -250,7 +250,7 @@ namespace lnx
 
    bool window::CreateEx(DWORD dwExStyle, const char * lpszClassName,
       const char * lpszWindowName, DWORD dwStyle,
-      int x, int y, int nWidth, int nHeight,
+      int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
       oswindow hWndParent, id id, LPVOID lpParam)
    {
       UNREFERENCED_PARAMETER(id);
@@ -302,7 +302,7 @@ namespace lnx
       Display *dpy;
       Window rootwin;
       XEvent e;
-      int scr;
+      int32_t scr;
 //      cairo_surface_t *cs;
 
       if(!(dpy=XOpenDisplay(NULL))) {
@@ -819,7 +819,7 @@ namespace lnx
    {
       /*ASSERT(::IsWindow(get_os_data()));
 
-      int nLen = ::GetWindowTextLength(get_os_data());
+      int32_t nLen = ::GetWindowTextLength(get_os_data());
       ::GetWindowText(get_os_data(), rString.GetBufferSetLength(nLen), nLen+1);
       rString.ReleaseBuffer();*/
       rString = m_strWindowText;
@@ -827,7 +827,7 @@ namespace lnx
    }
 
 /*
-   int window::GetDlgItemText(int nID, string & rString) const
+   int32_t window::GetDlgItemText(int32_t nID, string & rString) const
    {
       ASSERT(::IsWindow(get_os_data()));
       rString = "";    // is_empty without deallocating
@@ -835,12 +835,12 @@ namespace lnx
       oswindow hWnd = ::GetDlgItem(get_os_data(), nID);
       if (hWnd != NULL)
       {
-         int nLen = ::GetWindowTextLength(hWnd);
+         int32_t nLen = ::GetWindowTextLength(hWnd);
          ::GetWindowText(hWnd, rString.GetBufferSetLength(nLen), nLen+1);
          rString.ReleaseBuffer();
       }
 
-      return (int)rString.get_length();
+      return (int32_t)rString.get_length();
    }
 */
 
@@ -864,7 +864,7 @@ namespace lnx
    // window will delegate owner draw messages to self drawing controls
 
    // Drawing: for all 4 control types
-// /*   void window::OnDrawItem(int /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
+// /*   void window::OnDrawItem(int32_t /*nIDCtl*/, LPDRAWITEMSTRUCT lpDrawItemStruct)
   // {
 
       // reflect notification to child window control
@@ -876,18 +876,18 @@ namespace lnx
   // }
 
    // Drawing: for all 4 control types
-//   int window::OnCompareItem(int /*nIDCtl*/, LPCOMPAREITEMSTRUCT lpCompareItemStruct)
+//   int32_t window::OnCompareItem(int32_t /*nIDCtl*/, LPCOMPAREITEMSTRUCT lpCompareItemStruct)
   // {
     //  // reflect notification to child window control
       //LRESULT lResult;
 //      if (ReflectLastMsg(lpCompareItemStruct->hwndItem, &lResult))
-  //       return (int)lResult;        // eat it
+  //       return (int32_t)lResult;        // eat it
 
       // not handled - do default
-    //  return (int)Default();
+    //  return (int32_t)Default();
 //   }
 
-  // void window::OnDeleteItem(int /*nIDCtl*/, LPDELETEITEMSTRUCT lpDeleteItemStruct)
+  // void window::OnDeleteItem(int32_t /*nIDCtl*/, LPDELETEITEMSTRUCT lpDeleteItemStruct)
    //{
       // reflect notification to child window control
      // if (ReflectLastMsg(lpDeleteItemStruct->hwndItem))
@@ -905,7 +905,7 @@ namespace lnx
 
 
    // Measure item implementation relies on unique control/menu IDs
-//   void window::OnMeasureItem(int /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
+//   void window::OnMeasureItem(int32_t /*nIDCtl*/, LPMEASUREITEMSTRUCT lpMeasureItemStruct)
   /* {
       if (lpMeasureItemStruct->CtlType == ODT_MENU)
       {
@@ -1197,7 +1197,7 @@ namespace lnx
 /*      if(pbase->m_uiMessage == WM_MOUSELEAVE)
       {
          m_bMouseHover = false;
-         for(int i = 0; i < m_guieptraMouseHover.get_size(); i++)
+         for(int32_t i = 0; i < m_guieptraMouseHover.get_size(); i++)
          {
             if(m_guieptraMouseHover[i] == this
                || m_guieptraMouseHover[i]->m_pimpl == this
@@ -1309,7 +1309,7 @@ namespace lnx
             pmouse->m_ecursor = visual::cursor_default;
          }
 restart_mouse_hover_check:
-         for(int i = 0; i < m_guieptraMouseHover.get_size(); i++)
+         for(int32_t i = 0; i < m_guieptraMouseHover.get_size(); i++)
          {
             if(!m_guieptraMouseHover[i]->_001IsPointInside(pmouse->m_pt))
             {
@@ -1359,7 +1359,7 @@ restart_mouse_hover_check:
          wnda = System.frames();
          wnda.get_wnda(hwnda);
          user::window_util::SortByZOrder(hwnda);
-         for(int i = 0; i < hwnda.get_size(); i++)
+         for(int32_t i = 0; i < hwnda.get_size(); i++)
          {
             ::user::interaction * pguie = wnda.find_first(hwnda[i]);
             if(pguie != NULL && pguie->m_pguie != NULL)
@@ -1381,7 +1381,7 @@ restart_mouse_hover_check:
          {
             try
             {
-               Application.set_key_pressed((int) pbase->m_wparam, true);
+               Application.set_key_pressed((int32_t) pbase->m_wparam, true);
             }
             catch(...)
             {
@@ -1391,7 +1391,7 @@ restart_mouse_hover_check:
          {
             try
             {
-               Application.set_key_pressed((int) pbase->m_wparam, false);
+               Application.set_key_pressed((int32_t) pbase->m_wparam, false);
             }
             catch(...)
             {
@@ -1787,8 +1787,8 @@ restart_mouse_hover_check:
    // special case for WM_VSCROLL and WM_HSCROLL
    ASSERT(message == WM_VSCROLL || message == WM_HSCROLL ||
    message == WM_VSCROLL+WM_REFLECT_BASE || message == WM_HSCROLL+WM_REFLECT_BASE);
-   int nScrollCode = (short)LOWORD(wparam);
-   int nPos = (short)HIWORD(wparam);
+   int32_t nScrollCode = (short)LOWORD(wparam);
+   int32_t nPos = (short)HIWORD(wparam);
    if (lpEntry->nSig == gen::Sig_SCROLL)
    (this->*mmf.pfn_v_u_u_W)(nScrollCode, nPos,
    ::lnx::window::from_handle(reinterpret_cast<oswindow>(lparam)));
@@ -1806,12 +1806,12 @@ restart_mouse_hover_check:
    break;
 
    case gen::Sig_OWNERDRAW:
-   (this->*mmf.pfn_v_i_s)(static_cast<int>(wparam), reinterpret_cast<LPTSTR>(lparam));
+   (this->*mmf.pfn_v_i_s)(static_cast<int32_t>(wparam), reinterpret_cast<LPTSTR>(lparam));
    lResult = TRUE;
    break;
 
    case gen::Sig_i_i_s:
-   lResult = (this->*mmf.pfn_i_i_s)(static_cast<int>(wparam), reinterpret_cast<LPTSTR>(lparam));
+   lResult = (this->*mmf.pfn_i_i_s)(static_cast<int32_t>(wparam), reinterpret_cast<LPTSTR>(lparam));
    break;
 
    case gen::Sig_u_v_p:
@@ -1888,7 +1888,7 @@ restart_mouse_hover_check:
       UNREFERENCED_PARAMETER(lparam);
       /*   UINT nID = LOWORD(wparam);
       oswindow hWndCtrl = (oswindow)lparam;
-      int nCode = HIWORD(wparam);
+      int32_t nCode = HIWORD(wparam);
 
       // default routing for command messages (through closure table)
 
@@ -1929,7 +1929,7 @@ restart_mouse_hover_check:
       }
 
       #ifdef DEBUG
-      if (nCode < 0 && nCode != (int)0x8000)
+      if (nCode < 0 && nCode != (int32_t)0x8000)
       TRACE(::radix::trace::category_AppMsg, 0, "Implementation Warning: control notification = $%X.\n",
       nCode);
       #endif
@@ -1946,7 +1946,7 @@ restart_mouse_hover_check:
 
       // get the child ID from the window itself
       //      uint_ptr nID = __get_dialog_control_id(hWndCtrl);
-      //      int nCode = pNMHDR->code;
+      //      int32_t nCode = pNMHDR->code;
 
       ASSERT(hWndCtrl != NULL);
       ASSERT(::IsWindow(hWndCtrl));
@@ -2105,11 +2105,11 @@ return NULL;
       return ::lnx::window::from_handle(hWnd);
    }
 */
-   int window::message_box(const char * lpszText, const char * lpszCaption, UINT nType)
+   int32_t window::message_box(const char * lpszText, const char * lpszCaption, UINT nType)
    {
       if (lpszCaption == NULL)
          lpszCaption = __get_app_name();
-      int nResult = ::MessageBox((oswindow)get_os_data(), lpszText, lpszCaption, nType);
+      int32_t nResult = ::MessageBox((oswindow)get_os_data(), lpszText, lpszCaption, nType);
       return nResult;
    }
 
@@ -2134,7 +2134,7 @@ return NULL;
             return pWndChild;
       }*/
 
-      for(int i = 0; i < hWnd->m_uiptraChild.get_count(); i++)
+      for(int32_t i = 0; i < hWnd->m_uiptraChild.get_count(); i++)
       {
          if(hWnd->m_uiptraChild[i]->GetDlgCtrlId() == id)
          {
@@ -2211,29 +2211,29 @@ return NULL;
    // if the window doesn't have a _visible_ windows scrollbar - then
    //   look for a sibling with the appropriate ID
 
-   CScrollBar* window::GetScrollBarCtrl(int) const
+   CScrollBar* window::GetScrollBarCtrl(int32_t) const
    {
       return NULL;        // no special scrollers supported
    }
 
-   int window::SetScrollPos(int nBar, int nPos, bool bRedraw)
+   int32_t window::SetScrollPos(int32_t nBar, int32_t nPos, bool bRedraw)
    {
 //      return ::SetScrollPos(get_os_data(), nBar, nPos, bRedraw);
 return 0;
    }
 
-   int window::GetScrollPos(int nBar) const
+   int32_t window::GetScrollPos(int32_t nBar) const
    {
       //return ::GetScrollPos(get_os_data(), nBar);
       return 0;
    }
 
-   void window::SetScrollRange(int nBar, int nMinPos, int nMaxPos, bool bRedraw)
+   void window::SetScrollRange(int32_t nBar, int32_t nMinPos, int32_t nMaxPos, bool bRedraw)
    {
       //::SetScrollRange(get_os_data(), nBar, nMinPos, nMaxPos, bRedraw);
    }
 
-   void window::GetScrollRange(int nBar, LPINT lpMinPos, LPINT lpMaxPos) const
+   void window::GetScrollRange(int32_t nBar, LPINT lpMinPos, LPINT lpMaxPos) const
    {
       //::GetScrollRange(get_os_data(), nBar, lpMinPos, lpMaxPos);
    }
@@ -2241,14 +2241,14 @@ return 0;
    // Turn on/off non-control scrollbars
    //   for WS_?SCROLL scrollbars - show/hide them
    //   for control scrollbar - enable/disable them
-   void window::EnableScrollBarCtrl(int nBar, bool bEnable)
+   void window::EnableScrollBarCtrl(int32_t nBar, bool bEnable)
    {
       // WS_?SCROLL scrollbar - show or hide
       ShowScrollBar(nBar, bEnable);
    }
 
 /*
-   bool window::SetScrollInfo(int nBar, LPSCROLLINFO lpScrollInfo, bool bRedraw)
+   bool window::SetScrollInfo(int32_t nBar, LPSCROLLINFO lpScrollInfo, bool bRedraw)
    {
       ASSERT(lpScrollInfo != NULL);
 
@@ -2258,7 +2258,7 @@ return 0;
       return true;
    }
 
-   bool window::GetScrollInfo(int nBar, LPSCROLLINFO lpScrollInfo, UINT nMask)
+   bool window::GetScrollInfo(int32_t nBar, LPSCROLLINFO lpScrollInfo, UINT nMask)
    {
       UNREFERENCED_PARAMETER(nMask);
       ASSERT(lpScrollInfo != NULL);
@@ -2267,9 +2267,9 @@ return 0;
       return ::GetScrollInfo(hWnd, nBar, lpScrollInfo) != FALSE;
    }
 */
-   int window::GetScrollLimit(int nBar)
+   int32_t window::GetScrollLimit(int32_t nBar)
    {
-      int nMin, nMax;
+      int32_t nMin, nMax;
       GetScrollRange(nBar, &nMin, &nMax);
 /*      SCROLLINFO info;
       if (GetScrollInfo(nBar, &info, SIF_PAGE))
@@ -2279,7 +2279,7 @@ return 0;
       return nMax;
    }
 
-   void window::ScrollWindow(int xAmount, int yAmount,
+   void window::ScrollWindow(int32_t xAmount, int32_t yAmount,
       LPCRECT lpRect, LPCRECT lpClipRect)
    {
 /*      ASSERT(::IsWindow(get_os_data()));
@@ -2360,7 +2360,7 @@ return 0;
    else if (gen::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
-   for (int i = 0; i < m_pguie->m_uiptra.get_count();   i++)
+   for (int32_t i = 0; i < m_pguie->m_uiptra.get_count();   i++)
    {
    ::user::interaction * hWndChild = m_pguie->m_uiptra[i];
    string strIdc = hWndChild->GetDlgCtrlId();
@@ -2383,7 +2383,7 @@ return 0;
    else if (gen::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
-   for (int i = 0; i < m_uiptra.get_count();   i++)
+   for (int32_t i = 0; i < m_uiptra.get_count();   i++)
    {
    ::user::interaction * hWndChild = m_uiptra[i];
    string strIdc = hWndChild->GetDlgCtrlId();
@@ -2479,7 +2479,7 @@ return 0;
          {
             id id = hWndChild->GetDlgCtrlId();
             ::user::interaction * pWnd = hWndChild;
-            if (id == (int) nIdLeftOver)
+            if (id == (int32_t) nIdLeftOver)
                hWndLeftOver = hWndChild;
             else if (pWnd != NULL)
                hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
@@ -2704,7 +2704,7 @@ return 0;
       case WM_COMMAND:
          {
             // reflect the message through the message ::collection::map as OCM_COMMAND
-            /* xxx         int nCode = HIWORD(wparam);
+            /* xxx         int32_t nCode = HIWORD(wparam);
             if (window::_001OnCommand(0, MAKELONG(nCode, WM_REFLECT_BASE+WM_COMMAND), NULL, NULL))
             {
             if (pResult != NULL)
@@ -2719,7 +2719,7 @@ return 0;
          {
             // reflect the message through the message ::collection::map as OCM_NOTIFY
             NMHDR* pNMHDR = (NMHDR*)lparam;
-            //            int nCode = pNMHDR->code;
+            //            int32_t nCode = pNMHDR->code;
             //            __NOTIFY notify;
             //          notify.pResult = pResult;
             //        notify.pNMHDR = pNMHDR;
@@ -2879,10 +2879,10 @@ return 0;
 //
 //      LRESULT lResult;
 //      if (ReflectLastMsg(lpInfo->hWnd, &lResult))
-//         return (int)lResult;    // eat it
+//         return (int32_t)lResult;    // eat it
 //
 //      // not handled - do default
-//      return (int)Default();
+//      return (int32_t)Default();
    }
 
    void window::_001OnCreate(gen::signal_object * pobj)
@@ -2995,7 +2995,7 @@ return 0;
       rgnWindow = CreateRectRgn(0, 0, 0, 0);
       rgnIntersect = CreateRectRgn(0, 0, 0, 0);
 */
-      //      int iCount = wndaApp.get_count();
+      //      int32_t iCount = wndaApp.get_count();
 
 throw not_implemented(get_app());
 //      try
@@ -3068,7 +3068,7 @@ throw not_implemented(get_app());
 //                  /*::ca::window * pwnd = dynamic_cast < ::ca::window * > (window::FromHandlePermanent(hWnd));
 //                  if(pwnd == NULL)
 //                  {
-//                  for(int l = 0; l < wndpa.get_count(); l++)
+//                  for(int32_t l = 0; l < wndpa.get_count(); l++)
 //                  {
 //                  if(wndpa[l]->get_safe_handle() == hWnd)
 //                  {
@@ -3491,8 +3491,8 @@ throw not_implemented(get_app());
 //      }
 //
 //      // find dialog's upper left based on rcCenter
-//      int xLeft = (rcCenter.left + rcCenter.right) / 2 - rcDlg.width() / 2;
-//      int yTop = (rcCenter.top + rcCenter.bottom) / 2 - rcDlg.height() / 2;
+//      int32_t xLeft = (rcCenter.left + rcCenter.right) / 2 - rcDlg.width() / 2;
+//      int32_t yTop = (rcCenter.top + rcCenter.bottom) / 2 - rcDlg.height() / 2;
 //
 //      // if the dialog is outside the screen, move it inside
 //      if (xLeft < rcArea.left)
@@ -3690,7 +3690,7 @@ throw not_implemented(get_app());
       bool bShowIdle = (dwFlags & MLF_SHOWONIDLE) && !(GetStyle() & WS_VISIBLE);
       oswindow hWndParent = ::GetParent(get_os_data());
       m_iModal = m_iModalCount;
-      int iLevel = m_iModal;
+      int32_t iLevel = m_iModal;
       oprop(string("RunModalLoop.thread(") + gen::str::from(iLevel) + ")") = System.GetThread();
       m_iModalCount++;
 
@@ -3818,7 +3818,7 @@ throw not_implemented(get_app());
 //      return m_nModalResult;
    }
 
-   bool window::ContinueModal(int iLevel)
+   bool window::ContinueModal(int32_t iLevel)
    {
       return iLevel < m_iModalCount;
    }
@@ -3829,7 +3829,7 @@ throw not_implemented(get_app());
 //      ASSERT(::IsWindow(get_os_data()));
 //
 //      // this result will be returned from window::RunModalLoop
-//      m_nModalResult = (int) nResult;
+//      m_nModalResult = (int32_t) nResult;
 //
 //      // make sure a message goes through to exit the modal loop
 //      if(m_iModalCount > 0)
@@ -3854,11 +3854,11 @@ throw not_implemented(get_app());
       // make sure a message goes through to exit the modal loop
       if(m_iModalCount > 0)
       {
-         int iLevel = m_iModalCount - 1;
+         int32_t iLevel = m_iModalCount - 1;
          m_iModalCount = 0;
          PostMessage(WM_NULL);
          System.GetThread()->post_thread_message(WM_NULL, 0, 0);
-         for(int i = iLevel; i >= 0; i--)
+         for(int32_t i = iLevel; i >= 0; i--)
          {
             ::ca::thread * pthread = oprop(string("RunModalLoop.thread(") + gen::str::from(i) + ")").ca2 < ::ca::thread > ();
             try
@@ -3979,7 +3979,7 @@ throw not_implemented(get_app());
       return get_os_data();
    }
 
-   bool window::SetWindowPos(int z, int x, int y, int cx, int cy, UINT nFlags)
+   bool window::SetWindowPos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
       /*bool b;
       bool * pb = &b;
@@ -4079,7 +4079,7 @@ throw not_implemented(get_app());
 
    }
 
-   void window::MoveWindow(int x, int y, int nWidth, int nHeight, bool bRepaint)
+   void window::MoveWindow(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, bool bRepaint)
    {
       ASSERT(::IsWindow(get_os_data()));
       SetWindowPos(0, x, y, nWidth, nHeight, bRepaint ? SWP_SHOWWINDOW : 0);
@@ -4249,7 +4249,7 @@ throw not_implemented(get_app());
       ::ShowWindow(get_os_data(), SW_RESTORE);
    }
 
-   bool window::ShowWindow(int nCmdShow)
+   bool window::ShowWindow(int32_t nCmdShow)
    {
       if(!::IsWindow(get_os_data()))
          return false;
@@ -4331,12 +4331,12 @@ throw not_implemented(get_app());
       return ::lnx::window::from_handle(::GetParent(get_os_data()));
    }
 
-   LONG window::GetWindowLong(int nIndex)
+   LONG window::GetWindowLong(int32_t nIndex)
    {
       return ::GetWindowLong(get_os_data(), nIndex);
    }
 
-   LONG window::SetWindowLong(int nIndex, LONG lValue)
+   LONG window::SetWindowLong(int32_t nIndex, LONG lValue)
    {
       return ::SetWindowLong(get_os_data(), nIndex, lValue);
    }
@@ -4543,13 +4543,13 @@ throw not_implemented(get_app());
 //      ASSERT(::IsWindow(get_os_data())); return ::ArrangeIconicWindows(get_os_data());
    }
 
-   int window::SetWindowRgn(HRGN hRgn, bool bRedraw)
+   int32_t window::SetWindowRgn(HRGN hRgn, bool bRedraw)
    {
       throw not_implemented(get_app());
 //      ASSERT(::IsWindow(get_os_data())); return ::SetWindowRgn(get_os_data(), hRgn, bRedraw);
    }
 
-   int window::GetWindowRgn(HRGN hRgn)
+   int32_t window::GetWindowRgn(HRGN hRgn)
    {
       throw not_implemented(get_app());
 //      ASSERT(::IsWindow(get_os_data()) && hRgn != NULL); return ::GetWindowRgn(get_os_data(), hRgn);
@@ -4654,7 +4654,7 @@ throw not_implemented(get_app());
       //return ::GetUpdateRect(get_os_data(), lpRect, bErase) != FALSE;
    }
 
-   int window::GetUpdateRgn(::ca::region* pRgn, bool bErase)
+   int32_t window::GetUpdateRgn(::ca::region* pRgn, bool bErase)
    {
       throw not_implemented(get_app());
       //ASSERT(::IsWindow(get_os_data()));
@@ -4823,7 +4823,7 @@ throw not_implemented(get_app());
    }
 
 /*
-   bool window::EnableScrollBar(int nSBFlags, UINT nArrowFlags)
+   bool window::EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags)
    {
 
       ASSERT(::IsWindow(get_os_data()));
@@ -4833,7 +4833,7 @@ throw not_implemented(get_app());
    }
 */
 
-   bool window::DrawAnimatedRects(int idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo)
+   bool window::DrawAnimatedRects(int32_t idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo)
    {
 
       throw not_implemented(get_app());
@@ -4960,9 +4960,9 @@ throw not_implemented(get_app());
 
 
    // Helper for radio buttons
-   int window::GetCheckedRadioButton(int nIDFirstButton, int nIDLastButton)
+   int32_t window::GetCheckedRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton)
    {
-      for (int nID = nIDFirstButton; nID <= nIDLastButton; nID++)
+      for (int32_t nID = nIDFirstButton; nID <= nIDLastButton; nID++)
       {
          if (IsDlgButtonChecked(nID))
             return nID; // id that matched
@@ -4970,7 +4970,7 @@ throw not_implemented(get_app());
       return 0; // invalid ID
    }
 
-   void window::CheckDlgButton(int nIDButton, UINT nCheck)
+   void window::CheckDlgButton(int32_t nIDButton, UINT nCheck)
    {
 
       throw not_implemented(get_app());
@@ -4979,7 +4979,7 @@ throw not_implemented(get_app());
 
    }
 
-   void window::CheckRadioButton(int nIDFirstButton, int nIDLastButton, int nIDCheckButton)
+   void window::CheckRadioButton(int32_t nIDFirstButton, int32_t nIDLastButton, int32_t nIDCheckButton)
    {
 
       throw not_implemented(get_app());
@@ -4988,7 +4988,7 @@ throw not_implemented(get_app());
 
    }
 
-   int window::DlgDirList(LPTSTR lpPathSpec, int nIDListBox, int nIDStaticPath, UINT nFileType)
+   int32_t window::DlgDirList(LPTSTR lpPathSpec, int32_t nIDListBox, int32_t nIDStaticPath, UINT nFileType)
    {
 
       throw not_implemented(get_app());
@@ -4997,7 +4997,7 @@ throw not_implemented(get_app());
 
    }
 
-   int window::DlgDirListComboBox(LPTSTR lpPathSpec, int nIDComboBox, int nIDStaticPath, UINT nFileType)
+   int32_t window::DlgDirListComboBox(LPTSTR lpPathSpec, int32_t nIDComboBox, int32_t nIDStaticPath, UINT nFileType)
    {
 
       throw not_implemented(get_app());
@@ -5006,7 +5006,7 @@ throw not_implemented(get_app());
 
    }
 
-   bool window::DlgDirSelect(LPTSTR lpString, int nSize, int nIDListBox)
+   bool window::DlgDirSelect(LPTSTR lpString, int32_t nSize, int32_t nIDListBox)
    {
 
       throw not_implemented(get_app());
@@ -5015,7 +5015,7 @@ throw not_implemented(get_app());
 
    }
 
-   bool window::DlgDirSelectComboBox(LPTSTR lpString, int nSize, int nIDComboBox)
+   bool window::DlgDirSelectComboBox(LPTSTR lpString, int32_t nSize, int32_t nIDComboBox)
    {
 
       throw not_implemented(get_app());
@@ -5030,13 +5030,13 @@ throw not_implemented(get_app());
 
       ASSERT(::IsWindow(get_os_data()));
       ASSERT(phWnd != NULL);
-      *phWnd = ::GetDlgItem(get_os_data(), (int) id);
+      *phWnd = ::GetDlgItem(get_os_data(), (int32_t) id);
 
    }
 */
 
 /*
-   UINT window::GetDlgItemInt(int nID, WINBOOL * lpTrans, bool bSigned) const
+   UINT window::GetDlgItemInt(int32_t nID, WINBOOL * lpTrans, bool bSigned) const
    {
 
       ASSERT(::IsWindow(get_os_data()));
@@ -5046,7 +5046,7 @@ throw not_implemented(get_app());
    }
 */
 
-//   int window::GetDlgItemText(int nID, LPTSTR lpStr, int nMaxCount) const
+//   int32_t window::GetDlgItemText(int32_t nID, LPTSTR lpStr, int32_t nMaxCount) const
 //   {
 //
 //      throw not_implemented(get_app());
@@ -5070,7 +5070,7 @@ throw not_implemented(get_app());
 
    }
 
-   UINT window::IsDlgButtonChecked(int nIDButton) const
+   UINT window::IsDlgButtonChecked(int32_t nIDButton) const
    {
 
       throw not_implemented(get_app());
@@ -5079,7 +5079,7 @@ throw not_implemented(get_app());
 
    }
 
-   LPARAM window::SendDlgItemMessage(int nID, UINT message, WPARAM wparam, LPARAM lparam)
+   LPARAM window::SendDlgItemMessage(int32_t nID, UINT message, WPARAM wparam, LPARAM lparam)
    {
 
       throw not_implemented(get_app());
@@ -5088,7 +5088,7 @@ throw not_implemented(get_app());
 
    }
 
-   void window::SetDlgItemInt(int nID, UINT nValue, bool bSigned)
+   void window::SetDlgItemInt(int32_t nID, UINT nValue, bool bSigned)
    {
 
       throw not_implemented(get_app());
@@ -5097,7 +5097,7 @@ throw not_implemented(get_app());
 
    }
 
-   void window::SetDlgItemText(int nID, const char * lpszString)
+   void window::SetDlgItemText(int32_t nID, const char * lpszString)
    {
 
       throw not_implemented(get_app());
@@ -5106,7 +5106,7 @@ throw not_implemented(get_app());
 
    }
 
-   int window::ScrollWindowEx(int dx, int dy, LPCRECT lpRectScroll, LPCRECT lpRectClip, ::ca::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags)
+   int32_t window::ScrollWindowEx(int32_t dx, int32_t dy, LPCRECT lpRectScroll, LPCRECT lpRectClip, ::ca::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags)
    {
 
       throw not_implemented(get_app());
@@ -5284,7 +5284,7 @@ throw not_implemented(get_app());
 
    }
 
-   void window::CreateSolidCaret(int nWidth, int nHeight)
+   void window::CreateSolidCaret(int32_t nWidth, int32_t nHeight)
    {
 
       throw not_implemented(get_app());
@@ -5293,7 +5293,7 @@ throw not_implemented(get_app());
 
    }
 
-   void window::CreateGrayCaret(int nWidth, int nHeight)
+   void window::CreateGrayCaret(int32_t nWidth, int32_t nHeight)
    {
 
       throw not_implemented(get_app());
@@ -5457,7 +5457,7 @@ throw not_implemented(get_app());
    { return Default(); }
    void window::OnMenuSelect(UINT, UINT, HMENU)
    { Default(); }
-   void window::OnMove(int, int)
+   void window::OnMove(int32_t, int32_t)
    { Default(); }
    HCURSOR window::OnQueryDragIcon()
    { return (HCURSOR)Default(); }
@@ -5499,7 +5499,7 @@ throw not_implemented(get_app());
    }
    void window::OnShowWindow(bool, UINT)
    { Default(); }
-   void window::OnSize(UINT, int, int)
+   void window::OnSize(UINT, int32_t, int32_t)
    { Default(); }
    void window::OnTCard(UINT, DWORD)
    { Default(); }
@@ -5593,8 +5593,8 @@ throw not_implemented(get_app());
    { Default(); }
    void window::OnMButtonUp(UINT, point)
    { Default(); }
-   int window::OnMouseActivate(::ca::window *, UINT, UINT)
-   { return (int)Default(); }
+   int32_t window::OnMouseActivate(::ca::window *, UINT, UINT)
+   { return (int32_t)Default(); }
    void window::OnMouseMove(UINT, point)
    { Default(); }
 
@@ -5656,9 +5656,9 @@ throw not_implemented(get_app());
    void window::OnExitMenuLoop(bool)
    { Default(); }
    // Win4 support
-//   void window::OnStyleChanged(int, LPSTYLESTRUCT)
+//   void window::OnStyleChanged(int32_t, LPSTYLESTRUCT)
 //   { Default(); }
-//   void window::OnStyleChanging(int, LPSTYLESTRUCT)
+//   void window::OnStyleChanging(int32_t, LPSTYLESTRUCT)
 //   { Default(); }
    void window::OnSizing(UINT, LPRECT)
    { Default(); }
@@ -5893,7 +5893,7 @@ throw not_implemented(get_app());
    /////////////////////////////////////////////////////////////////////////////
    // oswindow creation hooks
 
-   LRESULT CALLBACK __cbt_filter_hook(int code, WPARAM wparam, LPARAM lparam)
+   LRESULT CALLBACK __cbt_filter_hook(int32_t code, WPARAM wparam, LPARAM lparam)
    {
 
       throw not_implemented(::ca::get_thread_app());
@@ -6074,7 +6074,7 @@ void CTestCmdUI::Enable(bool bOn)
    m_bEnableChanged = TRUE;
 }
 
-void CTestCmdUI::SetCheck(int)
+void CTestCmdUI::SetCheck(int32_t)
 {
    // do nothing -- just want to know about calls to Enable
 }
@@ -6652,8 +6652,8 @@ namespace lnx
 //      sz.cx = rectWindow.right - rectWindow.left;
 //      sz.cy = rectWindow.bottom - rectWindow.top;
 //
-//      int cx = sz.cx;
-//      int cy = sz.cy;
+//      int32_t cx = sz.cx;
+//      int32_t cy = sz.cy;
 //
 //      BITMAPINFO info;
 //      COLORREF * pcolorref;
@@ -6695,46 +6695,46 @@ namespace lnx
 //
 //         while (size >= 8)
 //         {
-//            dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
-//            dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
-//            dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
+//            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
+//            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
+//            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
 //
-//            dst[4+0] = LOBYTE(((int)dst[4+0] * (int)dst[4+3])>> 8);
-//            dst[4+1] = LOBYTE(((int)dst[4+1] * (int)dst[4+3])>> 8);
-//            dst[4+2] = LOBYTE(((int)dst[4+2] * (int)dst[4+3])>> 8);
+//            dst[4+0] = LOBYTE(((int32_t)dst[4+0] * (int32_t)dst[4+3])>> 8);
+//            dst[4+1] = LOBYTE(((int32_t)dst[4+1] * (int32_t)dst[4+3])>> 8);
+//            dst[4+2] = LOBYTE(((int32_t)dst[4+2] * (int32_t)dst[4+3])>> 8);
 //
-//            dst[8+0] = LOBYTE(((int)dst[8+0] * (int)dst[8+3])>> 8);
-//            dst[8+1] = LOBYTE(((int)dst[8+1] * (int)dst[8+3])>> 8);
-//            dst[8+2] = LOBYTE(((int)dst[8+2] * (int)dst[8+3])>> 8);
+//            dst[8+0] = LOBYTE(((int32_t)dst[8+0] * (int32_t)dst[8+3])>> 8);
+//            dst[8+1] = LOBYTE(((int32_t)dst[8+1] * (int32_t)dst[8+3])>> 8);
+//            dst[8+2] = LOBYTE(((int32_t)dst[8+2] * (int32_t)dst[8+3])>> 8);
 //
-//            dst[12+0] = LOBYTE(((int)dst[12+0] * (int)dst[12+3])>> 8);
-//            dst[12+1] = LOBYTE(((int)dst[12+1] * (int)dst[12+3])>> 8);
-//            dst[12+2] = LOBYTE(((int)dst[12+2] * (int)dst[12+3])>> 8);
+//            dst[12+0] = LOBYTE(((int32_t)dst[12+0] * (int32_t)dst[12+3])>> 8);
+//            dst[12+1] = LOBYTE(((int32_t)dst[12+1] * (int32_t)dst[12+3])>> 8);
+//            dst[12+2] = LOBYTE(((int32_t)dst[12+2] * (int32_t)dst[12+3])>> 8);
 //
-//            dst[16+0] = LOBYTE(((int)dst[16+0] * (int)dst[16+3])>> 8);
-//            dst[16+1] = LOBYTE(((int)dst[16+1] * (int)dst[16+3])>> 8);
-//            dst[16+2] = LOBYTE(((int)dst[16+2] * (int)dst[16+3])>> 8);
+//            dst[16+0] = LOBYTE(((int32_t)dst[16+0] * (int32_t)dst[16+3])>> 8);
+//            dst[16+1] = LOBYTE(((int32_t)dst[16+1] * (int32_t)dst[16+3])>> 8);
+//            dst[16+2] = LOBYTE(((int32_t)dst[16+2] * (int32_t)dst[16+3])>> 8);
 //
-//            dst[20+0] = LOBYTE(((int)dst[20+0] * (int)dst[20+3])>> 8);
-//            dst[20+1] = LOBYTE(((int)dst[20+1] * (int)dst[20+3])>> 8);
-//            dst[20+2] = LOBYTE(((int)dst[20+2] * (int)dst[20+3])>> 8);
+//            dst[20+0] = LOBYTE(((int32_t)dst[20+0] * (int32_t)dst[20+3])>> 8);
+//            dst[20+1] = LOBYTE(((int32_t)dst[20+1] * (int32_t)dst[20+3])>> 8);
+//            dst[20+2] = LOBYTE(((int32_t)dst[20+2] * (int32_t)dst[20+3])>> 8);
 //
-//            dst[24+0] = LOBYTE(((int)dst[24+0] * (int)dst[24+3])>> 8);
-//            dst[24+1] = LOBYTE(((int)dst[24+1] * (int)dst[24+3])>> 8);
-//            dst[24+2] = LOBYTE(((int)dst[24+2] * (int)dst[24+3])>> 8);
+//            dst[24+0] = LOBYTE(((int32_t)dst[24+0] * (int32_t)dst[24+3])>> 8);
+//            dst[24+1] = LOBYTE(((int32_t)dst[24+1] * (int32_t)dst[24+3])>> 8);
+//            dst[24+2] = LOBYTE(((int32_t)dst[24+2] * (int32_t)dst[24+3])>> 8);
 //
-//            dst[28+0] = LOBYTE(((int)dst[28+0] * (int)dst[28+3])>> 8);
-//            dst[28+1] = LOBYTE(((int)dst[28+1] * (int)dst[28+3])>> 8);
-//            dst[28+2] = LOBYTE(((int)dst[28+2] * (int)dst[28+3])>> 8);
+//            dst[28+0] = LOBYTE(((int32_t)dst[28+0] * (int32_t)dst[28+3])>> 8);
+//            dst[28+1] = LOBYTE(((int32_t)dst[28+1] * (int32_t)dst[28+3])>> 8);
+//            dst[28+2] = LOBYTE(((int32_t)dst[28+2] * (int32_t)dst[28+3])>> 8);
 //
 //            dst += 4 * 8;
 //            size -= 8;
 //         }
 //         while(size--)
 //         {
-//            dst[0] = LOBYTE(((int)dst[0] * (int)dst[3])>> 8);
-//            dst[1] = LOBYTE(((int)dst[1] * (int)dst[3])>> 8);
-//            dst[2] = LOBYTE(((int)dst[2] * (int)dst[3])>> 8);
+//            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
+//            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
+//            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
 //            dst += 4;
 //         }
 //

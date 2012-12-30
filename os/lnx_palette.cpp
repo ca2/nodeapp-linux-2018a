@@ -133,14 +133,14 @@ namespace lnx
 */
 
 
-   int palette::GetEntryCount()
+   int32_t palette::GetEntryCount()
    {
 
       //ASSERT(get_os_data() != NULL);
 
       //WORD nEntries;
 
-      //::GetObject(get_os_data(), sizeof(WORD), &nEntries); return (int)nEntries;
+      //::GetObject(get_os_data(), sizeof(WORD), &nEntries); return (int32_t)nEntries;
 
       return 0;
 

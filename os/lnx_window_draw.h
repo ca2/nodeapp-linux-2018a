@@ -120,7 +120,7 @@ namespace lnx
 
       EOptimize TwfOptimizeRenderRemoveNextProper(
          user::oswindow_tree::Array & hwndtreea,
-         int iIndex,
+         int32_t iIndex,
          LPCRECT lpcrect);
 
       void get_wnda(user::interaction_ptr_array & wndpa);

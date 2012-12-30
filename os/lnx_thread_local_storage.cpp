@@ -8,12 +8,12 @@
 
 #if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
-void * PASCAL no_track_object::operator new(size_t nSize, const char *, int)
+void * PASCAL no_track_object::operator new(size_t nSize, const char *, int32_t)
 {
    return no_track_object::operator new(nSize);
 }
 #define new DEBUG_NEW
-void PASCAL no_track_object::operator delete(void * pObject, const char *, int)
+void PASCAL no_track_object::operator delete(void * pObject, const char *, int32_t)
 {
    if (pObject != NULL)
       ::free(pObject);
@@ -40,7 +40,7 @@ void PASCAL no_track_object::operator delete(void * p)
 struct thread_data : public no_track_object
 {
    thread_data* pNext; // required to be member of simple_list
-   int nCount;         // current size of pData
+   int32_t nCount;         // current size of pData
    LPVOID* pData;      // actual thread local data (indexed by nSlot)
 };
 
@@ -122,7 +122,7 @@ thread_slot_data::thread_slot_data()
 
 void thread_slot_data::delete_data()
 {
-   for(int i = 0; i < 1024; i++)
+   for(int32_t i = 0; i < 1024; i++)
    {
       if(m_pa[i] != NULL)
       {

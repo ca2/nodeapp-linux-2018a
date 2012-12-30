@@ -16,13 +16,13 @@ namespace lnx
       //delete_object();
    }
 
-   int graphics_object::get_object(int nCount, LPVOID lpObject) const
+   int32_t graphics_object::get_object(int32_t nCount, LPVOID lpObject) const
    {
       //return ::GetObject(get_handle(), nCount, lpObject);
       return 0;
    }
 
-   bool graphics_object::CreateStockObject(int nIndex)
+   bool graphics_object::CreateStockObject(int32_t nIndex)
    {
       //return (set_handle(::GetStockObject(nIndex))) != NULL;
       return 0;

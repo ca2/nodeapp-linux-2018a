@@ -55,11 +55,11 @@ namespace lnx
       bool           m_bCloseOnDelete;
       string         m_strFileName;
       wstring        m_wstrFileName;
-      int            m_iFile;
+      int32_t            m_iFile;
 
 
       file(::ca::application * papp);
-      file(::ca::application * papp, int hFile);
+      file(::ca::application * papp, int32_t hFile);
       file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags);
       virtual ~file();
 
@@ -110,10 +110,10 @@ namespace lnx
    {
 
 
-      int PASCAL OsErrorToException(LONG lOsError);
-      int PASCAL ErrnoToException(int nErrno);
+      int32_t PASCAL OsErrorToException(LONG lOsError);
+      int32_t PASCAL ErrnoToException(int32_t nErrno);
       void PASCAL ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName = NULL);
-      void PASCAL ThrowErrno(::ca::application * papp, int nErrno, const char * lpszFileName = NULL);
+      void PASCAL ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName = NULL);
 
 
    }  // namespace file_exception

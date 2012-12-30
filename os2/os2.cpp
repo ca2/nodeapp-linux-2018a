@@ -2,11 +2,11 @@
 
 
 
-extern "C" int APIENTRY
+extern "C" int32_t APIENTRY
 DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 {
-   
-   
+
+
    UNREFERENCED_PARAMETER(hInstance);
    UNREFERENCED_PARAMETER(lpReserved);
 
@@ -16,12 +16,12 @@ DllMain(HINSTANCE hInstance, DWORD dwReason, LPVOID lpReserved)
 
 
       ::OutputDebugString("::ca2:: win2.dll :: initializing!\n");
-      
+
 
    }
    else if (dwReason == DLL_PROCESS_DETACH)
    {
-   
+
 
       ::OutputDebugString("::ca2:: win2.dll :: terminating!\n");
 

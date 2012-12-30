@@ -23,7 +23,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
 
       ::radix::object * pobject = NULL;
 
-      /*for(int i = 0; i < 256; i++)
+      /*for(int32_t i = 0; i < 256; i++)
       {
          try
          {
@@ -74,7 +74,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
       (*pfnOldCrtDumpClient)(pvData, nBytes);
 }
 
-int __cdecl __crt_report_hook(int nRptType, char *szMsg, int* pResult)
+int32_t __cdecl __crt_report_hook(int32_t nRptType, char *szMsg, int32_t* pResult)
 {
    // no hook on asserts or when m_pFile is NULL
    if (nRptType == _CRT_ASSERT || g_dumpcontext.m_pFile == NULL)
@@ -132,7 +132,7 @@ ___DEBUG_STATE::~___DEBUG_STATE()
          ::OutputDebugString("~___DEBUG_STATE _CrtdumpMemoryLeaks exception\n");
       }
    }
-   int nOldState = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
+   int32_t nOldState = _CrtSetDbgFlag(_CRTDBG_REPORT_FLAG);
    _CrtSetDbgFlag(nOldState & ~_CRTDBG_LEAK_CHECK_DF);
 
    ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE,__crt_report_hook) != -1);

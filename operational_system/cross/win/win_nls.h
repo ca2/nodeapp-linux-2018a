@@ -1343,26 +1343,26 @@ IsDBCSLeadByteEx(
     BYTE  TestChar);
 
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 MultiByteToWideChar(
     UINT     CodePage,
     DWORD    dwFlags,
     LPCSTR   lpMultiByteStr,
-    int      cbMultiByte,
+    int32_t      cbMultiByte,
     LPWSTR  lpWideCharStr,
-    int      cchWideChar);
+    int32_t      cchWideChar);
 
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 WideCharToMultiByte(
     UINT     CodePage,
     DWORD    dwFlags,
     LPCWSTR  lpWideCharStr,
-    int      cchWideChar,
+    int32_t      cchWideChar,
     LPSTR   lpMultiByteStr,
-    int      cbMultiByte,
+    int32_t      cbMultiByte,
     LPCSTR   lpDefaultChar,
     LPBOOL  lpUsedDefaultChar);
 
@@ -1373,26 +1373,26 @@ WideCharToMultiByte(
 
 // For Windows Vista and above CompareStringEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 CompareStringA(
     LCID     Locale,
     DWORD    dwCmpFlags,
     PCNZCH lpString1,
-    int      cchCount1,
+    int32_t      cchCount1,
     PCNZCH  lpString2,
-    int      cchCount2);
+    int32_t      cchCount2);
 
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 CompareStringW(
     LCID     Locale,
     DWORD    dwCmpFlags,
     PCNZWCH lpString1,
-    int      cchCount1,
+    int32_t      cchCount1,
     PCNZWCH  lpString2,
-    int      cchCount2);
+    int32_t      cchCount2);
 
 #ifdef UNICODE
 #define CompareString  CompareStringW
@@ -1403,14 +1403,14 @@ CompareStringW(
 #if defined(_M_CEE)
 #undef CompareString
 __inline
-int
+int32_t
 CompareString(
     LCID     Locale,
     DWORD    dwCmpFlags,
     LPCTSTR  lpString1,
-    int      cchCount1,
+    int32_t      cchCount1,
     LPCTSTR  lpString2,
-    int      cchCount2
+    int32_t      cchCount2
     )
 {
 #ifdef UNICODE
@@ -1432,15 +1432,15 @@ CompareString(
 
 // For Windows Vista and above FindNLSStringEx is preferred
 WINBASEAPI
-int
+int32_t
 WINAPI
 FindNLSString(
                        LCID Locale,
                        DWORD dwFindNLSStringFlags,
     LPCWSTR lpStringSource,
-                       int cchSource,
+                       int32_t cchSource,
     LPCWSTR lpStringValue,
-                       int cchValue,
+                       int32_t cchValue,
                 LPINT pcchFound);
 
 #endif //(WINVER >= 0x0600)
@@ -1448,40 +1448,40 @@ FindNLSString(
 #if (WINVER >= _WIN32_WINNT_WIN7)
 
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 FindStringOrdinal(
                        DWORD dwFindStringOrdinalFlags,
     LPCWSTR lpStringSource,
-                       int cchSource,
+                       int32_t cchSource,
     LPCWSTR lpStringValue,
-                       int cchValue,
+                       int32_t cchValue,
                        WINBOOL bIgnoreCase);
 
 #endif //(WINVER >= _WIN32_WINNT_WIN7)
 
 // For Windows Vista and above LCMapStringEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 LCMapStringA(
     LCID     Locale,
     DWORD    dwMapFlags,
     LPCSTR  lpSrcStr,
-    int      cchSrc,
+    int32_t      cchSrc,
     LPSTR  lpDestStr,
-    int      cchDest);
+    int32_t      cchDest);
 // For Windows Vista and above LCMapStringEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 LCMapStringW(
     LCID     Locale,
     DWORD    dwMapFlags,
     LPCWSTR  lpSrcStr,
-    int      cchSrc,
+    int32_t      cchSrc,
     LPWSTR  lpDestStr,
-    int      cchDest);
+    int32_t      cchDest);
 #ifdef UNICODE
 #define LCMapString  LCMapStringW
 #else
@@ -1490,22 +1490,22 @@ LCMapStringW(
 
 // For Windows Vista and above GetLocaleInfoEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetLocaleInfoA(
     LCID     Locale,
     LCTYPE   LCType,
     LPSTR  lpLCData,
-    int      cchData);
+    int32_t      cchData);
 // For Windows Vista and above GetLocaleInfoEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetLocaleInfoW(
     LCID     Locale,
     LCTYPE   LCType,
     LPWSTR  lpLCData,
-    int      cchData);
+    int32_t      cchData);
 #ifdef UNICODE
 #define GetLocaleInfo  GetLocaleInfoW
 #else
@@ -1535,25 +1535,25 @@ SetLocaleInfoW(
 #if (WINVER >= 0x040A)
 // For Windows Vista and above GetCalendarInfoEx is preferred
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetCalendarInfoA(
     LCID     Locale,
     CALID    Calendar,
     CALTYPE  CalType,
     LPSTR   lpCalData,
-    int      cchData,
+    int32_t      cchData,
     LPDWORD  lpValue);
 // For Windows Vista and above GetCalendarInfoEx is preferred
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetCalendarInfoW(
     LCID     Locale,
     CALID    Calendar,
     CALTYPE  CalType,
     LPWSTR   lpCalData,
-    int      cchData,
+    int32_t      cchData,
     LPDWORD  lpValue);
 #ifdef UNICODE
 #define GetCalendarInfo  GetCalendarInfoW
@@ -1586,12 +1586,12 @@ SetCalendarInfoW(
 
 #if (WINVER >= 0x0600)
 WINBASEAPI
-int
+int32_t
 WINAPI
 LCIDToLocaleName(
     LCID     Locale,
     __out_ecount_opt(cchName) LPWSTR  lpName,
-    int      cchName,
+    int32_t      cchName,
     DWORD    dwFlags);
 
 WINBASEAPI
@@ -1605,7 +1605,7 @@ LocaleNameToLCID(
 
 // For Windows Vista and above GetTimeFormatEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetTimeFormatA(
     LCID             Locale,
@@ -1613,10 +1613,10 @@ GetTimeFormatA(
     CONST SYSTEMTIME *lpTime,
     LPCSTR          lpFormat,
     LPSTR          lpTimeStr,
-    int              cchTime);
+    int32_t              cchTime);
 // For Windows Vista and above GetTimeFormatEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetTimeFormatW(
     LCID             Locale,
@@ -1624,7 +1624,7 @@ GetTimeFormatW(
     CONST SYSTEMTIME *lpTime,
     LPCWSTR          lpFormat,
     LPWSTR          lpTimeStr,
-    int              cchTime);
+    int32_t              cchTime);
 #ifdef UNICODE
 #define GetTimeFormat  GetTimeFormatW
 #else
@@ -1635,7 +1635,7 @@ GetTimeFormatW(
 // For Windows Vista and above GetDurationFormatEx is preferred
 #if (WINVER >= 0x0600)
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetDurationFormat(
     LCID             Locale,
@@ -1644,12 +1644,12 @@ GetDurationFormat(
     ULONGLONG ullDuration,
     LPCWSTR          lpFormat,
     __out_ecount_opt(cchDuration) LPWSTR          lpDurationStr,
-    int              cchDuration);
+    int32_t              cchDuration);
 #endif //(WINVER >= 0x0600)
 
 // For Windows Vista and above GetDateFormatEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetDateFormatA(
     LCID             Locale,
@@ -1657,10 +1657,10 @@ GetDateFormatA(
     CONST SYSTEMTIME *lpDate,
     LPCSTR          lpFormat,
     LPSTR          lpDateStr,
-    int              cchDate);
+    int32_t              cchDate);
 // For Windows Vista and above GetDateFormatEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetDateFormatW(
     LCID             Locale,
@@ -1668,7 +1668,7 @@ GetDateFormatW(
     CONST SYSTEMTIME *lpDate,
     LPCWSTR          lpFormat,
     LPWSTR          lpDateStr,
-    int              cchDate);
+    int32_t              cchDate);
 #ifdef UNICODE
 #define GetDateFormat  GetDateFormatW
 #else
@@ -1677,7 +1677,7 @@ GetDateFormatW(
 
 // For Windows Vista and above GetNumberFormatEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetNumberFormatA(
     LCID             Locale,
@@ -1685,10 +1685,10 @@ GetNumberFormatA(
     LPCSTR          lpValue,
     CONST NUMBERFMTA *lpFormat,
     LPSTR          lpNumberStr,
-    int              cchNumber);
+    int32_t              cchNumber);
 // For Windows Vista and above GetNumberFormatEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetNumberFormatW(
     LCID             Locale,
@@ -1696,7 +1696,7 @@ GetNumberFormatW(
     LPCWSTR          lpValue,
     CONST NUMBERFMTW *lpFormat,
     LPWSTR          lpNumberStr,
-    int              cchNumber);
+    int32_t              cchNumber);
 #ifdef UNICODE
 #define GetNumberFormat  GetNumberFormatW
 #else
@@ -1705,7 +1705,7 @@ GetNumberFormatW(
 
 // For Windows Vista and above GetCurrencyFormatEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetCurrencyFormatA(
     LCID               Locale,
@@ -1713,10 +1713,10 @@ GetCurrencyFormatA(
     LPCSTR            lpValue,
     CONST CURRENCYFMTA *lpFormat,
     LPSTR            lpCurrencyStr,
-    int                cchCurrency);
+    int32_t                cchCurrency);
 // For Windows Vista and above GetCurrencyFormatEx is preferred
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetCurrencyFormatW(
     LCID               Locale,
@@ -1724,7 +1724,7 @@ GetCurrencyFormatW(
     LPCWSTR            lpValue,
     CONST CURRENCYFMTW *lpFormat,
     LPWSTR            lpCurrencyStr,
-    int                cchCurrency);
+    int32_t                cchCurrency);
 #ifdef UNICODE
 #define GetCurrencyFormat  GetCurrencyFormatW
 #else
@@ -1886,22 +1886,22 @@ IsValidLocale(
     DWORD  dwFlags);
 
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetGeoInfoA(
     GEOID       Location,
     GEOTYPE     GeoType,
     LPSTR     lpGeoData,
-    int         cchData,
+    int32_t         cchData,
     LANGID      LangId);
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 GetGeoInfoW(
     GEOID       Location,
     GEOTYPE     GeoType,
     LPWSTR     lpGeoData,
-    int         cchData,
+    int32_t         cchData,
     LANGID      LangId);
 #ifdef UNICODE
 #define GetGeoInfo  GetGeoInfoW
@@ -2117,7 +2117,7 @@ GetStringTypeExA(
                     LCID       Locale,
                     DWORD      dwInfoType,
      LPCSTR   lpSrcStr,
-                    int        cchSrc,
+                    int32_t        cchSrc,
     LPWORD     lpCharType);
 //xxx linux WINBASEAPI
 WINBOOL
@@ -2126,7 +2126,7 @@ GetStringTypeExW(
                     LCID       Locale,
                     DWORD      dwInfoType,
      LPCWSTR   lpSrcStr,
-                    int        cchSrc,
+                    int32_t        cchSrc,
     LPWORD     lpCharType);
 #ifdef UNICODE
 #define GetStringTypeEx  GetStringTypeExW
@@ -2152,7 +2152,7 @@ GetStringTypeA(
     LCID     Locale,
     DWORD    dwInfoType,
     LPCSTR   lpSrcStr,
-    int      cchSrc,
+    int32_t      cchSrc,
     LPWORD  lpCharType);
 
 //xxx linux WINBASEAPI
@@ -2161,28 +2161,28 @@ WINAPI
 GetStringTypeW(
     DWORD    dwInfoType,
      LPCWSTR  lpSrcStr,
-    int      cchSrc,
+    int32_t      cchSrc,
     LPWORD  lpCharType);
 
 
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 FoldStringA(
     DWORD    dwMapFlags,
     LPCSTR  lpSrcStr,
-    int      cchSrc,
+    int32_t      cchSrc,
     LPSTR  lpDestStr,
-    int      cchDest);
+    int32_t      cchDest);
 //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 FoldStringW(
     DWORD    dwMapFlags,
     LPCWSTR  lpSrcStr,
-    int      cchSrc,
+    int32_t      cchSrc,
     LPWSTR  lpDestStr,
-    int      cchDest);
+    int32_t      cchDest);
 #ifdef UNICODE
 #define FoldString  FoldStringW
 #else
@@ -2296,63 +2296,63 @@ EnumSystemCodePagesW(
 //
 
 WINNORMALIZEAPI
-int
+int32_t
 WINAPI NormalizeString(                          NORM_FORM NormForm,
                         __in_ecount(cwSrcLength)      LPCWSTR   lpSrcString,
-                                                 int       cwSrcLength,
+                                                 int32_t       cwSrcLength,
                         __out_ecount_opt(cwDstLength) LPWSTR    lpDstString,
-                                                 int       cwDstLength );
+                                                 int32_t       cwDstLength );
 
 WINNORMALIZEAPI
 WINBOOL
 WINAPI IsNormalizedString(                   NORM_FORM NormForm,
                            __in_ecount(cwLength)  LPCWSTR   lpString,
-                                             int       cwLength );
+                                             int32_t       cwLength );
 
 //
 // IDN (International Domain Name) Functions
 //
 WINNORMALIZEAPI
-int
+int32_t
 WINAPI IdnToAscii(                          DWORD    dwFlags,
                   __in_ecount(cchUnicodeChar) 	 LPCWSTR  lpUnicodeCharStr,
-                                         	 int      cchUnicodeChar,
+                                         	 int32_t      cchUnicodeChar,
                   __out_ecount_opt(cchASCIIChar) LPWSTR   lpASCIICharStr,
-                                         	 int      cchASCIIChar);
+                                         	 int32_t      cchASCIIChar);
 
 WINNORMALIZEAPI
-int
+int32_t
 WINAPI IdnToNameprepUnicode(                           	DWORD   dwFlags,
                             __in_ecount(cchUnicodeChar)     	LPCWSTR lpUnicodeCharStr,
-                                                       	int     cchUnicodeChar,
+                                                       	int32_t     cchUnicodeChar,
                             __out_ecount_opt(cchNameprepChar)   LPWSTR  lpNameprepCharStr,
-                                                       	int     cchNameprepChar);
+                                                       	int32_t     cchNameprepChar);
 
 WINNORMALIZEAPI
-int
+int32_t
 WINAPI IdnToUnicode(                        	 DWORD   dwFlags,
                     __in_ecount(cchASCIIChar)    	 LPCWSTR lpASCIICharStr,
-                                            	 int     cchASCIIChar,
+                                            	 int32_t     cchASCIIChar,
                     __out_ecount_opt(cchUnicodeChar) LPWSTR  lpUnicodeCharStr,
-                                            	 int     cchUnicodeChar);
+                                            	 int32_t     cchUnicodeChar);
 
 WINBASEAPI
 WINBOOL
 WINAPI VerifyScripts(
        DWORD   dwFlags,            // optional behavior flags
        LPCWSTR lpLocaleScripts,    // Locale list of scripts string
-       int     cchLocaleScripts,   // size of locale script list string
+       int32_t     cchLocaleScripts,   // size of locale script list string
        LPCWSTR lpTestScripts,      // test scripts string
-       int     cchTestScripts);    // size of test list string
+       int32_t     cchTestScripts);    // size of test list string
 
 WINBASEAPI
-int
+int32_t
 WINAPI GetStringScripts(
                                 DWORD   dwFlags,        // optional behavior flags
                                 LPCWSTR lpString,       // Unicode character input string
-                                int     cchString,      // size of input string
+                                int32_t     cchString,      // size of input string
         __out_ecount_opt(cchScripts) LPWSTR  lpScripts,      // Script list output string
-                                int     cchScripts);    // size of output string
+                                int32_t     cchScripts);    // size of output string
 
 #endif //(WINVER >= 0x0600)
 
@@ -2366,17 +2366,17 @@ WINAPI GetStringScripts(
 #define LOCALE_NAME_SYSTEM_DEFAULT          L"!x-sys-default-locale"
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetLocaleInfoEx(
     LPCWSTR lpLocaleName,
     LCTYPE LCType,
     LPWSTR lpLCData,
-    int cchData
+    int32_t cchData
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetCalendarInfoEx(
     LPCWSTR lpLocaleName,
@@ -2384,13 +2384,13 @@ GetCalendarInfoEx(
     LPCWSTR lpReserved,
     CALTYPE CalType,
     LPWSTR lpCalData,
-    int cchData,
+    int32_t cchData,
     LPDWORD lpValue
 );
 
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetTimeFormatEx(
     LPCWSTR lpLocaleName,
@@ -2398,11 +2398,11 @@ GetTimeFormatEx(
     CONST SYSTEMTIME *lpTime,
     LPCWSTR lpFormat,
     LPWSTR lpTimeStr,
-    int cchTime
+    int32_t cchTime
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetDateFormatEx(
     LPCWSTR lpLocaleName,
@@ -2410,12 +2410,12 @@ GetDateFormatEx(
     CONST SYSTEMTIME *lpDate,
     LPCWSTR lpFormat,
     LPWSTR lpDateStr,
-    int cchDate,
+    int32_t cchDate,
     LPCWSTR lpCalendar
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetDurationFormatEx(
     LPCWSTR lpLocaleName,
@@ -2424,11 +2424,11 @@ GetDurationFormatEx(
     ULONGLONG ullDuration,
     LPCWSTR lpFormat,
     __out_ecount_opt(cchDuration) LPWSTR lpDurationStr,
-    int cchDuration
+    int32_t cchDuration
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetNumberFormatEx(
     LPCWSTR lpLocaleName,
@@ -2436,11 +2436,11 @@ GetNumberFormatEx(
     LPCWSTR lpValue,
     CONST NUMBERFMTW *lpFormat,
     LPWSTR lpNumberStr,
-    int cchNumber
+    int32_t cchNumber
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetCurrencyFormatEx(
     LPCWSTR lpLocaleName,
@@ -2448,23 +2448,23 @@ GetCurrencyFormatEx(
     LPCWSTR lpValue,
     CONST CURRENCYFMTW *lpFormat,
     LPWSTR lpCurrencyStr,
-    int cchCurrency
+    int32_t cchCurrency
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetUserDefaultLocaleName(
     __out_ecount(cchLocaleName) LPWSTR lpLocaleName,
-    int cchLocaleName
+    int32_t cchLocaleName
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 GetSystemDefaultLocaleName(
     __out_ecount(cchLocaleName) LPWSTR lpLocaleName,
-    int cchLocaleName
+    int32_t cchLocaleName
 );
 
 WINBASEAPI
@@ -2477,30 +2477,30 @@ GetNLSVersionEx(
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 CompareStringEx(
     LPCWSTR lpLocaleName,
     DWORD dwCmpFlags,
     LPCWSTR lpString1,
-    int cchCount1,
+    int32_t cchCount1,
     LPCWSTR lpString2,
-    int cchCount2,
+    int32_t cchCount2,
     LPNLSVERSIONINFO lpVersionInformation,
     LPVOID lpReserved,
     LPARAM lParam
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 FindNLSStringEx(
     LPCWSTR lpLocaleName,
     DWORD dwFindNLSStringFlags,
     __in_ecount(cchSource) LPCWSTR lpStringSource,
-    int cchSource,
+    int32_t cchSource,
     __in_ecount(cchValue) LPCWSTR lpStringValue,
-    int cchValue,
+    int32_t cchValue,
     LPINT pcchFound,
     LPNLSVERSIONINFO lpVersionInformation,
     LPVOID lpReserved,
@@ -2509,28 +2509,28 @@ FindNLSStringEx(
 
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 LCMapStringEx(
     LPCWSTR lpLocaleName,
     DWORD dwMapFlags,
     LPCWSTR lpSrcStr,
-    int cchSrc,
+    int32_t cchSrc,
     LPWSTR lpDestStr,
-    int cchDest,
+    int32_t cchDest,
     LPNLSVERSIONINFO lpVersionInformation,
     LPVOID lpReserved,
     LPARAM lParam
 );
 
 WINBASEAPI
-int
+int32_t
 WINAPI
 CompareStringOrdinal(
     LPCWSTR lpString1,
-    int     cchCount1,
+    int32_t     cchCount1,
     LPCWSTR lpString2,
-    int     cchCount2,
+    int32_t     cchCount2,
     WINBOOL    bIgnoreCase
 );
 
@@ -2596,12 +2596,12 @@ EnumSystemLocalesEx(
 
 #if (WINVER >= _WIN32_WINNT_WIN7)
 //xxx linux //xxx linux WINBASEAPI
-int
+int32_t
 WINAPI
 ResolveLocaleName(
                            LPCWSTR lpNameToResolve,
     LPWSTR  lpLocaleName,
-                               int     cchLocaleName
+                               int32_t     cchLocaleName
 );
 #endif // (WINVER >= _WIN32_WINNT_WIN7)
 

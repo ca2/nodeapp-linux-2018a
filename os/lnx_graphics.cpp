@@ -181,7 +181,7 @@ namespace lnx
 
    }
 
-   int graphics::ExcludeUpdateRgn(::ca::window * pWnd)
+   int32_t graphics::ExcludeUpdateRgn(::ca::window * pWnd)
    {
   //    ASSERT(get_handle1() != NULL);
 //      return ::ExcludeUpdateRgn(get_handle1(), WIN_WINDOW(pWnd)->get_handle());
@@ -189,7 +189,7 @@ namespace lnx
          return 0;
    }
 
-   int graphics::GetDeviceCaps(int nIndex) const
+   int32_t graphics::GetDeviceCaps(int32_t nIndex) const
    {
 /*      ASSERT(get_handle2() != NULL);
       return ::GetDeviceCaps(get_handle2(), nIndex);*/
@@ -208,7 +208,7 @@ namespace lnx
 
    }
 
-   point graphics::SetBrushOrg(int x, int y)
+   point graphics::SetBrushOrg(int32_t x, int32_t y)
    {
 /*      ASSERT(get_handle1() != NULL);
       POINT point;
@@ -229,7 +229,7 @@ namespace lnx
 
    }
 
-   int graphics::EnumObjects(int nObjectType, int (CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData)
+   int32_t graphics::EnumObjects(int32_t nObjectType, int32_t (CALLBACK* lpfn)(LPVOID, LPARAM), LPARAM lpData)
    {
 /*      ASSERT(get_handle2() != NULL);
       return ::EnumObjects(get_handle2(), nObjectType, (GOBJENUMPROC)lpfn, lpData);*/
@@ -335,25 +335,25 @@ namespace lnx
       return 0;
    }
 
-   int graphics::GetBkMode() const
+   int32_t graphics::GetBkMode() const
    {
       //return ::GetBkMode(get_handle2());
       return 0;
    }
 
-   int graphics::GetPolyFillMode() const
+   int32_t graphics::GetPolyFillMode() const
    {
       //return ::GetPolyFillMode(get_handle2());
       return cairo_get_fill_rule(m_pdc) == CAIRO_FILL_RULE_WINDING ? ::ca::fill_mode_winding : ::ca::fill_mode_alternate;
    }
 
-   int graphics::GetROP2() const
+   int32_t graphics::GetROP2() const
    {
       //return ::GetROP2(get_handle2());
       return 0;
    }
 
-   int graphics::GetStretchBltMode() const
+   int32_t graphics::GetStretchBltMode() const
    {
       //return ::GetStretchBltMode(get_handle2());
       return 0;
@@ -365,13 +365,13 @@ namespace lnx
       return 0;
    }
 
-   int graphics::GetMapMode() const
+   int32_t graphics::GetMapMode() const
    {
       //return ::GetMapMode(get_handle2());
       return 0;
    }
 
-   int graphics::GetGraphicsMode() const
+   int32_t graphics::GetGraphicsMode() const
    {
       //return ::GetGraphicsMode(get_handle2());
       return 0;
@@ -435,7 +435,7 @@ namespace lnx
       return ::size(0, 0);
    }
 
-   void graphics::DPtoLP(LPPOINT lpPoints, int nCount) const
+   void graphics::DPtoLP(LPPOINT lpPoints, int32_t nCount) const
    {
       //::DPtoLP(get_handle2(), lpPoints, nCount);
    }
@@ -445,7 +445,7 @@ namespace lnx
       //::DPtoLP(get_handle2(), (LPPOINT)lpRect, 2);
    }
 
-   void graphics::LPtoDP(LPPOINT lpPoints, int nCount) const
+   void graphics::LPtoDP(LPPOINT lpPoints, int32_t nCount) const
    {
       //::LPtoDP(get_handle2(), lpPoints, nCount);
    }
@@ -464,7 +464,7 @@ namespace lnx
 
    }
 
-   bool graphics::FrameRgn(::ca::region* pRgn, ::ca::brush* pBrush, int nWidth, int nHeight)
+   bool graphics::FrameRgn(::ca::region* pRgn, ::ca::brush* pBrush, int32_t nWidth, int32_t nHeight)
    {
 
 //      return ::FrameRgn(get_handle1(), (HRGN)pRgn->get_os_data(), (HBRUSH)pBrush->get_os_data(), nWidth, nHeight) != FALSE;
@@ -496,7 +496,7 @@ namespace lnx
 
    }
 
-   bool graphics::PtVisible(int x, int y) const
+   bool graphics::PtVisible(int32_t x, int32_t y) const
    {
 
   //    ASSERT(get_handle1() != NULL);
@@ -542,7 +542,7 @@ namespace lnx
 
    }
 
-   bool graphics::Arc(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
+   bool graphics::Arc(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    {
 
       double centerx    = (x2 + x1) / 2.0;
@@ -587,7 +587,7 @@ namespace lnx
 
    }
 
-   bool graphics::Polyline(const POINT* lpPoints, int nCount)
+   bool graphics::Polyline(const POINT* lpPoints, int32_t nCount)
    {
 
       /*ASSERT(get_handle1() != NULL);
@@ -628,7 +628,7 @@ namespace lnx
 
    }
 
-   bool graphics::DrawIcon(int x, int y, ::visual::icon * picon)
+   bool graphics::DrawIcon(int32_t x, int32_t y, ::visual::icon * picon)
    {
 
       throw not_implemented(get_app());
@@ -658,7 +658,7 @@ namespace lnx
 
    }
 
-   bool graphics::DrawIcon(int x, int y, ::visual::icon * picon, int cx, int cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags)
+   bool graphics::DrawIcon(int32_t x, int32_t y, ::visual::icon * picon, int32_t cx, int32_t cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags)
    {
 
       return false;
@@ -769,7 +769,7 @@ namespace lnx
 
    }
 
-   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int nTextLen, HBRUSH hBrush)
+   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int32_t nTextLen, HBRUSH hBrush)
    {
 
       throw not_implemented(get_app());
@@ -779,7 +779,7 @@ namespace lnx
 
    }
 
-   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int nTextLen, ::ca::brush* pBrush)
+   bool graphics::DrawState(point pt, size size, const char * lpszText, UINT nFlags, bool bPrefixText, int32_t nTextLen, ::ca::brush* pBrush)
    {
 
       throw not_implemented(get_app());
@@ -836,7 +836,7 @@ namespace lnx
 
    }
 
-   bool graphics::Chord(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
+   bool graphics::Chord(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    {
       throw not_implemented(get_app());
       return false;
@@ -865,7 +865,7 @@ namespace lnx
 
    }
 
-   bool graphics::DrawEllipse(int x1, int y1, int x2, int y2)
+   bool graphics::DrawEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
       double centerx    = (x2 + x1) / 2.0;
@@ -904,7 +904,7 @@ namespace lnx
 
    }
 
-   bool graphics::FillEllipse(int x1, int y1, int x2, int y2)
+   bool graphics::FillEllipse(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
       double centerx    = (x2 + x1) / 2.0;
@@ -943,7 +943,7 @@ namespace lnx
 
    }
 
-   bool graphics::Pie(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
+   bool graphics::Pie(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    {
 
       throw not_implemented(get_app());
@@ -966,7 +966,7 @@ namespace lnx
 
    }
 
-   bool graphics::fill_polygon(const POINTD * pa, int nCount)
+   bool graphics::fill_polygon(const POINTD * pa, int32_t nCount)
    {
 
       if(nCount <= 0)
@@ -975,7 +975,7 @@ namespace lnx
 
       cairo_move_to(m_pdc, pa[0].x, pa[0].y);
 
-      for(int i = 1; i < nCount; i++)
+      for(int32_t i = 1; i < nCount; i++)
       {
          cairo_line_to(m_pdc, pa[i].x, pa[i].y);
       }
@@ -986,7 +986,7 @@ namespace lnx
 
    }
 
-   bool graphics::fill_polygon(const POINT* pa, int nCount)
+   bool graphics::fill_polygon(const POINT* pa, int32_t nCount)
    {
 
       if(nCount <= 0)
@@ -995,7 +995,7 @@ namespace lnx
 
       cairo_move_to(m_pdc, pa[0].x, pa[0].y);
 
-      for(int i = 1; i < nCount; i++)
+      for(int32_t i = 1; i < nCount; i++)
       {
          cairo_line_to(m_pdc, pa[i].x, pa[i].y);
       }
@@ -1007,7 +1007,7 @@ namespace lnx
    }
 
 
-   bool graphics::Polygon(const POINT* pa, int nCount)
+   bool graphics::Polygon(const POINT* pa, int32_t nCount)
    {
 
 
@@ -1017,7 +1017,7 @@ namespace lnx
 
       cairo_move_to(m_pdc, pa[0].x, pa[0].y);
 
-      for(int i = 1; i < nCount; i++)
+      for(int32_t i = 1; i < nCount; i++)
       {
 
          cairo_line_to(m_pdc, pa[i].x, pa[i].y);
@@ -1031,7 +1031,7 @@ namespace lnx
    }
 
 
-   bool graphics::PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int nCount)
+   bool graphics::PolyPolygon(const POINT* lpPoints, const INT* lpPolyCounts, int32_t nCount)
    {
 
       throw not_implemented(get_app());
@@ -1040,7 +1040,7 @@ namespace lnx
 
    }
 
-   bool graphics::Rectangle(int x1, int y1, int x2, int y2)
+   bool graphics::Rectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
 /*      Gdiplus::RectF rectf((Gdiplus::REAL) x1, (Gdiplus::REAL) y1, (Gdiplus::REAL) (x2 - x1), (Gdiplus::REAL) (y2 - y1));
@@ -1069,7 +1069,7 @@ namespace lnx
 
    }
 
-   bool graphics::DrawRectangle(int x1, int y1, int x2, int y2)
+   bool graphics::DrawRectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
       cairo_rectangle(m_pdc, x1, y1, x2, y2);
@@ -1085,7 +1085,7 @@ namespace lnx
 
    }
 
-   bool graphics::FillRectangle(int x1, int y1, int x2, int y2)
+   bool graphics::FillRectangle(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
       cairo_rectangle(m_pdc, x1, y1, x2, y2);
@@ -1101,7 +1101,7 @@ namespace lnx
 
    }
 
-   bool graphics::RoundRect(int x1, int y1, int x2, int y2, int x3, int y3)
+   bool graphics::RoundRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3)
    {
 
       throw not_implemented(get_app());
@@ -1123,7 +1123,7 @@ namespace lnx
 
    }
 
-   bool graphics::PatBlt(int x, int y, int nWidth, int nHeight, DWORD dwRop)
+   bool graphics::PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, DWORD dwRop)
    {
 
 //      ASSERT(get_handle1() != NULL);
@@ -1136,7 +1136,7 @@ namespace lnx
    }
 
 
-   bool graphics::BitBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, DWORD dwRop)
+   bool graphics::BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, DWORD dwRop)
    {
 
 
@@ -1267,7 +1267,7 @@ namespace lnx
    }
 
 
-   bool graphics::StretchBlt(int xDst, int yDst, int nDstWidth, int nDstHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, DWORD dwRop)
+   bool graphics::StretchBlt(int32_t xDst, int32_t yDst, int32_t nDstWidth, int32_t nDstHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, DWORD dwRop)
    {
 
       if(pgraphicsSrc == NULL)
@@ -1300,7 +1300,7 @@ namespace lnx
    }
 
 
-   COLORREF graphics::GetPixel(int x, int y) const
+   COLORREF graphics::GetPixel(int32_t x, int32_t y) const
    {
 
       throw not_implemented(get_app());
@@ -1322,7 +1322,7 @@ namespace lnx
 
    }
 
-   COLORREF graphics::SetPixel(int x, int y, COLORREF crColor)
+   COLORREF graphics::SetPixel(int32_t x, int32_t y, COLORREF crColor)
    {
 
       throw not_implemented(get_app());
@@ -1344,7 +1344,7 @@ namespace lnx
 
    }
 
-   bool graphics::FloodFill(int x, int y, COLORREF crColor)
+   bool graphics::FloodFill(int32_t x, int32_t y, COLORREF crColor)
    {
 
       throw not_implemented(get_app());
@@ -1355,7 +1355,7 @@ namespace lnx
 
    }
 
-   bool graphics::ExtFloodFill(int x, int y, COLORREF crColor, UINT nFillType)
+   bool graphics::ExtFloodFill(int32_t x, int32_t y, COLORREF crColor, UINT nFillType)
    {
 
       throw not_implemented(get_app());
@@ -1373,7 +1373,7 @@ namespace lnx
    // double blend
    //// COLOR_DEST = SRC_ALPHA * BLEND_ALPHA * COLOR_SRC  + (1 - SRC_ALPHA * BLEND_ALPHA) * COLOR_DST
 
-   bool graphics::TextOut(int x, int y, const string & str)
+   bool graphics::TextOut(int32_t x, int32_t y, const string & str)
    {
 
       if(m_pdibAlphaBlend != NULL)
@@ -1432,7 +1432,7 @@ namespace lnx
 
       //ASSERT(get_handle1() != NULL);
       //wstring wstr = gen::international::utf8_to_unicode(str);
-      return TextOut(x, y, str, (int) str.get_length());
+      return TextOut(x, y, str, (int32_t) str.get_length());
 
    } // call virtual
 
@@ -1488,11 +1488,11 @@ namespace lnx
 
       //ASSERT(get_handle1() != NULL);
       //wstring wstr = gen::international::utf8_to_unicode(str);
-      return TextOut(x, y, str, (int) str.get_length());
+      return TextOut(x, y, str, (int32_t) str.get_length());
 
    } // call virtual
 
-   bool graphics::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect, const char * lpszString, UINT nCount, LPINT lpDxWidths)
    {
 
       throw not_implemented(get_app());
@@ -1503,7 +1503,7 @@ namespace lnx
 
    }
 
-   bool graphics::ExtTextOut(int x, int y, UINT nOptions, LPCRECT lpRect, const string & str, LPINT lpDxWidths)
+   bool graphics::ExtTextOut(int32_t x, int32_t y, UINT nOptions, LPCRECT lpRect, const string & str, LPINT lpDxWidths)
    {
 
       throw not_implemented(get_app());
@@ -1514,7 +1514,7 @@ namespace lnx
 
    }
 
-   size graphics::TabbedTextOut(int x, int y, const char * lpszString, int nCount, int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
+   size graphics::TabbedTextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount, int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
    {
 
       throw not_implemented(get_app());
@@ -1525,63 +1525,63 @@ namespace lnx
 
    }
 
-   size graphics::TabbedTextOut(int x, int y, const string & str, int nTabPositions, LPINT lpnTabStopPositions, int nTabOrigin)
+   size graphics::TabbedTextOut(int32_t x, int32_t y, const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions, int32_t nTabOrigin)
    {
 
       throw not_implemented(get_app());
       return ::size(0, 0);
 
 //      ASSERT(get_handle1() != NULL);
-//      return ::TabbedTextOut(get_handle1(), x, y, str, (int)str.get_length(), nTabPositions, lpnTabStopPositions, nTabOrigin);
+//      return ::TabbedTextOut(get_handle1(), x, y, str, (int32_t)str.get_length(), nTabPositions, lpnTabStopPositions, nTabOrigin);
 
    }
 
 
-   size graphics::GetTabbedTextExtent(const char * lpszString, strsize nCount, int nTabPositions, LPINT lpnTabStopPositions) const
+   size graphics::GetTabbedTextExtent(const char * lpszString, strsize nCount, int32_t nTabPositions, LPINT lpnTabStopPositions) const
    {
 
       throw not_implemented(get_app());
       return ::size(0, 0);
 
 //      ASSERT(get_handle2() != NULL);
-//      return ::GetTabbedTextExtent(get_handle2(), lpszString, (int) nCount, nTabPositions, lpnTabStopPositions);
+//      return ::GetTabbedTextExtent(get_handle2(), lpszString, (int32_t) nCount, nTabPositions, lpnTabStopPositions);
 
    }
 
-   size graphics::GetTabbedTextExtent(const string & str, int nTabPositions, LPINT lpnTabStopPositions) const
+   size graphics::GetTabbedTextExtent(const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions) const
    {
 
       throw not_implemented(get_app());
       return ::size(0, 0);
 
 //      ASSERT(get_handle2() != NULL);
-//      return ::GetTabbedTextExtent(get_handle2(), str, (int) str.get_length(), nTabPositions, lpnTabStopPositions);
+//      return ::GetTabbedTextExtent(get_handle2(), str, (int32_t) str.get_length(), nTabPositions, lpnTabStopPositions);
 
    }
 
-   size graphics::GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, int nTabPositions, LPINT lpnTabStopPositions) const
+   size graphics::GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, int32_t nTabPositions, LPINT lpnTabStopPositions) const
    {
 
       throw not_implemented(get_app());
       return ::size(0, 0);
 
 //      ASSERT(get_handle1() != NULL);
-//      return ::GetTabbedTextExtent(get_handle1(), lpszString, (int) nCount, nTabPositions, lpnTabStopPositions);
+//      return ::GetTabbedTextExtent(get_handle1(), lpszString, (int32_t) nCount, nTabPositions, lpnTabStopPositions);
 
    }
 
-   size graphics::GetOutputTabbedTextExtent(const string & str, int nTabPositions, LPINT lpnTabStopPositions) const
+   size graphics::GetOutputTabbedTextExtent(const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions) const
    {
 
       throw not_implemented(get_app());
       return ::size(0, 0);
 
 //      ASSERT(get_handle1() != NULL);
-//      return ::GetTabbedTextExtent(get_handle1(), str, (int) str.get_length(), nTabPositions, lpnTabStopPositions);
+//      return ::GetTabbedTextExtent(get_handle1(), str, (int32_t) str.get_length(), nTabPositions, lpnTabStopPositions);
 
    }
 
-   bool graphics::GrayString(::ca::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int), LPARAM lpData, int nCount,int x, int y, int nWidth, int nHeight)
+   bool graphics::GrayString(::ca::brush* pBrush, bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int32_t), LPARAM lpData, int32_t nCount,int32_t x, int32_t y, int32_t nWidth, int32_t nHeight)
    {
 
       throw not_implemented(get_app());
@@ -1603,7 +1603,7 @@ namespace lnx
 
    }
 
-   int graphics::GetTextFace(int nCount, LPTSTR lpszFacename) const
+   int32_t graphics::GetTextFace(int32_t nCount, LPTSTR lpszFacename) const
    {
 
       throw not_implemented(get_app());
@@ -1614,14 +1614,14 @@ namespace lnx
 
    }
 
-   int graphics::GetTextFace(string & rString) const
+   int32_t graphics::GetTextFace(string & rString) const
    {
 
       throw not_implemented(get_app());
       return 0;
 
 //      ASSERT(get_handle2() != NULL);
-//      int nResult = ::GetTextFace(get_handle2(), 256, rString.GetBuffer(256)); rString.ReleaseBuffer();
+//      int32_t nResult = ::GetTextFace(get_handle2(), 256, rString.GetBuffer(256)); rString.ReleaseBuffer();
 //      return nResult;
 
    }
@@ -1710,7 +1710,7 @@ namespace lnx
    }
 
 
-   int graphics::GetTextCharacterExtra() const
+   int32_t graphics::GetTextCharacterExtra() const
    {
 
       throw not_implemented(get_app());
@@ -1756,7 +1756,7 @@ namespace lnx
 
 /*
 
-   DWORD graphics::GetCharacterPlacement(const char * lpString, int nCount, int nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const
+   DWORD graphics::GetCharacterPlacement(const char * lpString, int32_t nCount, int32_t nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const
    {
 
       throw not_implemented(get_app());
@@ -1767,14 +1767,14 @@ namespace lnx
 
    }
 
-   DWORD graphics::GetCharacterPlacement(string & str, int nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const
+   DWORD graphics::GetCharacterPlacement(string & str, int32_t nMaxExtent, LPGCP_RESULTS lpResults, DWORD dwFlags) const
    {
 
       throw not_implemented(get_app());
       return 0;
 
 //      ASSERT(get_handle1() != NULL);
-//      return ::GetCharacterPlacement(get_handle1(), (const char *)str, (int) str.get_length(), nMaxExtent, lpResults, dwFlags);
+//      return ::GetCharacterPlacement(get_handle1(), (const char *)str, (int32_t) str.get_length(), nMaxExtent, lpResults, dwFlags);
 
    }
 
@@ -1794,7 +1794,7 @@ namespace lnx
    }
 
 
-   bool graphics::ScrollDC(int dx, int dy, LPCRECT lpRectScroll, LPCRECT lpRectClip, ::ca::region* pRgnUpdate, LPRECT lpRectUpdate)
+   bool graphics::ScrollDC(int32_t dx, int32_t dy, LPCRECT lpRectScroll, LPCRECT lpRectClip, ::ca::region* pRgnUpdate, LPRECT lpRectUpdate)
    {
 
       throw not_implemented(get_app());
@@ -1806,7 +1806,7 @@ namespace lnx
    }
 
    // Printer Escape Functions
-   int graphics::Escape(int nEscape, int nCount, const char * lpszInData, LPVOID lpOutData)
+   int32_t graphics::Escape(int32_t nEscape, int32_t nCount, const char * lpszInData, LPVOID lpOutData)
    {
 
       throw not_implemented(get_app());
@@ -1890,7 +1890,7 @@ namespace lnx
 
 /*
 
-   int graphics::GetKerningPairs(int nPairs, LPKERNINGPAIR lpkrnpair) const
+   int32_t graphics::GetKerningPairs(int32_t nPairs, LPKERNINGPAIR lpkrnpair) const
    {
 
       throw not_implemented(get_app());
@@ -1917,7 +1917,7 @@ namespace lnx
 /*
 
    // ::userbase::document handling functions
-   int graphics::StartDoc(LPDOCINFO lpDocInfo)
+   int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
    {
 
       throw not_implemented(get_app());
@@ -1930,7 +1930,7 @@ namespace lnx
 
 */
 
-   int graphics::StartPage()
+   int32_t graphics::StartPage()
    {
 
       throw not_implemented(get_app());
@@ -1941,7 +1941,7 @@ namespace lnx
 
    }
 
-   int graphics::EndPage()
+   int32_t graphics::EndPage()
    {
 
       throw not_implemented(get_app());
@@ -1952,7 +1952,7 @@ namespace lnx
 
    }
 
-   int graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, int))
+   int32_t graphics::SetAbortProc(bool (CALLBACK* lpfn)(HDC, int32_t))
    {
 
       throw not_implemented(get_app());
@@ -1963,7 +1963,7 @@ namespace lnx
 
    }
 
-   int graphics::AbortDoc()
+   int32_t graphics::AbortDoc()
    {
 
       throw not_implemented(get_app());
@@ -1974,7 +1974,7 @@ namespace lnx
 
    }
 
-   int graphics::EndDoc()
+   int32_t graphics::EndDoc()
    {
 
       throw not_implemented(get_app());
@@ -1985,7 +1985,7 @@ namespace lnx
 
    }
 
-   bool graphics::MaskBlt(int x, int y, int nWidth, int nHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, ::ca::bitmap& maskBitmap, int xMask, int yMask, DWORD dwRop)
+   bool graphics::MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask, DWORD dwRop)
    {
 
       throw not_implemented(get_app());
@@ -1996,7 +1996,7 @@ namespace lnx
 
    }
 
-   bool graphics::PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nWidth, int nHeight, ::ca::bitmap& maskBitmap, int xMask, int yMask)
+   bool graphics::PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nWidth, int32_t nHeight, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask)
    {
 
       throw not_implemented(get_app());
@@ -2007,7 +2007,7 @@ namespace lnx
 
    }
 
-   bool graphics::SetPixelV(int x, int y, COLORREF crColor)
+   bool graphics::SetPixelV(int32_t x, int32_t y, COLORREF crColor)
    {
 
       throw not_implemented(get_app());
@@ -2029,7 +2029,7 @@ namespace lnx
 
    }
 
-   bool graphics::AngleArc(int x, int y, int nRadius, float fStartAngle, float fSweepAngle)
+   bool graphics::AngleArc(int32_t x, int32_t y, int32_t nRadius, float fStartAngle, float fSweepAngle)
    {
 
       throw not_implemented(get_app());
@@ -2051,7 +2051,7 @@ namespace lnx
 
    }
 
-   int graphics::GetArcDirection() const
+   int32_t graphics::GetArcDirection() const
    {
 
       throw not_implemented(get_app());
@@ -2062,7 +2062,7 @@ namespace lnx
 
    }
 
-   bool graphics::PolyPolyline(const POINT* lpPoints, const DWORD* lpPolyPoints, int nCount)
+   bool graphics::PolyPolyline(const POINT* lpPoints, const DWORD* lpPolyPoints, int32_t nCount)
    {
 
       throw not_implemented(get_app());
@@ -2123,7 +2123,7 @@ namespace lnx
 
    }
 
-   bool graphics::PolyBezier(const POINT* lpPoints, int nCount)
+   bool graphics::PolyBezier(const POINT* lpPoints, int32_t nCount)
    {
 
       throw not_implemented(get_app());
@@ -2134,7 +2134,7 @@ namespace lnx
 
    }
 
-   int graphics::DrawEscape(int nEscape, int nInputSize, const char * lpszInputData)
+   int32_t graphics::DrawEscape(int32_t nEscape, int32_t nInputSize, const char * lpszInputData)
    {
 
       throw not_implemented(get_app());
@@ -2145,7 +2145,7 @@ namespace lnx
 
    }
 
-   int graphics::Escape(int nEscape, int nInputSize, const char * lpszInputData,  int nOutputSize, char * lpszOutputData)
+   int32_t graphics::Escape(int32_t nEscape, int32_t nInputSize, const char * lpszInputData,  int32_t nOutputSize, char * lpszOutputData)
    {
 
       throw not_implemented(get_app());
@@ -2278,7 +2278,7 @@ namespace lnx
 
    }
 
-   int graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int nCount) const
+   int32_t graphics::GetPath(LPPOINT lpPoints, LPBYTE lpTypes, int32_t nCount) const
    {
 
       throw not_implemented(get_app());
@@ -2370,8 +2370,8 @@ namespace lnx
 
 /*bool CALLBACK metaCallback(
    EmfPlusRecordType recordType,
-   unsigned int flags,
-   unsigned int dataSize,
+   unsigned int32_t flags,
+   unsigned int32_t dataSize,
    const unsigned char* pStr,
    void* callbackData)
 {
@@ -2441,7 +2441,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 // India India
 // Member
 
-   bool graphics::alpha_blend(int xDst, int yDst, int nDstWidth, int nDstHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, double dRate)
+   bool graphics::alpha_blend(int32_t xDst, int32_t yDst, int32_t nDstWidth, int32_t nDstHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dRate)
    {
 
       if(m_pdibAlphaBlend != NULL)
@@ -2546,8 +2546,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    }
 
 
-   /*bool graphics::alpha_blend(int xDest, int yDest, int nDestWidth, int nDestHeight,
-      ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, BLENDFUNCTION blend)
+   /*bool graphics::alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
+      ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, BLENDFUNCTION blend)
    {
 
       throw not_implemented(get_app());
@@ -2632,7 +2632,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    }*/
 
 
-   bool graphics::TransparentBlt(int xDest, int yDest, int nDestWidth, int nDestHeight, ::ca::graphics * pgraphicsSrc, int xSrc, int ySrc, int nSrcWidth, int nSrcHeight, UINT crTransparent)
+   bool graphics::TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, UINT crTransparent)
    {
 
       throw not_implemented(get_app());
@@ -2733,7 +2733,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int cgi, int nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
+   bool graphics::GetTextExtentExPointI(LPWORD pgiIn, int32_t cgi, int32_t nMaxExtent, LPINT lpnFit, LPINT alpDx, LPSIZE lpSize) const
    {
 
       throw not_implemented(get_app());
@@ -2744,7 +2744,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 //      return ::GetTextExtentExPointI(get_handle1(), pgiIn, cgi, nMaxExtent, lpnFit, alpDx, lpSize) != FALSE;
 
    }
-   bool graphics::GetTextExtentPointI(LPWORD pgiIn, int cgi, LPSIZE lpSize) const
+   bool graphics::GetTextExtentPointI(LPWORD pgiIn, int32_t cgi, LPSIZE lpSize) const
    {
 
       throw not_implemented(get_app());
@@ -2773,7 +2773,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*
       ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
-      int nMapMode;
+      int32_t nMapMode;
       if (this != NULL && (nMapMode = GetMapMode()) < MM_ISOTROPIC && nMapMode != MM_TEXT)
       {
          // when using a constrained ::collection::map mode, ::collection::map against physical inch
@@ -2784,7 +2784,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       else
       {
          // ::collection::map against logical inch for non-constrained mapping modes
-         int cxPerInch, cyPerInch;
+         int32_t cxPerInch, cyPerInch;
          if (this != NULL)
          {
             ASSERT_VALID(this);
@@ -2813,7 +2813,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 /*      ASSERT(__is_valid_address(lpSize, sizeof(SIZE)));
 
-      int nMapMode;
+      int32_t nMapMode;
       if (this != NULL && (nMapMode = GetMapMode()) < MM_ISOTROPIC &&
          nMapMode != MM_TEXT)
       {
@@ -2825,7 +2825,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       else
       {
          // ::collection::map against logical inch for non-constrained mapping modes
-         int cxPerInch, cyPerInch;
+         int32_t cxPerInch, cyPerInch;
          if (this != NULL)
          {
             ASSERT_VALID(this);
@@ -2872,7 +2872,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if (gen_HalftoneBrush == NULL)
       {
          WORD grayPattern[8];
-         for (int i = 0; i < 8; i++)
+         for (int32_t i = 0; i < 8; i++)
             grayPattern[i] = (WORD)(0x5555 << (i & 1));
          HBITMAP grayBitmap = CreateBitmap(8, 8, 1, 1, grayPattern);
          if (grayBitmap != NULL)
@@ -2984,7 +2984,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    /*
 
-   void graphics::FillSolidRect(int x, int y, int cx, int cy, COLORREF clr)
+   void graphics::FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
    {
       ::SetBkColor(get_handle1(), clr);
       rect rect(x, y, x + cx, y + cy);
@@ -3000,7 +3000,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          lpRect->bottom - lpRect->top, clrTopLeft, clrBottomRight);
    }
 
-   void graphics::Draw3dRect(int x, int y, int cx, int cy,
+   void graphics::Draw3dRect(int32_t x, int32_t y, int32_t cx, int32_t cy,
       COLORREF clrTopLeft, COLORREF clrBottomRight)
    {
       FillSolidRect(x, y, cx - 1, 1, clrTopLeft);
@@ -3146,7 +3146,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // Out-of-line routines
 
-   int graphics::StartDoc(const char * lpszDocName)
+   int32_t graphics::StartDoc(const char * lpszDocName)
    {
 
       throw not_implemented(get_app());
@@ -3162,14 +3162,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SaveDC()
+   int32_t graphics::SaveDC()
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = 0;
+      int32_t nRetVal = 0;
       if(get_handle2() != NULL)
          nRetVal = ::SaveDC(get_handle2());
       if(get_handle1() != NULL && get_handle1() != get_handle2() && ::SaveDC(get_handle1()) != 0)
@@ -3179,7 +3179,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   bool graphics::RestoreDC(int nSavedDC)
+   bool graphics::RestoreDC(int32_t nSavedDC)
    {
 
       throw not_implemented(get_app());
@@ -3201,7 +3201,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 //      return ::win::graphics_object::from_handle(papp, ::SelectObject(hDC, h));
    //}
 
-   ::ca::graphics_object* graphics::SelectStockObject(int nIndex)
+   ::ca::graphics_object* graphics::SelectStockObject(int32_t nIndex)
    {
 /*      HGDIOBJ hObject = ::GetStockObject(nIndex);
       HGDIOBJ hOldObj = NULL;
@@ -3270,18 +3270,18 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SelectObject(::ca::region* pRgn)
+   int32_t graphics::SelectObject(::ca::region* pRgn)
    {
 
       throw not_implemented(get_app());
       return false;
 
 /*
-      int nRetVal = GDI_ERROR;
+      int32_t nRetVal = GDI_ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
-         nRetVal = (int)(int_ptr)::SelectObject(get_handle1(), (HGDIOBJ) pRgn->get_os_data());
+         nRetVal = (int32_t)(int_ptr)::SelectObject(get_handle1(), (HGDIOBJ) pRgn->get_os_data());
       if(get_handle2() != NULL)
-         nRetVal = (int)(int_ptr)::SelectObject(get_handle2(), (HGDIOBJ) pRgn->get_os_data());
+         nRetVal = (int32_t)(int_ptr)::SelectObject(get_handle2(), (HGDIOBJ) pRgn->get_os_data());
       return nRetVal;
 */
 
@@ -3311,12 +3311,12 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SetBkMode(int nBkMode)
+   int32_t graphics::SetBkMode(int32_t nBkMode)
    {
 
       return 0;
 
-/*      int nRetVal = 0;
+/*      int32_t nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetBkMode(get_handle1(), nBkMode);
       if(get_handle2() != NULL)
@@ -3324,14 +3324,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return nRetVal;*/
    }
 
-   int graphics::SetPolyFillMode(int nPolyFillMode)
+   int32_t graphics::SetPolyFillMode(int32_t nPolyFillMode)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = 0;
+      int32_t nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetPolyFillMode(get_handle1(), nPolyFillMode);
       if(get_handle2() != NULL)
@@ -3341,14 +3341,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SetROP2(int nDrawMode)
+   int32_t graphics::SetROP2(int32_t nDrawMode)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = 0;
+      int32_t nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetROP2(get_handle1(), nDrawMode);
       if(get_handle2() != NULL)
@@ -3358,7 +3358,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SetStretchBltMode(int nStretchMode)
+   int32_t graphics::SetStretchBltMode(int32_t nStretchMode)
    {
 
       throw not_implemented(get_app());
@@ -3380,7 +3380,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
       return 1;
 */
-      /*int nRetVal = 0;
+      /*int32_t nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetStretchBltMode(get_handle1(), nStretchMode);
       if(get_handle2() != NULL)
@@ -3401,14 +3401,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       //return crRetVal;
    }
 
-   int graphics::SetGraphicsMode(int iMode)
+   int32_t graphics::SetGraphicsMode(int32_t iMode)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = 0;
+      int32_t nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
       {
          nRetVal = ::SetGraphicsMode(get_handle1(), iMode);
@@ -3465,7 +3465,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SetMapMode(int nMapMode)
+   int32_t graphics::SetMapMode(int32_t nMapMode)
    {
 
       throw not_implemented(get_app());
@@ -3473,7 +3473,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 /*
-      int nRetVal = 0;
+      int32_t nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetMapMode(get_handle1(), nMapMode);
       if(get_handle2() != NULL)
@@ -3500,7 +3500,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   point graphics::SetViewportOrg(int x, int y)
+   point graphics::SetViewportOrg(int32_t x, int32_t y)
    {
       /*point point(0, 0);
       if(get_handle1() != NULL && get_handle1() != get_handle2())
@@ -3519,7 +3519,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   point graphics::OffsetViewportOrg(int nWidth, int nHeight)
+   point graphics::OffsetViewportOrg(int32_t nWidth, int32_t nHeight)
    {
 
       point point = GetViewportOrg();
@@ -3530,7 +3530,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   size graphics::SetViewportExt(int x, int y)
+   size graphics::SetViewportExt(int32_t x, int32_t y)
    {
 
       throw not_implemented(get_app());
@@ -3546,7 +3546,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 */
    }
 
-   size graphics::ScaleViewportExt(int xNum, int xDenom, int yNum, int yDenom)
+   size graphics::ScaleViewportExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
    {
 
       throw not_implemented(get_app());
@@ -3563,7 +3563,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   point graphics::SetWindowOrg(int x, int y)
+   point graphics::SetWindowOrg(int32_t x, int32_t y)
    {
 
       throw not_implemented(get_app());
@@ -3579,7 +3579,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 */
    }
 
-   point graphics::OffsetWindowOrg(int nWidth, int nHeight)
+   point graphics::OffsetWindowOrg(int32_t nWidth, int32_t nHeight)
    {
 
       throw not_implemented(get_app());
@@ -3596,7 +3596,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   size graphics::SetWindowExt(int x, int y)
+   size graphics::SetWindowExt(int32_t x, int32_t y)
    {
 
       throw not_implemented(get_app());
@@ -3613,7 +3613,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   size graphics::ScaleWindowExt(int xNum, int xDenom, int yNum, int yDenom)
+   size graphics::ScaleWindowExt(int32_t xNum, int32_t xDenom, int32_t yNum, int32_t yDenom)
    {
 
       throw not_implemented(get_app());
@@ -3630,7 +3630,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::GetClipBox(LPRECT lpRect) const
+   int32_t graphics::GetClipBox(LPRECT lpRect) const
    {
 
       throw not_implemented(get_app());
@@ -3639,7 +3639,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 /*      return ::GetClipBox(get_handle1(), lpRect);*/
    }
 
-   int graphics::SelectClipRgn(::ca::region * pregion)
+   int32_t graphics::SelectClipRgn(::ca::region * pregion)
    {
 
       if(pregion == NULL)
@@ -3660,7 +3660,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       return 0;
 
 /*
-      int nRetVal = ERROR;
+      int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SelectClipRgn(get_handle1(), pRgn == NULL ? NULL : (HRGN) pRgn->get_os_data());
       if(get_handle2() != NULL)
@@ -3670,14 +3670,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::ExcludeClipRect(int x1, int y1, int x2, int y2)
+   int32_t graphics::ExcludeClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = ERROR;
+      int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::ExcludeClipRect(get_handle1(), x1, y1, x2, y2);
       if(get_handle2() != NULL)
@@ -3687,14 +3687,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::ExcludeClipRect(LPCRECT lpRect)
+   int32_t graphics::ExcludeClipRect(LPCRECT lpRect)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = ERROR;
+      int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::ExcludeClipRect(get_handle1(), lpRect->left, lpRect->top,
          lpRect->right, lpRect->bottom);
@@ -3706,14 +3706,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::IntersectClipRect(int x1, int y1, int x2, int y2)
+   int32_t graphics::IntersectClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = ERROR;
+      int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::IntersectClipRect(get_handle1(), x1, y1, x2, y2);
       if(get_handle2() != NULL)
@@ -3723,13 +3723,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::IntersectClipRect(LPCRECT lpRect)
+   int32_t graphics::IntersectClipRect(LPCRECT lpRect)
    {
 
       throw not_implemented(get_app());
       return 0;
 
-/*      int nRetVal = ERROR;
+/*      int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::IntersectClipRect(get_handle1(), lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
       if(get_handle2() != NULL)
@@ -3739,14 +3739,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::OffsetClipRgn(int x, int y)
+   int32_t graphics::OffsetClipRgn(int32_t x, int32_t y)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = ERROR;
+      int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::OffsetClipRgn(get_handle1(), x, y);
       if(get_handle2() != NULL)
@@ -3756,14 +3756,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::OffsetClipRgn(SIZE size)
+   int32_t graphics::OffsetClipRgn(SIZE size)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = ERROR;
+      int32_t nRetVal = ERROR;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::OffsetClipRgn(get_handle1(), size.cx, size.cy);
       if(get_handle2() != NULL)
@@ -3772,7 +3772,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 */
    }
 
-   /*point graphics::MoveTo(int x, int y)
+   /*point graphics::MoveTo(int32_t x, int32_t y)
    {
       point point(0, 0);
       if(get_handle1() != NULL && get_handle1() != get_handle2())
@@ -3799,14 +3799,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SetTextJustification(int nBreakExtra, int nBreakCount)
+   int32_t graphics::SetTextJustification(int32_t nBreakExtra, int32_t nBreakCount)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*
-      int nRetVal = 0;
+      int32_t nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetTextJustification(get_handle1(), nBreakExtra, nBreakCount);
       if(get_handle2() != NULL)
@@ -3816,7 +3816,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SetTextCharacterExtra(int nCharExtra)
+   int32_t graphics::SetTextCharacterExtra(int32_t nCharExtra)
    {
 
       throw not_implemented(get_app());
@@ -3824,7 +3824,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 /*
       ASSERT(get_handle1() != NULL);
-      int nRetVal = 0x8000000;
+      int32_t nRetVal = 0x8000000;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetTextCharacterExtra(get_handle1(), nCharExtra);
       if(get_handle2() != NULL)
@@ -3929,7 +3929,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // Advanced Win32 GDI functions
 
-   bool graphics::ArcTo(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)
+   bool graphics::ArcTo(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3, int32_t x4, int32_t y4)
    {
 
       throw not_implemented(get_app());
@@ -3949,7 +3949,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SetArcDirection(int nArcDirection)
+   int32_t graphics::SetArcDirection(int32_t nArcDirection)
    {
 
 
@@ -3958,7 +3958,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 /*
       ASSERT(get_handle1() != NULL);
-      int nResult = 0;
+      int32_t nResult = 0;
       if (get_handle1() != get_handle2())
          nResult = ::SetArcDirection(get_handle1(), nArcDirection);
       if (get_handle2() != NULL)
@@ -3968,7 +3968,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int nCount)
+   bool graphics::PolyDraw(const POINT* lpPoints, const BYTE* lpTypes, int32_t nCount)
    {
 
       throw not_implemented(get_app());
@@ -3988,7 +3988,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   bool graphics::PolylineTo(const POINT* lpPoints, int nCount)
+   bool graphics::PolylineTo(const POINT* lpPoints, int32_t nCount)
    {
 
       throw not_implemented(get_app());
@@ -4027,7 +4027,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 //   }
 
-   bool graphics::PolyBezierTo(const POINT* lpPoints, int nCount)
+   bool graphics::PolyBezierTo(const POINT* lpPoints, int32_t nCount)
    {
 
       throw not_implemented(get_app());
@@ -4047,7 +4047,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   bool graphics::SelectClipPath(int nMode)
+   bool graphics::SelectClipPath(int32_t nMode)
    {
 
       throw not_implemented(get_app());
@@ -4077,14 +4077,14 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::SelectClipRgn(::ca::region* pRgn, int nMode)
+   int32_t graphics::SelectClipRgn(::ca::region* pRgn, int32_t nMode)
    {
 
       throw not_implemented(get_app());
       return 0;
 
 /*      ASSERT(get_handle1() != NULL);
-      int nRetVal = ERROR;
+      int32_t nRetVal = ERROR;
       if (get_handle1() != get_handle2())
          nRetVal = ::ExtSelectClipRgn(get_handle1(), (HRGN)pRgn->get_os_data(), nMode);
       if (get_handle2() != NULL)
@@ -4097,8 +4097,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // Special handling for metafile playback
 /*
-   int CALLBACK __enum_meta_file_procedure(HDC hDC,
-      HANDLETABLE* pHandleTable, METARECORD* pMetaRec, int nHandles, LPARAM lParam)
+   int32_t CALLBACK __enum_meta_file_procedure(HDC hDC,
+      HANDLETABLE* pHandleTable, METARECORD* pMetaRec, int32_t nHandles, LPARAM lParam)
    {
       ::ca::graphics * pgraphics = (::ca::graphics *)lParam;
       ASSERT_VALID(pgraphics);
@@ -4107,43 +4107,43 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          // these records have effects different for each graphics derived class
       case META_SETMAPMODE:
-         (dynamic_cast<::win::graphics * >(pgraphics))->SetMapMode((int)(short)pMetaRec->rdParm[0]);
+         (dynamic_cast<::win::graphics * >(pgraphics))->SetMapMode((int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWEXT:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowExt(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETWINDOWORG:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetWindowOrg(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTEXT:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportExt(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETVIEWPORTORG:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetViewportOrg(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_SCALEWINDOWEXT:
          (dynamic_cast<::win::graphics * >(pgraphics))->ScaleWindowExt(
-            (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+            (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
+            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_SCALEVIEWPORTEXT:
          (dynamic_cast<::win::graphics * >(pgraphics))->ScaleViewportExt(
-            (int)(short)pMetaRec->rdParm[3], (int)(short)pMetaRec->rdParm[2],
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+            (int32_t)(short)pMetaRec->rdParm[3], (int32_t)(short)pMetaRec->rdParm[2],
+            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_OFFSETVIEWPORTORG:
          (dynamic_cast<::win::graphics * >(pgraphics))->OffsetViewportOrg(
-            (int)(short)pMetaRec->rdParm[1], (int)(short)pMetaRec->rdParm[0]);
+            (int32_t)(short)pMetaRec->rdParm[1], (int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_SAVEDC:
          (dynamic_cast<::win::graphics * >(pgraphics))->SaveDC();
          break;
       case META_RESTOREDC:
-         (dynamic_cast<::win::graphics * >(pgraphics))->RestoreDC((int)(short)pMetaRec->rdParm[0]);
+         (dynamic_cast<::win::graphics * >(pgraphics))->RestoreDC((int32_t)(short)pMetaRec->rdParm[0]);
          break;
       case META_SETBKCOLOR:
          (dynamic_cast<::win::graphics * >(pgraphics))->SetBkColor(*(UNALIGNED COLORREF*)&pMetaRec->rdParm[0]);
@@ -4256,7 +4256,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-   int graphics::draw_text(const char * lpszString, int nCount, LPRECT lpRect, UINT nFormat)
+   int32_t graphics::draw_text(const char * lpszString, int32_t nCount, LPRECT lpRect, UINT nFormat)
    {
       /*if(get_handle1() == NULL)
          return -1;
@@ -4264,13 +4264,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = gen::international::utf8_to_unicode(string(lpszString, nCount));
-      return ::DrawTextW(get_handle1(), wstr, (int) wcslen(wstr), lpRect, nFormat); */
+      return ::DrawTextW(get_handle1(), wstr, (int32_t) wcslen(wstr), lpRect, nFormat); */
 
       return draw_text(string(lpszString, nCount), lpRect, nFormat);
 
    }
 
-   int graphics::draw_text(const string & str, LPRECT lpRect, UINT nFormat)
+   int32_t graphics::draw_text(const string & str, LPRECT lpRect, UINT nFormat)
    {
 
       /*if(get_handle1() == NULL)
@@ -4279,7 +4279,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = gen::international::utf8_to_unicode(str);
-      return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int)wcslen(wstr), lpRect, nFormat); */
+      return ::DrawTextW(get_handle1(), (const wchar_t *)wstr, (int32_t)wcslen(wstr), lpRect, nFormat); */
 
 /*
       try
@@ -4394,7 +4394,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-   int graphics::draw_text_ex(LPTSTR lpszString, int nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   int32_t graphics::draw_text_ex(LPTSTR lpszString, int32_t nCount, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
 
       throw not_implemented(get_app());
@@ -4407,11 +4407,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = gen::international::utf8_to_unicode(string(lpszString, nCount));
-      return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int)wcslen(wstr), lpRect, nFormat, lpDTParams);
+      return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams);
 */
    }
 
-   int graphics::draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
+   int32_t graphics::draw_text_ex(const string & str, LPRECT lpRect, UINT nFormat, LPDRAWTEXTPARAMS lpDTParams)
    {
 
       throw not_implemented(get_app());
@@ -4423,12 +4423,12 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT((nFormat & (DT_END_ELLIPSIS | DT_MODIFYSTRING)) != (DT_END_ELLIPSIS | DT_MODIFYSTRING));
       ASSERT((nFormat & (DT_PATH_ELLIPSIS | DT_MODIFYSTRING)) != (DT_PATH_ELLIPSIS | DT_MODIFYSTRING));
       wstring wstr = gen::international::utf8_to_unicode(str);
-      return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int)wcslen(wstr), lpRect, nFormat, lpDTParams);
+      return ::DrawTextExW(get_handle1(), const_cast<wchar_t *>((const wchar_t *)wstr), (int32_t)wcslen(wstr), lpRect, nFormat, lpDTParams);
 */
 
    }
 
-   size graphics::GetTextExtent(const char * lpszString, strsize nCount, int iIndex) const
+   size graphics::GetTextExtent(const char * lpszString, strsize nCount, int32_t iIndex) const
    {
 
 
@@ -4491,7 +4491,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
                              | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
                              | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
 
-      int count = strFormat.GetMeasurableCharacterRangeCount();
+      int32_t count = strFormat.GetMeasurableCharacterRangeCount();
 
       Gdiplus::Region * pCharRangeRegions = new Gdiplus::Region[count];
 
@@ -4499,7 +4499,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       Gdiplus::PointF origin(0, 0);
 
-      //m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
+      //m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
 
       ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, (INT) wstr.get_length(), ((graphics *)this)->gdiplus_font(), box, &strFormat, (INT) count, pCharRangeRegions);
 
@@ -4577,7 +4577,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
                              | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
                              | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
 
-      m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box);
+      m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box);
 
       return size((int64_t) (box.Width * m_fontxyz.m_dFontWidth), (int64_t) (box.Height));*/
 
@@ -4586,7 +4586,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       SIZE size;
       string str(lpszString, nCount);
       wstring wstr = gen::international::utf8_to_unicode(str);
-      if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int)wstr.get_length(), &size))
+      if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
       {
          return class size(0, 0);
       }
@@ -4599,7 +4599,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
          return size(0, 0);
       SIZE size;
       wstring wstr = gen::international::utf8_to_unicode(str);
-      if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int)wstr.get_length(), &size))
+      if(!::GetTextExtentPoint32W(get_handle2(), wstr, (int32_t)wstr.get_length(), &size))
       {
          return class size(0, 0);
       }
@@ -4627,7 +4627,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       try
       {
-         m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
+         m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &box);
       }
       catch(...)
       {
@@ -4649,7 +4649,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       SIZE size;
       string str(lpszString, nCount);
       wstring wstr = gen::international::utf8_to_unicode(str);
-      VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int)wstr.get_length(), &size));
+      VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
 */
 
@@ -4665,12 +4665,12 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       ASSERT(get_handle1() != NULL);
       SIZE size;
       wstring wstr = gen::international::utf8_to_unicode(str);
-      VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int)wstr.get_length(), &size));
+      VERIFY(::GetTextExtentPoint32W(get_handle1(), wstr, (int32_t)wstr.get_length(), &size));
       return size;
 */
    }
 
-   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int iIndex) const
+   bool graphics::GetTextExtent(sized & size, const char * lpszString, strsize nCount, int32_t iIndex) const
    {
 
       string str(&lpszString[iIndex], nCount);
@@ -4746,7 +4746,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
                              | Gdiplus::StringFormatFlagsNoClip | Gdiplus::StringFormatFlagsMeasureTrailingSpaces
                              | Gdiplus::StringFormatFlagsLineLimit | Gdiplus::StringFormatFlagsNoWrap);
 
-      int count = strFormat.GetMeasurableCharacterRangeCount();
+      int32_t count = strFormat.GetMeasurableCharacterRangeCount();
 
       Gdiplus::Region * pCharRangeRegions = new Gdiplus::Region[count];
 
@@ -4768,7 +4768,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
 
 
-      //m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
+      //m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, Gdiplus::StringFormat::GenericTypographic(), &box);
 
       ((graphics *)this)->m_pgraphics->MeasureCharacterRanges(wstr, (INT) nCount, ((graphics *)this)->gdiplus_font(), layoutRect, &strFormat, (INT) count, pCharRangeRegions);
 
@@ -4846,7 +4846,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       try
       {
-         if(m_pgraphics->MeasureString(wstr, (int) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box) != Gdiplus::Status::Ok)
+         if(m_pgraphics->MeasureString(wstr, (int32_t) wstr.get_length(), ((graphics *)this)->gdiplus_font(), origin, &strFormat,  &box) != Gdiplus::Status::Ok)
             bOk = false;
       }
       catch(...)
@@ -5024,7 +5024,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       //::ExtTextOut(get_handle1(), 0, 0, ETO_OPAQUE, lpRect, NULL, 0, NULL);
    }
 
-   void graphics::FillSolidRect(int x, int y, int cx, int cy, COLORREF clr)
+   void graphics::FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr)
    {
       //g.SetCompositingMode(Gdiplus::CompositingModeSourceOver);
       //g().SetCompositingMode(Gdiplus::CompositingModeSourceOver);
@@ -5040,7 +5040,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    }
 
 
-   bool graphics::TextOut(int x, int y, const char * lpszString, int nCount)
+   bool graphics::TextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount)
    {
    string str(lpszString, nCount);
 
@@ -5164,7 +5164,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 return true;
    }
 
-   bool graphics::TextOut(double x, double y, const char * lpszString, int nCount)
+   bool graphics::TextOut(double x, double y, const char * lpszString, int32_t nCount)
    {
 
    string str(lpszString, nCount);
@@ -5449,25 +5449,25 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
     // Released into the public domain.
 
     // get width, height
-    int width = cairo_image_surface_get_width( surface );
-    int height = cairo_image_surface_get_height( surface );
+    int32_t width = cairo_image_surface_get_width( surface );
+    int32_t height = cairo_image_surface_get_height( surface );
     unsigned char* dst = (unsigned char*)malloc(width*height*4);
     unsigned* precalc =
         (unsigned*)malloc(width*height*sizeof(unsigned));
     unsigned char* src = cairo_image_surface_get_data( surface );
     double mul=1.f/((radius*2)*(radius*2));
-    int channel;
+    int32_t channel;
 
     // The number of times to perform the averaging. According to wikipedia,
     // three iterations is good enough to pass for a gaussian.
-    const int MAX_ITERATIONS = 3;
-    int iteration;
+    const int32_t MAX_ITERATIONS = 3;
+    int32_t iteration;
 
     memcpy( dst, src, width*height*4 );
 
     for ( iteration = 0; iteration < MAX_ITERATIONS; iteration++ ) {
         for( channel = 0; channel < 4; channel++ ) {
-            int x,y;
+            int32_t x,y;
 
             // precomputation step.
             unsigned char* pix = src;
@@ -5476,7 +5476,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
             pix += channel;
             for (y=0;y<height;y++) {
                 for (x=0;x<width;x++) {
-                    int tot=pix[0];
+                    int32_t tot=pix[0];
                     if (x>0) tot+=pre[-1];
                     if (y>0) tot+=pre[-width];
                     if (x>0 && y>0) tot-=pre[-width-1];
@@ -5486,19 +5486,19 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
             }
 
             // blur step.
-            pix = dst + (int)radius * width * 4 + (int)radius * 4 + channel;
+            pix = dst + (int32_t)radius * width * 4 + (int32_t)radius * 4 + channel;
             for (y=radius;y<height-radius;y++) {
                 for (x=radius;x<width-radius;x++) {
-                    int l = x < radius ? 0 : x - radius;
-                    int t = y < radius ? 0 : y - radius;
-                    int r = x + radius >= width ? width - 1 : x + radius;
-                    int b = y + radius >= height ? height - 1 : y + radius;
-                    int tot = precalc[r+b*width] + precalc[l+t*width] -
+                    int32_t l = x < radius ? 0 : x - radius;
+                    int32_t t = y < radius ? 0 : y - radius;
+                    int32_t r = x + radius >= width ? width - 1 : x + radius;
+                    int32_t b = y + radius >= height ? height - 1 : y + radius;
+                    int32_t tot = precalc[r+b*width] + precalc[l+t*width] -
                         precalc[l+b*width] - precalc[r+t*width];
                     *pix=(unsigned char)(tot*mul);
                     pix += 4;
                 }
-                pix += (int)radius * 2 * 4;
+                pix += (int32_t)radius * 2 * 4;
             }
         }
         memcpy( src, dst, width*height*4 );
@@ -5649,7 +5649,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
       ::lnx::graphics_path * ppath = dynamic_cast < ::lnx::graphics_path * > ((::ca::graphics_path *) ppathParam);
 
-      for(int i = 0; i < ppath->m_elementa.get_count(); i++)
+      for(int32_t i = 0; i < ppath->m_elementa.get_count(); i++)
       {
 
          set(ppath->m_elementa[i]);

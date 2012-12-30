@@ -47,7 +47,7 @@ private:
 
 
    static osdisplay_dataptra * s_pdataptra;
-   static int find(Display * pdisplay);
+   static int32_t find(Display * pdisplay);
    static data * get(Display * pdisplay);
 
 public:
@@ -99,6 +99,6 @@ public:
       return m_pdata == NULL;
    }
 
-   Atom get_window_long_atom(int nIndex);
+   Atom get_window_long_atom(int32_t nIndex);
 
 };

@@ -5,7 +5,7 @@
 
 //class simple_list;
 class thread_slot_data;                  // for manipulationg thread local storage
-template < int iSlot >
+template < int32_t iSlot >
 class thread_local_object;               // for storing thread local data
 class process_local_object;              // for storing thread local data
 class no_track_object;
@@ -69,14 +69,14 @@ public:
 
 #if defined(DEBUG) && !defined(___NO_DEBUG_CRT)
 #undef new
-   void * PASCAL operator new(size_t nSize, const char *, int);
+   void * PASCAL operator new(size_t nSize, const char *, int32_t);
 #define new DEBUG_NEW
-   void PASCAL operator delete(void * pObject, const char *, int);
+   void PASCAL operator delete(void * pObject, const char *, int32_t);
 #endif
     virtual ~no_track_object() {};
 };
 
-template < int iSlot >
+template < int32_t iSlot >
 class __NOVTABLE thread_local_object
 {
 public:
@@ -85,12 +85,12 @@ public:
    no_track_object* GetDataNA();
 
 // Implementation
-   //int m_nSlot;
+   //int32_t m_nSlot;
    ~thread_local_object();
 };
 
 
-template < int iSlot >
+template < int32_t iSlot >
 no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pfnCreateObject)())
 {
 
@@ -119,12 +119,12 @@ no_track_object* thread_local_object < iSlot> ::get_data(no_track_object* ( * pf
    return pValue;
 
 }
-template < int iSlot >
+template < int32_t iSlot >
 no_track_object* thread_local_object < iSlot > ::GetDataNA()
 {
    return __thread_data->get_slot_data()->m_pa[iSlot];
 }
-template < int iSlot >
+template < int32_t iSlot >
 thread_local_object < iSlot > ::~thread_local_object()
 {
 //   if (m_nSlot != 0 && __thread_data != NULL)
@@ -154,7 +154,7 @@ public:
 };
 
 
-template < class TYPE, int iSlot >
+template < class TYPE, int32_t iSlot >
 class thread_local :
    public thread_local_object < iSlot >
 {

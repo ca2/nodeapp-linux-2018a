@@ -43,7 +43,7 @@ bool stdio_file::open(const char * lpszFileName, UINT nOpenFlags)
   // ASSERT(m_bCloseOnDelete);
 
    char szMode[4]; // C-runtime open string
-   int nMode = 0;
+   int32_t nMode = 0;
 
    // determine read/write mode depending on ex1::filesp mode
    if (nOpenFlags & mode_create)
@@ -67,7 +67,7 @@ bool stdio_file::open(const char * lpszFileName, UINT nOpenFlags)
    }
 
    // will be inverted if not necessary
-   int nFlags = O_RDONLY;
+   int32_t nFlags = O_RDONLY;
    if (nOpenFlags & (mode_write|mode_read_write))
       nFlags ^= O_RDONLY;
 
@@ -78,7 +78,7 @@ bool stdio_file::open(const char * lpszFileName, UINT nOpenFlags)
    szMode[nMode++] = '\0';
 
    // open a C-runtime low-level file handle
-   //int nHandle = _open_osfhandle(m_hFile, nFlags);
+   //int32_t nHandle = _open_osfhandle(m_hFile, nFlags);
 
    // open a C-runtime stream from that handle
    //if (nHandle != -1)
@@ -166,10 +166,10 @@ UINT stdio_file::read_string(string & rString)
 
    //rString = &afxWchNil;    // is_empty string without deallocating
    rString.Empty();
-   const int nMaxSize = 128;
+   const int32_t nMaxSize = 128;
    char * lpsz = rString.GetBuffer(nMaxSize);
    char * lpszResult;
-   int nLen = 0;
+   int32_t nLen = 0;
    for (;;)
    {
       lpszResult = fgets(lpsz, nMaxSize+1, m_pStream);
@@ -232,7 +232,7 @@ file_position stdio_file::seek(file_offset lOff, ::ex1::e_seek eseek)
    ASSERT(eseek == ::ex1::seek_begin || eseek== ::ex1::seek_end || eseek== ::ex1::seek_current);
    ASSERT(m_pStream != NULL);
 
-   int nFrom;
+   int32_t nFrom;
    switch(eseek)
    {
    case ::ex1::seek_begin:
@@ -282,7 +282,7 @@ void stdio_file::close()
    ASSERT_VALID(this);
    ASSERT(m_pStream != NULL);
 
-   int nErr = 0;
+   int32_t nErr = 0;
 
    if (m_pStream != NULL)
       nErr = fclose(m_pStream);

@@ -314,7 +314,7 @@ extern "C" {
 #if defined(_MSC_VER)
 # define C_ASSERT(e) typedef char __C_ASSERT__[(e)?1:-1]
 #else
-# define C_ASSERT(e) extern void __C_ASSERT__(int [(e)?1:-1])
+# define C_ASSERT(e) extern void __C_ASSERT__(int32_t [(e)?1:-1])
 #endif
 
 /* Eliminate Microsoft C/C++ compiler warning 4715 */
@@ -334,13 +334,13 @@ extern "C" {
 #ifdef __cplusplus
 #define DEFINE_ENUM_FLAG_OPERATORS(ENUMTYPE) \
 extern "C++" { \
-    inline ENUMTYPE operator | (ENUMTYPE a, ENUMTYPE b) { return ENUMTYPE(((int)a)|((int)b)); } \
-    inline ENUMTYPE operator |= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((int &)a) |= ((int)b)); } \
-    inline ENUMTYPE operator & (ENUMTYPE a, ENUMTYPE b) { return ENUMTYPE(((int)a)&((int)b)); } \
-    inline ENUMTYPE operator &= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((int &)a) &= ((int)b)); } \
-    inline ENUMTYPE operator ~ (ENUMTYPE a) { return (ENUMTYPE)(~((int)a)); } \
-    inline ENUMTYPE operator ^ (ENUMTYPE a, ENUMTYPE b) { return ENUMTYPE(((int)a)^((int)b)); } \
-    inline ENUMTYPE operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((int &)a) ^= ((int)b)); } \
+    inline ENUMTYPE operator | (ENUMTYPE a, ENUMTYPE b) { return ENUMTYPE(((int32_t)a)|((int32_t)b)); } \
+    inline ENUMTYPE operator |= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((int32_t &)a) |= ((int32_t)b)); } \
+    inline ENUMTYPE operator & (ENUMTYPE a, ENUMTYPE b) { return ENUMTYPE(((int32_t)a)&((int32_t)b)); } \
+    inline ENUMTYPE operator &= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((int32_t &)a) &= ((int32_t)b)); } \
+    inline ENUMTYPE operator ~ (ENUMTYPE a) { return (ENUMTYPE)(~((int32_t)a)); } \
+    inline ENUMTYPE operator ^ (ENUMTYPE a, ENUMTYPE b) { return ENUMTYPE(((int32_t)a)^((int32_t)b)); } \
+    inline ENUMTYPE operator ^= (ENUMTYPE &a, ENUMTYPE b) { return (ENUMTYPE &)(((int32_t &)a) ^= ((int32_t)b)); } \
 }
 #else
 #define DEFINE_ENUM_FLAG_OPERATORS(ENUMTYPE) /* */
@@ -380,7 +380,7 @@ typedef short           SHORT,      *PSHORT;
 #ifdef _MSC_VER
 typedef long            LONG,       *PLONG;
 #else
-typedef int             LONG,       *PLONG;
+typedef int32_t             LONG,       *PLONG;
 #endif
 
 /* Some systems might have wchar_t, but we really need 16 bit characters */
@@ -465,7 +465,7 @@ typedef LONG            HRESULT;
 //typedef HANDLE *PHANDLE, *LPHANDLE;
 
 #ifdef STRICT
-#define DECLARE_HANDLE(a) typedef struct a##__ { int unused; } *a
+#define DECLARE_HANDLE(a) typedef struct a##__ { int32_t unused; } *a
 #else /*STRICT*/
 #define DECLARE_HANDLE(a) typedef HANDLE a
 #endif /*STRICT*/

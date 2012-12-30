@@ -232,7 +232,7 @@ namespace lnx
 
       ::dir::ls(stra, lpcsz);
 
-      for(int i = 0; i < stra.get_count(); i++)
+      for(int32_t i = 0; i < stra.get_count(); i++)
       {
 
          string strPath = stra[i];
@@ -309,7 +309,7 @@ namespace lnx
 
       ::dir::ls_dir(straDir, lpcsz);
 
-      for(int i = 0; i < straDir.get_count(); i++)
+      for(int32_t i = 0; i < straDir.get_count(); i++)
       {
 
          string strDir = straDir[i];
@@ -353,7 +353,7 @@ namespace lnx
 
       ::dir::ls(stra, lpcsz);
 
-      for(int i = 0; i < stra.get_count(); i++)
+      for(int32_t i = 0; i < stra.get_count(); i++)
       {
 
          string strPath = stra[i];
@@ -435,7 +435,7 @@ namespace lnx
       }
 
 
-      for(int i = 0; i < stra.get_count(); i++)
+      for(int32_t i = 0; i < stra.get_count(); i++)
       {
 
          string strPath = stra[i];
@@ -514,7 +514,7 @@ namespace lnx
       }
 
 
-      for(int i = 0; i < stra.get_count(); i++)
+      for(int32_t i = 0; i < stra.get_count(); i++)
       {
 
          string strPath = stra[i];
@@ -562,7 +562,7 @@ namespace lnx
       }
 
 
-      for(int i = 0; i < stra.get_count(); i++)
+      for(int32_t i = 0; i < stra.get_count(); i++)
       {
 
          string strPath = stra[i];
@@ -611,7 +611,7 @@ namespace lnx
       }
 
 
-      for(int i = 0; i < stra.get_count(); i++)
+      for(int32_t i = 0; i < stra.get_count(); i++)
       {
 
          string strPath = stra[i];
@@ -808,7 +808,7 @@ namespace lnx
 
       DWORD dwLastError;
 
-      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int) iLast))
+      if(m_isdirmap.lookup(str, bIsDir, dwLastError, (int32_t) iLast))
          return bIsDir;
 
 
@@ -976,7 +976,7 @@ namespace lnx
 
       stringa stra;
       System.file().get_ascendants_path(lpcsz, stra);
-      for(int i = 0; i < stra.get_size(); i++)
+      for(int32_t i = 0; i < stra.get_size(); i++)
       {
          if(!is(stra[i], papp))
          {
@@ -1046,7 +1046,7 @@ namespace lnx
          stringa straPath;
          stringa straTitle;
          ls(papp, psz, &straPath, &straTitle);
-         for(int i = 0; i < straPath.get_count(); i++)
+         for(int32_t i = 0; i < straPath.get_count(); i++)
          {
             if(is(straPath[i], papp))
             {

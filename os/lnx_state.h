@@ -66,7 +66,7 @@ namespace ca
 }
 
 #ifndef _PNH_DEFINED
-typedef int (__cdecl * _PNH)( size_t );
+typedef int32_t (__cdecl * _PNH)( size_t );
 #define _PNH_DEFINED
 #endif
 
@@ -261,7 +261,7 @@ public:
    UINT m_nMsgLast;                // last mouse message
 
 #ifdef DEBUG
-      int m_nDisablePumpCount; // Diagnostic trap to detect illegal re-entrancy
+      int32_t m_nDisablePumpCount; // Diagnostic trap to detect illegal re-entrancy
 #endif
 
    // other ::ca::window modal data

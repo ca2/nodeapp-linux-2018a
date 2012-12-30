@@ -28,14 +28,14 @@ extern "C" {
 
 /*
  * Win32 was easy to implement under Unix since most (all?) 32-bit
- * Unices uses the same type model (ILP32) as Win32, where int, long
+ * Unices uses the same type model (ILP32) as Win32, where int32_t, long
  * and pointer are 32-bit.
  *
  * Win64, however, will cause some problems when implemented under Unix.
  * Linux/{Alpha, Sparc64} and most (all?) other 64-bit Unices use
- * the LP64 type model where int is 32-bit and long and pointer are
+ * the LP64 type model where int32_t is 32-bit and long and pointer are
  * 64-bit. Win64 on the other hand uses the P64 (sometimes called LLP64)
- * type model where int and long are 32 bit and pointer is 64-bit.
+ * type model where int32_t and long are 32 bit and pointer is 64-bit.
  */
 
 #if defined(__x86_64__) && !defined(_WIN64)
@@ -46,7 +46,7 @@ extern "C" {
 /* The __intXX types are native types defined by the MS C compiler.
  * Apps that make use of them before they get defined here, can
  * simply add to the command line:
- *    -D__int8=char -D__int16=short -D__int32=int "-D__int64=long long"
+ *    -D__int8=char -D__int16=short -D__int32=int32_t "-D__int64=long long"
  */
 #if !defined(_MSC_VER) && !defined(__WIDL__)
 #  ifndef __int8
@@ -56,7 +56,7 @@ extern "C" {
 #    define __int16 short
 #  endif
 #  ifndef __int32
-#    define __int32 int
+#    define __int32 int32_t
 #  endif
 #  ifndef __int64
 #    if defined(_WIN64) && !defined(__MINGW64__)
@@ -80,13 +80,13 @@ extern "C" {
 
 typedef signed char      INT8, *PINT8;
 typedef signed short     INT16, *PINT16;
-typedef signed int       INT32, *PINT32;
+typedef signed int32_t       INT32, *PINT32;
 typedef unsigned char    UINT8, *PUINT8;
 typedef unsigned short   UINT16, *PUINT16;
-typedef unsigned int     UINT32, *PUINT32;
-typedef signed int       LONG32, *PLONG32;
-typedef unsigned int     ULONG32, *PULONG32;
-typedef unsigned int     DWORD32, *PDWORD32;
+typedef unsigned int32_t     UINT32, *PUINT32;
+typedef signed int32_t       LONG32, *PLONG32;
+typedef unsigned int32_t     ULONG32, *PULONG32;
+typedef unsigned int32_t     DWORD32, *PDWORD32;
 
 #ifdef _MSC_VER
 typedef signed __int64   INT64, *PINT64;
@@ -144,8 +144,8 @@ typedef ULONG_PTR     DWORD_PTR, *PDWORD_PTR;
 
 typedef __int64 SHANDLE_PTR;
 typedef unsigned __int64 HANDLE_PTR;
-typedef int HALF_PTR, *PHALF_PTR;
-typedef unsigned int UHALF_PTR, *PUHALF_PTR;
+typedef int32_t HALF_PTR, *PHALF_PTR;
+typedef unsigned int32_t UHALF_PTR, *PUHALF_PTR;
 
 #define MAXHALF_PTR 0x7fffffff
 #define MINHALF_PTR 0x80000000

@@ -69,13 +69,13 @@ private:
 
 
    static oswindow_dataptra * s_pdataptra;
-   static int find(Display * pdisplay, Window window);
+   static int32_t find(Display * pdisplay, Window window);
    static data * get(Display * pdisplay, Window window);
    static Atom s_atomLongType;
    static Atom s_atomLongStyle;
    static Atom s_atomLongStyleEx;
 
-   static Atom get_window_long_atom(int nIndex);
+   static Atom get_window_long_atom(int32_t nIndex);
 
 
 public:
@@ -146,10 +146,10 @@ public:
       return m_pdata == NULL ? 0 : m_pdata->m_window;
    }
 
-   int store_name(const char * psz);
-   int select_input(int iInput);
-   int select_all_input();
-   int map_window();
+   int32_t store_name(const char * psz);
+   int32_t select_input(int32_t iInput);
+   int32_t select_all_input();
+   int32_t map_window();
 
    void set_user_interaction(::user::interaction_base * pui);
    ::user::interaction_base * get_user_interaction_base();
@@ -167,9 +167,9 @@ public:
    long get_state();
    bool is_iconic();
    bool is_window_visible();
-   bool show_window(int nCmdShow);
-   LONG get_window_long(int nIndex);
-   LONG set_window_long(int nIndex, LONG l);
+   bool show_window(int32_t nCmdShow);
+   LONG get_window_long(int32_t nIndex);
+   LONG set_window_long(int32_t nIndex, LONG l);
    bool client_to_screen(LPPOINT lppoint);
    bool screen_to_client(LPPOINT lppoint);
 
@@ -203,17 +203,17 @@ inline oswindow SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
    return oswindow.set_parent(oswindowNewParent);
 }
 
-inline bool ShowWindow(::oswindow oswindow, int nCmdShow)
+inline bool ShowWindow(::oswindow oswindow, int32_t nCmdShow)
 {
    return oswindow.show_window(nCmdShow);
 }
 
-inline LONG GetWindowLongA(::oswindow oswindow, int nIndex)
+inline LONG GetWindowLongA(::oswindow oswindow, int32_t nIndex)
 {
    return oswindow.get_window_long(nIndex);
 }
 
-inline LONG SetWindowLongA(::oswindow oswindow, int nIndex, LONG l)
+inline LONG SetWindowLongA(::oswindow oswindow, int32_t nIndex, LONG l)
 {
    return oswindow.set_window_long(nIndex, l);
 }
@@ -228,12 +228,12 @@ inline bool ScreenToClient(::oswindow oswindow, LPPOINT lppoint)
    return oswindow.screen_to_client(lppoint);
 }
 
-inline int IsIconic(::oswindow oswindow)
+inline int32_t IsIconic(::oswindow oswindow)
 {
    return oswindow.is_iconic();
 }
 
-inline int IsWindowVisible(::oswindow oswindow)
+inline int32_t IsWindowVisible(::oswindow oswindow)
 {
    return oswindow.is_window_visible();
 }

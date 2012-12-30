@@ -46,8 +46,8 @@ struct tagHandle
 //typedef struct tagHandle * HANDLE;
 
 
-typedef unsigned int       DWORD;
-typedef int                 WINBOOL;
+typedef unsigned int32_t       DWORD;
+typedef int32_t                 WINBOOL;
 typedef unsigned char       BYTE;
 typedef unsigned short      WORD;
 typedef float               FLOAT;
@@ -56,19 +56,19 @@ typedef WINBOOL near           *PBOOL;
 typedef WINBOOL far            *LPBOOL;
 typedef BYTE near           *PBYTE;
 typedef BYTE far            *LPBYTE;
-typedef int near            *PINT;
-typedef int far             *LPINT;
+typedef int32_t near            *PINT;
+typedef int32_t far             *LPINT;
 typedef WORD near           *PWORD;
 typedef WORD far            *LPWORD;
-typedef int far            *LPLONG;
+typedef int32_t far            *LPLONG;
 typedef DWORD near          *PDWORD;
 typedef DWORD far           *LPDWORD;
 typedef void far            *LPVOID;
 typedef CONST void far      *LPCVOID;
 
-typedef int                 INT;
-typedef unsigned int        UINT;
-typedef unsigned int        *PUINT;
+typedef int32_t                 INT;
+typedef unsigned int32_t        UINT;
+typedef unsigned int32_t        *PUINT;
 
 
 
@@ -94,8 +94,8 @@ typedef LPSTR LPTSTR;
 #define VOID void
 typedef char CHAR;
 typedef short SHORT;
-typedef int LONG;
-typedef int INT;
+typedef int32_t LONG;
+typedef int32_t INT;
 #endif
 
 //
@@ -216,7 +216,7 @@ typedef struct _GUID {
 
 #define DECLSPEC_NO_RETURN
 void RaiseException(DWORD dwExceptionCode, DWORD dwExceptionFlags, DWORD nNumberOfArguments, const ulong_ptr *lpArguments);
-typedef int errno_t;
+typedef int32_t errno_t;
 
 
 #ifdef __cplusplus

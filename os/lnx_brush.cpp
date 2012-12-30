@@ -36,7 +36,7 @@ namespace lnx
    //
    //}
 
-   // bool brush::CreateHatchBrush(int nIndex, COLORREF crColor)
+   // bool brush::CreateHatchBrush(int32_t nIndex, COLORREF crColor)
    // {
    //    //return Attach(::CreateHatchBrush(nIndex, crColor));
    //    return FALSE;
@@ -56,13 +56,13 @@ namespace lnx
     //   //return Attach(::CreateDIBPatternBrushPt(lpPackedDIB, nUsage));
     //   return FALSE;
     //}
-    //bool brush::CreateSysColorBrush(int nIndex)
+    //bool brush::CreateSysColorBrush(int32_t nIndex)
     //{
     //   //return Attach(::GetSysColorBrush(nIndex));
     //   return FALSE;
 
     //}
-/*    int brush::GetLogBrush(LOGBRUSH* pLogBrush)
+/*    int32_t brush::GetLogBrush(LOGBRUSH* pLogBrush)
     {
        //ASSERT(get_os_data() != NULL);
        //return ::GetObject(get_os_data(), sizeof(LOGBRUSH), pLogBrush);
@@ -76,7 +76,7 @@ namespace lnx
 //  //       throw resource_exception();
 //   }
 //
-//   void brush::construct(int nIndex, COLORREF crColor)
+//   void brush::construct(int32_t nIndex, COLORREF crColor)
 //   {
 //    //  if (!Attach(::CreateHatchBrush(nIndex, crColor)))
 //      //   throw resource_exception();

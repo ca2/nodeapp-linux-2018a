@@ -9,7 +9,7 @@ namespace lnx
 
    class lnx
    {
-      int function();
+      int32_t function();
    };
 
 
@@ -40,13 +40,13 @@ struct CLASS_DECL_lnx __EXCEPTION_CONTEXT
 };
 
 #ifndef _PNH_DEFINED
-typedef int (__cdecl * _PNH)( size_t );
+typedef int32_t (__cdecl * _PNH)( size_t );
 #define _PNH_DEFINED
 #endif
 
 _PNH CLASS_DECL_lnx __get_new_handler();
 _PNH CLASS_DECL_lnx __set_new_handler(_PNH pfnNewHandler);
-CLASS_DECL_ca int c_cdecl __new_handler(size_t nSize);
+CLASS_DECL_ca int32_t c_cdecl __new_handler(size_t nSize);
 
 void CLASS_DECL_lnx __abort();
 
@@ -100,7 +100,7 @@ CLASS_DECL_lnx void __term_thread(::radix::application * papp, HINSTANCE hInstTe
 
 // Advanced initialization: for overriding default WinMain
 //CLASS_DECL_lnx bool gen::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
-  // __in_z LPTSTR lpCmdLine, __in int nCmdShow);
+  // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_lnx void __lnx_term();
 
 CLASS_DECL_lnx ::radix::application* __get_app();

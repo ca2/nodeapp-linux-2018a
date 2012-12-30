@@ -20,19 +20,19 @@ namespace lnx
    {
       return dynamic_cast < pen* > (::win::graphics_object::from_handle(papp, hPen));
    }*/
-/*   WINBOOL pen::CreatePen(int nPenStyle, int nWidth, COLORREF crColor)
+/*   WINBOOL pen::CreatePen(int32_t nPenStyle, int32_t nWidth, COLORREF crColor)
    { return Attach(::CreatePen(nPenStyle, nWidth, crColor)); }*/
 /*   WINBOOL pen::CreatePenIndirect(LPLOGPEN lpLogPen)
    { return Attach(::CreatePenIndirect(lpLogPen)); }*/
-/*   WINBOOL pen::CreatePen(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
-      int nStyleCount, const DWORD* lpStyle)
+/*   WINBOOL pen::CreatePen(int32_t nPenStyle, int32_t nWidth, const LOGBRUSH* pLogBrush,
+      int32_t nStyleCount, const DWORD* lpStyle)
    { return Attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
    lpStyle)); }*/
-/*   int pen::GetExtLogPen(EXTLOGPEN* pLogPen)
+/*   int32_t pen::GetExtLogPen(EXTLOGPEN* pLogPen)
    { ASSERT(get_handle() != NULL);
    return ::GetObject(get_handle(), sizeof(EXTLOGPEN), pLogPen); }
 */
-/*   int pen::GetLogPen(LOGPEN* pLogPen)
+/*   int32_t pen::GetLogPen(LOGPEN* pLogPen)
    {
       if(get_handle() == NULL)
          return 0;
@@ -40,15 +40,15 @@ namespace lnx
    }
 */
 
-/*   void pen::construct(int nPenStyle, int nWidth, COLORREF crColor)
+/*   void pen::construct(int32_t nPenStyle, int32_t nWidth, COLORREF crColor)
    {
       if (!Attach(::CreatePen(nPenStyle, nWidth, crColor)))
          AfxThrowResourceException();
    }
 */
 /*
-   void pen::construct(int nPenStyle, int nWidth, const LOGBRUSH* pLogBrush,
-      int nStyleCount, const DWORD* lpStyle)
+   void pen::construct(int32_t nPenStyle, int32_t nWidth, const LOGBRUSH* pLogBrush,
+      int32_t nStyleCount, const DWORD* lpStyle)
    {
       if (!Attach(::ExtCreatePen(nPenStyle, nWidth, pLogBrush, nStyleCount,
          lpStyle)))

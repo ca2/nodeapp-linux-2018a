@@ -77,7 +77,7 @@ void CLASS_DECL_lnx AfxSetWindowText(::user::interaction * hWndCtrl, const char 
    /*ENSURE(hWndCtrl);
    ENSURE(lpszNew);
 
-   int nNewLen = lstrlen(lpszNew);
+   int32_t nNewLen = lstrlen(lpszNew);
    char szOld[256]="";
    // fast check to see if text really changes (reduces flash in controls)
    if (nNewLen > _countof(szOld) ||
@@ -157,7 +157,7 @@ void CLASS_DECL_lnx AfxGlobalFree(HGLOBAL hGlobal)
 
 #define MIN_MALLOC_OVERHEAD 4   // LocalAlloc or other overhead
 
-int __CDECL AfxCriticalNewHandler(size_t nSize)
+int32_t __CDECL AfxCriticalNewHandler(size_t nSize)
    // nSize is already rounded
 {
    // called during critical primitive::memory allocation

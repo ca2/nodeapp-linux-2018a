@@ -5,7 +5,7 @@
 namespace lnx
 {
 
-   int function()
+   int32_t function()
    {
       return 0;
    }

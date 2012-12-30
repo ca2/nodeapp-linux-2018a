@@ -607,7 +607,7 @@ namespace lnx
 
 
 	   HRESULT result = S_OK;
-	   int iii = 0;
+	   int32_t iii = 0;
 
 	   // clear all current mappings (note: thread-awareness is needed)
 
