@@ -43,19 +43,19 @@ typedef unsigned long XID;
 
 #if defined(_LP64)
 
-    typedef long int32_t int_ptr, *pint_ptr;
-    typedef unsigned long int32_t uint_ptr, *puint_ptr;
+    typedef int64_t int_ptr, *pint_ptr;
+    typedef uint64_t uint_ptr, *puint_ptr;
 
-    typedef long long long_ptr, *plong_ptr;
-    typedef unsigned long long ulong_ptr, *pulong_ptr;
+    typedef int64_t long_ptr, *plong_ptr;
+    typedef uint64_t ulong_ptr, *pulong_ptr;
 
 #else
 
     typedef int32_t int_ptr, *pint_ptr;
-    typedef unsigned int32_t uint_ptr, *puint_ptr;
+    typedef uint32_t uint_ptr, *puint_ptr;
 
-    typedef long long_ptr, *plong_ptr;
-    typedef unsigned int32_t ulong_ptr, *pulong_ptr;
+    typedef int32_t long_ptr, *plong_ptr;
+    typedef unint32_t ulong_ptr, *pulong_ptr;
 
 #endif
 

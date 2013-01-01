@@ -13,14 +13,14 @@
 	<File name="lnx2_factory_exchange.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="366" topLine="0" />
 	</File>
-	<File name="lnx2_printer.cpp" open="1" top="0" tabpos="1">
+	<File name="lnx2_printer.cpp" open="1" top="1" tabpos="1">
 		<Cursor position="1576" topLine="73" />
 	</File>
 	<File name="lnx2_printer.h" open="0" top="0" tabpos="6">
 		<Cursor position="164" topLine="0" />
 	</File>
-	<File name="os2.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="462" topLine="0" />
+	<File name="os2.cpp" open="1" top="0" tabpos="2">
+		<Cursor position="460" topLine="0" />
 	</File>
 	<File name="os2.h" open="0" top="0" tabpos="1">
 		<Cursor position="258" topLine="0" />
