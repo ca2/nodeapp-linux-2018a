@@ -23,7 +23,7 @@ typedef struct _GUID
 #ifdef _MSC_VER
     unsigned long  Data1;
 #else
-    unsigned int32_t   Data1;
+    uint32_t   Data1;
 #endif
     unsigned short Data2;
     unsigned short Data3;

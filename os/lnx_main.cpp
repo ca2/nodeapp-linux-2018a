@@ -13,7 +13,7 @@ void CLASS_DECL_lnx __cdecl _ca2_purecall()
 }
 
 
-void __cdecl _null_se_translator(unsigned int32_t uiCode, EXCEPTION_POINTERS * ppointers);
+void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
 
 
 //::ca::application *     win_application_create(::ca::application * pappSystem, const char * pszId);
@@ -252,7 +252,7 @@ int32_t CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, co
 
 
 
-void __cdecl _null_se_translator(unsigned int32_t uiCode, EXCEPTION_POINTERS * ppointers)
+void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers)
 {
    UNREFERENCED_PARAMETER(uiCode);
    UNREFERENCED_PARAMETER(ppointers);

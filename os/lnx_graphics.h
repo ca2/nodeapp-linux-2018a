@@ -19,8 +19,8 @@ namespace lnx
       int32_t                     m_iType;
       bool                    m_bForeColor;
       bool                    m_bBackColor;
-      long unsigned int32_t       m_uiForeColor;
-      long unsigned int32_t       m_uiBackColor;
+      uint64_t                m_uiForeColor;
+      uint64_t                m_uiBackColor;
       COLORREF                m_crTextColor;
       //xxx ::Gdiplus::GraphicsPath *     m_ppath;
       //xxx ::Gdiplus::GraphicsPath *     m_ppathPaint;

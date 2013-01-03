@@ -63,7 +63,7 @@ typedef unsigned long XID;
 //typedef void * HANDLE;
 //typedef void * HDC;
 typedef unsigned char BYTE;
-typedef unsigned int32_t UINT;
+typedef uint32_t UINT;
 //typedef int_ptr WPARAM;
 //typedef int_ptr LPARAM;
 
@@ -134,7 +134,7 @@ typedef union _XEvent XEvent;
 #ifdef __cplusplus
 
 
-inline void __debug_break() { asm("int32_t $3"); }
+inline void __debug_break() { asm("int $3"); }
 
 
 #endif
@@ -309,7 +309,7 @@ inline void __debug_break() { asm("int32_t $3"); }
 
 typedef unsigned char   u_char;
 typedef unsigned short  u_short;
-typedef unsigned int32_t    u_int;
+typedef uint32_t    u_int;
 typedef unsigned long   u_long;
 
 

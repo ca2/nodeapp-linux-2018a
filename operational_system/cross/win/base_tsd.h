@@ -80,13 +80,13 @@ extern "C" {
 
 typedef signed char      INT8, *PINT8;
 typedef signed short     INT16, *PINT16;
-typedef signed int32_t       INT32, *PINT32;
+typedef int32_t       INT32, *PINT32;
 typedef unsigned char    UINT8, *PUINT8;
 typedef unsigned short   UINT16, *PUINT16;
-typedef unsigned int32_t     UINT32, *PUINT32;
-typedef signed int32_t       LONG32, *PLONG32;
-typedef unsigned int32_t     ULONG32, *PULONG32;
-typedef unsigned int32_t     DWORD32, *PDWORD32;
+typedef uint32_t     UINT32, *PUINT32;
+typedef int32_t       LONG32, *PLONG32;
+typedef uint32_t     ULONG32, *PULONG32;
+typedef uint32_t     DWORD32, *PDWORD32;
 
 #ifdef _MSC_VER
 typedef signed __int64   INT64, *PINT64;
@@ -145,7 +145,7 @@ typedef ULONG_PTR     DWORD_PTR, *PDWORD_PTR;
 typedef __int64 SHANDLE_PTR;
 typedef unsigned __int64 HANDLE_PTR;
 typedef int32_t HALF_PTR, *PHALF_PTR;
-typedef unsigned int32_t UHALF_PTR, *PUHALF_PTR;
+typedef uint32_t UHALF_PTR, *PUHALF_PTR;
 
 #define MAXHALF_PTR 0x7fffffff
 #define MINHALF_PTR 0x80000000

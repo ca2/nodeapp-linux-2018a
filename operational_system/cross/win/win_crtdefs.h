@@ -101,7 +101,7 @@
 #define _MSVCRT_LONG_DEFINED
 /* we need 32-bit longs even on 64-bit */
 typedef int32_t __msvcrt_long;
-typedef unsigned int32_t __msvcrt_ulong;
+typedef uint32_t __msvcrt_ulong;
 #endif
 
 #ifndef _INTPTR_T_DEFINED
@@ -117,7 +117,7 @@ typedef int32_t intptr_t;
 #ifdef  _WIN64
 typedef unsigned __int64 uintptr_t;
 #else
-typedef unsigned int32_t uintptr_t;
+typedef uint32_t uintptr_t;
 #endif
 #define _UINTPTR_T_DEFINED
 #endif
@@ -135,7 +135,7 @@ typedef int32_t ptrdiff_t;
 #ifdef _WIN64
 typedef unsigned __int64 size_t;
 #else
-typedef unsigned int32_t size_t;
+typedef uint32_t size_t;
 #endif
 #define _SIZE_T_DEFINED
 #endif
@@ -208,8 +208,8 @@ typedef struct tagLC_ID {
 #ifndef _THREADLOCALEINFO
 typedef struct threadlocaleinfostruct {
     int32_t refcount;
-    unsigned int32_t lc_codepage;
-    unsigned int32_t lc_collate_cp;
+    uint32_t lc_codepage;
+    uint32_t lc_collate_cp;
     unsigned long lc_handle[6];
     LC_ID lc_id[6];
     struct {

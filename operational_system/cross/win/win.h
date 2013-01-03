@@ -46,7 +46,7 @@ struct tagHandle
 //typedef struct tagHandle * HANDLE;
 
 
-typedef unsigned int32_t       DWORD;
+typedef uint32_t       DWORD;
 typedef int32_t                 WINBOOL;
 typedef unsigned char       BYTE;
 typedef unsigned short      WORD;
@@ -67,8 +67,8 @@ typedef void far            *LPVOID;
 typedef CONST void far      *LPCVOID;
 
 typedef int32_t                 INT;
-typedef unsigned int32_t        UINT;
-typedef unsigned int32_t        *PUINT;
+typedef uint32_t        UINT;
+typedef uint32_t        *PUINT;
 
 
 

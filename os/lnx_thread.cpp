@@ -1970,7 +1970,7 @@ stop_run:
 //					if ( ( rc = read(fileDescs_[0], &command, 5 * sizeof( FileDescWaiterThreadCommand ) ) ) == -1 )
 //						continue;
 //					read_++;
-//					for ( unsigned int32_t i = 0; i < ( rc/sizeof( FileDescWaiterThreadCommand ) ); i++ )
+//					for ( uint32_t i = 0; i < ( rc/sizeof( FileDescWaiterThreadCommand ) ); i++ )
 //						if ( command[i]() == FileDescWaiterThreadCommand::terminate )
 //							return 0;
 //					if ( !--nSelect )
