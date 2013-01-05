@@ -314,9 +314,6 @@
 
 #include <winreg.h>
 #include <winnls.h>
-#include <stddef.h>
-#include <limits.h>
-#include <malloc.h>
 #include <new.h>
 #include <eh.h>
 

@@ -2,7 +2,6 @@
 
 
 #include <fcntl.h>
-#include <unistd.h>
 
 #ifdef LINUX
 #include <dlfcn.h>

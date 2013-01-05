@@ -1,15 +1,10 @@
 #include "framework.h"
-
 #include "lnx_thread_slots.h"
-
-#include <stddef.h>
 
 
 #pragma warning(disable: 4074)
 #pragma init_seg(compiler)
 
-/////////////////////////////////////////////////////////////////////////////
-// __MODULE_STATE push/pop implementation
 
 CLASS_DECL_lnx __MODULE_STATE * __set_module_state(__MODULE_STATE* pNewState)
 {

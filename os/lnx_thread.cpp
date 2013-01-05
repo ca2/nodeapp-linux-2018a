@@ -10,11 +10,6 @@
 
 //#include "internal_linux.hpp"
 
-//#include <iostream>
-//#include <string>
-
-#include <unistd.h>
-#include <errno.h>
 #include <fcntl.h>
 
 //namespace gen { namespace pal {
