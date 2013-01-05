@@ -21,9 +21,26 @@
 #include <errno.h>
 #include <malloc.h>
 #include <inttypes.h>
+#define __USE_BSD
 #include <sys/time.h>
+#undef __USE_BSD
 #include <pthread.h>
 #include <sys/resource.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <netinet/in.h>
+#include <arpa/inet.h>
+#include <netdb.h>
+
+// ----------------------------------------
+// common unix includes / defines
+//#include <unistd.h>
+//#include <sys/time.h>
+//#include <sys/types.h>
+//#include <sys/socket.h>
+//#include <netinet/in.h>
+//#include <arpa/inet.h>
+//#include <netdb.h>
 
 
 #define _gmtime64 gmtime
