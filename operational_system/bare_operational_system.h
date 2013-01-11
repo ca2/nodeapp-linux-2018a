@@ -32,15 +32,6 @@
 #include <arpa/inet.h>
 #include <netdb.h>
 
-// ----------------------------------------
-// common unix includes / defines
-//#include <unistd.h>
-//#include <sys/time.h>
-//#include <sys/types.h>
-//#include <sys/socket.h>
-//#include <netinet/in.h>
-//#include <arpa/inet.h>
-//#include <netdb.h>
 
 
 #define _gmtime64 gmtime
@@ -321,8 +312,6 @@ inline void __debug_break() { asm("int $3"); }
 #define __min(a,b)  (((a) < (b)) ? (a) : (b))
 
 
-
-// _BSD types from sys/types.h
 
 typedef unsigned char   u_char;
 typedef unsigned short  u_short;

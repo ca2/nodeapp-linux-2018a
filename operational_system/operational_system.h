@@ -205,10 +205,6 @@ typedef std::type_info std_type_info;
 
 
 
-#include <netinet/in.h>
-
-
-
 // std:: includes can undef min max macros
 
 

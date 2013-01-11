@@ -694,7 +694,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
    #endif
    }
 
-   unsigned long application::get_thread_id()
+   uint32_t application::get_thread_id()
    {
       return ::pthread_self();
    }

@@ -2,7 +2,6 @@
 
 
 // define portable types for 32-bit / 64-bit OS
-#include <inttypes.h>
 typedef int32_t BOOL;
 typedef uint8_t BYTE;
 typedef uint16_t WORD;

@@ -193,7 +193,7 @@ namespace lnx
 
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);
-      virtual unsigned long get_thread_id();
+      virtual uint32_t get_thread_id();
 
 
    };

@@ -106,7 +106,6 @@ typedef GUID FMTID,*LPFMTID;
 #endif /* defined(__cplusplus) && !defined(CINTERFACE) */
 
 #if defined(__cplusplus) && !defined(CINTERFACE)
-#include <string.h>
 inline bool operator==(const GUID& guidOne, const GUID& guidOther)
 {
     return !memcmp(&guidOne,&guidOther,sizeof(GUID));

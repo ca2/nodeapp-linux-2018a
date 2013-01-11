@@ -1,5 +1,4 @@
 #include "framework.h"
-#include <netdb.h>
 
 
 namespace lnx
