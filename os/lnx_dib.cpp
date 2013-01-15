@@ -22,7 +22,7 @@ namespace lnx
    int64_t dib::SinN[360];
 
 
-   int64_t dib::Cos10N[10]; // until 10 degress
+   int64_t dib::Cos10N[10]; // until 10 degressa
    int64_t dib::Sin10N[10]; // more precision * 1 << 34
 
 
@@ -2560,4 +2560,4 @@ namespace lnx
 #define new DEBUG_NEW
 
 
-}
+} // namespace lnx
