@@ -96,6 +96,6 @@ namespace lnx
       string         m_strNetSeedFolder;
    };
 
-} // namespace win
+} // namespace lnx
 
 
