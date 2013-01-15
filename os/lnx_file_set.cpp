@@ -1,7 +1,8 @@
 #include "framework.h"
 
 
-namespace lnx{
+namespace lnx
+{
 
 
    file_set::file_set(::ca::application * papp) :
@@ -139,7 +140,7 @@ namespace lnx{
    }
 
 
-} // namespace win
+} // namespace mac
 
 
 
