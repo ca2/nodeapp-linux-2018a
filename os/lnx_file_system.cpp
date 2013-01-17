@@ -14,6 +14,11 @@ namespace lnx
 {
 
 
+   file_system::file_system(::ca::application * papp) :
+      ca(papp)
+   {
+   }
+
    bool file_system::path::is_equal(const char * lpszFilPathA, const char * lpszFilPathB)
    {
       string stra(lpszFilPathA);
@@ -82,7 +87,7 @@ namespace lnx
       return true;
    }
 
-   void get_ascendants_path(const char * lpcsz, stringa & straParam)
+   void file_system::get_ascendants_path(const char * lpcsz, stringa & straParam)
    {
       stringa stra;
       get_ascendants_name(lpcsz, stra);
@@ -553,10 +558,6 @@ namespace lnx
    class file_system::path & file_system::path()
    {
       return m_path;
-   }
-
-   file_system::file_system()
-   {
    }
 
    string file_system::title_(const char * path)
