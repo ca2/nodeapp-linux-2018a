@@ -11,7 +11,7 @@ namespace lnx
       System.factory().cloneable_large <stdio_file          >  (System. type_info < ::ex1::text_file         > ());
       System.factory().cloneable_large < file               >  (System. type_info < ::ex1::file              > ());
       System.factory().cloneable_large < file_set            >  (System. type_info < ::ex2::file_set          > ());
-      System.factory().cloneable < file_system               >  (System. type_info < ::ex1::file_system       > (), 1);
+      System.factory().cloneable < ::lnx::file::system               >  (System. type_info < ::ca::file::system       > (), 1);
       System.factory().cloneable < WinResource                 >  (System. type_info < ::ex1::resource          > (), 1);
       System.factory().cloneable < application                 >  (System. type_info < ::ex2::application       > (), 1);
       System.factory().cloneable < dir                         >  (System. type_info < ::ca::dir::system        > (), 1);
