@@ -837,7 +837,7 @@ namespace lnx
    }
 
 
-   bool thread::create_thread(::ca::e_thread_priority epriority, uint32_t dwCreateFlagsParam, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::create_thread(::ca::e_thread_priority epriority, uint32_t dwCreateFlagsParam, uint_ptr nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       uint32_t dwCreateFlags = dwCreateFlagsParam;
