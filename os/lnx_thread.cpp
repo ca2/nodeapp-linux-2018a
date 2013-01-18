@@ -656,7 +656,7 @@ namespace lnx
       return m_nID;
    }
 
-   bool thread::Begin(::ca::e_thread_priority epriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::begin(::ca::e_thread_priority epriority, UINT nStackSize, DWORD dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
       if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
       {
