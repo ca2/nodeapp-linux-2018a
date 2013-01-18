@@ -835,9 +835,10 @@ namespace lnx
       m_ptimera->check();
    }
 
-      bool thread::create_thread(::ca::e_thread_priority epriority, DWORD dwCreateFlagsParam, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
-{
-  DWORD dwCreateFlags = dwCreateFlagsParam;
+   bool thread::create_thread(::ca::e_thread_priority epriority, uint32_t dwCreateFlagsParam, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   {
+
+      uint32_t dwCreateFlags = dwCreateFlagsParam;
 
       if(epriority != ::ca::thread_priority_normal)
       {
