@@ -656,21 +656,6 @@ namespace lnx
       return m_nID;
    }
 
-   bool thread::begin(::ca::e_thread_priority epriority, UINT nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
-   {
-      if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
-      {
-         Delete();
-         return false;
-      }
-      //VERIFY(SetThreadPriority(epriority));
-      //if (!(dwCreateFlags & CREATE_SUSPENDED))
-      //{
-        // ENSURE(ResumeThread() != (DWORD)-1);
-      //}
-      return true;
-   }
-
    void thread::on_delete(::ca::ca * p)
    {
    }
@@ -834,6 +819,23 @@ namespace lnx
          return;
       m_ptimera->check();
    }
+
+
+   bool thread::begin(::ca::e_thread_priority epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   {
+      if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
+      {
+         Delete();
+         return false;
+      }
+      //VERIFY(SetThreadPriority(epriority));
+      //if (!(dwCreateFlags & CREATE_SUSPENDED))
+      //{
+        // ENSURE(ResumeThread() != (DWORD)-1);
+      //}
+      return true;
+   }
+
 
    bool thread::create_thread(::ca::e_thread_priority epriority, uint32_t dwCreateFlagsParam, UINT nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
