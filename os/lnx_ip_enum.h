@@ -30,7 +30,7 @@ namespace lnx
    };
 
 
-} // namespace win
+} // namespace lnx
 
 
 
