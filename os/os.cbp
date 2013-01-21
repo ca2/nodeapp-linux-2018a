@@ -135,8 +135,6 @@
 		<Unit filename="lnx_preview_dc.cpp" />
 		<Unit filename="lnx_region.cpp" />
 		<Unit filename="lnx_region.h" />
-		<Unit filename="lnx_resource.cpp" />
-		<Unit filename="lnx_resource.h" />
 		<Unit filename="lnx_root_tools.h" />
 		<Unit filename="lnx_shell.cpp" />
 		<Unit filename="lnx_shell.h" />
