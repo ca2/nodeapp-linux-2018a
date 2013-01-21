@@ -146,7 +146,7 @@
 		<Cursor position="1406" topLine="26" />
 	</File>
 	<File name="lnx_factory_exchange.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="3361" topLine="4" />
+		<Cursor position="3008" topLine="17" />
 	</File>
 	<File name="lnx_factory_exchange.h" open="0" top="0" tabpos="10">
 		<Cursor position="55" topLine="0" />
@@ -194,7 +194,7 @@
 		<Cursor position="1728" topLine="70" />
 	</File>
 	<File name="lnx_internal.h" open="0" top="0" tabpos="0">
-		<Cursor position="218" topLine="0" />
+		<Cursor position="117" topLine="0" />
 	</File>
 	<File name="lnx_ip_enum.cpp" open="0" top="0" tabpos="40">
 		<Cursor position="23" topLine="0" />
@@ -237,12 +237,6 @@
 	</File>
 	<File name="lnx_region.h" open="0" top="0" tabpos="50">
 		<Cursor position="1799" topLine="21" />
-	</File>
-	<File name="lnx_resource.cpp" open="0" top="0" tabpos="0">
-		<Cursor position="7493" topLine="245" />
-	</File>
-	<File name="lnx_resource.h" open="0" top="0" tabpos="0">
-		<Cursor position="232" topLine="0" />
 	</File>
 	<File name="lnx_root_tools.h" open="0" top="0" tabpos="0">
 		<Cursor position="7454" topLine="165" />
