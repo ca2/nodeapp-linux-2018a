@@ -57,7 +57,7 @@ namespace lnx
 
          memcpy(&addr.s_addr, phostent->h_addr_list[nAdapter], phostent->h_length);
 
-         str = to_string(&addr);
+         str = ::to_vsstring(&addr);
 
          if(str.has_char())
          {
