@@ -55,8 +55,13 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 
    pinitmaindata->m_hInstance             = NULL;
    pinitmaindata->m_hPrevInstance         = NULL;
-   for(int32_t i = 0; i < argc; i++)
+   if(argc > 0)
    {
+      pinitmaindata->m_vssCommandLine     = argv[0];
+   }
+   for(int32_t i = 1; i < argc; i++)
+   {
+      pinitmaindata->m_vssCommandLine     += " ";
       pinitmaindata->m_vssCommandLine     += argv[i];
    }
    pinitmaindata->m_nCmdShow              = SW_SHOW;
