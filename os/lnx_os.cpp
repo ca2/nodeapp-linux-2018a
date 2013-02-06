@@ -285,7 +285,7 @@ namespace lnx
    bool os::local_machine_set_run(const char * pszKey, const char * pszCommand)
    {
 
-      throw not_implemented(get_app());
+//      throw not_implemented(get_app());
       return false;
 
 /*
@@ -353,7 +353,7 @@ namespace lnx
 
    bool os::defer_register_ca2_plugin_for_mozilla()
    {
-      throw not_implemented(get_app());
+    //  throw not_implemented(get_app());
       return false;
 
 /*
