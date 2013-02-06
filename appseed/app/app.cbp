@@ -15,9 +15,7 @@
 				<Option parameters=": app=app-core/hellomultiverse build_number=basis locale=_std schema=_std install" />
 				<Option host_application="/ca2/stage/x86/app" />
 				<Compiler>
-					<Add option="-std=c++0x" />
 					<Add option="-g" />
-					<Add option="-fPIC" />
 					<Add directory="." />
 					<Add directory=".." />
 					<Add directory="../.." />
@@ -31,12 +29,20 @@
 			</Target>
 		</Build>
 		<Compiler>
+			<Add option="-std=c++0x" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="-fnon-call-exceptions" />
+			<Add option="-fno-pie" />
+			<Add option="-fno-stack-protector" />
+			<Add option="-Wno-pointer-arith" />
+			<Add option="-Wno-attributes" />
+			<Add option="-Winvalid-pch" />
 			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath,\\$$ORIGIN" />
+			<Add option="-Wl,-E" />
 			<Add option="-lca2c" />
 			<Add option="-lca2optca" />
 			<Add option="-lca2ca" />
