@@ -1,9 +1,6 @@
 #!/bin/bash
 
 
-install()
-
-
 function install()
 {
 	
@@ -12,3 +9,6 @@ function install()
 	./app : app=app-core/hellomultiverse locale=_std schema=_std install build_number=basis
 
 }
+
+
+install
