@@ -29,13 +29,19 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++0x" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="-fnon-call-exceptions" />
-			<Add option="-fPIC" />
+			<Add option="-fno-pie" />
+			<Add option="-fno-stack-protector" />
+			<Add option="-Wno-pointer-arith" />
+			<Add option="-Wno-attributes" />
+			<Add option="-Winvalid-pch" />
 			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath,\\$$ORIGIN" />
+			<Add option="-Wl,-E" />
 			<Add option="-lca2c" />
 			<Add option="-lca2ca" />
 			<Add option="-lca2" />
