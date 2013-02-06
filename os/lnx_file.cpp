@@ -155,11 +155,17 @@ namespace lnx
             dwFlags |= O_TRUNC;
       }
 
+      DWORD dwPermission = 0;
+
+      dwPermission |= S_IRUSR | S_IWUSR | S_IXUSR;
+      dwPermission |= S_IRGRP | S_IWGRP | S_IXGRP;
+
       // attempt file creation
       //HANDLE hFile = shell::CreateFile(gen::international::utf8_to_unicode(m_strFileName), dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
-      int32_t hFile = ::open(m_strFileName, dwFlags); //::open(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
+      int32_t hFile = ::open(m_strFileName, dwFlags, dwPermission); //::open(m_strFileName, dwAccess, dwShareMode, &sa, dwCreateFlag, FILE_ATTRIBUTE_NORMAL, NULL);
       if(hFile == -1)
       {
+         int iError = errno;
          DWORD dwLastError = ::GetLastError();
 
          if(dwLastError != ERROR_FILE_NOT_FOUND && dwLastError != ERROR_PATH_NOT_FOUND)
