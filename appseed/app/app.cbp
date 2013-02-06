@@ -12,7 +12,8 @@
 				<Option object_output="../../../time/intermediate/nodeapp/app" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option host_application=": app=app-core/hellomultiver build_number=basis" />
+				<Option parameters=": app=app-core/hellomultiverse build_number=basis locale=_std schema=_std install" />
+				<Option host_application="/ca2/stage/x86/app" />
 				<Compiler>
 					<Add option="-std=c++0x" />
 					<Add option="-g" />
