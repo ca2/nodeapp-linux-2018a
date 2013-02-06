@@ -16,6 +16,7 @@
 				<Option host_application="/ca2/stage/x86/app" />
 				<Compiler>
 					<Add option="-g" />
+					<Add option="-D_DEBUG" />
 					<Add directory="." />
 					<Add directory=".." />
 					<Add directory="../.." />
@@ -38,7 +39,6 @@
 			<Add option="-Wno-pointer-arith" />
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
-			<Add option="-D_DEBUG" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath,\\$$ORIGIN" />
