@@ -1,3 +1,14 @@
-#! /bin/bash
+#!/bin/bash
 
-../../../../../stage/x86/app : app=app-core/hellomultiverse locale=_std schema=_std install build_number=basis
+
+install()
+
+
+function install()
+{
+	
+	cd ../../../../../stage/x86
+
+	./app : app=app-core/hellomultiverse locale=_std schema=_std install build_number=basis
+
+}
