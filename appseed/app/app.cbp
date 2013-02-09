@@ -39,10 +39,12 @@
 			<Add option="-Wno-pointer-arith" />
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
+			<Add directory="../../../app/thirdparty/appseed" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath,\\$$ORIGIN" />
 			<Add option="-Wl,-E" />
+			<Add option="-lca2zlib" />
 			<Add option="-lFreeImage" />
 			<Add option="-lca2c" />
 			<Add option="-lca2optca" />
