@@ -26,5 +26,6 @@ void ca2_factory_exchange(::ca::application * papp)
 {
 
    win2::factory_exchange factoryexchange(papp);
+
 }
 
