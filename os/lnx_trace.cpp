@@ -391,7 +391,8 @@ void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg)
    else if (lpmsg->message >= WM_USER)
    {
       // User message
-      sprintf(szBuf, "WM_USER+0x%04X", lpmsg->message - WM_USER);
+      uint32_t uiValue = lpmsg->message - WM_USER;
+      snprintf(szBuf, sizeof(szBuf), "WM_USER+0x%04X", uiValue);
       lpszMsgName = szBuf;
    }
    else
