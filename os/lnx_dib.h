@@ -26,7 +26,6 @@ namespace lnx
       BITMAPINFO           m_info;
       ::ca::bitmap_sp      m_spbitmap;
       ::ca::graphics_sp    m_spgraphics;
-      class size           m_size;
       //HBITMAP              m_hbitmapOriginal;
 
       virtual ::ca::graphics * get_graphics();
