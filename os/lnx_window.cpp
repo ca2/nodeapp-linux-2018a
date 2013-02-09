@@ -274,6 +274,7 @@ namespace lnx
 //      cs.hInstance = System.m_hInstance;
       cs.lpCreateParams = lpParam;
 
+
       if(m_pguie != NULL && m_pguie != this)
       {
          if(!m_pguie->pre_create_window(cs))
@@ -304,6 +305,10 @@ namespace lnx
       XEvent e;
       int32_t scr;
 //      cairo_surface_t *cs;
+
+
+      m_pthread = ::ca::get_thread();
+      m_pguie->m_pthread = ::ca::get_thread();
 
       if(!(dpy=XOpenDisplay(NULL))) {
          fprintf(stderr, "ERROR: Could not open display\n");
@@ -356,6 +361,7 @@ namespace lnx
 #endif
 
       m_oswindow = oswindow(dpy, window);
+      m_oswindow.set_user_interaction(m_pguie);
 
       XStoreName(m_oswindow.display(), m_oswindow.window(), "hello");
       XSelectInput(m_oswindow.display(), m_oswindow.window(), ExposureMask|ButtonPressMask);
@@ -364,6 +370,16 @@ namespace lnx
 
       if (!unhook_window_create())
          PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
+
+
+      send_message(WM_CREATE, 0, (LPARAM) &cs);
+
+      m_pguie->SetWindowPos(0, 0, 0, cs.cx, cs.cy, 0);
+
+      send_message(WM_SIZE, 0, 0);
+
+//      on_set_parent(pparent);
+
 
   //    if (lnx == NULL)
          //return FALSE;
@@ -2115,24 +2131,8 @@ return NULL;
 
    ::user::interaction * PASCAL window::GetDescendantWindow(::user::interaction * hWnd, id id)
    {
-      single_lock sl(&hWnd->m_pthread->m_pthread->m_mutex, TRUE);
-      // GetDlgItem recursive (return first found)
-      // breadth-first for 1 level, then depth-first for next level
 
-      // use GetDlgItem since it is a fast USER function
-      ::user::interaction * pWndChild;
-/*      if ((pWndChild = hWnd->GetDlgItem(id)) != NULL)
-      {
-         if (pWndChild->GetTopWindow() != NULL)
-         {
-            // children with the same ID as their parent have priority
-            pWndChild = GetDescendantWindow(pWndChild, id);
-            if (pWndChild != NULL)
-               return pWndChild;
-         }
-         if (pWndChild != NULL)
-            return pWndChild;
-      }*/
+      single_lock sl(&hWnd->m_pthread->m_pthread->m_mutex, TRUE);
 
       for(int32_t i = 0; i < hWnd->m_uiptraChild.get_count(); i++)
       {
@@ -2145,18 +2145,8 @@ return NULL;
          }
       }
 
-      if(pWndChild == NULL)
-         return NULL;
+      return NULL;
 
-      // walk each child
-      for (pWndChild = pWndChild->GetTopWindow(); pWndChild != NULL;
-         pWndChild = pWndChild->GetNextWindow(GW_HWNDNEXT))
-      {
-         pWndChild = GetDescendantWindow(pWndChild, id);
-         if (pWndChild != NULL)
-            return pWndChild;
-      }
-      return NULL;    // not found
    }
 
    void PASCAL window::SendMessageToDescendants(void * hWnd, UINT message,
@@ -3694,128 +3684,126 @@ throw not_implemented(get_app());
       oprop(string("RunModalLoop.thread(") + gen::str::from(iLevel) + ")") = System.GetThread();
       m_iModalCount++;
 
-throw not_implemented(get_app());
-//
-//      m_iaModalThread.add(::GetCurrentThreadId());
-//      ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (m_pthread->m_p);
-//      ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_pthread);
-//      // acquire and dispatch messages until the modal state is done
-//      MESSAGE msg;
-//      for (;;)
-//      {
-//         ASSERT(ContinueModal(iLevel));
-//
-//         // phase1: check to see if we can do idle work
-//         while (bIdle && !::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE))
-//         {
-//            ASSERT(ContinueModal(iLevel));
-//
-//            // show the dialog when the message queue goes idle
-//            if (bShowIdle)
-//            {
-//               ShowWindow(SW_SHOWNORMAL);
-//               UpdateWindow();
-//               bShowIdle = FALSE;
-//            }
-//
-//            // call on_idle while in bIdle state
-//            if (!(dwFlags & MLF_NOIDLEMSG) && hWndParent != NULL && lIdleCount == 0)
-//            {
-//               // send WM_ENTERIDLE to the parent
+      m_iaModalThread.add(::GetCurrentThreadId());
+      ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (m_pthread->m_pthread->m_p);
+      ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_pthread->m_pthread);
+      // acquire and dispatch messages until the modal state is done
+      MESSAGE msg;
+      for (;;)
+      {
+         ASSERT(ContinueModal(iLevel));
+
+         // phase1: check to see if we can do idle work
+         while (bIdle && !::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE))
+         {
+            ASSERT(ContinueModal(iLevel));
+
+            // show the dialog when the message queue goes idle
+            if (bShowIdle)
+            {
+               ShowWindow(SW_SHOWNORMAL);
+               UpdateWindow();
+               bShowIdle = FALSE;
+            }
+
+            // call on_idle while in bIdle state
+            if (!(dwFlags & MLF_NOIDLEMSG) && hWndParent != NULL && lIdleCount == 0)
+            {
+               // send WM_ENTERIDLE to the parent
 //               ::SendMessage(hWndParent, WM_ENTERIDLE, MESSAGEF_DIALOGBOX, (LPARAM)get_os_data());
-//            }
-//            if ((dwFlags & MLF_NOKICKIDLE) ||
-//               !__call_window_procedure(this, get_os_data(), WM_KICKIDLE, MESSAGEF_DIALOGBOX, lIdleCount++))
-//            {
-//               // stop idle processing next time
-//               bIdle = FALSE;
-//            }
-//
-//            m_pthread->m_p->m_dwAlive = m_pthread->m_dwAlive = ::get_tick_count();
-//            if(pappThis1 != NULL)
-//            {
-//               pappThis1->m_dwAlive = m_pthread->m_dwAlive;
-//            }
-//            if(pappThis2 != NULL)
-//            {
-//               pappThis2->m_dwAlive = m_pthread->m_dwAlive;
-//            }
-//            if(pliveobject != NULL)
-//            {
-//               pliveobject->keep_alive();
-//            }
-//         }
-//
-//
-//         // phase2: pump messages while available
-//         do
-//         {
-//            if (!ContinueModal(iLevel))
-//               goto ExitModal;
-//
-//            // pump message, but quit on WM_QUIT
-//            if (!m_pthread->pump_message())
-//            {
-//               __post_quit_message(0);
-//               return -1;
-//            }
-//
-//            // show the window when certain special messages rec'd
-//            if (bShowIdle &&
-//               (msg.message == 0x118 || msg.message == WM_SYSKEYDOWN))
-//            {
-//               ShowWindow(SW_SHOWNORMAL);
-//               UpdateWindow();
-//               bShowIdle = FALSE;
-//            }
-//
-//            if (!ContinueModal(iLevel))
-//               goto ExitModal;
-//
-//            // reset "no idle" state after pumping "normal" message
-//            if (__is_idle_message(&msg))
-//            {
-//               bIdle = TRUE;
-//               lIdleCount = 0;
-//            }
-//
-//            m_pthread->m_p->m_dwAlive = m_pthread->m_dwAlive = ::get_tick_count();
-//            if(pappThis1 != NULL)
-//            {
-//               pappThis1->m_dwAlive = m_pthread->m_dwAlive;
-//            }
-//            if(pappThis2 != NULL)
-//            {
-//               pappThis2->m_dwAlive = m_pthread->m_dwAlive;
-//            }
-//            if(pliveobject != NULL)
-//            {
-//               pliveobject->keep_alive();
-//            }
-//
-//            /*            if(pliveobject != NULL)
-//            {
-//            pliveobject->keep();
-//            }*/
-//
-//         }
-//         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
-//
-//
-//         if(m_pguie->m_pthread != NULL)
-//         {
-//            m_pguie->m_pthread->step_timer();
-//         }
-//         if (!ContinueModal(iLevel))
-//            goto ExitModal;
-//
-//
-//      }
-//
-//ExitModal:
-//      m_iaModalThread.remove_first(::GetCurrentThreadId());
-//      m_iModal = m_iModalCount;
-//      return m_nModalResult;
+            }
+            //if ((dwFlags & MLF_NOKICKIDLE) ||
+              // !__call_window_procedure(this, get_os_data(), WM_KICKIDLE, MESSAGEF_DIALOGBOX, lIdleCount++))
+            {
+               // stop idle processing next time
+               //bIdle = FALSE;
+            }
+
+            m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
+            if(pappThis1 != NULL)
+            {
+               pappThis1->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+            }
+            if(pappThis2 != NULL)
+            {
+               pappThis2->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+            }
+            if(pliveobject != NULL)
+            {
+               pliveobject->keep_alive();
+            }
+         }
+
+
+         // phase2: pump messages while available
+         do
+         {
+            if (!ContinueModal(iLevel))
+               goto ExitModal;
+
+            // pump message, but quit on WM_QUIT
+            if (!m_pthread->m_pthread->pump_message())
+            {
+               __post_quit_message(0);
+               return -1;
+            }
+
+            // show the window when certain special messages rec'd
+            if (bShowIdle &&
+               (msg.message == 0x118 || msg.message == WM_SYSKEYDOWN))
+            {
+               ShowWindow(SW_SHOWNORMAL);
+               UpdateWindow();
+               bShowIdle = FALSE;
+            }
+
+            if (!ContinueModal(iLevel))
+               goto ExitModal;
+
+            // reset "no idle" state after pumping "normal" message
+            if (__is_idle_message(&msg))
+            {
+               bIdle = TRUE;
+               lIdleCount = 0;
+            }
+
+            m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
+            if(pappThis1 != NULL)
+            {
+               pappThis1->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+            }
+            if(pappThis2 != NULL)
+            {
+               pappThis2->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+            }
+            if(pliveobject != NULL)
+            {
+               pliveobject->keep_alive();
+            }
+
+            /*            if(pliveobject != NULL)
+            {
+            pliveobject->keep();
+            }*/
+
+         }
+         while (::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE) != FALSE);
+
+
+         if(m_pguie->m_pthread != NULL)
+         {
+            m_pguie->m_pthread->m_pthread->step_timer();
+         }
+         if (!ContinueModal(iLevel))
+            goto ExitModal;
+
+
+      }
+
+ExitModal:
+      m_iaModalThread.remove_first(::GetCurrentThreadId());
+      m_iModal = m_iModalCount;
+      return m_nModalResult;
    }
 
    bool window::ContinueModal(int32_t iLevel)
@@ -3826,22 +3814,22 @@ throw not_implemented(get_app());
    void window::EndModalLoop(id nResult)
    {
       throw not_implemented(get_app());
-//      ASSERT(::IsWindow(get_os_data()));
-//
-//      // this result will be returned from window::RunModalLoop
-//      m_nModalResult = (int32_t) nResult;
-//
-//      // make sure a message goes through to exit the modal loop
-//      if(m_iModalCount > 0)
-//      {
-//         m_iModalCount--;
-//         for(index i = 0; i < m_iaModalThread.get_count(); i++)
-//         {
-//            ::post_thread_message((DWORD) m_iaModalThread[i], WM_NULL, 0, 0);
-//         }
-//         PostMessage(WM_NULL);
-//         System.GetThread()->post_thread_message(WM_NULL, 0, 0);
-//      }
+      ASSERT(::IsWindow(get_os_data()));
+
+      // this result will be returned from window::RunModalLoop
+      m_nModalResult = (int32_t) nResult;
+
+      // make sure a message goes through to exit the modal loop
+      if(m_iModalCount > 0)
+      {
+         m_iModalCount--;
+         for(index i = 0; i < m_iaModalThread.get_count(); i++)
+         {
+            //::post_thread_message((DWORD) m_iaModalThread[i], WM_NULL, 0, 0);
+         }
+         PostMessage(WM_NULL);
+         System.GetThread()->post_thread_message(WM_NULL, 0, 0);
+      }
    }
 
    void window::EndAllModalLoops(id nResult)
@@ -4022,8 +4010,30 @@ throw not_implemented(get_app());
          m_pguie->m_rectParentClient = m_rectParentClient;
       }
 
-      throw not_implemented(get_app());
+      //throw not_implemented(get_app());
 
+
+      if(nFlags & SWP_NOMOVE)
+      {
+         if(nFlags & SWP_NOSIZE)
+         {
+         }
+         else
+         {
+            XResizeWindow(m_oswindow.display(), m_oswindow.window(), cx, cy);
+         }
+      }
+      else
+      {
+         if(nFlags & SWP_NOSIZE)
+         {
+            XMoveWindow(m_oswindow.display(), m_oswindow.window(), x, y);
+         }
+         else
+         {
+            XMoveResizeWindow(m_oswindow.display(), m_oswindow.window(), x, y, cx, cy);
+         }
+      }
 /*
       if(GetExStyle() & WS_EX_LAYERED)
       {
@@ -4328,7 +4338,8 @@ throw not_implemented(get_app());
          return NULL;
       if(get_os_data() == NULL)
          return NULL;
-      return ::lnx::window::from_handle(::GetParent(get_os_data()));
+      //return ::lnx::window::from_handle(::GetParent(get_os_data()));
+      return NULL;
    }
 
    LONG window::GetWindowLong(int32_t nIndex)
@@ -4451,9 +4462,58 @@ throw not_implemented(get_app());
    LRESULT window::send_message(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      throw not_implemented(get_app());
-      //ASSERT(::IsWindow(get_os_data()));
-      //return ::SendMessage(get_os_data(), message, wparam, lparam);
+      ::ca::smart_pointer < ::gen::message::base > spbase;
+
+      spbase(get_base(this, message, wparam, lparam));
+
+      try
+      {
+
+         ::user::interaction * pui = m_pguie;
+
+         while(pui != NULL && pui->get_parent() != NULL)
+         {
+
+            try
+            {
+
+               pui->pre_translate_message(spbase);
+
+            }
+            catch(...)
+            {
+
+               break;
+
+            }
+
+            if(spbase->m_bRet)
+               return spbase->get_lresult();
+
+            try
+            {
+
+               pui = pui->get_parent();
+
+            }
+            catch(...)
+            {
+
+               break;
+
+            }
+
+         }
+
+      }
+      catch(...)
+      {
+
+      }
+
+      message_handler(spbase);
+
+      return spbase->get_lresult();
 
    }
 
