@@ -1952,7 +1952,7 @@
 
 1357856369 /ca2/app/appseed/ca/ca/ca_pen.h
 
-1357856369 /ca2/app/appseed/ca/ca/ca_bitmap.h
+1360409741 /ca2/app/appseed/ca/ca/ca_bitmap.h
 	"ca_graphics_object.h"
 
 1357180659 /ca2/app/appseed/ca/ca/ca_brush.h
@@ -1995,7 +1995,7 @@
 	"ca/user/user_create_context.h"
 	"ca/user/user_check_interface.h"
 
-1360247811 /ca2/app/appseed/ca/gen/gen_message.h
+1360422381 /ca2/app/appseed/ca/gen/gen_message.h
 	<agile.h>
 
 1355396973 /ca2/app/appseed/ca/user/user_create_context.h
@@ -3880,9 +3880,9 @@
 
 1357180602 /ca2/nodeapp/os/lnx_graphics_object.h
 
-1357180603 /ca2/nodeapp/os/lnx_bitmap.h
+1360410187 /ca2/nodeapp/os/lnx_bitmap.h
 
-1357180602 /ca2/nodeapp/os/lnx_dib.h
+1360409237 /ca2/nodeapp/os/lnx_dib.h
 
 1357180603 /ca2/nodeapp/os/lnx_palette.h
 
