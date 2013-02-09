@@ -124,9 +124,9 @@ UINT APIENTRY __thread_entry(void * pParam)
       pThreadState->m_pModuleState = pStartup->pThreadState->m_pModuleState;
 
       // set current thread pointer for System.GetThread
-//      __MODULE_STATE* pModuleState = AfxGetModuleState();
-  //    __MODULE_THREAD_STATE* pState = pModuleState->m_thread;
-    //  pState->m_pCurrentWinThread = pThread;
+      __MODULE_STATE* pModuleState = __get_module_state();
+      __MODULE_THREAD_STATE* pState = pModuleState->m_thread;
+      pState->m_pCurrentWinThread = pThread;
 
       // forced initialization of the thread
       __init_thread();
@@ -153,6 +153,8 @@ UINT APIENTRY __thread_entry(void * pParam)
       __end_thread(dynamic_cast < ::radix::application * > (pThread->m_papp), (UINT)-1, FALSE);
       ASSERT(FALSE);  // unreachable
    }
+
+   pStartup->m_pthread = pThread;
 
    pThread->thread_entry(pStartup);
 
@@ -646,7 +648,7 @@ namespace lnx
 
    }
 
-   void * thread::get_os_data()
+   void * thread::get_os_data() const
    {
       return m_hThread;
    }
@@ -1659,9 +1661,8 @@ stop_run:
    }
    bool thread::post_thread_message(UINT message, WPARAM wParam, LPARAM lParam)
    {
-      throw not_implemented(get_app());
-      //ASSERT(m_hThread != NULL);
-      //return ::post_thread_message(m_nThreadID, message, wParam, lParam);
+      ASSERT(m_hThread != NULL);
+      return ::PostThreadMessage(m_nID, message, wParam, lParam);
    }
 
    void thread::set_os_data(void * pvoidOsData)
@@ -1772,6 +1773,11 @@ stop_run:
       m_evFinish.ResetEvent();
       install_message_handling(pThread);
       m_p->install_message_handling(pThread);
+
+
+      pThread->m_hThread = ::GetCurrentThread();
+      pThread->m_nID = ::GetCurrentThreadId();
+
 
       ::ca::window threadWnd;
 
@@ -2989,3 +2995,17 @@ __STATIC inline WINBOOL IsButtonUp(LPMESSAGE lpMsg)
 { return lpMsg->message == WM_LBUTTONUP; }
 
 */
+namespace ca
+{
+   extern CLASS_DECL_ca PFN_get_thread g_pfn_get_thread;
+   extern CLASS_DECL_ca PFN_get_thread_state g_pfn_get_thread_state;
+
+}
+
+
+
+__attribute__((constructor))
+static void initialize_navigationBarImages() {
+  ::ca::g_pfn_get_thread = &::lnx::get_thread;
+  ::ca::g_pfn_get_thread_state = (::ca::thread_state *(*)() )&__get_thread_state;
+}
