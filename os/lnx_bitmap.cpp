@@ -28,6 +28,9 @@ namespace lnx
    bool bitmap::CreateBitmap(::ca::graphics * pdc, int32_t cx, int32_t cy, UINT nPlanes, UINT nBitcount, const void * pdata)
    {
 
+      cy = abs(cy);
+      cx = abs(cx);
+
       if(nPlanes != 1 || nBitcount != 32)
       {
 
@@ -88,31 +91,63 @@ namespace lnx
    }
 
 
-   bool bitmap::CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void ** ppdata, HANDLE hSection, DWORD offset)
+   bool bitmap::CreateDIBSection(::ca::graphics * pdc, const BITMAPINFO * lpbmi, UINT usage, void ** ppdata, int * pstride, HANDLE hSection, DWORD offset)
    {
 
-      /*BITMAPINFO m_Info;
+      int cy = abs(lpbmi->bmiHeader.biHeight);
+      int cx = abs(lpbmi->bmiHeader.biWidth);
 
-      m_Info.bmiHeader.biSize=sizeof (BITMAPINFOHEADER);
-      m_Info.bmiHeader.biWidth=cx;
-      m_Info.bmiHeader.biHeight=cy;
-      m_Info.bmiHeader.biPlanes=1;
-      m_Info.bmiHeader.biBitCount=32;
-      m_Info.bmiHeader.biCompression=BI_RGB;
-      m_Info.bmiHeader.biSizeImage=cx*cy*4;*/
-
-      m_mem.allocate(lpbmi->bmiHeader.biWidth * lpbmi->bmiHeader.biHeight * 4);
-
-      memset(m_mem.get_data(), 0, m_mem.get_size());
-
-      if(!CreateBitmap(pdc, lpbmi->bmiHeader.biWidth, lpbmi->bmiHeader.biHeight, 1, 32, (COLORREF *) m_mem.get_data()))
+      if(lpbmi->bmiHeader.biPlanes != 1 || lpbmi->bmiHeader.biBitCount != 32)
       {
 
-         m_mem.allocate(0);
+         throw not_implemented(get_app());
+
+      }
+
+      if(m_psurface != NULL)
+      {
+
+         destroy();
+
+      }
+
+      int32_t iStride = cairo_format_stride_for_width(CAIRO_FORMAT_ARGB32, cx);
+
+      m_mem.allocate(iStride * cy);
+
+      if(*ppdata != NULL)
+      {
+
+         if(cx * 4 != iStride)
+         {
+
+            int32_t iW = cx * 4;
+
+            for(int32_t i = 0; i < cy; i++)
+            {
+
+               memcpy(&((byte *) m_mem.get_data())[iStride * i], &((byte *) *ppdata)[iW * i], iW);
+
+            }
+
+         }
+         else
+         {
+            memcpy(m_mem.get_data(), *ppdata, iStride * cy);
+         }
+
+      }
+
+
+      m_psurface = cairo_image_surface_create_for_data((unsigned char *) m_mem.get_data(), CAIRO_FORMAT_ARGB32, cx, cy, iStride);
+
+      if(m_psurface == NULL)
+      {
 
          return false;
 
       }
+
 
       if(ppdata != NULL)
       {
@@ -120,6 +155,16 @@ namespace lnx
          *ppdata = (COLORREF *) m_mem.get_data();
 
       }
+
+      if(pstride != NULL)
+      {
+
+         *pstride = iStride;
+
+      }
+
+      m_size.cx = cx;
+      m_size.cy = cy;
 
 
 
