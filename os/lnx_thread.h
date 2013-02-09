@@ -93,7 +93,7 @@ namespace lnx
 
 
 
-      virtual void * get_os_data();
+      virtual void * get_os_data() const;
       virtual int_ptr get_os_int();
 
       void set_os_data(void * pvoidOsData);
