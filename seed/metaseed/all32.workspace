@@ -2,42 +2,36 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
 		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+		<Project filename="../../../app/appseed/optca/optca.cbp">
+			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/c/_.cbp" />
-		<Project filename="../../../app/appseed/ca/ca.cbp">
-			<Depends filename="../../../app/appseed/c/_.cbp" />
-			<Depends filename="../../../app/appseed/optca/optca.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
-		</Project>
-		<Project filename="../../../app/appseed/ca2/ca2.cbp">
-			<Depends filename="../../../app/appseed/c/_.cbp" />
-			<Depends filename="../../../app/appseed/ca/ca.cbp" />
-		</Project>
-		<Project filename="../../../app/appseed/optca/optca.cbp" />
-		<Project filename="../../os/os.cbp">
-			<Depends filename="../../../app/appseed/c/_.cbp" />
-			<Depends filename="../../../app/appseed/ca/ca.cbp" />
-		</Project>
-		<Project filename="../../os2/os2.cbp">
+		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
+		</Project>
+		<Project filename="../../../app/appseed/c/_.cbp" />
+		<Project filename="../../../app/appseed/ca/ca.cbp" />
+		<Project filename="../../../app/appseed/ca2/ca2.cbp" />
+		<Project filename="../../os/os.cbp" />
+		<Project filename="../../os2/os2.cbp">
 			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../appseed/app/app.cbp" active="1">
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+			<Depends filename="../../../app/appseed/optca/optca.cbp" />
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
+			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-			<Depends filename="../../../app/appseed/optca/optca.cbp" />
 			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../os2/os2.cbp" />
 		</Project>
