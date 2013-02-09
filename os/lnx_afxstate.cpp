@@ -321,6 +321,7 @@ __MODULE_THREAD_STATE::__MODULE_THREAD_STATE()
 {
    m_nLastHit = static_cast<int_ptr>(-1);
    m_nLastStatus = static_cast<int_ptr>(-1);
+   m_pCurrentWinThread = NULL;
 // xxx   m_pLastInfo = NULL;
 
    // Note: it is only necessary to initialize non-zero data
