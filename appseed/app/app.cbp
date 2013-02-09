@@ -12,7 +12,7 @@
 				<Option object_output="../../../time/intermediate/nodeapp/app" />
 				<Option type="0" />
 				<Option compiler="gcc" />
-				<Option parameters=": app=app-core/hellomultiverse build_number=basis locale=_std schema=_std install" />
+				<Option parameters=": app=app-core/hellomultiverse build_number=basis locale=_std schema=_std" />
 				<Option host_application="/ca2/stage/x86/app" />
 				<Compiler>
 					<Add option="-g" />
@@ -43,6 +43,7 @@
 		<Linker>
 			<Add option="-Wl,-rpath,\\$$ORIGIN" />
 			<Add option="-Wl,-E" />
+			<Add option="-lFreeImage" />
 			<Add option="-lca2c" />
 			<Add option="-lca2optca" />
 			<Add option="-lca2ca" />
