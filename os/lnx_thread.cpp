@@ -1447,43 +1447,58 @@ stop_run:
 
          if(msg.message != WM_KICKIDLE)
          {
+
+            ::ca::smart_pointer < ::gen::message::base > spbase;
+
+            spbase(get_base(&msg));
+
+            if(m_p != NULL)
             {
-               ::ca::smart_pointer < ::gen::message::base > spbase;
-
-               throw todo(get_app());
-
-//               spbase(get_base(&msg));
-//
-               if(m_p != NULL)
-               {
-                  m_p->pre_translate_message(spbase);
-                  if(spbase->m_bRet)
-                     return TRUE;
-               }
-
-               System.pre_translate_message(spbase);
+               m_p->pre_translate_message(spbase);
                if(spbase->m_bRet)
                   return TRUE;
+            }
 
-               if(!Application.is_system())
-               {
-                  Application.pre_translate_message(spbase);
-                  if(spbase->m_bRet)
-                     return TRUE;
-               }
+            System.pre_translate_message(spbase);
+            if(spbase->m_bRet)
+               return TRUE;
 
-               __pre_translate_message(spbase);
+            if(!Application.is_system())
+            {
+               Application.pre_translate_message(spbase);
                if(spbase->m_bRet)
                   return TRUE;
+            }
 
-               spbase.destroy();
-            }
+            __pre_translate_message(spbase);
+            if(spbase->m_bRet)
+               return TRUE;
+
+            spbase.destroy();
+
+            if(msg.hwnd != NULL)
             {
-//               ::TranslateMessage(&msg);
-  //             ::DispatchMessage(&msg);
+
+               if(msg.hwnd.get_user_interaction() != NULL)
+               {
+
+                  msg.hwnd.get_user_interaction()->send_message(msg.message, msg.wParam, msg.lParam);
+
+               }
+
+
             }
+            else
+            {
+
+               message_handler(spbase);
+
+            }
+
          }
+
          return TRUE;
+
       }
       catch(const ::ca::exception & e)
       {
