@@ -34,8 +34,9 @@ namespace lnx
       m_spbitmap(papp),
       m_spgraphics(papp)
    {
+
       m_pcolorref          = NULL;
-      m_size               = ::size(0, 0);
+
    }
 
    COLORREF * dib::get_data()
@@ -82,9 +83,13 @@ namespace lnx
 
    void    dib::construct (int32_t cx,  int32_t cy)
    {
+
       m_pcolorref    = NULL;
-      m_size         = ::size(0, 0);
+      cx             = 0;
+      cy             = 0;
+
       create(cx, cy);
+
    }
 
    dib::~dib ()
@@ -101,8 +106,8 @@ namespace lnx
    {
       if(m_spbitmap.is_set()
       && m_spbitmap->get_os_data() != NULL
-      && width == m_size.cx
-      && height == m_size.cy)
+      && width == cx
+      && height == cy)
          return TRUE;
 
       Destroy();
@@ -125,13 +130,15 @@ namespace lnx
 
       if(m_spbitmap.m_p == NULL)
       {
-         m_size = ::size(0, 0);
+         cx = 0;
+         cy = 0;
          return FALSE;
       }
 
-      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, NULL, 0))
+      if(!m_spbitmap->CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &m_pcolorref, &scan, NULL, 0))
       {
-         m_size = ::size(0, 0);
+         cx = 0;
+         cy = 0;
          return FALSE;
       }
 
@@ -146,7 +153,8 @@ namespace lnx
             return FALSE;
          }
          ((Gdiplus::Bitmap *)pbitmap->get_os_data())->GetHBITMAP(Gdiplus::Color(0, 0, 0, 0), &m_hbitmapOriginal);*/
-         m_size = ::size(width, height);
+         cx = width;
+         cy = height;
          return TRUE;
       }
       else
@@ -192,7 +200,8 @@ namespace lnx
       if(m_spgraphics.is_set())
          gen::release(m_spgraphics.m_p);
 
-      m_size         = ::size(0, 0);
+      cx             = 0;
+      cy             = 0;
       m_pcolorref    = NULL;
 
       return TRUE;
@@ -207,7 +216,7 @@ namespace lnx
          (dynamic_cast<::win::graphics * >(pgraphics))->get_handle1(),
          pt.x, pt.y,
          size.cx, size.cy,
-         ptSrc.x, ptSrc.y, ptSrc.y, m_size.cy - ptSrc.y,
+         ptSrc.x, ptSrc.y, ptSrc.y, cy - ptSrc.y,
          m_pcolorref, &m_info, 0)
             != FALSE; */
 
@@ -227,7 +236,7 @@ namespace lnx
          return false;
       }
       throw todo(get_app());
-      // xxx bool bOk = GetDIBits(LNX_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, m_size.cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
+      // xxx bool bOk = GetDIBits(LNX_HDC(pdc), (HBITMAP) pbitmap->get_os_data(), 0, cy, m_pcolorref, &(m_info), DIB_RGB_COLORS) != FALSE;
       // xxx LNX_DC(pdc)->SelectObject(pbitmap);
       // xxx return bOk;
    }
@@ -240,7 +249,7 @@ namespace lnx
    void dib::Fill ( int32_t R, int32_t G, int32_t B )
    {
       COLORREF color=RGB ( B, G, R );
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       COLORREF * pcr;
 
@@ -291,7 +300,7 @@ namespace lnx
 
    void dib::set_rgb(int32_t R, int32_t G, int32_t B)
    {
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       BYTE * pbyte = (BYTE *) m_pcolorref;
 
@@ -308,7 +317,7 @@ namespace lnx
    void dib::ToAlpha(int32_t i)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -320,7 +329,7 @@ namespace lnx
    void dib::from_alpha()
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int64_t size = m_size.area();
+      int64_t size = cx * cy;
 
       while ( size-- )
       {
@@ -385,7 +394,7 @@ namespace lnx
    void dib::Map(int32_t ToRgb, int32_t FromRgb)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -398,7 +407,7 @@ namespace lnx
    void dib::ToAlphaAndFill(int32_t i, COLORREF cr)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       BYTE uchB = rgba_get_b(cr);
       BYTE uchG = rgba_get_g(cr);
@@ -417,7 +426,7 @@ namespace lnx
    void dib::GrayToARGB(COLORREF cr)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       DWORD dwB = rgba_get_b(cr);
       DWORD dwG = rgba_get_g(cr);
@@ -438,7 +447,7 @@ namespace lnx
    {
       if(op == 123) // zero dest RGB, invert alpha, and OR src RGB
       {
-         int32_t isize=m_size.cx*m_size.cy;
+         int32_t isize=cx*cy;
          LPDWORD lpbitsSrc= (LPDWORD) LNX_DIB(pdib)->m_pcolorref;
          LPDWORD lpbitsDest= (LPDWORD) m_pcolorref;
 
@@ -490,7 +499,7 @@ namespace lnx
 
    void dib::Invert()
    {
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
       LPBYTE lpb = (LPBYTE) m_pcolorref;
       for ( int32_t i=0; i<size; i++ )
       {
@@ -503,7 +512,7 @@ namespace lnx
 
    void dib::channel_invert(visual::rgba::echannel echannel)
    {
-      int64_t size   = m_size.area();
+      int64_t size   = cx * cy;
       register int64_t size64 = size / 64;
       LPBYTE lpb = (LPBYTE) m_pcolorref;
       lpb += ((int32_t)echannel) % 4;
@@ -606,7 +615,7 @@ namespace lnx
    void dib::FillGlass ( int32_t R, int32_t G, int32_t B, int32_t A )
    {
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -620,8 +629,8 @@ namespace lnx
    void dib::FillStippledGlass ( int32_t R, int32_t G, int32_t B )
    {
       COLORREF color=RGB ( B, G, R );
-      int32_t w=m_size.cx;
-      int32_t h=m_size.cy;
+      int32_t w=cx;
+      int32_t h=cy;
 
       for ( int32_t j=0; j<w; j++ )
       {
@@ -635,27 +644,27 @@ namespace lnx
    void dib::copy(::ca::dib * pdib)
    {
       // If DibSize Wrong Re-create dib
-      if ( (LNX_DIB(pdib)->m_size.cx!=m_size.cx) || (LNX_DIB(pdib)->m_size.cy!=m_size.cy) )
-         LNX_DIB(pdib)->create ( m_size.cx, m_size.cy );
+      if ( (LNX_DIB(pdib)->cx!=cx) || (LNX_DIB(pdib)->cy!=cy) )
+         LNX_DIB(pdib)->create ( cx, cy );
       // do copy
-      memcpy ( LNX_DIB(pdib)->m_pcolorref, m_pcolorref, m_size.cx*m_size.cy*4 );
+      memcpy ( LNX_DIB(pdib)->m_pcolorref, m_pcolorref, cx*cy*4 );
    }
 
 
    void dib::Paste ( ::ca::dib * pdib )
    {
       // If DibSize Wrong Re-create dib
-      if ( (m_size.cx!=LNX_DIB(pdib)->m_size.cx) || (m_size.cy!=LNX_DIB(pdib)->m_size.cy) )
-         create ( LNX_DIB(pdib)->m_size.cx, LNX_DIB(pdib)->m_size.cy );
+      if ( (cx!=LNX_DIB(pdib)->cx) || (cy!=LNX_DIB(pdib)->cy) )
+         create ( LNX_DIB(pdib)->cx, LNX_DIB(pdib)->cy );
       // do Paste
-      memcpy ( m_pcolorref, LNX_DIB(pdib)->m_pcolorref, m_size.cx*m_size.cy*4 );
+      memcpy ( m_pcolorref, LNX_DIB(pdib)->m_pcolorref, cx*cy*4 );
    }
 
    bool dib::color_blend(COLORREF cr, BYTE bAlpha)
    {
 
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       DWORD dwB = rgba_get_b(cr);
       DWORD dwG = rgba_get_g(cr);
@@ -678,12 +687,12 @@ namespace lnx
 
    void dib::Blend (::ca::dib * pdib, int32_t A )
    {
-      if ( m_size!=LNX_DIB(pdib)->m_size )
+      if ( size()!=LNX_DIB(pdib)->size() )
          return;
 
       BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -697,14 +706,14 @@ namespace lnx
 
    bool dib::Blend(::ca::dib *pdib, ::ca::dib *pdibA, int32_t A)
    {
-      if(m_size != LNX_DIB(pdib)->m_size ||
-         m_size != LNX_DIB(pdibA)->m_size)
+      if(size() != LNX_DIB(pdib)->size() ||
+         size() != LNX_DIB(pdibA)->size())
          return false;
 
       BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
       BYTE *alf=(BYTE*)LNX_DIB(pdibA)->m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       A = 2 - A;
 
@@ -723,12 +732,12 @@ namespace lnx
 
    void dib::Darken (::ca::dib * pdib )
    {
-      if ( m_size!=LNX_DIB(pdib)->m_size )
+      if ( size()!=LNX_DIB(pdib)->size() )
          return;
 
       BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -742,12 +751,12 @@ namespace lnx
 
    void dib::Difference (::ca::dib * pdib )
    {
-      if ( m_size!=LNX_DIB(pdib)->m_size )
+      if ( size()!=LNX_DIB(pdib)->size() )
          return;
 
       BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -765,12 +774,12 @@ namespace lnx
 
    void dib::Lighten (::ca::dib * pdib )
    {
-      if ( m_size!=LNX_DIB(pdib)->m_size )
+      if ( size()!=LNX_DIB(pdib)->size() )
          return;
 
       BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -785,12 +794,12 @@ namespace lnx
 
    void dib::Multiply (::ca::dib * pdib )
    {
-      if ( m_size!=LNX_DIB(pdib)->m_size )
+      if ( size()!=LNX_DIB(pdib)->size() )
          return;
 
       BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -804,12 +813,12 @@ namespace lnx
 
    void dib::Screen (::ca::dib * pdib )
    {
-      if ( m_size!=LNX_DIB(pdib)->m_size )
+      if ( size()!=LNX_DIB(pdib)->size() )
          return;
 
       BYTE *src=(BYTE*)LNX_DIB(pdib)->m_pcolorref;
       BYTE *dst=(BYTE*)m_pcolorref;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       while ( size-- )
       {
@@ -830,8 +839,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int32_t dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int32_t dx=((x+LNX_DIB(pdib)->cx)<cx) ? LNX_DIB(pdib)->cx : cx-x;
+      int32_t dy=((y+LNX_DIB(pdib)->cy)<cy) ? LNX_DIB(pdib)->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -839,11 +848,11 @@ namespace lnx
       if ( (dx<=0) || (dy<=0) )
          return;
       // If DibSize Wrong Re-create dib
-      if ( (dx!=LNX_DIB(pdib)->m_size.cx) || (dy!=LNX_DIB(pdib)->m_size.cy) )
+      if ( (dx!=LNX_DIB(pdib)->cx) || (dy!=LNX_DIB(pdib)->cy) )
          LNX_DIB(pdib)->create ( dx, dy );
 
       // Prepare buffer Addresses
-      COLORREF *src=m_pcolorref+(py*m_size.cx)+px;
+      COLORREF *src=m_pcolorref+(py*cx)+px;
       COLORREF *dst=LNX_DIB(pdib)->m_pcolorref;
 
       // Do copy
@@ -851,8 +860,8 @@ namespace lnx
       {
          for ( int32_t i=0; i<dx; i++ )
             dst[i]=src[i];
-         src+=m_size.cx;
-         dst+=LNX_DIB(pdib)->m_size.cx;
+         src+=cx;
+         dst+=LNX_DIB(pdib)->cx;
       }
    }
 
@@ -861,8 +870,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int32_t dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int32_t dx=((x+LNX_DIB(pdib)->cx)<cx) ? LNX_DIB(pdib)->cx : cx-x;
+      int32_t dy=((y+LNX_DIB(pdib)->cy)<cy) ? LNX_DIB(pdib)->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -871,16 +880,16 @@ namespace lnx
          return;
 
       // Prepare buffer Addresses
-      COLORREF *src=LNX_DIB(pdib)->m_pcolorref+((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x;
-      COLORREF *dst=m_pcolorref+(py*m_size.cx)+px;
+      COLORREF *src=LNX_DIB(pdib)->m_pcolorref+((py-y)*LNX_DIB(pdib)->cx)+px-x;
+      COLORREF *dst=m_pcolorref+(py*cx)+px;
 
       // Do Paste
       while ( dy-- )
       {
          for ( int32_t i=0; i<dx; i++ )
             dst[i]=src[i];
-         src+=LNX_DIB(pdib)->m_size.cx;
-         dst+=m_size.cx;
+         src+=LNX_DIB(pdib)->cx;
+         dst+=cx;
       }
    }
 
@@ -889,8 +898,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+w)<m_size.cx) ? w : m_size.cx-x;
-      int32_t dy=((y+h)<m_size.cy) ? h : m_size.cy-y;
+      int32_t dx=((x+w)<cx) ? w : cx-x;
+      int32_t dy=((y+h)<cy) ? h : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -899,7 +908,7 @@ namespace lnx
          return;
 
       // Prepare buffer Address
-      COLORREF *dst=m_pcolorref+(py*m_size.cx)+px;
+      COLORREF *dst=m_pcolorref+(py*cx)+px;
       COLORREF color=RGB ( B, G, R );
 
       // Do Fill
@@ -909,7 +918,7 @@ namespace lnx
          {
             dst[i]=color;
          }
-         dst+=m_size.cx;
+         dst+=cx;
       }
    }
 
@@ -918,8 +927,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+w)<m_size.cx) ? w : m_size.cx-x;
-      int32_t dy=((y+h)<m_size.cy) ? h : m_size.cy-y;
+      int32_t dx=((x+w)<cx) ? w : cx-x;
+      int32_t dy=((y+h)<cy) ? h : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -928,7 +937,7 @@ namespace lnx
          return;
 
       // Prepare buffer Address
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do FillGlass
       while ( dy-- )
@@ -940,7 +949,7 @@ namespace lnx
             dst[2]=(BYTE)(((R-dst[2])*A+(dst[2]<<8))>>8);
             dst+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
+         dst+=(cx-dx)<<2;
       }
    }
 
@@ -949,8 +958,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+w)<m_size.cx) ? w : m_size.cx-x;
-      int32_t dy=((y+h)<m_size.cy) ? h : m_size.cy-y;
+      int32_t dx=((x+w)<cx) ? w : cx-x;
+      int32_t dy=((y+h)<cy) ? h : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -959,7 +968,7 @@ namespace lnx
          return;
 
       // Prepare buffer Address
-      COLORREF *dst=m_pcolorref+(py*m_size.cx)+px;
+      COLORREF *dst=m_pcolorref+(py*cx)+px;
       COLORREF color=RGB ( B, G, R );
 
       // Do FillStippledGlass
@@ -969,7 +978,7 @@ namespace lnx
          {
             dst[i]=((i+j)&0x1) ? dst[i] : color;
          }
-         dst+=m_size.cx;
+         dst+=cx;
       }
    }
 
@@ -978,8 +987,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int32_t dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int32_t dx=((x+LNX_DIB(pdib)->cx)<cx) ? LNX_DIB(pdib)->cx : cx-x;
+      int32_t dy=((y+LNX_DIB(pdib)->cy)<cy) ? LNX_DIB(pdib)->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -988,8 +997,8 @@ namespace lnx
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Blend
       while ( dy-- )
@@ -1002,8 +1011,8 @@ namespace lnx
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->cx-dx)<<2;
       }
    }
 
@@ -1012,8 +1021,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int32_t dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int32_t dx=((x+LNX_DIB(pdib)->cx)<cx) ? LNX_DIB(pdib)->cx : cx-x;
+      int32_t dy=((y+LNX_DIB(pdib)->cy)<cy) ? LNX_DIB(pdib)->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1022,8 +1031,8 @@ namespace lnx
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Darken
       while ( dy-- )
@@ -1036,8 +1045,8 @@ namespace lnx
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->cx-dx)<<2;
       }
    }
 
@@ -1046,8 +1055,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int32_t dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int32_t dx=((x+LNX_DIB(pdib)->cx)<cx) ? LNX_DIB(pdib)->cx : cx-x;
+      int32_t dy=((y+LNX_DIB(pdib)->cy)<cy) ? LNX_DIB(pdib)->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1056,8 +1065,8 @@ namespace lnx
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Difference
       while ( dy-- )
@@ -1074,8 +1083,8 @@ namespace lnx
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->cx-dx)<<2;
       }
    }
 
@@ -1084,8 +1093,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int32_t dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int32_t dx=((x+LNX_DIB(pdib)->cx)<cx) ? LNX_DIB(pdib)->cx : cx-x;
+      int32_t dy=((y+LNX_DIB(pdib)->cy)<cy) ? LNX_DIB(pdib)->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1094,8 +1103,8 @@ namespace lnx
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Lighten
       while ( dy-- )
@@ -1108,8 +1117,8 @@ namespace lnx
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->cx-dx)<<2;
       }
    }
 
@@ -1118,8 +1127,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int32_t dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int32_t dx=((x+LNX_DIB(pdib)->cx)<cx) ? LNX_DIB(pdib)->cx : cx-x;
+      int32_t dy=((y+LNX_DIB(pdib)->cy)<cy) ? LNX_DIB(pdib)->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1128,8 +1137,8 @@ namespace lnx
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Multiply
       while ( dy-- )
@@ -1142,8 +1151,8 @@ namespace lnx
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->cx-dx)<<2;
       }
    }
 
@@ -1152,8 +1161,8 @@ namespace lnx
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
       int32_t py=(y>=0) ? y : 0;
-      int32_t dx=((x+LNX_DIB(pdib)->m_size.cx)<m_size.cx) ? LNX_DIB(pdib)->m_size.cx : m_size.cx-x;
-      int32_t dy=((y+LNX_DIB(pdib)->m_size.cy)<m_size.cy) ? LNX_DIB(pdib)->m_size.cy : m_size.cy-y;
+      int32_t dx=((x+LNX_DIB(pdib)->cx)<cx) ? LNX_DIB(pdib)->cx : cx-x;
+      int32_t dy=((y+LNX_DIB(pdib)->cy)<cy) ? LNX_DIB(pdib)->cy : cy-y;
       dx=(x>=0) ? dx : dx + x;
       dy=(y>=0) ? dy : dy + y;
 
@@ -1162,8 +1171,8 @@ namespace lnx
          return;
 
       // Prepare buffer Addresses
-      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->m_size.cx)+px-x)*4;
-      BYTE *dst=(BYTE *)m_pcolorref+((py*m_size.cx)+px)*4;
+      BYTE *src=(BYTE *)LNX_DIB(pdib)->m_pcolorref+(((py-y)*LNX_DIB(pdib)->cx)+px-x)*4;
+      BYTE *dst=(BYTE *)m_pcolorref+((py*cx)+px)*4;
 
       // Do Screen
       while ( dy-- )
@@ -1176,8 +1185,8 @@ namespace lnx
             dst+=4;
             src+=4;
          }
-         dst+=(m_size.cx-dx)<<2;
-         src+=(LNX_DIB(pdib)->m_size.cx-dx)<<2;
+         dst+=(cx-dx)<<2;
+         src+=(LNX_DIB(pdib)->cx-dx)<<2;
       }
    }
 
@@ -1198,7 +1207,7 @@ namespace lnx
       x=x1;
       y=y1;
 
-      m_pcolorref[y*m_size.cx+x]=color;
+      m_pcolorref[y*cx+x]=color;
       while (x<dx)
       {
          if (d<=0)
@@ -1212,7 +1221,7 @@ namespace lnx
             x++;
             y++;
          }
-         m_pcolorref[y*m_size.cx+x]=color;
+         m_pcolorref[y*cx+x]=color;
       }
    }*/
 
@@ -1235,7 +1244,7 @@ namespace lnx
          d=ay-(ax>>1);
          while ( x!=x2 )
          {
-            m_pcolorref[y*m_size.cx+x]=color;
+            m_pcolorref[y*cx+x]=color;
             if ( d>=0 )
             {
                y+=sy;
@@ -1250,7 +1259,7 @@ namespace lnx
          d=ax-(ay>>1);
          while ( y!=y2 )
          {
-            m_pcolorref[y*m_size.cx+x]=color;
+            m_pcolorref[y*cx+x]=color;
             if ( d>=0 )
             {
                x+=sx;
@@ -1282,9 +1291,9 @@ namespace lnx
          d=ay-(ax>>1);
          while ( x!=x2 )
          {
-            dst[(y*m_size.cx+x)<<2]=(BYTE)(((B-dst[(y*m_size.cx+x)<<2])*A+(dst[(y*m_size.cx+x)<<2]<<8))>>8);
-            dst[((y*m_size.cx+x)<<2)+1]=(BYTE)(((G-dst[((y*m_size.cx+x)<<2)+1])*A+(dst[((y*m_size.cx+x)<<2)+1]<<8))>>8);
-            dst[((y*m_size.cx+x)<<2)+2]=(BYTE)(((R-dst[((y*m_size.cx+x)<<2)+2])*A+(dst[((y*m_size.cx+x)<<2)+2]<<8))>>8);
+            dst[(y*cx+x)<<2]=(BYTE)(((B-dst[(y*cx+x)<<2])*A+(dst[(y*cx+x)<<2]<<8))>>8);
+            dst[((y*cx+x)<<2)+1]=(BYTE)(((G-dst[((y*cx+x)<<2)+1])*A+(dst[((y*cx+x)<<2)+1]<<8))>>8);
+            dst[((y*cx+x)<<2)+2]=(BYTE)(((R-dst[((y*cx+x)<<2)+2])*A+(dst[((y*cx+x)<<2)+2]<<8))>>8);
             if ( d>=0 )
             {
                y+=sy;
@@ -1299,9 +1308,9 @@ namespace lnx
          d=ax-(ay>>1);
          while ( y!=y2 )
          {
-            dst[(y*m_size.cx+x)<<2]=(BYTE)(((B-dst[(y*m_size.cx+x)<<2])*A+(dst[(y*m_size.cx+x)<<2]<<8))>>8);
-            dst[((y*m_size.cx+x)<<2)+1]=(BYTE)(((G-dst[((y*m_size.cx+x)<<2)+1])*A+(dst[((y*m_size.cx+x)<<2)+1]<<8))>>8);
-            dst[((y*m_size.cx+x)<<2)+2]=(BYTE)(((R-dst[((y*m_size.cx+x)<<2)+2])*A+(dst[((y*m_size.cx+x)<<2)+2]<<8))>>8);
+            dst[(y*cx+x)<<2]=(BYTE)(((B-dst[(y*cx+x)<<2])*A+(dst[(y*cx+x)<<2]<<8))>>8);
+            dst[((y*cx+x)<<2)+1]=(BYTE)(((G-dst[((y*cx+x)<<2)+1])*A+(dst[((y*cx+x)<<2)+1]<<8))>>8);
+            dst[((y*cx+x)<<2)+2]=(BYTE)(((R-dst[((y*cx+x)<<2)+2])*A+(dst[((y*cx+x)<<2)+2]<<8))>>8);
             if ( d>=0 )
             {
                x+=sx;
@@ -1319,7 +1328,7 @@ namespace lnx
       COLORREF crSet = RGB(rgba_get_b(crInMask), rgba_get_g(crInMask), rgba_get_r(crInMask));
       COLORREF crUnset  = RGB(rgba_get_b(crOutMask), rgba_get_g(crOutMask), rgba_get_r(crOutMask));
 
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       for ( int32_t i=0; i<size; i++ )
          if(m_pcolorref[i]== crFind)
@@ -1343,7 +1352,7 @@ namespace lnx
 
    void dib::channel_mask(unsigned char uchFind, unsigned char uchSet, unsigned char uchUnset, visual::rgba::echannel echannel)
    {
-      int32_t size = m_size.cx * m_size.cy;
+      int32_t size = cx * cy;
       unsigned char * puch = (unsigned char * ) m_pcolorref;
       puch += ((int32_t) echannel) % 4;
 
@@ -1359,7 +1368,7 @@ namespace lnx
 
    DWORD dib::GetPixel(int32_t x, int32_t y)
    {
-      DWORD dw = *(m_pcolorref + x + (m_size.cy - y - 1) * m_size.cx);
+      DWORD dw = *(m_pcolorref + x + (cy - y - 1) * cx);
       return RGB(rgba_get_b(dw), rgba_get_g(dw), rgba_get_r(dw));
    }
 
@@ -1491,14 +1500,14 @@ namespace lnx
 
 
          if(xL < 0) xL = 0;
-         if(xU >= m_size.cx) xU = m_size.cx - 1;
+         if(xU >= cx) xU = cx - 1;
          if(yL < 0) yL = 0;
-         if(yU >= m_size.cy) yU = m_size.cy - 1;
+         if(yU >= cy) yU = cy - 1;
 
 
-         BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * m_size.cx));
-         DWORD dwAdd = ((m_size.cx - 1 - xU) + xL) * 4;
-//         int32_t size=m_size.cx*m_size.cy;
+         BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * cx));
+         DWORD dwAdd = ((cx - 1 - xU) + xL) * 4;
+//         int32_t size=cx*cy;
 
          int32_t dx, dy;
 
@@ -1651,14 +1660,14 @@ namespace lnx
 
 
          if(xL < 0) xL = 0;
-         if(xU >= m_size.cx) xU = m_size.cx - 1;
+         if(xU >= cx) xU = cx - 1;
          if(yL < 0) yL = 0;
-         if(yU >= m_size.cy) yU = m_size.cy - 1;
+         if(yU >= cy) yU = cy - 1;
 
 
-         BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * m_size.cx));
-         DWORD dwAdd = ((m_size.cx - 1 - xU) + xL) * 4;
-//         int32_t size=m_size.cx*m_size.cy;
+         BYTE *dst = ((BYTE*)(m_pcolorref + xL + yL * cx));
+         DWORD dwAdd = ((cx - 1 - xU) + xL) * 4;
+//         int32_t size=cx*cy;
 
          int32_t dx, dy;
 
@@ -1739,7 +1748,7 @@ namespace lnx
       BYTE * r2=(BYTE*)spdib2->get_data();
       BYTE * srcM=(BYTE*)dibM.m_pcolorref;
       BYTE * dest=(BYTE*)m_pcolorref;
-      int32_t iSize = m_size.cx*m_size.cy;
+      int32_t iSize = cx*cy;
 
       BYTE b;
       BYTE bMax;
@@ -1778,8 +1787,8 @@ namespace lnx
      // ::ca::dib_sp spdib(get_app());
    //   spdib->Paste(this);
 
-      int32_t cx = m_size.cx;
-      int32_t cy = m_size.cy;
+      int32_t cx = cx;
+      int32_t cy = cy;
 
       int32_t l = max(cx, cy);
 
@@ -1808,7 +1817,7 @@ namespace lnx
             x=int32_t(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
             y=int32_t(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               spdib->m_pcolorref[abs(y%m_size.cy)*m_size.cx+abs(x%m_size.cx)];
+               spdib->m_pcolorref[abs(y%cy)*cx+abs(x%cx)];
             //k++;
          }
          (j+joff)*cx+(i+ioff)
@@ -1817,8 +1826,8 @@ namespace lnx
       int32_t k = 0;
       double dCos = ::cos(dAngle * dPi / 180.0) * dScale;
       double dSin = ::sin(dAngle * dPi / 180.0) * dScale;
-      int32_t cx1 = m_size.cx - 1;
-      int32_t cy1 = m_size.cy - 1;
+      int32_t cx1 = cx - 1;
+      int32_t cy1 = cy - 1;
         for ( int32_t j=jmin; j<jmax; j++ )
       {
          for ( int32_t i=imin; i<imax; i++ )
@@ -1826,28 +1835,28 @@ namespace lnx
             int32_t x, y;
 
             // A Combination of a 2d Translation/rotation/Scale Matrix
-            //x=abs((int32_t(dCos * i - dSin * j) + ioff) % m_size.cx);
-            //y=abs((int32_t(dSin * i + dCos * j) + joff) % m_size.cy);
+            //x=abs((int32_t(dCos * i - dSin * j) + ioff) % cx);
+            //y=abs((int32_t(dSin * i + dCos * j) + joff) % cy);
 
             x = (int32_t) abs((dCos * i - dSin * j) + ioff);
             y = (int32_t) abs((dSin * i + dCos * j) + joff);
 
-            if((x / m_size.cx) % 2 == 0)
+            if((x / cx) % 2 == 0)
             {
-               x %= m_size.cx;
+               x %= cx;
             }
             else
             {
-               x = cx1 - (x % m_size.cx);
+               x = cx1 - (x % cx);
             }
 
-            if((y / m_size.cy) % 2 == 0)
+            if((y / cy) % 2 == 0)
             {
-               y %= m_size.cy;
+               y %= cy;
             }
             else
             {
-               y = cy1 - (y % m_size.cy);
+               y = cy1 - (y % cy);
             }
 
 
@@ -1863,8 +1872,8 @@ namespace lnx
    void dib::Rotate034(::ca::dib * pdib, double dAngle, double dScale)
    {
 
-      int32_t cx = m_size.cx;
-      int32_t cy = m_size.cy;
+      int32_t cx = cx;
+      int32_t cy = cy;
 
       int32_t l = max(cx, cy);
 
@@ -1888,8 +1897,8 @@ namespace lnx
       int32_t k = 0;
       double dCos = ::cos(dAngle * dPi / 180.0) * dScale;
       double dSin = ::sin(dAngle * dPi / 180.0) * dScale;
-      int32_t cx1 = m_size.cx - 1;
-      int32_t cy1 = m_size.cy - 1;
+      int32_t cx1 = cx - 1;
+      int32_t cy1 = cy - 1;
         for ( int32_t j=jmin; j<jmax; j++ )
       {
          for ( int32_t i=imin; i<imax; i++ )
@@ -1897,28 +1906,28 @@ namespace lnx
             int32_t x, y;
 
             // A Combination of a 2d Translation/rotation/Scale Matrix
-            //x=abs((int32_t(dCos * i - dSin * j) + ioff) % m_size.cx);
-            //y=abs((int32_t(dSin * i + dCos * j) + joff) % m_size.cy);
+            //x=abs((int32_t(dCos * i - dSin * j) + ioff) % cx);
+            //y=abs((int32_t(dSin * i + dCos * j) + joff) % cy);
 
             x = (int32_t) abs((dCos * i - dSin * j) + ioff);
             y = (int32_t) abs((dSin * i + dCos * j) + joff);
 
-            if((x / m_size.cx) % 2 == 0)
+            if((x / cx) % 2 == 0)
             {
-               x %= m_size.cx;
+               x %= cx;
             }
             else
             {
-               x = cx1 - (x % m_size.cx);
+               x = cx1 - (x % cx);
             }
 
-            if((y / m_size.cy) % 2 == 0)
+            if((y / cy) % 2 == 0)
             {
-               y %= m_size.cy;
+               y %= cy;
             }
             else
             {
-               y = cy1 - (y % m_size.cy);
+               y = cy1 - (y % cy);
             }
 
 
@@ -1972,7 +1981,7 @@ namespace lnx
             x=int32_t(cos10(i, iAngle) - sin10(j, iAngle)) + ioff;
             y=int32_t(sin10(i, iAngle) + cos10(j, iAngle)) + joff;
             m_pcolorref[(j+joff)*cx+(i+ioff)]=
-               spdib->m_pcolorref[abs(y%m_size.cy)*m_size.cx+abs(x%m_size.cx)];
+               spdib->m_pcolorref[abs(y%cy)*cx+abs(x%cx)];
             //k++;
          }
          (j+joff)*cx+(i+ioff)
@@ -1990,8 +1999,8 @@ namespace lnx
             int32_t x, y;
 
             // A Combination of a 2d Translation/rotation/Scale Matrix
-            //x=abs((int32_t(dCos * i - dSin * j) + ioff) % m_size.cx);
-            //y=abs((int32_t(dSin * i + dCos * j) + joff) % m_size.cy);
+            //x=abs((int32_t(dCos * i - dSin * j) + ioff) % cx);
+            //y=abs((int32_t(dSin * i + dCos * j) + joff) % cy);
 
             x = (int32_t) abs((dCos * i - dSin * j) + ioff);
             y = (int32_t) abs((dSin * i + dCos * j) + joff);
@@ -2016,8 +2025,8 @@ namespace lnx
 
 
 
-            m_pcolorref[(j+joff)*m_size.cx+(i+ioff)]=
-               LNX_DIB(pdib)->m_pcolorref[y * m_size.cx + x];
+            m_pcolorref[(j+joff)*cx+(i+ioff)]=
+               LNX_DIB(pdib)->m_pcolorref[y * cx + x];
             k++;
          }
       }
@@ -2039,7 +2048,7 @@ namespace lnx
    void dib::Fill (int32_t A, int32_t R, int32_t G, int32_t B )
    {
       COLORREF color = RGB ( B, G, R ) | (A << 24);
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       COLORREF * pcr;
 
@@ -2097,16 +2106,16 @@ namespace lnx
       int32_t iRLine;
       int32_t iGLine;
       int32_t iBLine;
-      double dDiv = m_size.cx * m_size.cy;
+      double dDiv = cx * cy;
       if(dDiv > 0)
       {
          LPBYTE lpb = (LPBYTE) m_pcolorref;
-         for (int32_t y = 0; y < m_size.cy; y++)
+         for (int32_t y = 0; y < cy; y++)
          {
             iRLine = 0;
             iGLine = 0;
             iBLine = 0;
-            for (int32_t x = 0; x < m_size.cx; x++)
+            for (int32_t x = 0; x < cx; x++)
             {
                iRLine += lpb[2];
                iGLine += lpb[1];
@@ -2132,12 +2141,12 @@ namespace lnx
 
    void dib::_xor(::ca::dib * pdib)
    {
-      if(m_size.cx != LNX_DIB(pdib)->m_size.cx
-      || m_size.cy != LNX_DIB(pdib)->m_size.cy)
+      if(cx != LNX_DIB(pdib)->cx
+      || cy != LNX_DIB(pdib)->cy)
       {
          return;
       }
-      int32_t iCount = m_size.cx * m_size.cy;
+      int32_t iCount = cx * cy;
       LPDWORD lpd1 = (LPDWORD) m_pcolorref;
       LPDWORD lpd2 = (LPDWORD) LNX_DIB(pdib)->m_pcolorref;
       for(int32_t i = 0; i < iCount; i++)
@@ -2161,16 +2170,16 @@ namespace lnx
       int32_t iSliceCount = (int32_t) sqrt((double) iFrameCount);
       if(iSliceCount == 0)
          iSliceCount = 1;
-      int32_t iFrameWidth = m_size.cx / iSliceCount;
-      int32_t iFrameHeight = m_size.cy / iSliceCount;
+      int32_t iFrameWidth = cx / iSliceCount;
+      int32_t iFrameHeight = cy / iSliceCount;
       int32_t iX = iFrame % iSliceCount;
       int32_t iY = iFrame / iSliceCount;
-      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
+      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * cx];
       COLORREF * lpSrc = (COLORREF *) lpdata;
       COLORREF * lpDestLine;
       for(int32_t y = 0; y < iFrameHeight; y++)
       {
-         lpDestLine = &lpDest[y * m_size.cx];
+         lpDestLine = &lpDest[y * cx];
          for(int32_t x = 0; x < iFrameWidth; x++)
          {
              *lpDestLine = *lpSrc;
@@ -2187,16 +2196,16 @@ namespace lnx
       int32_t iSliceCount = (int32_t) sqrt((double) iFrameCount);
       if(iSliceCount == 0)
          iSliceCount = 1;
-      int32_t iFrameWidth = m_size.cx / iSliceCount;
-      int32_t iFrameHeight = m_size.cy / iSliceCount;
+      int32_t iFrameWidth = cx / iSliceCount;
+      int32_t iFrameHeight = cy / iSliceCount;
       int32_t iX = iFrame % iSliceCount;
       int32_t iY = iFrame / iSliceCount;
-      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
+      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * cx];
       COLORREF * lpSrc = (COLORREF *) lpdata;
       COLORREF * lpDestLine;
       for(int32_t y = iFrameHeight - 1; y >= 0; y--)
       {
-         lpDestLine = &lpDest[y * m_size.cx];
+         lpDestLine = &lpDest[y * cx];
          for(int32_t x = 0; x < iFrameWidth; x++)
          {
              *lpDestLine = *lpSrc;
@@ -2213,16 +2222,16 @@ namespace lnx
       int32_t iSliceCount = (int32_t) sqrt((double) iFrameCount);
       if(iSliceCount == 0)
          iSliceCount = 1;
-      int32_t iFrameWidth = m_size.cx / iSliceCount;
-      int32_t iFrameHeight = m_size.cy / iSliceCount;
+      int32_t iFrameWidth = cx / iSliceCount;
+      int32_t iFrameHeight = cy / iSliceCount;
       int32_t iX = iFrame % iSliceCount;
       int32_t iY = iFrame / iSliceCount;
-      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * m_size.cx];
+      COLORREF * lpDest = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight * cx];
       COLORREF * lpSrc = (COLORREF *) lpdata;
       COLORREF * lpDestLine;
       for(int32_t y = iFrameHeight - 1; y >= 0; y--)
       {
-         lpDestLine = &lpDest[y * m_size.cx];
+         lpDestLine = &lpDest[y * cx];
          for(int32_t x = 0; x < iFrameWidth; x++)
          {
              *lpDestLine ^= *lpSrc;
@@ -2235,16 +2244,16 @@ namespace lnx
    void dib::get_frame(void * lpdata, int32_t iFrame, int32_t iFrameCount)
    {
       int32_t iSliceCount = (int32_t) sqrt((double) iFrameCount);
-      int32_t iFrameWidth = m_size.cx / iSliceCount;
-      int32_t iFrameHeight = m_size.cy / iSliceCount;
+      int32_t iFrameWidth = cx / iSliceCount;
+      int32_t iFrameHeight = cy / iSliceCount;
       int32_t iX = iFrame % iSliceCount;
       int32_t iY = iFrame / iSliceCount;
-      COLORREF * lpSrc = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight *  m_size.cx];
+      COLORREF * lpSrc = &m_pcolorref[iFrameWidth * iX + iY * iFrameHeight *  cx];
       COLORREF * lpDest = (COLORREF *) lpdata;
       COLORREF * lpSrcLine;
       for(int32_t y = 0; y < iFrameHeight; y++)
       {
-         lpSrcLine = &lpSrc[y * m_size.cx];
+         lpSrcLine = &lpSrc[y * cx];
          for(int32_t x = 0; x < iFrameWidth; x++)
          {
              *lpDest = *lpSrcLine;
@@ -2256,7 +2265,7 @@ namespace lnx
 
    bool dib::is_rgb_black()
    {
-      int32_t iSize = m_size.cx * m_size.cy;
+      int32_t iSize = cx * cy;
       COLORREF * lp = m_pcolorref;
       for(int32_t i = 0; i < iSize; i++)
       {
@@ -2273,7 +2282,7 @@ namespace lnx
       {
          return;
       }
-      int32_t iCount = m_size.cx * m_size.cy;
+      int32_t iCount = cx * cy;
       LPBYTE lp = ((LPBYTE) m_pcolorref);
       int32_t i = 0;
       int32_t iCount1 = iCount - iCount % 8;
@@ -2328,7 +2337,7 @@ namespace lnx
       {
          return;
       }
-      int32_t iCount = m_size.cx * m_size.cy;
+      int32_t iCount = cx * cy;
       LPBYTE lp = ((LPBYTE) m_pcolorref);
       for(int32_t i = 0; i < iCount; i++)
       {
@@ -2346,7 +2355,7 @@ namespace lnx
       {
          return;
       }
-      int32_t iCount = m_size.cx * m_size.cy;
+      int32_t iCount = cx * cy;
       LPBYTE lp = ((LPBYTE) m_pcolorref);
       for(int32_t i = 0; i < iCount; i++)
       {
@@ -2375,9 +2384,9 @@ namespace lnx
       ::StretchDIBits(
          SP_HDC(m_spgraphics),
          0, 0,
-         m_size.cx, m_size.cy,
+         cx, cy,
          0, 0,
-         LNX_DIB(pdib)->m_size.cx, LNX_DIB(pdib)->m_size.cy,
+         LNX_DIB(pdib)->cx, LNX_DIB(pdib)->cy,
          LNX_DIB(pdib)->m_pcolorref,
          &LNX_DIB(pdib)->m_info,
          DIB_RGB_COLORS,
@@ -2398,7 +2407,7 @@ namespace lnx
    void dib::fill_channel(int32_t intensity, visual::rgba::echannel echannel)
    {
        int32_t offset = ((int32_t)echannel) % 4;
-      int32_t size=m_size.cx*m_size.cy;
+      int32_t size=cx*cy;
 
       BYTE * pb;
 
@@ -2470,67 +2479,42 @@ namespace lnx
 
    int32_t dib::width()
    {
-      return m_size.cx;
+      return cx;
    }
 
    int32_t dib::height()
    {
-      return m_size.cy;
+      return cy;
    }
 
 #undef new
 
-   bool dib::from(::ca::graphics * pgraphics, FIBITMAP *pfibitmap, bool bUnloadFI)
+   bool dib::from(::ca::graphics * pgraphics, FIBITMAP * pfibitmap, bool bUnloadFI)
    {
 
       if(pfibitmap == NULL)
            return false;
 
-      BITMAPINFO * pbi = FreeImage_GetInfo(pfibitmap);
-      void * pdata = FreeImage_GetBits(pfibitmap);
+
+      FIBITMAP * pfi = FreeImage_ConvertTo32Bits(pfibitmap);
+
+      BITMAPINFO * pbi = FreeImage_GetInfo(pfi);
+      void * pdata = FreeImage_GetBits(pfi);
 
       if(!create(pbi->bmiHeader.biWidth, pbi->bmiHeader.biHeight))
          return false;
 
 
-      COLORREF * pcolorref = NULL;
+      int bx = cx * sizeof(COLORREF); // byte width - band width
 
-      HBITMAP hbitmap;
-
-      throw todo(get_app());
-
-      //HBITMAP hbitmap = ::CreateDIBSection(NULL, &m_info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, 0);
-
-      if(hbitmap == NULL)
+      for(int i = 0; i < cy; i++)
       {
-         Destroy();
-         return false;
+         memcpy((COLORREF *)&(((byte *)m_pcolorref)[scan * i]), &(((byte *) pdata)[bx * i]),  bx);
       }
 
-      throw todo(get_app());
+      FreeImage_Unload (pfi);
 
-//      HDC hdc = ::CreateCompatibleDC(NULL);
-
-
-
-/*   xxx   if(pbi->bmiHeader.biHeight != SetDIBits(
-         hdc,
-         hbitmap,
-         0,
-         pbi->bmiHeader.biHeight,
-         pdata,
-         pbi,
-         DIB_RGB_COLORS))
-      {
-         Destroy();
-         if(bUnloadFI)
-         {
-            FreeImage_Unload(pfibitmap);
-         }
-         return false;
-      } */
-
-      memcpy(m_pcolorref, pcolorref, (size_t) (area() * sizeof(COLORREF)));
+      pfi = NULL;
 
 
       RGBQUAD bkcolor;
