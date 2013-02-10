@@ -10,9 +10,6 @@ namespace lnx
    {
    public:
 
-   int32_t                  m_iStyle;
-   COLORREF             m_cr;
-   int32_t                  m_iStock;
 
 
 //xxx      Gdiplus::Brush * m_pbrush;
