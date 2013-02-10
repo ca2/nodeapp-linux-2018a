@@ -9,11 +9,6 @@ namespace lnx
       ca(papp)
    {
 
-      m_iStock = -1;
-
-      m_iStyle = FillSolid;
-
-      m_cr = 0;
 
    }
 
@@ -129,9 +124,9 @@ namespace lnx
          if(m_etype == type_solid)
          {
 
-            ((brush *) this)->m_iStock = -1;
+//            ((brush *) this)->m_iStock = -1;
 
-            ((brush *) this)->m_iStyle = FillSolid;
+  //          ((brush *) this)->m_iStyle = FillSolid;
 
          }
          else if(m_etype == type_linear_gradient_point_color)
@@ -147,9 +142,9 @@ namespace lnx
          else
          {
 
-            ((brush *) this)->m_iStock = -1;
+    //        ((brush *) this)->m_iStock = -1;
 
-            ((brush *) this)->m_iStyle = FillSolid;
+      //      ((brush *) this)->m_iStyle = FillSolid;
 
          }
       }
