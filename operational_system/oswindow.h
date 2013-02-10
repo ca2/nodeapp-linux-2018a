@@ -17,7 +17,8 @@ typedef int32_t LONG;
 #define CONST               const
 #endif
 
-
+template < typename t1, typename t2 >
+class simple_map;
 
 typedef struct tagPOINT
 {
@@ -51,9 +52,14 @@ public:
    {
    public:
 
+      data();
+      ~data();
+
       osdisplay                     m_osdisplay;
       Window                        m_window;
+      Visual *                      m_pvisual;
       ::user::interaction_base *    m_pui;
+      simple_map < int, LONG > *    m_plongmap;
 
    };
 
@@ -82,7 +88,7 @@ public:
 
    oswindow();
    oswindow(const ::ca::null & null);
-   oswindow(Display * pdisplay, Window window);
+   oswindow(Display * pdisplay, Window windo, Visual * pvisual = NULL);
    oswindow(const oswindow & oswindow);
    oswindow(const void * p);
    oswindow(const LPARAM & lparam);
@@ -144,6 +150,17 @@ public:
    {
       return m_pdata == NULL ? 0 : m_pdata->m_window;
    }
+
+   Visual * visual()
+   {
+      return m_pdata == NULL ? NULL : m_pdata->m_pvisual;
+   }
+
+   Visual * visual() const
+   {
+      return m_pdata == NULL ? NULL : m_pdata->m_pvisual;
+   }
+
 
    int32_t store_name(const char * psz);
    int32_t select_input(int32_t iInput);
