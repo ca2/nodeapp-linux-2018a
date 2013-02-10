@@ -106,7 +106,7 @@ namespace lnx
             else
             {
                while(*lpsz++ != '\0')
-                  if(*lpsz == '/') *lpsz = '/';
+                  if(*lpsz == '\\') *lpsz = '/';
             }
          }
          strPath.ReleaseBuffer(iLenFolder + 1 + iLenRelative);
