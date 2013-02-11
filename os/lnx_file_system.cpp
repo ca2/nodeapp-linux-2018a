@@ -332,6 +332,8 @@ namespace lnx
       else
       {
          string strFilePath(varFile);
+         if(!exists(strFilePath, papp))
+            return "";
          if(papp->m_bZipIsDir && (gen::str::find_ci(".zip:", strFilePath) >= 0))
          {
             gen::memory_file memfile(papp, &storage);
@@ -955,7 +957,7 @@ namespace lnx
       if(stat(pszPath, &st) != 0)
          return false;
 
-      return S_ISREG(st.st_mode) || S_ISDIR(st.st_mode);
+      return S_ISREG(st.st_mode) && !S_ISDIR(st.st_mode);
 
 #endif
 
