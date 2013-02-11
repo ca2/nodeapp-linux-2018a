@@ -231,8 +231,10 @@ CLASS_DECL_lnx void AfxProcessWndProcException(base_exception* e, gen::signal_ob
 
 void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
 {
+#ifndef DEBUG
    try
    {
+#endif
       SCAST_PTR(gen::message::base, pbase, pobj);
 
       //   ASSERT_VALID(this);
@@ -274,8 +276,10 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
       for(int32_t i = 0; i < wnda.get_count(); i++)
       {
          ::user::interaction * pui = wnda[i];
+#ifndef DEBUG
          try
          {
+#endif
             if(pui != NULL)
             {
                if(pui->m_pguie != NULL)
@@ -298,15 +302,19 @@ void AfxInternalPreTranslateMessage(gen::signal_object * pobj)
                   }
                }
             }
+#ifndef DEBUG
          }
          catch(...)
          {
          }
+#endif
       }
+#ifndef DEBUG
    }
    catch(...)
    {
    }
+#endif
 
    // no special processing
 }
@@ -584,18 +592,22 @@ namespace lnx
             ::user::interaction * pui = puiptra->element_at(i);
             if(pui->m_pthread != NULL)
             {
+#ifndef DEBUG
                try
                {
+#endif
                   if(LNX_THREAD(pui->m_pthread->m_pthread) == this
                   || LNX_THREAD(pui->m_pthread->m_pthread->m_p) == LNX_THREAD(m_p)
                   || LNX_THREAD(pui->m_pthread->m_pthread) == LNX_THREAD(m_p))
                   {
                      pui->m_pthread = NULL;
                   }
+#ifndef DEBUG
                }
                catch(...)
                {
                }
+#endif
             }
          }
          sl.unlock();
@@ -609,17 +621,21 @@ namespace lnx
 
       for(int32_t i = 0; i < m_captraDeletePool.get_count(); i++)
       {
+#ifndef DEBUG
          try
          {
+#endif
             ::ca::ca * pca = m_captraDeletePool[i];
             if(dynamic_cast < ::ca::application * > (pca) == m_papp)
             {
                m_papp = NULL;
             }
+#ifndef DEBUG
          }
          catch(...)
          {
          }
+#endif
       }
 
       // free thread object
@@ -700,18 +716,25 @@ namespace lnx
          m_ptimera->unset(pui->m_pimpl);
       }
 
+#ifndef DEBUG
       try
       {
+#endif
          if(LNX_THREAD(pui->m_pthread) == this)
          {
             pui->m_pthread = NULL;
          }
+#ifndef DEBUG
       }
       catch(...)
       {
       }
+#endif
+
+#ifndef DEBUG
       try
       {
+#endif
          if(pui->m_pimpl != NULL && pui->m_pimpl != pui)
          {
             if(LNX_THREAD(pui->m_pimpl->m_pthread) == this)
@@ -719,10 +742,12 @@ namespace lnx
                pui->m_pimpl->m_pthread = NULL;
             }
          }
+#ifndef DEBUG
       }
       catch(...)
       {
       }
+#endif
       try
       {
          if(pui->m_pguie != NULL && pui->m_pguie != pui)
@@ -968,6 +993,12 @@ void thread::Delete()
       ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (this);
       ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_p);
 
+
+      XEvent e;
+
+
+      Display * d = XOpenDisplay(NULL);
+
       // acquire and dispatch messages until a WM_QUIT message is received.
       MESSAGE msg;
       while(m_bRun)
@@ -975,6 +1006,11 @@ void thread::Delete()
          // phase1: check to see if we can do idle work
          while (bIdle && !::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE))
          {
+            defer_process_windows_messages();
+//            if(XCheckTypedEvent(d, -1, &e))
+            {
+
+            }
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
                bIdle = FALSE; // assume "no idle" state
@@ -1016,6 +1052,8 @@ void thread::Delete()
          do
          {
 
+            defer_process_windows_messages();
+
             // pump message, but quit on WM_QUIT
             if (!pump_message())
             {
@@ -1053,6 +1091,8 @@ void thread::Delete()
 
       }
 stop_run:
+
+      XCloseDisplay(d);
 
       return 0;
    }
@@ -1836,14 +1876,18 @@ stop_run:
       // else -- check for thread with message loop
       else if (!m_p->initialize_instance())
       {
+#ifndef DEBUG
          try
          {
+#endif
             nResult = exit();
+#ifndef DEBUG
          }
          catch(...)
          {
             nResult = (DWORD) -1;
          }
+#endif
       }
       else
       {
@@ -1851,11 +1895,14 @@ stop_run:
          ASSERT_VALID(this);
 //         se_translator::attach();
    run:
+#ifndef DEBUG
          try
          {
             try
             {
+#endif
                nResult = m_p->run();
+#ifndef DEBUG
             }
             catch(const ::ca::exception & e)
             {
@@ -1876,6 +1923,7 @@ stop_run:
          catch(...)
          {
          }
+#endif
          // let se_translator run undefinetely
          //se_translator::detach();
       }
@@ -1887,23 +1935,31 @@ stop_run:
 
    int32_t thread::thread_term(int32_t nResult)
    {
+#ifndef DEBUG
       try
       {
+#endif
          finalize_message_window();
+#ifndef DEBUG
       }
       catch(...)
       {
       }
+#endif
 
+#ifndef DEBUG
       try
       {
+#endif
          // cleanup and shutdown the thread
 //         threadWnd.Detach();
          __end_thread(dynamic_cast < ::radix::application * > (m_papp), nResult);
+#ifndef DEBUG
       }
       catch(...)
       {
       }
+      #endif
       return nResult;
    }
 
@@ -2968,6 +3024,97 @@ return AfxInternalProcessWndProcException( e, pMsg );
 }
 */
 
+
+
+   void thread::defer_process_windows_messages()
+   {
+
+      XEvent e;
+
+      bool b;
+
+      Window root;
+      Window child;
+      int root_x;
+      int root_y;
+      int win_x;
+      int win_y;
+      unsigned int mask;
+
+
+      bool bContinue;
+
+
+      for(int i = 0; i < m_oswindowa.get_size(); i++)
+      {
+
+         oswindow w(m_oswindowa[i]);
+
+         if(XCheckWindowEvent(w.display(), w.window(), ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask | ExposureMask, &e))
+         {
+
+            if(e.type == Expose)
+            {
+               LNX_WINDOW(w.get_user_interaction()->m_pimpl)->_001Expose();
+            }
+            else if(e.type == ButtonPress || e.type == ButtonRelease)
+            {
+
+               int message;
+
+               WPARAM wparam;
+
+               LPARAM lparam;
+
+               if(e.xbutton.type == ButtonPress)
+               {
+                  if(e.xbutton.button == Button1)
+                  {
+                     message = WM_LBUTTONDOWN;
+                  }
+                  else
+                  {
+                  }
+
+               }
+               else if(e.xbutton.type == ButtonRelease)
+               {
+                  if(e.xbutton.button == Button1)
+                  {
+                     message = WM_LBUTTONUP;
+                  }
+                  else
+                  {
+                  }
+
+               }
+
+               lparam = MAKELONG(e.xbutton.x, e.xbutton.y);
+
+               w.get_user_interaction()->send_message(message, wparam, lparam);
+
+            }
+            else if(e.type == MotionNotify)
+            {
+
+               int message = WM_MOUSEMOVE;
+
+               WPARAM wparam;
+
+               LPARAM lparam;
+
+               lparam = MAKELONG(e.xmotion.x, e.xmotion.y);
+
+               w.get_user_interaction()->send_message(message, wparam, lparam);
+
+            }
+         }
+
+      }
+
+
+
+   }
 
 
 } // namespace lnx

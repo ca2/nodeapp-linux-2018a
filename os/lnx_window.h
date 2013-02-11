@@ -238,6 +238,9 @@ namespace lnx
          UINT flags = RDW_INVALIDATE | RDW_UPDATENOW | RDW_ERASE);
 // xxx      virtual bool EnableScrollBar(int32_t nSBFlags, UINT nArrowFlags = ESB_ENABLE_BOTH);
 
+virtual    void set_view_port_org(::ca::graphics * pgraphics);
+
+
       virtual bool DrawAnimatedRects(int32_t idAni, CONST RECT *lprcFrom, CONST RECT *lprcTo);
       virtual bool DrawCaption(::ca::graphics * pgraphics, LPCRECT lprc, UINT uFlags);
 
@@ -691,6 +694,7 @@ namespace lnx
 
 
       void _001UpdateWindow();
+      void _001Expose();
 
 
       void _001OnTriggerMouseInside();

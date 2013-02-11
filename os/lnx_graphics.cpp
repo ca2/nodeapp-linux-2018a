@@ -418,7 +418,14 @@ namespace lnx
    point graphics::SetViewportOrg(POINT point)
    {
       //return SetViewportOrg(point.x, point.y);
-      return ::point(0, 0);
+      cairo_matrix_t m;
+      cairo_get_matrix(m_pdc, &m);
+      int xOld = m.x0;
+      int yOld = m.y0;
+      m.x0 = point.x;
+      m.y0 = point.y;
+      cairo_transform(m_pdc, &m);
+      return ::point(xOld, yOld);
    }
 
    size graphics::SetViewportExt(SIZE size)

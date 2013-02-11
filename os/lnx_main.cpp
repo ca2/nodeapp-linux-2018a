@@ -16,6 +16,26 @@ void CLASS_DECL_lnx __cdecl _ca2_purecall()
 void __cdecl _null_se_translator(uint32_t uiCode, EXCEPTION_POINTERS * ppointers);
 
 
+int xlib_error_handler(Display * d, XErrorEvent * e)
+{
+
+   if(e->request_code == 12) //
+   {
+
+      if(e->error_code == BadValue)
+      {
+      }
+
+   }
+   char sz[1024];
+   XGetErrorText(d, e->error_code, sz, sizeof(sz));
+   fputs(sz, stderr);
+
+   abort();
+
+}
+
+
 //::ca::application *     win_application_create(::ca::application * pappSystem, const char * pszId);
 //::ca::application *     win_instantiate_application(::ca::application * pappSystem, const char * pszId);
 //int32_t                     win_application_procedure(::ca::application * pappSystem)
@@ -29,8 +49,11 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 
 //   UNREFERENCED_PARAMETER(lpCmdLine);
 
+   if(!XInitThreads())
+      return -1;
 
 
+   XSetErrorHandler(xlib_error_handler);
 
 //   ::CoInitialize(NULL);
 

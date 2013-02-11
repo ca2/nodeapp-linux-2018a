@@ -775,7 +775,7 @@ namespace lnx
    bool os::is_remote_session()
    {
 
-      throw not_implemented(get_app());
+//      throw not_implemented(get_app());
       return false;
 /*
       return GetSystemMetrics(SM_REMOTESESSION) != FALSE;

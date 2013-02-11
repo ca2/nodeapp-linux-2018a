@@ -54,6 +54,9 @@ namespace lnx
       // list of frame_window objects for thread
       simple_list < frame_window * > m_frameList;
 
+
+      comparable_array < void * > m_oswindowa;
+
       // temporary/permanent ::collection::map state
       DWORD m_nTempMapLock;           // if not 0, temp maps locked
       //hmenu_map      * m_pmapHMENU;
@@ -127,6 +130,9 @@ namespace lnx
       virtual ::user::interaction * get_active_ui();
       virtual ::user::interaction * set_active_ui(::user::interaction * pui);
       virtual void step_timer();
+
+
+      virtual void defer_process_windows_messages();
 
 
       virtual void on_delete(::ca::ca * poc);

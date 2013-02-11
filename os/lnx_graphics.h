@@ -17,11 +17,11 @@ namespace lnx
 
       cairo_t *               m_pdc; // Cairo drawing context
       int32_t                     m_iType;
-      bool                    m_bForeColor;
-      bool                    m_bBackColor;
-      uint64_t                m_uiForeColor;
-      uint64_t                m_uiBackColor;
-      COLORREF                m_crTextColor;
+      //bool                    m_bForeColor;
+      //bool                    m_bBackColor;
+      //uint64_t                m_uiForeColor;
+      //uint64_t                m_uiBackColor;
+      //COLORREF                m_crTextColor;
       //xxx ::Gdiplus::GraphicsPath *     m_ppath;
       //xxx ::Gdiplus::GraphicsPath *     m_ppathPaint;
       //xxx HDC                           m_hdc;
@@ -51,6 +51,9 @@ namespace lnx
       //static void PASCAL DeleteTempMap();
       //bool Attach(HDC hdc);   // Attach/Detach affects only the Output DC
       //HDC Detach();
+
+
+      virtual void * detach();
 
       //virtual void SetAttribDC(HDC hDC);  // Set the Attribute DC
       //virtual void SetOutputDC(HDC hDC);  // Set the Output DC
@@ -494,6 +497,7 @@ namespace lnx
 
 
       // platform-specific or platform-internals
+      bool set_os_color(COLORREF cr);
       bool set(const ::ca::brush * pbrush);
       bool set(const ::ca::pen * ppen);
       bool set(const ::ca::font * pfont);

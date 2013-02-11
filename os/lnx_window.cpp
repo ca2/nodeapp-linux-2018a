@@ -1,5 +1,6 @@
 #include "framework.h"
 #include <cairo/cairo-xlib.h>
+#include <X11/Xatom.h>
 
 //#define COMPILE_MULTIMON_STUBS
 //#include <multimon.h>
@@ -248,6 +249,89 @@ namespace lnx
          pParentWnd->get_safe_handle(), id, lpParam);
    }
 
+
+ /* MWM decorations values */
+ #define MWM_DECOR_NONE          0
+ #define MWM_DECOR_ALL           (1L << 0)
+ #define MWM_DECOR_BORDER        (1L << 1)
+ #define MWM_DECOR_RESIZEH       (1L << 2)
+ #define MWM_DECOR_TITLE         (1L << 3)
+ #define MWM_DECOR_MENU          (1L << 4)
+ #define MWM_DECOR_MINIMIZE      (1L << 5)
+ #define MWM_DECOR_MAXIMIZE      (1L << 6)
+
+ /* KDE decoration values */
+ enum {
+  KDE_noDecoration = 0,
+  KDE_normalDecoration = 1,
+  KDE_tinyDecoration = 2,
+  KDE_noFocus = 256,
+  KDE_standaloneMenuBar = 512,
+  KDE_desktopIcon = 1024 ,
+  KDE_staysOnTop = 2048
+ };
+
+ void wm_nodecorations(oswindow w, int map) {
+    Atom WM_HINTS;
+    int set;
+
+
+
+    Display * dpy = w.display();
+    Window window = w.window();
+
+   int scr=DefaultScreen(dpy);
+   Window rootw=RootWindow(dpy, scr);
+
+    WM_HINTS = XInternAtom(dpy, "_MOTIF_WM_HINTS", True);
+    if ( WM_HINTS != None ) {
+        #define MWM_HINTS_DECORATIONS   (1L << 1)
+        struct {
+          unsigned long flags;
+          unsigned long functions;
+          unsigned long decorations;
+                   long input_mode;
+          unsigned long status;
+        } MWMHints = { MWM_HINTS_DECORATIONS, 0,
+            MWM_DECOR_NONE, 0, 0 };
+        XChangeProperty(dpy, window, WM_HINTS, WM_HINTS, 32,
+                        PropModeReplace, (unsigned char *)&MWMHints,
+                        sizeof(MWMHints)/4);
+    }
+    WM_HINTS = XInternAtom(dpy, "KWM_WIN_DECORATION", True);
+    if ( WM_HINTS != None ) {
+        long KWMHints = KDE_tinyDecoration;
+        XChangeProperty(dpy, window, WM_HINTS, WM_HINTS, 32,
+                        PropModeReplace, (unsigned char *)&KWMHints,
+                        sizeof(KWMHints)/4);
+    }
+
+    WM_HINTS = XInternAtom(dpy, "_WIN_HINTS", True);
+    if ( WM_HINTS != None ) {
+        long GNOMEHints = 0;
+        XChangeProperty(dpy, window, WM_HINTS, WM_HINTS, 32,
+                        PropModeReplace, (unsigned char *)&GNOMEHints,
+                        sizeof(GNOMEHints)/4);
+    }
+    WM_HINTS = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", True);
+    if ( WM_HINTS != None ) {
+        Atom NET_WMHints[2];
+        NET_WMHints[0] = XInternAtom(dpy,
+            "_KDE_NET_WM_WINDOW_TYPE_OVERRIDE", True);
+        NET_WMHints[1] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_NORMAL", True);
+        XChangeProperty(dpy, window,
+                        WM_HINTS, XA_ATOM, 32, PropModeReplace,
+                        (unsigned char *)&NET_WMHints, 2);
+    }
+    XSetTransientForHint(dpy, window, rootw);
+    if(map)
+    {
+    XUnmapWindow(dpy, window);
+    XMapWindow(dpy, window);
+
+    }
+ }
+
    bool window::CreateEx(DWORD dwExStyle, const char * lpszClassName,
       const char * lpszWindowName, DWORD dwStyle,
       int32_t x, int32_t y, int32_t nWidth, int32_t nHeight,
@@ -300,8 +384,9 @@ namespace lnx
       hook_window_create(this);
 
 
-      Display *dpy;
+      Display *display;
       Window rootwin;
+
       XEvent e;
       int32_t scr;
 //      cairo_surface_t *cs;
@@ -310,22 +395,58 @@ namespace lnx
       m_pthread = ::ca::get_thread();
       m_pguie->m_pthread = ::ca::get_thread();
 
-      if(!(dpy=XOpenDisplay(NULL))) {
+      if(!(display=XOpenDisplay(NULL))) {
          fprintf(stderr, "ERROR: Could not open display\n");
          exit(1);
       }
 
-      scr=DefaultScreen(dpy);
-      rootwin=RootWindow(dpy, scr);
+      scr=DefaultScreen(display);
+      rootwin=RootWindow(display, scr);
 
-      if(cs.cx <= 0)
-         cs.cx = 1;
-      if(cs.cy <= 0)
-         cs.cy = 1;
+      if(cs.cx <= 256)
+         cs.cx = 256;
+      if(cs.cy <= 256)
+         cs.cy = 256;
 
-      Window window = XCreateSimpleWindow(dpy, rootwin, 1, 1, cs.cx, cs.cy, 0, BlackPixel(dpy, scr), BlackPixel(dpy, scr));
+//      Window window = XCreateSimpleWindow(dpy, rootwin, 256, 256, cs.cx, cs.cy, 0, BlackPixel(dpy, scr), BlackPixel(dpy, scr));
+
+      const char * xserver = getenv( "DISPLAY" ) ;
 
 
+
+      if (display == 0)
+
+      {
+
+      printf("Could not establish a connection to X-server '%s'\n", xserver ) ;
+
+      return false;
+
+      }
+
+
+
+      // query Visual for "TrueColor" and 32 bits depth (RGBA)
+
+      XVisualInfo visualinfo ;
+
+      XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &visualinfo);
+
+      // create window
+
+      XSetWindowAttributes attr = {0,};
+
+      attr.colormap = XCreateColormap( display, rootwin, visualinfo.visual, AllocNone);
+
+      attr.event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | PointerMotionMask;
+
+      attr.background_pixmap = None ;
+
+      attr.border_pixmap = None;
+
+      attr.border_pixel = 0 ;
+
+      Window window = XCreateWindow( display, DefaultRootWindow(display), 256, 256, cs.cx, cs.cy, 0, visualinfo.depth, InputOutput, visualinfo.visual, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
 
 
       /*oswindow hWnd = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass,
@@ -360,12 +481,20 @@ namespace lnx
       }
 #endif
 
-      m_oswindow = oswindow(dpy, window);
+      m_oswindow = oswindow(display, window, visualinfo.visual);
       m_oswindow.set_user_interaction(m_pguie);
 
-      XStoreName(m_oswindow.display(), m_oswindow.window(), "hello");
-      XSelectInput(m_oswindow.display(), m_oswindow.window(), ExposureMask|ButtonPressMask);
-      XMapWindow(m_oswindow.display(), m_oswindow.window());
+      if(lpszWindowName != NULL && strlen(lpszWindowName) > 0)
+      {
+         XStoreName(m_oswindow.display(), m_oswindow.window(), lpszWindowName);
+      }
+wm_nodecorations(m_oswindow, 0);
+      //XSelectInput(m_oswindow.display(), m_oswindow.window(), ExposureMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask);
+      if(dwStyle & WS_VISIBLE)
+      {
+         XMapWindow(m_oswindow.display(), m_oswindow.window());
+      }
+
 
 
       if (!unhook_window_create())
@@ -374,9 +503,11 @@ namespace lnx
 
       send_message(WM_CREATE, 0, (LPARAM) &cs);
 
-      m_pguie->SetWindowPos(0, 0, 0, cs.cx, cs.cy, 0);
+      m_pguie->SetWindowPos(0, 256, 256, cs.cx, cs.cy, 0);
 
       send_message(WM_SIZE, 0, 0);
+
+      LNX_THREAD(m_pthread->m_pthread->m_p)->m_oswindowa.add(m_oswindow);
 
 //      on_set_parent(pparent);
 
@@ -559,6 +690,7 @@ namespace lnx
          pdraw->m_wndpaOut.remove(this);
          pdraw->m_wndpaOut.remove(m_pguie);
       }
+      LNX_THREAD(m_pthread)->m_oswindowa.remove(m_oswindow);
    }
 
    void window::_001OnCaptureChanged(gen::signal_object * pobj)
@@ -1290,7 +1422,8 @@ namespace lnx
             if(m_bOSNativeMouseMessagePosition)
             {
                class rect rectWindow32;
-//               ::GetWindowRect(get_os_data(), &rectWindow32);
+               ::GetWindowRect(get_os_data(), &rectWindow32);
+               //rectWindow32 = m_pguie->m_rectParentClient;
                ::copy(rectWindow, rectWindow32);
             }
             else
@@ -3672,6 +3805,8 @@ throw not_implemented(get_app());
    }
 
 
+
+
    id window::RunModalLoop(DWORD dwFlags, ::ca::live_object * pliveobject)
    {
       // for tracking the idle time state
@@ -3687,6 +3822,10 @@ throw not_implemented(get_app());
       m_iaModalThread.add(::GetCurrentThreadId());
       ::radix::application * pappThis1 = dynamic_cast < ::radix::application * > (m_pthread->m_pthread->m_p);
       ::radix::application * pappThis2 = dynamic_cast < ::radix::application * > (m_pthread->m_pthread);
+
+            //Display * d = XOpenDisplay(NULL);
+            //XEvent  e;
+
       // acquire and dispatch messages until the modal state is done
       MESSAGE msg;
       for (;;)
@@ -3696,6 +3835,12 @@ throw not_implemented(get_app());
          // phase1: check to see if we can do idle work
          while (bIdle && !::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE))
          {
+            LNX_THREAD(m_pthread->m_pthread->m_p)->defer_process_windows_messages();
+//            if(XCheckTypedEvent(d, -1, &e))
+            {
+
+            }
+
             ASSERT(ContinueModal(iLevel));
 
             // show the dialog when the message queue goes idle
@@ -3738,6 +3883,12 @@ throw not_implemented(get_app());
          // phase2: pump messages while available
          do
          {
+            LNX_THREAD(m_pthread->m_pthread->m_p)->defer_process_windows_messages();
+//            if(XCheckTypedEvent(d, -1, &e))
+            {
+
+            }
+
             if (!ContinueModal(iLevel))
                goto ExitModal;
 
@@ -3801,6 +3952,7 @@ throw not_implemented(get_app());
       }
 
 ExitModal:
+//XCloseDisplay(d);
       m_iaModalThread.remove_first(::GetCurrentThreadId());
       m_iModal = m_iModalCount;
       return m_nModalResult;
@@ -4012,6 +4164,15 @@ throw not_implemented(get_app());
 
       //throw not_implemented(get_app());
 
+      if(nFlags & SWP_SHOWWINDOW)
+      {
+
+         XUnmapWindow(m_oswindow.display(), m_oswindow.window());
+         XMapWindow(m_oswindow.display(), m_oswindow.window());
+         m_bVisible = true;
+
+      }
+
 
       if(nFlags & SWP_NOMOVE)
       {
@@ -4034,6 +4195,7 @@ throw not_implemented(get_app());
             XMoveResizeWindow(m_oswindow.display(), m_oswindow.window(), x, y, cx, cy);
          }
       }
+
 /*
       if(GetExStyle() & WS_EX_LAYERED)
       {
@@ -4099,7 +4261,7 @@ throw not_implemented(get_app());
    {
 
       class rect64 rectWindow;
-      m_pguie->GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow);
 
       lprect->left   += (LONG) rectWindow.left;
       lprect->right  += (LONG) rectWindow.left;
@@ -4111,7 +4273,7 @@ throw not_implemented(get_app());
    void window::ClientToScreen(LPPOINT lppoint)
    {
       class rect64 rectWindow;
-      m_pguie->GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow);
 
       lppoint->x     += (LONG) rectWindow.left;
       lppoint->y     += (LONG) rectWindow.top;
@@ -4121,7 +4283,7 @@ throw not_implemented(get_app());
    void window::ClientToScreen(__rect64 * lprect)
    {
       class rect rectWindow;
-      m_pguie->GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow);
 
       lprect->left   += rectWindow.left;
       lprect->right  += rectWindow.left;
@@ -4133,7 +4295,7 @@ throw not_implemented(get_app());
    void window::ClientToScreen(__point64 * lppoint)
    {
       class rect64 rectWindow;
-      m_pguie->GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow);
 
       lppoint->x     += rectWindow.left;
       lppoint->y     += rectWindow.top;
@@ -4143,7 +4305,7 @@ throw not_implemented(get_app());
    void window::ScreenToClient(LPRECT lprect)
    {
       class rect64 rectWindow;
-      m_pguie->GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow);
 
       lprect->left   -= (LONG) rectWindow.left;
       lprect->right  -= (LONG) rectWindow.left;
@@ -4155,7 +4317,7 @@ throw not_implemented(get_app());
    void window::ScreenToClient(LPPOINT lppoint)
    {
       class rect64 rectWindow;
-      m_pguie->GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow);
 
       lppoint->x     -= (LONG) rectWindow.left;
       lppoint->y     -= (LONG) rectWindow.top;
@@ -4165,7 +4327,7 @@ throw not_implemented(get_app());
    void window::ScreenToClient(__rect64 * lprect)
    {
       class rect64 rectWindow;
-      m_pguie->GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow);
 
       lprect->left   -= rectWindow.left;
       lprect->right  -= rectWindow.left;
@@ -4177,7 +4339,7 @@ throw not_implemented(get_app());
    void window::ScreenToClient(__point64 * lppoint)
    {
       class rect64 rectWindow;
-      m_pguie->GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow);
 
       lppoint->x     -= rectWindow.left;
       lppoint->y     -= rectWindow.top;
@@ -4189,15 +4351,15 @@ throw not_implemented(get_app());
       if(!::IsWindow(get_os_data()))
          throw simple_exception(get_app(), "no more a window");
       // if it is temporary window - probably not ca2 wrapped window
-      if(m_pguie == NULL || m_pguie == this)
+      //if(m_pguie == NULL || m_pguie == this)
       {
          rect rect32;
          ::GetWindowRect(get_os_data(), rect32);
          ::copy(lprect, rect32);
       }
-      else
+      //else
       {
-         interaction::GetWindowRect(lprect);
+        // interaction::GetWindowRect(lprect);
       }
    }
 
@@ -4617,7 +4779,7 @@ throw not_implemented(get_app());
 
    bool window::BringWindowToTop()
    {
-      throw not_implemented(get_app());
+//      throw not_implemented(get_app());
 //      return ::BringWindowToTop(get_os_data()) != FALSE;
 
    }
@@ -4655,7 +4817,7 @@ throw not_implemented(get_app());
       rectClient.top = 0;
       rectClient.right = 500;
       rectClient.bottom = 500;
-      (dynamic_cast < ::lnx::graphics * >(g.m_p))->attach(cairo_create(cairo_xlib_surface_create(oswindow.display(), oswindow.window(), DefaultVisual(oswindow.display(), 0), rectClient.width(), rectClient.height())));
+      (dynamic_cast < ::lnx::graphics * >(g.m_p))->attach(cairo_create(cairo_xlib_surface_create(oswindow.display(), oswindow.window(), oswindow.visual(),rectClient.width(), rectClient.height())));
       return g.detach();
    }
 
@@ -4772,6 +4934,8 @@ throw not_implemented(get_app());
             return false;
 
       }
+
+      return m_bVisible;
 
       if(!::IsWindowVisible(get_os_data()))
          return false;
@@ -4975,21 +5139,29 @@ throw not_implemented(get_app());
    ::ca::window * PASCAL window::GetCapture()
    {
 
-      throw not_implemented(::ca::get_thread_app());
-      //return ::lnx::window::from_handle(::GetCapture());
+      if(::GetCapture() == NULL)
+         return NULL;
+
+      return dynamic_cast < ::ca::window * > (::GetCapture().get_user_interaction()->m_pimpl);
 
    }
 
    ::user::interaction * window::set_capture(::user::interaction* pinterface)
    {
 
-      throw not_implemented(get_app());
-//      ASSERT(::IsWindow(get_os_data()));
-//
-//      if(pinterface != NULL)
-//         m_pguieCapture = pinterface;
-//
-//      return dynamic_cast < ::ca::window * > (::lnx::window::from_handle(::SetCapture(get_os_data())));
+      ASSERT(::IsWindow(get_os_data()));
+
+      oswindow w = SetCapture(get_os_data());
+
+      if(GetCapture() != NULL)
+      {
+
+         if(pinterface != NULL)
+            m_pguieCapture = pinterface;
+
+      }
+
+      return w.get_user_interaction();
 
    }
 
@@ -5004,7 +5176,7 @@ throw not_implemented(get_app());
    ::ca::window * window::SetFocus()
    {
 
-      throw not_implemented(get_app());
+//      throw not_implemented(get_app());
 //      ASSERT(::IsWindow(get_os_data()));
 //      return ::lnx::window::from_handle(::SetFocus(get_os_data()));
 
@@ -5398,7 +5570,7 @@ throw not_implemented(get_app());
    bool window::SetForegroundWindow()
    {
 
-    throw not_implemented(get_app());
+//    throw not_implemented(get_app());
 //      return ::SetForegroundWindow(get_os_data()) != FALSE;
 
    }
@@ -6108,10 +6280,10 @@ throw not_implemented(get_app());
    {
 
 
-      throw not_implemented(get_app());
-//      m_bMouseHover = true;
-//      TRACKMOUSEEVENT tme = { sizeof(tme) };
-//      tme.dwFlags = TME_LEAVE;
+      //throw not_implemented(get_app());
+      m_bMouseHover = true;
+    //  TRACKMOUSEEVENT tme = { sizeof(tme) };
+  //    tme.dwFlags = TME_LEAVE;
 //      tme.hwndTrack = get_os_data();
 //      TrackMouseEvent(&tme);
 
@@ -6688,11 +6860,265 @@ namespace lnx
 
 
    }*/
+   void window::_001Expose()
+   {
+
+      rect rectWindow;
+
+      GetWindowRect(rectWindow);
+
+      if(rectWindow.area() <= 0)
+         return;
+
+      XLockDisplay(m_oswindow.display());
+
+      try
+      {
+
+         cairo_surface_t * cs = cairo_xlib_surface_create(m_oswindow.display(), m_oswindow.window(), m_oswindow.visual(), rectWindow.width(), rectWindow.height());
+
+         cairo_t * c = cairo_create(cs);
+
+
+
+         cairo_set_operator(c, CAIRO_OPERATOR_SOURCE);
+
+         cairo_rectangle(c, 0, 0, rectWindow.width(), rectWindow.height());
+
+         cairo_set_source_rgba(c, 0.0, 0.0, 0.0, 0.0);
+
+         cairo_fill(c);
+
+         cairo_set_operator(c, CAIRO_OPERATOR_OVER);
+
+         cairo_rectangle(c, 10, 10, 200, 200);
+
+         cairo_set_source_rgba(c, 0.5, 1.0, 0.5, 0.5);
+
+         cairo_fill(c);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         ::ca::graphics_sp g(get_app());
+
+         g->attach(c);
+
+         _000OnDraw(g);
+
+         g->detach();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         cairo_show_page(c);
+
+         cairo_destroy(c);
+
+         cairo_surface_destroy(cs);
+
+      }
+      catch(...)
+      {
+
+
+      }
+
+      try
+      {
+
+         //cairo_surface_destroy(csSrc);
+         //cairo_destroy(cSrc);
+
+      }
+      catch(...)
+      {
+
+      }
+
+      XUnlockDisplay(m_oswindow.display());
+
+}
+
+
 
    void window::_001UpdateWindow()
    {
 
-      throw not_implemented(get_app());
+
+
+      //cairo_surface_t * csSrc;
+
+      //cairo_t * cSrc;
+
+
+      XEvent e;
+
+      if(!XCheckTypedWindowEvent(m_oswindow.display(), m_oswindow.window(), Expose, &e))
+         return;
+
+      if(e.type != Expose)
+         return;
+
+
+/*      try
+      {
+
+//         csSrc = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
+
+  //       cSrc = cairo_create(csSrc);
+
+    //     ::ca::graphics_sp g(get_app());
+
+/*         cairo_set_operator(cSrc, CAIRO_OPERATOR_SOURCE);
+
+         cairo_rectangle(cSrc, 0, 0, rectWindow.width(), rectWindow.height());
+
+         cairo_set_source_rgba(cSrc, 0.0, 0.0, 0.0, 0.0);
+
+         cairo_fill(cSrc);
+
+         cairo_set_operator(cSrc, CAIRO_OPERATOR_OVER);
+
+         cairo_rectangle(cSrc, 10, 10, 200, 200);
+
+         cairo_set_source_rgba(cSrc, 0.5, 1.0, 0.5, 0.5);
+
+         cairo_fill(cSrc);*/
+
+//         g->attach(cSrc);
+
+  //       _000OnDraw(g);
+
+    //     g->detach();
+
+         //cairo_show_page(cSrc);
+
+
+
+  /*    }
+      catch(...)
+      {
+
+
+      }
+      XLockDisplay(m_oswindow.display());
+
+      try
+      {
+
+         cairo_surface_t * cs = cairo_xlib_surface_create(m_oswindow.display(), m_oswindow.window(), m_oswindow.visual(), rectWindow.width(), rectWindow.height());
+
+         cairo_t * c = cairo_create(cs);
+
+
+
+         cairo_set_operator(c, CAIRO_OPERATOR_SOURCE);
+
+         cairo_rectangle(c, 0, 0, rectWindow.width(), rectWindow.height());
+
+         cairo_set_source_rgba(c, 0.0, 0.0, 0.0, 0.0);
+
+         cairo_fill(c);
+
+         cairo_set_operator(c, CAIRO_OPERATOR_OVER);
+
+         cairo_rectangle(c, 10, 10, 200, 200);
+
+         cairo_set_source_rgba(c, 0.5, 1.0, 0.5, 0.5);
+
+         cairo_fill(c);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         ::ca::graphics_sp g(get_app());
+
+         g->attach(c);
+
+         _000OnDraw(g);
+
+         g->detach();
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+         cairo_show_page(c);
+
+         cairo_destroy(c);
+
+         cairo_surface_destroy(cs);
+
+      }
+      catch(...)
+      {
+
+
+      }
+
+      try
+      {
+
+         //cairo_surface_destroy(csSrc);
+         //cairo_destroy(cSrc);
+
+      }
+      catch(...)
+      {
+
+      }
+
+      XUnlockDisplay(m_oswindow.display());
+
+      //throw not_implemented(get_app());
 
 //
 //
@@ -6852,6 +7278,249 @@ namespace lnx
 //
 //      ::DeleteObject(hbitmap);
    }
+
+   void window::_001UpdateWindow()
+   {
+
+      rect rectWindow;
+
+      GetWindowRect(rectWindow);
+
+      if(rectWindow.area() <= 0)
+         return;
+
+
+      //cairo_surface_t * csSrc;
+
+      //cairo_t * cSrc;
+
+
+      XEvent e;
+
+/*      if(!XCheckTypedWindowEvent(m_oswindow.display(), m_oswindow.window(), Expose, &e))
+         return;
+
+      if(e.type != Expose)
+         return;
+
+
+      try
+      {
+
+//         csSrc = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
+
+  //       cSrc = cairo_create(csSrc);
+
+    //     ::ca::graphics_sp g(get_app());
+
+/*         cairo_set_operator(cSrc, CAIRO_OPERATOR_SOURCE);
+
+         cairo_rectangle(cSrc, 0, 0, rectWindow.width(), rectWindow.height());
+
+         cairo_set_source_rgba(cSrc, 0.0, 0.0, 0.0, 0.0);
+
+         cairo_fill(cSrc);
+
+         cairo_set_operator(cSrc, CAIRO_OPERATOR_OVER);
+
+         cairo_rectangle(cSrc, 10, 10, 200, 200);
+
+         cairo_set_source_rgba(cSrc, 0.5, 1.0, 0.5, 0.5);
+
+         cairo_fill(cSrc);*/
+
+//         g->attach(cSrc);
+
+  //       _000OnDraw(g);
+
+    //     g->detach();
+
+         //cairo_show_page(cSrc);
+
+
+
+/*      }
+      catch(...)
+      {
+
+
+      }
+      //throw not_implemented(get_app());
+
+//
+//
+//      rect rectWindow;
+//
+//      GetWindowRect(rectWindow);
+//
+//      if(rectWindow.area() <= 0)
+//         return;
+//
+//
+//      POINT pt;
+//      SIZE sz;
+//
+//      pt.x = rectWindow.left;
+//      pt.y = rectWindow.top;
+//      sz.cx = rectWindow.right - rectWindow.left;
+//      sz.cy = rectWindow.bottom - rectWindow.top;
+//
+//      int32_t cx = sz.cx;
+//      int32_t cy = sz.cy;
+//
+//      BITMAPINFO info;
+//      COLORREF * pcolorref;
+//
+//      zero_memory(&info, sizeof (BITMAPINFO));
+//
+//      info.bmiHeader.biSize          = sizeof (BITMAPINFOHEADER);
+//      info.bmiHeader.biWidth         = cx;
+//      info.bmiHeader.biHeight        = - cy;
+//      info.bmiHeader.biPlanes        = 1;
+//      info.bmiHeader.biBitCount      = 32;
+//      info.bmiHeader.biCompression   = BI_RGB;
+//      info.bmiHeader.biSizeImage     = cx * cy * 4;
+//
+//      HBITMAP hbitmap = CreateDIBSection(NULL, &info, DIB_RGB_COLORS, (void **) &pcolorref, NULL, NULL);
+//
+//      {
+//
+//         memset(pcolorref, 0, cx * cy * 4);
+//
+//         Gdiplus::Bitmap b(cx, cy, cx *4 , PixelFormat32bppARGB, (BYTE *) pcolorref);
+//
+//         ::ca::graphics_sp spg(get_app());
+//
+//         (dynamic_cast < ::lnx::graphics * > (spg.m_p))->attach(new Gdiplus::Graphics(&b));
+//
+//         _001Print(spg);
+//
+//      }
+//
+//      if(GetExStyle() & WS_EX_LAYERED)
+//      {
+//         BYTE *dst=(BYTE*)pcolorref;
+//         int64_t size = cx * cy;
+//
+//
+//         // >> 8 instead of / 255 subsequent alpha_blend operations say thanks on true_blend because (255) * (1/254) + (255) * (254/255) > 255
+//
+//
+//         while (size >= 8)
+//         {
+//            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
+//            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
+//            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
+//
+//            dst[4+0] = LOBYTE(((int32_t)dst[4+0] * (int32_t)dst[4+3])>> 8);
+//            dst[4+1] = LOBYTE(((int32_t)dst[4+1] * (int32_t)dst[4+3])>> 8);
+//            dst[4+2] = LOBYTE(((int32_t)dst[4+2] * (int32_t)dst[4+3])>> 8);
+//
+//            dst[8+0] = LOBYTE(((int32_t)dst[8+0] * (int32_t)dst[8+3])>> 8);
+//            dst[8+1] = LOBYTE(((int32_t)dst[8+1] * (int32_t)dst[8+3])>> 8);
+//            dst[8+2] = LOBYTE(((int32_t)dst[8+2] * (int32_t)dst[8+3])>> 8);
+//
+//            dst[12+0] = LOBYTE(((int32_t)dst[12+0] * (int32_t)dst[12+3])>> 8);
+//            dst[12+1] = LOBYTE(((int32_t)dst[12+1] * (int32_t)dst[12+3])>> 8);
+//            dst[12+2] = LOBYTE(((int32_t)dst[12+2] * (int32_t)dst[12+3])>> 8);
+//
+//            dst[16+0] = LOBYTE(((int32_t)dst[16+0] * (int32_t)dst[16+3])>> 8);
+//            dst[16+1] = LOBYTE(((int32_t)dst[16+1] * (int32_t)dst[16+3])>> 8);
+//            dst[16+2] = LOBYTE(((int32_t)dst[16+2] * (int32_t)dst[16+3])>> 8);
+//
+//            dst[20+0] = LOBYTE(((int32_t)dst[20+0] * (int32_t)dst[20+3])>> 8);
+//            dst[20+1] = LOBYTE(((int32_t)dst[20+1] * (int32_t)dst[20+3])>> 8);
+//            dst[20+2] = LOBYTE(((int32_t)dst[20+2] * (int32_t)dst[20+3])>> 8);
+//
+//            dst[24+0] = LOBYTE(((int32_t)dst[24+0] * (int32_t)dst[24+3])>> 8);
+//            dst[24+1] = LOBYTE(((int32_t)dst[24+1] * (int32_t)dst[24+3])>> 8);
+//            dst[24+2] = LOBYTE(((int32_t)dst[24+2] * (int32_t)dst[24+3])>> 8);
+//
+//            dst[28+0] = LOBYTE(((int32_t)dst[28+0] * (int32_t)dst[28+3])>> 8);
+//            dst[28+1] = LOBYTE(((int32_t)dst[28+1] * (int32_t)dst[28+3])>> 8);
+//            dst[28+2] = LOBYTE(((int32_t)dst[28+2] * (int32_t)dst[28+3])>> 8);
+//
+//            dst += 4 * 8;
+//            size -= 8;
+//         }
+//         while(size--)
+//         {
+//            dst[0] = LOBYTE(((int32_t)dst[0] * (int32_t)dst[3])>> 8);
+//            dst[1] = LOBYTE(((int32_t)dst[1] * (int32_t)dst[3])>> 8);
+//            dst[2] = LOBYTE(((int32_t)dst[2] * (int32_t)dst[3])>> 8);
+//            dst += 4;
+//         }
+//
+//
+//         {
+//            HDC hdcScreen = ::GetDC(get_os_data());
+//
+//            HDC hdcMem = ::CreateCompatibleDC(NULL);
+//
+//            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
+//
+//            BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+//
+//            POINT ptZero = { 0 };
+//
+//            point ptSrc(0, 0);
+//
+//            bool bOk = ::UpdateLayeredWindow(get_os_data(), hdcScreen, &pt, &sz, hdcMem, &ptSrc, RGB(0, 0, 0), &blendPixelFunction, ULW_ALPHA) != FALSE;
+//
+//            ::SelectObject(hdcMem, hbitmapOld);
+//
+//            ::DeleteDC(hdcMem);
+//
+//            ::ReleaseDC(get_os_data(), hdcScreen);
+//         }
+//
+//
+//      }
+//      else
+//      {
+//
+//         {
+//            HDC hdcScreen = ::GetDC(get_os_data());
+//
+//            HDC hdcMem = ::CreateCompatibleDC(NULL);
+//
+//            HBITMAP hbitmapOld = (HBITMAP) ::SelectObject(hdcMem, hbitmap);
+//
+//            BLENDFUNCTION blendPixelFunction = { AC_SRC_OVER, 0, 255, AC_SRC_ALPHA };
+//
+//            POINT ptZero = { 0 };
+//
+//            point ptSrc(0, 0);
+//
+//            ::BitBlt(hdcScreen, 0, 0, sz.cx, sz.cy, hdcMem, 0, 0, SRCCOPY);
+//
+//            ::SelectObject(hdcMem, hbitmapOld);
+//
+//            ::DeleteDC(hdcMem);
+//
+//            ::ReleaseDC(get_os_data(), hdcScreen);
+//         }
+//
+//      }
+//
+//      ::DeleteObject(hbitmap);
+*/
+   }
+
+   void window::set_view_port_org(::ca::graphics * pgraphics)
+   {
+      // graphics will be already set its view port to the window for linux - cairo with xlib
+
+
+/*      rect64 rectWindow;
+      GetWindowRect(rectWindow);
+      get_wnd()->ScreenToClient(rectWindow);
+      pgraphics->SetViewportOrg(point(rectWindow.top_left()));
+      pgraphics->SelectClipRgn(NULL);
+*/
+
+   }
+
 
 }
 

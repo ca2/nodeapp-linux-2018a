@@ -95,6 +95,7 @@ namespace lnx
 
       virtual bool add_arc(const RECT & rect, int32_t iStart, int32_t iAngle);
       virtual bool add_line(int32_t x, int32_t y);
+      virtual bool add_line(int32_t x, int32_t y, int32_t x2, int32_t y2);
 
       virtual bool add_move(int32_t x, int32_t y);
 

@@ -104,6 +104,13 @@ namespace lnx
 
    }
 
+   bool graphics_path::add_line(int32_t x, int32_t y, int32_t x2, int32_t y2)
+   {
+         add_line(x, y);
+         add_line(x2, y2);
+   }
+
+
    bool graphics_path::begin_figure(bool bFill, ::ca::e_fill_mode efillmode)
    {
 
