@@ -19,6 +19,10 @@ namespace lnx
       */
       m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
 
+      m_spfont.create(papp);
+      m_spfont->m_strFontFamilyName = "Helvetica";
+      m_spfont->m_dFontSize = 12.0;
+
    }
 
    graphics::graphics()
@@ -1243,14 +1247,37 @@ namespace lnx
          if(pgraphicsSrc == NULL)
             return false;
 
+         if(nWidth <= 0 || nHeight <= 0)
+            return false;
+
          cairo_pattern_t * ppattern = cairo_get_source((cairo_t *) pgraphicsSrc->get_os_data());
 
          if(ppattern == NULL)
             return false;
 
+         cairo_matrix_t matrix;
+
+         cairo_save(m_pdc);
+
+         cairo_translate(m_pdc, x, y);
+
+         cairo_matrix_init_translate(&matrix, xSrc, ySrc);
+
+         cairo_pattern_set_matrix(ppattern, &matrix);
+
+         cairo_rectangle(m_pdc, 0, 0, nWidth, nHeight);
+
+         cairo_clip(m_pdc);
+
          cairo_set_source(m_pdc, ppattern);
 
          cairo_paint(m_pdc);
+
+         cairo_restore(m_pdc);
+
+         cairo_matrix_init_translate(&matrix, -xSrc, -ySrc);
+
+         cairo_pattern_set_matrix(ppattern, &matrix);
 
          return true;
 
@@ -1273,7 +1300,7 @@ namespace lnx
       if(pgraphicsSrc == NULL)
          return false;
 
-      if(nSrcWidth == 0 || nSrcHeight == 0 || nDstWidth == 0 || nDstHeight == 0)
+      if(nSrcWidth <= 0 || nSrcHeight <= 0 || nDstWidth <= 0 || nDstHeight <= 0)
          return false;
 
       cairo_pattern_t * ppattern = cairo_get_source((cairo_t *) pgraphicsSrc->get_os_data());
@@ -2115,6 +2142,7 @@ namespace lnx
       return *m_spfont.m_p;
 
    }
+
 
    ::ca::bitmap & graphics::GetCurrentBitmap() const
    {
@@ -3633,7 +3661,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    int32_t graphics::GetClipBox(LPRECT lpRect) const
    {
 
-      throw not_implemented(get_app());
+      //throw not_implemented(get_app());
       return 0;
 
 /*      return ::GetClipBox(get_handle1(), lpRect);*/
@@ -4377,6 +4405,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       delete pmNew;*/
 
+      set_os_color(m_crColor);
+
       cairo_translate(m_pdc, lpRect->left, lpRect->top);
 
       cairo_scale(m_pdc, m_fontxyz.m_dFontWidth, 1.0);
@@ -4607,7 +4637,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       class sized size;
 
-      if(!GetTextExtent(size, str, str.get_length(), str.get_length()))
+      if(!GetTextExtent(size, str, str.get_length(), 0))
          return ::size(0, 0);
 
       return ::size((long) size.cx, (long) size.cy);
@@ -4675,7 +4705,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       string str(&lpszString[iIndex], nCount);
 
-      ((graphics *) this)->set(&m_fontxyz);
+      ((graphics *) this)->set(m_spfont);
 
       cairo_text_extents_t ex;
 
@@ -5012,7 +5042,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       //g().SetCompositingMode(Gdiplus::CompositingModeSourceOver);
       //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
 
-      set_color(clr);
+      if(lpRect->right <= lpRect->left || lpRect->bottom <= lpRect->top)
+         return;
+
+      set_os_color(clr);
 
       cairo_rectangle(m_pdc, lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
 
@@ -5030,8 +5063,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       //g().SetCompositingMode(Gdiplus::CompositingModeSourceOver);
       //g().SetCompositingQuality(Gdiplus::CompositingQualityGammaCorrected);
 
+      if(cx <= 0 || cy <= 0)
+         return;
 
-      set_color(clr);
+      set_os_color(clr);
 
       cairo_rectangle(m_pdc, x, y, cx, cy);
 
@@ -5042,14 +5077,16 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    bool graphics::TextOut(int32_t x, int32_t y, const char * lpszString, int32_t nCount)
    {
-   string str(lpszString, nCount);
 
+      string str(lpszString, nCount);
 
-   ((graphics *) this)->set(m_spfont);
+      ((graphics *) this)->set(m_spfont);
 
-   cairo_move_to(m_pdc, x, y);
+      set_os_color(m_crColor);
 
-   cairo_show_text(m_pdc, str);
+      cairo_move_to(m_pdc, x, y);
+
+      cairo_show_text(m_pdc, str);
 
       /*::Gdiplus::PointF origin(0, 0);
 
@@ -5171,6 +5208,8 @@ return true;
 
 
    ((graphics *) this)->set(m_spfont);
+
+   set_os_color(m_crColor);
 
    cairo_move_to(m_pdc, x, y);
 
@@ -5761,6 +5800,24 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
    }
 
+    void * graphics::detach()
+    {
+
+       cairo_t * p = m_pdc;
+
+       m_pdc = NULL;
+
+       return p;
+    }
+
+    bool graphics::set_os_color(COLORREF cr)
+    {
+
+       cairo_set_source_rgba(m_pdc, GetRValue(cr) / 255.0, GetGValue(cr) / 255.0, GetBValue(cr) / 255.0, GetAValue(cr) / 255.0);
+
+      return true;
+
+    }
 
 } // namespace lnx
 
