@@ -3055,7 +3055,114 @@ return AfxInternalProcessWndProcException( e, pMsg );
 
             if(e.type == Expose)
             {
-               LNX_WINDOW(w.get_user_interaction()->m_pimpl)->_001Expose();
+
+               ::lnx::window * pw = LNX_WINDOW(w.get_user_interaction()->m_pimpl);
+
+               rect rectWindow32;
+
+               ::GetWindowRect(pw->get_os_data(), rectWindow32);
+
+               rect64 rectWindow = rectWindow32;
+
+               bool bMove;
+
+               bool bSize;
+
+               if(rectWindow.top_left() == pw->m_rectParentClient.top_left())
+               {
+
+                  bMove = false;
+
+                  if(rectWindow.size() == pw->m_rectParentClient.size())
+                  {
+
+                     bSize = false;
+
+                  }
+                  else
+                  {
+
+                     pw->m_rectParentClient.right  = rectWindow.right;
+
+                     pw->m_rectParentClient.bottom     = rectWindow.top;
+
+                     bSize = true;
+
+                  }
+               }
+               else
+               {
+
+                  bMove = true;
+
+                  if(rectWindow.size() == pw->m_rectParentClient.size())
+                  {
+
+                     pw->m_rectParentClient = rectWindow;;
+
+                     bSize = false;
+
+                  }
+                  else
+                  {
+
+                     pw->m_rectParentClient = rectWindow;;
+
+                     bSize = true;
+                  }
+
+               }
+
+               if(!pw->m_bVisible || (pw->m_pguie != pw && pw->m_pguie != NULL && !pw->m_pguie->m_bVisible))
+               {
+
+                  pw->m_bVisible = true;
+
+                  if(pw->m_pguie != pw && pw->m_pguie != NULL)
+                  {
+
+                     pw->m_pguie->m_bVisible = true;
+
+                  }
+
+                  pw->send_message(WM_SHOWWINDOW, TRUE, 0);
+
+               }
+
+
+
+               if(bSize || bMove)
+               {
+
+                  if(pw->m_pguie != pw && pw->m_pguie != NULL)
+                  {
+
+                     pw->m_pguie->m_rectParentClient = pw->m_rectParentClient;
+
+                  }
+
+                  if(bSize)
+                  {
+
+                     pw->send_message(WM_SIZE, 0, rectWindow.size().lparam());
+
+                  }
+
+                  if(bMove)
+                  {
+
+                     pw->send_message(WM_MOVE, 0, rectWindow.top_left().lparam());
+
+                  }
+
+               }
+
+               pw->_001Expose();
+
+            }
+            else if(e.type == ConfigureNotify)
+            {
+//               XClearWindow(w.display(), w.window());
             }
             else if(e.type == ButtonPress || e.type == ButtonRelease)
             {
