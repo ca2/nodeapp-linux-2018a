@@ -3089,7 +3089,7 @@ return AfxInternalProcessWndProcException( e, pMsg );
 
                }
 
-               lparam = MAKELONG(e.xbutton.x, e.xbutton.y);
+               lparam = MAKELONG(e.xbutton.x_root, e.xbutton.y_root);
 
                w.get_user_interaction()->send_message(message, wparam, lparam);
 
@@ -3103,7 +3103,7 @@ return AfxInternalProcessWndProcException( e, pMsg );
 
                LPARAM lparam;
 
-               lparam = MAKELONG(e.xmotion.x, e.xmotion.y);
+               lparam = MAKELONG(e.xmotion.x_root, e.xmotion.y_root);
 
                w.get_user_interaction()->send_message(message, wparam, lparam);
 
@@ -3111,8 +3111,6 @@ return AfxInternalProcessWndProcException( e, pMsg );
          }
 
       }
-
-
 
    }
 
