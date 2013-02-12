@@ -4164,7 +4164,7 @@ throw not_implemented(get_app());
 
       //throw not_implemented(get_app());
 
-      if(nFlags & SWP_SHOWWINDOW)
+      if((nFlags & SWP_SHOWWINDOW) && !IsWindowVisible())
       {
 
          XUnmapWindow(m_oswindow.display(), m_oswindow.window());
@@ -4517,64 +4517,64 @@ throw not_implemented(get_app());
 
    ::user::interaction * window::release_capture()
    {
-      throw not_implemented(get_app());
-//      oswindow hwndCapture = ::GetCapture();
-//      if(hwndCapture == NULL)
-//         return NULL;
-//      if(hwndCapture == get_os_data())
-//      {
-//         ::user::interaction * puieCapture = get_capture();
-//         if(::ReleaseCapture())
-//         {
-//            m_pguieCapture = NULL;
-//            return puieCapture;
-//         }
-//         else
-//         {
-//            return NULL;
-//         }
-//      }
-//      else
-//      {
-//         return window::GetCapture()->release_capture();
-//      }
+      //throw not_implemented(get_app());
+      oswindow hwndCapture = ::GetCapture();
+      if(hwndCapture == NULL)
+         return NULL;
+      if(((void *) hwndCapture) == get_os_data())
+      {
+         ::user::interaction * puieCapture = get_capture();
+         if(::ReleaseCapture())
+         {
+            m_pguieCapture = NULL;
+            return puieCapture;
+         }
+         else
+         {
+            return NULL;
+         }
+      }
+      else
+      {
+         return window::GetCapture()->release_capture();
+      }
    }
 
    ::user::interaction * window::get_capture()
    {
-      throw not_implemented(get_app());
-//      oswindow hwndCapture = ::GetCapture();
-//      if(hwndCapture == NULL)
-//         return NULL;
-//      if(hwndCapture == get_os_data())
-//      {
-//         if(m_pguieCapture != NULL)
-//         {
-//            return m_pguieCapture;
-//         }
-//         else
-//         {
-//            if(m_pguie != NULL)
-//            {
-//               if(m_pguie->get_wnd() != NULL && LNX_WINDOW(m_pguie->get_wnd())->m_pguieCapture != NULL)
-//               {
-//                  return LNX_WINDOW(m_pguie->get_wnd())->m_pguieCapture;
-//               }
-//               else
-//               {
-//                  return m_pguie;
-//               }
-//            }
-//            else
-//            {
-//               return this;
-//            }
-//         }
-//      }
-//      else
-//      {
-//         return window::GetCapture()->get_capture();
-//      }
+//      throw not_implemented(get_app());
+      oswindow hwndCapture = ::GetCapture();
+      if(hwndCapture == NULL)
+         return NULL;
+      if(((void *) hwndCapture) == get_os_data())
+      {
+         if(m_pguieCapture != NULL)
+         {
+            return m_pguieCapture;
+         }
+         else
+         {
+            if(m_pguie != NULL)
+            {
+               if(m_pguie->get_wnd() != NULL && LNX_WINDOW(m_pguie->get_wnd())->m_pguieCapture != NULL)
+               {
+                  return LNX_WINDOW(m_pguie->get_wnd())->m_pguieCapture;
+               }
+               else
+               {
+                  return m_pguie;
+               }
+            }
+            else
+            {
+               return this;
+            }
+         }
+      }
+      else
+      {
+         return window::GetCapture()->get_capture();
+      }
    }
 
 
