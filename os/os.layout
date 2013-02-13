@@ -19,8 +19,8 @@
 	<File name="../operational_system/cross/win/win_crtdefs.h" open="0" top="0" tabpos="4">
 		<Cursor position="5158" topLine="165" />
 	</File>
-	<File name="../operational_system/cross/win/win_def.h" open="1" top="1" tabpos="9">
-		<Cursor position="6419" topLine="240" />
+	<File name="../operational_system/cross/win/win_def.h" open="1" top="0" tabpos="9">
+		<Cursor position="6419" topLine="237" />
 	</File>
 	<File name="../operational_system/cross/win/win_gdi.h" open="0" top="0" tabpos="2">
 		<Cursor position="4569" topLine="131" />
@@ -50,7 +50,7 @@
 		<Cursor position="847" topLine="58" />
 	</File>
 	<File name="../operational_system/oswindow.h" open="1" top="0" tabpos="8">
-		<Cursor position="1662" topLine="105" />
+		<Cursor position="346" topLine="22" />
 	</File>
 	<File name="../operational_system/version.h" open="0" top="0" tabpos="6">
 		<Cursor position="8008" topLine="232" />
@@ -176,7 +176,7 @@
 		<Cursor position="311" topLine="0" />
 	</File>
 	<File name="lnx_graphics.cpp" open="1" top="0" tabpos="6">
-		<Cursor position="87233" topLine="3308" />
+		<Cursor position="9826" topLine="403" />
 	</File>
 	<File name="lnx_graphics.h" open="0" top="0" tabpos="3">
 		<Cursor position="711" topLine="0" />
@@ -257,7 +257,7 @@
 		<Cursor position="933" topLine="15" />
 	</File>
 	<File name="lnx_thread.cpp" open="1" top="0" tabpos="2">
-		<Cursor position="87898" topLine="3124" />
+		<Cursor position="88135" topLine="3226" />
 	</File>
 	<File name="lnx_thread.h" open="0" top="0" tabpos="3">
 		<Cursor position="1765" topLine="24" />
@@ -274,8 +274,8 @@
 	<File name="lnx_util.cpp" open="0" top="0" tabpos="12">
 		<Cursor position="24" topLine="0" />
 	</File>
-	<File name="lnx_window.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="203324" topLine="6853" />
+	<File name="lnx_window.cpp" open="1" top="1" tabpos="1">
+		<Cursor position="219101" topLine="7472" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="8">
 		<Cursor position="29936" topLine="663" />
