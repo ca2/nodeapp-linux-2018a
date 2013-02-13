@@ -35,6 +35,5 @@
 			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../os2/os2.cbp" />
 		</Project>
-		<Project filename="../../sample/x.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
