@@ -434,17 +434,21 @@ namespace lnx
 
       // create window
 
-      XSetWindowAttributes attr = {0,};
+      XSetWindowAttributes attr;
+
+      ZERO(attr);
 
       attr.colormap = XCreateColormap( display, rootwin, visualinfo.visual, AllocNone);
 
-      attr.event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | PointerMotionMask;
+      attr.event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | PointerMotionMask | StructureNotifyMask;
 
       attr.background_pixmap = None ;
 
       attr.border_pixmap = None;
 
       attr.border_pixel = 0 ;
+
+      attr.override_redirect = True;
 
       Window window = XCreateWindow( display, DefaultRootWindow(display), 256, 256, cs.cx, cs.cy, 0, visualinfo.depth, InputOutput, visualinfo.visual, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
 
@@ -2590,9 +2594,9 @@ return 0;
             GetClientRect(&layout.rect);    // starting rect comes from client rect
       }
 
-/*      if ((nFlags & ~reposNoPosLeftOver) != reposQuery)
-         layout.hDWP = ::BeginDeferWindowPos(8); // reasonable guess
-      else
+//      if ((nFlags & ~reposNoPosLeftOver) != reposQuery)
+  //       layout.hDWP = ::BeginDeferWindowPos(8); // reasonable guess
+    //  else
          layout.hDWP = NULL; // not actually doing layout
 
       if(m_pguie != this && m_pguie != NULL)
@@ -2658,7 +2662,7 @@ return 0;
       }
 
       // the rest is the client size of the left-over pane
-      if(nIdLeftOver != NULL && hWndLeftOver != NULL)
+      if(!nIdLeftOver.is_null() && ((void *) hWndLeftOver) != NULL)
       {
          ::user::interaction * pLeftOver = hWndLeftOver;
          // allow extra space as specified by lpRectBorder
@@ -2679,8 +2683,8 @@ return 0;
       }
 
       // move and resize all the windows at once!
-      if (layout.hDWP == NULL || !::EndDeferWindowPos(layout.hDWP))
-         TRACE(::radix::trace::category_AppMsg, 0, "Warning: DeferWindowPos failed - low system resources.\n");*/
+//      if (layout.hDWP == NULL || !::EndDeferWindowPos(layout.hDWP))
+  //       TRACE(::radix::trace::category_AppMsg, 0, "Warning: DeferWindowPos failed - low system resources.\n");*/
    }
 
 
@@ -4130,46 +4134,13 @@ throw not_implemented(get_app());
       ASSERT(::IsWindow(get_os_data()));
       /*   return ::SetWindowPos(get_os_data(), pWndInsertAfter->get_os_data(),
       x, y, cx, cy, nFlags) != FALSE; */
-      rect64 rectWindowOld = m_rectParentClient;
-      if(nFlags & SWP_NOMOVE)
-      {
-         if(nFlags & SWP_NOSIZE)
-         {
-         }
-         else
-         {
-            m_rectParentClient.right   = m_rectParentClient.left + cx;
-            m_rectParentClient.bottom  = m_rectParentClient.top + cy;
-         }
-      }
-      else
-      {
-         if(nFlags & SWP_NOSIZE)
-         {
-            m_rectParentClient.offset(x - m_rectParentClient.left, y - m_rectParentClient.top);
-         }
-         else
-         {
-            m_rectParentClient.left    = x;
-            m_rectParentClient.top     = y;
-            m_rectParentClient.right   = m_rectParentClient.left + cx;
-            m_rectParentClient.bottom  = m_rectParentClient.top + cy;
-         }
-      }
-      if(m_pguie != this
-         && m_pguie != NULL)
-      {
-         m_pguie->m_rectParentClient = m_rectParentClient;
-      }
 
       //throw not_implemented(get_app());
 
       if((nFlags & SWP_SHOWWINDOW) && !IsWindowVisible())
       {
 
-         XUnmapWindow(m_oswindow.display(), m_oswindow.window());
          XMapWindow(m_oswindow.display(), m_oswindow.window());
-         m_bVisible = true;
 
       }
 
@@ -4182,6 +4153,7 @@ throw not_implemented(get_app());
          else
          {
             XResizeWindow(m_oswindow.display(), m_oswindow.window(), cx, cy);
+//            XClearWindow(m_oswindow.display(), m_oswindow.window());
          }
       }
       else
@@ -4189,10 +4161,12 @@ throw not_implemented(get_app());
          if(nFlags & SWP_NOSIZE)
          {
             XMoveWindow(m_oswindow.display(), m_oswindow.window(), x, y);
+  //          XClearWindow(m_oswindow.display(), m_oswindow.window());
          }
          else
          {
             XMoveResizeWindow(m_oswindow.display(), m_oswindow.window(), x, y, cx, cy);
+    //        XClearWindow(m_oswindow.display(), m_oswindow.window());
          }
       }
 
@@ -4359,7 +4333,7 @@ throw not_implemented(get_app());
       }
       //else
       {
-        // interaction::GetWindowRect(lprect);
+        //  interaction::GetWindowRect(lprect);
       }
    }
 
@@ -4367,15 +4341,15 @@ throw not_implemented(get_app());
    {
       ASSERT(::IsWindow(get_os_data()));
       // if it is temporary window - probably not ca2 wrapped window
-      if(m_pguie == NULL || m_pguie == this)
+      //if(m_pguie == NULL || m_pguie == this)
       {
          rect rect32;
          ::GetClientRect(get_os_data(), rect32);
          ::copy(lprect, rect32);
       }
-      else
+      //else
       {
-         interaction::GetClientRect(lprect);
+        // interaction::GetClientRect(lprect);
       }
    }
 
@@ -4935,8 +4909,6 @@ throw not_implemented(get_app());
 
       }
 
-      return m_bVisible;
-
       if(!::IsWindowVisible(get_os_data()))
          return false;
 
@@ -5404,7 +5376,11 @@ throw not_implemented(get_app());
    ::user::interaction* window::GetTopWindow()
    {
 
-      throw not_implemented(get_app());
+      if(m_pguie->m_uiptraChild.get_size() <= 0)
+         return NULL;
+
+      return m_pguie->m_uiptraChild[0];
+    //  throw not_implemented(get_app());
 //      ASSERT(::IsWindow(get_os_data()));
 //      return ::lnx::window::from_handle(::GetTopWindow(get_os_data()));
 
@@ -6870,6 +6846,66 @@ namespace lnx
       if(rectWindow.area() <= 0)
          return;
 
+
+      //single_lock sl(this, true);
+
+      cairo_surface_t * csSrc;
+
+      cairo_t * cSrc;
+
+      //try
+      //{
+
+         csSrc = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
+
+         cSrc = cairo_create(csSrc);
+
+         cairo_set_operator(cSrc, CAIRO_OPERATOR_SOURCE);
+
+         cairo_rectangle(cSrc, 0, 0, rectWindow.width(), rectWindow.height());
+
+         cairo_set_source_rgba(cSrc, 0.0, 0.0, 0.0, 0.0);
+
+         cairo_fill(cSrc);
+
+         cairo_set_operator(cSrc, CAIRO_OPERATOR_OVER);
+
+         cairo_rectangle(cSrc, 10, 10, 200, 200);
+
+         cairo_set_source_rgba(cSrc, 0.5, 1.0, 0.5, 0.5);
+
+         cairo_fill(cSrc);
+
+
+
+
+         ::ca::graphics_sp g(get_app());
+
+         g->attach(cSrc);
+
+         _000OnDraw(g);
+
+         g->detach();
+
+
+
+//         g->attach(cSrc);
+
+  //       _000OnDraw(g);
+
+    //     g->detach();
+
+         //cairo_show_page(cSrc);
+
+         cairo_destroy(cSrc);
+
+//      }
+  //    catch(...)
+    //  {
+
+
+      //}
+
       XLockDisplay(m_oswindow.display());
 
       try
@@ -6879,15 +6915,11 @@ namespace lnx
 
          cairo_t * c = cairo_create(cs);
 
-
-
          cairo_set_operator(c, CAIRO_OPERATOR_SOURCE);
 
-         cairo_rectangle(c, 0, 0, rectWindow.width(), rectWindow.height());
+         cairo_set_source_surface(c, csSrc, 0, 0);
 
-         cairo_set_source_rgba(c, 0.0, 0.0, 0.0, 0.0);
-
-         cairo_fill(c);
+         cairo_paint(c);
 
          cairo_set_operator(c, CAIRO_OPERATOR_OVER);
 
@@ -6896,44 +6928,6 @@ namespace lnx
          cairo_set_source_rgba(c, 0.5, 1.0, 0.5, 0.5);
 
          cairo_fill(c);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-         ::ca::graphics_sp g(get_app());
-
-         g->attach(c);
-
-         _000OnDraw(g);
-
-         g->detach();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
          cairo_show_page(c);
 
@@ -6951,7 +6945,7 @@ namespace lnx
       try
       {
 
-         //cairo_surface_destroy(csSrc);
+         cairo_surface_destroy(csSrc);
          //cairo_destroy(cSrc);
 
       }
@@ -6970,19 +6964,22 @@ namespace lnx
    {
 
 
+      XClearWindow(m_oswindow.display(), m_oswindow.window());
 
       //cairo_surface_t * csSrc;
 
       //cairo_t * cSrc;
 
+//      _001Expose();
 
-      XEvent e;
 
-      if(!XCheckTypedWindowEvent(m_oswindow.display(), m_oswindow.window(), Expose, &e))
-         return;
+      //XEvent e;
 
-      if(e.type != Expose)
-         return;
+      //if(!XCheckTypedWindowEvent(m_oswindow.display(), m_oswindow.window(), Expose, &e))
+        // return;
+
+      //if(e.type != Expose)
+        // return;
 
 
 /*      try
