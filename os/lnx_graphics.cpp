@@ -424,7 +424,7 @@ namespace lnx
       int yOld = m.y0;
       m.x0 = point.x;
       m.y0 = point.y;
-      cairo_transform(m_pdc, &m);
+      cairo_set_matrix(m_pdc, &m);
       return ::point(xOld, yOld);
    }
 
@@ -3546,9 +3546,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       cairo_matrix_t m;
 
-      cairo_matrix_translate(&m, x, y);
+      cairo_get_matrix(m_pdc, &m);
 
-      cairo_transform(m_pdc, &m);
+      m.x0  = x;
+
+      m.y0 = y;
+
+      cairo_set_matrix(m_pdc, &m);
 
       //return point;
       return point(x, y);
