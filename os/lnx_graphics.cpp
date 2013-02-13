@@ -3331,7 +3331,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    COLORREF graphics::SetBkColor(COLORREF crColor)
    {
 
-      throw not_implemented(get_app());
+//      throw not_implemented(get_app());
+      return set_color(crColor);
       return 0;
 
 
