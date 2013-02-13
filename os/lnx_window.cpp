@@ -6853,8 +6853,12 @@ namespace lnx
 
       cairo_t * cSrc;
 
-      //try
-      //{
+#ifndef DEBUG
+
+      try
+      {
+
+#endif
 
          csSrc = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
 
@@ -6868,6 +6872,7 @@ namespace lnx
 
          cairo_fill(cSrc);
 
+/*
          cairo_set_operator(cSrc, CAIRO_OPERATOR_OVER);
 
          cairo_rectangle(cSrc, 10, 10, 200, 200);
@@ -6875,7 +6880,7 @@ namespace lnx
          cairo_set_source_rgba(cSrc, 0.5, 1.0, 0.5, 0.5);
 
          cairo_fill(cSrc);
-
+*/
 
 
 
@@ -6889,22 +6894,18 @@ namespace lnx
 
 
 
-//         g->attach(cSrc);
-
-  //       _000OnDraw(g);
-
-    //     g->detach();
-
-         //cairo_show_page(cSrc);
 
          cairo_destroy(cSrc);
 
-//      }
-  //    catch(...)
-    //  {
 
+#ifndef DEBUG
+      }
+      catch(...)
+      {
 
-      //}
+      }
+#endif
+
 
       XLockDisplay(m_oswindow.display());
 
@@ -6920,14 +6921,6 @@ namespace lnx
          cairo_set_source_surface(c, csSrc, 0, 0);
 
          cairo_paint(c);
-
-         cairo_set_operator(c, CAIRO_OPERATOR_OVER);
-
-         cairo_rectangle(c, 10, 10, 200, 200);
-
-         cairo_set_source_rgba(c, 0.5, 1.0, 0.5, 0.5);
-
-         cairo_fill(c);
 
          cairo_show_page(c);
 
@@ -7508,6 +7501,7 @@ namespace lnx
    {
       // graphics will be already set its view port to the window for linux - cairo with xlib
 
+      pgraphics->SetViewportOrg(point(0, 0));
 
 /*      rect64 rectWindow;
       GetWindowRect(rectWindow);
