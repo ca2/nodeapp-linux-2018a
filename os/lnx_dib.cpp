@@ -391,6 +391,62 @@ namespace lnx
 
    }
 
+
+   void dib::map()
+   {
+
+      if(m_pcolorref == NULL)
+         return;
+
+     if(m_spbitmap.m_p == NULL)
+         return;
+
+     cairo_surface_t * surface = dynamic_cast < ::lnx::bitmap * > (m_spbitmap.m_p)->m_psurface;
+
+     if(surface == NULL)
+         return;
+
+     cairo_surface_flush (surface);
+
+
+     void * pdata = cairo_image_surface_get_data(surface);
+
+     if(pdata != m_pcolorref && pdata != NULL)
+     {
+         memcpy(m_pcolorref, pdata, cy * scan * sizeof(COLORREF));
+     }
+
+
+
+
+   }
+
+   void dib::unmap()
+   {
+
+      if(m_pcolorref == NULL)
+         return;
+
+     if(m_spbitmap.m_p == NULL)
+         return;
+
+     cairo_surface_t * surface = dynamic_cast < ::lnx::bitmap * > (m_spbitmap.m_p)->m_psurface;
+
+     if(surface == NULL)
+         return;
+
+   void * pdata =  cairo_image_surface_get_data(surface);
+
+   if(pdata != m_pcolorref && pdata != NULL)
+   {
+      memcpy(pdata, m_pcolorref, cy * scan * sizeof(COLORREF));
+   }
+
+
+     cairo_surface_mark_dirty (surface);
+
+   }
+
    void dib::Map(int32_t ToRgb, int32_t FromRgb)
    {
       BYTE *dst=(BYTE*)m_pcolorref;
@@ -2396,6 +2452,7 @@ namespace lnx
 
    ::ca::graphics * dib::get_graphics()
    {
+      unmap();
       return m_spgraphics;
    }
 
@@ -2505,12 +2562,46 @@ namespace lnx
          return false;
 
 
+      map();
+
       int bx = cx * sizeof(COLORREF); // byte width - band width
 
-      for(int i = 0; i < cy; i++)
+
+      //if(pbi->bmiHeader.biHeight < 0)
       {
-         memcpy((COLORREF *)&(((byte *)m_pcolorref)[scan * i]), &(((byte *) pdata)[bx * i]),  bx);
+
+         for(int i = 0; i < cy; i++)
+         {
+            memcpy((COLORREF *)&(((byte *)m_pcolorref)[scan * i]), &(((byte *) pdata)[bx * (cy - i - 1)]),  bx);
+         }
+
       }
+      /*else
+      {
+         for(int i = 0; i < cy; i++)
+         {
+            memcpy((COLORREF *)&(((byte *)m_pcolorref)[scan * i]), &(((byte *) pdata)[bx * i]),  bx);
+         }
+
+      }
+
+
+      //memset(m_pcolorref, 0x7f, cy * bx);
+      /*cairo_surface_t * surface = dynamic_cast < ::lnx::bitmap * > (m_spbitmap.m_p)->m_psurface;
+
+     cairo_surface_flush (surface);
+
+     // modify the image
+     void * data = cairo_image_surface_get_data (surface);
+     int width = cairo_image_surface_get_width (surface);
+     int height = cairo_image_surface_get_height (surface);
+     int stride = cairo_image_surface_get_stride (surface);
+     memcpy(data, m_pcolorref, height * stride);
+
+     // mark the image dirty so Cairo clears its caches.
+     cairo_surface_mark_dirty (surface);*/
+
+
 
       FreeImage_Unload (pfi);
 
