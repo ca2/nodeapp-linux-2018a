@@ -333,16 +333,20 @@ namespace lnx{
       s_bRunning = true;
       while(m_bRun && ::ca::get_thread()->m_bRun)
       {
+#ifndef DEBUG
          try
+#endif
          {
             if(m_bProDevianMode)
             {
                _synch_redraw();
             }
          }
+#ifndef DEBUG
          catch(...)
          {
          }
+#endif
 //         while(::PeekMessage(&msg, ::ca::null(), NULL, NULL, PM_NOREMOVE))
          while(::PeekMessage(&msg, ::ca::null(), 0, 0, 0))
          {
@@ -405,7 +409,7 @@ namespace lnx{
 
       rect rectScreen;
       System.get_screen_rect(&rectScreen);
-      m_pbuffer->UpdateBuffer(rectScreen.bottom_right());
+/*      m_pbuffer->UpdateBuffer(rectScreen.bottom_right());
       if(m_pbuffer->GetBuffer()->get_os_data() == NULL)
          return true;
 
@@ -414,7 +418,8 @@ namespace lnx{
       if(pdc == NULL)
       {
          return false;
-      }
+      }*/
+
 
 
       user::oswindow_array hwnda;
