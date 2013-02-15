@@ -42,6 +42,9 @@ namespace lnx
       static void s_initialize();
       void stretch_dib(::ca::dib * pdib);
 
+      void map();
+      void unmap();
+
       bool dc_select(bool bSelect = true);
 
       COLORREF GetAverageColor();
