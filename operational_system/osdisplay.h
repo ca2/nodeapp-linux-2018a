@@ -40,7 +40,6 @@ public:
 
    };
 
-private:
 
 
    data *   m_pdata;
@@ -50,7 +49,6 @@ private:
    static int32_t find(Display * pdisplay);
    static data * get(Display * pdisplay);
 
-public:
 
 
    osdisplay();
