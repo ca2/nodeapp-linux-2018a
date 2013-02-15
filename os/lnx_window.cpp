@@ -180,13 +180,23 @@ namespace lnx
 
    ::lnx::window * window::from_handle(oswindow oswindow)
    {
+
+      if(oswindow.get_user_interaction() == NULL)
+         return NULL;
+
       return dynamic_cast < ::lnx::window * > (oswindow.get_user_interaction()->m_pimpl);
+
    }
 
 
    window * PASCAL window::FromHandlePermanent(oswindow oswindow)
    {
+
+      if(oswindow.get_user_interaction() == NULL)
+         return NULL;
+
       return dynamic_cast < ::lnx::window * > (oswindow.get_user_interaction()->m_pimpl);
+
    }
 
    bool window::Attach(oswindow hWndNew)
@@ -440,7 +450,7 @@ namespace lnx
 
       attr.colormap = XCreateColormap( display, rootwin, visualinfo.visual, AllocNone);
 
-      attr.event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | PointerMotionMask | StructureNotifyMask;
+      attr.event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | StructureNotifyMask;
 
       attr.background_pixmap = None ;
 
@@ -706,52 +716,80 @@ wm_nodecorations(m_oswindow, 0);
    // WM_NCDESTROY is the absolute LAST message sent.
    void window::_001OnNcDestroy(gen::signal_object * pobj)
    {
+
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
+
       pobj->m_bRet = true;
+
       // cleanup main and active windows
+
       ::ca::thread* pThread = System.GetThread();
+
       if (pThread != NULL)
       {
+
          if (pThread->GetMainWnd() == this)
          {
+
             if (!afxContextIsDLL)
             {
+
                // shut down current thread if possible
+
                if (pThread != &System)
                   __post_quit_message(0);
+
             }
+
             pThread->SetMainWnd(NULL);
+
          }
+
          if (pThread->get_active_ui() == this)
             pThread->set_active_ui(NULL);
+
       }
 
       // cleanup tooltip support
+
       if(m_pguie != NULL)
       {
+
          if (m_pguie->m_nFlags & WF_TOOLTIPS)
          {
+
          }
+
       }
 
       // call default, unsubclass, and detach from the ::collection::map
-/*      WNDPROC pfnWndProc = WNDPROC(GetWindowLongPtr(get_os_data(), GWLP_WNDPROC));
+
+/*
+      WNDPROC pfnWndProc = WNDPROC(GetWindowLongPtr(get_os_data(), GWLP_WNDPROC));
       Default();
       if (WNDPROC(GetWindowLongPtr(get_os_data(), GWLP_WNDPROC)) == pfnWndProc)
       {
          WNDPROC pfnSuper = *GetSuperWndProcAddr();
          if (pfnSuper != NULL)
             SetWindowLongPtr(get_os_data(), GWLP_WNDPROC, reinterpret_cast<int_ptr>(pfnSuper));
-      }*/
+      }
+*/
+
       Detach();
+
       ASSERT(get_os_data() == NULL);
+
       m_pfnDispatchWindowProc = &window::_start_user_message_handler;
+
       // call special post-cleanup routine
+
       PostNcDestroy();
+
       if(m_pguie != NULL && m_pguie != this)
       {
          m_pguie->PostNcDestroy();
       }
+
    }
 
    void window::PostNcDestroy()
@@ -1393,6 +1431,14 @@ wm_nodecorations(m_oswindow, 0);
                }
             }
          }
+
+         if(pbase->m_uiMessage == WM_LBUTTONDOWN)
+         {
+
+               TRACE("WM_LBUTTONDOWN");
+
+         }
+
          ::gen::message::mouse * pmouse = (::gen::message::mouse *) pbase;
 
          Application.m_ptCursor = pmouse->m_pt;
@@ -3283,9 +3329,11 @@ throw not_implemented(get_app());
    void window::_001OnPaint(gen::signal_object * pobj)
    {
 
+      _001Expose();
+
       //lock lock(m_pguie, 1984);
 
-throw not_implemented(get_app());
+//throw not_implemented(get_app());
 
 //      SCAST_PTR(::gen::message::base, pbase, pobj);
 //
@@ -3836,6 +3884,8 @@ throw not_implemented(get_app());
       {
          ASSERT(ContinueModal(iLevel));
 
+         bIdle = FALSE;
+
          // phase1: check to see if we can do idle work
          while (bIdle && !::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE))
          {
@@ -3866,6 +3916,7 @@ throw not_implemented(get_app());
             {
                // stop idle processing next time
                //bIdle = FALSE;
+
             }
 
             m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
@@ -5140,17 +5191,26 @@ throw not_implemented(get_app());
    ::ca::window * PASCAL window::GetFocus()
    {
 
-      throw not_implemented(::ca::get_thread_app());
-//      return ::lnx::window::from_handle(::GetFocus());
+      oswindow w = ::GetFocus();
+
+      if(!::IsWindow(w))
+         return NULL;
+
+      return dynamic_cast < ::ca::window * > (w.get_user_interaction()->m_pimpl);
 
    }
 
    ::ca::window * window::SetFocus()
    {
 
-//      throw not_implemented(get_app());
-//      ASSERT(::IsWindow(get_os_data()));
-//      return ::lnx::window::from_handle(::SetFocus(get_os_data()));
+      ASSERT(::IsWindow(get_os_data()));
+
+      oswindow w = ::SetFocus(get_os_data());
+
+      if(!::IsWindow(w))
+         return NULL;
+
+      return dynamic_cast < ::ca::window * > (w.get_user_interaction()->m_pimpl);
 
    }
 
@@ -6839,12 +6899,109 @@ namespace lnx
    void window::_001Expose()
    {
 
-      rect rectWindow;
+      rect rectWindow32;
 
-      GetWindowRect(rectWindow);
+      GetWindowRect(rectWindow32);
 
-      if(rectWindow.area() <= 0)
+      if(rectWindow32.area() <= 0)
          return;
+
+
+      rect64 rectWindow = rectWindow32;
+
+      bool bMove;
+
+      bool bSize;
+
+      if(rectWindow.top == m_rectParentClient.top)
+      {
+
+         bMove = false;
+
+         if(rectWindow.size() == m_rectParentClient.size())
+         {
+
+            bSize = false;
+
+         }
+         else
+         {
+
+            m_rectParentClient.right  = rectWindow.right;
+
+            m_rectParentClient.bottom     = rectWindow.top;
+
+            bSize = true;
+
+         }
+      }
+      else
+      {
+
+         bMove = true;
+
+         if(rectWindow.size() == m_rectParentClient.size())
+         {
+
+            m_rectParentClient = rectWindow;;
+
+            bSize = false;
+
+         }
+         else
+         {
+
+            m_rectParentClient = rectWindow;;
+
+            bSize = true;
+         }
+
+      }
+
+         if(!m_bVisible || (m_pguie != this && m_pguie != NULL && !m_pguie->m_bVisible))
+         {
+
+            m_bVisible = true;
+
+            if(m_pguie != this && m_pguie != NULL)
+            {
+
+               m_pguie->m_bVisible = true;
+
+            }
+
+            send_message(WM_SHOWWINDOW, TRUE, 0);
+
+         }
+
+
+
+         if(bSize || bMove)
+         {
+
+            if(m_pguie != this && m_pguie != NULL)
+            {
+
+               m_pguie->m_rectParentClient = m_rectParentClient;
+
+            }
+
+            if(bSize)
+            {
+
+               send_message(WM_SIZE, 0, rectWindow.size().lparam());
+
+            }
+
+            if(bMove)
+            {
+
+               send_message(WM_MOVE, 0, rectWindow.top_left().lparam());
+
+            }
+
+         }
+
 
 
       //single_lock sl(this, true);
