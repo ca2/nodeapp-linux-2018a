@@ -3045,12 +3045,12 @@ return AfxInternalProcessWndProcException( e, pMsg );
       bool bContinue;
 
 
-      for(int i = 0; i < m_oswindowa.get_size(); i++)
+/*      for(int i = 0; i < m_oswindowa.get_size(); i++)
       {
 
          oswindow w(m_oswindowa[i]);
 
-         if(XCheckWindowEvent(w.display(), w.window(), ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask | ExposureMask, &e))
+         if(XCheckWindowEvent(w.display(), w.window(), ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask | KeyReleaseMask | ExposureMask, &e))
          {
 
             if(e.type == Expose)
@@ -3201,6 +3201,35 @@ return AfxInternalProcessWndProcException( e, pMsg );
                w.get_user_interaction()->send_message(message, wparam, lparam);
 
             }
+            else if(e.type == KeyPress || e.type == KeyRelease)
+            {
+
+               int message;
+
+               WPARAM wparam;
+
+               LPARAM lparam;
+
+               if(e.xkey.type == KeyPress)
+               {
+
+                  message = WM_KEYDOWN;
+
+               }
+               else if(e.xkey.type == KeyRelease)
+               {
+
+                  message = WM_KEYUP;
+
+               }
+
+               wparam = e.xkey.keycode;
+
+               lparam = 0;
+
+               w.get_user_interaction()->send_message(message, wparam, lparam);
+
+            }
             else if(e.type == MotionNotify)
             {
 
@@ -3215,9 +3244,10 @@ return AfxInternalProcessWndProcException( e, pMsg );
                w.get_user_interaction()->send_message(message, wparam, lparam);
 
             }
+
          }
 
-      }
+      }*/
 
    }
 
