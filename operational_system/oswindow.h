@@ -41,6 +41,10 @@ namespace user
 class oswindow_dataptra;
 
 
+class simple_event;
+
+
+typedef simple_event * HTHREAD;
 
 
 class CLASS_DECL_c oswindow
@@ -59,11 +63,11 @@ public:
       Window                        m_window;
       Visual *                      m_pvisual;
       ::user::interaction_base *    m_pui;
+      HTHREAD                       m_hthread;
       simple_map < int, LONG > *    m_plongmap;
 
    };
 
-private:
 
 
 
@@ -75,7 +79,9 @@ private:
 
    static oswindow_dataptra * s_pdataptra;
    static int32_t find(Display * pdisplay, Window window);
+   static int32_t find(Window window);
    static data * get(Display * pdisplay, Window window);
+   static data * get(Window window);
    static Atom s_atomLongType;
    static Atom s_atomLongStyle;
    static Atom s_atomLongStyleEx;
@@ -83,12 +89,11 @@ private:
    static Atom get_window_long_atom(int32_t nIndex);
 
 
-public:
 
 
    oswindow();
    oswindow(const ::ca::null & null);
-   oswindow(Display * pdisplay, Window windo, Visual * pvisual = NULL);
+   oswindow(Display * pdisplay, Window window, Visual * pvisual = NULL);
    oswindow(const oswindow & oswindow);
    oswindow(const void * p);
    oswindow(const LPARAM & lparam);
@@ -195,6 +200,10 @@ public:
    {
       return m_pdata == NULL;
    }
+
+
+   static oswindow defer_get(Window w);
+
 
 };
 
