@@ -1257,7 +1257,12 @@ namespace lnx
          if(nWidth <= 0 || nHeight <= 0)
             return false;
 
-         cairo_pattern_t * ppattern = cairo_get_source((cairo_t *) pgraphicsSrc->get_os_data());
+         cairo_surface_t * psurface = cairo_get_target((cairo_t *) pgraphicsSrc->get_os_data());
+
+         if(psurface == NULL)
+            return false;
+
+         cairo_pattern_t * ppattern = cairo_pattern_create_for_surface(psurface);
 
          if(ppattern == NULL)
             return false;
@@ -1285,6 +1290,8 @@ namespace lnx
          cairo_matrix_init_translate(&matrix, -xSrc, -ySrc);
 
          cairo_pattern_set_matrix(ppattern, &matrix);
+
+         cairo_pattern_destroy(ppattern);
 
          return true;
 
@@ -5593,7 +5600,29 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    bool graphics::set(const ::ca::brush * pbrush)
    {
 
-      cairo_set_source_rgba(m_pdc, GetRValue(pbrush->m_cr) / 255.0, GetGValue(pbrush->m_cr) / 255.0, GetBValue(pbrush->m_cr) / 255.0, GetAValue(pbrush->m_cr) / 255.0);
+      if(pbrush->m_etype == ::ca::brush::type_linear_gradient_point_color)
+      {
+
+         cairo_pattern_t * ppattern = cairo_pattern_create_linear(pbrush->m_pt1.x, pbrush->m_pt1.y, pbrush->m_pt2.x, pbrush->m_pt2.y);
+
+         cairo_pattern_add_color_stop_rgba(ppattern, 0., GetRValue(pbrush->m_cr) / 255.0, GetGValue(pbrush->m_cr) / 255.0, GetBValue(pbrush->m_cr) / 255.0, GetAValue(pbrush->m_cr) / 255.0);
+
+         cairo_pattern_add_color_stop_rgba(ppattern, 1., GetRValue(pbrush->m_cr2) / 255.0, GetGValue(pbrush->m_cr2) / 255.0, GetBValue(pbrush->m_cr2) / 255.0, GetAValue(pbrush->m_cr2) / 255.0);
+
+         cairo_set_source(m_pdc, ppattern);
+
+         cairo_pattern_destroy(ppattern);
+
+      }
+      else
+      {
+
+         cairo_set_source_rgba(m_pdc, GetRValue(pbrush->m_cr) / 255.0, GetGValue(pbrush->m_cr) / 255.0, GetBValue(pbrush->m_cr) / 255.0, GetAValue(pbrush->m_cr) / 255.0);
+
+
+      }
+
+
 
    }
 
