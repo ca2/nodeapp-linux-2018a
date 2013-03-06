@@ -42,7 +42,7 @@ int xlib_error_handler(Display * d, XErrorEvent * e)
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
-//  Can be replaced as long as 'gen::WinInit' is called first
+//  Can be replaced as long as '::ca::WinInit' is called first
 
 int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 {

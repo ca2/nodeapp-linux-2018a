@@ -202,7 +202,7 @@
 	<File name="lnx_ip_enum.h" open="0" top="0" tabpos="1">
 		<Cursor position="354" topLine="0" />
 	</File>
-	<File name="lnx_main.cpp" open="1" top="1" tabpos="0">
+	<File name="lnx_main.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="619" topLine="0" />
 	</File>
 	<File name="lnx_os.cpp" open="0" top="0" tabpos="11">

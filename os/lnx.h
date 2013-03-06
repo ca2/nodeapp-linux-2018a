@@ -97,15 +97,15 @@ CLASS_DECL_lnx void AfxResetMsgCache();
 
 #include "lnx_shell.h"
 
-CLASS_DECL_lnx void __trace_message(const char * lpszPrefix, gen::signal_object * pobj);
+CLASS_DECL_lnx void __trace_message(const char * lpszPrefix, ::ca::signal_object * pobj);
 CLASS_DECL_lnx void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 
-CLASS_DECL_lnx WINBOOL __cdecl __is_idle_message(gen::signal_object * pobj);
+CLASS_DECL_lnx WINBOOL __cdecl __is_idle_message(::ca::signal_object * pobj);
 CLASS_DECL_lnx WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg);
 
 
-CLASS_DECL_lnx void AfxProcessWndProcException(base_exception*, gen::signal_object * pobj);
-CLASS_DECL_lnx void __cdecl __pre_translate_message(gen::signal_object * pobj);
+CLASS_DECL_lnx void AfxProcessWndProcException(base_exception*, ::ca::signal_object * pobj);
+CLASS_DECL_lnx void __cdecl __pre_translate_message(::ca::signal_object * pobj);
 
 
 #include "lnx_application.h"

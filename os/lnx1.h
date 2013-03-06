@@ -99,7 +99,7 @@ CLASS_DECL_lnx void __term_thread(::radix::application * papp, HINSTANCE hInstTe
 
 
 // Advanced initialization: for overriding default WinMain
-//CLASS_DECL_lnx bool gen::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
+//CLASS_DECL_lnx bool ::ca::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_lnx void __lnx_term();
 
