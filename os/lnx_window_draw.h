@@ -124,7 +124,7 @@ namespace lnx
       void get_wnda(user::interaction_ptr_array & wndpa);
       void get_wnda(user::oswindow_array & hwnda);
 
-      static UINT c_cdecl ThreadProcRedraw(LPVOID lpv);
+      virtual int32_t run();
 
       virtual UINT RedrawProc();
 

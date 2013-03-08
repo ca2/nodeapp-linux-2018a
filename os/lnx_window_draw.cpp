@@ -103,7 +103,7 @@ namespace lnx{
    void window_draw::_synch_redraw()
    {
 
-      keep_event_reset keepeventreset(&m_eventFree);
+      //keep_event_reset keepeventreset(&m_eventFree);
 
       static DWORD s_dwLastAnalysisFrame = 0;
       static DWORD s_dwLastFrameFrame = 0;
@@ -327,6 +327,8 @@ namespace lnx{
 //      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca::thread_sp::m_p)->m_nThreadID, TRUE);
       MESSAGE msg;
       s_bRunning = true;
+      m_bRun = true;
+      ::ca::get_thread()->m_bRun = true;
       while(m_bRun && ::ca::get_thread()->m_bRun)
       {
 #ifndef DEBUG
@@ -367,10 +369,9 @@ namespace lnx{
       return 0;
    }
 
-   UINT c_cdecl window_draw::ThreadProcRedraw(LPVOID lpv)
+   int32_t window_draw::run()
    {
-      window_draw * pdraw = (window_draw *) lpv;
-      return pdraw->RedrawProc();
+      return RedrawProc();
    }
 
 
@@ -1037,11 +1038,18 @@ throw not_implemented(get_app());
 
    void window_draw::get_wnda(user::interaction_ptr_array & wndpa)
    {
+
+      mutex_lock sl(user_mutex(), true);
+
+
       wndpa = System.frames();
    }
 
    void window_draw::get_wnda(user::oswindow_array & hwnda)
    {
+
+      mutex_lock sl(user_mutex(), true);
+
       System.frames().get_wnda(hwnda);
    }
 

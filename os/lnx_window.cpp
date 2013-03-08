@@ -87,6 +87,7 @@ namespace lnx
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
+      m_pmutexGraphics = NULL;
 
    }
 
@@ -104,6 +105,8 @@ namespace lnx
       m_bMouseHover = false;
       m_pfont = NULL;
       m_pguieCapture = NULL;
+      m_pmutexGraphics = NULL;
+
    }
 
    ::ca::window * window::from_os_data(void * pdata)
@@ -1384,6 +1387,38 @@ wm_nodecorations(m_oswindow, 0);
       return;
       }
       }*/
+
+      if(pbase->m_uiMessage == WM_KEYDOWN ||
+         pbase->m_uiMessage == WM_KEYUP ||
+         pbase->m_uiMessage == WM_CHAR)
+      {
+
+         ::ca::message::key * pkey = (::ca::message::key *) pbase;
+
+
+         if(pbase->m_uiMessage == WM_KEYDOWN)
+         {
+            try
+            {
+               Application.set_key_pressed(pkey->m_ekey, true);
+            }
+            catch(...)
+            {
+            }
+         }
+         else if(pbase->m_uiMessage == WM_KEYUP)
+         {
+            try
+            {
+               Application.set_key_pressed(pkey->m_ekey, false);
+            }
+            catch(...)
+            {
+            }
+         }
+
+
+      }
       pbase->set_lresult(0);
 
 /*      if(pbase->m_uiMessage == WM_MOUSELEAVE)
@@ -1577,27 +1612,6 @@ restart_mouse_hover_check:
          pbase->m_uiMessage == WM_KEYUP ||
          pbase->m_uiMessage == WM_CHAR)
       {
-
-         if(pbase->m_uiMessage == WM_KEYDOWN)
-         {
-            try
-            {
-               Application.set_key_pressed((int32_t) pbase->m_wparam, true);
-            }
-            catch(...)
-            {
-            }
-         }
-         else if(pbase->m_uiMessage == WM_KEYUP)
-         {
-            try
-            {
-               Application.set_key_pressed((int32_t) pbase->m_wparam, false);
-            }
-            catch(...)
-            {
-            }
-         }
 
          ::ca::message::key * pkey = (::ca::message::key *) pbase;
          ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Application.user().get_keyboard_focus());
@@ -6900,6 +6914,13 @@ namespace lnx
    }*/
    void window::_001Expose()
    {
+
+//      single_lock sl(mutex_graphics(), true);
+
+
+      mutex_lock sl(user_mutex(), true);
+
+
 
       rect rectWindow32;
 
