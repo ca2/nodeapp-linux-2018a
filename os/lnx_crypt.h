@@ -6,7 +6,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx crypt :
-      virtual public ::ca4::crypt
+      virtual public ::ca::crypt
    {
    public:
 

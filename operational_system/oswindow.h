@@ -44,6 +44,9 @@ class oswindow_dataptra;
 class simple_event;
 
 
+class simple_mutex;
+
+
 typedef simple_event * HTHREAD;
 
 
@@ -78,6 +81,8 @@ public:
 
 
    static oswindow_dataptra * s_pdataptra;
+   static simple_mutex * s_pmutex;
+
    static int32_t find(Display * pdisplay, Window window);
    static int32_t find(Window window);
    static data * get(Display * pdisplay, Window window);

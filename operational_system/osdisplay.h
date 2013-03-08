@@ -21,6 +21,7 @@ namespace ca
 
 
 class osdisplay_dataptra;
+class simple_mutex;
 
 
 
@@ -46,6 +47,7 @@ public:
 
 
    static osdisplay_dataptra * s_pdataptra;
+   static simple_mutex * s_pmutex;
    static int32_t find(Display * pdisplay);
    static data * get(Display * pdisplay);
 

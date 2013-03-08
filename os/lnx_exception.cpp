@@ -79,7 +79,7 @@ CLASS_DECL_ca void WINAPI atl_throw_impl( HRESULT hr )
    }
    else
    {
-//      gen::ThrowOleException( hr );
+//      ::ca::ThrowOleException( hr );
    }
 #else
    throw atl_exception( hr );

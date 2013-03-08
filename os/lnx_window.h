@@ -6,7 +6,7 @@ namespace lnx
 
 
    CLASS_DECL_lnx LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
-   //CLASS_DECL_lnx void _gen::StandardSubclass(oswindow);
+   //CLASS_DECL_lnx void _::ca::StandardSubclass(oswindow);
    CLASS_DECL_lnx LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
    CLASS_DECL_lnx LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
@@ -23,6 +23,7 @@ namespace lnx
       oswindow                      m_oswindow;
       ::user::window_interface *    m_pbasewnd;
       ::user::interaction *         m_pguieCapture;
+      mutex *                       m_pmutexGraphics;
 
       //visual::dib_sp                m_spdib;
       //visual::dib_sp                m_spdibMultAlphaWork;
@@ -41,7 +42,7 @@ namespace lnx
 
       static const MESSAGE* PASCAL GetCurrentMessage();
 
-      virtual void install_message_handling(::gen::message::dispatch * pinterface);
+      virtual void install_message_handling(::ca::message::dispatch * pinterface);
 
       bool operator==(const ::ca::window& wnd) const;
       bool operator!=(const ::ca::window& wnd) const;
@@ -55,6 +56,8 @@ namespace lnx
       virtual void set_owner(::user::interaction * pOwnerWnd);
 
       virtual oswindow get_handle() const;
+
+      inline mutex * mutex_graphics() { if(m_pmutexGraphics != NULL) return m_pmutexGraphics; m_pmutexGraphics = new mutex(get_app()); return m_pmutexGraphics; }
 
       virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);
 
@@ -608,11 +611,11 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       virtual void EndModalState();
 
       // for translating oswindows messages in main message pump
-      virtual void pre_translate_message(gen::signal_object * pobj);
+      virtual void pre_translate_message(::ca::signal_object * pobj);
 
 
       // for processing oswindows messages
-      virtual void message_handler(gen::signal_object * pobj);
+      virtual void message_handler(::ca::signal_object * pobj);
       //virtual bool OnWndMsg(UINT message, WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
       // for handling default processing
@@ -641,7 +644,7 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(::user::interaction * puiStop, gen::signal_object * pobj);
+      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::ca::signal_object * pobj);
       static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * hWnd, id id);
       static void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))
@@ -671,7 +674,7 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
 
       // implementation of message dispatch/hooking
       CLASS_DECL_lnx friend LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
-      //CLASS_DECL_lnx friend void _gen::StandardSubclass(oswindow);
+      //CLASS_DECL_lnx friend void _::ca::StandardSubclass(oswindow);
       CLASS_DECL_lnx friend LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
       CLASS_DECL_lnx friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 

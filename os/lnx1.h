@@ -64,7 +64,7 @@ CLASS_DECL_lnx LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPA
 typedef void (__MSG_CALL ::ca::window::*__PMSGW)();
    // like '__PMSG' but for ::ca::window derived classes only
 
-typedef void (__MSG_CALL ::radix::thread::*__PMSGT)();
+typedef void (__MSG_CALL ::ca::thread::*__PMSGT)();
    // like '__PMSG' but for thread-derived classes only
 
 
@@ -78,13 +78,13 @@ typedef void (__MSG_CALL ::radix::thread::*__PMSGT)();
 
 
 CLASS_DECL_lnx ::lnx::thread * __get_thread();
-CLASS_DECL_lnx void __set_thread(::radix::thread * pthread);
+CLASS_DECL_lnx void __set_thread(::ca::thread * pthread);
 CLASS_DECL_lnx MESSAGE * __get_current_message();
 
-CLASS_DECL_lnx void __end_thread(::radix::application * papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_lnx void __end_thread(::ca::application * papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_lnx void __init_thread();
-CLASS_DECL_lnx void __term_thread(::radix::application * papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_lnx void __term_thread(::ca::application * papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
@@ -103,7 +103,7 @@ CLASS_DECL_lnx void __term_thread(::radix::application * papp, HINSTANCE hInstTe
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_lnx void __lnx_term();
 
-CLASS_DECL_lnx ::radix::application* __get_app();
+CLASS_DECL_lnx ::ca::application* __get_app();
 CLASS_DECL_lnx ::user::interaction* __get_main_window();
 //CLASS_DECL_lnx HINSTANCE CLASS_DECL_lnx System.m_hInstance;
 CLASS_DECL_lnx HINSTANCE __get_resource_handle();

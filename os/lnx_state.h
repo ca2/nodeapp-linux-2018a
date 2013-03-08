@@ -128,7 +128,7 @@ public:
    __MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem = FALSE);
    ~__MODULE_STATE();
 
-   ::radix::application* m_pCurrentWinApp;
+   ::ca::application* m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
    HINSTANCE m_hCurrentResourceHandle;
    const char * m_lpszCurrentAppName;
@@ -213,7 +213,7 @@ protected:
    ulong_ptr m_ulActCtxCookie;
    bool m_bValidActCtxCookie;
 };
-#define __MANAGE_STATE(p) _gen::InitManaged(); __MAINTAIN_STATE2 _ctlState(p);
+#define __MANAGE_STATE(p) _::ca::InitManaged(); __MAINTAIN_STATE2 _ctlState(p);
 
 /////////////////////////////////////////////////////////////////////////////
 // Thread global state

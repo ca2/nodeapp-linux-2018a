@@ -7,7 +7,7 @@ namespace lnx
 
    ip_enum::ip_enum(::ca::application * papp) :
       ca(papp),
-      ::ca4::ip_enum(papp)
+      ::ca::ip_enum(papp)
    {
 
    }

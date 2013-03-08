@@ -279,7 +279,7 @@ public:
       free(pwszPath);
       return FALSE;
    }
-   gen::international::unicode_to_utf8(str, pwszPath);
+   ::ca::international::unicode_to_utf8(str, pwszPath);
    free(pwszPath);
    return TRUE;
 }
@@ -464,15 +464,15 @@ inline DWORD shell::GetTempPath(string & str)
 {
    wchar_t * pwsz = (wchar_t *) malloc(sizeof(wchar_t) * MAX_PATH * 4);
    DWORD dwResult = (*theLinuxShell.m_pfnGetTempPath)(sizeof(wchar_t) * MAX_PATH * 4, pwsz);
-   gen::international::unicode_to_utf8(str, pwsz);
+   ::ca::international::unicode_to_utf8(str, pwsz);
    free(pwsz);
    return dwResult;
 }
 
 inline UINT shell::GetTempFileName(const char * lpPathName, const char * lpPrefixString, UINT uUnique, string & str)
 {
-   wstring wstrPathName = gen::international::utf8_to_unicode(lpPathName);
-   wstring wstrPrefixString = gen::international::utf8_to_unicode(lpPrefixString);
+   wstring wstrPathName = ::ca::international::utf8_to_unicode(lpPathName);
+   wstring wstrPrefixString = ::ca::international::utf8_to_unicode(lpPrefixString);
    wstring wstr;
    wstr.alloc(MAX_PATH * 4);
    UINT uiResult = (*theLinuxShell.m_pfnGetTempFileName)(
@@ -480,13 +480,13 @@ inline UINT shell::GetTempFileName(const char * lpPathName, const char * lpPrefi
       wstrPrefixString,
       uUnique,
       wstr);
-   gen::international::unicode_to_utf8(str, wstr);
+   ::ca::international::unicode_to_utf8(str, wstr);
    return uiResult;
 }
 
 inline WINBOOL shell::MoveFile(const char * lpExistingFileName, const char * lpNewFileName)
 {
-   return MoveFile(gen::international::utf8_to_unicode(lpExistingFileName), gen::international::utf8_to_unicode(lpNewFileName));
+   return MoveFile(::ca::international::utf8_to_unicode(lpExistingFileName), ::ca::international::utf8_to_unicode(lpNewFileName));
 }
 
 */

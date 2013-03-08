@@ -20,7 +20,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx application :
-      virtual public ::ex2::application
+      virtual public ::ca::application
    {
    public:
 
@@ -149,11 +149,11 @@ namespace lnx
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::gen::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual ::ca::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(gen::signal_object * pobj);
+      virtual void pre_translate_message(::ca::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
       virtual bool is_idle_message(MESSAGE* pMsg);  // checks for special messages
@@ -185,8 +185,8 @@ namespace lnx
       ::ca::window * window_from_os_data(void * pdata);
       ::ca::window * window_from_os_data_permanent(void * pdata);
 
-      virtual ::radix::thread * GetThread();
-      virtual void set_thread(::radix::thread * pthread);
+      virtual ::ca::thread * GetThread();
+      virtual void set_thread(::ca::thread * pthread);
 
       virtual ::ca::window * FindWindow(const char * lpszClassName, const char * lpszWindowName);
       virtual ::ca::window * FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow);

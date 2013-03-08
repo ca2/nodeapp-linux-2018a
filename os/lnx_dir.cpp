@@ -152,13 +152,13 @@ namespace lnx
    string dir::relpath(const char * lpcszSource, const char * lpcszRelative, const char * psz2)
    {
       const char * pszRequest;
-      if(::ca2::is_url(lpcszSource, &pszRequest))
+      if(::ca::is_url(lpcszSource, &pszRequest))
       {
-         if(gen::str::begins(lpcszRelative, "/"))
+         if(::ca::str::begins(lpcszRelative, "/"))
          {
             return path((const char *) string(lpcszSource, pszRequest - lpcszSource), lpcszRelative);
          }
-         else if(*pszRequest == '\0' || gen::str::ends(lpcszSource, "/"))
+         else if(*pszRequest == '\0' || ::ca::str::ends(lpcszSource, "/"))
          {
             return path(lpcszSource, lpcszRelative, psz2);
          }
@@ -169,7 +169,7 @@ namespace lnx
       }
       else
       {
-         if(gen::str::ends(lpcszSource, "\\") || gen::str::ends(lpcszSource, "/"))
+         if(::ca::str::ends(lpcszSource, "\\") || ::ca::str::ends(lpcszSource, "/"))
          {
             return path(lpcszSource, lpcszRelative, psz2);
          }
@@ -221,7 +221,7 @@ namespace lnx
 
       string strDir(lpcsz);
 
-      if(!gen::str::ends(strDir, "/"))
+      if(!::ca::str::ends(strDir, "/"))
       {
 
          strDir += "/";
@@ -239,7 +239,7 @@ namespace lnx
 
          string strName = strPath;
 
-         if(!gen::str::begins_eat(strName, strDir))
+         if(!::ca::str::begins_eat(strName, strDir))
             continue;
 
          if(!matches_wildcard_criteria(pszPattern, strName))
@@ -342,7 +342,7 @@ namespace lnx
 
       string strDir(lpcsz);
 
-      if(!gen::str::ends(strDir, "/"))
+      if(!::ca::str::ends(strDir, "/"))
       {
 
          strDir += "/";
@@ -360,7 +360,7 @@ namespace lnx
 
          string strName = strPath;
 
-         if(!gen::str::begins_eat(strName, strDir))
+         if(!::ca::str::begins_eat(strName, strDir))
             continue;
 
          if(!matches_wildcard_criteria(pszPattern, strName))
@@ -427,7 +427,7 @@ namespace lnx
 
       string strDir(lpcsz);
 
-      if(!gen::str::ends(strDir, "/"))
+      if(!::ca::str::ends(strDir, "/"))
       {
 
          strDir += "/";
@@ -442,7 +442,7 @@ namespace lnx
 
          string strName = strPath;
 
-         if(!gen::str::begins_eat(strName, strDir))
+         if(!::ca::str::begins_eat(strName, strDir))
             continue;
 
          if(!System.dir().is(strPath, papp))
@@ -506,7 +506,7 @@ namespace lnx
 
       string strDir(lpcsz);
 
-      if(!gen::str::ends(strDir, "/"))
+      if(!::ca::str::ends(strDir, "/"))
       {
 
          strDir += "/";
@@ -521,7 +521,7 @@ namespace lnx
 
          string strName = strPath;
 
-         if(!gen::str::begins_eat(strName, strDir))
+         if(!::ca::str::begins_eat(strName, strDir))
             continue;
 
          if(!System.dir().is(strPath, papp))
@@ -554,7 +554,7 @@ namespace lnx
 
       string strDir(lpcsz);
 
-      if(!gen::str::ends(strDir, "/"))
+      if(!::ca::str::ends(strDir, "/"))
       {
 
          strDir += "/";
@@ -569,7 +569,7 @@ namespace lnx
 
          string strName = strPath;
 
-         if(!gen::str::begins_eat(strName, strDir))
+         if(!::ca::str::begins_eat(strName, strDir))
             continue;
 
          if(System.dir().is(strPath, papp))
@@ -603,7 +603,7 @@ namespace lnx
 
       string strDir(lpcsz);
 
-      if(!gen::str::ends(strDir, "/"))
+      if(!::ca::str::ends(strDir, "/"))
       {
 
          strDir += "/";
@@ -618,7 +618,7 @@ namespace lnx
 
          string strName = strPath;
 
-         if(!gen::str::begins_eat(strName, strDir))
+         if(!::ca::str::begins_eat(strName, strDir))
             continue;
 
          if(pstraPath != NULL)
@@ -704,7 +704,7 @@ namespace lnx
       string strPath(lpcszPath);
       if(strPath.get_length() >= MAX_PATH)
       {
-         if(gen::str::begins(strPath, "\\\\"))
+         if(::ca::str::begins(strPath, "\\\\"))
          {
             strPath = "\\\\?\\UNC" + strPath.Mid(1);
          }
@@ -748,22 +748,22 @@ namespace lnx
 
       wstring wstrPath;
 
-      //strsize iLen = ::gen::international::utf8_to_unicode_count(strPath);
+      //strsize iLen = ::ca::international::utf8_to_unicode_count(strPath);
       //wstrPath.alloc(iLen + 32);
-      wstrPath = ::gen::international::utf8_to_unicode(strPath);
+      wstrPath = ::ca::international::utf8_to_unicode(strPath);
       if(wstrPath.get_length() >= MAX_PATH)
       {
-         if(::gen::str::begins(wstrPath, L"\\\\"))
+         if(::ca::str::begins(wstrPath, L"\\\\"))
          {
-            ::gen::str::begin(wstrPath, L"\\\\?\\UNC");
+            ::ca::str::begin(wstrPath, L"\\\\?\\UNC");
          }
          else
          {
-            ::gen::str::begin(wstrPath, L"\\\\?\\");
+            ::ca::str::begin(wstrPath, L"\\\\?\\");
          }
       }
 
-      bIsDir = ::dir::is(gen::international::unicode_to_utf8(wstrPath));
+      bIsDir = ::dir::is(::ca::international::unicode_to_utf8(wstrPath));
 
       m_isdirmap.set(strPath, bIsDir, bIsDir ? 0 : ::GetLastError());
 
@@ -818,7 +818,7 @@ namespace lnx
          return true;
       }
 
-      strsize iFind = gen::str::find_ci(".zip:", str);
+      strsize iFind = ::ca::str::find_ci(".zip:", str);
 
       if(papp->m_bZipIsDir && iFind >= 0 && iFind < iLast)
       {
@@ -833,27 +833,27 @@ namespace lnx
 
       wstring wstrPath;
 
-      //strsize iLen = ::gen::international::utf8_to_unicode_count(str, iLast + 1);
+      //strsize iLen = ::ca::international::utf8_to_unicode_count(str, iLast + 1);
 
       //wstrPath.alloc(iLen + 32);
 
-      wstrPath = ::gen::international::utf8_to_unicode(str, iLast + 1);
+      wstrPath = ::ca::international::utf8_to_unicode(str, iLast + 1);
 
       //OutputDebugStringW(wstrPath);
 
       if(wstrPath.get_length() >= MAX_PATH)
       {
-         if(::gen::str::begins(wstrPath, L"\\\\"))
+         if(::ca::str::begins(wstrPath, L"\\\\"))
          {
-            ::gen::str::begin(wstrPath, L"\\\\?\\UNC");
+            ::ca::str::begin(wstrPath, L"\\\\?\\UNC");
          }
          else
          {
-            ::gen::str::begin(wstrPath, L"\\\\?\\");
+            ::ca::str::begin(wstrPath, L"\\\\?\\");
          }
       }
 
-      bIsDir = ::dir::is(gen::international::unicode_to_utf8(wstrPath));
+      bIsDir = ::dir::is(::ca::international::unicode_to_utf8(wstrPath));
 
       m_isdirmap.set(str.Left(iLast + 1), bIsDir, bIsDir ? 0 : ::GetLastError());
 
@@ -1005,7 +1005,7 @@ namespace lnx
                   catch(...)
                   {
                   }
-                  //if(::CreateDirectory(gen::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
+                  //if(::CreateDirectory(::ca::international::utf8_to_unicode("\\\\?\\" + stra[i]), NULL))
                   if(::dir::mk("\\\\?\\" + stra[i]))
                   {
                      m_isdirmap.set(stra[i], true, 0);
@@ -1309,7 +1309,7 @@ namespace lnx
             memset(buf, 0, sizeof(buf));
          }
       }*/
-      /*return gen::international::unicode_to_utf8(buf);*/
+      /*return ::ca::international::unicode_to_utf8(buf);*/
       return ::getlogin();
    }
 
@@ -1384,7 +1384,7 @@ namespace lnx
 
    bool dir::is_inside(const char * pszDir, const char * pszPath, ::ca::application * papp)
    {
-      return gen::str::begins_ci(pszDir, pszPath);
+      return ::ca::str::begins_ci(pszDir, pszPath);
    }
 
    bool dir::has_subdir(::ca::application * papp, const char * pszDir)

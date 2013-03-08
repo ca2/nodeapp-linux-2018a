@@ -9,11 +9,11 @@ namespace lnx
       ca(papp)
    {
 
-      System.factory().cloneable_large <stdio_file             >  (System. type_info < ::ex1::text_file         > ());
-      System.factory().cloneable_large < file                  >  (System. type_info < ::ex1::file              > ());
-      System.factory().cloneable_large < file_set              >  (System. type_info < ::ex2::file_set          > ());
-      System.factory().cloneable < file_system                 >  (System. type_info < ::ca::file::system       > (), 1);
-      System.factory().cloneable < application                 >  (System. type_info < ::ex2::application       > (), 1);
+      System.factory().cloneable_large <stdio_file             >  (System. type_info < ::ca::text_file         > ());
+      System.factory().cloneable_large < file                  >  (System. type_info < ::ca::file              > ());
+      System.factory().cloneable_large < file_set              >  (System. type_info < ::ca::file_set          > ());
+      System.factory().cloneable < file_system                 >  (System. type_info < ::ca::file_system       > (), 1);
+      System.factory().cloneable < application                 >  (System. type_info < ::ca::application_base  > (), 1);
       System.factory().cloneable < dir                         >  (System. type_info < ::ca::dir::system        > (), 1);
       System.factory().cloneable_large < dib                   >  (System. type_info < ::ca::dib                > ());
       System.factory().cloneable_large < graphics              >  (System. type_info < ::ca::graphics           > ());
@@ -28,10 +28,10 @@ namespace lnx
       System.factory().creatable_large < thread                >  (System. type_info < ::ca::thread             > ());
       System.factory().creatable_large < window                >  (System. type_info < ::ca::window             > ());
       System.factory().creatable < os                          >  (System. type_info < ::ca::os                 > (), 1);
-      System.factory().creatable < port_forward                >  (System. type_info < ::ca4::port_forward      > (), 1);
-      System.factory().creatable_small < copydesk              >  (System. type_info < ::ca4::copydesk          > (), 1);
-      System.factory().creatable_small < crypt                 >  (System. type_info < ::ca4::crypt             > (), 1);
-      System.factory().creatable_small < ip_enum               >  (System. type_info < ::ca4::ip_enum           > ());
+      System.factory().creatable < port_forward                >  (System. type_info < ::ca::port_forward      > (), 1);
+      System.factory().creatable_small < copydesk              >  (System. type_info < ::ca::copydesk          > (), 1);
+      System.factory().creatable_small < crypt                 >  (System. type_info < ::ca::crypt             > (), 1);
+      System.factory().creatable_small < ip_enum               >  (System. type_info < ::ca::ip_enum           > ());
 
       ::lnx::dib::s_initialize();
 

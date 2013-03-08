@@ -40,8 +40,6 @@ namespace lnx
       virtual ~window_draw();
 
 
-      virtual bool start();
-
       bool UpdateBuffer(LPCRECT lpcrect);
       //void OnPaint(void * hwnd, CPaintDC & spgraphics);
 
@@ -135,7 +133,7 @@ namespace lnx
       virtual void synch_redraw();
       virtual void _synch_redraw();
 
-      virtual void message_window_message_handler(gen::signal_object * pobj);
+      virtual void message_window_message_handler(::ca::signal_object * pobj);
 
    };
 

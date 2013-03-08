@@ -6,7 +6,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx copydesk :
-      virtual public ::ca4::copydesk,
+      virtual public ::ca::copydesk,
       virtual public ::ca::window_sp
    {
    public:

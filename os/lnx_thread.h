@@ -20,7 +20,7 @@ namespace lnx
 {
 
    class CLASS_DECL_lnx thread :
-      virtual public ::radix::thread,
+      virtual public ::ca::thread,
       virtual public ::ca::message_window_simple_callback
    {
    public:
@@ -102,7 +102,7 @@ namespace lnx
       void set_os_data(void * pvoidOsData);
       void set_os_int(int_ptr iData);
 
-      virtual void set_p(::radix::thread * p);
+      virtual void set_p(::ca::thread * p);
 
 
       virtual bool begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
@@ -138,7 +138,7 @@ namespace lnx
       virtual void on_delete(::ca::ca * poc);
 
       int32_t GetThreadPriority();
-      WINBOOL SetThreadPriority(int32_t nPriority);
+      bool set_thread_priority(::ca::e_thread_priority nPriority);
 
    // Operations
       DWORD SuspendThread();
@@ -156,25 +156,25 @@ namespace lnx
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual gen::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual ::ca::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(gen::signal_object * pobj);
+      virtual void pre_translate_message(::ca::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual bool is_idle_message(gen::signal_object * pobj);  // checks for special messages
+      virtual bool is_idle_message(::ca::signal_object * pobj);  // checks for special messages
       virtual WINBOOL is_idle_message(LPMESSAGE lpmsg);  // checks for special messages
-      virtual void message_handler(gen::signal_object * pobj);
+      virtual void message_handler(::ca::signal_object * pobj);
 
       // thread termination
       virtual int32_t exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
-      virtual void ProcessWndProcException(base_exception * e, gen::signal_object * pMsg);
+      virtual void ProcessWndProcException(base_exception * e, ::ca::signal_object * pMsg);
 
       // Advanced: handling messages sent to message filter hook
-      virtual void ProcessMessageFilter(int32_t code, gen::signal_object * pobj);
+      virtual void ProcessMessageFilter(int32_t code, ::ca::signal_object * pobj);
 
       // Advanced: virtual access to GetMainWnd()
       virtual ::user::interaction* GetMainWnd();
@@ -183,8 +183,8 @@ namespace lnx
 
 
 
-      virtual void DispatchThreadMessageEx(gen::signal_object * pobj);  // helper
-      virtual void message_window_message_handler(gen::signal_object * pobj);
+      virtual void DispatchThreadMessageEx(::ca::signal_object * pobj);  // helper
+      virtual void message_window_message_handler(::ca::signal_object * pobj);
 
       virtual void delete_temp();
 
