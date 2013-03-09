@@ -291,6 +291,8 @@ namespace lnx
     int set;
 
 
+   mutex_lock sl(user_mutex(), true);
+
 
     Display * dpy = w.display();
     Window window = w.window();
@@ -409,6 +411,11 @@ namespace lnx
 
       m_pthread = ::ca::get_thread();
       m_pguie->m_pthread = ::ca::get_thread();
+
+
+
+      mutex_lock sl(user_mutex(), true);
+
 
       if(!(display=XOpenDisplay(NULL))) {
          fprintf(stderr, "ERROR: Could not open display\n");
@@ -4192,6 +4199,10 @@ throw not_implemented(get_app());
 
    bool window::SetWindowPos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
+
+
+   mutex_lock sl(user_mutex(), true);
+
       /*bool b;
       bool * pb = &b;
       if(m_papp->s_ptwf != NULL)
@@ -4961,6 +4972,8 @@ throw not_implemented(get_app());
 
    bool window::IsWindowVisible()
    {
+
+   mutex_lock sl(user_mutex(), true);
 
       if(!::IsWindow(get_os_data()))
          return false;

@@ -1372,7 +1372,8 @@ stop_run:
    __STATIC inline WINBOOL IsEnterKey(::ca::signal_object * pobj)
    {
       SCAST_PTR(::ca::message::base, pbase, pobj);
-      return pbase->m_uiMessage == WM_KEYDOWN && pbase->m_wparam == VK_RETURN;
+      SCAST_PTR(::ca::message::key, pkey, pobj);
+      return pbase->m_uiMessage == WM_KEYDOWN && pkey->m_ekey == ::user::key_return;
    }
 
    __STATIC inline WINBOOL IsButtonUp(::ca::signal_object * pobj)
@@ -3287,8 +3288,8 @@ __STATIC WINBOOL CLASS_DECL_lnx IsHelpKey(LPMESSAGE lpMsg)
       GetKeyState(VK_MENU) >= 0;
 }
 
-__STATIC inline WINBOOL IsEnterKey(LPMESSAGE lpMsg)
-{ return lpMsg->message == WM_KEYDOWN && lpMsg->wParam == VK_RETURN; }
+//__STATIC inline WINBOOL IsEnterKey(LPMESSAGE lpMsg)
+//{ return lpMsg->message == WM_KEYDOWN && lpMsg->wParam == VK_RETURN; }
 
 __STATIC inline WINBOOL IsButtonUp(LPMESSAGE lpMsg)
 { return lpMsg->message == WM_LBUTTONUP; }
