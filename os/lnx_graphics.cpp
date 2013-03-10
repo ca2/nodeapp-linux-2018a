@@ -1317,22 +1317,49 @@ namespace lnx
       if(nSrcWidth <= 0 || nSrcHeight <= 0 || nDstWidth <= 0 || nDstHeight <= 0)
          return false;
 
-      cairo_pattern_t * ppattern = cairo_get_source((cairo_t *) pgraphicsSrc->get_os_data());
+         if(pgraphicsSrc == NULL)
+            return false;
 
-      if(ppattern == NULL)
-         return false;
+         cairo_surface_t * psurface = cairo_get_target((cairo_t *) pgraphicsSrc->get_os_data());
 
-      cairo_translate(m_pdc, xDst, yDst);
+         if(psurface == NULL)
+            return false;
 
-      cairo_scale(m_pdc, (double) nDstWidth / (double) nSrcWidth, (double) nDstHeight / (double) nSrcHeight);
+         cairo_pattern_t * ppattern = cairo_pattern_create_for_surface(psurface);
 
-      cairo_set_source(m_pdc, ppattern);
+         if(ppattern == NULL)
+            return false;
 
-      cairo_paint(m_pdc);
+         cairo_matrix_t matrix;
 
-      cairo_scale(m_pdc, (double) nSrcWidth / (double) nDstWidth, (double) nSrcHeight / (double) nDstHeight);
+         cairo_save(m_pdc);
 
-      cairo_translate(m_pdc, -xDst, -yDst);
+         cairo_translate(m_pdc, xDst, yDst);
+
+         cairo_matrix_init_translate(&matrix, xSrc, ySrc);
+
+         cairo_matrix_scale(&matrix, nDstWidth / nSrcWidth, nDstHeight / nSrcHeight);
+
+         cairo_pattern_set_matrix(ppattern, &matrix);
+
+         cairo_rectangle(m_pdc, 0, 0, nDstWidth, nDstHeight);
+
+         cairo_clip(m_pdc);
+
+         cairo_set_source(m_pdc, ppattern);
+
+         cairo_paint(m_pdc);
+
+         cairo_restore(m_pdc);
+
+         cairo_matrix_init_scale(&matrix, nSrcWidth / nDstWidth , nSrcHeight / nDstHeight);
+
+         cairo_matrix_translate(&matrix, -xSrc, -ySrc);
+
+         cairo_pattern_set_matrix(ppattern, &matrix);
+
+         cairo_pattern_destroy(ppattern);
+
 
       return true;
 
@@ -2153,7 +2180,7 @@ namespace lnx
    ::ca::font & graphics::GetCurrentFont() const
    {
 
-      return *m_spfont.m_p;
+      return (::ca::font &) m_fontxyz;
 
    }
 
@@ -4430,7 +4457,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       cairo_scale(m_pdc, m_fontxyz.m_dFontWidth, 1.0);
 
-      set(m_spfont);
+      set(&m_fontxyz);
 
       cairo_show_text(m_pdc, str);
 
@@ -4484,7 +4511,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    string str(&lpszString[iIndex], nCount);
 
 
-   ((graphics *) this)->set(m_spfont);
+   ((graphics *) this)->set(&m_fontxyz);
 
    cairo_text_extents_t ex;
 
@@ -4600,7 +4627,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    string str(lpszString, nCount);
 
 
-   ((graphics *) this)->set(m_spfont);
+   ((graphics *) this)->set(&m_fontxyz);
 
    cairo_text_extents_t ex;
 
@@ -4724,7 +4751,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       string str(&lpszString[iIndex], nCount);
 
-      ((graphics *) this)->set(m_spfont);
+      ((graphics *) this)->set(&m_fontxyz);
 
       cairo_text_extents_t ex;
 
@@ -4867,7 +4894,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    string str(lpszString, nCount);
 
 
-   ((graphics *) this)->set(m_spfont);
+   ((graphics *) this)->set(&m_fontxyz);
 
    cairo_text_extents_t ex;
 
@@ -5099,7 +5126,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       string str(lpszString, nCount);
 
-      ((graphics *) this)->set(m_spfont);
+      ((graphics *) this)->set(&m_fontxyz);
 
       set_os_color(m_crColor);
 
@@ -5226,7 +5253,7 @@ return true;
    string str(lpszString, nCount);
 
 
-   ((graphics *) this)->set(m_spfont);
+   ((graphics *) this)->set(&m_fontxyz);
 
    set_os_color(m_crColor);
 

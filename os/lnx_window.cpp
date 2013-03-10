@@ -398,7 +398,7 @@ namespace lnx
          cs.style &= ~WS_CHILD;
       }
 
-      hook_window_create(this);
+//      hook_window_create(this);
 
 
       Display *display;
@@ -523,8 +523,8 @@ wm_nodecorations(m_oswindow, 0);
 
 
 
-      if (!unhook_window_create())
-         PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
+      //if (!unhook_window_create())
+        // PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
 
       send_message(WM_CREATE, 0, (LPARAM) &cs);
@@ -4197,11 +4197,39 @@ throw not_implemented(get_app());
       return get_os_data();
    }
 
+
+   #define SWP_IGNOREPALACEGUARD 0x80000000
+
    bool window::SetWindowPos(int32_t z, int32_t x, int32_t y, int32_t cx, int32_t cy, UINT nFlags)
    {
 
 
-   mutex_lock sl(user_mutex(), true);
+      mutex_lock sl(user_mutex(), true);
+
+      rect rectScreen;
+
+      System.get_screen_rect(rectScreen);
+
+      int iPalaceGuard = 49;
+
+      if(nFlags & SWP_IGNOREPALACEGUARD)
+         iPalaceGuard = 1;
+
+      if(x < 0)
+         x = 0;
+      else if(x > rectScreen.right - iPalaceGuard)
+         x = rectScreen.right - iPalaceGuard;
+
+      if(y < 0)
+         y = 0;
+      else if(y > rectScreen.bottom - iPalaceGuard)
+         y = rectScreen.bottom - iPalaceGuard;
+
+      if(cx < iPalaceGuard)
+         cx = iPalaceGuard;
+
+      if(cy < iPalaceGuard)
+         cy = iPalaceGuard;
 
       /*bool b;
       bool * pb = &b;
@@ -4734,8 +4762,7 @@ throw not_implemented(get_app());
    bool window::PostMessage(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      throw not_implemented(get_app());
-      //return ::PostMessage(get_os_data(), message, wparam, lparam) != FALSE;
+      return ::PostMessage(get_os_data(), message, wparam, lparam) != FALSE;
 
    }
 

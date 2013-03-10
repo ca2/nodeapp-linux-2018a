@@ -573,7 +573,7 @@ namespace lnx
    bool os::create_service(::planebase::application * papp)
    {
 
-      throw not_implemented(get_app());
+      //throw not_implemented(get_app());
       return false;
 
 /*
@@ -625,7 +625,7 @@ namespace lnx
 
    bool os::remove_service(::planebase::application * papp)
    {
-      throw not_implemented(get_app());
+//      throw not_implemented(get_app());
       return false;
 
 /*
@@ -666,7 +666,7 @@ namespace lnx
 
    bool os::start_service(::planebase::application * papp)
    {
-      throw not_implemented(get_app());
+      //throw not_implemented(get_app());
       return false;
 
 /*

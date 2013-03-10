@@ -2,14 +2,14 @@
 
 
 #include <fcntl.h>
-
-#ifdef LINUX
+#include <unistd.h>
 #include <dlfcn.h>
 #include <link.h>
 #include <ctype.h>
-#elif defined(MACOS)
-#include <dlfcn.h>
-#endif
+
+//#elif defined(MACOS)
+//#include <dlfcn.h>
+//#endif
 
 __STATIC inline bool IsDirSep(WCHAR ch)
 {
