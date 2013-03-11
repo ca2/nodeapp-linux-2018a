@@ -888,7 +888,7 @@ namespace lnx
       if(radiusx == 0.0 || radiusy == 0.0)
          return false;
 
-      cairo_save(m_pdc);
+      cairo_keep keep(m_pdc);
 
       cairo_new_sub_path(m_pdc);
 
@@ -898,15 +898,11 @@ namespace lnx
 
       cairo_arc(m_pdc, 0.0, 0.0, 1.0, 0.0, 2.0 * 3.1415);
 
-      cairo_restore(m_pdc);
-
-      cairo_save(m_pdc);
+      keep.pulse();
 
       set(&m_penxyz);
 
       cairo_stroke(m_pdc);
-
-      cairo_restore(m_pdc);
 
       return true;
 
@@ -938,7 +934,7 @@ namespace lnx
          return false;
 
 
-      cairo_save(m_pdc);
+      cairo_keep keep(m_pdc);
 
       cairo_new_sub_path(m_pdc);
 
@@ -948,9 +944,10 @@ namespace lnx
 
       cairo_arc(m_pdc, 0.0, 0.0, 1.0, 0.0, 2.0 * 3.1415);
 
+      keep.restore();
+
       fill();
 
-      cairo_restore(m_pdc);
 
       return true;
 
@@ -1282,9 +1279,13 @@ namespace lnx
 
          cairo_matrix_t matrix;
 
-         cairo_save(m_pdc);
+         cairo_matrix_t matrixOld;
+
+         cairo_keep keep(m_pdc);
 
          cairo_translate(m_pdc, x, y);
+
+         cairo_pattern_get_matrix(ppattern, &matrixOld);
 
          cairo_matrix_init_translate(&matrix, xSrc, ySrc);
 
@@ -1298,11 +1299,9 @@ namespace lnx
 
          cairo_paint(m_pdc);
 
-         cairo_restore(m_pdc);
+         keep.restore();
 
-         cairo_matrix_init_translate(&matrix, -xSrc, -ySrc);
-
-         cairo_pattern_set_matrix(ppattern, &matrix);
+         cairo_pattern_set_matrix(ppattern, &matrixOld);
 
          cairo_pattern_destroy(ppattern);
 
@@ -1345,7 +1344,7 @@ namespace lnx
 
          cairo_matrix_t matrix;
 
-         cairo_save(m_pdc);
+         cairo_keep keep(m_pdc);
 
          cairo_translate(m_pdc, xDst, yDst);
 
@@ -1362,8 +1361,6 @@ namespace lnx
          cairo_set_source(m_pdc, ppattern);
 
          cairo_paint(m_pdc);
-
-         cairo_restore(m_pdc);
 
          cairo_matrix_init_scale(&matrix, nSrcWidth / nDstWidth , nSrcHeight / nDstHeight);
 
@@ -4511,18 +4508,17 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       size sz = GetTextExtent("P");
 
+      cairo_keep keep(m_pdc);
+
       cairo_translate(m_pdc, lpRect->left, lpRect->top + sz.cy);
 
       cairo_scale(m_pdc, m_fontxyz.m_dFontWidth, 1.0);
 
+      keep.pulse();
+
       set(&m_fontxyz);
 
       cairo_show_text(m_pdc, str);
-
-      cairo_scale(m_pdc, 1.0 / m_fontxyz.m_dFontWidth, 1.0);
-
-      cairo_translate(m_pdc, -lpRect->left, -lpRect->top);
-
 
       return 1;
 
@@ -4568,6 +4564,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    string str(&lpszString[iIndex], nCount);
 
+   cairo_keep keep(m_pdc);
 
    ((graphics *) this)->set(&m_fontxyz);
 
@@ -5186,6 +5183,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       size sz = GetTextExtent("P");
 
+      cairo_keep keep(m_pdc);
+
       ((graphics *) this)->set(&m_fontxyz);
 
       set_os_color(m_crColor);
@@ -5709,8 +5708,6 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
       }
 
-
-
    }
 
 
@@ -5741,14 +5738,14 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
       }
 
-
-
    }
 
    bool graphics::fill_and_draw()
    {
 
       bool bPen = m_sppen.is_set() && (m_sppen->m_etype != ::ca::pen::type_null);
+
+      cairo_keep keep(m_pdc);
 
       if(m_spbrush.is_set() && (m_spbrush->m_etype != ::ca::brush::type_null))
       {
@@ -5770,6 +5767,8 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
       }
 
+      keep.pulse();
+
       if(bPen)
       {
 
@@ -5779,7 +5778,6 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
 
       }
-
 
       return true;
 
@@ -5791,6 +5789,8 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
       if(pbrush == NULL || pbrush->m_etype == ::ca::brush::type_null)
          return true;
+
+      cairo_keep keep(m_pdc);
 
       set(pbrush);
 
@@ -5804,6 +5804,8 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
       if(ppen == NULL || ppen->m_etype == ::ca::pen::type_null)
          return true;
 
+      cairo_keep keep(m_pdc);
+
       set(ppen);
 
       cairo_stroke(m_pdc);
@@ -5813,6 +5815,8 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
    bool graphics::set(const ::ca::graphics_path * ppathParam)
    {
+
+      cairo_keep keep(m_pdc);
 
       ::lnx::graphics_path * ppath = dynamic_cast < ::lnx::graphics_path * > ((::ca::graphics_path *) ppathParam);
 
@@ -5835,7 +5839,6 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
          cairo_set_fill_rule(m_pdc, CAIRO_FILL_RULE_WINDING);
 
       }
-
 
       return true;
 
@@ -5867,15 +5870,13 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    bool graphics::set(const ::lnx::graphics_path::arc & a)
    {
 
+      cairo_keep keep(m_pdc);
+
       cairo_translate(m_pdc, a.m_xCenter, a.m_yCenter);
 
       cairo_scale(m_pdc, 1.0, a.m_dRadiusY / a.m_dRadiusX);
 
       cairo_arc(m_pdc, 0.0, 0.0, a.m_dRadiusX, a.m_dAngle1, a.m_dAngle2);
-
-      cairo_scale(m_pdc, 1.0, a.m_dRadiusX / a.m_dRadiusY);
-
-      cairo_translate(m_pdc, -a.m_xCenter, -a.m_yCenter);
 
       return true;
 
@@ -5906,7 +5907,6 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    {
 
       cairo_move_to(m_pdc, p.m_x, p.m_y);
-
 
       return true;
 

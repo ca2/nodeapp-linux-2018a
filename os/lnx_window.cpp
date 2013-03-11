@@ -7157,7 +7157,7 @@ namespace lnx
 
          cairo_fill(m_cairoSource);
 
-         cairo_save(m_cairoSource);
+         cairo_keep keepSource(m_cairoSource);
 
          ::ca::graphics_sp g(get_app());
 
@@ -7167,7 +7167,7 @@ namespace lnx
 
          g->detach();
 
-         cairo_restore(m_cairoSource);
+         keepSource.restore();
 
 
 #ifndef DEBUG
