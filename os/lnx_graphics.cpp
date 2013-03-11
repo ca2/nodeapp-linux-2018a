@@ -3878,6 +3878,10 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       cairo_move_to(m_pdc, x, y);
 
+      m_x = x;
+
+      m_y = y;
+
       return point;
    }
 
@@ -3899,6 +3903,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       }
 
       cairo_move_to(m_pdc, x, y);
+
+      m_x = x;
+
+      m_y = y;
+
 
       return point;
    }
@@ -5438,7 +5447,7 @@ return true;
       //string str(lpszString, nCount);
 
 
-
+      cairo_move_to(m_pdc, m_x, m_y);
 
       cairo_line_to(m_pdc, x, y);
 
@@ -5683,7 +5692,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
          cairo_pattern_t * ppattern = cairo_pattern_create_linear(pbrush->m_pt1.x, pbrush->m_pt1.y, pbrush->m_pt2.x, pbrush->m_pt2.y);
 
-         cairo_pattern_add_color_stop_rgba(ppattern, 0., GetRValue(pbrush->m_cr) / 255.0, GetGValue(pbrush->m_cr) / 255.0, GetBValue(pbrush->m_cr) / 255.0, GetAValue(pbrush->m_cr) / 255.0);
+         cairo_pattern_add_color_stop_rgba(ppattern, 0., GetRValue(pbrush->m_cr1) / 255.0, GetGValue(pbrush->m_cr1) / 255.0, GetBValue(pbrush->m_cr1) / 255.0, GetAValue(pbrush->m_cr1) / 255.0);
 
          cairo_pattern_add_color_stop_rgba(ppattern, 1., GetRValue(pbrush->m_cr2) / 255.0, GetGValue(pbrush->m_cr2) / 255.0, GetBValue(pbrush->m_cr2) / 255.0, GetAValue(pbrush->m_cr2) / 255.0);
 

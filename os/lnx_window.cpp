@@ -7157,6 +7157,8 @@ namespace lnx
 
          cairo_fill(m_cairoSource);
 
+         cairo_save(m_cairoSource);
+
          ::ca::graphics_sp g(get_app());
 
          g->attach(m_cairoSource);
@@ -7164,6 +7166,8 @@ namespace lnx
          _000OnDraw(g);
 
          g->detach();
+
+         cairo_restore(m_cairoSource);
 
 
 #ifndef DEBUG
