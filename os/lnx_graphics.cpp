@@ -569,15 +569,13 @@ namespace lnx
       double end        = atan2(y4 - centery, x4 - centerx);
 
 
+      cairo_keep keep(m_pdc);
+
       cairo_translate(m_pdc, centerx, centery);
 
       cairo_scale(m_pdc, radiusx, radiusy);
 
       cairo_arc(m_pdc, 0.0, 0.0, 1.0, start, end);
-
-      cairo_scale(m_pdc, 1.0 / radiusx, 1.0 / radiusy);
-
-      cairo_translate(m_pdc, -centerx,  -centery);
 
       return true;
 
@@ -1299,8 +1297,6 @@ namespace lnx
 
          cairo_paint(m_pdc);
 
-         keep.restore();
-
          cairo_pattern_set_matrix(ppattern, &matrixOld);
 
          cairo_pattern_destroy(ppattern);
@@ -1344,6 +1340,10 @@ namespace lnx
 
          cairo_matrix_t matrix;
 
+         cairo_matrix_t matrixOld;
+
+         cairo_pattern_set_matrix(ppattern, &matrixOld);
+
          cairo_keep keep(m_pdc);
 
          cairo_translate(m_pdc, xDst, yDst);
@@ -1362,13 +1362,7 @@ namespace lnx
 
          cairo_paint(m_pdc);
 
-         cairo_matrix_init_scale(&matrix, nSrcWidth / nDstWidth , nSrcHeight / nDstHeight);
-
-         cairo_matrix_translate(&matrix, -xSrc, -ySrc);
-
-         cairo_pattern_set_matrix(ppattern, &matrix);
-
-         cairo_pattern_destroy(ppattern);
+         cairo_pattern_set_matrix(ppattern, &matrixOld);
 
 
       return true;
@@ -2608,6 +2602,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(ppattern == NULL)
          return false;
 
+      cairo_keep keep(m_pdc);
+
       cairo_translate(m_pdc, xDst, yDst);
 
       cairo_scale(m_pdc, (double) nDstWidth / (double) nSrcWidth, (double) nDstHeight / (double) nSrcHeight);
@@ -2616,9 +2612,6 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       cairo_paint_with_alpha(m_pdc, dRate);
 
-      cairo_scale(m_pdc, (double) nSrcWidth / (double) nDstWidth, (double) nSrcHeight / (double) nDstHeight);
-
-      cairo_translate(m_pdc, -xDst, -yDst);
 
       return true;
 
@@ -4504,19 +4497,49 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       delete pmNew;*/
 
-      set_os_color(m_crColor);
+      size szBase = GetTextExtent("P");
 
-      size sz = GetTextExtent("P");
+      size sz = GetTextExtent(str);
 
       cairo_keep keep(m_pdc);
 
-      cairo_translate(m_pdc, lpRect->left, lpRect->top + sz.cy);
+      double dx;
+
+      double dy;
+
+      if(nFormat & DT_RIGHT)
+      {
+         dx = lpRect->right - lpRect->left - sz.cx;
+      }
+      else if(nFormat & DT_CENTER)
+      {
+         dx = ((lpRect->right - lpRect->left) - (sz.cx)) / 2.0;
+      }
+      else
+      {
+         dx = 0.;
+      }
+
+      if(nFormat & DT_BOTTOM)
+      {
+         dy = lpRect->bottom - lpRect->top - sz.cy;
+      }
+      else if(nFormat & DT_VCENTER)
+      {
+         dy = ((lpRect->bottom - lpRect->top) - (sz.cy)) / 2.0;
+      }
+      else
+      {
+         dy = 0.;
+      }
+
+      cairo_translate(m_pdc, lpRect->left + dx, lpRect->top + szBase.cy + dy);
 
       cairo_scale(m_pdc, m_fontxyz.m_dFontWidth, 1.0);
 
-      keep.pulse();
-
       set(&m_fontxyz);
+
+      set_os_color(m_crColor);
 
       cairo_show_text(m_pdc, str);
 
@@ -5818,6 +5841,8 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
       cairo_keep keep(m_pdc);
 
+      cairo_new_sub_path(m_pdc);
+
       ::lnx::graphics_path * ppath = dynamic_cast < ::lnx::graphics_path * > ((::ca::graphics_path *) ppathParam);
 
       for(int32_t i = 0; i < ppath->m_elementa.get_count(); i++)
@@ -5888,13 +5913,13 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
       if(!cairo_has_current_point(m_pdc))
       {
 
-         cairo_move_to(m_pdc, l.m_x, l.m_y);
+         cairo_move_to(m_pdc, l.m_x + 0.5, l.m_y + 0.5);
 
       }
       else
       {
 
-         cairo_line_to(m_pdc, l.m_x, l.m_y);
+         cairo_line_to(m_pdc, l.m_x + 0.5, l.m_y + 0.5);
 
       }
 
@@ -5906,7 +5931,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    bool graphics::set(const ::lnx::graphics_path::move & p)
    {
 
-      cairo_move_to(m_pdc, p.m_x, p.m_y);
+      cairo_move_to(m_pdc, p.m_x + 0.5, p.m_y + 0.5);
 
       return true;
 
