@@ -888,17 +888,25 @@ namespace lnx
       if(radiusx == 0.0 || radiusy == 0.0)
          return false;
 
+      cairo_save(m_pdc);
+
+      cairo_new_sub_path(m_pdc);
+
       cairo_translate(m_pdc, centerx, centery);
 
       cairo_scale(m_pdc, radiusx, radiusy);
 
       cairo_arc(m_pdc, 0.0, 0.0, 1.0, 0.0, 2.0 * 3.1415);
 
-      draw();
+      cairo_restore(m_pdc);
 
-      cairo_scale(m_pdc, 1.0 / radiusx, 1.0 / radiusy);
+      cairo_save(m_pdc);
 
-      cairo_translate(m_pdc, -centerx,  -centery);
+      set(&m_penxyz);
+
+      cairo_stroke(m_pdc);
+
+      cairo_restore(m_pdc);
 
       return true;
 
@@ -929,6 +937,11 @@ namespace lnx
       if(radiusx == 0.0 || radiusy == 0.0)
          return false;
 
+
+      cairo_save(m_pdc);
+
+      cairo_new_sub_path(m_pdc);
+
       cairo_translate(m_pdc, centerx, centery);
 
       cairo_scale(m_pdc, radiusx, radiusy);
@@ -937,12 +950,12 @@ namespace lnx
 
       fill();
 
-      cairo_scale(m_pdc, 1.0 / radiusx, 1.0 / radiusy);
-
-      cairo_translate(m_pdc, -centerx,  -centery);
+      cairo_restore(m_pdc);
 
       return true;
+
    }
+
 
    bool graphics::FillEllipse(LPCRECT lpRect)
    {
@@ -950,7 +963,7 @@ namespace lnx
       /*return ::Ellipse(get_handle1(), lpRect->left, lpRect->top,
    lpRect->right, lpRect->bottom); */
 
-      return FillEllipse(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top);
+      return FillEllipse(lpRect->left, lpRect->top, lpRect->right, lpRect->bottom);
 
    }
 
@@ -3846,15 +3859,49 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 */
    }
 
-   /*point graphics::MoveTo(int32_t x, int32_t y)
+   point graphics::MoveTo(int32_t x, int32_t y)
    {
       point point(0, 0);
-      if(get_handle1() != NULL && get_handle1() != get_handle2())
-         ::MoveToEx(get_handle1(), x, y, &point);
-      if(get_handle2() != NULL)
-         ::MoveToEx(get_handle2(), x, y, &point);
+
+      if(cairo_has_current_point(m_pdc))
+      {
+
+         double dx = 0.;
+         double dy = 0.;
+
+         cairo_get_current_point(m_pdc, &dx, &dy);
+
+         point.x = dx;
+         point.y = dy;
+
+      }
+
+      cairo_move_to(m_pdc, x, y);
+
       return point;
-   }*/
+   }
+
+   pointd graphics::MoveTo(double x, double y)
+   {
+      pointd point(0., 0.);
+
+      if(cairo_has_current_point(m_pdc))
+      {
+
+         double dx = 0.;
+         double dy = 0.;
+
+         cairo_get_current_point(m_pdc, &dx, &dy);
+
+         point.x = dx;
+         point.y = dy;
+
+      }
+
+      cairo_move_to(m_pdc, x, y);
+
+      return point;
+   }
 
    UINT graphics::SetTextAlign(UINT nFlags)
    {
@@ -4453,7 +4500,9 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       set_os_color(m_crColor);
 
-      cairo_translate(m_pdc, lpRect->left, lpRect->top);
+      size sz = GetTextExtent("P");
+
+      cairo_translate(m_pdc, lpRect->left, lpRect->top + sz.cy);
 
       cairo_scale(m_pdc, m_fontxyz.m_dFontWidth, 1.0);
 
@@ -5126,11 +5175,13 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       string str(lpszString, nCount);
 
+      size sz = GetTextExtent("P");
+
       ((graphics *) this)->set(&m_fontxyz);
 
       set_os_color(m_crColor);
 
-      cairo_move_to(m_pdc, x, y);
+      cairo_move_to(m_pdc, x, y + sz.cy);
 
       cairo_show_text(m_pdc, str);
 
@@ -5857,14 +5908,14 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    bool graphics::fill()
    {
 
-      return fill(m_spbrush);
+      return fill(&m_brushxyz);
 
    }
 
    bool graphics::draw()
    {
 
-      return draw(m_sppen);
+      return draw(&m_penxyz);
 
    }
 

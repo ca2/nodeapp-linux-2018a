@@ -24,6 +24,13 @@ namespace lnx
       ::user::window_interface *    m_pbasewnd;
       ::user::interaction *         m_pguieCapture;
       mutex *                       m_pmutexGraphics;
+      cairo_t *                     m_cairo;
+      cairo_surface_t *             m_cairosurface;
+      cairo_t *                     m_cairoSource;
+      cairo_surface_t *             m_cairosurfaceSource;
+      cairo_t *                     m_cairoWork;
+      cairo_surface_t *             m_cairosurfaceWork;
+
 
       //visual::dib_sp                m_spdib;
       //visual::dib_sp                m_spdibMultAlphaWork;

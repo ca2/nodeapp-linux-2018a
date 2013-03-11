@@ -228,6 +228,19 @@ namespace lnx
 
    }
 
+
+   void * region::get_os_data() const
+   {
+
+      if(m_bUpdated)
+         return (void *) this;
+
+      ((region *) this)->m_bUpdated = true;
+
+      return (void *) this;
+
+   }
+
 } // namespace lnx
 
 

@@ -38,6 +38,7 @@ namespace lnx{
       m_pbuffer = new user::buffer(papp);
       m_pbuffer->m_spdib.create(papp);
       m_dwLastUpdate = false;
+      m_iFramesPerSecond = 20;
    }
 
    extern void _001DeferPaintLayeredWindowBackground(void * hwnd, ::ca::graphics * pdc);
@@ -337,7 +338,10 @@ namespace lnx{
          {
             if(m_bProDevianMode)
             {
+               DWORD dw1 = get_tick_count();
                _synch_redraw();
+               DWORD dw2 = get_tick_count();
+               m_dwLastDelay = dw2 - dw1;
             }
          }
 #ifndef DEBUG
@@ -350,7 +354,7 @@ namespace lnx{
          {
             __get_thread()->pump_message();
          }
-         int32_t iUiDataWriteWindowTimeForTheApplicationInThisMachine = 8;
+         int32_t iUiDataWriteWindowTimeForTheApplicationInThisMachine = 84;
          if(m_iFramesPerSecond == 0)
          {
             Sleep(1000);

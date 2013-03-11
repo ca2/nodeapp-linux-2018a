@@ -479,7 +479,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
       ::ca::thread_sp::m_p->set_os_data(NULL);
 
       LNX_THREAD(::ca::thread_sp::m_p)->m_bRun = false;
-      LNX_THREAD(::ca::smart_pointer < ::ca::application_base > ::m_p->::ca::thread_sp::m_p)->m_bRun = false;
+      //LNX_THREAD(::ca::smart_pointer < ::ca::application_base > ::m_p->::ca::thread_sp::m_p)->m_bRun = false;
 
       int32_t iRet = ::ca::application::exit_instance();
 

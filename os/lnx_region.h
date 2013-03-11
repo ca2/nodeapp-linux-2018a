@@ -10,6 +10,8 @@ namespace lnx
    {
    public:
 
+      cairo_surface_t *       m_psurface;
+      rect                    m_rectBoundingBoxInternal;
 
 
 // xxx     Gdiplus::Region *       m_pregion;
@@ -56,6 +58,9 @@ namespace lnx
       bool get_polygon(cairo_t * pdc);
       bool get_poly_polygon(cairo_t * pdc);
       bool get_combine(cairo_t * pdc);
+
+
+      virtual void * get_os_data() const;
 
 
 

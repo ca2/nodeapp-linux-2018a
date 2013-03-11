@@ -220,7 +220,8 @@ namespace lnx
 
    // Line-Output Functions
       point GetCurrentPosition() const;
-//      point MoveTo(int32_t x, int32_t y);
+      point MoveTo(int32_t x, int32_t y);
+      pointd MoveTo(double x, double y);
   //    point MoveTo(POINT point);
       bool LineTo(double x, double y);
     //  bool LineTo(POINT point);

@@ -73,6 +73,12 @@ namespace lnx
       m_pfont = NULL;
       m_pguieCapture = NULL;
       m_pmutexGraphics = NULL;
+      m_cairo = NULL;
+      m_cairosurface = NULL;
+      m_cairoSource = NULL;
+      m_cairosurfaceSource = NULL;
+      m_cairoWork = NULL;
+      m_cairosurfaceWork = NULL;
    }
 
    void window::construct(oswindow hWnd)
@@ -88,7 +94,12 @@ namespace lnx
       m_pfont = NULL;
       m_pguieCapture = NULL;
       m_pmutexGraphics = NULL;
-
+      m_cairo = NULL;
+      m_cairosurface = NULL;
+      m_cairoSource = NULL;
+      m_cairosurfaceSource = NULL;
+      m_cairoWork = NULL;
+      m_cairosurfaceWork = NULL;
    }
 
    window::window(::ca::application * papp) :
@@ -106,7 +117,12 @@ namespace lnx
       m_pfont = NULL;
       m_pguieCapture = NULL;
       m_pmutexGraphics = NULL;
-
+      m_cairo = NULL;
+      m_cairosurface = NULL;
+      m_cairoSource = NULL;
+      m_cairosurfaceSource = NULL;
+      m_cairoWork = NULL;
+      m_cairosurfaceWork = NULL;
    }
 
    ::ca::window * window::from_os_data(void * pdata)
@@ -4210,7 +4226,7 @@ throw not_implemented(get_app());
 
       System.get_screen_rect(rectScreen);
 
-      int iPalaceGuard = 49;
+      int iPalaceGuard = 256;
 
       if(nFlags & SWP_IGNOREPALACEGUARD)
          iPalaceGuard = 1;
@@ -4227,9 +4243,13 @@ throw not_implemented(get_app());
 
       if(cx < iPalaceGuard)
          cx = iPalaceGuard;
+      else if(cx > rectScreen.width())
+         cx = rectScreen.width();
 
       if(cy < iPalaceGuard)
          cy = iPalaceGuard;
+      else if(cy > rectScreen.height())
+         cy = rectScreen.height();
 
       /*bool b;
       bool * pb = &b;
@@ -4242,14 +4262,6 @@ throw not_implemented(get_app());
       x, y, cx, cy, nFlags) != FALSE; */
 
       //throw not_implemented(get_app());
-
-      if((nFlags & SWP_SHOWWINDOW) && !IsWindowVisible())
-      {
-
-         XMapWindow(m_oswindow.display(), m_oswindow.window());
-
-      }
-
 
       if(nFlags & SWP_NOMOVE)
       {
@@ -4275,6 +4287,14 @@ throw not_implemented(get_app());
     //        XClearWindow(m_oswindow.display(), m_oswindow.window());
          }
       }
+
+      if((nFlags & SWP_SHOWWINDOW))
+      {
+
+         XMapWindow(m_oswindow.display(), m_oswindow.window());
+
+      }
+
 
 /*
       if(GetExStyle() & WS_EX_LAYERED)
@@ -6976,7 +6996,7 @@ namespace lnx
 
       bool bSize;
 
-      if(rectWindow.top == m_rectParentClient.top)
+      if(rectWindow.top_left() == m_rectParentClient.top_left())
       {
 
          bMove = false;
@@ -7054,6 +7074,59 @@ namespace lnx
 
                send_message(WM_SIZE, 0, rectWindow.size().lparam());
 
+
+               if(m_cairoWork != NULL)
+               {
+
+                  cairo_destroy(m_cairoWork);
+
+               }
+
+               if(m_cairosurfaceWork != NULL)
+               {
+
+                  cairo_surface_destroy(m_cairosurfaceWork);
+
+               }
+
+
+               if(m_cairoSource != NULL)
+               {
+
+                  cairo_destroy(m_cairoSource);
+
+               }
+
+               if(m_cairosurfaceSource != NULL)
+               {
+
+                  cairo_surface_destroy(m_cairosurfaceSource);
+
+               }
+
+               if(m_cairosurface == NULL)
+               {
+
+                  m_cairosurface = cairo_xlib_surface_create(m_oswindow.display(), m_oswindow.window(), m_oswindow.visual(), rectWindow.width(), rectWindow.height());
+
+                  m_cairo = cairo_create(m_cairosurface);
+
+               }
+               else
+               {
+
+                  cairo_xlib_surface_set_size(m_cairosurface, rectWindow.width(), rectWindow.height());
+
+               }
+
+               m_cairosurfaceSource = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
+
+               m_cairoSource = cairo_create(m_cairosurfaceSource);
+
+               m_cairosurfaceWork = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
+
+               m_cairoWork = cairo_create(m_cairosurfaceWork);
+
             }
 
             if(bMove)
@@ -7067,12 +7140,6 @@ namespace lnx
 
 
 
-      //single_lock sl(this, true);
-
-      cairo_surface_t * csSrc;
-
-      cairo_t * cSrc;
-
 #ifndef DEBUG
 
       try
@@ -7080,42 +7147,23 @@ namespace lnx
 
 #endif
 
-         csSrc = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
+         cairo_reset_clip(m_cairoSource);
 
-         cSrc = cairo_create(csSrc);
+         cairo_set_operator(m_cairoSource, CAIRO_OPERATOR_SOURCE);
 
-         cairo_set_operator(cSrc, CAIRO_OPERATOR_SOURCE);
+         cairo_rectangle(m_cairoSource, 0, 0, rectWindow.width(), rectWindow.height());
 
-         cairo_rectangle(cSrc, 0, 0, rectWindow.width(), rectWindow.height());
+         cairo_set_source_rgba(m_cairoSource, 0.0, 0.0, 0.0, 0.0);
 
-         cairo_set_source_rgba(cSrc, 0.0, 0.0, 0.0, 0.0);
-
-         cairo_fill(cSrc);
-
-/*
-         cairo_set_operator(cSrc, CAIRO_OPERATOR_OVER);
-
-         cairo_rectangle(cSrc, 10, 10, 200, 200);
-
-         cairo_set_source_rgba(cSrc, 0.5, 1.0, 0.5, 0.5);
-
-         cairo_fill(cSrc);
-*/
-
-
+         cairo_fill(m_cairoSource);
 
          ::ca::graphics_sp g(get_app());
 
-         g->attach(cSrc);
+         g->attach(m_cairoSource);
 
          _000OnDraw(g);
 
          g->detach();
-
-
-
-
-         cairo_destroy(cSrc);
 
 
 #ifndef DEBUG
@@ -7132,38 +7180,20 @@ namespace lnx
       try
       {
 
-         cairo_surface_t * cs = cairo_xlib_surface_create(m_oswindow.display(), m_oswindow.window(), m_oswindow.visual(), rectWindow.width(), rectWindow.height());
+         cairo_set_operator(m_cairo, CAIRO_OPERATOR_SOURCE);
 
-         cairo_t * c = cairo_create(cs);
+         cairo_reset_clip(m_cairo);
 
-         cairo_set_operator(c, CAIRO_OPERATOR_SOURCE);
+         cairo_set_source_surface(m_cairo, m_cairosurfaceSource, 0, 0);
 
-         cairo_set_source_surface(c, csSrc, 0, 0);
+         cairo_paint(m_cairo);
 
-         cairo_paint(c);
-
-         cairo_show_page(c);
-
-         cairo_destroy(c);
-
-         cairo_surface_destroy(cs);
+         cairo_show_page(m_cairo);
 
       }
       catch(...)
       {
 
-
-      }
-
-      try
-      {
-
-         cairo_surface_destroy(csSrc);
-         //cairo_destroy(cSrc);
-
-      }
-      catch(...)
-      {
 
       }
 

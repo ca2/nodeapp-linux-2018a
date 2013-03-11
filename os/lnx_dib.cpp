@@ -300,17 +300,26 @@ namespace lnx
 
    void dib::set_rgb(int32_t R, int32_t G, int32_t B)
    {
-      int32_t size=cx*cy;
+
+      map();
+
+      int32_t size=scan*cy;
 
       BYTE * pbyte = (BYTE *) m_pcolorref;
 
       int32_t i;
-      for (i=0; i<size; i++ )
+      int32_t j;
+      int32_t r = scan - cx * sizeof(COLORREF);
+      for (i=0; i<cy; i++ )
       {
-         *pbyte++ = (BYTE) R;
-         *pbyte++ = (BYTE) G;
-         *pbyte++ = (BYTE) B;
-         pbyte++;
+         for (j=0; j<cx; j++ )
+         {
+            *pbyte++ = (BYTE) R * pbyte[3] / 255;
+            *pbyte++ = (BYTE) G * pbyte[2] / 255;
+            *pbyte++ = (BYTE) B * pbyte[1] / 255;
+            pbyte++;
+         }
+         j+= r;
       }
    }
 
@@ -2103,6 +2112,8 @@ namespace lnx
 
    void dib::Fill (int32_t A, int32_t R, int32_t G, int32_t B )
    {
+      map();
+
       COLORREF color = RGB ( B, G, R ) | (A << 24);
       int32_t size=cx*cy;
 
