@@ -1342,7 +1342,7 @@ namespace lnx
 
          cairo_matrix_t matrixOld;
 
-         cairo_pattern_set_matrix(ppattern, &matrixOld);
+         cairo_pattern_get_matrix(ppattern, &matrixOld);
 
          cairo_keep keep(m_pdc);
 
@@ -1350,7 +1350,7 @@ namespace lnx
 
          cairo_matrix_init_translate(&matrix, xSrc, ySrc);
 
-         cairo_matrix_scale(&matrix, nDstWidth / nSrcWidth, nDstHeight / nSrcHeight);
+         cairo_matrix_scale(&matrix, (double) nDstWidth / (double) nSrcWidth, (double) nDstHeight / (double) nSrcHeight);
 
          cairo_pattern_set_matrix(ppattern, &matrix);
 

@@ -733,6 +733,7 @@ wm_nodecorations(m_oswindow, 0);
          pdraw->m_wndpaOut.remove(m_pguie);
       }
       LNX_THREAD(m_pthread)->m_oswindowa.remove(m_oswindow);
+      oswindow::remove(m_oswindow);
    }
 
    void window::_001OnCaptureChanged(::ca::signal_object * pobj)
@@ -966,8 +967,8 @@ wm_nodecorations(m_oswindow, 0);
          }
       }
       sl.unlock();
-  //    if (get_os_data() != NULL)
-//         bResult = ::DestroyWindow(get_os_data()) != FALSE;
+      if (get_os_data() != NULL)
+         bResult = ::DestroyWindow(get_os_data()) != FALSE;
       sl.lock();
       if (hWndOrig != NULL)
       {
@@ -5689,6 +5690,8 @@ throw not_implemented(get_app());
 
    ::ca::window * PASCAL window::GetForegroundWindow()
    {
+
+      return NULL;
 
          throw not_implemented(::ca::get_thread_app());
 //      return ::lnx::window::from_handle(::GetForegroundWindow());

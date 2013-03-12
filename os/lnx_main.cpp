@@ -82,10 +82,21 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
    {
       pinitmaindata->m_vssCommandLine     = argv[0];
    }
+   bool bColon = false;
    for(int32_t i = 1; i < argc; i++)
    {
-      pinitmaindata->m_vssCommandLine     += " ";
-      pinitmaindata->m_vssCommandLine     += argv[i];
+      if(bColon || (bColon = (strcmp(argv[i], ":") == 0)))
+      {
+         pinitmaindata->m_vssCommandLine     += " ";
+         pinitmaindata->m_vssCommandLine     += argv[i];
+
+      }
+      else
+      {
+         pinitmaindata->m_vssCommandLine     += " \"";
+         pinitmaindata->m_vssCommandLine     += argv[i];
+         pinitmaindata->m_vssCommandLine     += "\"";
+      }
    }
    pinitmaindata->m_nCmdShow              = SW_SHOW;
 

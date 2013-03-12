@@ -418,14 +418,28 @@ namespace lnx
      cairo_surface_flush (surface);
 
 
-     void * pdata = cairo_image_surface_get_data(surface);
+     byte  * pdata = (byte *) cairo_image_surface_get_data(surface);
 
-     if(pdata != m_pcolorref && pdata != NULL)
+     if(pdata != (byte *) m_pcolorref && pdata != NULL)
      {
-         memcpy(m_pcolorref, pdata, cy * scan * sizeof(COLORREF));
+         memcpy(m_pcolorref, pdata, cy * scan);
      }
 
 
+      pdata = (byte *) m_pcolorref;
+
+      int size = scan * cy / sizeof(COLORREF);
+      while(size > 0)
+      {
+         if(pdata[3] != 0)
+         {
+            pdata[0] = pdata[0] * 255 / pdata[3];
+            pdata[1] = pdata[1] * 255 / pdata[3];
+            pdata[2] = pdata[2] * 255 / pdata[3];
+         }
+         pdata += 4;
+         size--;
+      }
 
 
    }
@@ -444,11 +458,22 @@ namespace lnx
      if(surface == NULL)
          return;
 
-   void * pdata =  cairo_image_surface_get_data(surface);
+   byte * pdata =  (byte *) m_pcolorref;
+      int size = scan * cy / sizeof(COLORREF);
+      while(size > 0)
+      {
+         pdata[0] = pdata[0] * pdata[3] / 255;
+         pdata[1] = pdata[1] * pdata[3] / 255;
+         pdata[2] = pdata[2] * pdata[3] / 255;
+         pdata += 4;
+         size--;
+      }
 
-   if(pdata != m_pcolorref && pdata != NULL)
+      pdata =  (byte *) cairo_image_surface_get_data(surface);
+
+   if(pdata != (byte *) m_pcolorref && pdata != NULL)
    {
-      memcpy(pdata, m_pcolorref, cy * scan * sizeof(COLORREF));
+      memcpy(pdata, m_pcolorref, cy * scan);
    }
 
 
@@ -2614,8 +2639,6 @@ namespace lnx
 
 
 
-      FreeImage_Unload (pfi);
-
       pfi = NULL;
 
 
@@ -2632,6 +2655,9 @@ namespace lnx
       {
          transparent_color(bkcolor);
       }
+
+      FreeImage_Unload (pfi);
+
 
       if(bUnloadFI)
       {
