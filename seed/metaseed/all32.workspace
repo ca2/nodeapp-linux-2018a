@@ -18,7 +18,22 @@
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" active="1">
+		<Project filename="../../../app-core/appseed/flag/flag.cbp" active="1">
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+			<Depends filename="../../../app/appseed/optca/optca.cbp" />
+			<Depends filename="../../../app-core/appseed/alarm/alarm.cbp" />
+			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
+			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
+			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
+			<Depends filename="../../../app/appseed/c/_.cbp" />
+			<Depends filename="../../../app/appseed/ca/ca.cbp" />
+			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
+			<Depends filename="../../os/os.cbp" />
+			<Depends filename="../../os2/os2.cbp" />
+			<Depends filename="../../appseed/app/app.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/appseed/optca/optca.cbp" />
