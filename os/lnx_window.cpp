@@ -733,7 +733,7 @@ wm_nodecorations(m_oswindow, 0);
          pdraw->m_wndpaOut.remove(m_pguie);
       }
       LNX_THREAD(m_pthread)->m_oswindowa.remove(m_oswindow);
-      oswindow::remove(m_oswindow);
+      oswindow::remove(m_oswindow.display(), m_oswindow.window());
    }
 
    void window::_001OnCaptureChanged(::ca::signal_object * pobj)

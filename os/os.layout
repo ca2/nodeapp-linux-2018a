@@ -5,7 +5,7 @@
 		<Cursor position="32" topLine="0" />
 	</File>
 	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="17">
-		<Cursor position="283" topLine="141" />
+		<Cursor position="1862" topLine="97" />
 	</File>
 	<File name="../operational_system/cross/win/base_tsd.h" open="0" top="0" tabpos="2">
 		<Cursor position="4784" topLine="124" />
@@ -275,7 +275,7 @@
 		<Cursor position="24" topLine="0" />
 	</File>
 	<File name="lnx_window.cpp" open="0" top="0" tabpos="4">
-		<Cursor position="20881" topLine="708" />
+		<Cursor position="21176" topLine="714" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="1">
 		<Cursor position="1041" topLine="0" />

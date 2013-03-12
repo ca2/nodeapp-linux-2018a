@@ -6,7 +6,7 @@
 		<Project filename="../../../app/appseed/optca/optca.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
-		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" active="1">
+		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/appseed/optca/optca.cbp" />
@@ -22,7 +22,6 @@
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../os2/os2.cbp" />
-			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
@@ -67,7 +66,7 @@
 			<Depends filename="../../os2/os2.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/projection/projection.cbp">
+		<Project filename="../../../app-core/appseed/projection/projection.cbp" active="1">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/appseed/optca/optca.cbp" />
@@ -94,14 +93,6 @@
 		<Project filename="../../os2/os2.cbp">
 			<Depends filename="../../os/os.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/sphere/sphere.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
-			<Depends filename="../../../app/appseed/optca/optca.cbp" />
-			<Depends filename="../../../app/appseed/c/_.cbp" />
-			<Depends filename="../../../app/appseed/ca/ca.cbp" />
-			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-		</Project>
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
@@ -115,6 +106,12 @@
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../os2/os2.cbp" />
+		</Project>
+		<Project filename="../../../app/appseed/sphere/sphere.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+			<Depends filename="../../../app/appseed/c/_.cbp" />
+			<Depends filename="../../../app/appseed/ca/ca.cbp" />
+			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
