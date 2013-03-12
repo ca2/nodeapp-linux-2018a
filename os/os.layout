@@ -100,7 +100,7 @@
 	<File name="lnx_appterm.cpp" open="0" top="0" tabpos="8">
 		<Cursor position="1902" topLine="26" />
 	</File>
-	<File name="lnx_bitmap.cpp" open="1" top="0" tabpos="3">
+	<File name="lnx_bitmap.cpp" open="0" top="0" tabpos="3">
 		<Cursor position="1975" topLine="103" />
 	</File>
 	<File name="lnx_bitmap.h" open="0" top="0" tabpos="9">
@@ -124,7 +124,7 @@
 	<File name="lnx_crypt.h" open="0" top="0" tabpos="17">
 		<Cursor position="487" topLine="0" />
 	</File>
-	<File name="lnx_dib.cpp" open="1" top="0" tabpos="1">
+	<File name="lnx_dib.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="10193" topLine="402" />
 	</File>
 	<File name="lnx_dib.h" open="0" top="0" tabpos="12">
@@ -175,7 +175,7 @@
 	<File name="lnx_font.h" open="0" top="0" tabpos="8">
 		<Cursor position="311" topLine="0" />
 	</File>
-	<File name="lnx_graphics.cpp" open="1" top="0" tabpos="2">
+	<File name="lnx_graphics.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="32693" topLine="1288" />
 	</File>
 	<File name="lnx_graphics.h" open="0" top="0" tabpos="3">
@@ -274,7 +274,7 @@
 	<File name="lnx_util.cpp" open="0" top="0" tabpos="12">
 		<Cursor position="24" topLine="0" />
 	</File>
-	<File name="lnx_window.cpp" open="1" top="0" tabpos="4">
+	<File name="lnx_window.cpp" open="0" top="0" tabpos="4">
 		<Cursor position="20881" topLine="708" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="1">
