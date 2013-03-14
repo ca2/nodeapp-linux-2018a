@@ -14,6 +14,7 @@ namespace lnx
    {
    public:
 
+
       static float Cosines[360];
       static float Sines[360];
       static int64_t CosN[360]; // * 1 << 31
@@ -22,11 +23,22 @@ namespace lnx
       static int64_t Sin10N[10]; // more precision * 1 << 34
       static double dPi;
 
+
       COLORREF *           m_pcolorref;
       BITMAPINFO           m_info;
       ::ca::bitmap_sp      m_spbitmap;
       ::ca::graphics_sp    m_spgraphics;
+      bool                 m_bMapped;
       //HBITMAP              m_hbitmapOriginal;
+
+
+
+
+      dib(::ca::application * papp);
+      virtual void construct(int32_t cx, int32_t cy);
+      virtual ~dib();
+
+
 
       virtual ::ca::graphics * get_graphics();
       virtual ::ca::bitmap_sp get_bitmap();
@@ -35,9 +47,6 @@ namespace lnx
 
       virtual COLORREF * get_data();
 
-      dib(::ca::application * papp);
-      virtual void construct(int32_t cx, int32_t cy);
-      virtual ~dib();
 
       static void s_initialize();
       void stretch_dib(::ca::dib * pdib);

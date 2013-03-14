@@ -5766,14 +5766,14 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
    bool graphics::fill_and_draw()
    {
 
-      bool bPen = m_sppen.is_set() && (m_sppen->m_etype != ::ca::pen::type_null);
+      bool bPen = m_penxyz.m_etype != ::ca::pen::type_null;
 
       cairo_keep keep(m_pdc);
 
-      if(m_spbrush.is_set() && (m_spbrush->m_etype != ::ca::brush::type_null))
+      if(m_brushxyz.m_etype != ::ca::brush::type_null)
       {
 
-         set(m_spbrush);
+         set(&m_brushxyz);
 
          if(bPen)
          {
@@ -5795,7 +5795,7 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
       if(bPen)
       {
 
-         set(m_sppen);
+         set(&m_penxyz);
 
          cairo_stroke(m_pdc);
 

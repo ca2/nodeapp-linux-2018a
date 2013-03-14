@@ -68,6 +68,7 @@ public:
       ::user::interaction_base *    m_pui;
       HTHREAD                       m_hthread;
       simple_map < int, LONG > *    m_plongmap;
+      bool                          m_bDestroying;
 
    };
 
@@ -209,14 +210,12 @@ public:
 
    static oswindow defer_get(Window w);
 
+   bool is_destroying();
+
 
 };
 
 
-inline bool IsWindow(oswindow oswindow)
-{
-   return oswindow.get_user_interaction() != NULL;
-}
 
 inline bool IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant)
 {
@@ -271,3 +270,7 @@ inline int32_t IsWindowVisible(::oswindow oswindow)
 
 #define GetWindowLong GetWindowLongA
 #define SetWindowLong SetWindowLongA
+
+
+
+CLASS_DECL_c bool IsWindow(oswindow oswindow);

@@ -36,6 +36,7 @@ namespace lnx
    {
 
       m_pcolorref          = NULL;
+      m_bMapped            = false;
 
    }
 
@@ -404,6 +405,9 @@ namespace lnx
    void dib::map()
    {
 
+      if(m_bMapped)
+         return;
+
       if(m_pcolorref == NULL)
          return;
 
@@ -441,24 +445,28 @@ namespace lnx
          size--;
       }
 
+      m_bMapped = true;
 
    }
 
    void dib::unmap()
    {
 
+      if(!m_bMapped)
+         return;
+
       if(m_pcolorref == NULL)
          return;
 
-     if(m_spbitmap.m_p == NULL)
+      if(m_spbitmap.m_p == NULL)
          return;
 
-     cairo_surface_t * surface = dynamic_cast < ::lnx::bitmap * > (m_spbitmap.m_p)->m_psurface;
+      cairo_surface_t * surface = dynamic_cast < ::lnx::bitmap * > (m_spbitmap.m_p)->m_psurface;
 
-     if(surface == NULL)
+      if(surface == NULL)
          return;
 
-   byte * pdata =  (byte *) m_pcolorref;
+      byte * pdata =  (byte *) m_pcolorref;
       int size = scan * cy / sizeof(COLORREF);
       while(size > 0)
       {
@@ -471,13 +479,14 @@ namespace lnx
 
       pdata =  (byte *) cairo_image_surface_get_data(surface);
 
-   if(pdata != (byte *) m_pcolorref && pdata != NULL)
-   {
-      memcpy(pdata, m_pcolorref, cy * scan);
-   }
+      if(pdata != (byte *) m_pcolorref && pdata != NULL)
+      {
+         memcpy(pdata, m_pcolorref, cy * scan);
+      }
 
+      cairo_surface_mark_dirty (surface);
 
-     cairo_surface_mark_dirty (surface);
+      m_bMapped = false;
 
    }
 
