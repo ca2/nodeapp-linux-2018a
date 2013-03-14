@@ -430,7 +430,7 @@ namespace lnx
 
 
 
-      mutex_lock sl(user_mutex(), true);
+      //mutex_lock sl(user_mutex(), true);
 
 
       if(!(display=XOpenDisplay(NULL))) {
@@ -6980,10 +6980,7 @@ namespace lnx
 
 //      single_lock sl(mutex_graphics(), true);
 
-
       mutex_lock sl(user_mutex(), true);
-
-
 
       rect rectWindow32;
 
@@ -7140,6 +7137,9 @@ namespace lnx
             }
 
          }
+
+
+
 
 
 

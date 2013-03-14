@@ -558,12 +558,9 @@ namespace lnx
       // no HTHREAD until it is created
     //  m_hThread = NULL;
       //m_nThreadID = 0;
-
-      ___THREAD_STATE* pState = __get_thread_state();
       // initialize message pump
       m_nDisablePumpCount = 0;
-      pState->m_nMsgLast = WM_NULL;
-      System.get_cursor_pos(&(pState->m_ptCursorLast));
+
 
       // most threads are deleted when not needed
       m_bAutoDelete = TRUE;
@@ -1824,6 +1821,15 @@ return false;
 //      ASSERT(pstartup->pThreadState != NULL);
       ASSERT(pstartup->m_pthread != NULL);
       //ASSERT(!pstartup->bError);
+
+{
+
+      ___THREAD_STATE* pState = __get_thread_state();
+      pState->m_nMsgLast = WM_NULL;
+      System.get_cursor_pos(&(pState->m_ptCursorLast));
+
+}
+
 
       ::lnx::thread* pThread = dynamic_cast < ::lnx::thread * > (pstartup->m_pthread);
 
