@@ -4,7 +4,7 @@
 	<File name="../operational_system/_.h" open="0" top="0" tabpos="0">
 		<Cursor position="32" topLine="0" />
 	</File>
-	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="8">
+	<File name="../operational_system/bare_operational_system.h" open="1" top="1" tabpos="2">
 		<Cursor position="2047" topLine="106" />
 	</File>
 	<File name="../operational_system/cross/win/base_tsd.h" open="0" top="0" tabpos="2">
@@ -274,14 +274,14 @@
 	<File name="lnx_util.cpp" open="0" top="0" tabpos="12">
 		<Cursor position="24" topLine="0" />
 	</File>
-	<File name="lnx_window.cpp" open="1" top="0" tabpos="1">
+	<File name="lnx_window.cpp" open="0" top="0" tabpos="1">
 		<Cursor position="14897" topLine="521" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="1">
 		<Cursor position="1041" topLine="0" />
 	</File>
-	<File name="lnx_window_draw.cpp" open="1" top="1" tabpos="2">
-		<Cursor position="9989" topLine="332" />
+	<File name="lnx_window_draw.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="9989" topLine="302" />
 	</File>
 	<File name="lnx_window_draw.h" open="0" top="0" tabpos="63">
 		<Cursor position="3589" topLine="102" />
