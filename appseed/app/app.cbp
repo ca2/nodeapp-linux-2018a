@@ -56,6 +56,7 @@
 			<Add option="-lmysqlclient" />
 			<Add option="-lssl" />
 			<Add directory="../../../stage/x86" />
+			<Add directory="/usr/lib64/mysql/" />
 		</Linker>
 		<Unit filename="app.cpp" />
 		<Unit filename="framework.h">
