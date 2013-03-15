@@ -11,7 +11,7 @@ namespace lnx
       ::ca::smart_pointer < ::ca::application_base >::set_app(papp);
       ::ca::thread_sp::create(papp);
 
-      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
+      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
 
       m_pfilemanager = NULL;
 
@@ -450,13 +450,13 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    bool application::initialize1()
    {
-      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
-      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::interaction_ptr_array;
+      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
+      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::interaction_ptr_array;
 
-      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ca::application_base >::m_p);
-      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ca::application_base >::m_p);
+      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ca::application_base >::m_p);
+      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ca::application_base >::m_p);
 
-      LNX_THREAD(smart_pointer < ::ca::thread >::m_p)->set_run();
+      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->set_run();
       return true;
    }
 

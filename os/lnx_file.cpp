@@ -186,7 +186,7 @@ namespace lnx
             {*/
 
 
-            vfxThrowFileException(get_app(), ::lnx::file_exception::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+            vfxThrowFileException(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, m_strFileName);
 
             //}
 
@@ -224,7 +224,7 @@ namespace lnx
 
 
             DWORD dwLastError = ::GetLastError();
-            vfxThrowFileException(get_app(), ::lnx::file_exception::OsErrorToException(dwLastError), dwLastError, m_strFileName);
+            vfxThrowFileException(get_app(), file_exception::OsErrorToException(dwLastError), dwLastError, m_strFileName);
 
 
             //}
@@ -265,7 +265,7 @@ namespace lnx
             {
 
             }
-            ::lnx::file_exception::ThrowOsError(get_app(), errno);
+            file_exception::ThrowOsError(get_app(), errno);
          }
          else if(iRead == 0)
          {
@@ -296,7 +296,7 @@ namespace lnx
       {
          int32_t iWrite = ::write(m_iFile, &((const byte *)lpBuf)[pos], (size_t) min(0x7fffffff, nCount));
          if(iWrite < 0)
-            ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
+            file_exception::ThrowOsError(get_app(), (LONG)::GetLastError(), m_strFileName);
          nCount -= iWrite;
          pos += iWrite;
       }
@@ -310,7 +310,7 @@ namespace lnx
    {
 
       if(m_iFile == (UINT)hFileNull)
-         ::lnx::file_exception::ThrowOsError(get_app(), (LONG)0);
+         file_exception::ThrowOsError(get_app(), (LONG)0);
 
       ASSERT_VALID(this);
       ASSERT(m_iFile != (UINT)hFileNull);
@@ -323,7 +323,7 @@ namespace lnx
       file_position posNew = ::lseek64(m_iFile, lLoOffset, (DWORD)nFrom);
 //      posNew |= ((file_position) lHiOffset) << 32;
       if(posNew  == (file_position)-1)
-         ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
       return posNew;
    }
@@ -339,7 +339,7 @@ namespace lnx
       file_position pos = ::lseek64(m_iFile, lLoOffset, SEEK_CUR);
   //    pos |= ((file_position)lHiOffset) << 32;
       if(pos  == (file_position)-1)
-         ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
 
       return pos;
    }
@@ -361,7 +361,7 @@ namespace lnx
          return;
 
       if (!::FlushFileBuffers((HANDLE)m_iFile))
-         ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
    }
 
    void file::close()
@@ -378,7 +378,7 @@ namespace lnx
       m_strFileName.Empty();
 
       if (bError)
-         ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    void file::Abort()
@@ -399,7 +399,7 @@ namespace lnx
       ASSERT(m_iFile != (UINT)hFileNull);
 
       /*if (!::LockFile((HANDLE)m_iFile, LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-         ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
    }
 
    void file::UnlockRange(file_position dwPos, file_size dwCount)
@@ -408,7 +408,7 @@ namespace lnx
       ASSERT(m_iFile != (UINT)hFileNull);
 
 /*      if (!::UnlockFile((HANDLE)m_iFile,  LODWORD(dwPos), HIDWORD(dwPos), LODWORD(dwCount), HIDWORD(dwCount)))
-         ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());*/
    }
 
    void file::set_length(file_size dwNewLen)
@@ -419,7 +419,7 @@ namespace lnx
       seek((LONG)dwNewLen, (::ca::e_seek)::ca::seek_begin);
 
       if (!::ftruncate64(m_iFile, dwNewLen))
-         ::lnx::file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
+         file_exception::ThrowOsError(get_app(), (LONG)::GetLastError());
    }
 
    file_size file::get_length() const
@@ -570,21 +570,21 @@ namespace lnx
 
 
 
-   void PASCAL ::lnx::file_exception::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
+   void PASCAL file_exception::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
    {
       if (lOsError != 0)
-         vfxThrowFileException(papp, ::lnx::file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
+         vfxThrowFileException(papp, file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void PASCAL ::lnx::file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
+   void PASCAL file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
-         vfxThrowFileException(papp, ::lnx::file_exception::ErrnoToException(nErrno), errno, lpszFileName);
+         vfxThrowFileException(papp, file_exception::ErrnoToException(nErrno), errno, lpszFileName);
    }
 
 
 
-   int32_t PASCAL ::lnx::file_exception::OsErrorToException(LONG lOsErr)
+   int32_t PASCAL file_exception::OsErrorToException(LONG lOsErr)
    {
       // NT Error codes
       switch ((UINT)lOsErr)
@@ -1682,28 +1682,36 @@ void CLASS_DECL_lnx vfxThrowFileException(::ca::application * papp, int32_t caus
    throw ::ca::file_exception(papp, cause, lOsError, lpszFileName);
 }
 
-int32_t PASCAL ::lnx::file_exception::ErrnoToException(int32_t nErrno)
+namespace lnx
 {
-   switch(nErrno)
-   {
-   case EPERM:
-   case EACCES:
-      return ::ca::file_exception::accessDenied;
-   case EBADF:
-      return ::ca::file_exception::invalidFile;
-   case EDEADLOCK:
-      return ::ca::file_exception::sharingViolation;
-   case EMFILE:
-      return ::ca::file_exception::tooManyOpenFiles;
-   case ENOENT:
-   case ENFILE:
-      return ::ca::file_exception::fileNotFound;
-   case ENOSPC:
-      return ::ca::file_exception::diskFull;
-   case EINVAL:
-   case EIO:
-      return ::ca::file_exception::hardIO;
-   default:
-      return ::ca::file_exception::type_generic;
-   }
-}
+
+
+    int32_t PASCAL file_exception::ErrnoToException(int32_t nErrno)
+    {
+       switch(nErrno)
+       {
+       case EPERM:
+       case EACCES:
+          return ::ca::file_exception::accessDenied;
+       case EBADF:
+          return ::ca::file_exception::invalidFile;
+       case EDEADLOCK:
+          return ::ca::file_exception::sharingViolation;
+       case EMFILE:
+          return ::ca::file_exception::tooManyOpenFiles;
+       case ENOENT:
+       case ENFILE:
+          return ::ca::file_exception::fileNotFound;
+       case ENOSPC:
+          return ::ca::file_exception::diskFull;
+       case EINVAL:
+       case EIO:
+          return ::ca::file_exception::hardIO;
+       default:
+          return ::ca::file_exception::type_generic;
+       }
+    }
+
+
+} // namespace lnx
+

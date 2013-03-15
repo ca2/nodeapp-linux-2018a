@@ -29,4 +29,4 @@ CLASS_DECL_lnx bool __initialize(bool bDLL, DWORD dwVersion)
 
 
 //char gen_InitAppState = (char)(__initialize(FALSE, _MFC_VER));
-char gen_InitAppState = (char)(__initialize(FALSE, 1));
+char gen_InitAppState = '\0';

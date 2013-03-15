@@ -4624,7 +4624,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       const char * psz = lpszString;
       while(i < iIndex)
       {
-         iLen = ::ca::str::utf8_char(psz).length();
+         iLen = ::ca::str::get_utf8_char(psz).length();
          iRange++;
          i += iLen;
          psz = ::ca::str::utf8_inc(psz);
@@ -4867,7 +4867,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       {
          try
          {
-            iLen = ::ca::str::utf8_char(psz).length();
+            iLen = ::ca::str::get_utf8_char(psz).length();
          }
          catch(...)
          {
@@ -5688,9 +5688,13 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
       cairo_pattern_get_surface(ppattern, &psurfaceSrc);
 
+      /*
+
       cairo_surface_t * psurface = cairo_surface_create_for_rectangle(psurfaceSrc, lpcrect->left, lpcrect->top, width(lpcrect), height(lpcrect));
 
       cairo_image_surface_blur(psurface, dRadius);
+
+      */
 
       return true;
 
