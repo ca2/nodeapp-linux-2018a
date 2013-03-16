@@ -28,6 +28,7 @@ namespace lnx
 
       // advanced use and implementation
       bool                          m_bPrinting;
+      int                     m_nStretchBltMode;
 
 
 

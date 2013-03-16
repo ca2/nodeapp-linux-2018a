@@ -23,6 +23,9 @@ namespace lnx
       m_spfont->m_strFontFamilyName = "Helvetica";
       m_spfont->m_dFontSize = 12.0;
 
+
+      m_nStretchBltMode = HALFTONE;
+
    }
 
    graphics::graphics()
@@ -36,6 +39,8 @@ namespace lnx
       m_ppathPaint      = NULL;*/
       m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
 
+
+      m_nStretchBltMode = HALFTONE;
 
    }
 
@@ -1348,9 +1353,9 @@ namespace lnx
 
          cairo_translate(m_pdc, xDst, yDst);
 
-         cairo_matrix_init_translate(&matrix, xSrc, ySrc);
+         cairo_matrix_init_translate(&matrix, -xSrc, -ySrc);
 
-         cairo_matrix_scale(&matrix, (double) nDstWidth / (double) nSrcWidth, (double) nDstHeight / (double) nSrcHeight);
+         cairo_matrix_scale(&matrix, (double) nSrcWidth / (double) nDstWidth, (double) nSrcHeight / (double) nDstHeight);
 
          cairo_pattern_set_matrix(ppattern, &matrix);
 
@@ -1359,6 +1364,19 @@ namespace lnx
          cairo_clip(m_pdc);
 
          cairo_set_source(m_pdc, ppattern);
+
+         if(m_nStretchBltMode == 0)
+         {
+            cairo_pattern_set_filter(cairo_get_source(m_pdc), CAIRO_FILTER_NEAREST);
+         }
+         else if(m_nStretchBltMode == HALFTONE)
+         {
+            cairo_pattern_set_filter(cairo_get_source(m_pdc), CAIRO_FILTER_GOOD);
+         }
+         else
+         {
+            cairo_pattern_set_filter(cairo_get_source(m_pdc), CAIRO_FILTER_FAST);
+         }
 
          cairo_paint(m_pdc);
 
@@ -3435,24 +3453,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    {
 
       //throw not_implemented(get_app());
-      return 0;
+//      return 0;
 
+m_nStretchBltMode = nStretchMode;
+return 1;
 
-/*
-      if(nStretchMode == 0)
-      {
-         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeNearestNeighbor);
-      }
-      else if(nStretchMode == HALFTONE)
-      {
-         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeHighQualityBicubic);
-      }
-      else
-      {
-         m_pgraphics->SetInterpolationMode(Gdiplus::InterpolationModeLowQuality);
-      }
-      return 1;
-*/
       /*int32_t nRetVal = 0;
       if(get_handle1() != NULL && get_handle1() != get_handle2())
          nRetVal = ::SetStretchBltMode(get_handle1(), nStretchMode);

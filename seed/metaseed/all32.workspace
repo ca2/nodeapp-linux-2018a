@@ -6,7 +6,7 @@
 		<Project filename="../../../app/appseed/optca/optca.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
-		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" active="1">
+		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/appseed/optca/optca.cbp" />
@@ -52,7 +52,7 @@
 			<Depends filename="../../os2/os2.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
+		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" active="1">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/appseed/optca/optca.cbp" />
