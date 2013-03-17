@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
-		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		<Project filename="../../../app/appseed/optca/optca.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
@@ -88,7 +90,12 @@
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/c/_.cbp" />
-		<Project filename="../../../app/appseed/ca/ca.cbp" />
+		<Project filename="../../../app/appseed/ca/ca.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/ca2/ca2.cbp" />
 		<Project filename="../../os/os.cbp" />
 		<Project filename="../../os2/os2.cbp">
