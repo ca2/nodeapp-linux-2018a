@@ -13,8 +13,10 @@
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/appseed/optca/optca.cbp" />
 			<Depends filename="../../../app-core/appseed/alarm/alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
