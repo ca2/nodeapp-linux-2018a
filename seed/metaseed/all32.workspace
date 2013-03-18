@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
-		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+		</Project>
+		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+		</Project>
 		<Project filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		<Project filename="../../../app/appseed/optca/optca.cbp">
