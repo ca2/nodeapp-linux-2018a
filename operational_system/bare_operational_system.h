@@ -354,6 +354,8 @@ typedef unsigned long   u_long;
 
 #if defined(__LP64__) || defined(_LP64)
 
+#define OS64BIT
+#define OSBIT 64
 #if !defined(__LP64__)
 #define __LP64__
 #endif
@@ -371,6 +373,8 @@ typedef uint64_t dword_ptr;
 #else
 
 
+#define OS32BIT
+#define OSBIT 32
 #define _X86_
 
 
