@@ -4,8 +4,8 @@
 	<File name="../operational_system/_.h" open="0" top="0" tabpos="0">
 		<Cursor position="32" topLine="0" />
 	</File>
-	<File name="../operational_system/bare_operational_system.h" open="0" top="0" tabpos="2">
-		<Cursor position="1994" topLine="106" />
+	<File name="../operational_system/bare_operational_system.h" open="1" top="0" tabpos="1">
+		<Cursor position="689" topLine="31" />
 	</File>
 	<File name="../operational_system/cross/win/base_tsd.h" open="0" top="0" tabpos="2">
 		<Cursor position="4784" topLine="124" />
