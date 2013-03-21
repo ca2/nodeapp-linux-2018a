@@ -5,6 +5,7 @@
 		<Option title="app" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
+		<Option extended_obj_names="1" />
 		<Build>
 			<Target title="Debug">
 				<Option output="../../../stage/x86/app" prefix_auto="0" extension_auto="0" />
@@ -46,15 +47,16 @@
 			<Add option="-Wl,-E" />
 			<Add option="-l_ca2zlib" />
 			<Add option="-l_ca2freeimage" />
+			<Add option="-l_ca2freetype" />
+			<Add option="-l_ca2openssl" />
 			<Add option="-lca2c" />
 			<Add option="-lca2optca" />
 			<Add option="-lca2ca" />
 			<Add option="-lca2" />
 			<Add option="-lca2os" />
 			<Add option="-lcairo" />
-			<Add option="-l_ca2freetype" />
 			<Add option="-lmysqlclient" />
-			<Add option="-l_ca2openssl" />
+			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../stage/x86" />
 			<Add directory="/usr/lib64/mysql/" />
 		</Linker>

@@ -1615,10 +1615,10 @@ stop_run:
    {
       SCAST_PTR(::ca::message::base, pbase, pobj);
       // special message which identifies the window as using AfxWndProc
-      if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
+      //if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
       {
-         pbase->set_lresult(0);
-         return;
+        // pbase->set_lresult(0);
+         //return;
       }
 
       // all other messages route through message ::collection::map

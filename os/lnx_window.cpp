@@ -918,11 +918,11 @@ wm_nodecorations(m_oswindow, 0);
 
       // dump out window specific statistics
       char szBuf [64];
-      if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
-         ((::ca::window *) this)->GetWindowText(szBuf, _countof(szBuf));
+//      if (!const_cast < window * > (this)->send_message(WM_QUERYAFXWNDPROC, 0, 0) && pWnd == this)
+  //       ((::ca::window *) this)->GetWindowText(szBuf, _countof(szBuf));
   //    else
 //         ::DefWindowProc(get_os_data(), WM_GETTEXT, _countof(szBuf), (LPARAM)&szBuf[0]);
-      dumpcontext << "\ncaption = \"" << szBuf << "\"";
+    //  dumpcontext << "\ncaption = \"" << szBuf << "\"";
 
 //      ::GetClassName(get_os_data(), szBuf, _countof(szBuf));
   //    dumpcontext << "\nclass name = \"" << szBuf << "\"";
@@ -6480,8 +6480,8 @@ mutex * PASCAL afxMutexHwnd()
 LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam)
 {
    // special message which identifies the window as using __window_procedure
-   if (nMsg == WM_QUERYAFXWNDPROC)
-      return 1;
+//   if (nMsg == WM_QUERYAFXWNDPROC)
+  //    return 1;
 
    throw not_implemented(::ca::get_thread_app());
 

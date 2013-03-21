@@ -46,6 +46,7 @@
 			<Add option="-lca2c" />
 			<Add option="-lca2ca" />
 			<Add option="-lca2" />
+			<Add option="-Wl,-z,defs" />
 			<Add directory="../../stage/x86" />
 		</Linker>
 		<Unit filename="application.h" />
