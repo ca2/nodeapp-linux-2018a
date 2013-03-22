@@ -38,7 +38,7 @@
 			<Depends filename="../../os2/os2.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" active="1">
+		<Project filename="../../../app-core/appseed/netnodelite/netnodelite.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
@@ -82,7 +82,7 @@
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/netnodelite_script/netnodelite_script.cbp">
+		<Project filename="../../../app-core/appseed/netnodelite_script/netnodelite_script.cbp" active="1">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />

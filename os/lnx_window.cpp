@@ -465,18 +465,29 @@ namespace lnx
 
 
       // query Visual for "TrueColor" and 32 bits depth (RGBA)
+      Visual * vis = DefaultVisual(display, DefaultScreen(display));
+      int depth = 0;
+      {
 
       XVisualInfo visualinfo ;
 
-      XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &visualinfo);
 
+
+      if(XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &visualinfo))
+      {
+          vis = visualinfo.visual;
+          depth = visualinfo.depth;
+      }
+
+
+      }
       // create window
 
       XSetWindowAttributes attr;
 
       ZERO(attr);
 
-      attr.colormap = XCreateColormap( display, rootwin, visualinfo.visual, AllocNone);
+      attr.colormap = XCreateColormap( display, rootwin, vis, AllocNone);
 
       attr.event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | StructureNotifyMask;
 
@@ -488,7 +499,7 @@ namespace lnx
 
       attr.override_redirect = True;
 
-      Window window = XCreateWindow( display, DefaultRootWindow(display), 256, 256, cs.cx, cs.cy, 0, visualinfo.depth, InputOutput, visualinfo.visual, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
+      Window window = XCreateWindow( display, DefaultRootWindow(display), 256, 256, cs.cx, cs.cy, 0, depth, InputOutput, vis, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
 
 
       /*oswindow hWnd = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass,
@@ -523,7 +534,7 @@ namespace lnx
       }
 #endif
 
-      m_oswindow = oswindow(display, window, visualinfo.visual);
+      m_oswindow = oswindow(display, window, vis);
       m_oswindow.set_user_interaction(m_pguie);
 
       if(lpszWindowName != NULL && strlen(lpszWindowName) > 0)
