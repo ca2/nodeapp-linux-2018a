@@ -383,6 +383,13 @@ namespace lnx
 
          }
 
+         if(pstraRelative != NULL)
+         {
+
+            pstraRelative->add(strName);
+
+         }
+
          bool bIsDir;
 
          if(pbaIsDir != NULL || piaSize != NULL)

@@ -25,6 +25,10 @@
 #define __WINESRC__
 
 
+#define CLASS_DECL_EXPORT
+#define CLASS_DECL_IMPORT
+
+
 #include "bare_operational_system.h"
 
 

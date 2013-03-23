@@ -86,27 +86,10 @@ namespace ca
 
 
 
-/////////////////////////////////////////////////////////////////////////////
-// thread entry point
-
-struct _AFX_THREAD_STARTUP : ::ca::thread_startup
-{
-   // following are "in" parameters to thread startup
-   ___THREAD_STATE* pThreadState;    // thread state of parent thread
-   ::lnx::thread* pThread;    // thread for new thread
-   DWORD dwCreateFlags;    // thread creation flags
-   _PNH pfnNewHandler;     // new handler for new thread
-
-   //HANDLE hEvent;          // event triggered after success/non-success
-   //HANDLE hEvent2;         // event triggered after thread is resumed
-
-   // strictly "out" -- set after hEvent is triggered
-   WINBOOL bError;    // TRUE if error during startup
-};
 
 UINT APIENTRY __thread_entry(void * pParam)
 {
-   _AFX_THREAD_STARTUP* pStartup = (_AFX_THREAD_STARTUP*)pParam;
+   ___THREAD_STARTUP* pStartup = (___THREAD_STARTUP*)pParam;
    ASSERT(pStartup != NULL);
    ASSERT(pStartup->pThreadState != NULL);
    ASSERT(pStartup->pThread != NULL);
@@ -167,6 +150,7 @@ UINT APIENTRY __thread_entry(void * pParam)
    delete pStartup;
 
    pStartup = NULL;
+
 
 
    int32_t n = pThread->m_p->main();
@@ -449,7 +433,7 @@ void CLASS_DECL_lnx __end_thread(::ca::application * papp, UINT nExitCode, bool 
 //   _endthreadex(nExitCode);
 }
 
-extern thread_local_storage * __thread_data;
+extern __thread thread_local_storage * __thread_data;
 void CLASS_DECL_lnx __term_thread(::ca::application * papp, HINSTANCE hInstTerm)
 {
 
@@ -1910,6 +1894,8 @@ return false;
             try
             {
 #endif
+                m_bReady = true;
+                m_p->m_bReady = true;
                nResult = m_p->run();
 #ifndef DEBUG
             }

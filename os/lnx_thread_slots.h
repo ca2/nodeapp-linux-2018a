@@ -55,8 +55,8 @@ public:
 };
 
 
-extern BYTE _gen_ThreadData[sizeof(thread_local_storage)];
-extern thread_local_storage * __thread_data;
+extern __thread BYTE _gen_ThreadData[sizeof(thread_local_storage)];
+extern __thread thread_local_storage * __thread_data;
 
 
 class CLASS_DECL_lnx no_track_object
