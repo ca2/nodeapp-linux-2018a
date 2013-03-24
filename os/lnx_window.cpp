@@ -543,7 +543,7 @@ namespace lnx
       }
 wm_nodecorations(m_oswindow, 0);
       //XSelectInput(m_oswindow.display(), m_oswindow.window(), ExposureMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask);
-      if(dwStyle & WS_VISIBLE)
+      if(cs.style & WS_VISIBLE)
       {
          XMapWindow(m_oswindow.display(), m_oswindow.window());
       }
@@ -556,7 +556,7 @@ wm_nodecorations(m_oswindow, 0);
 
       send_message(WM_CREATE, 0, (LPARAM) &cs);
 
-      m_pguie->SetWindowPos(0, 256, 256, cs.cx, cs.cy, 0);
+//      m_pguie->SetWindowPos(0, 256, 256, cs.cx, cs.cy, 0);
 
       send_message(WM_SIZE, 0, 0);
 
@@ -4275,13 +4275,20 @@ throw not_implemented(get_app());
 
       //throw not_implemented(get_app());
 
+      XSizeHints hints;
+
+
       if(nFlags & SWP_NOMOVE)
       {
          if(nFlags & SWP_NOSIZE)
          {
+            hints.flags = 0;
          }
          else
          {
+            hints.flags = PSize;
+            hints.width = cx;
+            hints.height = cy;
             XResizeWindow(m_oswindow.display(), m_oswindow.window(), cx, cy);
 //            XClearWindow(m_oswindow.display(), m_oswindow.window());
          }
@@ -4292,18 +4299,38 @@ throw not_implemented(get_app());
          {
             XMoveWindow(m_oswindow.display(), m_oswindow.window(), x, y);
   //          XClearWindow(m_oswindow.display(), m_oswindow.window());
+            hints.flags = PPosition;
+            hints.x = x;
+            hints.y = y;
          }
          else
          {
             XMoveResizeWindow(m_oswindow.display(), m_oswindow.window(), x, y, cx, cy);
     //        XClearWindow(m_oswindow.display(), m_oswindow.window());
+            hints.flags = PPosition | PSize;
+            hints.x = x;
+            hints.y = y;
+            hints.width = cx;
+            hints.height = cy;
          }
+      }
+
+      if(!IsWindowVisible())
+      {
+
+         XSetNormalHints(m_oswindow.display(), m_oswindow.window(), &hints);
+
       }
 
       if((nFlags & SWP_SHOWWINDOW))
       {
 
-         XMapWindow(m_oswindow.display(), m_oswindow.window());
+         if(!IsWindowVisible())
+         {
+
+            XMapWindow(m_oswindow.display(), m_oswindow.window());
+
+         }
 
       }
 

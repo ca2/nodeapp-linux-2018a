@@ -5209,7 +5209,7 @@ return 1;
 
       string str(lpszString, nCount);
 
-      size sz = GetTextExtent("P");
+      size sz = GetTextExtent("Pqgy");
 
       cairo_keep keep(m_pdc);
 
@@ -5337,18 +5337,23 @@ return true;
    bool graphics::TextOut(double x, double y, const char * lpszString, int32_t nCount)
    {
 
-   string str(lpszString, nCount);
+      string str(lpszString, nCount);
 
+      sized sz;
 
-   ((graphics *) this)->set(&m_fontxyz);
+      GetTextExtent(sz, "Pqgy", 1);
 
-   set_os_color(m_crColor);
+      cairo_keep keep(m_pdc);
 
-   cairo_move_to(m_pdc, x, y);
+      ((graphics *) this)->set(&m_fontxyz);
 
-   cairo_show_text(m_pdc, str);
+      set_os_color(m_crColor);
 
-   return true;
+      cairo_move_to(m_pdc, x, y + sz.cy);
+
+      cairo_show_text(m_pdc, str);
+
+      return true;
 
    /*
 

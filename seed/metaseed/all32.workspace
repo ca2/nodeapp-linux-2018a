@@ -95,7 +95,9 @@
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/c/_.cbp" />
+		<Project filename="../../../app/appseed/c/_.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/ca/ca.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
