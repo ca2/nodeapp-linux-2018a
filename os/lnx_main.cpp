@@ -55,11 +55,12 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 
 //   UNREFERENCED_PARAMETER(lpCmdLine);
 
-   if(!XInitThreads())
-      return -1;
+   c_xstart();
+
 
 
    XSetErrorHandler(xlib_error_handler);
+
 
 //   ::CoInitialize(NULL);
 

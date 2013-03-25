@@ -65,6 +65,7 @@ public:
       osdisplay                     m_osdisplay;
       Window                        m_window;
       Visual *                      m_pvisual;
+      bool                          m_bMessageOnlyWindow;
       ::user::interaction_base *    m_pui;
       HTHREAD                       m_hthread;
       simple_map < int, LONG > *    m_plongmap;
@@ -84,8 +85,10 @@ public:
    static oswindow_dataptra * s_pdataptra;
    static simple_mutex * s_pmutex;
 
+   static int32_t find_message_only_window(::user::interaction_base * puibaseMessageWindow);
    static int32_t find(Display * pdisplay, Window window);
    static int32_t find(Window window);
+   static data * get_message_only_window(::user::interaction_base * puibaseMessageWindow);
    static data * get(Display * pdisplay, Window window);
    static data * get(Window window);
    static Atom s_atomLongType;
@@ -99,6 +102,7 @@ public:
 
    oswindow();
    oswindow(const ::ca::null & null);
+   oswindow(::user::interaction_base * puibaseMessageOnlyWindow);
    oswindow(Display * pdisplay, Window window, Visual * pvisual = NULL);
    oswindow(const oswindow & oswindow);
    oswindow(const void * p);
