@@ -177,7 +177,7 @@ typedef struct _PROC_THREAD_ATTRIBUTE_LIST *PPROC_THREAD_ATTRIBUTE_LIST, *LPPROC
 
 class simple_event;
 
-simple_event *
+HTHREAD
 WINAPI
 CreateThread(
     LPSECURITY_ATTRIBUTES lpThreadAttributes,

@@ -417,150 +417,168 @@ namespace lnx
 //      hook_window_create(this);
 
 
-      Display *display;
-      Window rootwin;
-
-      XEvent e;
-      int32_t scr;
-//      cairo_surface_t *cs;
-
-
       m_pthread = ::ca::get_thread();
       m_pguie->m_pthread = ::ca::get_thread();
 
-
-
-      //mutex_lock sl(user_mutex(), true);
-
-
-      if(!(display=XOpenDisplay(NULL))) {
-         fprintf(stderr, "ERROR: Could not open display\n");
-         exit(1);
-      }
-
-      scr=DefaultScreen(display);
-      rootwin=RootWindow(display, scr);
-
-      if(cs.cx <= 256)
-         cs.cx = 256;
-      if(cs.cy <= 256)
-         cs.cy = 256;
-
-//      Window window = XCreateSimpleWindow(dpy, rootwin, 256, 256, cs.cx, cs.cy, 0, BlackPixel(dpy, scr), BlackPixel(dpy, scr));
-
-      const char * xserver = getenv( "DISPLAY" ) ;
-
-
-
-      if (display == 0)
-
+      if(cs.hwndParent == (oswindow) HWND_MESSAGE)
       {
+         m_oswindow = oswindow(m_pguie);
 
-      printf("Could not establish a connection to X-server '%s'\n", xserver ) ;
-
-      return false;
+         send_message(WM_CREATE, 0, (LPARAM) &cs);
 
       }
-
-
-
-      // query Visual for "TrueColor" and 32 bits depth (RGBA)
-      Visual * vis = DefaultVisual(display, DefaultScreen(display));
-      int depth = 0;
+      else
       {
 
-      XVisualInfo visualinfo ;
+         Display *display;
+         Window rootwin;
+
+         XEvent e;
+         int32_t scr;
+   //      cairo_surface_t *cs;
 
 
 
-      if(XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &visualinfo))
-      {
-          vis = visualinfo.visual;
-          depth = visualinfo.depth;
-      }
 
 
-      }
-      // create window
-
-      XSetWindowAttributes attr;
-
-      ZERO(attr);
-
-      attr.colormap = XCreateColormap( display, rootwin, vis, AllocNone);
-
-      attr.event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | StructureNotifyMask;
-
-      attr.background_pixmap = None ;
-
-      attr.border_pixmap = None;
-
-      attr.border_pixel = 0 ;
-
-      attr.override_redirect = True;
-
-      Window window = XCreateWindow( display, DefaultRootWindow(display), 256, 256, cs.cx, cs.cy, 0, depth, InputOutput, vis, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
+         //mutex_lock sl(user_mutex(), true);
 
 
-      /*oswindow hWnd = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass,
-         cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy,
-         cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);*/
-
-#ifdef DEBUG
-      if (window == 0)
-      {
-         DWORD dwLastError = GetLastError();
-         string strLastError = FormatMessageFromSystem(dwLastError);
-         string strMessage;
-         strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
-
-         TRACE(::ca::trace::category_AppMsg, 0, "Warning: oswindow creation failed: GetLastError returned:\n");
-         TRACE(::ca::trace::category_AppMsg, 0, "%s\n", strMessage);
-         try
+         if(!(display=XOpenDisplay(NULL)))
          {
-            if(dwLastError == 0x0000057e)
-            {
-               System.simple_message_box(NULL, "Cannot create a top-level child window.");
-            }
-            else
-            {
-               System.simple_message_box(NULL, strMessage);
-            }
+            fprintf(stderr, "ERROR: Could not open display\n");
+            exit(1);
          }
-         catch(...)
+
+         scr      =  DefaultScreen(display);
+         rootwin  =  RootWindow(display, scr);
+
+         if(cs.cx <= 256)
+            cs.cx = 256;
+         if(cs.cy <= 256)
+            cs.cy = 256;
+
+   //      Window window = XCreateSimpleWindow(dpy, rootwin, 256, 256, cs.cx, cs.cy, 0, BlackPixel(dpy, scr), BlackPixel(dpy, scr));
+
+         const char * xserver = getenv( "DISPLAY" ) ;
+
+
+
+         if (display == 0)
+
          {
-         }
+
+         printf("Could not establish a connection to X-server '%s'\n", xserver ) ;
+
          return false;
-      }
-#endif
 
-      m_oswindow = oswindow(display, window, vis);
-      m_oswindow.set_user_interaction(m_pguie);
-
-      if(lpszWindowName != NULL && strlen(lpszWindowName) > 0)
-      {
-         XStoreName(m_oswindow.display(), m_oswindow.window(), lpszWindowName);
-      }
-wm_nodecorations(m_oswindow, 0);
-      //XSelectInput(m_oswindow.display(), m_oswindow.window(), ExposureMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask);
-      if(cs.style & WS_VISIBLE)
-      {
-         XMapWindow(m_oswindow.display(), m_oswindow.window());
-      }
+         }
 
 
+
+         // query Visual for "TrueColor" and 32 bits depth (RGBA)
+         Visual * vis = DefaultVisual(display, DefaultScreen(display));
+         int depth = 0;
+         {
+
+            XVisualInfo visualinfo ;
+
+
+
+            if(XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &visualinfo))
+            {
+                vis = visualinfo.visual;
+                depth = visualinfo.depth;
+            }
+
+
+         }
+         // create window
+
+         XSetWindowAttributes attr;
+
+         ZERO(attr);
+
+         attr.colormap = XCreateColormap( display, rootwin, vis, AllocNone);
+
+         attr.event_mask = ExposureMask | ButtonPressMask | ButtonReleaseMask | KeyPressMask | KeyReleaseMask | PointerMotionMask | StructureNotifyMask;
+
+         attr.background_pixmap = None ;
+
+         attr.border_pixmap = None;
+
+         attr.border_pixel = 0 ;
+
+         attr.override_redirect = True;
+
+         Window window = XCreateWindow( display, DefaultRootWindow(display), 256, 256, cs.cx, cs.cy, 0, depth, InputOutput, vis, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
+
+
+         /*oswindow hWnd = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass,
+            cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy,
+            cs.hwndParent, cs.hMenu, cs.hInstance, cs.lpCreateParams);*/
+
+   #ifdef DEBUG
+         if (window == 0)
+         {
+            DWORD dwLastError = GetLastError();
+            string strLastError = FormatMessageFromSystem(dwLastError);
+            string strMessage;
+            strMessage.Format("%s\n\nSystem Error Code: %d", strLastError, dwLastError);
+
+            TRACE(::ca::trace::category_AppMsg, 0, "Warning: oswindow creation failed: GetLastError returned:\n");
+            TRACE(::ca::trace::category_AppMsg, 0, "%s\n", strMessage);
+            try
+            {
+               if(dwLastError == 0x0000057e)
+               {
+                  System.simple_message_box(NULL, "Cannot create a top-level child window.");
+               }
+               else
+               {
+                  System.simple_message_box(NULL, strMessage);
+               }
+            }
+            catch(...)
+            {
+            }
+            return false;
+         }
+   #endif
+
+         m_oswindow = oswindow(display, window, vis);
+         m_oswindow.set_user_interaction(m_pguie);
+
+         if(lpszWindowName != NULL && strlen(lpszWindowName) > 0)
+         {
+            XStoreName(m_oswindow.display(), m_oswindow.window(), lpszWindowName);
+         }
+
+         wm_nodecorations(m_oswindow, 0);
+
+         //XSelectInput(m_oswindow.display(), m_oswindow.window(), ExposureMask | ButtonPressMask | ButtonReleaseMask | PointerMotionMask | KeyPressMask);
+
+         if(cs.style & WS_VISIBLE)
+         {
+            XMapWindow(m_oswindow.display(), m_oswindow.window());
+         }
 
       //if (!unhook_window_create())
         // PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
 
-      send_message(WM_CREATE, 0, (LPARAM) &cs);
+         send_message(WM_CREATE, 0, (LPARAM) &cs);
 
-//      m_pguie->SetWindowPos(0, 256, 256, cs.cx, cs.cy, 0);
+   //      m_pguie->SetWindowPos(0, 256, 256, cs.cx, cs.cy, 0);
 
-      send_message(WM_SIZE, 0, 0);
+         send_message(WM_SIZE, 0, 0);
 
-      LNX_THREAD(m_pthread->m_pthread->m_p)->m_oswindowa.add(m_oswindow);
+         LNX_THREAD(m_pthread->m_pthread->m_p)->m_oswindowa.add(m_oswindow);
+
+      }
+
+
+
 
 //      on_set_parent(pparent);
 
@@ -625,7 +643,7 @@ wm_nodecorations(m_oswindow, 0);
       {
          string strName = "ca2::fontopus::message_wnd::winservice_1";
 //         if(!CreateEx(0, NULL, pszName, WS_CHILD, 0, 0, 0, 0, oswindow_MESSAGE, NULL, NULL))
-         if(!CreateEx(0, NULL, pszName, WS_CHILD, 0, 0, 0, 0,::ca::null(), id(), NULL))
+         if(!CreateEx(0, NULL, pszName, WS_CHILD, 0, 0, 0, 0,HWND_MESSAGE, id(), NULL))
          {
             return false;
          }

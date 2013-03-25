@@ -883,6 +883,8 @@ namespace lnx
       if (m_hThread == NULL)
          return FALSE;
 
+      m_hThread->m_pthread = this;
+
       // start the thread just for ca2 API initialization
       VERIFY(ResumeThread() != (DWORD)-1);
       pstartup->hEvent.wait();
@@ -894,7 +896,7 @@ namespace lnx
       // if error during startup, shut things down
       if (pstartup->bError)
       {
-         m_hThread->wait();
+         m_hThread->m_pevent->wait();
          m_hThread = NULL;
          return FALSE;
       }
@@ -1475,31 +1477,42 @@ stop_run:
 
             ::ca::smart_pointer < ::ca::message::base > spbase;
 
+            if(msg.message == 126)
+            {
+
+               TRACE0("WM_DISPLAYCHANGE");
+            }
+
             spbase(get_base(&msg));
 
-            if(m_p != NULL)
+            if(spbase.is_set())
             {
-               m_p->pre_translate_message(spbase);
+
+               if(m_p != NULL)
+               {
+                  m_p->pre_translate_message(spbase);
+                  if(spbase->m_bRet)
+                     return TRUE;
+               }
+
+               System.pre_translate_message(spbase);
                if(spbase->m_bRet)
                   return TRUE;
-            }
 
-            System.pre_translate_message(spbase);
-            if(spbase->m_bRet)
-               return TRUE;
+               if(!Application.is_system())
+               {
+                  Application.pre_translate_message(spbase);
+                  if(spbase->m_bRet)
+                     return TRUE;
+               }
 
-            if(!Application.is_system())
-            {
-               Application.pre_translate_message(spbase);
+               __pre_translate_message(spbase);
                if(spbase->m_bRet)
                   return TRUE;
+
+               spbase.destroy();
+
             }
-
-            __pre_translate_message(spbase);
-            if(spbase->m_bRet)
-               return TRUE;
-
-            spbase.destroy();
 
             if(msg.hwnd != NULL)
             {

@@ -27,6 +27,18 @@ typedef struct tagPOINT
 } POINT, *PPOINT, NEAR *NPPOINT, FAR *LPPOINT;
 
 
+class hthread;
+
+namespace ca
+{
+
+
+   class thread_base;
+
+
+} // namespace ca
+
+
 namespace user
 {
 
@@ -47,7 +59,7 @@ class simple_event;
 class simple_mutex;
 
 
-typedef simple_event * HTHREAD;
+typedef hthread * HTHREAD;
 
 
 class CLASS_DECL_c oswindow
@@ -219,7 +231,7 @@ public:
 
 };
 
-
+#define HWND_MESSAGE ((::oswindow::data *) (int_ptr) 1)
 
 inline bool IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant)
 {
