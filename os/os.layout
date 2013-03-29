@@ -88,10 +88,10 @@
 	<File name="lnx_appcore.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="32" topLine="0" />
 	</File>
-	<File name="lnx_application.cpp" open="1" top="1" tabpos="2">
+	<File name="lnx_application.cpp" open="0" top="0" tabpos="2">
 		<Cursor position="14650" topLine="551" />
 	</File>
-	<File name="lnx_application.h" open="1" top="0" tabpos="1">
+	<File name="lnx_application.h" open="0" top="0" tabpos="1">
 		<Cursor position="4795" topLine="161" />
 	</File>
 	<File name="lnx_appmodul.cpp" open="0" top="0" tabpos="7">
