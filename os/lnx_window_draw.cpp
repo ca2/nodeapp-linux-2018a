@@ -88,7 +88,7 @@ namespace lnx{
    {
       if(!m_bProDevianMode)
       {
-         m_spwindowMessage->PostMessage(WM_USER + 1984 + 1977);
+         m_uiMessage.PostMessage(WM_USER + 1984 + 1977);
       }
    }
 

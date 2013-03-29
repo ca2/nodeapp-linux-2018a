@@ -171,6 +171,8 @@ namespace lnx
 
 
 
+
+
    // oswindow Text Functions
       void SetWindowText(const char * lpszString);
       strsize GetWindowText(LPTSTR lpszStringBuf, strsize nMaxCount);

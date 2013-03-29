@@ -563,6 +563,18 @@ namespace lnx
 
    thread::~thread()
    {
+
+      if(m_uiMessage.m_pimpl != NULL)
+      {
+         m_uiMessage.m_pimpl->m_pthread = NULL;
+         m_uiMessage.m_pimpl->m_signalptra.remove_all();
+         m_uiMessage.m_pimpl->m_signala.remove_all();
+      }
+
+      m_uiMessage.m_pthread = NULL;
+      m_uiMessage.m_signalptra.remove_all();
+      m_uiMessage.m_signala.remove_all();
+
       if(m_puiptra != NULL)
       {
          single_lock sl(&m_mutexUiPtra, TRUE);
@@ -660,6 +672,14 @@ namespace lnx
    }
 
 
+   int thread::get_x_window_count() const
+   {
+
+         if(m_puiptra == NULL)
+            return 0;
+
+            return m_puiptra->get_count();
+   }
 
    ::user::interaction * thread::SetMainWnd(::user::interaction * pui)
    {
@@ -758,7 +778,7 @@ namespace lnx
 
    void thread::set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse)
    {
-      if(m_spwindowMessage.is_null())
+      if(!m_uiMessage.IsWindow())
       {
          return;
       }
@@ -773,9 +793,9 @@ namespace lnx
          }
       }
       sl.unlock();
-      if(m_spwindowMessage->IsWindow())
+      if(m_uiMessage.IsWindow())
       {
-         m_spwindowMessage->SetTimer((uint_ptr)-2, iMin, NULL);
+         m_uiMessage.SetTimer((uint_ptr)-2, iMin, NULL);
       }
    }
 

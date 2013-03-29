@@ -125,6 +125,31 @@ namespace lnx
       m_cairosurfaceWork = NULL;
    }
 
+   window::~window()
+   {
+
+      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().m_pwindowmap != NULL)
+      {
+         Sys(m_papp).user().m_pwindowmap->m_map.remove_key((int_ptr) get_os_data());
+      }
+
+      //single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
+      if(m_pfont != NULL)
+      {
+         delete m_pfont;
+      }
+      //sl.unlock();
+      if(m_oswindow != NULL)
+      {
+
+         TRACE(::ca::trace::category_AppMsg, 0, "Warning: calling DestroyWindow in window::~window; "
+            "OnDestroy or PostNcDestroy in derived class will not be called.\n");
+         m_pcallback = NULL;
+         DestroyWindow();
+      }
+   }
+
+
    ::ca::window * window::from_os_data(void * pdata)
    {
       return dynamic_cast < ::ca::window * >(from_handle((oswindow) pdata));
@@ -385,7 +410,7 @@ namespace lnx
       cs.y = y;
       cs.cx = nWidth;
       cs.cy = nHeight;
-//      cs.hwndParent = hWndParent;
+      cs.hwndParent = hWndParent;
       //   cs.hMenu = hWndParent == NULL ? NULL : nIDorHMenu;
       cs.hMenu = NULL;
 //      cs.hInstance = System.m_hInstance;
@@ -652,28 +677,6 @@ namespace lnx
    }
 
 
-   window::~window()
-   {
-
-      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().m_pwindowmap != NULL)
-      {
-         Sys(m_papp).user().m_pwindowmap->m_map.remove_key((int_ptr) get_os_data());
-      }
-
-      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
-      if(m_pfont != NULL)
-      {
-         delete m_pfont;
-      }
-      sl.unlock();
-      if (get_os_data() != NULL)
-      {
-         TRACE(::ca::trace::category_AppMsg, 0, "Warning: calling DestroyWindow in window::~window; "
-            "OnDestroy or PostNcDestroy in derived class will not be called.\n");
-         m_pcallback = NULL;
-         DestroyWindow();
-      }
-   }
 
    void window::install_message_handling(::ca::message::dispatch * pinterface)
    {
@@ -970,14 +973,27 @@ namespace lnx
 
    bool window::DestroyWindow()
    {
+
+      if((get_os_data() == NULL))
+         return false;
+
+      if(m_oswindow.m_pdata->m_bMessageOnlyWindow)
+      {
+
+         ::oswindow::remove_message_only_window(m_pguie);
+
+         m_pguie = NULL;
+
+         return false;
+
+      }
+
       single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
       ::ca::window * pWnd;
       hwnd_map * pMap;
       oswindow hWndOrig;
       bool bResult;
 
-      if ((get_os_data() == NULL) )
-         return FALSE;
 
       bResult = FALSE;
       pMap = NULL;

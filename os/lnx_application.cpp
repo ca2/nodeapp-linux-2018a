@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <X11/cursorfont.h>
 
 extern __thread thread_local_storage * __thread_data;
 
@@ -29,9 +30,6 @@ namespace lnx
       //m_lpCmdLine = NULL;
 //      m_pCmdInfo = NULL;
 
-      // initialize wait cursor state
-      m_nWaitCursorCount = 0;
-      m_hcurWaitCursorRestore = NULL;
 
       // initialize current printer state
 // xxx       m_hDevMode = NULL;
@@ -542,6 +540,47 @@ if(__get_module_state()->m_pmapHWND == NULL)
    {
       return ::win::graphics::from_handle((HDC) pdata);
    }*/
+
+   void application::ShowWaitCursor(bool bShow)
+   {
+
+      mutex_lock mlUser(user_mutex(), true);
+
+      mutex_lock mlOsWindow(*::oswindow::s_pmutex, true);
+
+      unsigned int uiShape;
+
+      if(bShow)
+      {
+
+         uiShape = XC_watch;
+
+      }
+      else
+      {
+
+         uiShape = XC_arrow;
+
+      }
+
+      for(int i = 0; i < ::oswindow::s_pdataptra->get_count(); i++)
+      {
+
+         oswindow window = ::oswindow::s_pdataptra->element_at(i);
+
+         if(window.m_pdata->m_bMessageOnlyWindow)
+            continue;
+
+         if(window.display() == NULL)
+            continue;
+
+         Cursor cursor = XCreateFontCursor(window.display(), uiShape);
+
+         XDefineCursor(window.display(), window.window(), cursor);
+
+      }
+
+   }
 
    ::ca::window * application::window_from_os_data(void * pdata)
    {

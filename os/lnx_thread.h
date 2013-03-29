@@ -151,6 +151,7 @@ namespace lnx
       // called when occurs an se_exception exception in run
       // return true to call run again
       virtual bool on_run_exception(::ca::exception & e);
+      virtual int32_t get_x_window_count() const;
 
    // Overridables
       // thread initialization

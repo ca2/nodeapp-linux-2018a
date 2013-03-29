@@ -182,6 +182,8 @@ namespace lnx
 
       //::ca::graphics * graphics_from_os_data(void * pdata);
 
+      virtual void ShowWaitCursor(bool bShow = true);
+
       ::ca::window * window_from_os_data(void * pdata);
       ::ca::window * window_from_os_data_permanent(void * pdata);
 

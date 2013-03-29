@@ -5889,14 +5889,23 @@ void cairo_image_surface_blur( cairo_surface_t* surface, double radius )
 
       switch(e.m_etype)
       {
-      case simple_path::element::type_arc:
+      case ::ca::graphics_path::element::type_arc:
          set(e.m_arc);
          break;
-      case simple_path::element::type_line:
+      case ::ca::graphics_path::element::type_line:
          set(e.m_line);
          break;
-      case simple_path::element::type_close:
-         cairo_close_path(m_pdc);
+      case ::ca::graphics_path::element::type_move:
+         set(e.m_move);
+         break;
+      case ::ca::graphics_path::element::type_end:
+         {
+
+            if(e.m_end.m_bClose)
+            {
+            cairo_close_path(m_pdc);
+            }
+         }
          break;
       default:
          throw "unexpected simple os graphics element type";

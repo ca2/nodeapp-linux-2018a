@@ -135,6 +135,7 @@ public:
 
    static bool remove(Display * pdisplay, Window window);
 
+   static bool remove_message_only_window(::user::interaction_base * puibaseMessageOnlyWindow);
 
    oswindow & operator = (const oswindow & window);
 
