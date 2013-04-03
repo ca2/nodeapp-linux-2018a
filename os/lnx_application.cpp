@@ -448,15 +448,13 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    bool application::initialize1()
    {
-      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_ptimera = new ::user::interaction::timer_array(this);
-      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_puiptra = new user::interaction_ptr_array;
 
-      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_ptimera->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ca::application_base >::m_p);
-      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_puiptra->m_papp = dynamic_cast < ::plane::application * >  (::ca::smart_pointer < ::ca::application_base >::m_p);
+      ::ca::smart_pointer < ::ca::thread >::m_p->set_run();
 
-      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->set_run();
       return true;
+
    }
+
 
    bool application::initialize2()
    {
@@ -595,9 +593,9 @@ if(__get_module_state()->m_pmapHWND == NULL)
       user::interaction_ptr_array wndptra = System.frames();
       for(int32_t i = 0; i < wndptra.get_count(); i++)
       {
-         if(wndptra[i]->get_safe_handle() == (oswindow) pdata)
+         if(wndptra[i].get_safe_handle() == (oswindow) pdata)
          {
-            return wndptra[i]->get_wnd();
+            return wndptra[i].get_wnd();
          }
       }
       return NULL;

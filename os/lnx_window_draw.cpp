@@ -21,7 +21,10 @@ public:
 
 };
 
-namespace lnx{
+
+namespace lnx
+{
+
 
    window_draw::window_draw(::ca::application * papp) :
       ca(papp),
@@ -31,7 +34,8 @@ namespace lnx{
       m_mutexRendering(papp),
       m_mutexRgnUpdate(papp),
       m_semaphoreBuffer(papp),
-      m_mutexRender(papp)
+      m_mutexRender(papp),
+      m_wndpaOut(papp)
    {
       m_dwLastRedrawRequest = ::GetTickCount();
       m_bRender = false;
@@ -88,7 +92,7 @@ namespace lnx{
    {
       if(!m_bProDevianMode)
       {
-         m_uiMessage.PostMessage(WM_USER + 1984 + 1977);
+         m_spuiMessage->PostMessage(WM_USER + 1984 + 1977);
       }
    }
 
@@ -262,7 +266,7 @@ namespace lnx{
       }
       else
       {
-         ::user::window_interface * ptwi = System.user().window_map().get((int_ptr) hwndParam);
+         ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) hwndParam);
          ::user::interaction * pguie = dynamic_cast < ::user::interaction * > (ptwi);
          rect rectWindow;
          ::GetWindowRect((oswindow) hwndParam, rectWindow);
@@ -421,18 +425,13 @@ namespace lnx{
          return false;
       }*/
 
-
-
       user::oswindow_array hwnda;
 
       get_wnda(hwnda);
 
-      user::interaction_ptr_array wndpa;
-
-
+      user::interaction_ptr_array wndpa(get_app());
 
       get_wnda(wndpa);
-
 
       user::window_util::SortByZOrder(hwnda);
 
@@ -518,9 +517,9 @@ namespace lnx{
       {
          try
          {
-            if(wndpa[l]->oprop("session").is_new())
+            if(wndpa[l].oprop("session").is_new())
             {
-               dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl)->_001UpdateWindow();
+               dynamic_cast < ::ca::window * > (wndpa[l].m_pimpl.m_p)->_001UpdateWindow();
             }
             l++;
          }
@@ -528,14 +527,14 @@ namespace lnx{
          {
             if(se.m_strMessage == "no more a window")
             {
-               System.frames().remove(wndpa[l]);
+               System.frames().remove(wndpa(l));
                wndpa.remove_at(l);
 
             }
          }
          catch(...)
          {
-            System.frames().remove(wndpa[l]);
+            System.frames().remove(wndpa(l));
             wndpa.remove_at(l);
          }
       }
@@ -551,9 +550,9 @@ namespace lnx{
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
          {
-            if(wndpa[l]->get_safe_handle() == hwndTopic)
+            if(wndpa[l].get_safe_handle() == hwndTopic)
             {
-               pwnd = dynamic_cast < ::ca::window * > (wndpa[l]->m_pimpl);
+               pwnd = dynamic_cast < ::ca::window * > (wndpa[l].m_pimpl.m_p);
                break;
             }
          }
@@ -658,7 +657,7 @@ namespace lnx{
 
       for(int32_t i = 0; i < m_wndpaOut.get_count(); i++)
       {
-         ::user::interaction* pwnd = m_wndpaOut[i];
+         ::user::interaction* pwnd = m_wndpaOut(i);
 
          ScreenOutput(m_pbuffer, pwnd);
 

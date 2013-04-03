@@ -2,6 +2,8 @@
 #include <cairo/cairo-xlib.h>
 #include <X11/Xatom.h>
 
+#define TEST 0
+
 //#define COMPILE_MULTIMON_STUBS
 //#include <multimon.h>
 
@@ -29,6 +31,9 @@ struct __CTLCOLOR
    HDC hDC;
    UINT nCtlType;
 };
+
+extern cairo_surface_t *  g_cairosurface;
+extern cairo_t *  g_cairo;
 
 WINBOOL PeekMessage(
     LPMESSAGE lpMsg,
@@ -79,6 +84,7 @@ namespace lnx
       m_cairosurfaceSource = NULL;
       m_cairoWork = NULL;
       m_cairosurfaceWork = NULL;
+      m_bExposing = false;
    }
 
    void window::construct(oswindow hWnd)
@@ -100,6 +106,7 @@ namespace lnx
       m_cairosurfaceSource = NULL;
       m_cairoWork = NULL;
       m_cairosurfaceWork = NULL;
+      m_bExposing = false;
    }
 
    window::window(::ca::application * papp) :
@@ -123,14 +130,15 @@ namespace lnx
       m_cairosurfaceSource = NULL;
       m_cairoWork = NULL;
       m_cairosurfaceWork = NULL;
+      m_bExposing = false;
    }
 
    window::~window()
    {
 
-      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().m_pwindowmap != NULL)
+      if(m_papp != NULL && m_papp->m_psystem != NULL && Sys(m_papp).user().is_set() && Sys(m_papp).user()->m_pwindowmap != NULL)
       {
-         Sys(m_papp).user().m_pwindowmap->m_map.remove_key((int_ptr) get_os_data());
+         Sys(m_papp).user()->m_pwindowmap->m_map.remove_key((int_ptr) get_os_data());
       }
 
       //single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
@@ -230,7 +238,7 @@ namespace lnx
       if(oswindow.get_user_interaction() == NULL)
          return NULL;
 
-      return dynamic_cast < ::lnx::window * > (oswindow.get_user_interaction()->m_pimpl);
+      return dynamic_cast < ::lnx::window * > (oswindow.get_user_interaction()->m_pimpl.m_p);
 
    }
 
@@ -241,7 +249,7 @@ namespace lnx
       if(oswindow.get_user_interaction() == NULL)
          return NULL;
 
-      return dynamic_cast < ::lnx::window * > (oswindow.get_user_interaction()->m_pimpl);
+      return dynamic_cast < ::lnx::window * > (oswindow.get_user_interaction()->m_pimpl.m_p);
 
    }
 
@@ -472,7 +480,8 @@ namespace lnx
          if(!(display=XOpenDisplay(NULL)))
          {
             fprintf(stderr, "ERROR: Could not open display\n");
-            exit(1);
+//            exit(1);
+            return false;
          }
 
          scr      =  DefaultScreen(display);
@@ -1520,7 +1529,7 @@ namespace lnx
             || pbase->m_uiMessage == WM_MBUTTONDOWN
             || pbase->m_uiMessage == WM_MOUSEMOVE)
          {
-            if(Application.m_puser != NULL)
+            if(Application.fontopus().m_puser != NULL)
             {
                if(&ApplicationUser != NULL)
                {
@@ -1616,9 +1625,9 @@ namespace lnx
 restart_mouse_hover_check:
          for(int32_t i = 0; i < m_guieptraMouseHover.get_size(); i++)
          {
-            if(!m_guieptraMouseHover[i]->_001IsPointInside(pmouse->m_pt))
+            if(!m_guieptraMouseHover[i]._001IsPointInside(pmouse->m_pt))
             {
-               ::user::interaction * pui = m_guieptraMouseHover[i];
+               ::user::interaction * pui = m_guieptraMouseHover(i);
 //               pui->send_message(WM_MOUSELEAVE);
                m_guieptraMouseHover.remove(pui);
                goto restart_mouse_hover_check;
@@ -1660,7 +1669,7 @@ restart_mouse_hover_check:
             }
          }
          user::oswindow_array hwnda;
-         user::interaction_ptr_array wnda;
+         user::interaction_ptr_array wnda(get_app());
          wnda = System.frames();
          wnda.get_wnda(hwnda);
          user::window_util::SortByZOrder(hwnda);
@@ -1683,7 +1692,7 @@ restart_mouse_hover_check:
       {
 
          ::ca::message::key * pkey = (::ca::message::key *) pbase;
-         ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Application.user().get_keyboard_focus());
+         ::user::interaction * puiFocus = dynamic_cast < ::user::interaction * > (Application.user()->get_keyboard_focus());
          if(puiFocus != NULL
             && puiFocus->IsWindow()
             && puiFocus->GetTopLevelParent() != NULL)
@@ -2404,12 +2413,12 @@ return NULL;
 
       for(int32_t i = 0; i < hWnd->m_uiptraChild.get_count(); i++)
       {
-         if(hWnd->m_uiptraChild[i]->GetDlgCtrlId() == id)
+         if(hWnd->m_uiptraChild[i].GetDlgCtrlId() == id)
          {
-            if(hWnd->m_uiptraChild[i]->GetDescendantWindow(id))
-               return hWnd->m_uiptraChild[i]->GetDescendantWindow(id);
+            if(hWnd->m_uiptraChild[i].GetDescendantWindow(id))
+               return hWnd->m_uiptraChild[i].GetDescendantWindow(id);
             else
-               return hWnd->m_uiptraChild[i];
+               return hWnd->m_uiptraChild(i);
          }
       }
 
@@ -4627,9 +4636,9 @@ throw not_implemented(get_app());
             }
             ::ShowWindow(get_os_data(), nCmdShow);
          }
-         m_bVisible = ::IsWindowVisible(get_os_data()) != FALSE;
+//         m_bVisible = ::IsWindowVisible(get_os_data()) != FALSE;
          if(m_pguie!= NULL && m_pguie != this)
-            m_pguie->m_bVisible = m_bVisible;
+//            m_pguie->m_bVisible = m_bVisible;
          if(!m_bVisible || IsIconic())
          {
             ::UpdateLayeredWindow(get_os_data(), NULL, NULL, NULL, NULL, NULL, 0, NULL, 0);
@@ -5010,10 +5019,18 @@ throw not_implemented(get_app());
       cairo_t * pcairo = (cairo_t *) pgraphics->get_os_data();
 
       cairo_surface_t * psurface = cairo_get_target(pcairo);
+	if(pcairo ==  g_cairo)
+	{
+         printf("123");
+
+	}
 
       cairo_destroy(pcairo);
 
-      cairo_surface_destroy(psurface);
+if(psurface == g_cairosurface)
+{
+   printf("123");
+}      cairo_surface_destroy(psurface);
 
 //      if(((Gdiplus::Graphics *)(dynamic_cast<::lnx::graphics * >(pgraphics))->get_os_data()) == NULL)
   //       return false;
@@ -5314,7 +5331,7 @@ throw not_implemented(get_app());
       if(::GetCapture() == NULL)
          return NULL;
 
-      return dynamic_cast < ::ca::window * > (::GetCapture().get_user_interaction()->m_pimpl);
+      return dynamic_cast < ::ca::window * > (::GetCapture().get_user_interaction()->m_pimpl.m_p);
 
    }
 
@@ -5345,7 +5362,7 @@ throw not_implemented(get_app());
       if(!::IsWindow(w))
          return NULL;
 
-      return dynamic_cast < ::ca::window * > (w.get_user_interaction()->m_pimpl);
+      return dynamic_cast < ::ca::window * > (w.get_user_interaction()->m_pimpl.m_p);
 
    }
 
@@ -5359,7 +5376,7 @@ throw not_implemented(get_app());
       if(!::IsWindow(w))
          return NULL;
 
-      return dynamic_cast < ::ca::window * > (w.get_user_interaction()->m_pimpl);
+      return dynamic_cast < ::ca::window * > (w.get_user_interaction()->m_pimpl.m_p);
 
    }
 
@@ -5588,7 +5605,7 @@ throw not_implemented(get_app());
       if(m_pguie->m_uiptraChild.get_size() <= 0)
          return NULL;
 
-      return m_pguie->m_uiptraChild[0];
+      return m_pguie->m_uiptraChild(0);
     //  throw not_implemented(get_app());
 //      ASSERT(::IsWindow(get_os_data()));
 //      return ::lnx::window::from_handle(::GetTopWindow(get_os_data()));
@@ -6459,7 +6476,7 @@ throw not_implemented(get_app());
 
    void window::_001BaseWndInterfaceMap()
    {
-      System.user().window_map().set((int_ptr)get_os_data(), this);
+      System.user()->window_map().set((int_ptr)get_os_data(), this);
    }
 
 
@@ -7054,13 +7071,20 @@ namespace lnx
 
       mutex_lock sl(user_mutex(), true);
 
+      if(m_bExposing)
+         return;
+
+      keeper < bool > keepExposing(&m_bExposing, true, false, true);
+
       rect rectWindow32;
 
       GetWindowRect(rectWindow32);
 
       if(rectWindow32.area() <= 0)
+      {
+         TRACE("area is null or negative");
          return;
-
+      }
 
       rect64 rectWindow = rectWindow32;
 
@@ -7130,7 +7154,6 @@ namespace lnx
          }
 
 
-
          if(bSize || bMove)
          {
 
@@ -7149,14 +7172,21 @@ namespace lnx
 
                if(m_cairoWork != NULL)
                {
+	if(m_cairoWork ==  g_cairo)
+	{
+         printf("123");
 
-                  cairo_destroy(m_cairoWork);
+	}          cairo_destroy(m_cairoWork);
 
                }
 
                if(m_cairosurfaceWork != NULL)
                {
 
+if(m_cairosurfaceWork == g_cairosurface)
+{
+   printf("123");
+}
                   cairo_surface_destroy(m_cairosurfaceWork);
 
                }
@@ -7164,6 +7194,11 @@ namespace lnx
 
                if(m_cairoSource != NULL)
                {
+	if(m_cairoSource ==  g_cairo)
+	{
+         printf("123");
+
+	}
 
                   cairo_destroy(m_cairoSource);
 
@@ -7172,7 +7207,11 @@ namespace lnx
                if(m_cairosurfaceSource != NULL)
                {
 
-                  cairo_surface_destroy(m_cairosurfaceSource);
+             if(m_cairosurfaceSource == g_cairosurface)
+{
+   printf("123");
+}
+          cairo_surface_destroy(m_cairosurfaceSource);
 
                }
 
@@ -7181,7 +7220,12 @@ namespace lnx
 
                   m_cairosurface = cairo_xlib_surface_create(m_oswindow.display(), m_oswindow.window(), m_oswindow.visual(), rectWindow.width(), rectWindow.height());
 
+
+                  g_cairosurface = m_cairosurface;
+
                   m_cairo = cairo_create(m_cairosurface);
+
+                  g_cairo = m_cairo;
 
                }
                else
@@ -7214,13 +7258,10 @@ namespace lnx
 
 
 
-
-#ifndef DEBUG
+     ::ca::graphics_sp g(get_app());
 
       try
       {
-
-#endif
 
          cairo_reset_clip(m_cairoSource);
 
@@ -7232,26 +7273,51 @@ namespace lnx
 
          cairo_fill(m_cairoSource);
 
-         cairo_keep keepSource(m_cairoSource);
-
-         ::ca::graphics_sp g(get_app());
-
-         g->attach(m_cairoSource);
-
-         _000OnDraw(g);
-
-         g->detach();
-
-         keepSource.restore();
 
 
-#ifndef DEBUG
       }
       catch(...)
       {
 
       }
-#endif
+
+      cairo_keep keepSource(m_cairoSource);
+
+      try
+      {
+
+         g->attach(m_cairoSource);
+
+         _000OnDraw(g);
+
+
+      }
+      catch(...)
+      {
+
+      }
+
+      try
+      {
+
+         g->detach();
+
+      }
+      catch(...)
+      {
+
+      }
+
+      try
+      {
+
+         keepSource.restore();
+
+      }
+      catch(...)
+      {
+
+      }
 
 
       XLockDisplay(m_oswindow.display());
@@ -7266,6 +7332,19 @@ namespace lnx
          cairo_set_source_surface(m_cairo, m_cairosurfaceSource, 0, 0);
 
          cairo_paint(m_cairo);
+
+
+         #if TEST
+         {
+
+         cairo_rectangle(m_cairo, 10, 10, 50, 50);
+
+         cairo_set_source_rgba(m_cairo, 84 / 255.0, 184 / 255.0, 77 / 255.0, 128 / 255.0);
+
+         cairo_fill(m_cairo);
+
+         }
+         #endif
 
          cairo_show_page(m_cairo);
 
@@ -7546,7 +7625,7 @@ namespace lnx
 //
 //
 //         {
-//            HDC hdcScreen = ::GetDC(get_os_data());
+//            HDC hdcScreen = ::1p.t5mL>1..(get_os_data());
 //
 //            HDC hdcMem = ::CreateCompatibleDC(NULL);
 //

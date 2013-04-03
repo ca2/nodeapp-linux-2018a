@@ -1000,7 +1000,7 @@ prhelp(char *name)
 	    "      -quiet       run in foreground, show what's happening\n"
 	    "      -verbose     running commentary\n"
 	    "\n" "Report bugs to <astrand@lysator.liu.se>\n", name);
-    exit(EXIT_SUCCESS);
+//    exit(EXIT_SUCCESS);
 }
 
 
@@ -1011,7 +1011,7 @@ prversion(void)
 //    fprintf(stderr, "%s version %s\n", PACKAGE_NAME, PACKAGE_VERSION);
     fprintf(stderr, "Copyright (C) 2001-2008 Kim Saunders et al.\n");
     fprintf(stderr, "Distributed under the terms of the GNU GPL\n");
-    exit(EXIT_SUCCESS);
+//    exit(EXIT_SUCCESS);
 }
 
 /* failure message for malloc() problems */
@@ -1019,7 +1019,7 @@ void
 errmalloc(void)
 {
     fprintf(stderr, "Error: Could not allocate memory.\n");
-    exit(EXIT_FAILURE);
+//    exit(EXIT_FAILURE);
 }
 
 /* failure to connect to X11 display */
@@ -1033,7 +1033,7 @@ errxdisplay(char *display)
 	display = getenv("DISPLAY");
 
     fprintf(stderr, "Error: Can't open display: %s\n", display);
-    exit(EXIT_FAILURE);
+//    exit(EXIT_FAILURE);
 }
 
 /* a wrapper for perror that joins multiple prefixes together. Arguments

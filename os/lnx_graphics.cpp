@@ -1,5 +1,7 @@
 #include "framework.h"
 #include <math.h>
+extern cairo_surface_t *  g_cairosurface;
+extern cairo_t *  g_cairo;
 
 
 namespace lnx
@@ -78,6 +80,11 @@ namespace lnx
 
       if(m_pdc != NULL)
       {
+	if(m_pdc ==  g_cairo)
+	{
+         printf("123");
+
+	}
          cairo_destroy(m_pdc);
          m_pdc = NULL;
       }
@@ -125,6 +132,11 @@ namespace lnx
 
       if(m_pdc != NULL)
       {
+	if(m_pdc ==  g_cairo)
+	{
+         printf("123");
+
+	}
 
          cairo_destroy(m_pdc);
 
@@ -142,7 +154,10 @@ namespace lnx
 
          m_pdc = cairo_create(psurface);
 
-         cairo_surface_destroy(psurface);
+if(psurface == g_cairosurface)
+{
+   printf("123");
+}         cairo_surface_destroy(psurface);
 
          return m_pdc != NULL;
 
@@ -159,7 +174,10 @@ namespace lnx
 
          if(psurfaceNew == NULL)
             return false;
-
+if(psurfaceNew == g_cairosurface)
+{
+   printf("123");
+}
          m_pdc = cairo_create(psurfaceNew);
 
          cairo_surface_destroy(psurfaceNew);
@@ -261,6 +279,11 @@ namespace lnx
       return dynamic_cast < ::ca::bitmap* > (SelectGdiObject(get_app(), get_handle1(), pbitmap->get_os_data()));*/
       if(m_pdc != NULL)
       {
+	if(m_pdc ==  g_cairo)
+	{
+         printf("123");
+
+	}
          cairo_destroy(m_pdc);
       }
 
@@ -422,6 +445,12 @@ namespace lnx
    // non-virtual helpers calling virtual mapping functions
    point graphics::SetViewportOrg(POINT point)
    {
+      if(abs(point.x) > 900 || abs(point.y) > 800)
+      {
+
+         printf("123");
+      }
+
       //return SetViewportOrg(point.x, point.y);
       cairo_matrix_t m;
       cairo_get_matrix(m_pdc, &m);
@@ -1381,6 +1410,8 @@ namespace lnx
          cairo_paint(m_pdc);
 
          cairo_pattern_set_matrix(ppattern, &matrixOld);
+
+         cairo_pattern_destroy(ppattern);
 
 
       return true;
@@ -2630,6 +2661,8 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
       cairo_paint_with_alpha(m_pdc, dRate);
 
+      cairo_pattern_destroy(ppattern);
+
 
       return true;
 
@@ -3185,6 +3218,11 @@ VOID Example_EnumerateMetafile9(HDC hdc)
       if(m_pdc == NULL)
          return true;
 
+	if(m_pdc ==  g_cairo)
+	{
+         printf("123");
+
+	}
 
       cairo_destroy(m_pdc);
 
@@ -3566,13 +3604,11 @@ return 1;
       //POINT point;
       //::GetViewportOrgEx(get_handle2(), &point);
 
-      double x = 0.0;
+      cairo_matrix_t m;
 
-      double y = 0.0;
+      cairo_get_matrix(m_pdc, &m);
 
-      cairo_user_to_device(m_pdc, &x, &y);
-
-      return point((int64_t) x, (int64_t) y);
+      return point((int64_t) m.x0, (int64_t) m.y0);
 
    }
 
@@ -3606,7 +3642,19 @@ return 1;
 
       point point = GetViewportOrg();
 
+
+      if(abs(nWidth) > 800|| abs(nHeight) >800)
+      {
+
+         printf("123");
+      }
+
       cairo_translate(m_pdc, nWidth, nHeight);
+      if(abs(point.x + nWidth) > 800 || abs(point.y + nHeight) > 800)
+      {
+
+         printf("123");
+      }
 
       return ::point(point.x + nWidth, point.y + nHeight);
 
@@ -5557,6 +5605,11 @@ return true;
 
       if(m_pdc != NULL)
       {
+	if(m_pdc ==  g_cairo)
+	{
+         printf("123");
+
+	}
 
          cairo_destroy(m_pdc);
 

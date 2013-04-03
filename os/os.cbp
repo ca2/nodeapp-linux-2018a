@@ -63,6 +63,7 @@
 		<Unit filename="../operational_system/cross/win/pshpack8.h" />
 		<Unit filename="../operational_system/cross/win/win.h" />
 		<Unit filename="../operational_system/cross/win/win_base.h" />
+		<Unit filename="../operational_system/cross/win/win_common_controls.h" />
 		<Unit filename="../operational_system/cross/win/win_crt.h" />
 		<Unit filename="../operational_system/cross/win/win_crtdefs.h" />
 		<Unit filename="../operational_system/cross/win/win_def.h" />

@@ -17,7 +17,7 @@ namespace lnx
    public:
 
 
-      pha(::user::interaction)      m_guieptraMouseHover;
+      spa(::user::interaction)      m_guieptraMouseHover;
       ::ca::window_callback *       m_pcallback;
       string                        m_strWindowText;
       oswindow                      m_oswindow;
@@ -30,6 +30,7 @@ namespace lnx
       cairo_surface_t *             m_cairosurfaceSource;
       cairo_t *                     m_cairoWork;
       cairo_surface_t *             m_cairosurfaceWork;
+      bool                          m_bExposing;
 
 
       //visual::dib_sp                m_spdib;

@@ -1,4 +1,6 @@
 #include "framework.h"
+extern cairo_surface_t *  g_cairosurface;
+extern cairo_t *  g_cairo;
 
 
 namespace lnx
@@ -372,7 +374,10 @@ namespace lnx
       if(m_psurface == NULL)
          return;
 
-      cairo_surface_destroy(m_psurface);
+if(m_psurface == g_cairosurface)
+{
+   printf("123");
+}      cairo_surface_destroy(m_psurface);
 
    }
 

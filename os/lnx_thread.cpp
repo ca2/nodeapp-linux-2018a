@@ -259,7 +259,7 @@ void AfxInternalPreTranslateMessage(::ca::signal_object * pobj)
       user::interaction_ptr_array wnda = Sys(pThread->get_app()).frames();
       for(int32_t i = 0; i < wnda.get_count(); i++)
       {
-         ::user::interaction * pui = wnda[i];
+         ::user::interaction * pui = wnda(i);
 #ifndef DEBUG
          try
          {
@@ -529,8 +529,7 @@ namespace lnx
    {
       m_ptimera      = NULL;
       m_puiptra      = NULL;
-      m_puiMain      = NULL;
-      m_puiActive    = NULL;
+
 
 //      m_peventReady  = NULL;
 
@@ -554,7 +553,7 @@ namespace lnx
   //    m_pmapHGDIOBJ = new hgdiobj_map;
 //      m_frameList.Construct(offsetof(frame_window, m_pNextFrameWnd));
       m_ptimera = new ::user::interaction::timer_array(get_app());
-      m_puiptra = new user::interaction_ptr_array;
+      m_puiptra = new user::interaction_ptr_array(get_app());
 
       m_hThread = NULL;
 
@@ -564,16 +563,16 @@ namespace lnx
    thread::~thread()
    {
 
-      if(m_uiMessage.m_pimpl != NULL)
+/*      if(m_spuiMessage->m_pimpl != NULL)
       {
-         m_uiMessage.m_pimpl->m_pthread = NULL;
-         m_uiMessage.m_pimpl->m_signalptra.remove_all();
-         m_uiMessage.m_pimpl->m_signala.remove_all();
+         m_spuiMessage->m_pimpl->m_pthread = NULL;
+         m_spuiMessage->m_pimpl->m_signalptra.remove_all();
+         m_spuiMessage->m_pimpl->m_signala.remove_all();
       }
 
-      m_uiMessage.m_pthread = NULL;
-      m_uiMessage.m_signalptra.remove_all();
-      m_uiMessage.m_signala.remove_all();
+      m_spuiMessage->m_pthread = NULL;
+      m_spuiMessage->m_signalptra.remove_all();
+      m_spuiMessage->m_signala.remove_all();*/
 
       if(m_puiptra != NULL)
       {
@@ -778,7 +777,7 @@ namespace lnx
 
    void thread::set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse)
    {
-      if(!m_uiMessage.IsWindow())
+      if(!m_spuiMessage->IsWindow())
       {
          return;
       }
@@ -787,15 +786,15 @@ namespace lnx
       int32_t iMin = 100;
       for(int32_t i = 0; i < m_ptimera->m_timera.get_count(); i++)
       {
-         if(m_ptimera->m_timera.element_at(i).m_uiElapse < natural(iMin))
+         if(m_ptimera->m_timera[i].m_uiElapse < natural(iMin))
          {
-            iMin = m_ptimera->m_timera.element_at(i).m_uiElapse;
+            iMin = m_ptimera->m_timera[i].m_uiElapse;
          }
       }
       sl.unlock();
-      if(m_uiMessage.IsWindow())
+      if(m_spuiMessage->IsWindow())
       {
-         m_uiMessage.SetTimer((uint_ptr)-2, iMin, NULL);
+         m_spuiMessage->SetTimer((uint_ptr)-2, iMin, NULL);
       }
    }
 
@@ -961,7 +960,7 @@ void thread::Delete()
     //     ::SetEvent((HANDLE) m_peventReady);
       //}
       //pthread->::ca::smart_pointer < ::ca::thread >::m_p = NULL;
-      ::ca::del(m_p);
+      m_p->release();
 //      delete_this();
    }
    else
@@ -1862,12 +1861,7 @@ return false;
 
       ::ca::window threadWnd;
 
-      m_ptimera            = new ::user::interaction::timer_array(get_app());
-      m_puiptra            = new user::interaction_ptr_array;
       m_bRun               = true;
-
-      m_ptimera->m_papp    = m_papp;
-      m_puiptra->m_papp    = m_papp;
 
 
       if(!initialize_message_window(get_app(), ""))
