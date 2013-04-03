@@ -820,7 +820,7 @@ namespace lnx
 
    bool thread::get_run()
    {
-      return m_bRun;
+      return m_bRun && ::os_thread::get_run();
    }
 
    ::ca::thread * thread::get_app_thread()
@@ -1006,7 +1006,7 @@ void thread::Delete()
 
       // acquire and dispatch messages until a WM_QUIT message is received.
       MESSAGE msg;
-      while(m_bRun)
+      while(get_run())
       {
          // phase1: check to see if we can do idle work
          while (bIdle && !::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE))
@@ -1092,7 +1092,7 @@ void thread::Delete()
             }
          }
 //         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
-         while (::PeekMessage(&msg, ::ca::null(),0, 0, 0) != FALSE);
+         while (get_run() && ::PeekMessage(&msg, ::ca::null(),0, 0, 0) != FALSE);
 
       }
 stop_run:
@@ -1481,6 +1481,15 @@ stop_run:
             // Note: prevents calling message loop things in 'exit_instance'
             // will never be decremented
             return FALSE;
+         }
+
+         bool bRun = get_run();
+
+         if(!bRun)
+         {
+
+            return false;
+
          }
 
          if(m_nDisablePumpCount != 0)

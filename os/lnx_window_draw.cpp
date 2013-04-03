@@ -334,7 +334,7 @@ namespace lnx
       s_bRunning = true;
       m_bRun = true;
       ::ca::get_thread()->m_bRun = true;
-      while(m_bRun && ::ca::get_thread()->m_bRun)
+      while(m_bRun && ::ca::get_thread()->get_run())
       {
 #ifndef DEBUG
          try

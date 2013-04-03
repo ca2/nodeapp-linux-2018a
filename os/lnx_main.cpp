@@ -114,7 +114,6 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 
    nReturnCode = psystem->main();
 
-
    try
    {
       main_finalize();
