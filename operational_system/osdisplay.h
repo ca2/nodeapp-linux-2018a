@@ -11,14 +11,53 @@ namespace ca
 
 
       null() {}
+      null(const null &) {}
+      null(null && ) {}
+
+
+null & operator = (null &&)
+{
+
+return *this;
+}
+
+template < typename T >
+      operator T*() { return (T *) 0; }
 
 
    };
 
 } // namespace ca
 
+inline ::ca::null null()
+{
+    return ::ca::null();
+}
 
 
+template < typename T >
+inline bool operator != (const T t, const ::ca::null & n)
+{
+   return t != ((int_ptr) 0);
+}
+
+template < typename T >
+inline bool operator != (const ::ca::null & n, const T t)
+{
+   return t != ((int_ptr) 0);
+}
+
+template < typename T >
+inline bool operator == (const T t, const ::ca::null & n)
+{
+   return t == ((int_ptr) 0);
+}
+
+template < typename T >
+inline bool operator == (const ::ca::null & n, const T t)
+{
+   return t == ((int_ptr) 0);
+}
 
 class osdisplay_dataptra;
 class simple_mutex;

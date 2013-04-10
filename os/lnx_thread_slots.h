@@ -39,7 +39,7 @@ class CLASS_DECL_lnx thread_local_storage
 {
 public:
 
-   pthread_key_t key;   // used to access system thread-local storage
+   //pthread_key_t key;   // used to access system thread-local storage
    thread_slot_data *               m_pthreadslotdata;
 
 
