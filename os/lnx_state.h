@@ -98,7 +98,7 @@ public:
 
    // common controls thread state
    CToolTipCtrl* m_pToolTip;
-   ::ca::window * m_pLastHit;       // last ::ca::window to own tooltip
+   sp(::ca::window) m_pLastHit;       // last ::ca::window to own tooltip
    int_ptr m_nLastHit;         // last hittest code
 // xxx   TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
    int_ptr m_nLastStatus;      // last flyby status message
@@ -128,7 +128,7 @@ public:
    __MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem = FALSE);
    ~__MODULE_STATE();
 
-   ::ca::application* m_pCurrentWinApp;
+   sp(::ca::application) m_pCurrentWinApp;
    HINSTANCE m_hCurrentInstanceHandle;
    HINSTANCE m_hCurrentResourceHandle;
    const char * m_lpszCurrentAppName;
@@ -168,7 +168,7 @@ public:
    // define thread local portions of module state
    thread_local<__MODULE_THREAD_STATE, slot___MODULE_THREAD_STATE> m_thread;
 
-   //Fusion: declare pointer to base_array of pointers to isolation aware dll wrappers (ex: comctl32).
+   //Fusion: declare pointer to array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
    //Defaults to TRUE. When FALSE - ca2 API will not activate context in __MAINTAIN_STATE2 (used by __MANAGE_STATE).
    bool   m_bSetAmbientActCtx;
@@ -247,8 +247,8 @@ public:
    __EXCEPTION_CONTEXT m_exceptionContext;
 
    // ::ca::window create, gray dialog hook, and other hook data
-   ::user::interaction * m_pWndInit;
-   ::ca::window * m_pAlternateWndInit;      // special case commdlg hooking
+   sp(::user::interaction) m_pWndInit;
+   sp(::ca::window) m_pAlternateWndInit;      // special case commdlg hooking
    DWORD m_dwPropStyle;
    DWORD m_dwPropExStyle;
    oswindow m_hWndInit;
@@ -279,7 +279,7 @@ public:
    bool m_bWaitForDataSource;
 
    // OLE control thread-local data
-   ::ca::window * m_pWndPark;       // "parking space" ::ca::window
+   sp(::ca::window) m_pWndPark;       // "parking space" ::ca::window
    long m_nCtrlRef;        // reference count on parking ::ca::window
    bool m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 };

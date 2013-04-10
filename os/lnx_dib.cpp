@@ -1819,7 +1819,7 @@ namespace lnx
          DI_IMAGE | DI_MASK);
 
       // Black blend dib
-      ::ca::dib_sp spdib2(get_app());
+      ::ca::dib_sp spdib2(allocer());
       spdib2->create(cx, cy);
       spdib2->Fill(0, 0, 0, 0);
 

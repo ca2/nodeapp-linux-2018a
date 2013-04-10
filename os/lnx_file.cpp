@@ -62,7 +62,7 @@ namespace lnx
 
    }
 
-   ::ca::file * file::Duplicate() const
+   sp(::ca::file) file::Duplicate() const
    {
       ASSERT_VALID(this);
       ASSERT(m_iFile != (UINT)hFileNull);
@@ -1341,7 +1341,7 @@ bool CLASS_DECL_lnx vfxGetInProcServer(const char * lpszCLSID, string & str)
 //#endif  //!___NO_OLE_SUPPORT
 */
 
-CLASS_DECL_lnx bool vfxResolveShortcut(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional)
+CLASS_DECL_lnx bool vfxResolveShortcut(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional)
 {
 
 
@@ -1358,7 +1358,7 @@ CLASS_DECL_lnx bool vfxResolveShortcut(string & strTarget, const char * pszSourc
 
 /*
 
-   ::user::interaction * pui = puiMessageParentOptional;
+   sp(::user::interaction) pui = puiMessageParentOptional;
 
    wstring wstrFileOut;
    wstring wstrFileIn = ::ca::international::utf8_to_unicode(pszSource);

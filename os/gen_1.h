@@ -3,12 +3,12 @@
 class push_routing_frame
 {
 protected:
-   frame_window* pOldRoutingFrame;
+   sp(frame_window) pOldRoutingFrame;
    ___THREAD_STATE* pThreadState;
    push_routing_frame* pOldPushRoutingFrame;
 
 public:
-   explicit push_routing_frame(frame_window* pNewRoutingFrame)
+   explicit push_routing_frame(sp(frame_window) pNewRoutingFrame)
    {
       pThreadState = __get_thread_state();
      pOldPushRoutingFrame = pThreadState->m_pPushRoutingFrame;

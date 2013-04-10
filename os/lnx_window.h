@@ -22,7 +22,7 @@ namespace lnx
       string                        m_strWindowText;
       oswindow                      m_oswindow;
       ::user::window_interface *    m_pbasewnd;
-      ::user::interaction *         m_pguieCapture;
+      sp(::user::interaction)         m_pguieCapture;
       mutex *                       m_pmutexGraphics;
       cairo_t *                     m_cairo;
       cairo_surface_t *             m_cairosurface;
@@ -60,7 +60,7 @@ namespace lnx
       bool ModifyStyle(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
       bool ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
 
-      //virtual ::user::interaction * GetOwner();
+      //virtual sp(::user::interaction) GetOwner();
       virtual void set_owner(::user::interaction * pOwnerWnd);
 
       virtual oswindow get_handle() const;
@@ -87,7 +87,7 @@ namespace lnx
 
    #endif   // WINVER >= 0x0500
 
-      virtual ::ca::window * from_os_data(void * pdata);
+      virtual sp(::ca::window) from_os_data(void * pdata);
       virtual void * get_os_data() const;
 
       static window * from_handle(oswindow hWnd);
@@ -99,7 +99,7 @@ namespace lnx
       // subclassing/unsubclassing functions
       virtual void pre_subclass_window();
       bool SubclassWindow(oswindow hWnd);
-      //bool SubclassDlgItem(UINT nID, ::ca::window * pParent);
+      //bool SubclassDlgItem(UINT nID, sp(::ca::window) pParent);
       oswindow UnsubclassWindow();
 
       // handling of RT_DLGINIT resource (extension to RT_DIALOG)
@@ -111,7 +111,7 @@ namespace lnx
       virtual bool create(const char * lpszClassName,
          const char * lpszWindowName, DWORD dwStyle,
          const RECT& rect,
-         ::user::interaction * pParentWnd, id id,
+         sp(::user::interaction) pParentWnd, id id,
          ::ca::create_context* pContext = NULL);
 
       // advanced creation (allows access to extended styles)
@@ -123,7 +123,7 @@ namespace lnx
       virtual bool CreateEx(DWORD dwExStyle, const char * lpszClassName,
          const char * lpszWindowName, DWORD dwStyle,
          const RECT& rect,
-         ::user::interaction* pParentWnd, id id,
+         sp(::user::interaction) pParentWnd, id id,
          LPVOID lpParam = NULL);
 
       virtual bool DestroyWindow();
@@ -141,24 +141,24 @@ namespace lnx
       void get_child_by_id(id id, oswindow* phWnd) const;
          // as above, but returns oswindow
       using ::user::interaction::GetDescendantWindow;
-      ::user::interaction * GetDescendantWindow(id id);
+      sp(::user::interaction) GetDescendantWindow(id id);
          // like get_child_by_id but recursive
       void SendMessageToDescendants(UINT message, WPARAM wParam = 0,
          LPARAM lParam = 0, bool bDeep = TRUE, bool bOnlyPerm = FALSE);
-      frame_window* GetParentFrame();
-      frame_window* EnsureParentFrame();
-      ::user::interaction* GetTopLevelParent();
-      ::user::interaction* EnsureTopLevelParent();
-      ::user::interaction* GetTopLevelOwner();
-      ::user::interaction* GetParentOwner();
-      frame_window* GetTopLevelFrame();
-      static ::ca::window * PASCAL GetSafeOwner(::ca::window * pParent = NULL, oswindow* pWndTop = NULL);
+      sp(frame_window) GetParentFrame();
+      sp(frame_window) EnsureParentFrame();
+      sp(::user::interaction) GetTopLevelParent();
+      sp(::user::interaction) EnsureTopLevelParent();
+      sp(::user::interaction) GetTopLevelOwner();
+      sp(::user::interaction) GetParentOwner();
+      sp(frame_window) GetTopLevelFrame();
+      static sp(::ca::window) PASCAL GetSafeOwner(::ca::window * pParent = NULL, oswindow* pWndTop = NULL);
 
       virtual bool IsWindow();
 
    #if(WINVER >= 0x0500)
 
-      ::ca::window * GetAncestor(UINT gaFlags) const;
+      sp(::ca::window) GetAncestor(UINT gaFlags) const;
 
    #endif   // WINVER >= 0x0500
 
@@ -296,12 +296,12 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       virtual bool EnableWindow(bool bEnable = TRUE);
 
       // the active ::ca::window applies only to top-level (frame windows)
-      virtual ::user::interaction * GetActiveWindow();
-      virtual ::user::interaction * SetActiveWindow();
+      virtual sp(::user::interaction) GetActiveWindow();
+      virtual sp(::user::interaction) SetActiveWindow();
 
       // the foreground ::ca::window applies only to top-level windows (frame windows)
       virtual bool SetForegroundWindow();
-      static ::ca::window * PASCAL GetForegroundWindow();
+      static sp(::ca::window) PASCAL GetForegroundWindow();
 
       virtual id SetDlgCtrlId(id id);
       virtual id GetDlgCtrlId();
@@ -309,14 +309,14 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
 
 
       // capture and focus apply to all windows
-      static ::ca::window * PASCAL GetCapture();
-      virtual ::user::interaction * set_capture(::user::interaction * pinterface = NULL);
-      virtual ::user::interaction * release_capture();
-      virtual ::user::interaction * get_capture();
-      static ::ca::window * PASCAL GetFocus();
-      ::ca::window * SetFocus();
+      static sp(::ca::window) PASCAL GetCapture();
+      virtual sp(::user::interaction) set_capture(::user::interaction * pinterface = NULL);
+      virtual sp(::user::interaction) release_capture();
+      virtual sp(::user::interaction) get_capture();
+      static sp(::ca::window) PASCAL GetFocus();
+      sp(::user::interaction) SetFocus();
 
-      static ::ca::window * PASCAL GetDesktopWindow();
+      static sp(::ca::window) PASCAL GetDesktopWindow();
 
    // Obsolete and non-portable APIs - not recommended for new code
       virtual void CloseWindow();
@@ -338,8 +338,8 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       //virtual UINT GetChildByIdInt(int32_t nID, bool * lpTrans = NULL, bool bSigned = TRUE) const;
       //virtual int32_t GetChildByIdText(int32_t nID, LPTSTR lpStr, int32_t nMaxCount) const;
       //virtual int32_t GetChildByIdText(int32_t nID, string & rString) const;
-      virtual ::ca::window * GetNextDlgGroupItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
-      virtual ::ca::window * GetNextDlgTabItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
+      virtual sp(::ca::window) GetNextDlgGroupItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
+      virtual sp(::ca::window) GetNextDlgTabItem(::ca::window * pWndCtl, bool bPrevious = FALSE) const;
       virtual UINT IsDlgButtonChecked(int32_t nIDButton) const;
       virtual LRESULT SendDlgItemMessage(int32_t nID, UINT message, WPARAM wParam = 0, LPARAM lParam = 0);
       virtual void SetDlgItemInt(int32_t nID, UINT nValue, bool bSigned = TRUE);
@@ -374,22 +374,22 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
    #endif   // WINVER >= 0x0500
 
    // oswindow Access Functions
-      virtual ::ca::window * ChildWindowFromPoint(POINT point);
-      virtual ::ca::window * ChildWindowFromPoint(POINT point, UINT nFlags);
-      static ::ca::window * PASCAL FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      static ::ca::window * FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow);
+      virtual sp(::user::interaction) ChildWindowFromPoint(POINT point);
+      virtual sp(::user::interaction) ChildWindowFromPoint(POINT point, UINT nFlags);
+      static sp(::ca::window) PASCAL FindWindow(const char * lpszClassName, const char * lpszWindowName);
+      static sp(::ca::window) FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow);
 
-      virtual ::user::interaction * GetNextWindow(UINT nFlag = GW_HWNDNEXT);
-      virtual ::user::interaction * GetTopWindow();
+      virtual sp(::user::interaction) GetNextWindow(UINT nFlag = GW_HWNDNEXT);
+      virtual sp(::user::interaction) GetTopWindow();
 
-      virtual ::user::interaction * GetWindow(UINT nCmd);
-      virtual ::user::interaction * GetLastActivePopup();
+      virtual sp(::user::interaction) GetWindow(UINT nCmd);
+      virtual sp(::user::interaction) GetLastActivePopup();
 
       virtual bool IsChild(::user::interaction *  pWnd);
-      virtual ::user::interaction * get_parent() const;
+      virtual sp(::user::interaction) get_parent() const;
       using ::user::interaction::set_parent;
-      ::ca::window * set_parent(::ca::window * pWndNewParent);
-      static ::ca::window * PASCAL oswindowFromPoint(POINT point);
+      sp(::ca::window) set_parent(::ca::window * pWndNewParent);
+      static sp(::ca::window) PASCAL oswindowFromPoint(POINT point);
 
    // Alert Functions
 
@@ -408,9 +408,9 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       virtual bool ChangeClipboardChain(oswindow hWndNext);
       virtual oswindow  SetClipboardViewer();
       virtual bool OpenClipboard();
-      static ::ca::window * PASCAL GetClipboardOwner();
-      static ::ca::window * PASCAL GetClipboardViewer();
-      static ::ca::window * PASCAL GetOpenClipboardWindow();
+      static sp(::ca::window) PASCAL GetClipboardOwner();
+      static sp(::ca::window) PASCAL GetClipboardViewer();
+      static sp(::ca::window) PASCAL GetOpenClipboardWindow();
 
    // Caret Functions
       virtual void CreateCaret(::ca::bitmap* pBitmap);
@@ -467,7 +467,7 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       virtual bool OnCommand(WPARAM wParam, LPARAM lParam);
       virtual bool OnNotify(WPARAM wParam, LPARAM lParam, LRESULT* pResult);
 
-      void OnActivate(UINT nState, ::ca::window * pWndOther, bool bMinimized);
+      void OnActivate(UINT nState, sp(::ca::window) pWndOther, bool bMinimized);
       void OnActivateApp(bool bActive, DWORD dwThreadID);
       LRESULT OnActivateTopLevel(WPARAM, LPARAM);
       void OnCancelMode();
@@ -478,12 +478,12 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       DECL_GEN_SIGNAL(_001OnCreate);
 
 
-      HBRUSH OnCtlColor(::ca::graphics * pgraphics, ::ca::window * pWnd, UINT nCtlColor);
+      HBRUSH OnCtlColor(::ca::graphics * pgraphics, sp(::ca::window) pWnd, UINT nCtlColor);
 
       DECL_GEN_SIGNAL(_001OnDestroy);
       void OnEnable(bool bEnable);
       void OnEndSession(bool bEnding);
-      void OnEnterIdle(UINT nWhy, ::ca::window * pWho);
+      void OnEnterIdle(UINT nWhy, sp(::ca::window) pWho);
       bool OnEraseBkgnd(::ca::graphics * pgraphics);
       void OnGetMinMaxInfo(MINMAXINFO* lpMMI);
       //xxx bool OnHelpInfo(HELPINFO* lpHelpInfo);
@@ -595,7 +595,7 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
 
    // MDI message handler member functions
       void OnMDIActivate(bool bActivate,
-         ::ca::window * pActivateWnd, ::ca::window * pDeactivateWnd);
+         sp(::ca::window) pActivateWnd, sp(::ca::window) pDeactivateWnd);
 
    // menu loop notification messages
       void OnEnterMenuLoop(bool bIsTrackPopupMenu);
@@ -655,13 +655,13 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       bool IsTopParentActive();
       void ActivateTopParent();
       virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::ca::signal_object * pobj);
-      static ::user::interaction * PASCAL GetDescendantWindow(::user::interaction * hWnd, id id);
+      static sp(::user::interaction) PASCAL GetDescendantWindow(::user::interaction * hWnd, id id);
       static void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
-      virtual bool IsFrameWnd(); // is_kind_of(System.type_info < frame_window > ()))
+      virtual bool is_frame_window(); // is_kind_of(System.type_info < frame_window > ()))
       virtual void on_final_release();
       static bool PASCAL ModifyStyle(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
       static bool PASCAL ModifyStyleEx(oswindow hWnd, DWORD dwRemove, DWORD dwAdd, UINT nFlags);
-      static void PASCAL _FilterToolTipMessage(MESSAGE* pMsg, ::ca::window * pWnd);
+      static void PASCAL _FilterToolTipMessage(MESSAGE* pMsg, sp(::ca::window) pWnd);
       bool _EnableToolTips(bool bEnable, UINT nFlag);
       static oswindow PASCAL GetSafeOwner_(oswindow hWnd, oswindow* pWndTop);
       void PrepareForHelp();
@@ -677,8 +677,8 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       friend class frame_window;
 
       // for creating dialogs and dialog-like windows
-      bool CreateDlg(const char * lpszTemplateName, ::ca::window * pParentWnd);
-      //bool CreateDlgIndirect(LPCDLGTEMPLATE lpDialogTemplate, ::ca::window * pParentWnd,
+      bool CreateDlg(const char * lpszTemplateName, sp(::ca::window) pParentWnd);
+      //bool CreateDlgIndirect(LPCDLGTEMPLATE lpDialogTemplate, sp(::ca::window) pParentWnd,
         // HINSTANCE hInst);
 
 

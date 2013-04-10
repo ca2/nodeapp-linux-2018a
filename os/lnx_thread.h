@@ -48,11 +48,11 @@ namespace lnx
 		/// true if waiting should be done on all items
 		bool				waitForAllItems_;
 		/// a list of items this threads waits for
-		::collection::list < waitable * >	itemsToWaitFor_;
+		::list < waitable * >	itemsToWaitFor_;
 
 
       // list of frame_window objects for thread
-      simple_list < frame_window * > m_frameList;
+      simple_list < sp(frame_window) > m_frameList;
 
 
       comparable_array < void * > m_oswindowa;
@@ -109,7 +109,7 @@ namespace lnx
 
       virtual bool create_thread(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlagsParam = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      virtual ::user::interaction * SetMainWnd(::user::interaction * pui);
+      virtual sp(::user::interaction) SetMainWnd(::user::interaction * pui);
 
       virtual int32_t thread_entry(::ca::thread_startup * pstartup);
       virtual int32_t main();
@@ -119,7 +119,7 @@ namespace lnx
       virtual void add(::user::interaction * pui);
       virtual void remove(::user::interaction * pui);
       virtual ::count get_ui_count();
-      virtual ::user::interaction * get_ui(int32_t iIndex);
+      virtual sp(::user::interaction) get_ui(int32_t iIndex);
       virtual void set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse);
       virtual void unset_timer(::user::interaction * pui, uint_ptr nIDEvent);
       virtual void set_auto_delete(bool bAutoDelete = true);
@@ -127,8 +127,8 @@ namespace lnx
       virtual event & get_finish_event();
       virtual bool get_run();
       virtual ::ca::thread * get_app_thread();
-      virtual ::user::interaction * get_active_ui();
-      virtual ::user::interaction * set_active_ui(::user::interaction * pui);
+      virtual sp(::user::interaction) get_active_ui();
+      virtual sp(::user::interaction) set_active_ui(::user::interaction * pui);
       virtual void step_timer();
 
 
@@ -178,7 +178,7 @@ namespace lnx
       virtual void ProcessMessageFilter(int32_t code, ::ca::signal_object * pobj);
 
       // Advanced: virtual access to GetMainWnd()
-      virtual ::user::interaction* GetMainWnd();
+      virtual sp(::user::interaction) GetMainWnd();
 
          // 'delete this' only if m_bAutoDelete == TRUE
 

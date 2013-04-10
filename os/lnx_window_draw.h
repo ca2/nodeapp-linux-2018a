@@ -52,7 +52,7 @@ namespace lnx
 
       virtual bool ScreenOutput();
 
-      virtual bool ScreenOutput(user::buffer *, ::user::interaction* pwnd);
+      virtual bool ScreenOutput(user::buffer *, sp(::user::interaction) pwnd);
 
       // Transparent drawing operations
       // controllers
@@ -92,28 +92,28 @@ namespace lnx
       void TwfGetTopWindow(
          void * hwnd,
          user::oswindow_array & hwnda,
-         base_array < HRGN, HRGN > & hrgna,
+         array < HRGN, HRGN > & hrgna,
          user::oswindow_tree::Array & hwndtreea,
          LPCRECT lpcrect);
 
       bool TwfGetTopWindow(
          void * hwnd,
          user::oswindow_array & hwnda,
-         base_array < HRGN, HRGN > & hrgna,
+         array < HRGN, HRGN > & hrgna,
          user::oswindow_tree::Array & hwndtreea,
          HRGN hrgn);
 
       bool TwfGetTopWindow(
          void * hwnd,
          user::oswindow_array & hwnda,
-         base_array < HRGN, HRGN > & hrgna,
+         array < HRGN, HRGN > & hrgna,
          user::oswindow_tree & hwndtree,
          HRGN hrgn);
 
       void TwfGetTopWindowOptimizeOpaque(
          void * hwndOpaque,
          user::oswindow_array & hwnda,
-         base_array < HRGN, HRGN > & hrgna);
+         array < HRGN, HRGN > & hrgna);
 
 
       EOptimize TwfOptimizeRenderRemoveNextProper(

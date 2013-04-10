@@ -21,7 +21,7 @@ namespace lnx
       */
       m_etextrendering  = ::ca::text_rendering_anti_alias_grid_fit;
 
-      m_spfont.create(papp);
+      m_spfont.create(allocer());
       m_spfont->m_strFontFamilyName = "Helvetica";
       m_spfont->m_dFontSize = 12.0;
 
@@ -104,7 +104,7 @@ namespace lnx
    }
 
 
-/*   ::ca::window * graphics::GetWindow() const
+/*   sp(::ca::window) graphics::GetWindow() const
    {
       ASSERT(get_handle1() != NULL); return ::win::window::from_handle(::WindowFromDC(get_handle1()));
    }
@@ -1568,26 +1568,26 @@ if(psurfaceNew == g_cairosurface)
             rect rectText(point((int64_t) x, (int64_t) y), GetTextExtent(str));
             if(rectIntersect.intersect(rectIntersect, rectText))
             {
-               ::ca::dib_sp dib0(get_app());
+               ::ca::dib_sp dib0(allocer());
                dib0->create(rectText.size());
                dib0->get_graphics()->SetTextColor(RGB(255, 255, 255));
                dib0->get_graphics()->SelectObject(&GetCurrentFont());
                dib0->get_graphics()->SetBkMode(TRANSPARENT);
                dib0->get_graphics()->TextOut(0, 0, str);
                dib0->ToAlpha(0);
-               ::ca::dib_sp dib1(get_app());
+               ::ca::dib_sp dib1(allocer());
                dib1->create(rectText.size());
                dib1->get_graphics()->SetTextColor(GetTextColor());
                dib1->get_graphics()->SelectObject(&GetCurrentFont());
                dib1->get_graphics()->SetBkMode(TRANSPARENT);
                dib1->get_graphics()->TextOut(0, 0, str);
                dib1->channel_from(visual::rgba::channel_alpha, dib0);
-               ::ca::dib_sp dib2(get_app());
+               ::ca::dib_sp dib2(allocer());
                dib2->create(rectText.size());
                dib2->Fill(255, 0, 0, 0);
                dib2->from(point((int64_t) max(0, m_ptAlphaBlend.x - x), (int64_t) max(0, m_ptAlphaBlend.y - y)),
                m_pdibAlphaBlend->get_graphics(), point((int64_t) max(0, x - m_ptAlphaBlend.x), (int64_t) max(0, y - m_ptAlphaBlend.y)), rectText.size());
-               dib1->channel_multiply(visual::rgba::channel_alpha, dib2);
+               dib1->channel_multiply(visual::rgba::channel_alpha, dib2.m_p);
                /*::ca::dib_sp dib3(get_app());
                dib1->mult_alpha(dib3);*/
 

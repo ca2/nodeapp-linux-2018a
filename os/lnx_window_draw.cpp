@@ -40,7 +40,7 @@ namespace lnx
       m_dwLastRedrawRequest = ::GetTickCount();
       m_bRender = false;
       m_pbuffer = new user::buffer(papp);
-      m_pbuffer->m_spdib.create(papp);
+      m_pbuffer->m_spdib.create(allocer());
       m_dwLastUpdate = false;
       m_iFramesPerSecond = 20;
    }
@@ -267,7 +267,7 @@ namespace lnx
       else
       {
          ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) hwndParam);
-         ::user::interaction * pguie = dynamic_cast < ::user::interaction * > (ptwi);
+         sp(::user::interaction) pguie =  (ptwi);
          rect rectWindow;
          ::GetWindowRect((oswindow) hwndParam, rectWindow);
          //::GetClientRect(hwndParam, rectWindow);
@@ -519,7 +519,7 @@ namespace lnx
          {
             if(wndpa[l].oprop("session").is_new())
             {
-               dynamic_cast < ::ca::window * > (wndpa[l].m_pimpl.m_p)->_001UpdateWindow();
+               wndpa[l].m_pimpl.cast < ::ca::window >()->_001UpdateWindow();
             }
             l++;
          }
@@ -544,15 +544,15 @@ namespace lnx
       {
          oswindow hwndTopic = wndaApp[j];
 
-         ::ca::window * pwnd = NULL;
-         //::ca::window * pwnd = dynamic_cast < ::ca::window * > (System.window_map().get((int_ptr) hwndTopic));
+         sp(::ca::window) pwnd = NULL;
+         //::ca::window * pwnd =  (System.window_map().get((int_ptr) hwndTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
          {
             if(wndpa[l].get_safe_handle() == hwndTopic)
             {
-               pwnd = dynamic_cast < ::ca::window * > (wndpa[l].m_pimpl.m_p);
+               pwnd = wndpa[l].m_pimpl.m_p;
                break;
             }
          }
@@ -657,7 +657,7 @@ namespace lnx
 
       for(int32_t i = 0; i < m_wndpaOut.get_count(); i++)
       {
-         ::user::interaction* pwnd = m_wndpaOut(i);
+         sp(::user::interaction) pwnd = m_wndpaOut(i);
 
          ScreenOutput(m_pbuffer, pwnd);
 
@@ -673,7 +673,7 @@ namespace lnx
       return &m_semaphoreBuffer;
    }
 
-   // The first ::ca::window handle in the base_array must belong
+   // The first ::ca::window handle in the array must belong
    // to the higher z order ::ca::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
@@ -787,7 +787,7 @@ namespace lnx
 
       rect rectClient;
 
-      ::user::interaction * pguie = dynamic_cast < ::user::interaction * > (ptwi);
+      sp(::user::interaction) pguie =  (ptwi);
 
       pguie->GetClientRect(rectClient);
       pguie->ClientToScreen(rectClient);
@@ -808,7 +808,7 @@ namespace lnx
          return OptimizeNone;
       }
 
-   //    ::ca::window * pwnd = window::FromHandlePermanent(hwnd);
+   //    sp(::ca::window) pwnd = window::FromHandlePermanent(hwnd);
 
 
       if(ptwi == NULL)
@@ -854,7 +854,7 @@ namespace lnx
    bool window_draw::TwfGetTopWindow(
       void * hwnd,
       user::oswindow_array & hwnda,
-      base_array < HRGN, HRGN > & hrgna,
+      array < HRGN, HRGN > & hrgna,
       user::oswindow_tree::Array & hwndtreea,
       HRGN hrgn)
    {
@@ -878,7 +878,7 @@ namespace lnx
    bool window_draw::TwfGetTopWindow(
       void * hwndParam,
       user::oswindow_array & hwnda,
-      base_array < HRGN, HRGN > & hrgna,
+      array < HRGN, HRGN > & hrgna,
       user::oswindow_tree & hwndtree,
       HRGN hrgn)
    {
@@ -899,7 +899,7 @@ namespace lnx
       ::GetWindowRect((::oswindow) oswindow, rectWindow);
 
 
-   //   ::ca::window * pwnd = ::lnx::window::from_handle(oswindow);
+   //   sp(::ca::window) pwnd = ::lnx::window::from_handle(oswindow);
 
       if(!TwfGetTopWindow(
             hwndParam,
@@ -983,7 +983,7 @@ throw not_implemented(get_app());
    void window_draw::TwfGetTopWindow(
       void * hwnd,
       user::oswindow_array & hwnda,
-      base_array < HRGN, HRGN > & hrgna,
+      array < HRGN, HRGN > & hrgna,
       user::oswindow_tree::Array & hwndtreea,
       LPCRECT lpcrect)
    {
@@ -1001,11 +1001,11 @@ throw not_implemented(get_app());
    void window_draw::TwfGetTopWindowOptimizeOpaque(
       void * hwndOpaque,
       user::oswindow_array & hwnda,
-      base_array < HRGN, HRGN > & hrgna)
+      array < HRGN, HRGN > & hrgna)
    {
       rect rectWindow;
 
-   //   ::ca::window * pwndOpaque = window::FromHandlePermanent(hwndOpaque);
+   //   sp(::ca::window) pwndOpaque = window::FromHandlePermanent(hwndOpaque);
 
       ::GetWindowRect((oswindow) hwndOpaque, rectWindow);
 
@@ -1103,7 +1103,7 @@ throw not_implemented(get_app());
       user::buffer * pbuffer,
       // hwndParam ::ca::window device context
       // is used from screen output
-      ::user::interaction* pwnd)
+      sp(::user::interaction) pwnd)
    {
       if(pwnd != NULL)
       {
@@ -1331,7 +1331,7 @@ throw not_implemented(get_app());
 
 
 
-   // The first ::ca::window handle in the base_array must belong
+   // The first ::ca::window handle in the array must belong
    // to the higher z order ::ca::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.

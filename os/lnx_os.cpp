@@ -752,7 +752,7 @@ namespace lnx
 */
    }
 
-   bool os::resolve_link(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional)
+   bool os::resolve_link(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional)
    {
 
       throw not_implemented(get_app());

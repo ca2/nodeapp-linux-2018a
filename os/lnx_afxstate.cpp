@@ -144,7 +144,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure,
 
 
    //bEnable = __enable_memory_tracking(FALSE);
-   //Fusion: allocate dll wrappers base_array.
+   //Fusion: allocate dll wrappers array.
    m_pDllIsolationWrappers = NULL;
    //__enable_memory_tracking(bEnable);
    m_bSetAmbientActCtx = TRUE;
@@ -189,7 +189,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem) :
 
 
    //bEnable = __enable_memory_tracking(FALSE);
-   //Fusion: allocate dll wrappers base_array.
+   //Fusion: allocate dll wrappers array.
    m_pDllIsolationWrappers = NULL;
    //__enable_memory_tracking(bEnable);
    m_bSetAmbientActCtx = TRUE;
@@ -399,7 +399,7 @@ bool CLASS_DECL_lnx __is_module_dll()
 
 bool CLASS_DECL_lnx __init_current_state_app()
 {
-   ::ca::application* pApp = __get_module_state()->m_pCurrentWinApp;
+   sp(::ca::application) pApp = __get_module_state()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())
    {
       // Init Failed

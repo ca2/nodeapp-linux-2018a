@@ -9,8 +9,7 @@ namespace lnx
    application::application(::ca::application * papp) :
       ca(papp)
    {
-      ::ca::smart_pointer < ::ca::application_base >::set_app(papp);
-      ::ca::thread_sp::create(papp);
+      ::ca::thread_sp::create(allocer());
 
       LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
 
@@ -55,7 +54,7 @@ namespace lnx
       ::ca::smart_pointer < ::ca::application_base > ::m_p->_001OnFileNew(NULL);
    }
 
-   ::user::document_interface * application::_001OpenDocumentFile(var varFile)
+   sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
       return ::ca::smart_pointer < ::ca::application_base > ::m_p->_001OpenDocumentFile(varFile);
    }
@@ -501,7 +500,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
 
    // Advanced: access to GetMainWnd()
-   ::user::interaction* application::GetMainWnd()
+   sp(::user::interaction) application::GetMainWnd()
    {
       return ::win::thread::GetMainWnd();
    }
@@ -580,14 +579,14 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    }
 
-   ::ca::window * application::window_from_os_data(void * pdata)
+   sp(::ca::window) application::window_from_os_data(void * pdata)
    {
       return ::lnx::window::from_handle((oswindow) pdata);
    }
 
-   ::ca::window * application::window_from_os_data_permanent(void * pdata)
+   sp(::ca::window) application::window_from_os_data_permanent(void * pdata)
    {
-      ::ca::window * pwnd = ::lnx::window::FromHandlePermanent((oswindow) pdata);
+      sp(::ca::window) pwnd = ::lnx::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
@@ -682,12 +681,12 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    }
 
-   ::ca::window * application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   sp(::ca::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    {
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   ::ca::window * application::FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow)
+   sp(::ca::window) application::FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow)
    {
       return window::FindWindowEx(hwndParent, hwndChildAfter, lpszClass, lpszWindow);
    }
@@ -774,7 +773,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
          // fill in the initial state for the application
          // Windows specific initialization (not done if no application)
 // xxx         m_hInstance = hInstance;
-// xxx          (dynamic_cast < ::ca::application * >(m_papp))->m_hInstance = hInstance;
+// xxx          (dynamic_cast < sp(::ca::application) >(m_papp))->m_hInstance = hInstance;
          //hPrevInstance; // Obsolete.
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;

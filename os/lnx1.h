@@ -103,8 +103,8 @@ CLASS_DECL_lnx void __term_thread(::ca::application * papp, HINSTANCE hInstTerm 
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_lnx void __lnx_term();
 
-CLASS_DECL_lnx ::ca::application* __get_app();
-CLASS_DECL_lnx ::user::interaction* __get_main_window();
+CLASS_DECL_lnx sp(::ca::application)  __get_app();
+CLASS_DECL_lnx sp(::user::interaction) __get_main_window();
 //CLASS_DECL_lnx HINSTANCE CLASS_DECL_lnx System.m_hInstance;
 CLASS_DECL_lnx HINSTANCE __get_resource_handle();
 CLASS_DECL_lnx void __set_resource_handle(HINSTANCE hInstResource);

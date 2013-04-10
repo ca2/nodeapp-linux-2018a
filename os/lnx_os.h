@@ -51,7 +51,7 @@ namespace lnx
       virtual bool start_service(::planebase::application * papp);
       virtual bool stop_service(::planebase::application * papp);
 
-      virtual bool resolve_link(string & strTarget, const char * pszSource, ::user::interaction * puiMessageParentOptional = NULL);
+      virtual bool resolve_link(string & strTarget, const char * pszSource, sp(::user::interaction) puiMessageParentOptional = NULL);
 
       void raise_exception( DWORD dwExceptionCode, DWORD dwExceptionFlags);
 

@@ -1,8 +1,8 @@
 #include "framework.h"
 
 // Global helper functions
- CLASS_DECL_lnx ::ca::application * __get_app()
-{ return dynamic_cast < ::ca::application * > (afxCurrentWinApp); }
+ CLASS_DECL_lnx sp(::ca::application) __get_app()
+{ return afxCurrentWinApp; }
 
  CLASS_DECL_lnx HINSTANCE __get_instance_handle()
    { ASSERT(afxCurrentInstanceHandle != NULL);
@@ -14,10 +14,10 @@
    { ASSERT(hInstResource != NULL); afxCurrentResourceHandle = hInstResource; }
  CLASS_DECL_lnx const char * __get_app_name()
    { ASSERT(afxCurrentAppName != NULL); return afxCurrentAppName; }
- CLASS_DECL_lnx ::user::interaction * __get_main_window()
+ CLASS_DECL_lnx sp(::user::interaction) __get_main_window()
 {
       ::ca::thread* pThread = dynamic_cast < ::ca::thread * > (::lnx::get_thread());
-      return pThread != NULL ? pThread->GetMainWnd() : NULL;
+      return pThread != NULL ? pThread->GetMainWnd().m_p : NULL;
  }
 
  CLASS_DECL_lnx bool __gen_get_ambient_act_ctx()

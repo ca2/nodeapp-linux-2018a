@@ -64,8 +64,8 @@ WINBOOL CLASS_DECL_lnx AfxInternalPumpMessage();
 LRESULT CLASS_DECL_lnx AfxInternalProcessWndProcException(base_exception*, const MESSAGE* pMsg);
 WINBOOL AfxInternalPreTranslateMessage(MESSAGE* pMsg);
 WINBOOL AfxInternalIsIdleMessage(MESSAGE* pMsg);
-__STATIC void CLASS_DECL_lnx __pre_init_dialog(::user::interaction * pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-__STATIC void CLASS_DECL_lnx __post_init_dialog(::user::interaction * pWnd, const RECT& rectOld, DWORD dwStyleOld);
+__STATIC void CLASS_DECL_lnx __pre_init_dialog(sp(::user::interaction )pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
+__STATIC void CLASS_DECL_lnx __post_init_dialog(sp(::user::interaction) pWnd, const RECT& rectOld, DWORD dwStyleOld);
 
 namespace ca
 {
@@ -133,7 +133,7 @@ UINT APIENTRY __thread_entry(void * pParam)
 //         threadWnd.Detach();
       pStartup->bError = TRUE;
       pStartup->hEvent.set_event();
-      __end_thread(dynamic_cast < ::ca::application * > (pThread->m_papp), (UINT)-1, FALSE);
+      __end_thread( (pThread->m_papp.m_p), (UINT)-1, FALSE);
       ASSERT(FALSE);  // unreachable
    }
 
@@ -236,7 +236,7 @@ void AfxInternalPreTranslateMessage(::ca::signal_object * pobj)
       }
 
       // walk from target to main ::ca::window
-      ::user::interaction* pMainWnd = pThread->GetMainWnd();
+      sp(::user::interaction) pMainWnd = pThread->GetMainWnd();
       if(pMainWnd != NULL && pMainWnd->IsWindow())
       {
          pMainWnd->WalkPreTranslateTree(pobj);
@@ -246,7 +246,7 @@ void AfxInternalPreTranslateMessage(::ca::signal_object * pobj)
 
       // in case of modeless dialogs, last chance route through main
       //   ::ca::window's accelerator table
-      ::ca::window * pWnd = pbase->m_pwnd->get_wnd();
+      sp(::ca::window) pWnd = pbase->m_pwnd->get_wnd();
       if (pMainWnd != NULL)
       {
          if (pWnd != NULL && LNX_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
@@ -259,7 +259,7 @@ void AfxInternalPreTranslateMessage(::ca::signal_object * pobj)
       user::interaction_ptr_array wnda = Sys(pThread->get_app()).frames();
       for(int32_t i = 0; i < wnda.get_count(); i++)
       {
-         ::user::interaction * pui = wnda(i);
+         sp(::user::interaction) pui = wnda(i);
 #ifndef DEBUG
          try
          {
@@ -581,7 +581,7 @@ namespace lnx
          m_puiptra = NULL;
          for(int32_t i = 0; i < puiptra->get_size(); i++)
          {
-            ::user::interaction * pui = puiptra->element_at(i);
+            sp(::user::interaction) pui = puiptra->element_at(i);
             if(pui->m_pthread != NULL)
             {
 #ifndef DEBUG
@@ -611,24 +611,6 @@ namespace lnx
       pState->m_pmapHDC->delete_temp();
       pState->m_pmapHWND->delete_temp();*/
 
-      for(int32_t i = 0; i < m_captraDeletePool.get_count(); i++)
-      {
-#ifndef DEBUG
-         try
-         {
-#endif
-            ::ca::ca * pca = m_captraDeletePool[i];
-            if(dynamic_cast < ::ca::application * > (pca) == m_papp)
-            {
-               m_papp = NULL;
-            }
-#ifndef DEBUG
-         }
-         catch(...)
-         {
-         }
-#endif
-      }
 
       // free thread object
 //      if (m_hThread != NULL)
@@ -680,9 +662,9 @@ namespace lnx
             return m_puiptra->get_count();
    }
 
-   ::user::interaction * thread::SetMainWnd(::user::interaction * pui)
+   sp(::user::interaction) thread::SetMainWnd(::user::interaction * pui)
    {
-      ::user::interaction * puiPrevious = m_puiMain;
+      sp(::user::interaction) puiPrevious = m_puiMain;
       m_puiMain  = pui;
       return puiPrevious;
    }
@@ -769,7 +751,7 @@ namespace lnx
       return m_puiptra->get_count();
    }
 
-   ::user::interaction * thread::get_ui(int32_t iIndex)
+   sp(::user::interaction) thread::get_ui(int32_t iIndex)
    {
       single_lock sl(&m_mutexUiPtra, TRUE);
       return m_puiptra->element_at(iIndex);
@@ -828,14 +810,14 @@ namespace lnx
       return m_pAppThread;
    }
 
-   ::user::interaction * thread::get_active_ui()
+   sp(::user::interaction) thread::get_active_ui()
    {
       return m_puiActive;
    }
 
-   ::user::interaction * thread::set_active_ui(::user::interaction * pui)
+   sp(::user::interaction) thread::set_active_ui(::user::interaction * pui)
    {
-      ::user::interaction * puiPrevious = m_puiActive;
+      sp(::user::interaction) puiPrevious = m_puiActive;
       m_puiActive = pui;
       return puiPrevious;
    }
@@ -948,7 +930,7 @@ void thread::Delete()
    if(m_bAutoDelete)
    {
       if(m_pappDelete != NULL)
-         delete m_pappDelete;
+         m_pappDelete.release();
       m_evFinish.SetEvent();
       ::ca::thread * pthread = dynamic_cast < ::ca::thread * > (m_p);
 //      if(pthread->m_peventReady != NULL)
@@ -960,8 +942,9 @@ void thread::Delete()
     //     ::SetEvent((HANDLE) m_peventReady);
       //}
       //pthread->::ca::smart_pointer < ::ca::thread >::m_p = NULL;
-      m_p->release();
+//      m_p.release();
 //      delete_this();
+::ca::c::release();
    }
    else
    {
@@ -995,8 +978,8 @@ void thread::Delete()
       // for tracking the idle time state
       WINBOOL bIdle = TRUE;
       LONG lIdleCount = 0;
-      ::ca::application * pappThis1 = dynamic_cast < ::ca::application * > (this);
-      ::ca::application * pappThis2 = dynamic_cast < ::ca::application * > (m_p);
+      sp(::ca::application) pappThis1 =  (this);
+      sp(::ca::application) pappThis2 =  (m_p);
 
 
       XEvent e;
@@ -1154,7 +1137,7 @@ stop_run:
             m_puiptra = NULL;
             for(int32_t i = 0; i < puiptra->get_size(); i++)
             {
-               ::user::interaction * pui = puiptra->element_at(i);
+               sp(::user::interaction) pui = puiptra->element_at(i);
                if(pui->m_pthread != NULL)
                {
                   if(LNX_THREAD(pui->m_pthread->m_pthread) == this
@@ -1203,7 +1186,7 @@ stop_run:
       {
          for(int32_t i = 0; i < m_puiptra->get_count(); i++)
          {
-            ::user::interaction* pui = m_puiptra->element_at(i);
+            sp(::user::interaction) pui = m_puiptra->element_at(i);
             try
             {
                if (pui != NULL && pui->IsWindowVisible())
@@ -1223,7 +1206,7 @@ stop_run:
 
          // send WM_IDLEUPDATECMDUI to the main window
          /*
-         ::user::interaction* pMainWnd = GetMainWnd();
+         sp(::user::interaction) pMainWnd = GetMainWnd();
          if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
          {
             /*AfxCallWndProc(pMainWnd, pMainWnd->get_handle(),
@@ -1235,7 +1218,7 @@ stop_run:
          */
          // send WM_IDLEUPDATECMDUI to all frame windows
          /* linux __MODULE_THREAD_STATE* pState = _AFX_CMDTARGET_GETSTATE()->m_thread;
-         frame_window* pFrameWnd = pState->m_frameList;
+         sp(frame_window) pFrameWnd = pState->m_frameList;
          while (pFrameWnd != NULL)
          {
             if (pFrameWnd->get_handle() != NULL && pFrameWnd != pMainWnd)
@@ -1263,8 +1246,8 @@ stop_run:
          if (pState->m_nTempMapLock == 0)
          {
             // free temp maps, OLE DLLs, etc.
-            AfxLockTempMaps(dynamic_cast < ::ca::application * > (m_p->m_papp));
-            AfxUnlockTempMaps(dynamic_cast < ::ca::application * > (m_p->m_papp));
+            AfxLockTempMaps( (m_p->m_papp));
+            AfxUnlockTempMaps( (m_p->m_papp));
          }*/
       }
 
@@ -1290,7 +1273,7 @@ stop_run:
       SCAST_PTR(::ca::message::base, pbase, pobj);
       if(pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
-         ::ca::scoped_ptr < ::user::message > spmessage(pbase->m_lparam);
+         sp(::user::message) spmessage(pbase->m_lparam);
          spmessage->send();
          pbase->m_bRet = true;
          return;
@@ -1392,9 +1375,9 @@ stop_run:
 
       SCAST_PTR(::ca::message::base, pbase, pobj);
 
-      frame_window* pTopFrameWnd;
-      ::user::interaction* pMainWnd;
-      ::user::interaction* pMsgWnd;
+      sp(frame_window) pTopFrameWnd;
+      sp(::user::interaction) pMainWnd;
+      sp(::user::interaction) pMsgWnd;
       switch (code)
       {
 /*      case MESSAGEF_DDEMGR:
@@ -1454,7 +1437,7 @@ stop_run:
    /////////////////////////////////////////////////////////////////////////////
    // Access to GetMainWnd() & m_pActiveWnd
 
-   ::user::interaction* thread::GetMainWnd()
+   sp(::user::interaction) thread::GetMainWnd()
    {
       if (m_puiActive != NULL)
          return m_puiActive;    // probably in-place active
@@ -1511,7 +1494,7 @@ stop_run:
                TRACE0("WM_DISPLAYCHANGE");
             }
 
-            spbase(get_base(&msg));
+            spbase = get_base(&msg);
 
             if(spbase.is_set())
             {
@@ -1538,7 +1521,7 @@ stop_run:
                if(spbase->m_bRet)
                   return TRUE;
 
-               spbase.destroy();
+               spbase.release();
 
             }
 
@@ -1595,7 +1578,7 @@ stop_run:
   // dumpcontext << "\nm_nThreadID = " << m_nThreadID;
    dumpcontext << "\nm_nDisablePumpCount = " << pState->m_nDisablePumpCount;
    if (__get_thread() == this)
-      dumpcontext << "\nm_pMainWnd = " << m_puiMain;
+      dumpcontext << "\nm_pMainWnd = " << m_puiMain.m_p;
 
    dumpcontext << "\nm_msgCur = {";
 /*   dumpcontext << "\n\thwnd = " << (void *)pState->m_msgCur.hwnd;
@@ -1647,7 +1630,7 @@ stop_run:
       }
 
       // all other messages route through message ::collection::map
-      ::ca::window * pwindow = pbase->m_pwnd->get_wnd();
+      sp(::ca::window) pwindow = pbase->m_pwnd->get_wnd();
 
 /*      ASSERT(pwindow == NULL || LNX_WINDOW(pwindow)->get_handle() == pbase->m_hwnd);
 
@@ -1789,7 +1772,7 @@ return false;
 
 
 #ifndef _AFX_PORTABLE
-      /*::ca::application * papp = dynamic_cast < ::ca::application * > (get_app());
+      /*::ca::application * papp =  (get_app());
       ___THREAD_STATE* pThreadState = gen_ThreadState.GetDataNA();
       if( pThreadState != NULL )
       {
@@ -1858,7 +1841,7 @@ return false;
 
       ::lnx::thread* pThread = dynamic_cast < ::lnx::thread * > (pstartup->m_pthread);
 
-      ::ca::application* papp = dynamic_cast < ::ca::application * > (get_app());
+      sp(::ca::application) papp =  (get_app());
       m_evFinish.ResetEvent();
       install_message_handling(pThread);
       m_p->install_message_handling(pThread);
@@ -1984,7 +1967,7 @@ return false;
 #endif
          // cleanup and shutdown the thread
 //         threadWnd.Detach();
-         __end_thread(dynamic_cast < ::ca::application * > (m_papp), nResult);
+         __end_thread( (m_papp), nResult);
 #ifndef DEBUG
       }
       catch(...)
@@ -2575,7 +2558,7 @@ return TRUE;
 }
 
 // walk from target to main ::ca::window
-::user::interaction* pMainWnd = System.GetMainWnd();
+sp(::user::interaction) pMainWnd = System.GetMainWnd();
 /* trans   if (::ca::window::WalkPreTranslateTree(pMainWnd->GetSafeHwnd(), pMsg))
 return TRUE; */
 
@@ -2583,7 +2566,7 @@ return TRUE; */
 //   ::ca::window's accelerator table
 /*   if (pMainWnd != NULL)
 {
-::ca::window * pWnd = ::lnx::window::from_handle(pMsg->hwnd);
+sp(::ca::window) pWnd = ::lnx::window::from_handle(pMsg->hwnd);
 if (pWnd != NULL && LNX_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
 return pMainWnd->pre_translate_message(pMsg);
 }
@@ -2911,7 +2894,7 @@ ASSERT(__check_memory());
 if (lCount <= 0)
 {
 // send WM_IDLEUPDATECMDUI to the main ::ca::window
-::user::interaction* pMainWnd = GetMainWnd();
+sp(::user::interaction) pMainWnd = GetMainWnd();
 if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
 {
 /*AfxCallWndProc(pMainWnd, pMainWnd->get_handle(),
@@ -2922,7 +2905,7 @@ pMainWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
 }
 // send WM_IDLEUPDATECMDUI to all frame windows
 /* linux __MODULE_THREAD_STATE* pState = _AFX_CMDTARGET_GETSTATE()->m_thread;
-frame_window* pFrameWnd = pState->m_frameList;
+sp(frame_window) pFrameWnd = pState->m_frameList;
 while (pFrameWnd != NULL)
 {
 if (pFrameWnd->get_handle() != NULL && pFrameWnd != pMainWnd)

@@ -14,7 +14,7 @@
 
 string get_error_message(DWORD dwError);
 
-::ca::application *     lnx_instantiate_application(::ca::application * pappSystem, const char * pszId);
+sp(::ca::application)     lnx_instantiate_application(::ca::application * pappSystem, const char * pszId);
 
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
@@ -88,7 +88,7 @@ CLASS_DECL_lnx void AfxResetMsgCache();
 #define AfxWndProc (*AfxGetAfxWndProc())
 
 #define LNX_THREAD(pthread) (dynamic_cast < ::lnx::thread * > (dynamic_cast < ::ca::thread * >(pthread)))
-#define LNX_WINDOW(pwnd) (dynamic_cast < ::lnx::window * > (dynamic_cast < ::ca::window * >(pwnd)))
+#define LNX_WINDOW(pwnd) (dynamic_cast < ::lnx::window * > (((sp(::ca::window))(pwnd)).m_p))
 #define LNX_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::ca::graphics * > (pgraphics)))
 #define SP_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (( ::ca::graphics * )(pgraphics)))
 #define LNX_HDC(pgraphics) ((HDC)*(dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::ca::graphics * > (pgraphics))))

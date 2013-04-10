@@ -188,7 +188,7 @@ namespace lnx
       return strcmp(lpcsz1, lpcsz2) == 0;
    }
 
-   void dir::root_ones(stringa & stra, ::ca::application * papp)
+   void dir::root_ones(stringa & stra, sp(::ca::application) papp)
    {
       stra.add("/");
 /*      DWORD dwSize = ::GetLogicalDriveStrings(0, NULL);
@@ -212,7 +212,7 @@ namespace lnx
       free(lpszAlloc);*/
    }
 
-   void dir::ls_pattern(::ca::application * papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, base_array < bool, bool > * pbaIsDir, base_array < int64_t, int64_t > * piaSize)
+   void dir::ls_pattern(::ca::application * papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
    {
 
       if(::ca::dir::system::is(lpcsz, papp)) // if base class "already" "says" it is a dir, let it handle it: may be not a operational system dir, e.g., zip or compressed directory...
@@ -305,7 +305,7 @@ namespace lnx
       rls_pattern(papp, lpcsz, "*.*", pstraPath, pstraTitle, pstraRelative, NULL, NULL, eextract);
    }
 
-   void dir::rls_pattern(::ca::application * papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, base_array < bool, bool > * pbaIsDir, base_array < int64_t, int64_t > * piaSize, e_extract eextract)
+   void dir::rls_pattern(::ca::application * papp, const char * lpcsz, const char * pszPattern, stringa * pstraPath, stringa * pstraTitle, stringa * pstraRelative, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize, e_extract eextract)
    {
 
       stra_dup straDir;
@@ -604,7 +604,7 @@ namespace lnx
 
    }
 
-   void dir::ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, base_array < bool, bool > * pbaIsDir, base_array < int64_t, int64_t > * piaSize)
+   void dir::ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath, stringa * pstraTitle, array < bool, bool > * pbaIsDir, array < int64_t, int64_t > * piaSize)
    {
 
       stra_dup stra;
@@ -685,7 +685,7 @@ namespace lnx
 
    }
 
-   bool dir::is(const char * lpcszPath, ::ca::application * papp)
+   bool dir::is(const char * lpcszPath, sp(::ca::application) papp)
    {
 
       bool bIsDir;
@@ -731,7 +731,7 @@ namespace lnx
       return bIsDir;
    }
 
-   bool dir::is(const string & strPath, ::ca::application * papp)
+   bool dir::is(const string & strPath, sp(::ca::application) papp)
    {
 
       if(::ca::dir::system::is(strPath, papp))
@@ -780,7 +780,7 @@ namespace lnx
       return bIsDir;
    }
 
-   bool dir::name_is(const string & str, ::ca::application * papp)
+   bool dir::name_is(const string & str, sp(::ca::application) papp)
    {
       //OutputDebugString(str);
       strsize iLast = str.get_length() - 1;
@@ -978,7 +978,7 @@ namespace lnx
       return path(strLogBaseDir, pszId);
    }
 
-   bool dir::mk(const char * lpcsz, ::ca::application * papp)
+   bool dir::mk(const char * lpcsz, sp(::ca::application) papp)
    {
 
       if(is(lpcsz, papp))
@@ -1279,9 +1279,9 @@ namespace lnx
 
       string strUserFolderShift;
 
-      if(App(papp).directrix().m_varTopicQuery.has_property("user_folder_relative_path"))
+      if(App(papp).directrix()->m_varTopicQuery.has_property("user_folder_relative_path"))
       {
-         strUserFolderShift = path(strRelative, App(papp).directrix().m_varTopicQuery["user_folder_relative_path"].get_string());
+         strUserFolderShift = path(strRelative, App(papp).directrix()->m_varTopicQuery["user_folder_relative_path"].get_string());
       }
       else
       {
@@ -1387,12 +1387,12 @@ namespace lnx
       return path(str, lpcszRelativePath, lpcsz2);
    }
 
-   bool dir::is_inside_time(const char * pszPath, ::ca::application * papp)
+   bool dir::is_inside_time(const char * pszPath, sp(::ca::application) papp)
    {
       return is_inside(time(), pszPath, papp);
    }
 
-   bool dir::is_inside(const char * pszDir, const char * pszPath, ::ca::application * papp)
+   bool dir::is_inside(const char * pszDir, const char * pszPath, sp(::ca::application) papp)
    {
       return ::ca::str::begins_ci(pszDir, pszPath);
    }

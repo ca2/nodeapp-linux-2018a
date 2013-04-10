@@ -31,21 +31,21 @@ namespace lnx
       virtual string path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl);
 
       virtual string relpath(const char * lpcszSource, const char * lpcszRelative, const char * lpcsz2 = NULL);
-      virtual void  ls_pattern(::ca::application * papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, base_array < bool, bool > * pbaIsDir = NULL, base_array < int64_t, int64_t > * piaSize = NULL);
-      virtual void  ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, base_array < bool, bool > * pbaIsDir = NULL, base_array < int64_t, int64_t > * piaSize = NULL);
-      virtual void  rls_pattern(::ca::application * papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, base_array < bool, bool > * pbaIsDir = NULL, base_array < int64_t, int64_t > * piaSize = NULL, e_extract eextract = extract_first);
+      virtual void  ls_pattern(::ca::application * papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
+      virtual void  ls(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
+      virtual void  rls_pattern(::ca::application * papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL, e_extract eextract = extract_first);
       virtual void  rls(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, e_extract eextract = extract_first);
       virtual void  rls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL);
       virtual void  ls_dir(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
       virtual bool  has_subdir(::ca::application * papp, const char * lpcsz);
       virtual void  ls_file(::ca::application * papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
-      virtual bool  is(const char * lpcsz, ::ca::application * papp);
-      virtual bool  is(const string & str, ::ca::application * papp);
-      virtual bool  name_is(const string & str, ::ca::application * papp);
-      virtual bool  is_inside(const char * lpcszDir, const char * lpcszPath, ::ca::application * papp);
-      virtual bool  is_inside_time(const char * lpcsz, ::ca::application * papp);
-      virtual void root_ones(stringa & stra, ::ca::application * papp);
-      virtual bool mk(const char * lpcsz, ::ca::application * papp);
+      virtual bool  is(const char * lpcsz, sp(::ca::application) papp);
+      virtual bool  is(const string & str, sp(::ca::application) papp);
+      virtual bool  name_is(const string & str, sp(::ca::application) papp);
+      virtual bool  is_inside(const char * lpcszDir, const char * lpcszPath, sp(::ca::application) papp);
+      virtual bool  is_inside_time(const char * lpcsz, sp(::ca::application) papp);
+      virtual void root_ones(stringa & stra, sp(::ca::application) papp);
+      virtual bool mk(const char * lpcsz, sp(::ca::application) papp);
       virtual bool rm(::ca::application * papp, const char * psz, bool bRecursive = true);
 
 
