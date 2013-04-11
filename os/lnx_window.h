@@ -43,8 +43,8 @@ namespace lnx
 
       virtual void on_delete(::ca::ca * poc);
 
-      virtual void mouse_hover_add(::user::interaction* pinterface);
-      virtual void mouse_hover_remove(::user::interaction* pinterface);
+      virtual void mouse_hover_add(sp(::user::interaction) pinterface);
+      virtual void mouse_hover_remove(sp(::user::interaction) pinterface);
 
       bool create_message_window(const char * pszName, ::ca::window_callback * pcallback = NULL);
 

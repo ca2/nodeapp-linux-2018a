@@ -55,12 +55,12 @@ const char gen_Wnd[] = __WND;
 namespace lnx
 {
 
-   void window::mouse_hover_add(::user::interaction* pinterface)
+   void window::mouse_hover_add(sp(::user::interaction) pinterface)
    {
       m_guieptraMouseHover.add_unique(pinterface);
    }
 
-   void window::mouse_hover_remove(::user::interaction* pinterface)
+   void window::mouse_hover_remove(sp(::user::interaction) pinterface)
    {
       m_guieptraMouseHover.remove(pinterface);
    }
@@ -5335,7 +5335,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   sp(::user::interaction) window::set_capture(::user::interaction* pinterface)
+   sp(::user::interaction) window::set_capture(sp(::user::interaction) pinterface)
    {
 
       ASSERT(::IsWindow(get_os_data()));
