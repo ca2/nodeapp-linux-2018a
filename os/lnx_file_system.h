@@ -25,7 +25,7 @@ namespace lnx
       class file_system::path m_path;
 
 
-      file_system(::ca::application * papp);
+      file_system(sp(::ca::application) papp);
 
       path & path();
 
@@ -53,11 +53,11 @@ namespace lnx
       void  get_ascendants_name(const char * lpcsz, stringa & stra);
 
 
-      string time(::ca::application * papp, const char * pszBasePath, int32_t iDepth, const char * pszPrefix = NULL, const char * pszSuffix = NULL);
-      string time_square(::ca::application * papp, const char * pszPrefix = NULL, const char * pszSuffix = NULL);
-      string time_log(::ca::application * papp, const char * pszId);
+      string time(sp(::ca::application) papp, const char * pszBasePath, int32_t iDepth, const char * pszPrefix = NULL, const char * pszSuffix = NULL);
+      string time_square(sp(::ca::application) papp, const char * pszPrefix = NULL, const char * pszSuffix = NULL);
+      string time_log(sp(::ca::application) papp, const char * pszId);
 
-      virtual ::ca::filesp time_square_file(::ca::application * papp, const char * pszPrefix = NULL, const char * pszSuffix = NULL);
+      virtual ::ca::filesp time_square_file(sp(::ca::application) papp, const char * pszPrefix = NULL, const char * pszSuffix = NULL);
       virtual ::ca::filesp get(const char * name, sp(::ca::application) papp);
 
 
