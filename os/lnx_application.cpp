@@ -365,7 +365,7 @@ return NULL;
    {
       return ::win::thread::post_thread_message(message, wParam, lParam);
    }
-   bool application::post_message(::user::interaction * pguie, UINT message, WPARAM wParam, LPARAM lParam)
+   bool application::post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam, LPARAM lParam)
    {
       return ::win::thread::post_message(pguie, message, wParam, lParam);
    }

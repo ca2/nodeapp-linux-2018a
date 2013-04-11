@@ -8,7 +8,7 @@ namespace lnx
    CLASS_DECL_lnx LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
    //CLASS_DECL_lnx void _::ca::StandardSubclass(oswindow);
    CLASS_DECL_lnx LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
-   CLASS_DECL_lnx LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_lnx LRESULT __call_window_procedure(sp(::user::interaction) pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
    class CLASS_DECL_lnx window :
@@ -61,7 +61,7 @@ namespace lnx
       bool ModifyStyleEx(DWORD dwRemove, DWORD dwAdd, UINT nFlags = 0);
 
       //virtual sp(::user::interaction) GetOwner();
-      virtual void set_owner(::user::interaction * pOwnerWnd);
+      virtual void set_owner(sp(::user::interaction) pOwnerWnd);
 
       virtual oswindow get_handle() const;
 
@@ -310,7 +310,7 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
 
       // capture and focus apply to all windows
       static sp(::ca::window) PASCAL GetCapture();
-      virtual sp(::user::interaction) set_capture(::user::interaction * pinterface = NULL);
+      virtual sp(::user::interaction) set_capture(sp(::user::interaction) pinterface = NULL);
       virtual sp(::user::interaction) release_capture();
       virtual sp(::user::interaction) get_capture();
       static sp(::ca::window) PASCAL GetFocus();
@@ -385,7 +385,7 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       virtual sp(::user::interaction) GetWindow(UINT nCmd);
       virtual sp(::user::interaction) GetLastActivePopup();
 
-      virtual bool IsChild(::user::interaction *  pWnd);
+      virtual bool IsChild(sp(::user::interaction)  pWnd);
       virtual sp(::user::interaction) get_parent() const;
       using ::user::interaction::set_parent;
       sp(::ca::window) set_parent(::ca::window * pWndNewParent);
@@ -457,7 +457,7 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
 
       // dialog support
       void UpdateDialogControls(command_target* pTarget, bool bDisableIfNoHndler);
-      void CenterWindow(::user::interaction * pAlternateOwner = NULL);
+      void CenterWindow(sp(::user::interaction) pAlternateOwner = NULL);
       virtual id   RunModalLoop(DWORD dwFlags = 0, ::ca::live_object * pliveobject = NULL);
       virtual bool ContinueModal(int32_t iLevel);
       virtual void EndModalLoop(id nResult);
@@ -654,8 +654,8 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       bool HandleFloatingSysCommand(UINT nID, LPARAM lParam);
       bool IsTopParentActive();
       void ActivateTopParent();
-      virtual void WalkPreTranslateTree(::user::interaction * puiStop, ::ca::signal_object * pobj);
-      static sp(::user::interaction) PASCAL GetDescendantWindow(::user::interaction * hWnd, id id);
+      virtual void WalkPreTranslateTree(sp(::user::interaction) puiStop, ::ca::signal_object * pobj);
+      static sp(::user::interaction) PASCAL GetDescendantWindow(sp(::user::interaction) hWnd, id id);
       static void PASCAL SendMessageToDescendants(void*  hWnd, UINT message, WPARAM wParam, LPARAM lParam, bool bDeep, bool bOnlyPerm);
       virtual bool is_frame_window(); // is_kind_of(System.type_info < frame_window > ()))
       virtual void on_final_release();
@@ -686,7 +686,7 @@ virtual    void set_view_port_org(::ca::graphics * pgraphics);
       CLASS_DECL_lnx friend LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
       //CLASS_DECL_lnx friend void _::ca::StandardSubclass(oswindow);
       CLASS_DECL_lnx friend LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
-      CLASS_DECL_lnx friend LRESULT __call_window_procedure(::user::interaction * pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_lnx friend LRESULT __call_window_procedure(sp(::user::interaction) pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);

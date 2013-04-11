@@ -47,7 +47,7 @@ CLASS_DECL_lnx void AfxTryCleanup();
 // Global implementation helpers
 
 // window creation hooking
-CLASS_DECL_lnx void AfxHookWindowCreate(::user::interaction * pWnd);
+CLASS_DECL_lnx void AfxHookWindowCreate(sp(::user::interaction) pWnd);
 CLASS_DECL_lnx WINBOOL AfxUnhookWindowCreate();
 CLASS_DECL_lnx void AfxResetMsgCache();
 

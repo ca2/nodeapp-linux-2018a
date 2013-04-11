@@ -9,7 +9,7 @@
 
 //#include "sal.h"
 
-CLASS_DECL_lnx void hook_window_create(::user::interaction * pWnd);
+CLASS_DECL_lnx void hook_window_create(sp(::user::interaction) pWnd);
 CLASS_DECL_lnx bool unhook_window_create();
 void CLASS_DECL_lnx __pre_init_dialog(
    sp(::user::interaction) pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
@@ -2282,7 +2282,7 @@ restart_mouse_hover_check:
       return NULL;
    }
 
-   /* trans oswindow CLASS_DECL_lnx __get_parent_owner(::user::interaction * hWnd)
+   /* trans oswindow CLASS_DECL_lnx __get_parent_owner(sp(::user::interaction) hWnd)
    {
    // check for permanent-owned window first
    sp(::ca::window) pWnd = ::lnx::window::FromHandlePermanent(hWnd);
@@ -2406,7 +2406,7 @@ return NULL;
       return nResult;
    }
 
-   sp(::user::interaction) PASCAL window::GetDescendantWindow(::user::interaction * hWnd, id id)
+   sp(::user::interaction) PASCAL window::GetDescendantWindow(sp(::user::interaction) hWnd, id id)
    {
 
       single_lock sl(&hWnd->m_pthread->m_pthread->m_mutex, TRUE);
@@ -2617,7 +2617,7 @@ return 0;
 
    if(m_pguie != this && m_pguie != NULL)
    {
-   for (::user::interaction * hWndChild = m_pguie->GetTopWindow(); hWndChild != NULL;
+   for (sp(::user::interaction) hWndChild = m_pguie->GetTopWindow(); hWndChild != NULL;
    hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
    {
    string strIdc = hWndChild->GetDlgCtrlId();
@@ -2640,7 +2640,7 @@ return 0;
    }
    else
    {
-   for (::user::interaction * hWndChild = GetTopWindow(); hWndChild != NULL;
+   for (sp(::user::interaction) hWndChild = GetTopWindow(); hWndChild != NULL;
    hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
    {
    string strIdc = hWndChild->GetDlgCtrlId();
@@ -2741,7 +2741,7 @@ return 0;
 
       if(m_pguie != this && m_pguie != NULL)
       {
-         for (::user::interaction * hWndChild = m_pguie->GetTopWindow(); hWndChild != NULL;
+         for (sp(::user::interaction) hWndChild = m_pguie->GetTopWindow(); hWndChild != NULL;
             hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
          {
             id id = hWndChild->GetDlgCtrlId();
@@ -2751,7 +2751,7 @@ return 0;
             else if (pWnd != NULL)
                hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
-         for (::user::interaction * hWndChild = m_pguie->get_top_child(); hWndChild != NULL;
+         for (sp(::user::interaction) hWndChild = m_pguie->get_top_child(); hWndChild != NULL;
             hWndChild = hWndChild->under_sibling())
          {
             id id = hWndChild->GetDlgCtrlId();
@@ -2764,7 +2764,7 @@ return 0;
       }
       else
       {
-         for (::user::interaction * hWndChild = GetTopWindow(); hWndChild != NULL;
+         for (sp(::user::interaction) hWndChild = GetTopWindow(); hWndChild != NULL;
             hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
          {
             id id = hWndChild->GetDlgCtrlId();
@@ -2774,7 +2774,7 @@ return 0;
             else if (pWnd != NULL)
                hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
-         for (::user::interaction * hWndChild = m_pguie->get_top_child(); hWndChild != NULL;
+         for (sp(::user::interaction) hWndChild = m_pguie->get_top_child(); hWndChild != NULL;
             hWndChild = hWndChild->under_sibling())
          {
             id id = hWndChild->GetDlgCtrlId();
@@ -2885,7 +2885,7 @@ return 0;
       return false;*/
    }
 
-   void window::WalkPreTranslateTree(::user::interaction * puiStop, ::ca::signal_object * pobj)
+   void window::WalkPreTranslateTree(sp(::user::interaction) puiStop, ::ca::signal_object * pobj)
    {
       ASSERT(puiStop == NULL || puiStop->IsWindow());
       ASSERT(pobj != NULL);
@@ -2894,7 +2894,7 @@ return 0;
       // walk from the target window up to the hWndStop window checking
       //  if any window wants to translate this message
 
-      for (::user::interaction * pui = pbase->m_pwnd; pui != NULL; pui->get_parent())
+      for (sp(::user::interaction) pui = pbase->m_pwnd; pui != NULL; pui->get_parent())
       {
 
          pui->pre_translate_message(pobj);
@@ -3686,7 +3686,7 @@ throw not_implemented(get_app());
    /////////////////////////////////////////////////////////////////////////////
    // Centering dialog support (works for any non-child window)
 
-   void window::CenterWindow(::user::interaction * pAlternateOwner)
+   void window::CenterWindow(sp(::user::interaction) pAlternateOwner)
    {
       throw not_implemented(get_app());
 //      ASSERT(::IsWindow(get_os_data()));
@@ -3704,7 +3704,7 @@ throw not_implemented(get_app());
 //         {
 //            // let parent determine alternate center window
 //            sp(::user::interaction) hWndTemp =
-//               (::user::interaction * )hWndCenter->send_message(WM_QUERYCENTERWND, 0, 0);
+//               (sp(::user::interaction) )hWndCenter->send_message(WM_QUERYCENTERWND, 0, 0);
 //            if (hWndTemp != NULL)
 //               hWndCenter = hWndTemp;
 //         }
@@ -4245,7 +4245,7 @@ throw not_implemented(get_app());
 
 
 
-   bool window::IsChild(::user::interaction * pWnd)
+   bool window::IsChild(sp(::user::interaction) pWnd)
    {
       ASSERT(::IsWindow(get_os_data()));
       if(LNX_WINDOW(pWnd)->get_handle() == NULL)
@@ -4798,7 +4798,7 @@ throw not_implemented(get_app());
       return ModifyStyleEx(get_os_data(), dwRemove, dwAdd, nFlags);
    }
 
-   void window::set_owner(::user::interaction * pOwnerWnd)
+   void window::set_owner(sp(::user::interaction) pOwnerWnd)
    {
       m_pguieOwner = pOwnerWnd;
    }
@@ -6241,7 +6241,7 @@ if(psurface == g_cairosurface)
    /////////////////////////////////////////////////////////////////////////////
    // Official way to send message to a window
 
-   CLASS_DECL_lnx LRESULT __call_window_procedure(::user::interaction * pinteraction, oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam)
+   CLASS_DECL_lnx LRESULT __call_window_procedure(sp(::user::interaction) pinteraction, oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam)
    {
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       MESSAGE oldState = pThreadState->m_lastSentMsg;   // save for nesting
@@ -6632,7 +6632,7 @@ __STATIC void CLASS_DECL_lnx __post_init_dialog(
 
 
 
-CLASS_DECL_lnx void hook_window_create(::user::interaction * pWnd)
+CLASS_DECL_lnx void hook_window_create(sp(::user::interaction) pWnd)
 {
 
 //      throw not_implemented(::ca::get_thread_app());

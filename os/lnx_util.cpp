@@ -70,7 +70,7 @@ oswindow CLASS_DECL_lnx _AfxChildWindowFromPoint(oswindow hWnd, POINT pt)
    return NULL;    // not found
 }
 
-void CLASS_DECL_lnx AfxSetWindowText(::user::interaction * hWndCtrl, const char * lpszNew)
+void CLASS_DECL_lnx AfxSetWindowText(sp(::user::interaction) hWndCtrl, const char * lpszNew)
 {
    hWndCtrl->SetWindowText(lpszNew);
    /*ENSURE(hWndCtrl);

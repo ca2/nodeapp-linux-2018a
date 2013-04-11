@@ -662,20 +662,20 @@ namespace lnx
             return m_puiptra->get_count();
    }
 
-   sp(::user::interaction) thread::SetMainWnd(::user::interaction * pui)
+   sp(::user::interaction) thread::SetMainWnd(sp(::user::interaction) pui)
    {
       sp(::user::interaction) puiPrevious = m_puiMain;
       m_puiMain  = pui;
       return puiPrevious;
    }
 
-   void thread::add(::user::interaction * pui)
+   void thread::add(sp(::user::interaction) pui)
    {
       single_lock sl(&m_mutexUiPtra, TRUE);
       m_puiptra->add(pui);
    }
 
-   void thread::remove(::user::interaction * pui)
+   void thread::remove(sp(::user::interaction) pui)
    {
       if(pui == NULL)
          return;
@@ -757,7 +757,7 @@ namespace lnx
       return m_puiptra->element_at(iIndex);
    }
 
-   void thread::set_timer(::user::interaction * pui, uint_ptr nIDEvent, UINT nEllapse)
+   void thread::set_timer(sp(::user::interaction) pui, uint_ptr nIDEvent, UINT nEllapse)
    {
       if(!m_spuiMessage->IsWindow())
       {
@@ -780,7 +780,7 @@ namespace lnx
       }
    }
 
-   void thread::unset_timer(::user::interaction * pui, uint_ptr nIDEvent)
+   void thread::unset_timer(sp(::user::interaction) pui, uint_ptr nIDEvent)
    {
       m_ptimera->unset(pui, nIDEvent);
    }
@@ -815,7 +815,7 @@ namespace lnx
       return m_puiActive;
    }
 
-   sp(::user::interaction) thread::set_active_ui(::user::interaction * pui)
+   sp(::user::interaction) thread::set_active_ui(sp(::user::interaction) pui)
    {
       sp(::user::interaction) puiPrevious = m_puiActive;
       m_puiActive = pui;
@@ -1598,7 +1598,7 @@ stop_run:
 }
 #endif
 
-   bool thread::post_message(::user::interaction * pguie, UINT uiMessage, WPARAM wparam, LPARAM lparam)
+   bool thread::post_message(sp(::user::interaction) pguie, UINT uiMessage, WPARAM wparam, LPARAM lparam)
    {
 //      if(m_hThread == NULL)
   //       return false;
