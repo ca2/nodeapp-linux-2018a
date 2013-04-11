@@ -32,7 +32,7 @@ namespace lnx
       main_init_data *     m_pmaininitdata;
 
 
-      application(::ca::application * papp);
+      application(sp(::ca::application) papp);
       virtual ~application();
 
       virtual HINSTANCE GetHinstance();

@@ -26,7 +26,7 @@ namespace lnx
 {
 
 
-   window_draw::window_draw(::ca::application * papp) :
+   window_draw::window_draw(sp(::ca::application) papp) :
       ca(papp),
       ::ca::thread(papp),
       ::ca::window_draw(papp),

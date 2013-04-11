@@ -14,7 +14,7 @@
 
 string get_error_message(DWORD dwError);
 
-sp(::ca::application)     lnx_instantiate_application(::ca::application * pappSystem, const char * pszId);
+sp(::ca::application)     lnx_instantiate_application(sp(::ca::application) pappSystem, const char * pszId);
 
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
@@ -130,4 +130,4 @@ WINBOOL GetMessage(
 int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[]);
 
 
-CLASS_DECL_lnx void vfxThrowFileException(::ca::application * papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);
+CLASS_DECL_lnx void vfxThrowFileException(sp(::ca::application) papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);

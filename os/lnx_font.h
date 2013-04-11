@@ -11,7 +11,7 @@ namespace lnx
    public:
 
 
-      font(::ca::application * papp);
+      font(sp(::ca::application) papp);
       virtual ~font();
 
 

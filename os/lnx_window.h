@@ -38,7 +38,7 @@ namespace lnx
 
 
       window();
-      window(::ca::application * papp);
+      window(sp(::ca::application) papp);
       virtual void construct(oswindow hwnd);
 
       virtual void on_delete(::ca::ca * poc);

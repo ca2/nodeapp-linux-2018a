@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   brush::brush(::ca::application * papp) :
+   brush::brush(sp(::ca::application) papp) :
       ca(papp)
    {
 

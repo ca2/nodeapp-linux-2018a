@@ -8,7 +8,7 @@ namespace lnx
 {
 
 
-   graphics::graphics(::ca::application * papp) :
+   graphics::graphics(sp(::ca::application) papp) :
       ca(papp)
    {
 
@@ -2989,7 +2989,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
    /////////////////////////////////////////////////////////////////////////////
    // special graphics drawing primitives/helpers
 
-   ::ca::brush* PASCAL graphics::GetHalftoneBrush(::ca::application * papp)
+   ::ca::brush* PASCAL graphics::GetHalftoneBrush(sp(::ca::application) papp)
    {
 /*      ::ca::LockGlobals(CRIT_HALFTONEBRUSH);
       if (gen_HalftoneBrush == NULL)
@@ -3324,7 +3324,7 @@ VOID Example_EnumerateMetafile9(HDC hdc)
 
    }
 
-//   ::ca::graphics_object* PASCAL graphics::SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h)
+//   ::ca::graphics_object* PASCAL graphics::SelectGdiObject(sp(::ca::application) papp, HDC hDC, HGDIOBJ h)
   // {
 //      return ::win::graphics_object::from_handle(papp, ::SelectObject(hDC, h));
    //}

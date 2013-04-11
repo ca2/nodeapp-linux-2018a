@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   pen::pen(::ca::application * papp) :
+   pen::pen(sp(::ca::application) papp) :
       ca(papp)
    {
    }
@@ -16,7 +16,7 @@ namespace lnx
    {
       return (HPEN)(this == NULL ? NULL : get_handle());
    }*/
-/*   pen* PASCAL pen::from_handle(::ca::application * papp, HPEN hPen)
+/*   pen* PASCAL pen::from_handle(sp(::ca::application) papp, HPEN hPen)
    {
       return dynamic_cast < pen* > (::win::graphics_object::from_handle(papp, hPen));
    }*/

@@ -34,7 +34,7 @@ namespace lnx
 
 
 
-      dib(::ca::application * papp);
+      dib(sp(::ca::application) papp);
       virtual void construct(int32_t cx, int32_t cy);
       virtual ~dib();
 

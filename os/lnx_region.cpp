@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   region::region(::ca::application * papp) :
+   region::region(sp(::ca::application) papp) :
       ca(papp)
    {
 
@@ -23,7 +23,7 @@ namespace lnx
    {
       return (HRGN)(this == NULL ? NULL : get_os_data());
    }
-   region* PASCAL region::from_handle(::ca::application * papp, HRGN hRgn)
+   region* PASCAL region::from_handle(sp(::ca::application) papp, HRGN hRgn)
    {
       return dynamic_cast < region * > (::win::graphics_object::from_handle(papp, hRgn));
    }

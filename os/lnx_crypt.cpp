@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   crypt::crypt(::ca::application * papp) :
+   crypt::crypt(sp(::ca::application) papp) :
       ca(papp),
       ::ca::crypt(papp)
    {

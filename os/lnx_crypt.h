@@ -11,7 +11,7 @@ namespace lnx
    public:
 
 
-      crypt(::ca::application * papp);
+      crypt(sp(::ca::application) papp);
       virtual ~crypt();
 
 

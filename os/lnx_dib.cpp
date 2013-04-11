@@ -29,10 +29,10 @@ namespace lnx
    double dib::dPi;
 
 
-   dib::dib(::ca::application * papp) :
+   dib::dib(sp(::ca::application) papp) :
       ca(papp),
-      m_spbitmap(papp),
-      m_spgraphics(papp)
+      m_spbitmap(allocer()),
+      m_spgraphics(allocer())
    {
 
       m_pcolorref          = NULL;

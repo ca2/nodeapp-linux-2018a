@@ -8,7 +8,7 @@ namespace lnx
 {
 
 
-   os::os(::ca::application * papp) :
+   os::os(sp(::ca::application) papp) :
       ca(papp),
       ::ca::os(papp)
    {

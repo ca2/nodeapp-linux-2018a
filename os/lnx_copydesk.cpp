@@ -623,7 +623,7 @@ namespace lnx
 {
 
 
-   copydesk::copydesk(::ca::application * papp) :
+   copydesk::copydesk(sp(::ca::application) papp) :
       ca(papp),
       ::ca::copydesk(papp)
    {

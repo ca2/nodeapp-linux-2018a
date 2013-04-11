@@ -16,10 +16,10 @@ namespace lnx
 
 // xxx     Gdiplus::Region *       m_pregion;
 
-      //static region * PASCAL from_handle(::ca::application * papp, HRGN hRgn);
+      //static region * PASCAL from_handle(sp(::ca::application) papp, HRGN hRgn);
       //operator HRGN() const;
 
-      region(::ca::application * papp);
+      region(sp(::ca::application) papp);
       virtual ~region();
 
 

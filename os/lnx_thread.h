@@ -78,7 +78,7 @@ namespace lnx
       UINT                                m_dwFinishTimeout;
 
 
-      thread(::ca::application * papp);
+      thread(sp(::ca::application) papp);
       virtual ~thread();
 
 

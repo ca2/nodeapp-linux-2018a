@@ -6,7 +6,7 @@ extern __thread thread_local_storage * __thread_data;
 namespace lnx
 {
 
-   application::application(::ca::application * papp) :
+   application::application(sp(::ca::application) papp) :
       ca(papp)
    {
       ::ca::thread_sp::create(allocer());

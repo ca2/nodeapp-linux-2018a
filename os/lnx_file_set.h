@@ -17,7 +17,7 @@ namespace lnx
       stringa        m_straFile;
 
 
-      file_set(::ca::application * papp);
+      file_set(sp(::ca::application) papp);
       virtual ~file_set();
 
 

@@ -23,7 +23,7 @@ namespace lnx
 {
 
 
-   file::file(::ca::application * papp) :
+   file::file(sp(::ca::application) papp) :
       ca(papp)
    {
 
@@ -33,7 +33,7 @@ namespace lnx
 
    }
 
-   file::file(::ca::application * papp, int32_t hFile) :
+   file::file(sp(::ca::application) papp, int32_t hFile) :
       ca(papp)
    {
 
@@ -43,7 +43,7 @@ namespace lnx
 
    }
 
-   file::file(::ca::application * papp, const char * lpszFileName, UINT nOpenFlags) :
+   file::file(sp(::ca::application) papp, const char * lpszFileName, UINT nOpenFlags) :
       ca(papp)
    {
 
@@ -570,13 +570,13 @@ namespace lnx
 
 
 
-   void PASCAL file_exception::ThrowOsError(::ca::application * papp, LONG lOsError, const char * lpszFileName /* = NULL */)
+   void PASCAL file_exception::ThrowOsError(sp(::ca::application) papp, LONG lOsError, const char * lpszFileName /* = NULL */)
    {
       if (lOsError != 0)
          vfxThrowFileException(papp, file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void PASCAL file_exception::ThrowErrno(::ca::application * papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
+   void PASCAL file_exception::ThrowErrno(sp(::ca::application) papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
          vfxThrowFileException(papp, file_exception::ErrnoToException(nErrno), errno, lpszFileName);
@@ -1669,7 +1669,7 @@ return TRUE;
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException helpers
 
-void CLASS_DECL_lnx vfxThrowFileException(::ca::application * papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
+void CLASS_DECL_lnx vfxThrowFileException(sp(::ca::application) papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
 #ifdef DEBUG
    const char * lpsz;

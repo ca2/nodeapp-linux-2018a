@@ -10,7 +10,7 @@ namespace lnx
    {
    public:
 
-      palette(::ca::application * papp);
+      palette(sp(::ca::application) papp);
       virtual ~palette();
 
 

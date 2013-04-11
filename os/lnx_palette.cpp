@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   palette::palette(::ca::application * papp) :
+   palette::palette(sp(::ca::application) papp) :
       ca(papp)
    {
 
@@ -31,7 +31,7 @@ namespace lnx
 
 /*
 
-   palette* PASCAL palette::from_handle(::ca::application * papp, HPALETTE hPalette)
+   palette* PASCAL palette::from_handle(sp(::ca::application) papp, HPALETTE hPalette)
    {
 
       //return dynamic_cast < palette * > (::win::graphics_object::from_handle(papp, hPalette));

@@ -49,7 +49,7 @@ namespace lnx
    }
 
 
-   graphics_object * graphics_object_allocator(::ca::application * papp, HANDLE h)
+   graphics_object * graphics_object_allocator(sp(::ca::application) papp, HANDLE h)
    {
       /*switch(::GetObjectType(h))
       {
@@ -70,7 +70,7 @@ namespace lnx
       return NULL;
    }
 
-   /*graphics_object* PASCAL graphics_object::from_handle(::ca::application * papp, HGDIOBJ h)
+   /*graphics_object* PASCAL graphics_object::from_handle(sp(::ca::application) papp, HGDIOBJ h)
    {
       hgdiobj_map* pMap = afxMapHGDIOBJ(TRUE); //create ::collection::map if not exist
       ASSERT(pMap != NULL);

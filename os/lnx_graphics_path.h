@@ -11,10 +11,10 @@ namespace lnx
    public:
 
 
- 
 
 
-      graphics_path(::ca::application * papp);
+
+      graphics_path(sp(::ca::application) papp);
       virtual ~graphics_path();
 
 

@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   graphics_path::graphics_path(::ca::application * papp) :
+   graphics_path::graphics_path(sp(::ca::application) papp) :
       ca(papp)
    {
 

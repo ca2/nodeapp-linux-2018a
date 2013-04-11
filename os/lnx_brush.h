@@ -15,7 +15,7 @@ namespace lnx
 //xxx      Gdiplus::Brush * m_pbrush;
 
 
-      brush(::ca::application * papp);
+      brush(sp(::ca::application) papp);
       //virtual void construct(COLORREF crColor);                // CreateSolidBrush
       //virtual void construct(int32_t nIndex, COLORREF crColor);    // CreateHatchBrush
       //virtual void construct(::ca::bitmap * pbitmap);                // CreatePatternBrush

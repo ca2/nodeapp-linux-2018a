@@ -33,7 +33,7 @@ namespace lnx
 
 
       graphics();
-      graphics(::ca::application * papp);
+      graphics(sp(::ca::application) papp);
       virtual ~graphics();
 
 
@@ -456,7 +456,7 @@ namespace lnx
       bool SelectClipPath(int32_t nMode);
 
    // Misc Helper Functions
-      static ::ca::brush* PASCAL GetHalftoneBrush(::ca::application * papp);
+      static ::ca::brush* PASCAL GetHalftoneBrush(sp(::ca::application) papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast,
          ::ca::brush* pBrush = NULL, ::ca::brush* pBrushLast = NULL);
@@ -495,7 +495,7 @@ namespace lnx
 
    //protected:
       // used for implementation of non-virtual SelectObject calls
-      //static ::ca::graphics_object* PASCAL SelectGdiObject(::ca::application * papp, HDC hDC, HGDIOBJ h);
+      //static ::ca::graphics_object* PASCAL SelectGdiObject(sp(::ca::application) papp, HDC hDC, HGDIOBJ h);
 
 
       // platform-specific or platform-internals

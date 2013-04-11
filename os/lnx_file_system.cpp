@@ -14,7 +14,7 @@ namespace lnx
 {
 
 
-   file_system::file_system(::ca::application * papp) :
+   file_system::file_system(sp(::ca::application) papp) :
       ca(papp)
    {
    }
@@ -177,19 +177,19 @@ namespace lnx
    }
 
 
-   string file_system::time_square(::ca::application * papp, const char * pszPrefix, const char * pszSuffix)
+   string file_system::time_square(sp(::ca::application) papp, const char * pszPrefix, const char * pszSuffix)
    {
       string str;
       System.dir().time_square(str);
       return time(papp, str, 25, pszPrefix, pszSuffix);
    }
 
-   string file_system::time_log(::ca::application * papp, const char * pszId)
+   string file_system::time_log(sp(::ca::application) papp, const char * pszId)
    {
       return time(papp, System.dir().time_log(pszId), 9);
    }
 
-   string file_system::time(::ca::application * papp, const char * psz, int32_t iMaxLevel, const char * pszPrefix, const char * pszSuffix)
+   string file_system::time(sp(::ca::application) papp, const char * psz, int32_t iMaxLevel, const char * pszPrefix, const char * pszSuffix)
    {
       mutex_lock lockMachineEvent(
          (&System.machine_event_central() != NULL) ?
@@ -1174,7 +1174,7 @@ namespace lnx
 
    }
 
-   ::ca::filesp file_system::time_square_file(::ca::application * papp, const char * pszPrefix, const char * pszSuffix)
+   ::ca::filesp file_system::time_square_file(sp(::ca::application) papp, const char * pszPrefix, const char * pszSuffix)
    {
 
       return get(time_square(papp, pszPrefix, pszSuffix), papp);

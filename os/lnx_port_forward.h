@@ -16,7 +16,7 @@ namespace lnx
    public:
 
 
-	   port_forward(::ca::application * papp);
+	   port_forward(sp(::ca::application) papp);
 	   virtual ~port_forward();
 
 

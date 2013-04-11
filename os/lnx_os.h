@@ -11,7 +11,7 @@ namespace lnx
    public:
 
 
-      os(::ca::application * papp);
+      os(sp(::ca::application) papp);
       virtual ~os();
 
 

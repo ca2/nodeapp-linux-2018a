@@ -7,7 +7,7 @@ namespace lnx
 {
 
 
-   bitmap::bitmap(::ca::application * papp) :
+   bitmap::bitmap(sp(::ca::application) papp) :
       ca(papp)
    {
 

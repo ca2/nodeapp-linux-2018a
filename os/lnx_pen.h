@@ -20,7 +20,7 @@ namespace lnx
       //COLORREF             m_cr;
 
 
-      pen(::ca::application * papp);
+      pen(sp(::ca::application) papp);
       virtual ~pen();
       /*virtual void construct(int32_t nPenStyle, double nWidth, COLORREF crColor);
       virtual void construct(int32_t nPenStyle, double nWidth, const LOGBRUSH* pLogBrush, int32_t nStyleCount = 0, const DWORD* lpStyle = NULL);

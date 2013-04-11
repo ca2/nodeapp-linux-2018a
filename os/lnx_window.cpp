@@ -109,7 +109,7 @@ namespace lnx
       m_bExposing = false;
    }
 
-   window::window(::ca::application * papp) :
+   window::window(sp(::ca::application) papp) :
       ca(papp),
       ::user::interaction(papp)
    {
@@ -1459,7 +1459,7 @@ namespace lnx
       {
       if(pbase->m_wparam == BERGEDGE_GETAPP)
       {
-      ::ca::application ** ppapp= (::ca::application **) pbase->m_lparam;
+      sp(::ca::application)* ppapp= (sp(::ca::application)*) pbase->m_lparam;
       *ppapp = get_app();
       pbase->m_bRet = true;
       return;
@@ -3200,7 +3200,7 @@ return 0;
       oswindow m_hwnd;
       HDC m_hdc;
 
-      print_window(::ca::application * papp, oswindow hwnd, HDC hdc, DWORD dwTimeout) :
+      print_window(sp(::ca::application) papp, oswindow hwnd, HDC hdc, DWORD dwTimeout) :
          ca(papp),
          m_event(papp)
 
@@ -4237,7 +4237,7 @@ throw not_implemented(get_app());
    }
 
 
-   /*   view_update_hint::view_update_hint(::ca::application * papp) :
+   /*   view_update_hint::view_update_hint(sp(::ca::application) papp) :
    ca(papp)
    {
    }
@@ -4572,7 +4572,7 @@ throw not_implemented(get_app());
       return m_id;
    }
 
-   /*   guie_message_wnd::guie_message_wnd(::ca::application * papp) :
+   /*   guie_message_wnd::guie_message_wnd(sp(::ca::application) papp) :
    ca(papp)
    {
    m_pguieForward = NULL;

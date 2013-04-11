@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   font::font(::ca::application * papp) :
+   font::font(sp(::ca::application) papp) :
    ca(papp)
    {
 

@@ -16,7 +16,7 @@ namespace lnx
       ::size                  m_size;
 
 
-      bitmap(::ca::application * papp);
+      bitmap(sp(::ca::application) papp);
       virtual ~bitmap();
 
 

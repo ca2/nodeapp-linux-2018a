@@ -81,10 +81,10 @@ CLASS_DECL_lnx ::lnx::thread * __get_thread();
 CLASS_DECL_lnx void __set_thread(::ca::thread * pthread);
 CLASS_DECL_lnx MESSAGE * __get_current_message();
 
-CLASS_DECL_lnx void __end_thread(::ca::application * papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_lnx void __end_thread(sp(::ca::application) papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_lnx void __init_thread();
-CLASS_DECL_lnx void __term_thread(::ca::application * papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_lnx void __term_thread(sp(::ca::application) papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application

@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   factory_exchange::factory_exchange(::ca::application * papp) :
+   factory_exchange::factory_exchange(sp(::ca::application) papp) :
       ca(papp)
    {
 
@@ -48,7 +48,7 @@ namespace lnx
 
 
 extern "C"
-void ca2_factory_exchange(::ca::application * papp)
+void ca2_factory_exchange(sp(::ca::application) papp)
 {
    lnx::factory_exchange factoryexchange(papp);
 }

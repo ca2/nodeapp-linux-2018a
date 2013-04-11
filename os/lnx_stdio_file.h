@@ -21,7 +21,7 @@ namespace lnx
 
 
 
-      stdio_file(::ca::application * papp);
+      stdio_file(sp(::ca::application) papp);
       virtual ~stdio_file();
 
       virtual void write_string(const char * lpsz);
