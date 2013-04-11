@@ -50,7 +50,7 @@
 		<Cursor position="457" topLine="16" />
 	</File>
 	<File name="../operational_system/oswindow.h" open="0" top="0" tabpos="9">
-		<Cursor position="3775" topLine="178" />
+		<Cursor position="3908" topLine="178" />
 	</File>
 	<File name="../operational_system/version.h" open="0" top="0" tabpos="6">
 		<Cursor position="8008" topLine="232" />
@@ -275,10 +275,10 @@
 		<Cursor position="24" topLine="0" />
 	</File>
 	<File name="lnx_window.cpp" open="0" top="0" tabpos="15">
-		<Cursor position="191804" topLine="6578" />
+		<Cursor position="157938" topLine="5293" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="16">
-		<Cursor position="15561" topLine="360" />
+		<Cursor position="1596" topLine="45" />
 	</File>
 	<File name="lnx_window_draw.cpp" open="0" top="0" tabpos="6">
 		<Cursor position="15574" topLine="537" />
