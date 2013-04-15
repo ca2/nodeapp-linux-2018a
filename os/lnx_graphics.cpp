@@ -2037,7 +2037,7 @@ if(psurfaceNew == g_cairosurface)
 
 /*
 
-   // ::userbase::document handling functions
+   // ::user::document handling functions
    int32_t graphics::StartDoc(LPDOCINFO lpDocInfo)
    {
 

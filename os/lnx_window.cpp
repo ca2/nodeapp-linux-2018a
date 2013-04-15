@@ -1560,9 +1560,9 @@ namespace lnx
          if(m_papp->m_psession != NULL)
          {
             Session.m_ptCursor = pmouse->m_pt;
-            if(m_papp->m_psession->m_pbergedgeInterface != NULL)
+            if(m_papp->m_psession != NULL)
             {
-               m_papp->m_psession->m_pbergedgeInterface->m_ptCursor = pmouse->m_pt;
+               m_papp->m_psession->m_ptCursor = pmouse->m_pt;
             }
          }
          if(m_pguie != NULL && m_pguie != this && m_pguie->m_papp->m_psession != NULL && m_pguie->m_papp->m_psession != m_papp->m_psession)
@@ -2261,7 +2261,7 @@ restart_mouse_hover_check:
    /////////////////////////////////////////////////////////////////////////////
    // window extensions
 
-   sp(frame_window) window::GetParentFrame()
+   sp(::user::frame_window) window::GetParentFrame()
    {
       if (get_os_data() == NULL) // no oswindow attached
       {
@@ -2368,14 +2368,14 @@ return NULL;
       }
    }
 
-   sp(frame_window) window::GetTopLevelFrame()
+   sp(::user::frame_window) window::GetTopLevelFrame()
    {
       if (get_os_data() == NULL) // no oswindow attached
          return NULL;
 
       ASSERT_VALID(this);
 
-      sp(frame_window) pFrameWnd = NULL;
+      sp(::user::frame_window) pFrameWnd = NULL;
       if(m_pguie != this)
          pFrameWnd =  (m_pguie);
       else
@@ -2385,7 +2385,7 @@ return NULL;
 
       if (pFrameWnd != NULL)
       {
-         sp(frame_window) pTemp;
+         sp(::user::frame_window) pTemp;
          while ((pTemp = pFrameWnd->GetParentFrame()) != NULL)
             pFrameWnd = pTemp;
       }
@@ -4921,9 +4921,9 @@ throw not_implemented(get_app());
 
    }
 
-   sp(frame_window) window::EnsureParentFrame()
+   sp(::user::frame_window) window::EnsureParentFrame()
    {
-      sp(frame_window) pFrameWnd=GetParentFrame();
+      sp(::user::frame_window) pFrameWnd=GetParentFrame();
       ENSURE_VALID(pFrameWnd);
       return pFrameWnd;
    }
@@ -5889,7 +5889,7 @@ if(psurface == g_cairosurface)
    { Default(); }
    void window::OnKillFocus(::ca::window *)
    { Default(); }
-   LRESULT window::OnMenuChar(UINT, UINT, ::userbase::menu*)
+   LRESULT window::OnMenuChar(UINT, UINT, ::user::menu*)
    { return Default(); }
    void window::OnMenuSelect(UINT, UINT, HMENU)
    { Default(); }
@@ -6051,9 +6051,9 @@ if(psurface == g_cairosurface)
    { Default(); }
    void window::OnTimer(uint_ptr)
    { Default(); }
-   void window::OnInitMenu(::userbase::menu*)
+   void window::OnInitMenu(::user::menu*)
    { Default(); }
-   void window::OnInitMenuPopup(::userbase::menu*, UINT, bool)
+   void window::OnInitMenuPopup(::user::menu*, UINT, bool)
    { Default(); }
    void window::OnAskCbFormatName(UINT nMaxCount, LPTSTR pszName)
    {

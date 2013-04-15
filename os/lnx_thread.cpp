@@ -1375,7 +1375,7 @@ stop_run:
 
       SCAST_PTR(::ca::message::base, pbase, pobj);
 
-      sp(frame_window) pTopFrameWnd;
+      sp(::user::frame_window) pTopFrameWnd;
       sp(::user::interaction) pMainWnd;
       sp(::user::interaction) pMsgWnd;
       switch (code)
@@ -3307,8 +3307,8 @@ __STATIC inline WINBOOL IsButtonUp(LPMESSAGE lpMsg)
 */
 namespace ca
 {
-   extern CLASS_DECL_ca PFN_get_thread g_pfn_get_thread;
-   extern CLASS_DECL_ca PFN_get_thread_state g_pfn_get_thread_state;
+   extern CLASS_DECL_ca2 PFN_get_thread g_pfn_get_thread;
+   extern CLASS_DECL_ca2 PFN_get_thread_state g_pfn_get_thread_state;
 
 }
 

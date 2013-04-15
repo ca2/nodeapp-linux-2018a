@@ -6,13 +6,13 @@ namespace lnx
 
 
 
-   class CLASS_DECL_ca file_system :
+   class CLASS_DECL_ca2 file_system :
       public ::ca::file_system
    {
    public:
 
 
-      class CLASS_DECL_ca path :
+      class CLASS_DECL_ca2 path :
         public ::ca::file_system::path
       {
       public:

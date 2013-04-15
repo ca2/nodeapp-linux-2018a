@@ -52,7 +52,7 @@ namespace lnx
 
 
       // list of frame_window objects for thread
-      simple_list < sp(frame_window) > m_frameList;
+      simple_list < sp(::user::frame_window) > m_frameList;
 
 
       comparable_array < void * > m_oswindowa;

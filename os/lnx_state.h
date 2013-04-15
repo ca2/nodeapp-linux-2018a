@@ -54,9 +54,9 @@ class hmenu_map;
 //class hdc_map;
 //class hgdiobj_map;
 class himagelist_map;
-class frame_window;
+//class frame_window;
 class CToolTipCtrl;
-// xxx class ::userbase::control_bar;
+// xxx class ::user::control_bar;
 // xxx class ::user::interaction;
 namespace ca
 {
@@ -102,7 +102,7 @@ public:
    int_ptr m_nLastHit;         // last hittest code
 // xxx   TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
    int_ptr m_nLastStatus;      // last flyby status message
-   ::userbase::control_bar* m_pLastStatus; // last flyby status control bar
+   ::user::control_bar* m_pLastStatus; // last flyby status control bar
 };
 
 // forward references required for __MODULE_STATE definition
@@ -221,7 +221,7 @@ protected:
 // forward references required for ___THREAD_STATE definition
 class view;
 class CToolTipCtrl;
-// xxx class ::userbase::control_bar;
+// xxx class ::user::control_bar;
 class push_routing_frame;
 class CPushRoutingView;
 
