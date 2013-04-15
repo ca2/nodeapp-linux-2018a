@@ -12,7 +12,7 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp" />
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
-		<Project filename="../../../app-core/appseed/netnodecfg/netnodecfg.cbp" active="1">
+		<Project filename="../../../app-core/appseed/netnodecfg/netnodecfg.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
@@ -29,7 +29,7 @@
 		<Project filename="../../../app-core/appseed/netnodelite_library/netnodelite_library.cbp">
 			<Depends filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/netnodelite_script/netnodelite_script.cbp">
+		<Project filename="../../../app-core/appseed/netnodelite_script/netnodelite_script.cbp" active="1">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/alarm/alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
