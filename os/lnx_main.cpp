@@ -51,6 +51,10 @@ CLASS_DECL_lnx bool __initialize(bool bDLL, DWORD dwVersion);
 int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 {
 
+   if(!XInitThreads())
+      return -1;
+
+
    gen_InitAppState = (char)(__initialize(FALSE, 1));
 
 //   UNREFERENCED_PARAMETER(lpCmdLine);

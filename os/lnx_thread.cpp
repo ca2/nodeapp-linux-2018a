@@ -985,7 +985,7 @@ void thread::Delete()
       XEvent e;
 
 
-      Display * d = XOpenDisplay(NULL);
+      //Display * d = XOpenDisplay(NULL);
 
       // acquire and dispatch messages until a WM_QUIT message is received.
       MESSAGE msg;
@@ -1080,7 +1080,7 @@ void thread::Delete()
       }
 stop_run:
 
-      XCloseDisplay(d);
+      //XCloseDisplay(d);
 
       return 0;
    }
@@ -1834,7 +1834,7 @@ return false;
 
       ___THREAD_STATE* pState = __get_thread_state();
       pState->m_nMsgLast = WM_NULL;
-      System.get_cursor_pos(&(pState->m_ptCursorLast));
+      //System.get_cursor_pos(&(pState->m_ptCursorLast));
 
 }
 

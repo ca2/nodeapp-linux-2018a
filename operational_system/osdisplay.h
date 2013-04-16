@@ -63,6 +63,40 @@ class osdisplay_dataptra;
 class simple_mutex;
 
 
+class CLASS_DECL_c xdisplay
+{
+public:
+
+    Display *   m_pdisplay;
+    bool        m_bLocked;
+    bool        m_bOwn;
+
+    xdisplay();
+    xdisplay(Display * pdisplay, bool bInitialLock = true);
+    ~ xdisplay();
+
+    bool open(char * display_name, bool bInitialLock = true);
+
+    void lock();
+    void unlock();
+
+
+    bool close();
+
+    operator Display *()
+    {
+        return m_pdisplay;
+    }
+
+
+    Window default_root_window();
+
+    int default_screen();
+
+};
+
+
+
 
 class CLASS_DECL_c osdisplay
 {
