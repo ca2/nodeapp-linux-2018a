@@ -342,7 +342,7 @@ namespace lnx
 
    mutex_lock sl(user_mutex(), true);
 
-
+xdisplay d(w.display());
     Display * dpy = w.display();
     Window window = w.window();
 
@@ -483,6 +483,8 @@ namespace lnx
 //            exit(1);
             return false;
          }
+
+        xdisplay d(display);
 
          scr      =  DefaultScreen(display);
          rootwin  =  RootWindow(display, scr);
@@ -4277,6 +4279,8 @@ throw not_implemented(get_app());
 
       mutex_lock sl(user_mutex(), true);
 
+      xdisplay d(m_oswindow.display());
+
       rect rectScreen;
 
       System.get_screen_rect(rectScreen);
@@ -4982,6 +4986,8 @@ throw not_implemented(get_app());
    ::ca::graphics * window::GetDC()
    {
       ::ca::graphics_sp g(allocer());
+
+      xdisplay d(m_oswindow.display());
       oswindow oswindow;
       if(get_os_data() == NULL)
       {
@@ -7076,6 +7082,8 @@ namespace lnx
 
       keeper < bool > keepExposing(&m_bExposing, true, false, true);
 
+      xdisplay d(m_oswindow.display());
+
       rect rectWindow32;
 
       GetWindowRect(rectWindow32);
@@ -7320,7 +7328,7 @@ if(m_cairosurfaceWork == g_cairosurface)
       }
 
 
-      XLockDisplay(m_oswindow.display());
+      //XLockDisplay(m_oswindow.display());
 
       try
       {
@@ -7355,7 +7363,7 @@ if(m_cairosurfaceWork == g_cairosurface)
 
       }
 
-      XUnlockDisplay(m_oswindow.display());
+      //XUnlockDisplay(m_oswindow.display());
 
 }
 

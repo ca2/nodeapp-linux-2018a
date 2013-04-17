@@ -643,7 +643,7 @@ namespace lnx
       return m_hThread;
    }
 
-   int_ptr thread::get_os_int()
+   int_ptr thread::get_os_int() const
    {
       return m_nID;
    }

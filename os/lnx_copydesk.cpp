@@ -807,22 +807,23 @@ namespace lnx
    {
 
       string str;
-      Display * dpy;
+      //Display * dpy;
       Window win;
       Atom target;
 
 
       /* Connect to the X server. */
-      if ((dpy = XOpenDisplay(NULL)) == NULL)
-      {
-         return str;
-      }
+      xdisplay dpy;
+
+      if(!dpy.open(NULL))
+
+return "";
 
       target = XA_UTF8_STRING(dpy);
       Atom sseln = XA_CLIPBOARD(dpy);
 
       /* Create a window to trap events */
-      win = XCreateSimpleWindow(dpy, DefaultRootWindow(dpy), 0, 0, 1, 1, 0, 0, 0);
+      win = XCreateSimpleWindow(dpy, dpy.default_root_window(), 0, 0, 1, 1, 0, 0, 0);
 
       /* get events about property changes */
       XSelectInput(dpy, win, PropertyChangeMask);
