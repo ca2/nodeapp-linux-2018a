@@ -46,8 +46,8 @@
 	<File name="../operational_system/operational_system.h" open="0" top="0" tabpos="2">
 		<Cursor position="3555" topLine="153" />
 	</File>
-	<File name="../operational_system/osdisplay.h" open="0" top="0" tabpos="6">
-		<Cursor position="424" topLine="12" />
+	<File name="../operational_system/osdisplay.h" open="1" top="1" tabpos="2">
+		<Cursor position="477" topLine="12" />
 	</File>
 	<File name="../operational_system/oswindow.h" open="0" top="0" tabpos="9">
 		<Cursor position="3775" topLine="178" />
@@ -202,8 +202,8 @@
 	<File name="lnx_ip_enum.h" open="0" top="0" tabpos="1">
 		<Cursor position="319" topLine="0" />
 	</File>
-	<File name="lnx_main.cpp" open="1" top="1" tabpos="0">
-		<Cursor position="2047" topLine="80" />
+	<File name="lnx_main.cpp" open="1" top="0" tabpos="1">
+		<Cursor position="2044" topLine="80" />
 	</File>
 	<File name="lnx_os.cpp" open="0" top="0" tabpos="16">
 		<Cursor position="17367" topLine="672" />
