@@ -67,7 +67,10 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 
 
 //   ::CoInitialize(NULL);
-
+//{
+//int * pi = NULL;
+//*pi = 0;
+//}
 
 //throw todo(::ca::get_thread_app());
 
@@ -78,6 +81,30 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 //   _set_purecall_handler(_ca2_purecall);
 
    ::plane::system * psystem = new ::plane::system();
+
+    psystem->::exception::translator::attach();
+
+           //sigset_t set;
+           //sigemptyset(&set);
+           //sigaddset(&set, SIGSEGV);
+           //sigprocmask(SIG_BLOCK, &set, ::null());
+
+//{
+//int * pi = NULL;
+//*pi = 0;
+//}
+
+try
+{
+int * pi = NULL;
+*pi = 0;
+}
+catch(::exception::standard_access_violation & e)
+{
+    int i;
+int * pi = &i;
+*pi = 0;
+}
 
 //   ASSERT(hPrevInstance == NULL);
 
