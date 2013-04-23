@@ -46,8 +46,8 @@
 	<File name="../operational_system/operational_system.h" open="0" top="0" tabpos="2">
 		<Cursor position="3555" topLine="153" />
 	</File>
-	<File name="../operational_system/osdisplay.h" open="1" top="1" tabpos="2">
-		<Cursor position="477" topLine="12" />
+	<File name="../operational_system/osdisplay.h" open="0" top="0" tabpos="2">
+		<Cursor position="423" topLine="12" />
 	</File>
 	<File name="../operational_system/oswindow.h" open="0" top="0" tabpos="9">
 		<Cursor position="3775" topLine="178" />
@@ -82,14 +82,14 @@
 	<File name="lnx_afxmem.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="536" topLine="0" />
 	</File>
-	<File name="lnx_afxstate.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="10962" topLine="366" />
+	<File name="lnx_afxstate.cpp" open="0" top="0" tabpos="6">
+		<Cursor position="3986" topLine="138" />
 	</File>
 	<File name="lnx_appcore.cpp" open="0" top="0" tabpos="0">
 		<Cursor position="32" topLine="0" />
 	</File>
-	<File name="lnx_application.cpp" open="0" top="0" tabpos="19">
-		<Cursor position="173" topLine="8" />
+	<File name="lnx_application.cpp" open="0" top="0" tabpos="7">
+		<Cursor position="0" topLine="0" />
 	</File>
 	<File name="lnx_application.h" open="0" top="0" tabpos="20">
 		<Cursor position="502" topLine="18" />
@@ -130,8 +130,8 @@
 	<File name="lnx_dib.h" open="0" top="0" tabpos="12">
 		<Cursor position="906" topLine="19" />
 	</File>
-	<File name="lnx_dir.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="31898" topLine="1354" />
+	<File name="lnx_dir.cpp" open="0" top="0" tabpos="4">
+		<Cursor position="24646" topLine="1125" />
 	</File>
 	<File name="lnx_dir.h" open="0" top="0" tabpos="1">
 		<Cursor position="5453" topLine="42" />
@@ -151,8 +151,8 @@
 	<File name="lnx_factory_exchange.h" open="0" top="0" tabpos="10">
 		<Cursor position="169" topLine="0" />
 	</File>
-	<File name="lnx_file.cpp" open="0" top="0" tabpos="3">
-		<Cursor position="919" topLine="45" />
+	<File name="lnx_file.cpp" open="0" top="0" tabpos="10">
+		<Cursor position="6448" topLine="214" />
 	</File>
 	<File name="lnx_file.h" open="0" top="0" tabpos="23">
 		<Cursor position="3001" topLine="80" />
@@ -202,11 +202,11 @@
 	<File name="lnx_ip_enum.h" open="0" top="0" tabpos="1">
 		<Cursor position="319" topLine="0" />
 	</File>
-	<File name="lnx_main.cpp" open="1" top="0" tabpos="1">
-		<Cursor position="2044" topLine="80" />
+	<File name="lnx_main.cpp" open="0" top="0" tabpos="1">
+		<Cursor position="2961" topLine="89" />
 	</File>
-	<File name="lnx_os.cpp" open="0" top="0" tabpos="16">
-		<Cursor position="17367" topLine="672" />
+	<File name="lnx_os.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="19197" topLine="743" />
 	</File>
 	<File name="lnx_os.h" open="0" top="0" tabpos="15">
 		<Cursor position="2169" topLine="24" />
@@ -250,23 +250,23 @@
 	<File name="lnx_state.h" open="0" top="0" tabpos="11">
 		<Cursor position="1102" topLine="39" />
 	</File>
-	<File name="lnx_stdio_file.cpp" open="0" top="0" tabpos="24">
-		<Cursor position="111" topLine="9" />
+	<File name="lnx_stdio_file.cpp" open="0" top="0" tabpos="9">
+		<Cursor position="8186" topLine="297" />
 	</File>
 	<File name="lnx_stdio_file.h" open="0" top="0" tabpos="25">
 		<Cursor position="389" topLine="10" />
 	</File>
 	<File name="lnx_thread.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="37733" topLine="1360" />
+		<Cursor position="48664" topLine="1709" />
 	</File>
-	<File name="lnx_thread.h" open="0" top="0" tabpos="17">
-		<Cursor position="1683" topLine="37" />
+	<File name="lnx_thread.h" open="0" top="0" tabpos="13">
+		<Cursor position="5038" topLine="128" />
 	</File>
 	<File name="lnx_thread_local_storage.cpp" open="0" top="0" tabpos="5">
 		<Cursor position="2915" topLine="138" />
 	</File>
 	<File name="lnx_thread_slots.h" open="0" top="0" tabpos="5">
-		<Cursor position="577" topLine="17" />
+		<Cursor position="3398" topLine="128" />
 	</File>
 	<File name="lnx_trace.cpp" open="0" top="0" tabpos="9">
 		<Cursor position="520" topLine="7" />
@@ -274,14 +274,14 @@
 	<File name="lnx_util.cpp" open="0" top="0" tabpos="12">
 		<Cursor position="24" topLine="0" />
 	</File>
-	<File name="lnx_window.cpp" open="0" top="0" tabpos="13">
-		<Cursor position="69895" topLine="2370" />
+	<File name="lnx_window.cpp" open="0" top="0" tabpos="11">
+		<Cursor position="169449" topLine="5771" />
 	</File>
 	<File name="lnx_window.h" open="0" top="0" tabpos="14">
 		<Cursor position="5757" topLine="136" />
 	</File>
-	<File name="lnx_window_draw.cpp" open="0" top="0" tabpos="6">
-		<Cursor position="316" topLine="28" />
+	<File name="lnx_window_draw.cpp" open="0" top="0" tabpos="12">
+		<Cursor position="15545" topLine="529" />
 	</File>
 	<File name="lnx_window_draw.h" open="0" top="0" tabpos="7">
 		<Cursor position="1137" topLine="38" />

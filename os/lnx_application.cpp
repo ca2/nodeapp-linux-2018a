@@ -9,9 +9,10 @@ namespace lnx
    application::application(sp(::ca::application) papp) :
       ca(papp)
    {
-      ::ca::thread_sp::create(allocer());
+      ::ca::thread::m_p.create(allocer());
+      ::ca::thread::m_p->m_p = this;
 
-      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->m_pAppThread = this;
+      LNX_THREAD(::ca::thread::m_p.m_p)->m_pAppThread = this;
 
       m_pfilemanager = NULL;
 
@@ -51,12 +52,12 @@ namespace lnx
 
    void application::_001OnFileNew()
    {
-      ::ca::smart_pointer < ::ca::application_base > ::m_p->_001OnFileNew(NULL);
+      ::ca::application_base::m_p->_001OnFileNew(NULL);
    }
 
    sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
-      return ::ca::smart_pointer < ::ca::application_base > ::m_p->_001OpenDocumentFile(varFile);
+      return ::ca::application_base::m_p->_001OpenDocumentFile(varFile);
    }
 
    void application::_001EnableShellOpen()
@@ -199,12 +200,12 @@ namespace lnx
 
    void application::LockTempMaps()
    {
-      LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->LockTempMaps();
+      LNX_THREAD(::ca::thread::m_p.m_p)->LockTempMaps();
    }
 
    bool application::UnlockTempMaps(bool bDeleteTemp)
    {
-      return LNX_THREAD(::ca::smart_pointer < ::ca::thread >::m_p)->UnlockTempMaps(bDeleteTemp);
+      return LNX_THREAD(::ca::thread::m_p.m_p)->UnlockTempMaps(bDeleteTemp);
    }
 
 
@@ -418,7 +419,7 @@ post_thread_message
 */
    bool application::process_initialize()
    {
-      if(::ca::smart_pointer < ::ca::application_base > ::m_p->is_system())
+      if(::ca::application_base::m_p->is_system())
       {
 /*
 if(__get_module_state()->m_pmapHWND == NULL)
@@ -448,7 +449,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
    bool application::initialize1()
    {
 
-      ::ca::smart_pointer < ::ca::thread >::m_p->set_run();
+      ::ca::thread::m_p->set_run();
 
       return true;
 
@@ -471,10 +472,10 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
       // avoid calling CloseHandle() on our own thread handle
       // during the thread destructor
-      ::ca::thread_sp::m_p->set_os_data(NULL);
+      ::ca::thread::m_p->set_os_data(NULL);
 
-      LNX_THREAD(::ca::thread_sp::m_p)->m_bRun = false;
-      //LNX_THREAD(::ca::smart_pointer < ::ca::application_base > ::m_p->::ca::thread_sp::m_p)->m_bRun = false;
+      LNX_THREAD(::ca::thread::m_p.m_p)->m_bRun = false;
+      //LNX_THREAD(::ca::application_base::m_p->::ca::thread_sp::m_p)->m_bRun = false;
 
       int32_t iRet = ::ca::application::exit_instance();
 
@@ -597,7 +598,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
             return wndptra[i].get_wnd();
          }
       }
-      return NULL;
+      return ::null();
    }
 
    ::ca::thread * application::GetThread()
@@ -605,7 +606,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
       if(__get_thread() == NULL)
          return NULL;
       else
-         return dynamic_cast < ::ca::thread * > (__get_thread()->m_p);
+         return dynamic_cast < ::ca::thread * > (__get_thread()->m_p.m_p);
    }
 
    void application::set_thread(::ca::thread * pthread)
@@ -664,7 +665,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
          __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
          ENSURE(pThreadState);
 //         ASSERT(System.GetThread() == NULL);
-         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::lnx::thread * > (::ca::thread_sp::m_p);
+         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::lnx::thread * > (::ca::thread::m_p.m_p);
   //       ASSERT(System.GetThread() == this);
 
          // initialize application state
@@ -676,7 +677,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
 //      dynamic_cast < ::lnx::thread * > ((smart_pointer < ::ca::application >::m_p->::ca::thread_sp::m_p))->m_hThread = __get_thread()->m_hThread;
   //    dynamic_cast < ::lnx::thread * > ((smart_pointer < ::ca::application >::m_p->::ca::thread_sp::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
-      dynamic_cast < class ::lnx::thread * > (::ca::thread_sp::m_p)->m_hThread      =  ::GetCurrentThread();
+      dynamic_cast < class ::lnx::thread * > (::ca::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
 
 
    }
@@ -742,7 +743,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
       m_pmaininitdata = (::lnx::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::ca::smart_pointer < ::ca::application_base >::m_p->is_system())
+      if(m_pmaininitdata != NULL && ::ca::application_base::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;

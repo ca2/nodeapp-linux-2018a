@@ -568,11 +568,11 @@ xdisplay d(w.display());
             {
                if(dwLastError == 0x0000057e)
                {
-                  System.simple_message_box(NULL, "Cannot create a top-level child window.");
+                  System.simple_message_box(::null(), "Cannot create a top-level child window.");
                }
                else
                {
-                  System.simple_message_box(NULL, strMessage);
+                  System.simple_message_box(::null(), strMessage);
                }
             }
             catch(...)
@@ -609,7 +609,7 @@ xdisplay d(w.display());
 
          send_message(WM_SIZE, 0, 0);
 
-         LNX_THREAD(m_pthread->m_pthread->m_p)->m_oswindowa.add(m_oswindow);
+         LNX_THREAD(m_pthread->m_pthread->m_p.m_p)->m_oswindowa.add(m_oswindow);
 
       }
 
@@ -813,12 +813,12 @@ xdisplay d(w.display());
 
             }
 
-            pThread->SetMainWnd(NULL);
+            pThread->SetMainWnd(::null());
 
          }
 
          if (pThread->get_active_ui() == this)
-            pThread->set_active_ui(NULL);
+            pThread->set_active_ui(::null());
 
       }
 
@@ -1725,11 +1725,11 @@ restart_mouse_hover_check:
       {
          if(m_pguie != this && m_pguie != NULL)
          {
-            m_pguie->BaseOnControlEvent((::user::control_event *) pbase->m_lparam);
+            m_pguie->BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          else
          {
-            BaseOnControlEvent((::user::control_event *) pbase->m_lparam);
+            BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          return;
       }
@@ -2267,7 +2267,7 @@ restart_mouse_hover_check:
    {
       if (get_os_data() == NULL) // no oswindow attached
       {
-         return NULL;
+         return ::null();
       }
 
       ASSERT_VALID(this);
@@ -2281,7 +2281,7 @@ restart_mouse_hover_check:
          }
          pParentWnd = pParentWnd->get_parent();
       }
-      return NULL;
+      return ::null();
    }
 
    /* trans oswindow CLASS_DECL_lnx __get_parent_owner(sp(::user::interaction) hWnd)
@@ -2300,7 +2300,7 @@ restart_mouse_hover_check:
    sp(::user::interaction) window::GetTopLevelParent()
    {
       if (get_os_data() == NULL) // no oswindow attached
-         return NULL;
+         return ::null();
 
       ASSERT_VALID(this);
 
@@ -2315,7 +2315,7 @@ restart_mouse_hover_check:
    sp(::user::interaction) window::GetTopLevelOwner()
    {
       if (get_os_data() == NULL) // no oswindow attached
-         return NULL;
+         return ::null();
 
       ASSERT_VALID(this);
 
@@ -2325,13 +2325,13 @@ restart_mouse_hover_check:
       //   hWndOwner = hWndT;
 
 //      return ::lnx::window::from_handle(hWndOwner);
-return NULL;
+        return ::null();
    }
 
    sp(::user::interaction) window::GetParentOwner()
    {
       if (get_os_data() == NULL) // no oswindow attached
-         return NULL;
+         return ::null();
 
       ASSERT_VALID(this);
 
@@ -2345,7 +2345,7 @@ return NULL;
 
       return ::lnx::window::from_handle(hWndParent);*/
 
-      return NULL;
+      return ::null();
    }
 
    bool window::IsTopParentActive()
@@ -2373,11 +2373,11 @@ return NULL;
    sp(::user::frame_window) window::GetTopLevelFrame()
    {
       if (get_os_data() == NULL) // no oswindow attached
-         return NULL;
+         return ::null();
 
       ASSERT_VALID(this);
 
-      sp(::user::frame_window) pFrameWnd = NULL;
+      sp(::user::frame_window) pFrameWnd = ::null();
       if(m_pguie != this)
          pFrameWnd =  (m_pguie);
       else
@@ -2424,7 +2424,7 @@ return NULL;
          }
       }
 
-      return NULL;
+      return ::null();
 
    }
 
@@ -2722,7 +2722,7 @@ return 0;
       // NOTE: nIDFirst->nIDLast are usually 0->0xffff
 
       __SIZEPARENTPARAMS layout;
-      sp(::user::interaction) hWndLeftOver = NULL;
+      sp(::user::interaction) hWndLeftOver = ::null();
 
       layout.bStretch = bStretch;
       layout.sizeTotal.cx = layout.sizeTotal.cy = 0;
@@ -3985,7 +3985,7 @@ throw not_implemented(get_app());
          // phase1: check to see if we can do idle work
          while (bIdle && !::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE))
          {
-            LNX_THREAD(m_pthread->m_pthread->m_p)->defer_process_windows_messages();
+            LNX_THREAD(m_pthread->m_pthread->m_p.m_p)->defer_process_windows_messages();
 //            if(XCheckTypedEvent(d, -1, &e))
             {
 
@@ -4034,7 +4034,7 @@ throw not_implemented(get_app());
          // phase2: pump messages while available
          do
          {
-            LNX_THREAD(m_pthread->m_pthread->m_p)->defer_process_windows_messages();
+            LNX_THREAD(m_pthread->m_pthread->m_p.m_p)->defer_process_windows_messages();
 //            if(XCheckTypedEvent(d, -1, &e))
             {
 
@@ -4131,7 +4131,7 @@ ExitModal:
             //::post_thread_message((DWORD) m_iaModalThread[i], WM_NULL, 0, 0);
          }
          PostMessage(WM_NULL);
-         System.GetThread()->post_thread_message(WM_NULL, 0, 0);
+         System.GetThread()->post_thread_message(WM_NULL);
       }
    }
 
@@ -4148,13 +4148,13 @@ ExitModal:
          int32_t iLevel = m_iModalCount - 1;
          m_iModalCount = 0;
          PostMessage(WM_NULL);
-         System.GetThread()->post_thread_message(WM_NULL, 0, 0);
+         System.GetThread()->post_thread_message(WM_NULL);
          for(int32_t i = iLevel; i >= 0; i--)
          {
             ::ca::thread * pthread = oprop(string("RunModalLoop.thread(") + ::ca::str::from(i) + ")").ca < ::ca::thread > ();
             try
             {
-               pthread->post_thread_message(WM_NULL, 0, 0);
+               pthread->post_thread_message(WM_NULL);
             }
             catch(...)
             {
@@ -4683,11 +4683,11 @@ throw not_implemented(get_app());
    sp(::user::interaction) window::get_parent() const
    {
       if(!::IsWindow(get_os_data()))
-         return NULL;
+         return ::null();
       if(get_os_data() == NULL)
-         return NULL;
+         return ::null();
       //return ::lnx::window::from_handle(::GetParent(get_os_data()));
-      return NULL;
+      return ::null();
    }
 
    LONG window::GetWindowLong(int32_t nIndex)
@@ -4706,7 +4706,7 @@ throw not_implemented(get_app());
       //throw not_implemented(get_app());
       oswindow hwndCapture = ::GetCapture();
       if(hwndCapture == NULL)
-         return NULL;
+         return ::null();
       if(((void *) hwndCapture) == get_os_data())
       {
          sp(::user::interaction) puieCapture = get_capture();
@@ -4717,7 +4717,7 @@ throw not_implemented(get_app());
          }
          else
          {
-            return NULL;
+            return ::null();
          }
       }
       else
@@ -4731,7 +4731,7 @@ throw not_implemented(get_app());
 //      throw not_implemented(get_app());
       oswindow hwndCapture = ::GetCapture();
       if(hwndCapture == NULL)
-         return NULL;
+         return ::null();
       if(((void *) hwndCapture) == get_os_data())
       {
          if(m_pguieCapture != NULL)
@@ -5334,8 +5334,8 @@ if(psurface == g_cairosurface)
    sp(::ca::window) PASCAL window::GetCapture()
    {
 
-      if(::GetCapture() == NULL)
-         return NULL;
+      if(::GetCapture() == ::null())
+         return ::null();
 
       return  (::GetCapture().get_user_interaction()->m_pimpl.m_p);
 
@@ -5366,7 +5366,7 @@ if(psurface == g_cairosurface)
       oswindow w = ::GetFocus();
 
       if(!::IsWindow(w))
-         return NULL;
+         return ::null();
 
       return  (w.get_user_interaction()->m_pimpl.m_p);
 
@@ -5380,7 +5380,7 @@ if(psurface == g_cairosurface)
       oswindow w = ::SetFocus(get_os_data());
 
       if(!::IsWindow(w))
-         return NULL;
+         return ::null();
 
       return  (w.get_user_interaction()->m_pimpl.m_p);
 
@@ -5391,7 +5391,7 @@ if(psurface == g_cairosurface)
 /*
       return ::lnx::window::from_handle(::GetDesktopWindow());
 */
-      return NULL;
+      return ::null();
    }
 
 
@@ -5584,7 +5584,7 @@ if(psurface == g_cairosurface)
 
 //      throw not_implemented(get_app());
 //      return ::lnx::window::from_handle(::FindWindow(lpszClassName, lpszWindowName));
-      return NULL;
+      return ::null();
 
    }
 
@@ -5609,7 +5609,7 @@ if(psurface == g_cairosurface)
    {
 
       if(m_pguie->m_uiptraChild.get_size() <= 0)
-         return NULL;
+         return ::null();
 
       return m_pguie->m_uiptraChild(0);
     //  throw not_implemented(get_app());
@@ -5623,7 +5623,7 @@ if(psurface == g_cairosurface)
 
       ASSERT(::IsWindow(get_os_data()));
 //      return ::lnx::window::from_handle(::GetWindow(get_os_data(), nCmd));
-      return NULL;
+      return ::null();
 
    }
 
@@ -5786,7 +5786,7 @@ if(psurface == g_cairosurface)
    sp(::ca::window) PASCAL window::GetForegroundWindow()
    {
 
-      return NULL;
+      return ::null();
 
          throw not_implemented(::ca::get_thread_app());
 //      return ::lnx::window::from_handle(::GetForegroundWindow());

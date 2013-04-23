@@ -544,7 +544,7 @@ namespace lnx
       {
          oswindow hwndTopic = wndaApp[j];
 
-         sp(::ca::window) pwnd = NULL;
+         sp(::ca::window) pwnd = ::null();
          //::ca::window * pwnd =  (System.window_map().get((int_ptr) hwndTopic));
          //if(pwnd == NULL)
          //{

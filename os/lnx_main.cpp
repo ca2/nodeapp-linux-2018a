@@ -94,17 +94,6 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 //*pi = 0;
 //}
 
-try
-{
-int * pi = NULL;
-*pi = 0;
-}
-catch(::exception::standard_access_violation & e)
-{
-    int i;
-int * pi = &i;
-*pi = 0;
-}
 
 //   ASSERT(hPrevInstance == NULL);
 
