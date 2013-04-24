@@ -371,7 +371,7 @@ namespace lnx
 
       bool bError = FALSE;
       if (m_iFile != (UINT)hFileNull)
-         bError = !::close(m_iFile);
+         bError = ::close(m_iFile) == -1;
 
       m_iFile = (UINT) hFileNull;
       m_bCloseOnDelete = FALSE;
