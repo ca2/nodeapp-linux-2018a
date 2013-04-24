@@ -46,8 +46,8 @@
 	<File name="../operational_system/operational_system.h" open="0" top="0" tabpos="2">
 		<Cursor position="3555" topLine="153" />
 	</File>
-	<File name="../operational_system/osdisplay.h" open="1" top="1" tabpos="0">
-		<Cursor position="478" topLine="12" />
+	<File name="../operational_system/osdisplay.h" open="0" top="0" tabpos="1">
+		<Cursor position="712" topLine="0" />
 	</File>
 	<File name="../operational_system/oswindow.h" open="0" top="0" tabpos="9">
 		<Cursor position="3775" topLine="178" />
@@ -151,11 +151,11 @@
 	<File name="lnx_factory_exchange.h" open="0" top="0" tabpos="10">
 		<Cursor position="169" topLine="0" />
 	</File>
-	<File name="lnx_file.cpp" open="0" top="0" tabpos="10">
-		<Cursor position="6448" topLine="214" />
+	<File name="lnx_file.cpp" open="0" top="0" tabpos="3">
+		<Cursor position="9540" topLine="336" />
 	</File>
-	<File name="lnx_file.h" open="0" top="0" tabpos="23">
-		<Cursor position="3001" topLine="80" />
+	<File name="lnx_file.h" open="0" top="0" tabpos="4">
+		<Cursor position="701" topLine="44" />
 	</File>
 	<File name="lnx_file_set.cpp" open="0" top="0" tabpos="33">
 		<Cursor position="86" topLine="7" />
@@ -164,7 +164,7 @@
 		<Cursor position="291" topLine="0" />
 	</File>
 	<File name="lnx_file_system.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="19641" topLine="733" />
+		<Cursor position="19641" topLine="712" />
 	</File>
 	<File name="lnx_file_system.h" open="0" top="0" tabpos="6">
 		<Cursor position="159" topLine="8" />
