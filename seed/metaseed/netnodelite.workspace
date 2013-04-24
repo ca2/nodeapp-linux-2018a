@@ -2,7 +2,9 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
 		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+		</Project>
 		<Project filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		<Project filename="../../appseed/app/app.cbp" />
@@ -16,7 +18,11 @@
 		<Project filename="../../../app/appseed/c/_.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/ca2/ca2.cbp" />
+		<Project filename="../../../app/appseed/ca2/ca2.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+			<Depends filename="../../../app/appseed/c/_.cbp" />
+		</Project>
 		<Project filename="../../os/os.cbp" />
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" active="1">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
