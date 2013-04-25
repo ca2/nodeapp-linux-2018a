@@ -14,7 +14,7 @@
 		<Project filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
 		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 		<Project filename="../../../app-core/appseed/netnodelite_library/netnodelite_library.cbp" />
-		<Project filename="../../../app-core/appseed/netnodelite_script/netnodelite_script.cbp" />
+		<Project filename="../../../app-core/appseed/netnodelite_script/netnodelite_script.cbp" active="1" />
 		<Project filename="../../../app/appseed/c/_.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 		</Project>
@@ -24,7 +24,7 @@
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
 		<Project filename="../../os/os.cbp" />
-		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" active="1">
+		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp">
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
