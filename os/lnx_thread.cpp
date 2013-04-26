@@ -944,7 +944,7 @@ void thread::Delete()
       //pthread->::ca::smart_pointer < ::ca::thread >::m_p = NULL;
 //      m_p.release();
 //      delete_this();
-::ca::c::release();
+::c::c::release();
    }
    else
    {
@@ -1488,7 +1488,7 @@ stop_run:
          if(msg.message != WM_KICKIDLE)
          {
 
-            ::ca::smart_pointer < ::ca::message::base > spbase;
+            ::c::smart_pointer < ::ca::message::base > spbase;
 
             if(msg.message == 126)
             {

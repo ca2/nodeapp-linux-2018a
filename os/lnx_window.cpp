@@ -4810,7 +4810,7 @@ throw not_implemented(get_app());
    LRESULT window::send_message(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      ::ca::smart_pointer < ::ca::message::base > spbase;
+      ::c::smart_pointer < ::ca::message::base > spbase;
 
       spbase =get_base(this, message, wparam, lparam);
 

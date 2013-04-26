@@ -195,11 +195,11 @@ namespace lnx
    bool dib::Destroy ()
    {
       if(m_spbitmap.is_set())
-         ::ca::release(m_spbitmap.m_p);
+         ::c::release(m_spbitmap.m_p);
 
 
       if(m_spgraphics.is_set())
-         ::ca::release(m_spgraphics.m_p);
+         ::c::release(m_spgraphics.m_p);
 
       cx             = 0;
       cy             = 0;
