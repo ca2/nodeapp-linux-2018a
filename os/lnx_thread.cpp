@@ -759,13 +759,13 @@ namespace lnx
 
    void thread::set_timer(sp(::user::interaction) pui, uint_ptr nIDEvent, UINT nEllapse)
    {
-      if(!m_spuiMessage->IsWindow())
+    /*  if(!m_spuiMessage->IsWindow())
       {
          return;
-      }
+      }*/
       m_ptimera->set(pui, nIDEvent, nEllapse);
-      single_lock sl(&m_ptimera->m_mutex, TRUE);
-      int32_t iMin = 100;
+  //    single_lock sl(&m_ptimera->m_mutex, TRUE);
+/*      int32_t iMin = 100;
       for(int32_t i = 0; i < m_ptimera->m_timera.get_count(); i++)
       {
          if(m_ptimera->m_timera[i].m_uiElapse < natural(iMin))
@@ -777,7 +777,7 @@ namespace lnx
       if(m_spuiMessage->IsWindow())
       {
          m_spuiMessage->SetTimer((uint_ptr)-2, iMin, NULL);
-      }
+      }*/
    }
 
    void thread::unset_timer(sp(::user::interaction) pui, uint_ptr nIDEvent)
@@ -1857,8 +1857,8 @@ return false;
       m_bRun               = true;
 
 
-      if(!initialize_message_window(get_app(), ""))
-         return -1;
+      //if(!initialize_message_window(get_app(), ""))
+        // return -1;
 
 
 
