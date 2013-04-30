@@ -27,6 +27,7 @@
 
 #define CLASS_DECL_EXPORT
 #define CLASS_DECL_IMPORT
+#define CLASS_DECL_THREAD __thread
 
 
 #include "bare_operational_system.h"
