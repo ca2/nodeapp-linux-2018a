@@ -40,8 +40,8 @@
 	<File name="../operational_system/cross/win/win_user.h" open="0" top="0" tabpos="6">
 		<Cursor position="18152" topLine="663" />
 	</File>
-	<File name="../operational_system/get_platform.h" open="0" top="0" tabpos="2">
-		<Cursor position="455" topLine="0" />
+	<File name="../operational_system/get_platform.h" open="1" top="1" tabpos="0">
+		<Cursor position="448" topLine="0" />
 	</File>
 	<File name="../operational_system/operational_system.h" open="0" top="0" tabpos="2">
 		<Cursor position="3555" topLine="153" />
