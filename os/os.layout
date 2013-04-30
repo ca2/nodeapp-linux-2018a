@@ -47,7 +47,7 @@
 		<Cursor position="3555" topLine="153" />
 	</File>
 	<File name="../operational_system/osdisplay.h" open="0" top="0" tabpos="1">
-		<Cursor position="712" topLine="0" />
+		<Cursor position="286" topLine="0" />
 	</File>
 	<File name="../operational_system/oswindow.h" open="0" top="0" tabpos="9">
 		<Cursor position="3775" topLine="178" />
@@ -256,8 +256,8 @@
 	<File name="lnx_stdio_file.h" open="0" top="0" tabpos="25">
 		<Cursor position="389" topLine="10" />
 	</File>
-	<File name="lnx_thread.cpp" open="0" top="0" tabpos="8">
-		<Cursor position="48664" topLine="1709" />
+	<File name="lnx_thread.cpp" open="0" top="0" tabpos="2">
+		<Cursor position="23645" topLine="890" />
 	</File>
 	<File name="lnx_thread.h" open="0" top="0" tabpos="13">
 		<Cursor position="5038" topLine="128" />
