@@ -256,8 +256,8 @@
 	<File name="lnx_stdio_file.h" open="0" top="0" tabpos="25">
 		<Cursor position="389" topLine="10" />
 	</File>
-	<File name="lnx_thread.cpp" open="0" top="0" tabpos="2">
-		<Cursor position="23645" topLine="890" />
+	<File name="lnx_thread.cpp" open="1" top="1" tabpos="0">
+		<Cursor position="20122" topLine="752" />
 	</File>
 	<File name="lnx_thread.h" open="0" top="0" tabpos="13">
 		<Cursor position="5038" topLine="128" />
