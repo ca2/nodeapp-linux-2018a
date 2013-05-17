@@ -986,7 +986,7 @@ xdisplay d(w.display());
    {
 
       if((get_os_data() == NULL))
-         return false;
+         return true;
 
       if(m_oswindow.m_pdata->m_bMessageOnlyWindow)
       {
@@ -995,7 +995,7 @@ xdisplay d(w.display());
 
          m_pguie = NULL;
 
-         return false;
+         return true;
 
       }
 
