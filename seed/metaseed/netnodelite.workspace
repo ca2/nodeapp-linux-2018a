@@ -18,7 +18,7 @@
 		<Project filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
 		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 		<Project filename="../../../app-core/appseed/netnodelite_library/netnodelite_library.cbp" />
-		<Project filename="../../../app-core/appseed/netnodelite_script/netnodelite_script.cbp" active="1">
+		<Project filename="../../../app-core/appseed/netnodelite_script/netnodelite_script.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/alarm/alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
