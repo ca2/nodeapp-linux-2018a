@@ -15,6 +15,7 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp" />
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
+		<Project filename="../../../app-core/appseed/netnodecfg/netnodecfg.cbp" />
 		<Project filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
 		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 		<Project filename="../../../app-core/appseed/netnodelite_library/netnodelite_library.cbp" />
@@ -30,6 +31,13 @@
 		<Project filename="../../../app/appseed/c/_.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 		</Project>
+		<Project filename="../../../app/appseed/ca2/ca2.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+			<Depends filename="../../../app/appseed/c/_.cbp" />
+		</Project>
 		<Project filename="../../os/os.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
@@ -37,14 +45,6 @@
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/netnodecfg/netnodecfg.cbp" />
-		<Project filename="../../../app/appseed/ca2/ca2.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
-			<Depends filename="../../../app/appseed/c/_.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 	</Workspace>

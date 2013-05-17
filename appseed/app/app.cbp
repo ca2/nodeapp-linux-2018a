@@ -15,6 +15,7 @@
 				<Option compiler="gcc" />
 				<Option parameters=": app=app-core/hellomultiverse build_number=basis locale=_std schema=_std" />
 				<Option host_application="/ca2/stage/x86/app" />
+				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
@@ -37,6 +38,7 @@
 				<Option compiler="gcc" />
 				<Option parameters=": app=app-core/hellomultiverse build_number=basis locale=_std schema=_std" />
 				<Option host_application="/ca2/stage/x86/app" />
+				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
@@ -66,7 +68,7 @@
 			<Add directory="../../../app/thirdparty/appseed" />
 		</Compiler>
 		<Linker>
-			<Add option="-Wl,-rpath,\\$$ORIGIN" />
+			<Add option="-Wl,-rpath,$$$ORIGIN" />
 			<Add option="-Wl,-E" />
 			<Add option="-l_ca2zlib" />
 			<Add option="-l_ca2freeimage" />
