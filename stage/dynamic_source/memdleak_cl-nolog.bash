@@ -4,7 +4,7 @@
 function build()
 {
 	
-	cd /ca2/nodeapp/seed/metaseed
+	cd %CA2_ROOT%nodeapp/seed/metaseed
 
 
 g++ -std=c++0x -fPIC -fexceptions -fnon-call-exceptions -fno-pie -fno-stack-protector -Wno-pointer-arith -Wno-attributes -Winvalid-pch  -g -D_DEBUG  -DMEMDLEAK  -I../../../app/thirdparty/appseed -I. -I.. -I../.. -I../ca2 -I../../nodeapp/linux -I../../nodeapp/linux/include -I../../.. -I../../../app/appseed -I../../../app/appseed/ca -I../../../app/appseed/ca2 -I../../../app/thirdparty/include  -c /ca2/app-core/appseed/netnodelite_script/ds_script.cpp -o "%CA2_ROOT%time/intermediate/%PLATFORM%/netnodelite_script%ITEM_NAME%/%ITEM_TITLE%.o" 

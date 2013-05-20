@@ -69,7 +69,6 @@
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath,$$$ORIGIN" />
-			<Add option="-Wl,-E" />
 			<Add option="-l_ca2zlib" />
 			<Add option="-l_ca2freeimage" />
 			<Add option="-l_ca2freetype" />

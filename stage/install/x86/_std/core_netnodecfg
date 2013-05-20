@@ -1,12 +1,11 @@
-﻿#!/bin/bash
-
+﻿#!/bin/sh
 
 function install()
 {
 	
-	cd ../../../../../stage/x86
+        cd ../../../../../stage/x86
 
-	./app : app=app-core/netnodecfg type=application locale=_std schema=_std install build_number=basis
+        ./app : app=app-core/netnodecfg type=application locale=_std schema=_std install build_number=basis
 
 }
 

@@ -15,7 +15,14 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp" />
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
-		<Project filename="../../../app-core/appseed/netnodecfg/netnodecfg.cbp" />
+		<Project filename="../../../app-core/appseed/netnodecfg/netnodecfg.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
+			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
+			<Depends filename="../../../app/appseed/c/_.cbp" />
+			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
+			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
 		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 		<Project filename="../../../app-core/appseed/netnodelite_library/netnodelite_library.cbp" />
