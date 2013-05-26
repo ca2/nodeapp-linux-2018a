@@ -1475,6 +1475,7 @@ xdisplay d(w.display());
 
          ::ca::message::key * pkey = (::ca::message::key *) pbase;
 
+         Application.user()->keyboard().translate_os_key_message(pkey);
 
          if(pbase->m_uiMessage == WM_KEYDOWN)
          {
