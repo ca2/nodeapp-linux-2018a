@@ -73,6 +73,10 @@ namespace lnx
                   }
                }
             }
+            else
+            {
+               iLenFolder--;
+            }
          }
          else
          {
