@@ -607,7 +607,7 @@ xdisplay d(w.display());
 
    //      m_pguie->SetWindowPos(0, 256, 256, cs.cx, cs.cy, 0);
 
-         send_message(WM_SIZE, 0, 0);
+         send_message(WM_SIZE);
 
          LNX_THREAD(m_pthread->m_pthread->m_p.m_p)->m_oswindowa.add(m_oswindow);
 
@@ -1700,7 +1700,7 @@ restart_mouse_hover_check:
             && puiFocus->IsWindow()
             && puiFocus->GetTopLevelParent() != NULL)
          {
-            puiFocus->send_message(pkey);
+            puiFocus->send(pkey);
             if(pbase->m_bRet)
                return;
          }
@@ -4808,7 +4808,7 @@ throw not_implemented(get_app());
       m_pguieOwner = pOwnerWnd;
    }
 
-   LRESULT window::send_message(UINT message, WPARAM wparam, LPARAM lparam)
+   LRESULT window::send_message(UINT message, WPARAM wparam, lparam lparam)
    {
 
       ::c::smart_pointer < ::ca::message::base > spbase;
@@ -4866,7 +4866,7 @@ throw not_implemented(get_app());
 
    }
 
-   bool window::PostMessage(UINT message, WPARAM wparam, LPARAM lparam)
+   bool window::PostMessage(UINT message, WPARAM wparam, lparam lparam)
    {
 
       return ::PostMessage(get_os_data(), message, wparam, lparam) != FALSE;
@@ -5794,7 +5794,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   bool window::SendNotifyMessage(UINT message, WPARAM wparam, LPARAM lparam)
+   bool window::SendNotifyMessage(UINT message, WPARAM wparam, lparam lparam)
    {
 
       throw not_implemented(get_app());
@@ -7158,7 +7158,7 @@ namespace lnx
 
             }
 
-            send_message(WM_SHOWWINDOW, TRUE, 0);
+            send_message(WM_SHOWWINDOW, TRUE);
 
          }
 
