@@ -354,7 +354,7 @@ namespace lnx
          }
 #endif
 //         while(::PeekMessage(&msg, ::ca::null(), NULL, NULL, PM_NOREMOVE))
-         while(::PeekMessage(&msg, ::ca::null(), 0, 0, 0))
+         while(::PeekMessage(&msg, NULL, 0, 0, 0))
          {
             __get_thread()->pump_message();
          }
@@ -544,7 +544,7 @@ namespace lnx
       {
          oswindow hwndTopic = wndaApp[j];
 
-         sp(::ca::window) pwnd = ::null();
+         sp(::ca::window) pwnd = NULL;
          //::ca::window * pwnd =  (System.window_map().get((int_ptr) hwndTopic));
          //if(pwnd == NULL)
          //{
@@ -777,7 +777,7 @@ namespace lnx
 
       ::oswindow oswindow = hwndtree.m_oswindow;
 
-      ::user::window_interface * ptwi = oswindow.get_user_interaction();
+      ::user::window_interface * ptwi = oswindow->get_user_interaction();
 
       if(!::IsWindowVisible(oswindow))
       {

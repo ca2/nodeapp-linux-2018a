@@ -514,7 +514,7 @@ namespace lnx
       ca(papp),
       message_window_simple_callback(papp),//,
       m_evFinish(papp, FALSE, TRUE),
-      ::ca::thread(::null()),
+      ::ca::thread(NULL),
       m_mutexUiPtra(papp)
    {
       m_evFinish.SetEvent();
@@ -681,7 +681,7 @@ namespace lnx
          return;
       if(GetMainWnd() == pui)
       {
-         SetMainWnd(::null());
+         SetMainWnd(NULL);
       }
       single_lock sl(&m_mutexUiPtra, TRUE);
       if(m_puiptra != NULL)
@@ -994,7 +994,7 @@ void thread::Delete()
       while(get_run())
       {
          // phase1: check to see if we can do idle work
-         while (bIdle && !::PeekMessage(&msg, ::ca::null(), 0, 0, PM_NOREMOVE))
+         while (bIdle && !::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
          {
             defer_process_windows_messages();
 //            if(XCheckTypedEvent(d, -1, &e))
@@ -1077,7 +1077,7 @@ void thread::Delete()
             }
          }
 //         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
-         while (get_run() && ::PeekMessage(&msg, ::ca::null(),0, 0, 0) != FALSE);
+         while (get_run() && ::PeekMessage(&msg, NULL, 0, 0, 0) != FALSE);
 
       }
 stop_run:
@@ -1459,7 +1459,7 @@ stop_run:
       try
       {
          MESSAGE msg;
-         if(!::GetMessage(&msg, ::ca::null(), 0, 0))
+         if(!::GetMessage(&msg, NULL, 0, 0))
          {
             TRACE(::ca::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
             m_nDisablePumpCount++; // application must die
@@ -1530,10 +1530,10 @@ stop_run:
             if(msg.hwnd != NULL)
             {
 
-               if(msg.hwnd.get_user_interaction() != NULL)
+               if(msg.hwnd->get_user_interaction() != NULL)
                {
 
-                  msg.hwnd.get_user_interaction()->send_message(msg.message, msg.wParam, msg.lParam);
+                  msg.hwnd->get_user_interaction()->send_message(msg.message, msg.wParam, msg.lParam);
 
                }
 

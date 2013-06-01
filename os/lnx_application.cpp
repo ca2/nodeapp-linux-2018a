@@ -544,7 +544,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
       mutex_lock mlUser(user_mutex(), true);
 
-      mutex_lock mlOsWindow(*::oswindow::s_pmutex, true);
+      mutex_lock mlOsWindow(*::oswindow_data::s_pmutex, true);
 
       unsigned int uiShape;
 
@@ -561,20 +561,20 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
       }
 
-      for(int i = 0; i < ::oswindow::s_pdataptra->get_count(); i++)
+      for(int i = 0; i < ::oswindow_data::s_pdataptra->get_count(); i++)
       {
 
-         oswindow window = ::oswindow::s_pdataptra->element_at(i);
+         oswindow window = ::oswindow_data::s_pdataptra->element_at(i);
 
-         if(window.m_pdata->m_bMessageOnlyWindow)
+         if(window->m_bMessageOnlyWindow)
             continue;
 
-         if(window.display() == NULL)
+         if(window->display() == NULL)
             continue;
 
-         Cursor cursor = XCreateFontCursor(window.display(), uiShape);
+         Cursor cursor = XCreateFontCursor(window->display(), uiShape);
 
-         XDefineCursor(window.display(), window.window(), cursor);
+         XDefineCursor(window->display(), window->window(), cursor);
 
       }
 
@@ -598,7 +598,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
             return wndptra[i].get_wnd();
          }
       }
-      return ::null();
+      return NULL;
    }
 
    ::ca::thread * application::GetThread()

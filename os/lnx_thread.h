@@ -143,8 +143,8 @@ namespace lnx
    // Operations
       DWORD SuspendThread();
       DWORD ResumeThread();
-      bool post_thread_message(UINT message, WPARAM wParam = 0, lparam lParam = ::null());
-      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam = 0, lparam lParam = ::null());
+      bool post_thread_message(UINT message, WPARAM wParam = 0, lparam lParam = NULL);
+      bool post_message(sp(::user::interaction) pguie, UINT message, WPARAM wParam = 0, lparam lParam = NULL);
 
       virtual bool PreInitInstance();
 

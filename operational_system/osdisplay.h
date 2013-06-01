@@ -1,64 +1,6 @@
 #pragma once
 
 
-// backlink at inha-ubuntu at veriverse at Curitiba near Finados Holyday 2012-11-03 from ca.dylib/ca.so/ca.dll
-namespace ca
-{
-
-   class CLASS_DECL_c null
-   {
-   public:
-
-
-      null() {}
-      null(const null &) {}
-      null(null && ) {}
-
-
-null & operator = (null &&)
-{
-
-return *this;
-}
-
-template < typename T >
-      operator T*() { return (T *) 0; }
-
-
-   };
-
-} // namespace ca
-
-inline ::ca::null null()
-{
-    return ::ca::null();
-}
-
-
-template < typename T >
-inline bool operator != (const T t, const ::ca::null & n)
-{
-   return t != ((int_ptr) 0);
-}
-
-template < typename T >
-inline bool operator != (const ::ca::null & n, const T t)
-{
-   return t != ((int_ptr) 0);
-}
-
-template < typename T >
-inline bool operator == (const T t, const ::ca::null & n)
-{
-   return t == ((int_ptr) 0);
-}
-
-template < typename T >
-inline bool operator == (const ::ca::null & n, const T t)
-{
-   return t == ((int_ptr) 0);
-}
-
 class osdisplay_dataptra;
 class simple_mutex;
 
@@ -98,80 +40,68 @@ public:
 
 
 
-class CLASS_DECL_c osdisplay
+class CLASS_DECL_c osdisplay_data
 {
 public:
 
 
-   class CLASS_DECL_c data
-   {
-   public:
 
-      Display *               m_pdisplay;
-      Atom                    m_atomLongType;
-      Atom                    m_atomLongStyle;
-      Atom                    m_atomLongStyleEx;
-
-   };
-
-
-
-   data *   m_pdata;
+   Display *               m_pdisplay;
+   Atom                    m_atomLongType;
+   Atom                    m_atomLongStyle;
+   Atom                    m_atomLongStyleEx;
 
 
    static osdisplay_dataptra * s_pdataptra;
    static simple_mutex * s_pmutex;
-   static int32_t find(Display * pdisplay);
-   static data * get(Display * pdisplay);
 
 
 
-   osdisplay();
-   osdisplay(const ::ca::null & null);
-   osdisplay(Display * pdisplay);
-   osdisplay(const osdisplay & osdisplay);
+   osdisplay_data();
+   //osdisplay_data(Display * pdisplay);
 
 
-   static bool remove(Display * pdisplay);
 
-
-   osdisplay & operator = (const osdisplay & osdisplay);
-
-   bool operator == (const osdisplay & d) const
-   {
-      return m_pdata == d.m_pdata;
-   }
-
-   bool operator != (const osdisplay & d) const
-   {
-      return m_pdata != d.m_pdata;
-   }
 
    Display * display()
    {
-      return m_pdata == NULL ? NULL : m_pdata->m_pdisplay;
+      return this == NULL ? NULL : m_pdisplay;
+   }
+
+   Display * display() const
+   {
+      return this == NULL ? NULL : m_pdisplay;
    }
 
    Atom atom_long_type()
    {
-      return m_pdata == NULL ? 0 : m_pdata->m_atomLongType;
+      return this == NULL ? 0 : m_atomLongType;
    }
 
    Atom atom_long_style()
    {
-      return m_pdata == NULL ? 0 : m_pdata->m_atomLongStyle;
+      return this == NULL ? 0 : m_atomLongStyle;
    }
 
    Atom atom_long_style_ex()
    {
-      return m_pdata == NULL ? 0 : m_pdata->m_atomLongStyleEx;
+      return this == NULL ? 0 : m_atomLongStyleEx;
    }
 
    bool is_null() const
    {
-      return m_pdata == NULL;
+      return this == NULL;
    }
 
    Atom get_window_long_atom(int32_t nIndex);
 
 };
+
+
+CLASS_DECL_c int32_t osdisplay_find(Display * pdisplay);
+CLASS_DECL_c osdisplay_data * osdisplay_get(Display * pdisplay);
+CLASS_DECL_c bool osdisplay_remove(Display * pdisplay);
+
+
+typedef osdisplay_data * osdisplay;
+

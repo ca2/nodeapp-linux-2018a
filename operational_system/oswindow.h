@@ -39,6 +39,12 @@ namespace ca
 } // namespace ca
 
 
+class oswindow_data;
+
+
+typedef oswindow_data * oswindow;
+
+
 namespace user
 {
 
@@ -62,47 +68,24 @@ class simple_mutex;
 typedef hthread * HTHREAD;
 
 
-class CLASS_DECL_c oswindow
+class CLASS_DECL_c oswindow_data
 {
 public:
 
 
-   class CLASS_DECL_c data
-   {
-   public:
-
-      data();
-      ~data();
-
-      osdisplay                     m_osdisplay;
-      Window                        m_window;
-      Visual *                      m_pvisual;
-      bool                          m_bMessageOnlyWindow;
-      ::user::interaction_base *    m_pui;
-      HTHREAD                       m_hthread;
-      simple_map < int, LONG > *    m_plongmap;
-      bool                          m_bDestroying;
-
-   };
-
-
-
-
-
-
-
-   data *   m_pdata;
+   osdisplay                     m_osdisplay;
+   Window                        m_window;
+   Visual *                      m_pvisual;
+   bool                          m_bMessageOnlyWindow;
+   ::user::interaction_base *    m_pui;
+   HTHREAD                       m_hthread;
+   simple_map < int, LONG > *    m_plongmap;
+   bool                          m_bDestroying;
 
 
    static oswindow_dataptra * s_pdataptra;
    static simple_mutex * s_pmutex;
 
-   static int32_t find_message_only_window(::user::interaction_base * puibaseMessageWindow);
-   static int32_t find(Display * pdisplay, Window window);
-   static int32_t find(Window window);
-   static data * get_message_only_window(::user::interaction_base * puibaseMessageWindow);
-   static data * get(Display * pdisplay, Window window);
-   static data * get(Window window);
    static Atom s_atomLongType;
    static Atom s_atomLongStyle;
    static Atom s_atomLongStyleEx;
@@ -112,81 +95,67 @@ public:
 
 
 
-   oswindow();
-   oswindow(const ::ca::null & null);
-   oswindow(::user::interaction_base * puibaseMessageOnlyWindow);
-   oswindow(Display * pdisplay, Window window, Visual * pvisual = NULL);
-   oswindow(const oswindow & oswindow);
-   oswindow(const void * p);
-   oswindow(const LPARAM & lparam);
-   oswindow(const WPARAM & wparam);
+   oswindow_data();
+   oswindow_data(::user::interaction_base * puibaseMessageOnlyWindow);
+   oswindow_data(const void * p);
+   oswindow_data(const LPARAM & lparam);
+   oswindow_data(const WPARAM & wparam);
+
+
+   ~oswindow_data();
 
 
 
    operator void * ()
    {
-      return m_pdata;
+      return this;
    }
 
    operator void * () const
    {
-      return m_pdata;
+      return (void *) this;
    }
 
-   static bool remove(Display * pdisplay, Window window);
-
-   static bool remove_message_only_window(::user::interaction_base * puibaseMessageOnlyWindow);
-
-   oswindow & operator = (const oswindow & window);
+   oswindow_data & operator = (const oswindow_data & window);
 
    bool operator == (const void * p) const
    {
-      return m_pdata == p;
+      return this == p;
    }
 
    bool operator != (const void * p) const
    {
-      return m_pdata != p;
-   }
-
-   bool operator == (const oswindow & w) const
-   {
-      return m_pdata == w.m_pdata;
-   }
-
-   bool operator != (const oswindow & w) const
-   {
-      return m_pdata != w.m_pdata;
+      return this != p;
    }
 
    Display * display()
    {
-      return m_pdata == NULL ? NULL : m_pdata->m_osdisplay.display();
+      return this == NULL ? NULL : m_osdisplay->display();
    }
 
    Display * display() const
    {
-      return m_pdata == NULL ? NULL : m_pdata->m_osdisplay.display();
+      return this == NULL ? NULL : m_osdisplay->display();
    }
 
    Window window()
    {
-      return m_pdata == NULL ? 0 : m_pdata->m_window;
+      return this == NULL ? None : m_window;
    }
 
    Window window() const
    {
-      return m_pdata == NULL ? 0 : m_pdata->m_window;
+      return this == NULL ? None : m_window;
    }
 
    Visual * visual()
    {
-      return m_pdata == NULL ? NULL : m_pdata->m_pvisual;
+      return this == NULL ? NULL : m_pvisual;
    }
 
    Visual * visual() const
    {
-      return m_pdata == NULL ? NULL : m_pdata->m_pvisual;
+      return this == NULL ? NULL : m_pvisual;
    }
 
 
@@ -221,67 +190,79 @@ public:
 
    bool is_null() const
    {
-      return m_pdata == NULL;
+      return this == NULL;
    }
 
-
-   static oswindow defer_get(Window w);
 
    bool is_destroying();
 
 
 };
 
-#define HWND_MESSAGE ((::oswindow::data *) (int_ptr) 1)
+
+CLASS_DECL_c int32_t oswindow_find_message_only_window(::user::interaction_base * puibaseMessageWindow);
+CLASS_DECL_c int32_t oswindow_find(Display * pdisplay, Window window);
+CLASS_DECL_c int32_t oswindow_find(Window window);
+CLASS_DECL_c oswindow_data * oswindow_get_message_only_window(::user::interaction_base * puibaseMessageWindow);
+CLASS_DECL_c oswindow_data * oswindow_get(Display * pdisplay, Window window, Visual * pvisual = NULL);
+CLASS_DECL_c oswindow_data * oswindow_get(Window window);
+CLASS_DECL_c oswindow oswindow_defer_get(Window w);
+CLASS_DECL_c bool oswindow_remove(Display * pdisplay, Window window);
+CLASS_DECL_c bool oswindow_remove_message_only_window(::user::interaction_base * puibaseMessageOnlyWindow);
+
+
+
+
+#define HWND_MESSAGE ((::oswindow_data *) (int_ptr) 1)
 
 inline bool IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant)
 {
-   return oswindowParent.is_child(oswindowCandidateChildOrDescendant);
+   return oswindowParent->is_child(oswindowCandidateChildOrDescendant);
 }
 
 inline oswindow GetParent(::oswindow oswindow)
 {
-   return oswindow.get_parent();
+   return oswindow->get_parent();
 }
 
 inline oswindow SetParent(::oswindow oswindow, ::oswindow oswindowNewParent)
 {
-   return oswindow.set_parent(oswindowNewParent);
+   return oswindow->set_parent(oswindowNewParent);
 }
 
 inline bool ShowWindow(::oswindow oswindow, int32_t nCmdShow)
 {
-   return oswindow.show_window(nCmdShow);
+   return oswindow->show_window(nCmdShow);
 }
 
 inline LONG GetWindowLongA(::oswindow oswindow, int32_t nIndex)
 {
-   return oswindow.get_window_long(nIndex);
+   return oswindow->get_window_long(nIndex);
 }
 
 inline LONG SetWindowLongA(::oswindow oswindow, int32_t nIndex, LONG l)
 {
-   return oswindow.set_window_long(nIndex, l);
+   return oswindow->set_window_long(nIndex, l);
 }
 
 inline bool ClientToScreen(::oswindow oswindow, LPPOINT lppoint)
 {
-   return oswindow.client_to_screen(lppoint);
+   return oswindow->client_to_screen(lppoint);
 }
 
 inline bool ScreenToClient(::oswindow oswindow, LPPOINT lppoint)
 {
-   return oswindow.screen_to_client(lppoint);
+   return oswindow->screen_to_client(lppoint);
 }
 
 inline int32_t IsIconic(::oswindow oswindow)
 {
-   return oswindow.is_iconic();
+   return oswindow->is_iconic();
 }
 
 inline int32_t IsWindowVisible(::oswindow oswindow)
 {
-   return oswindow.is_window_visible();
+   return oswindow->is_window_visible();
 }
 
 
