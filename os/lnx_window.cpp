@@ -238,7 +238,9 @@ namespace lnx
       if(oswindow->get_user_interaction() == NULL)
          return NULL;
 
-      return dynamic_cast < ::lnx::window * > (oswindow->get_user_interaction()->m_pimpl.m_p);
+      ::user::interaction * pui = oswindow->get_user_interaction()->m_pimpl.m_p;
+
+      return dynamic_cast < ::lnx::window * > (pui);
 
    }
 
@@ -4279,7 +4281,7 @@ throw not_implemented(get_app());
 
    oswindow window::get_handle() const
    {
-      return (oswindow) get_handle();
+      return (oswindow) get_os_data();
    }
 
 
