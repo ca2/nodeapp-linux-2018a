@@ -462,13 +462,15 @@ xdisplay d(w->display());
 
       if(cs.hwndParent == (oswindow) HWND_MESSAGE)
       {
-         m_oswindow = oswindow(m_pguie.m_p);
+         m_oswindow = oswindow_get_message_only_window(m_pguie.m_p);
 
          send_message(WM_CREATE, 0, (LPARAM) &cs);
 
       }
       else
       {
+
+         mutex_lock ml(user_mutex());
 
          Display *display;
          Window rootwin;
@@ -2442,8 +2444,7 @@ restart_mouse_hover_check:
 
    }
 
-   void PASCAL window::SendMessageToDescendants(void * hWnd, UINT message,
-      WPARAM wparam, LPARAM lparam, bool bDeep, bool bOnlyPerm)
+   void PASCAL window::SendMessageToDescendants(void * hWnd, UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
       // walk through oswindows to avoid creating temporary window objects
       // unless we need to call this function recursively
@@ -5163,7 +5164,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   void window::SendMessageToDescendants(UINT message, WPARAM wparam, LPARAM lparam, bool bDeep, bool bOnlyPerm)
+   void window::SendMessageToDescendants(UINT message, WPARAM wparam, lparam lparam, bool bDeep, bool bOnlyPerm)
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
       //window::SendMessageToDescendants(get_handle(), message, wparam, lparam, bDeep, bOnlyPerm);
@@ -7130,7 +7131,7 @@ namespace lnx
 
             m_rectParentClient.right  = rectWindow.right;
 
-            m_rectParentClient.bottom     = rectWindow.top;
+            m_rectParentClient.bottom     = rectWindow.bottom;
 
             bSize = true;
 
