@@ -368,21 +368,31 @@ namespace lnx
 
    }
 
-   void bitmap::destroy()
+
+   bool bitmap::destroy()
    {
 
       if(m_psurface == NULL)
-         return;
+         return true;
 
-if(m_psurface == g_cairosurface)
-{
-   printf("123");
-}      cairo_surface_destroy(m_psurface);
+      if(m_psurface == g_cairosurface)
+      {
+         printf("123");
+      }
+
+      cairo_surface_destroy(m_psurface);
+
+      m_psurface = NULL;
+
+      return true;
 
    }
 
 
 } // namespace lnx
+
+
+
 
 
 

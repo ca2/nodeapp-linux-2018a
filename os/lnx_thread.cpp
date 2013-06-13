@@ -675,7 +675,7 @@ namespace lnx
       m_puiptra->add(pui);
    }
 
-   void thread::remove(sp(::user::interaction) pui)
+   void thread::remove(::user::interaction * pui)
    {
       if(pui == NULL)
          return;

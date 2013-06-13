@@ -51,7 +51,7 @@ namespace lnx
       virtual bool Attach(void * posdata);
 
 
-      void destroy();
+      virtual bool destroy();
 
 
    };

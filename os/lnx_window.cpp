@@ -85,6 +85,7 @@ namespace lnx
       m_cairoWork = NULL;
       m_cairosurfaceWork = NULL;
       m_bExposing = false;
+      m_oswindow = NULL;
    }
 
    void window::construct(oswindow hWnd)
@@ -107,6 +108,7 @@ namespace lnx
       m_cairoWork = NULL;
       m_cairosurfaceWork = NULL;
       m_bExposing = false;
+
    }
 
    window::window(sp(::ca::application) papp) :
@@ -131,6 +133,8 @@ namespace lnx
       m_cairoWork = NULL;
       m_cairosurfaceWork = NULL;
       m_bExposing = false;
+      m_oswindow = NULL;
+
    }
 
    window::~window()
@@ -4145,7 +4149,7 @@ ExitModal:
          {
             //::post_thread_message((DWORD) m_iaModalThread[i], WM_NULL, 0, 0);
          }
-         PostMessage(WM_NULL);
+         post_message(WM_NULL);
          System.GetThread()->post_thread_message(WM_NULL);
       }
    }
@@ -4162,7 +4166,7 @@ ExitModal:
       {
          int32_t iLevel = m_iModalCount - 1;
          m_iModalCount = 0;
-         PostMessage(WM_NULL);
+         post_message(WM_NULL);
          System.GetThread()->post_thread_message(WM_NULL);
          for(int32_t i = iLevel; i >= 0; i--)
          {
@@ -4880,12 +4884,14 @@ throw not_implemented(get_app());
 
    }
 
-   bool window::PostMessage(UINT message, WPARAM wparam, lparam lparam)
+
+   bool window::post_message(UINT message, WPARAM wparam, lparam lparam)
    {
 
       return ::PostMessage((oswindow) get_handle(), message, wparam, lparam) != FALSE;
 
    }
+
 
    bool window::DragDetect(POINT pt) const
    {
@@ -4897,16 +4903,24 @@ throw not_implemented(get_app());
 
    }
 
+
    void window::SetWindowText(const char * lpszString)
    {
+
       m_strWindowText = lpszString;
+
    }
+
 
    strsize window::GetWindowText(LPTSTR lpszString, strsize nMaxCount)
    {
+
       strncpy(lpszString, m_strWindowText, nMaxCount);
+
       return min(nMaxCount, m_strWindowText.get_length());
+
    }
+
 
    strsize window::GetWindowTextLength()
    {
@@ -4918,17 +4932,26 @@ throw not_implemented(get_app());
 
    }
 
+
    void window::SetFont(::ca::font* pfont, bool bRedraw)
    {
+
       UNREFERENCED_PARAMETER(bRedraw);
+
       ASSERT(::IsWindow((oswindow) get_handle())); m_pfont = new ::ca::font(*pfont);
+
    }
+
 
    ::ca::font* window::GetFont()
    {
+
       ASSERT(::IsWindow((oswindow) get_handle()));
+
       return m_pfont;
+
    }
+
 
    void window::DragAcceptFiles(bool bAccept)
    {
@@ -4940,81 +4963,126 @@ throw not_implemented(get_app());
 
    }
 
+
    sp(::user::frame_window) window::EnsureParentFrame()
    {
+
       sp(::user::frame_window) pFrameWnd=GetParentFrame();
+
       ENSURE_VALID(pFrameWnd);
+
       return pFrameWnd;
+
    }
+
 
    sp(::user::interaction) window::EnsureTopLevelParent()
    {
+
       sp(::user::interaction)pWnd=GetTopLevelParent();
+
       ENSURE_VALID(pWnd);
+
       return pWnd;
+
    }
+
 
    void window::MoveWindow(LPCRECT lpRect, bool bRepaint)
    {
+
       MoveWindow(lpRect->left, lpRect->top, lpRect->right - lpRect->left, lpRect->bottom - lpRect->top, bRepaint);
+
    }
+
 
    UINT window::ArrangeIconicWindows()
    {
+
       throw not_implemented(get_app());
+
 //      ASSERT(::IsWindow((oswindow) get_handle())); return ::ArrangeIconicWindows(get_handle());
+
    }
+
 
    int32_t window::SetWindowRgn(HRGN hRgn, bool bRedraw)
    {
+
       throw not_implemented(get_app());
+
 //      ASSERT(::IsWindow((oswindow) get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
+
    }
+
 
    int32_t window::GetWindowRgn(HRGN hRgn)
    {
+
       throw not_implemented(get_app());
+
 //      ASSERT(::IsWindow((oswindow) get_handle()) && hRgn != NULL); return ::GetWindowRgn(get_handle(), hRgn);
+
    }
+
 
    bool window::BringWindowToTop()
    {
+
 //      throw not_implemented(get_app());
 //      return ::BringWindowToTop(get_handle()) != FALSE;
 
    }
 
+
    void window::MapWindowPoints(::ca::window * pwndTo, LPPOINT lpPoint, UINT nCount)
    {
+
       throw not_implemented(get_app());
+
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), lpPoint, nCount);
+
    }
+
 
    void window::MapWindowPoints(::ca::window * pwndTo, LPRECT lpRect)
    {
+
       throw not_implemented(get_app());
+
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      ::MapWindowPoints(get_handle(), (oswindow) pwndTo->get_handle(), (LPPOINT)lpRect, 2);
+
    }
+
 
    ::ca::graphics * window::GetDC()
    {
+
       ::ca::graphics_sp g(allocer());
 
       xdisplay d(m_oswindow->display());
+
       oswindow oswindow;
+
       if(get_handle() == NULL)
       {
+
 //         oswindow = ::GetDesktopWindow();
 
       }
       else
       {
+
          oswindow = (::oswindow) get_handle();
+
       }
+
       rect rectClient;
+
       //oswindow->get_client_rect(rectClient);
+
       rectClient.left = 0;
       rectClient.top = 0;
       rectClient.right = 500;

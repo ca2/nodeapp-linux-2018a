@@ -126,8 +126,8 @@ namespace lnx
       m_info.bmiHeader.biCompression   = BI_RGB;
       m_info.bmiHeader.biSizeImage     = width * height * 4;
 
-      m_spbitmap.create(get_app());
-      m_spgraphics.create(get_app());
+      m_spbitmap.create(allocer());
+      m_spgraphics.create(allocer());
 
       if(m_spbitmap.m_p == NULL)
       {
