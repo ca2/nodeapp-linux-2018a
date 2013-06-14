@@ -796,6 +796,60 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    }
 
+   
+   bool application::update_module_paths()
+   {
+   
+         {
+
+            if(!br_init_lib(NULL))
+               return false;
+
+            char * lpszModuleFolder = br_find_exe_dir(NULL);
+
+            if(lpszModuleFolder == NULL)
+               return false;
+
+            m_strModuleFolder = lpszModuleFolder;
+
+            free(lpszModuleFolder);
+
+         }
+
+         {
+
+            void * handle = dlopen("libca2.so", RTLD_NOW);
+
+            if(handle == NULL)
+            {
+
+               m_strCa2ModuleFolder = m_strModuleFolder;
+
+               goto finishedCa2ModuleFolder;
+
+            }
+
+            link_map * plm;
+
+            dlinfo(handle, RTLD_DI_LINKMAP, &plm);
+
+            m_strCa2ModuleFolder = ::dir::name(plm->l_name);
+
+            if(m_strCa2ModuleFolder.is_empty() || m_strCa2ModuleFolder[0] != '/')
+            {
+
+                m_strCa2ModuleFolder = m_strModuleFolder;
+
+            }
+
+            dlclose(handle);
+
+
+         }
+
+		return true;
+   
+   }
 
 
 } // namespace lnx
