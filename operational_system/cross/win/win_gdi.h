@@ -20,6 +20,14 @@ struct tagLOGBRUSH;
 struct tagLOGRGN;
 
 
+typedef struct tagPOINT
+{
+    LONG  x;
+    LONG  y;
+} POINT, *PPOINT, NEAR *NPPOINT, FAR *LPPOINT;
+
+
+
 
 /* Ternary raster operations */
 #define SRCCOPY             (DWORD)0x00CC0020 /* dest = source                   */

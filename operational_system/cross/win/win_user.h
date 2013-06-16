@@ -950,29 +950,25 @@ MessageBoxW(
 #endif /* WINVER >= 0x0501 */
 
 
-namespace user
+struct user_menu;
+
+typedef struct _hmenu
 {
 
+    struct user_menu * m_p;
 
-   class menu;
-
-
-} // namespace user
+} * HMENU;
 
 
-typedef ::user::menu * HMENU;
 
+struct visual_cursor;
 
-namespace visual
+typedef struct _hcursor
 {
 
+    struct visual_cursor * m_p;
 
-   class cursor;
-
-
-} // namespace visual
-
-typedef ::visual::cursor * HCURSOR;
+} * HCURSOR;
 
 
 typedef void * HDROP;

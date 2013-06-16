@@ -75,7 +75,8 @@
 			<Add option="-l_ca2freeimage" />
 			<Add option="-l_ca2freetype" />
 			<Add option="-l_ca2openssl" />
-			<Add option="-lca2c" />
+			<Add option="-l_ca2c" />
+			<Add option="-lca2ca" />
 			<Add option="-lca2" />
 			<Add option="-lca2os" />
 			<Add option="-lcairo" />

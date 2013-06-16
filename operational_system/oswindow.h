@@ -20,14 +20,9 @@ typedef int32_t LONG;
 template < typename t1, typename t2 >
 class simple_map;
 
-typedef struct tagPOINT
-{
-    LONG  x;
-    LONG  y;
-} POINT, *PPOINT, NEAR *NPPOINT, FAR *LPPOINT;
 
 
-class hthread;
+struct hthread;
 
 namespace ca
 {
@@ -39,10 +34,10 @@ namespace ca
 } // namespace ca
 
 
-class oswindow_data;
+//class oswindow_data;
 
 
-typedef oswindow_data * oswindow;
+//typedef oswindow_data * oswindow;
 
 
 namespace user
@@ -65,7 +60,7 @@ class simple_event;
 class simple_mutex;
 
 
-typedef hthread * HTHREAD;
+//typedef hthread * HTHREAD;
 
 
 class CLASS_DECL_c oswindow_data

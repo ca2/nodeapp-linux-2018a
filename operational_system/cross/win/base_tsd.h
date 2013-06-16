@@ -21,6 +21,7 @@
 
 #pragma once
 
+#define _BASETSD_H_
 
 #ifdef __cplusplus
 extern "C" {
