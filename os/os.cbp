@@ -69,9 +69,9 @@
 			<Add option="-ldl" />
 			<Add option="-l_ca2c" />
 			<Add option="-l_ca2freeimage" />
+			<Add option="-l_ca2cairo" />
 			<Add option="-lca2ca" />
 			<Add option="-lca2" />
-			<Add option="-lcairo" />
 			<Add option="-lX11" />
 			<Add option="-lXmu" />
 			<Add option="-Wl,-z,defs" />
@@ -81,6 +81,8 @@
 		<Unit filename="../operational_system/_c.h" />
 		<Unit filename="../operational_system/_ca.h" />
 		<Unit filename="../operational_system/bare_operational_system.h" />
+		<Unit filename="../operational_system/cairo_config.h" />
+		<Unit filename="../operational_system/cairo_features.h" />
 		<Unit filename="../operational_system/cross/win/base_tsd.h" />
 		<Unit filename="../operational_system/cross/win/ntstatus.h" />
 		<Unit filename="../operational_system/cross/win/poppack.h" />

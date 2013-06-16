@@ -2,6 +2,10 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
 		<Project filename="../../../app/appseed/c/_c.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
+		</Project>
 		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp">
 			<Depends filename="../../../app/appseed/c/_c.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
@@ -13,6 +17,7 @@
 		<Project filename="../../../app/thirdparty/appseed/openssl/openssl.cbp">
 			<Depends filename="../../../app/appseed/c/_c.cbp" />
 		</Project>
+		<Project filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp">
 			<Depends filename="../../../app/appseed/c/_c.cbp" />
 		</Project>
