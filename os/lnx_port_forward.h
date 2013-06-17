@@ -11,40 +11,40 @@ namespace lnx
 
 
    class port_forward :
-      virtual public ::ca::port_forward
+      virtual public ::ca2::port_forward
    {
    public:
 
 
-	   port_forward(sp(::ca::application) papp);
+	   port_forward(sp(::ca2::application) papp);
 	   virtual ~port_forward();
 
 
 	   // forward declarations
 
-/* xxx	   interface IDerivedNATExternalIPAddressCallback;
-	   interface IDerivedNATNumberOfEntriesCallback;
+/* xxx	   interface IDerivedNATExternalIPAddresscallback;
+	   interface IDerivedNATNumberOfEntriescallback;
 
 
 	   // protected interfaces, which were forward-declared above, and which are used for event notifications from COM
 	   // most of the code is here in this .h file, except for the QueryInterface method which is in the .cpp file
 
-	   interface IDerivedNATExternalIPAddressCallback : public INATExternalIPAddressCallback
+	   interface IDerivedNATExternalIPAddresscallback : public INATExternalIPAddresscallback
 	   {
-		   IDerivedNATExternalIPAddressCallback( ::ca::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
+		   IDerivedNATExternalIPAddresscallback( ::ca2::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
 
-		   HRESULT STDMETHODCALLTYPE NewExternalIPAddress( BSTR bstrNewExternalIPAddress )
+		   HRESULT STDMETHODcaLLTYPE NewExternalIPAddress( BSTR bstrNewExternalIPAddress )
 		   {
 			   ASSERT( m_pointer != NULL );
             string strNewExternalIPAddress(bstrNewExternalIPAddress);
 			   return m_pointer->OnNewExternalIPAddress(strNewExternalIPAddress );
 		   }
 
-		   HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void ** ppvObject);
+		   HRESULT STDMETHODcaLLTYPE QueryInterface(REFIID iid, void ** ppvObject);
 
-		   ULONG STDMETHODCALLTYPE AddRef()  {	return ++m_dwRef; }
+		   ULONG STDMETHODcaLLTYPE AddRef()  {	return ++m_dwRef; }
 
-		   ULONG STDMETHODCALLTYPE Release()
+		   ULONG STDMETHODcaLLTYPE Release()
 		   {
 			   if ( --m_dwRef == 0 )
 				   delete this;
@@ -53,24 +53,24 @@ namespace lnx
 		   }
 
 		   DWORD		m_dwRef;
-		   ::ca::port_forward_change_callbacks*	m_pointer;
+		   ::ca2::port_forward_change_callbacks*	m_pointer;
 	   };
 
-	   interface IDerivedNATNumberOfEntriesCallback : public INATNumberOfEntriesCallback
+	   interface IDerivedNATNumberOfEntriescallback : public INATNumberOfEntriescallback
 	   {
-		   IDerivedNATNumberOfEntriesCallback( ::ca::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
+		   IDerivedNATNumberOfEntriescallback( ::ca2::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
 
-		   HRESULT STDMETHODCALLTYPE NewNumberOfEntries( long lNewNumberOfEntries )
+		   HRESULT STDMETHODcaLLTYPE NewNumberOfEntries( long lNewNumberOfEntries )
 		   {
 			   ASSERT( m_pointer != NULL );
 			   return m_pointer->OnNewNumberOfEntries( lNewNumberOfEntries );
 		   }
 
-		   HRESULT STDMETHODCALLTYPE QueryInterface(REFIID iid, void ** ppvObject);
+		   HRESULT STDMETHODcaLLTYPE QueryInterface(REFIID iid, void ** ppvObject);
 
-		   ULONG STDMETHODCALLTYPE AddRef()  { return ++m_dwRef; }
+		   ULONG STDMETHODcaLLTYPE AddRef()  { return ++m_dwRef; }
 
-		   ULONG STDMETHODCALLTYPE Release()
+		   ULONG STDMETHODcaLLTYPE Release()
 		   {
 			   if ( --m_dwRef == 0 )
 				   delete this;
@@ -79,20 +79,20 @@ namespace lnx
 		   }
 
 		   DWORD		m_dwRef;
-		   ::ca::port_forward_change_callbacks*	m_pointer;
+		   ::ca2::port_forward_change_callbacks*	m_pointer;
 	   };
 
 	   // public functions -- there are only a few
 
 
-	   virtual HRESULT ListenForUpnpChanges(::ca::port_forward_change_callbacks *pCallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
+	   virtual HRESULT ListenForUpnpChanges(::ca2::port_forward_change_callbacks *pcallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
 	   virtual HRESULT StopListeningForUpnpChanges( );  // Stops listenting for UPnP change events on the router and deletes any port_forward_change_callbacks-derived objects
 
-	   virtual WINBOOL GetDeviceInformationUsingThread( oswindow hWnd );  // starts a thread that will get IGD (router) device information; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to hWnd when it's done
-	   virtual WINBOOL GetMappingsUsingThread( oswindow hWnd );  // starts a thread that will get all mappings; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to hWnd when it's done
-	   virtual WINBOOL EditMappingUsingThread( port_map& oldMapping, port_map& newMapping, oswindow hWnd );  // starts a thread that will edit one specific mapping; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to hWnd when it's done
-	   virtual WINBOOL AddMappingUsingThread( port_map& newMapping, oswindow hWnd );  // starts a thread that will add one new mapping; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to hWnd when it's done
-	   virtual WINBOOL DeleteMappingUsingThread( port_map& oldMapping, oswindow hWnd );  // starts a thread that will delete one specific mapping; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION message to hWnd when it's done
+	   virtual WINBOOL GetDeviceInformationUsingThread( oswindow hWnd );  // starts a thread that will get IGD (router) device information; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION message to hWnd when it's done
+	   virtual WINBOOL GetMappingsUsingThread( oswindow hWnd );  // starts a thread that will get all mappings; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION message to hWnd when it's done
+	   virtual WINBOOL EditMappingUsingThread( port_map& oldMapping, port_map& newMapping, oswindow hWnd );  // starts a thread that will edit one specific mapping; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION message to hWnd when it's done
+	   virtual WINBOOL AddMappingUsingThread( port_map& newMapping, oswindow hWnd );  // starts a thread that will add one new mapping; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION message to hWnd when it's done
+	   virtual WINBOOL DeleteMappingUsingThread( port_map& oldMapping, oswindow hWnd );  // starts a thread that will delete one specific mapping; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION message to hWnd when it's done
 
 	   virtual array_ptr_alloc < port_map > get_port_map() const;  // gets a copy of currently-known port mappings
 	   virtual array_ptr_alloc < device >  get_igd() const;  // gets a copy of currently-know device information
@@ -108,7 +108,7 @@ namespace lnx
 	   void DeinitializeCom();
 	   HRESULT PopulateDeviceInfoContainer( IUPnPDevice* piDevice, device & deviceInfo, oswindow hWnd=NULL );
 	   HRESULT GetNextMapping( IEnumVARIANT* piEnumerator, port_map & mappingContainer );
-	   HRESULT SetChangeEventCallbackPointer(::ca::port_forward_change_callbacks *pCallbacks);
+	   HRESULT SetChangeEventcallbackPointer(::ca2::port_forward_change_callbacks *pcallbacks);
 
 	   static UINT ThreadForPortRetrieval( LPVOID pVoid );
 	   static UINT ThreadForDeviceInformationRetrieval( LPVOID pVoid );
@@ -123,19 +123,19 @@ namespace lnx
 	   // protected members
 
 	   IUPnPNAT*								m_piNAT;
-	   IDerivedNATExternalIPAddressCallback*	m_piExternalIPAddressCallback;
-	   IDerivedNATNumberOfEntriesCallback*		m_piNumberOfEntriesCallback;
+	   IDerivedNATExternalIPAddresscallback*	m_piExternalIPAddresscallback;
+	   IDerivedNATNumberOfEntriescallback*		m_piNumberOfEntriescallback;
 
 	   INATEventManager*						m_piEventManager;
-	   ::ca::port_forward_change_callbacks*			m_pChangeCallbackFunctions;
+	   ::ca2::port_forward_change_callbacks*			m_pChangecallbackFunctions;
 
 	   WINBOOL m_bListeningForUpnpChanges;
 
-	   ::ca::thread_sp m_pPortMappingThread;
-	   ::ca::thread_sp m_pDeviceInfoThread;
-	   ::ca::thread_sp m_pAddMappingThread;
-	   ::ca::thread_sp m_pEditMappingThread;
-	   ::ca::thread_sp m_pDeleteMappingThread;
+	   ::ca2::thread_sp m_pPortMappingThread;
+	   ::ca2::thread_sp m_pDeviceInfoThread;
+	   ::ca2::thread_sp m_pAddMappingThread;
+	   ::ca2::thread_sp m_pEditMappingThread;
+	   ::ca2::thread_sp m_pDeleteMappingThread;
 
 	   array_ptr_alloc<port_map> m_MappingContainer;
 

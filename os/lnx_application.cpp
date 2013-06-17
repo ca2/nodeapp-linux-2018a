@@ -1,18 +1,20 @@
 #include "framework.h"
 #include <X11/cursorfont.h>
+#include <dlfcn.h>
+#include <link.h>
 
 extern __thread thread_local_storage * __thread_data;
 
 namespace lnx
 {
 
-   application::application(sp(::ca::application) papp) :
-      ca(papp)
+   application::application(sp(::ca2::application) papp) :
+      ca2(papp)
    {
-      ::ca::thread::m_p.create(allocer());
-      ::ca::thread::m_p->m_p = this;
+      ::ca2::thread::m_p.create(allocer());
+      ::ca2::thread::m_p->m_p = this;
 
-      LNX_THREAD(::ca::thread::m_p.m_p)->m_pAppThread = this;
+      LNX_THREAD(::ca2::thread::m_p.m_p)->m_pAppThread = this;
 
       m_pfilemanager = NULL;
 
@@ -52,19 +54,19 @@ namespace lnx
 
    void application::_001OnFileNew()
    {
-      ::ca::application_base::m_p->_001OnFileNew(NULL);
+      ::ca2::application_base::m_p->_001OnFileNew(NULL);
    }
 
    sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
-      return ::ca::application_base::m_p->_001OpenDocumentFile(varFile);
+      return ::ca2::application_base::m_p->_001OpenDocumentFile(varFile);
    }
 
    void application::_001EnableShellOpen()
    {
 // xxx       ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
 
-// xxx       m_atomApp            = ::GlobalAddAtomW(::ca::international::utf8_to_unicode(m_strAppName));
+// xxx       m_atomApp            = ::GlobalAddAtomW(::ca2::international::utf8_to_unicode(m_strAppName));
 // xxx       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
    }
 
@@ -200,12 +202,12 @@ namespace lnx
 
    void application::LockTempMaps()
    {
-      LNX_THREAD(::ca::thread::m_p.m_p)->LockTempMaps();
+      LNX_THREAD(::ca2::thread::m_p.m_p)->LockTempMaps();
    }
 
    bool application::UnlockTempMaps(bool bDeleteTemp)
    {
-      return LNX_THREAD(::ca::thread::m_p.m_p)->UnlockTempMaps(bDeleteTemp);
+      return LNX_THREAD(::ca2::thread::m_p.m_p)->UnlockTempMaps(bDeleteTemp);
    }
 
 
@@ -214,15 +216,15 @@ namespace lnx
 /*      try
       {
    #ifdef DEBUG
-         // check for missing ::ca::LockTempMap calls
+         // check for missing ::ca2::LockTempMap calls
          if (__get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock != 0)
          {
-            TRACE(::ca::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n",
+            TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n",
                __get_module_thread_state()->m_pCurrentWinThread->m_nTempMapLock);
          }
    #endif
-         ::ca::LockTempMaps(::ca::smart_pointer < ::ca::application_base >::m_p);
-         ::ca::UnlockTempMaps(::ca::smart_pointer < ::ca::application_base >::m_p, -1);
+         ::ca2::LockTempMaps(::ca2::smart_pointer < ::ca2::application_base >::m_p);
+         ::ca2::UnlockTempMaps(::ca2::smart_pointer < ::ca2::application_base >::m_p, -1);
       }
       catch( base_exception* e )
       {
@@ -231,7 +233,7 @@ namespace lnx
 
       try
       {
-         // cleanup thread local tooltip ::ca::window
+         // cleanup thread local tooltip ::ca2::window
          if (hInstTerm == NULL)
          {
 //            __MODULE_THREAD_STATE* pModuleThreadState = __get_module_thread_state();
@@ -378,7 +380,7 @@ return NULL;
 
    // called when occurs an standard_exception exception in run
    // return true to call run again
-   bool application::on_run_exception(::ca::exception & e)
+   bool application::on_run_exception(::ca2::exception & e)
    {
       return ::win::thread::on_run_exception(e);
    }
@@ -390,7 +392,7 @@ return NULL;
       return ::win::thread::initialize_instance();
    }
 
-   ::ca::message::e_prototype application::GetMessagePrototype(UINT uiMessage, UINT uiCode)
+   ::ca2::message::e_prototype application::GetMessagePrototype(UINT uiMessage, UINT uiCode)
    {
       return ::win::thread::GetMessagePrototype(uiMessage, uiCode);
    }
@@ -400,7 +402,7 @@ post_thread_message
    {
       return ::win::thread::run();
    }
-   bool application::pre_translate_message(::ca::signal_object * pobj)
+   bool application::pre_translate_message(::ca2::signal_object * pobj)
    {
       return ::win::thread::pre_translate_message(pMsg);
    }
@@ -419,7 +421,7 @@ post_thread_message
 */
    bool application::process_initialize()
    {
-      if(::ca::application_base::m_p->is_system())
+      if(::ca2::application_base::m_p->is_system())
       {
 /*
 if(__get_module_state()->m_pmapHWND == NULL)
@@ -449,7 +451,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
    bool application::initialize1()
    {
 
-      ::ca::thread::m_p->set_run();
+      ::ca2::thread::m_p->set_run();
 
       return true;
 
@@ -472,14 +474,14 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
       // avoid calling CloseHandle() on our own thread handle
       // during the thread destructor
-      ::ca::thread::m_p->set_os_data(NULL);
+      ::ca2::thread::m_p->set_os_data(NULL);
 
-      LNX_THREAD(::ca::thread::m_p.m_p)->m_bRun = false;
-      //LNX_THREAD(::ca::application_base::m_p->::ca::thread_sp::m_p)->m_bRun = false;
+      LNX_THREAD(::ca2::thread::m_p.m_p)->m_bRun = false;
+      //LNX_THREAD(::ca2::application_base::m_p->::ca2::thread_sp::m_p)->m_bRun = false;
 
-      int32_t iRet = ::ca::application::exit_instance();
+      int32_t iRet = ::ca2::application::exit_instance();
 
-      //::ca::smart_pointer<::ca::application>::destroy();
+      //::ca2::smart_pointer<::ca2::application>::destroy();
 
 
 
@@ -534,7 +536,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
       return ::win::thread::DispatchThreadMessageEx(msg);
    }*/
 
-/*   ::ca::graphics * application::graphics_from_os_data(void * pdata)
+/*   ::ca2::graphics * application::graphics_from_os_data(void * pdata)
    {
       return ::win::graphics::from_handle((HDC) pdata);
    }*/
@@ -580,14 +582,14 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    }
 
-   sp(::ca::window) application::window_from_os_data(void * pdata)
+   sp(::ca2::window) application::window_from_os_data(void * pdata)
    {
       return ::lnx::window::from_handle((oswindow) pdata);
    }
 
-   sp(::ca::window) application::window_from_os_data_permanent(void * pdata)
+   sp(::ca2::window) application::window_from_os_data_permanent(void * pdata)
    {
-      sp(::ca::window) pwnd = ::lnx::window::FromHandlePermanent((oswindow) pdata);
+      sp(::ca2::window) pwnd = ::lnx::window::FromHandlePermanent((oswindow) pdata);
       if(pwnd != NULL)
          return pwnd;
       user::interaction_ptr_array wndptra = System.frames();
@@ -601,15 +603,15 @@ if(__get_module_state()->m_pmapHWND == NULL)
       return NULL;
    }
 
-   ::ca::thread * application::GetThread()
+   ::ca2::thread * application::GetThread()
    {
       if(__get_thread() == NULL)
          return NULL;
       else
-         return dynamic_cast < ::ca::thread * > (__get_thread()->m_p.m_p);
+         return dynamic_cast < ::ca2::thread * > (__get_thread()->m_p.m_p);
    }
 
-   void application::set_thread(::ca::thread * pthread)
+   void application::set_thread(::ca2::thread * pthread)
    {
       __set_thread(pthread);
    }
@@ -665,7 +667,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
          __MODULE_THREAD_STATE* pThreadState = pModuleState->m_thread;
          ENSURE(pThreadState);
 //         ASSERT(System.GetThread() == NULL);
-         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::lnx::thread * > (::ca::thread::m_p.m_p);
+         pThreadState->m_pCurrentWinThread = dynamic_cast < class ::lnx::thread * > (::ca2::thread::m_p.m_p);
   //       ASSERT(System.GetThread() == this);
 
          // initialize application state
@@ -675,19 +677,19 @@ if(__get_module_state()->m_pmapHWND == NULL)
       }
 
 
-//      dynamic_cast < ::lnx::thread * > ((smart_pointer < ::ca::application >::m_p->::ca::thread_sp::m_p))->m_hThread = __get_thread()->m_hThread;
-  //    dynamic_cast < ::lnx::thread * > ((smart_pointer < ::ca::application >::m_p->::ca::thread_sp::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
-      dynamic_cast < class ::lnx::thread * > (::ca::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
+//      dynamic_cast < ::lnx::thread * > ((smart_pointer < ::ca2::application >::m_p->::ca2::thread_sp::m_p))->m_hThread = __get_thread()->m_hThread;
+  //    dynamic_cast < ::lnx::thread * > ((smart_pointer < ::ca2::application >::m_p->::ca2::thread_sp::m_p))->m_nThreadID = __get_thread()->m_nThreadID;
+      dynamic_cast < class ::lnx::thread * > (::ca2::thread::m_p.m_p)->m_hThread      =  ::GetCurrentThread();
 
 
    }
 
-   sp(::ca::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
+   sp(::ca2::window) application::FindWindow(const char * lpszClassName, const char * lpszWindowName)
    {
       return window::FindWindow(lpszClassName, lpszWindowName);
    }
 
-   sp(::ca::window) application::FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow)
+   sp(::ca2::window) application::FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow)
    {
       return window::FindWindowEx(hwndParent, hwndChildAfter, lpszClass, lpszWindow);
    }
@@ -738,12 +740,12 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
 
 
-   bool application::set_main_init_data(::ca::main_init_data * pdata)
+   bool application::set_main_init_data(::ca2::main_init_data * pdata)
    {
 
       m_pmaininitdata = (::lnx::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::ca::application_base::m_p->is_system())
+      if(m_pmaininitdata != NULL && ::ca2::application_base::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;
@@ -774,7 +776,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
          // fill in the initial state for the application
          // Windows specific initialization (not done if no application)
 // xxx         m_hInstance = hInstance;
-// xxx          (dynamic_cast < sp(::ca::application) >(m_papp))->m_hInstance = hInstance;
+// xxx          (dynamic_cast < sp(::ca2::application) >(m_papp))->m_hInstance = hInstance;
          //hPrevInstance; // Obsolete.
          m_strCmdLine = strCmdLine;
          m_nCmdShow = nCmdShow;
@@ -785,21 +787,21 @@ if(__get_module_state()->m_pmapHWND == NULL)
          if (!afxContextIsDLL)
             __init_thread();
 
-         // Initialize ::ca::window::m_pfnNotifyWinEvent
+         // Initialize ::ca2::window::m_pfnNotifyWinEvent
       /*   HMODULE hModule = ::GetModuleHandle("user32.dll");
          if (hModule != NULL)
          {
-            ::ca::window::m_pfnNotifyWinEvent = (::ca::window::PFNNOTIFYWINEVENT)::GetProcAddress(hModule, "NotifyWinEvent");
+            ::ca2::window::m_pfnNotifyWinEvent = (::ca2::window::PFNNOTIFYWINEVENT)::GetProcaddress(hModule, "NotifyWinEvent");
          }*/
 
       return true;
 
    }
 
-   
+
    bool application::update_module_paths()
    {
-   
+
          {
 
             if(!br_init_lib(NULL))
@@ -818,37 +820,38 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
          {
 
-            void * handle = dlopen("libca2.so", RTLD_NOW);
+            void * handle = dlopen("libca.so", RTLD_NOW);
 
             if(handle == NULL)
             {
 
                m_strCa2ModuleFolder = m_strModuleFolder;
 
-               goto finishedCa2ModuleFolder;
-
             }
-
-            link_map * plm;
-
-            dlinfo(handle, RTLD_DI_LINKMAP, &plm);
-
-            m_strCa2ModuleFolder = ::dir::name(plm->l_name);
-
-            if(m_strCa2ModuleFolder.is_empty() || m_strCa2ModuleFolder[0] != '/')
+            else
             {
 
-                m_strCa2ModuleFolder = m_strModuleFolder;
+                link_map * plm;
+
+                dlinfo(handle, RTLD_DI_LINKMAP, &plm);
+
+                m_strCa2ModuleFolder = ::dir::name(plm->l_name);
+
+                if(m_strCa2ModuleFolder.is_empty() || m_strCa2ModuleFolder[0] != '/')
+                {
+
+                    m_strCa2ModuleFolder = m_strModuleFolder;
+
+                }
+
+                dlclose(handle);
 
             }
-
-            dlclose(handle);
-
 
          }
 
 		return true;
-   
+
    }
 
 

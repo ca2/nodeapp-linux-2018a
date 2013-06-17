@@ -1,7 +1,7 @@
 #include "framework.h"
 
-//const UINT UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION = ::RegisterWindowMessageA("UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION-{7C29C80A_5712_40e8_A124_A82E4B2795A7}");
-#define UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION (WM_APP + 123)
+//const UINT UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION = ::RegisterWindowMessageA("UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION-{7C29C80A_5712_40e8_A124_A82E4B2795A7}");
+#define UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION (WM_APP + 123)
 
 namespace lnx
 {
@@ -15,8 +15,8 @@ namespace lnx
    // Construction/Destruction
    //////////////////////////////////////////////////////////////////////
 
-   port_forward::port_forward(sp(::ca::application) papp) :
-      ca(papp)
+   port_forward::port_forward(sp(::ca2::application) papp) :
+      ca2(papp)
    {
 //	   InitializeMembersToNull();
 	//   ::InitializeCriticalSection( &m_cs );
@@ -34,10 +34,10 @@ namespace lnx
    {
 	   m_piNAT			= NULL;
 	   m_piEventManager	= NULL;
-	   m_piExternalIPAddressCallback= NULL;
-	   m_piNumberOfEntriesCallback	= NULL;
+	   m_piExternalIPAddresscallback= NULL;
+	   m_piNumberOfEntriescallback	= NULL;
 
-	   m_pChangeCallbackFunctions	= NULL;
+	   m_pChangecallbackFunctions	= NULL;
 
 	   m_pPortMappingThread = NULL;
 	   m_pDeviceInfoThread = NULL;
@@ -58,17 +58,17 @@ namespace lnx
    void port_forward::DeinitializeCom()
    {
 
-	   if ( m_piExternalIPAddressCallback != NULL )
+	   if ( m_piExternalIPAddresscallback != NULL )
 	   {
-		   m_piExternalIPAddressCallback->Release();
-		   m_piExternalIPAddressCallback = NULL;
+		   m_piExternalIPAddresscallback->Release();
+		   m_piExternalIPAddresscallback = NULL;
 	   }
 
 
-	   if ( m_piNumberOfEntriesCallback != NULL )
+	   if ( m_piNumberOfEntriescallback != NULL )
 	   {
-		   m_piNumberOfEntriesCallback->Release();
-		   m_piNumberOfEntriesCallback = NULL;
+		   m_piNumberOfEntriescallback->Release();
+		   m_piNumberOfEntriescallback = NULL;
 	   }
 
 	   if ( m_piEventManager != NULL )
@@ -86,7 +86,7 @@ namespace lnx
 	   CoUninitialize();  // balancing call for CoInitialize
    }
 
-   HRESULT port_forward::ListenForUpnpChanges(::ca::port_forward_change_callbacks *pCallbacks /* =NULL */ /*)
+   HRESULT port_forward::ListenForUpnpChanges(::ca2::port_forward_change_callbacks *pcallbacks /* =NULL */ /*)
    {
 	   // check if we are already listening
 
@@ -96,13 +96,13 @@ namespace lnx
 	   m_bListeningForUpnpChanges = TRUE;
 
 
-	   if ( pCallbacks==NULL )
+	   if ( pcallbacks==NULL )
 	   {
-		   SetChangeEventCallbackPointer(	new ::ca::port_forward_change_callbacks );
+		   SetChangeEventcallbackPointer(	new ::ca2::port_forward_change_callbacks );
 	   }
 	   else
 	   {
-		   SetChangeEventCallbackPointer( pCallbacks );
+		   SetChangeEventcallbackPointer( pcallbacks );
 	   }
 
 	   // initialize COM for this thread
@@ -134,8 +134,8 @@ namespace lnx
 		   return E_FAIL;
 	   }
 
-	   result = m_piEventManager->put_ExternalIPAddressCallback(
-		   m_piExternalIPAddressCallback = new IDerivedNATExternalIPAddressCallback( m_pChangeCallbackFunctions ) );
+	   result = m_piEventManager->put_ExternalIPAddresscallback(
+		   m_piExternalIPAddresscallback = new IDerivedNATExternalIPAddresscallback( m_pChangecallbackFunctions ) );
 
 	   if ( !SUCCEEDED(result) )
 	   {
@@ -147,8 +147,8 @@ namespace lnx
 		   return E_FAIL;
 	   }
 
-	   result = m_piEventManager->put_NumberOfEntriesCallback(
-		   m_piNumberOfEntriesCallback = new IDerivedNATNumberOfEntriesCallback( m_pChangeCallbackFunctions ) );
+	   result = m_piEventManager->put_NumberOfEntriescallback(
+		   m_piNumberOfEntriescallback = new IDerivedNATNumberOfEntriescallback( m_pChangecallbackFunctions ) );
 
 	   if ( !SUCCEEDED(result) )
 	   {
@@ -180,10 +180,10 @@ namespace lnx
 
 	   DeinitializeCom( );
 
-	   if ( m_pChangeCallbackFunctions != NULL )
+	   if ( m_pChangecallbackFunctions != NULL )
 	   {
-		   delete m_pChangeCallbackFunctions;
-		   m_pChangeCallbackFunctions = NULL;
+		   delete m_pChangecallbackFunctions;
+		   m_pChangecallbackFunctions = NULL;
 	   }
 
 	   return S_OK;
@@ -191,17 +191,17 @@ namespace lnx
 
 
 
-   HRESULT port_forward::SetChangeEventCallbackPointer(::ca::port_forward_change_callbacks *pCallbacks)
+   HRESULT port_forward::SetChangeEventcallbackPointer(::ca2::port_forward_change_callbacks *pcallbacks)
    {
-	   ASSERT( pCallbacks!=NULL );
+	   ASSERT( pcallbacks!=NULL );
 
-	   if ( m_pChangeCallbackFunctions != NULL )
+	   if ( m_pChangecallbackFunctions != NULL )
 	   {
-		   delete m_pChangeCallbackFunctions;
-		   m_pChangeCallbackFunctions = NULL;
+		   delete m_pChangecallbackFunctions;
+		   m_pChangecallbackFunctions = NULL;
 	   }
 
-	   m_pChangeCallbackFunctions = pCallbacks;
+	   m_pChangecallbackFunctions = pcallbacks;
 
 	   return S_OK;
    }
@@ -271,7 +271,7 @@ namespace lnx
    // There are five functions that create threads, and each function takes a oswindow as a
    // parameter.  During execution of the thread, each thread will post messages to this oswindow,
    // so as to notify the HWMND of the thread's progress through the needed COM tasks.  The
-   // message is always the same: a UINT named UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION.
+   // message is always the same: a UINT named UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION.
    // Encodings of the WPARAM and LPARAM within the message will enable the oswindow to determine
    // what's going on inside the thread.  The five functions are:
    //
@@ -314,7 +314,7 @@ namespace lnx
    // choose a different window, such as your CView-derived window for SDI applications
    //
    // The window that you choose must be able to process the message, which is a UINT named
-   // UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION.  For an MFC application, here are the changes
+   // UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION.  For an MFC application, here are the changes
    // you must make to your CWnd class:
    //
    // 1. Declare a handler in your .h file using the following signature, in which
@@ -326,18 +326,18 @@ namespace lnx
    // 2. In your *.cpp file include the following "extern" statement somewhere at the beginning of
    //    the file.  This statement tells the linker that the value of the message is defined elsewhere:
    //
-   //		extern const UINT UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION;  // defined in PortForwadEngine.cpp
+   //		extern const UINT UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION;  // defined in PortForwadEngine.cpp
    //
    // 3. In your .cpp implementation file, add an entry to the message map as follows:
    //
-   //		ON_REGISTERED_MESSAGE( UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, OnMappingThreadNotificationMeesage )
+   //		ON_REGISTERED_MESSAGE( UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, OnMappingThreadNotificationMeesage )
    //
    // 4. Again in your .cpp file, write the body of the OnMappingThreadNotificationMeesage() function.
    //    Typically, you would check the WPARAM parameter to determine the nature of the notification.
    //      WPARAM == port_forward::EnumPortRetrieveInterval is sent at intervals, where
    //        LPARAM goes from 0 to 10.  You can use this to update a progress control (if you want)
    //      WPARAM == port_forward::EnumPortRetrieveDone is sent when the thread is done, where
-   //        LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL).  Call the
+   //        LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL).  call the
    //        GetPortMappingVector() function to get a copy of the current contents of
    //        std::vector< port_forward::port_map > m_MappingContainer
 
@@ -372,7 +372,7 @@ namespace lnx
    //////////////////////////////////////////////
    //
    // The thread created by the EditMappingUsingThread() function uses the same architecture for
-   // message notification as above (ie, it posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION
+   // message notification as above (ie, it posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION
    // message), but with the following WPARAM and LPARAM encodings:
    //  WPARAM == port_forward::EnumEditMappingInterval at intervals, where
    //      LPARAM varies from 0 to 10.  You can use this to update of a progress control (if you want).
@@ -415,7 +415,7 @@ namespace lnx
    //////////////////////////////////////////////
    //
    // The thread created by the AddMappingUsingThread() function uses the same architecture for
-   // message notification as above (ie, it posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION
+   // message notification as above (ie, it posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION
    // message), but with the following WPARAM and LPARAM encodings:
    //  WPARAM == port_forward::EnumAddMappingInterval at intervals, where
    //      LPARAM varies from 0 to 10.  You can use this to update of a progress control (if you want).
@@ -456,7 +456,7 @@ namespace lnx
    //////////////////////////////////////////////
    //
    // The thread created by the DeleteMappingUsingThread() function uses the same architecture for
-   // message notification as above (ie, it posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION
+   // message notification as above (ie, it posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION
    // message), but with the following WPARAM and LPARAM encodings:
    //  WPARAM == port_forward::EnumDeleteMappingInterval at intervals, where
    //      LPARAM varies from 0 to 10.  You can use this to update of a progress control (if you want).
@@ -496,12 +496,12 @@ namespace lnx
    //////////////////////////////////////////////
    //
    // The thread created by the GetDeviceInformationUsingThread() function uses the same architecture for
-   // message notification as above (ie, it posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION
+   // message notification as above (ie, it posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION
    // message), but with the following WPARAM and LPARAM encodings:
    //  WPARAM == port_forward::EnumDeviceInfoInterval at intervals, where
    //      LPARAM varies from 0 to 10.  You can use this to update of a progress control (if you want).
    //  WPARAM == port_forward::EnumDeviceInfoDone when thread is finished, where
-   //      LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL).  Call the
+   //      LPARAM signifies if the thread was or was not successful (S_OK or E_FAIL).  call the
    //      GetDeviceInformationContainer() function to retrieve a copy of the current contents of
    //      port_forward::DeviceInformationContainer m_DeviceInfo
 
@@ -547,7 +547,7 @@ namespace lnx
 	   WPARAM wp = EnumPortRetrieveInterval;
 	   LPARAM lp = 0;
 
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   // initialize COM
 
@@ -573,7 +573,7 @@ namespace lnx
 
 
 	   lp = 1;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   // Get mapping enumerator and reset the list of mappings
 
@@ -590,7 +590,7 @@ namespace lnx
 		   bContinue = FALSE;
 
 	   lp = 2;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   // get count of static mappings
@@ -603,7 +603,7 @@ namespace lnx
 	   if ( cMappings <= 0 ) cMappings = 4;  // arbitrary non-zero value, so we can divide by non-zero value
 
 	   lp = 3;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   HRESULT result = S_OK;
@@ -628,7 +628,7 @@ namespace lnx
 		   }
 
 		   lp = 3 + (10-3)*(++iii)/cMappings;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 	   }
 
 	   // release COM objects and de-initialize COM
@@ -658,7 +658,7 @@ namespace lnx
 
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumPortRetrieveDone;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   pThis->m_pPortMappingThread = NULL;
 	   pThis->m_hWndForPortMappingThread = NULL;
@@ -684,7 +684,7 @@ namespace lnx
 	   WPARAM wp = EnumDeviceInfoInterval;
 	   LPARAM lp = 0;
 
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   // initialize COM
@@ -701,7 +701,7 @@ namespace lnx
 		   bContinue = FALSE;
 
 	   lp = 1;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   // get devices of the desired type, using the PnP schema
@@ -718,7 +718,7 @@ namespace lnx
 
 
 	   lp = 5;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   // now traverse the collection of piFoundDevices
@@ -757,7 +757,7 @@ namespace lnx
 					   // finally, post interval notification message and get all the needed information
 
 					   lp = 6;
-					   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+					   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	               // allocate and fill local devInfo into class member
                   ::EnterCriticalSection( &(pThis->m_cs) );
@@ -793,7 +793,7 @@ namespace lnx
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumDeviceInfoDone;
 
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   pThis->m_pDeviceInfoThread = NULL;
 	   pThis->m_hWndForDeviceInfoThread = NULL;
@@ -820,7 +820,7 @@ namespace lnx
 	   WPARAM wp = EnumEditMappingInterval;
 	   LPARAM lp = 0;
 
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   // initialize COM
 
@@ -843,7 +843,7 @@ namespace lnx
 
 
 	   lp = 1;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   // get the target old mapping from the collection of mappings
@@ -857,7 +857,7 @@ namespace lnx
 
 
 	   lp = 2;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   // update the mapping
@@ -869,19 +869,19 @@ namespace lnx
 
 		   hr |= piStaticPortMapping->Enable( vb );
 		   lp = 4;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
          hr |= piStaticPortMapping->EditDescription( newMapping.Description.AllocSysString() );
 		   lp = 6;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 		   hr |= piStaticPortMapping->EditInternalPort( _ttol(newMapping.InternalPort) );
 		   lp = 8;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
          hr |= piStaticPortMapping->EditInternalClient( newMapping.InternalClient.AllocSysString() );
 		   lp = 10;
-		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+		   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 		   if ( !SUCCEEDED(hr) )
 			   bContinue = FALSE;
@@ -916,7 +916,7 @@ namespace lnx
 
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumEditMappingDone;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   pThis->m_pEditMappingThread = NULL;
 	   pThis->m_hWndForEditMappingThread = NULL;
@@ -941,7 +941,7 @@ namespace lnx
 	   WPARAM wp = EnumDeleteMappingInterval;
 	   LPARAM lp = 0;
 
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   // initialize COM
 
@@ -964,7 +964,7 @@ namespace lnx
 
 
 	   lp = 1;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   // get the target old mapping from the collection of mappings
@@ -975,7 +975,7 @@ namespace lnx
 
 	   oldMapping.Protocol.ReleaseBuffer();
 	   lp = 2;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 
@@ -1001,7 +1001,7 @@ namespace lnx
 
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumDeleteMappingDone;
-	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( hWndForPosting, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   pThis->m_pDeleteMappingThread = NULL;
 	   pThis->m_hWndForDeleteMappingThread = NULL;
@@ -1024,7 +1024,7 @@ namespace lnx
 	   WPARAM wp = EnumAddMappingInterval;
 	   LPARAM lp = 0;
 
-	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   // initialize COM
 
@@ -1047,7 +1047,7 @@ namespace lnx
 
 
 	   lp = 1;
-	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 	   // add the new mapping
@@ -1074,7 +1074,7 @@ namespace lnx
 	   newMapping.Description.ReleaseBuffer();
 
 	   lp = 2;
-	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 
 
@@ -1106,7 +1106,7 @@ namespace lnx
 
 	   lp = (bContinue ? S_OK : E_FAIL);
 	   wp = EnumAddMappingDone;
-	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, lp );
+	   ::PostMessage( pThis->m_hWndForAddMappingThread, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, lp );
 
 	   pThis->m_pAddMappingThread = NULL;
 	   pThis->m_hWndForAddMappingThread = NULL;
@@ -1161,7 +1161,7 @@ namespace lnx
 	   }
 
 	   if( bStr != NULL )
-		   mappingContainer.ExternalIPAddress = string( ::ca::international::unicode_to_utf8(bStr) );
+		   mappingContainer.ExternalIPAddress = string( ::ca2::international::unicode_to_utf8(bStr) );
 
 	   SysFreeString(bStr);
 	   bStr = NULL;
@@ -1206,7 +1206,7 @@ namespace lnx
 	   }
 
 	   if( bStr != NULL )
-		   mappingContainer.Protocol = ::ca::international::unicode_to_utf8(bStr);
+		   mappingContainer.Protocol = ::ca2::international::unicode_to_utf8(bStr);
 
 	   SysFreeString(bStr);
 	   bStr = NULL;
@@ -1223,7 +1223,7 @@ namespace lnx
 	   }
 
 	   if( bStr != NULL )
-		   mappingContainer.InternalClient = ::ca::international::unicode_to_utf8(bStr);
+		   mappingContainer.InternalClient = ::ca2::international::unicode_to_utf8(bStr);
 
 	   SysFreeString(bStr);
 	   bStr = NULL;
@@ -1255,7 +1255,7 @@ namespace lnx
 	   }
 
 	   if( bStr != NULL )
-		   mappingContainer.Description = ::ca::international::unicode_to_utf8( bStr );
+		   mappingContainer.Description = ::ca2::international::unicode_to_utf8( bStr );
 
 	   SysFreeString(bStr);
 	   bStr = NULL;
@@ -1318,7 +1318,7 @@ namespace lnx
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get Description
@@ -1327,18 +1327,18 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.Description = ::ca::international::unicode_to_utf8( bStr );
+		   deviceInfo.Description = ::ca2::international::unicode_to_utf8( bStr );
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
       {
-		   WINBOOL b = ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   WINBOOL b = ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
          if(!b)
          {
             DWORD dw = ::GetLastError();
-            ::MessageBoxA(NULL, ::ca::str::from(dw), ::ca::str::from(dw), 0);
+            ::MessageBoxA(NULL, ::ca2::str::from(dw), ::ca2::str::from(dw), 0);
          }
       }
 
@@ -1349,13 +1349,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.FriendlyName = ::ca::international::unicode_to_utf8(bStr );
+		   deviceInfo.FriendlyName = ::ca2::international::unicode_to_utf8(bStr );
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get HasChildren
@@ -1369,7 +1369,7 @@ namespace lnx
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get IconURL
@@ -1381,7 +1381,7 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.IconURL = ::ca::international::unicode_to_utf8( bStr );
+		   deviceInfo.IconURL = ::ca2::international::unicode_to_utf8( bStr );
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
@@ -1390,7 +1390,7 @@ namespace lnx
 	   bStrMime = NULL;
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get IsRootDevice
@@ -1404,7 +1404,7 @@ namespace lnx
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get ManufacturerName
@@ -1413,13 +1413,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ManufacturerName = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.ManufacturerName = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get ManufacturerURL
@@ -1428,13 +1428,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ManufacturerURL = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.ManufacturerURL = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get ModelName
@@ -1443,13 +1443,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ModelName = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.ModelName = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get ModelNumber
@@ -1458,13 +1458,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ModelNumber = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.ModelNumber = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get ModelURL
@@ -1473,13 +1473,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.ModelURL = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.ModelURL = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get ParentDevice.  Actually, we will only get the FriendlyName of the parent device,
@@ -1499,7 +1499,7 @@ namespace lnx
 		   {
 			   if ( SUCCEEDED( piDev->get_FriendlyName( &bStr ) ) )
 			   {
-				   deviceInfo.ParentDevice = ::ca::international::unicode_to_utf8(bStr);
+				   deviceInfo.ParentDevice = ::ca2::international::unicode_to_utf8(bStr);
 				   SysFreeString(bStr);
 				   bStr = NULL;
 			   }
@@ -1509,7 +1509,7 @@ namespace lnx
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get PresentationURL
@@ -1518,13 +1518,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.PresentationURL = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.PresentationURL = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get RootDevice.  Actually, we will only get the FriendlyName of the root device,
@@ -1542,7 +1542,7 @@ namespace lnx
 		   {
 			   if ( SUCCEEDED( piDev->get_FriendlyName( &bStr ) ) )
 			   {
-				   deviceInfo.RootDevice = ::ca::international::unicode_to_utf8(bStr );
+				   deviceInfo.RootDevice = ::ca2::international::unicode_to_utf8(bStr );
 				   SysFreeString(bStr);
 				   bStr = NULL;
 			   }
@@ -1552,7 +1552,7 @@ namespace lnx
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 
@@ -1562,13 +1562,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.SerialNumber = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.SerialNumber = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get Services.  Actually, we will NOT enumerate through all the services that are contained
@@ -1599,7 +1599,7 @@ namespace lnx
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get Type
@@ -1608,13 +1608,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.Type = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.Type = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get UniqueDeviceName
@@ -1623,13 +1623,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-         deviceInfo.UniqueDeviceName = ::ca::international::unicode_to_utf8(bStr);
+         deviceInfo.UniqueDeviceName = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 
 	   // Get UPC
@@ -1638,13 +1638,13 @@ namespace lnx
 	   hrReturn |= result;
 	   if ( SUCCEEDED(result) )
 	   {
-		   deviceInfo.UPC = ::ca::international::unicode_to_utf8(bStr);
+		   deviceInfo.UPC = ::ca2::international::unicode_to_utf8(bStr);
 		   SysFreeString(bStr);
 		   bStr = NULL;
 	   }
 
 	   if ( hWnd!=NULL )
-		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFICATION, wp, (LPARAM)(lp += addend) );
+		   ::PostMessage( hWnd, UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION, wp, (LPARAM)(lp += addend) );
 
 	   return hrReturn;
    }
@@ -1659,12 +1659,12 @@ namespace lnx
 
 
 
-   HRESULT STDMETHODCALLTYPE port_forward::IDerivedNATNumberOfEntriesCallback::QueryInterface(REFIID iid, void ** ppvObject)
+   HRESULT STDMETHODcaLLTYPE port_forward::IDerivedNATNumberOfEntriescallback::QueryInterface(REFIID iid, void ** ppvObject)
    {
 	   HRESULT hr = S_OK;
 	   *ppvObject = NULL;
 
-	   if ( iid == IID_IUnknown ||	iid == IID_INATNumberOfEntriesCallback )
+	   if ( iid == IID_IUnknown ||	iid == IID_INATNumberOfEntriescallback )
 	   {
 		   *ppvObject = this;
 		   AddRef();
@@ -1679,12 +1679,12 @@ namespace lnx
    }
 
 
-   HRESULT STDMETHODCALLTYPE port_forward::IDerivedNATExternalIPAddressCallback::QueryInterface(REFIID iid, void ** ppvObject)
+   HRESULT STDMETHODcaLLTYPE port_forward::IDerivedNATExternalIPAddresscallback::QueryInterface(REFIID iid, void ** ppvObject)
    {
 	   HRESULT hr = S_OK;
 	   *ppvObject = NULL;
 
-	   if ( iid == IID_IUnknown ||	iid == IID_INATExternalIPAddressCallback )
+	   if ( iid == IID_IUnknown ||	iid == IID_INATExternalIPAddresscallback )
 	   {
 		   *ppvObject = this;
 		   AddRef();

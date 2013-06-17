@@ -122,9 +122,9 @@
 	#define PASCAL  __stdcall
 #endif
 
-// FASTCALL is used for static member functions with little or no params
-#ifndef FASTCALL
-	#define FASTCALL __fastcall
+// FASTcaLL is used for static member functions with little or no params
+#ifndef FASTcaLL
+	#define FASTcaLL __fastcall
 #endif
 
 // CDECL and EXPORT are defined in case WINDOWS.H doesn't
@@ -136,7 +136,7 @@
 	#define EXPORT
 #endif
 
-// UNALIGNED is used for unaligned data access (in CArchive mostly)
+// UNALIGNED is used for unaligned data access (in carchive mostly)
 #if !defined(UNALIGNED)
 #if defined(_M_IA64) || defined(_M_AMD64)
 #define UNALIGNED __unaligned
@@ -145,23 +145,23 @@
 #endif
 #endif
 
-// __DEPRECATED is used for functions that should no longer be used
-#ifndef __DEPRECATED
-#ifdef _AFX_DISABLE_DEPRECATED
-	#define __DEPRECATED(_Message)
+// __DEPREcaTED is used for functions that should no longer be used
+#ifndef __DEPREcaTED
+#ifdef _AFX_DISABLE_DEPREcaTED
+	#define __DEPREcaTED(_Message)
 #else
-	#define __DEPRECATED(_Message) __declspec(deprecated(_Message))
+	#define __DEPREcaTED(_Message) __declspec(deprecated(_Message))
 #endif
 #endif
 
-// _AFX_INSECURE_DEPRECATE is used for deprecated, insecure functions.
-#ifndef _AFX_INSECURE_DEPRECATE
-#ifdef _AFX_SECURE_NO_DEPRECATE
-#define _AFX_INSECURE_DEPRECATE(_Message)
+// _AFX_INSECURE_DEPREcaTE is used for deprecated, insecure functions.
+#ifndef _AFX_INSECURE_DEPREcaTE
+#ifdef _AFX_SECURE_NO_DEPREcaTE
+#define _AFX_INSECURE_DEPREcaTE(_Message)
 #else
-#define _AFX_INSECURE_DEPRECATE(_Message) __declspec(deprecated(_Message))
-#endif // _AFX_SECURE_NO_DEPRECATE
-#endif // _AFX_INSECURE_DEPRECATE
+#define _AFX_INSECURE_DEPREcaTE(_Message) __declspec(deprecated(_Message))
+#endif // _AFX_SECURE_NO_DEPREcaTE
+#endif // _AFX_INSECURE_DEPREcaTE
 
 // _API is used on global public functions
 #ifndef _API
@@ -233,11 +233,11 @@
 // The following macros are used on data declarations/definitions
 //  (they are redefined for extension DLLs and the shared MFC DLL)
 #define __DATADEF
-#define __API CLASS_DECL_ca2
+#define __API CLASS_DECL_ca
 
 // used when building the "core" MFC80.DLL
 #ifndef __CORE_DATA
-	#define __CORE_DATA CLASS_DECL_ca2
+	#define __CORE_DATA CLASS_DECL_ca
 	#define __CORE_DATADEF
 #endif
 
@@ -300,7 +300,7 @@
 #ifdef _AFX_DEVBUILD
 	#define __IMPL_DATA __DATA_EXPORT
 #else
-	#define __IMPL_DATA CLASS_DECL_ca2
+	#define __IMPL_DATA CLASS_DECL_ca
 #endif
 
 

@@ -2,11 +2,11 @@
 
 WINBOOL AfxInternalPreTranslateMessage(MESSAGE* pMsg);
 
-namespace ca
+namespace ca2
 {
    struct  thread_startup
    {
-      ::ca::thread *          m_pthread;    // thread for new thread
+      ::ca2::thread *          m_pthread;    // thread for new thread
       simple_event hEvent;          // event triggered after success/non-success
       simple_event hEvent2;         // event triggered after thread is resumed
 
@@ -14,14 +14,14 @@ namespace ca
       ~thread_startup();
    };
 
-} // namespace ca
+} // namespace ca2
 
 namespace lnx
 {
 
    class CLASS_DECL_lnx thread :
-      virtual public ::ca::thread,
-      virtual public ::ca::message_window_simple_callback
+      virtual public ::ca2::thread,
+      virtual public ::ca2::message_window_simple_callback
    {
    public:
 
@@ -73,12 +73,12 @@ namespace lnx
       UINT                                m_nDisablePumpCount;
       mutex                               m_mutexUiPtra;
 
-      ::ca::thread *                      m_pAppThread;
+      ::ca2::thread *                      m_pAppThread;
 
       UINT                                m_dwFinishTimeout;
 
 
-      thread(sp(::ca::application) papp);
+      thread(sp(::ca2::application) papp);
       virtual ~thread();
 
 
@@ -102,16 +102,16 @@ namespace lnx
       void set_os_data(void * pvoidOsData);
       void set_os_int(int_ptr iData);
 
-      virtual void set_p(::ca::thread * p);
+      virtual void set_p(::ca2::thread * p);
 
 
-      virtual bool begin(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool begin(::ca2::e_thread_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      virtual bool create_thread(::ca::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlagsParam = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool create_thread(::ca2::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlagsParam = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
       virtual sp(::user::interaction) SetMainWnd(sp(::user::interaction) pui);
 
-      virtual int32_t thread_entry(::ca::thread_startup * pstartup);
+      virtual int32_t thread_entry(::ca2::thread_startup * pstartup);
       virtual int32_t main();
       virtual int32_t thread_term(int32_t nResult);
 
@@ -126,7 +126,7 @@ namespace lnx
       virtual void set_run(bool bRun = true);
       virtual event & get_finish_event();
       virtual bool get_run();
-      virtual ::ca::thread * get_app_thread();
+      virtual ::ca2::thread * get_app_thread();
       virtual sp(::user::interaction) get_active_ui();
       virtual sp(::user::interaction) set_active_ui(sp(::user::interaction) pui);
       virtual void step_timer();
@@ -135,10 +135,10 @@ namespace lnx
       virtual void defer_process_windows_messages();
 
 
-      virtual void on_delete(::ca::ca * poc);
+      virtual void on_delete(::ca2::ca2 * poc);
 
       int32_t GetThreadPriority();
-      bool set_thread_priority(::ca::e_thread_priority nPriority);
+      bool set_thread_priority(::ca2::e_thread_priority nPriority);
 
    // Operations
       DWORD SuspendThread();
@@ -150,32 +150,32 @@ namespace lnx
 
       // called when occurs an se_exception exception in run
       // return true to call run again
-      virtual bool on_run_exception(::ca::exception & e);
+      virtual bool on_run_exception(::ca2::exception & e);
       virtual int32_t get_x_window_count() const;
 
    // Overridables
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::ca::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual ::ca2::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(::ca::signal_object * pobj);
+      virtual void pre_translate_message(::ca2::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
-      virtual bool is_idle_message(::ca::signal_object * pobj);  // checks for special messages
+      virtual bool is_idle_message(::ca2::signal_object * pobj);  // checks for special messages
       virtual WINBOOL is_idle_message(LPMESSAGE lpmsg);  // checks for special messages
-      virtual void message_handler(::ca::signal_object * pobj);
+      virtual void message_handler(::ca2::signal_object * pobj);
 
       // thread termination
       virtual int32_t exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
-      virtual void ProcessWndProcException(base_exception * e, ::ca::signal_object * pMsg);
+      virtual void ProcessWndProcException(base_exception * e, ::ca2::signal_object * pMsg);
 
       // Advanced: handling messages sent to message filter hook
-      virtual void ProcessMessageFilter(int32_t code, ::ca::signal_object * pobj);
+      virtual void ProcessMessageFilter(int32_t code, ::ca2::signal_object * pobj);
 
       // Advanced: virtual access to GetMainWnd()
       virtual sp(::user::interaction) GetMainWnd();
@@ -184,8 +184,8 @@ namespace lnx
 
 
 
-      virtual void DispatchThreadMessageEx(::ca::signal_object * pobj);  // helper
-      virtual void message_window_message_handler(::ca::signal_object * pobj);
+      virtual void DispatchThreadMessageEx(::ca2::signal_object * pobj);  // helper
+      virtual void message_window_message_handler(::ca2::signal_object * pobj);
 
       virtual void delete_temp();
 
@@ -196,7 +196,7 @@ namespace lnx
       operator pthread_t() const;
    };
 
-   CLASS_DECL_lnx ::ca::thread * get_thread();
+   CLASS_DECL_lnx ::ca2::thread * get_thread();
 
 } // namespace lnx
 

@@ -19,15 +19,15 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
       if(_CrtReportBlockType(pvData) != ___CLIENT_BLOCK)
          return;
 
-//      ::ca::object * pca = (::ca::object * ) pvData;
+//      ::ca2::object * pca = (::ca2::object * ) pvData;
 
-      ::ca::object * pobject = NULL;
+      ::ca2::object * pobject = NULL;
 
       /*for(int32_t i = 0; i < 256; i++)
       {
          try
          {
-            pobject = dynamic_cast < ::ca::object * > ((::ca::object *)&((int_ptr *)pca)[i]);
+            pobject = dynamic_cast < ::ca2::object * > ((::ca2::object *)&((int_ptr *)pca)[i]);
          }
          catch(std::__non_rtti_object & e)
          {
@@ -53,7 +53,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
       }
       if(false) // else
       {
-         ::ca::object & obj = *pobject;
+         ::ca2::object & obj = *pobject;
          // short form
 // xxx         C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "a %hs object at $%p, %u bytes long\n", typeid(obj).name(), pvData, nBytes));
          g_dumpcontext << sz;
@@ -61,7 +61,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
    }
 /* xxx   catch(std::__non_rtti_object & e)
    {
-      g_dumpcontext << "_::ca::CrtdumpClient __non_rtti_object ";
+      g_dumpcontext << "_::ca2::CrtdumpClient __non_rtti_object ";
       g_dumpcontext << e.what();
    } */
    catch(...)
@@ -82,11 +82,11 @@ int32_t __cdecl __crt_report_hook(int32_t nRptType, char *szMsg, int32_t* pResul
 
    ASSERT( pResult != NULL );
    if( pResult == NULL )
-      throw invalid_argument_exception(::ca::get_thread_app());
+      throw invalid_argument_exception(::ca2::get_thread_app());
 
    ASSERT( szMsg != NULL );
    if( szMsg == NULL )
-      throw invalid_argument_exception(::ca::get_thread_app());
+      throw invalid_argument_exception(::ca2::get_thread_app());
 
    // non-NULL m_pFile, so go through g_dumpcontext for the message
    *pResult = FALSE;
@@ -140,7 +140,7 @@ ___DEBUG_STATE::~___DEBUG_STATE()
 #endif // ___NO_DEBUG_CRT
 }
 
-PROCESS_LOCAL(___DEBUG_STATE, afxDebugState)
+PROCESS_LOcaL(___DEBUG_STATE, afxDebugState)
 
 bool CLASS_DECL_lnx __diagnostic_init()
 {

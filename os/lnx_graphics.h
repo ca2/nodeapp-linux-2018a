@@ -9,13 +9,13 @@ namespace lnx
    class font;
 
    class CLASS_DECL_lnx graphics :
-      virtual public ::ca::graphics
+      virtual public ::ca2::graphics
    {
-      // // DECLARE_DYNCREATE(::ca::graphics_sp)
+      // // DECLARE_DYNCREATE(::ca2::graphics_sp)
    public:
 
 
-      cairo_t *               m_pdc; // Cairo drawing context
+      cairo_t *               m_pdc; // cairo drawing context
       int32_t                     m_iType;
       //bool                    m_bForeColor;
       //bool                    m_bBackColor;
@@ -33,7 +33,7 @@ namespace lnx
 
 
       graphics();
-      graphics(sp(::ca::application) papp);
+      graphics(sp(::ca2::application) papp);
       virtual ~graphics();
 
 
@@ -46,9 +46,9 @@ namespace lnx
          return *m_pgraphics;
       }*/
 
-      //::ca::window * GetWindow() const;
+      //::ca2::window * GetWindow() const;
 
-      //static ::ca::graphics * PASCAL from_handle(HDC hDC);
+      //static ::ca2::graphics * PASCAL from_handle(HDC hDC);
       //static void PASCAL DeleteTempMap();
       //bool Attach(HDC hdc);   // Attach/Detach affects only the Output DC
       //HDC Detach();
@@ -63,11 +63,11 @@ namespace lnx
 
       bool IsPrinting() const;            // TRUE if being used for printing
 
-      ::ca::pen & GetCurrentPen() const;
-      ::ca::brush & GetCurrentBrush() const;
-      ::ca::palette & GetCurrentPalette() const;
-      ::ca::font & GetCurrentFont() const;
-      ::ca::bitmap & GetCurrentBitmap() const;
+      ::ca2::pen & GetCurrentPen() const;
+      ::ca2::brush & GetCurrentBrush() const;
+      ::ca2::palette & GetCurrentPalette() const;
+      ::ca2::font & GetCurrentFont() const;
+      ::ca2::bitmap & GetCurrentBitmap() const;
 
 
       //pen *       lnx_pen();
@@ -84,14 +84,14 @@ namespace lnx
    // Constructors
       bool CreateDC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData);
       bool CreateIC(const char * lpszDriverName, const char * lpszDeviceName, const char * lpszOutput, const void * lpInitData);
-      bool CreateCompatibleDC(::ca::graphics * pgraphics);
+      bool CreateCompatibleDC(::ca2::graphics * pgraphics);
 
       bool DeleteDC();
 
    // Device-Context Functions
       virtual int32_t SaveDC();
       virtual bool RestoreDC(int32_t nSavedDC);
-      int32_t GetDeviceCaps(int32_t nIndex) const;
+      int32_t GetDevicecaps(int32_t nIndex) const;
       UINT SetBoundsRect(LPCRECT lpRectBounds, UINT flags);
       UINT GetBoundsRect(LPRECT lpRectBounds, UINT flags);
 // xxx      bool ResetDC(const DEVMODE* lpDevMode);
@@ -105,18 +105,18 @@ namespace lnx
 
    // Type-safe selection helpers
    public:
-      virtual ::ca::graphics_object* SelectStockObject(int32_t nIndex);
-      ::ca::pen* SelectObject(::ca::pen* pPen);
-      ::ca::brush* SelectObject(::ca::brush* pBrush);
-      virtual ::ca::font* SelectObject(::ca::font* pFont);
-      ::ca::bitmap* SelectObject(::ca::bitmap* pBitmap);
-      int32_t SelectObject(::ca::region* pRgn);       // special return for regions
-      ::ca::graphics_object* SelectObject(::ca::graphics_object* pObject);
-         // ::ca::graphics_object* provided so compiler doesn't use SelectObject(HGDIOBJ)
+      virtual ::ca2::graphics_object* SelectStockObject(int32_t nIndex);
+      ::ca2::pen* SelectObject(::ca2::pen* pPen);
+      ::ca2::brush* SelectObject(::ca2::brush* pBrush);
+      virtual ::ca2::font* SelectObject(::ca2::font* pFont);
+      ::ca2::bitmap* SelectObject(::ca2::bitmap* pBitmap);
+      int32_t SelectObject(::ca2::region* pRgn);       // special return for regions
+      ::ca2::graphics_object* SelectObject(::ca2::graphics_object* pObject);
+         // ::ca2::graphics_object* provided so compiler doesn't use SelectObject(HGDIOBJ)
 
    // color and color Palette Functions
       COLORREF GetNearestColor(COLORREF crColor) const;
-      ::ca::palette* SelectPalette(::ca::palette* pPalette, bool bForceBackground);
+      ::ca2::palette* SelectPalette(::ca2::palette* pPalette, bool bForceBackground);
       UINT RealizePalette();
       void UpdateColors();
 
@@ -199,25 +199,25 @@ namespace lnx
       void HIMETRICtoLP(LPSIZE lpSize) const;
 
    // Region Functions
-      bool FillRgn(::ca::region* pRgn, ::ca::brush* pBrush);
-      bool FrameRgn(::ca::region* pRgn, ::ca::brush* pBrush, int32_t nWidth, int32_t nHeight);
-      bool InvertRgn(::ca::region* pRgn);
-      bool PaintRgn(::ca::region* pRgn);
+      bool FillRgn(::ca2::region* pRgn, ::ca2::brush* pBrush);
+      bool FrameRgn(::ca2::region* pRgn, ::ca2::brush* pBrush, int32_t nWidth, int32_t nHeight);
+      bool InvertRgn(::ca2::region* pRgn);
+      bool PaintRgn(::ca2::region* pRgn);
 
    // Clipping Functions
       virtual int32_t GetClipBox(LPRECT lpRect) const;
       virtual bool PtVisible(int32_t x, int32_t y) const;
             bool PtVisible(POINT point) const;
       virtual bool RectVisible(LPCRECT lpRect) const;
-            int32_t SelectClipRgn(::ca::region* pRgn);
+            int32_t SelectClipRgn(::ca2::region* pRgn);
             int32_t ExcludeClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
             int32_t ExcludeClipRect(LPCRECT lpRect);
-            int32_t ExcludeUpdateRgn(::ca::window * pWnd);
+            int32_t ExcludeUpdateRgn(::ca2::window * pWnd);
             int32_t IntersectClipRect(int32_t x1, int32_t y1, int32_t x2, int32_t y2);
             int32_t IntersectClipRect(LPCRECT lpRect);
             int32_t OffsetClipRgn(int32_t x, int32_t y);
             int32_t OffsetClipRgn(SIZE size);
-      int32_t SelectClipRgn(::ca::region* pRgn, int32_t nMode);
+      int32_t SelectClipRgn(::ca2::region* pRgn, int32_t nMode);
 
    // Line-Output Functions
       point GetCurrentPosition() const;
@@ -245,28 +245,28 @@ namespace lnx
       bool PolyBezierTo(const POINT* lpPoints, int32_t nCount);
 
    // Simple Drawing Functions
-      void FillRect(LPCRECT lpRect, ::ca::brush* pBrush);
-      void FrameRect(LPCRECT lpRect, ::ca::brush* pBrush);
+      void FillRect(LPCRECT lpRect, ::ca2::brush* pBrush);
+      void FrameRect(LPCRECT lpRect, ::ca2::brush* pBrush);
       void InvertRect(LPCRECT lpRect);
       bool DrawIcon(int32_t x, int32_t y, ::visual::icon * picon);
       bool DrawIcon(POINT point, ::visual::icon * picon);
       bool DrawIcon(int32_t x, int32_t y, ::visual::icon * picon, int32_t cx, int32_t cy, UINT istepIfAniCur, HBRUSH hbrFlickerFreeDraw, UINT diFlags);
       bool DrawState(point pt, size size, HBITMAP hBitmap, UINT nFlags,
          HBRUSH hBrush = NULL);
-      bool DrawState(point pt, size size, ::ca::bitmap* pBitmap, UINT nFlags,
-         ::ca::brush* pBrush = NULL);
+      bool DrawState(point pt, size size, ::ca2::bitmap* pBitmap, UINT nFlags,
+         ::ca2::brush* pBrush = NULL);
       bool DrawState(point pt, size size, HICON hIcon, UINT nFlags,
          HBRUSH hBrush = NULL);
       bool DrawState(point pt, size size, HICON hIcon, UINT nFlags,
-         ::ca::brush* pBrush = NULL);
+         ::ca2::brush* pBrush = NULL);
       bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
          bool bPrefixText = TRUE, int32_t nTextLen = 0, HBRUSH hBrush = NULL);
       bool DrawState(point pt, size size, const char * lpszText, UINT nFlags,
-         bool bPrefixText = TRUE, int32_t nTextLen = 0, ::ca::brush* pBrush = NULL);
+         bool bPrefixText = TRUE, int32_t nTextLen = 0, ::ca2::brush* pBrush = NULL);
 //xxx      bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
 //xxx         LPARAM lData, UINT nFlags, HBRUSH hBrush = NULL);
 //xxx      bool DrawState(point pt, size size, DRAWSTATEPROC lpDrawProc,
-//xxx         LPARAM lData, UINT nFlags, ::ca::brush* pBrush = NULL);
+//xxx         LPARAM lData, UINT nFlags, ::ca2::brush* pBrush = NULL);
 
    // Ellipse and Polygon Functions
       bool Chord(int32_t x1, int32_t y1, int32_t x2, int32_t y2, int32_t x3, int32_t y3,
@@ -294,9 +294,9 @@ namespace lnx
 
    // Bitmap Functions
       bool PatBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, DWORD dwRop);
-      bool BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc,
+      bool BitBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca2::graphics * pgraphicsSrc,
          int32_t xSrc, int32_t ySrc, DWORD dwRop);
-      bool StretchBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc,
+      bool StretchBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca2::graphics * pgraphicsSrc,
          int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, DWORD dwRop);
       COLORREF GetPixel(int32_t x, int32_t y) const;
       COLORREF GetPixel(POINT point) const;
@@ -304,23 +304,23 @@ namespace lnx
       COLORREF SetPixel(POINT point, COLORREF crColor);
       bool FloodFill(int32_t x, int32_t y, COLORREF crColor);
       bool ExtFloodFill(int32_t x, int32_t y, COLORREF crColor, UINT nFillType);
-      bool MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca::graphics * pgraphicsSrc,
-         int32_t xSrc, int32_t ySrc, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask,
+      bool MaskBlt(int32_t x, int32_t y, int32_t nWidth, int32_t nHeight, ::ca2::graphics * pgraphicsSrc,
+         int32_t xSrc, int32_t ySrc, ::ca2::bitmap& maskBitmap, int32_t xMask, int32_t yMask,
          DWORD dwRop);
-      bool PlgBlt(LPPOINT lpPoint, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
-         int32_t nWidth, int32_t nHeight, ::ca::bitmap& maskBitmap, int32_t xMask, int32_t yMask);
+      bool PlgBlt(LPPOINT lpPoint, ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc,
+         int32_t nWidth, int32_t nHeight, ::ca2::bitmap& maskBitmap, int32_t xMask, int32_t yMask);
       bool SetPixelV(int32_t x, int32_t y, COLORREF crColor);
       bool SetPixelV(POINT point, COLORREF crColor);
       bool GradientFill(TRIVERTEX* pVertices, ULONG nVertices,
         void * pMesh, ULONG nMeshElements, DWORD dwMode);
       bool TransparentBlt(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
-        ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
+        ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
         UINT clrTransparent);
 
-      virtual bool alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dOpacity);
+      virtual bool alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight, ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight, double dOpacity);
 
       /*bool alpha_blend(int32_t xDest, int32_t yDest, int32_t nDestWidth, int32_t nDestHeight,
-        ::ca::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
+        ::ca2::graphics * pgraphicsSrc, int32_t xSrc, int32_t ySrc, int32_t nSrcWidth, int32_t nSrcHeight,
         BLENDFUNCTION blend);*/
 
    // Text Functions
@@ -355,7 +355,7 @@ namespace lnx
       size GetTabbedTextExtent(const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions) const;
       size GetOutputTabbedTextExtent(const char * lpszString, strsize nCount, int32_t nTabPositions, LPINT lpnTabStopPositions) const;
       size GetOutputTabbedTextExtent(const string & str, int32_t nTabPositions, LPINT lpnTabStopPositions) const;
-      virtual bool GrayString(::ca::brush* pBrush,
+      virtual bool GrayString(::ca2::brush* pBrush,
          bool (CALLBACK* lpfnOutput)(HDC, LPARAM, int32_t), LPARAM lpData,
             int32_t nCount, int32_t x, int32_t y, int32_t nWidth, int32_t nHeight);
       UINT GetTextAlign() const;
@@ -386,7 +386,7 @@ namespace lnx
 
    // Scrolling Functions
       bool ScrollDC(int32_t dx, int32_t dy, LPCRECT lpRectScroll, LPCRECT lpRectClip,
-         ::ca::region* pRgnUpdate, LPRECT lpRectUpdate);
+         ::ca2::region* pRgnUpdate, LPRECT lpRectUpdate);
 
    // font Functions
       bool GetCharWidth(UINT nFirstChar, UINT nLastChar, LPINT lpBuffer) const;
@@ -446,8 +446,8 @@ namespace lnx
       bool StrokePath();
       bool WidenPath();
 
-      bool draw_path(::ca::graphics_path * ppath);
-      bool fill_path(::ca::graphics_path * ppath);
+      bool draw_path(::ca2::graphics_path * ppath);
+      bool fill_path(::ca2::graphics_path * ppath);
 
 
       float GetMiterLimit() const;
@@ -456,10 +456,10 @@ namespace lnx
       bool SelectClipPath(int32_t nMode);
 
    // Misc Helper Functions
-      static ::ca::brush* PASCAL GetHalftoneBrush(sp(::ca::application) papp);
+      static ::ca2::brush* PASCAL GetHalftoneBrush(sp(::ca2::application) papp);
       void DrawDragRect(LPCRECT lpRect, SIZE size,
          LPCRECT lpRectLast, SIZE sizeLast,
-         ::ca::brush* pBrush = NULL, ::ca::brush* pBrushLast = NULL);
+         ::ca2::brush* pBrush = NULL, ::ca2::brush* pBrushLast = NULL);
       void FillSolidRect(const __rect64 * lpRect, COLORREF clr);
       void FillSolidRect(LPCRECT lpRect, COLORREF clr);
       void FillSolidRect(int32_t x, int32_t y, int32_t cx, int32_t cy, COLORREF clr);
@@ -477,9 +477,9 @@ namespace lnx
 
 //      HGDIOBJ SelectObject(HGDIOBJ);      // do not use for regions
 
-      virtual void set_alpha_mode(::ca::e_alpha_mode ealphamode);
+      virtual void set_alpha_mode(::ca2::e_alpha_mode ealphamode);
 
-      virtual void set_text_rendering(::ca::e_text_rendering etextrendering);
+      virtual void set_text_rendering(::ca2::e_text_rendering etextrendering);
 
       virtual void * get_os_data() const;
 //      virtual HDC get_handle() const;
@@ -495,22 +495,22 @@ namespace lnx
 
    //protected:
       // used for implementation of non-virtual SelectObject calls
-      //static ::ca::graphics_object* PASCAL SelectGdiObject(sp(::ca::application) papp, HDC hDC, HGDIOBJ h);
+      //static ::ca2::graphics_object* PASCAL SelectGdiObject(sp(::ca2::application) papp, HDC hDC, HGDIOBJ h);
 
 
       // platform-specific or platform-internals
       bool set_os_color(COLORREF cr);
-      bool set(const ::ca::brush * pbrush);
-      bool set(const ::ca::pen * ppen);
-      bool set(const ::ca::font * pfont);
-      bool set(const ::ca::graphics_path * ppath);
+      bool set(const ::ca2::brush * pbrush);
+      bool set(const ::ca2::pen * ppen);
+      bool set(const ::ca2::font * pfont);
+      bool set(const ::ca2::graphics_path * ppath);
       bool set(const ::lnx::graphics_path::element & e);
       bool set(const ::lnx::graphics_path::arc & arc);
       bool set(const ::lnx::graphics_path::move & move);
       bool set(const ::lnx::graphics_path::line & line);
-      bool fill_and_draw(::ca::brush * pbrush, ::ca::pen * ppen);
-      bool fill(::ca::brush * pbrush);
-      bool draw(::ca::pen * ppen);
+      bool fill_and_draw(::ca2::brush * pbrush, ::ca2::pen * ppen);
+      bool fill(::ca2::brush * pbrush);
+      bool draw(::ca2::pen * ppen);
       bool fill_and_draw();
       bool fill();
       bool draw();

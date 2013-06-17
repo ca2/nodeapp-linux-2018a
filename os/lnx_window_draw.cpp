@@ -26,10 +26,10 @@ namespace lnx
 {
 
 
-   window_draw::window_draw(sp(::ca::application) papp) :
-      ca(papp),
-      ::ca::thread(papp),
-      ::ca::window_draw(papp),
+   window_draw::window_draw(sp(::ca2::application) papp) :
+      ca2(papp),
+      ::ca2::thread(papp),
+      ::ca2::window_draw(papp),
       message_window_simple_callback(papp),
       m_mutexRendering(papp),
       m_mutexRgnUpdate(papp),
@@ -45,7 +45,7 @@ namespace lnx
       m_iFramesPerSecond = 20;
    }
 
-   extern void _001DeferPaintLayeredWindowBackground(void * hwnd, ::ca::graphics * pdc);
+   extern void _001DeferPaintLayeredWindowBackground(void * hwnd, ::ca2::graphics * pdc);
    window_draw::~window_draw()
    {
 
@@ -63,9 +63,9 @@ namespace lnx
    }
    */
 
-   void window_draw::message_window_message_handler(::ca::signal_object * pobj)
+   void window_draw::message_window_message_handler(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca::message::base, pbase, pobj);
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
       if(pbase->m_uiMessage == (WM_USER + 1984 + 1977))
       {
          _synch_redraw();
@@ -163,29 +163,29 @@ namespace lnx
                TRACE("window_draw::_synch_redraw :: during prodevian Performance Analysis Time Frame - %d milliseconds -,", iTimeFrame);
                TRACE("window_draw::_synch_redraw :: failure count has exceeded the maximum count - %d", iMaxFailureCount);
                TRACE("window_draw::_synch_redraw :: Going to try to save some resource that may favor drawing perfomance");
-               if(!System.savings().is_trying_to_save(::ca::resource_blur_background))
+               if(!System.savings().is_trying_to_save(::ca2::resource_blur_background))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"blur background\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"blur background\" resource");
-                  System.savings().try_to_save(::ca::resource_blur_background);
+                  System.savings().try_to_save(::ca2::resource_blur_background);
                }
-               else if(!System.savings().is_trying_to_save(::ca::resource_blurred_text_embossing))
+               else if(!System.savings().is_trying_to_save(::ca2::resource_blurred_text_embossing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"blurred text embossing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"blurred text embossing\" resource");
-                  System.savings().try_to_save(::ca::resource_blurred_text_embossing);
+                  System.savings().try_to_save(::ca2::resource_blurred_text_embossing);
                }
-               else if(!System.savings().is_warning(::ca::resource_processing))
+               else if(!System.savings().is_warning(::ca2::resource_processing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not warning to save \"processing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to warn to save \"processing\" resource");
-                  System.savings().warn(::ca::resource_processing);
+                  System.savings().warn(::ca2::resource_processing);
                }
-               else if(!System.savings().is_trying_to_save(::ca::resource_processing))
+               else if(!System.savings().is_trying_to_save(::ca2::resource_processing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"processing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"processing\" resource");
-                  System.savings().try_to_save(::ca::resource_blur_background);
+                  System.savings().try_to_save(::ca2::resource_blur_background);
                }
             }
             s_iFrameFailureCount = 0;
@@ -195,7 +195,7 @@ namespace lnx
    }
 
    bool window_draw::to(
-      ::ca::graphics *          pdc,
+      ::ca2::graphics *          pdc,
       LPCRECT        lpcrectUpdate,
       user::oswindow_tree::Array & hwndtreea,
       bool           bGdiLocked,
@@ -224,7 +224,7 @@ namespace lnx
    }
 
    bool window_draw::to(
-      ::ca::graphics *          pdc,
+      ::ca2::graphics *          pdc,
       LPCRECT        lpcrectUpdate,
       user::oswindow_tree & hwndtree,
       bool           bGdiLocked,
@@ -292,7 +292,7 @@ namespace lnx
          else
          {
             bool bWin4 = FALSE;
-         //_::ca::FillPSOnStack();
+         //_::ca2::FillPSOnStack();
 /*            ::DefWindowProc(
                (oswindow) hwndParam,
                (bWin4 ? WM_PRINT : WM_PAINT),
@@ -329,12 +329,12 @@ namespace lnx
          TRACE("Could not initialize ca2::twf - ca2 Transparent Window Framework!");
          return 0;
       }
-//      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca::thread_sp::m_p)->m_nThreadID, TRUE);
+//      ::AttachThreadInput(::GetCurrentThreadId(), WIN_THREAD(System.::ca2::thread_sp::m_p)->m_nThreadID, TRUE);
       MESSAGE msg;
       s_bRunning = true;
       m_bRun = true;
-      ::ca::get_thread()->m_bRun = true;
-      while(m_bRun && ::ca::get_thread()->get_run())
+      ::ca2::get_thread()->m_bRun = true;
+      while(m_bRun && ::ca2::get_thread()->get_run())
       {
 #ifndef DEBUG
          try
@@ -353,7 +353,7 @@ namespace lnx
          {
          }
 #endif
-//         while(::PeekMessage(&msg, ::ca::null(), NULL, NULL, PM_NOREMOVE))
+//         while(::PeekMessage(&msg, ::ca2::null(), NULL, NULL, PM_NOREMOVE))
          while(::PeekMessage(&msg, NULL, 0, 0, 0))
          {
             __get_thread()->pump_message();
@@ -418,7 +418,7 @@ namespace lnx
       if(m_pbuffer->GetBuffer()->get_os_data() == NULL)
          return true;
 
-      ::ca::graphics * pdc = (dynamic_cast < ::lnx::graphics * > (m_pbuffer->GetBuffer()));
+      ::ca2::graphics * pdc = (dynamic_cast < ::lnx::graphics * > (m_pbuffer->GetBuffer()));
 
       if(pdc == NULL)
       {
@@ -457,14 +457,14 @@ namespace lnx
 
       m_wndpaOut.remove_all();
 
-//      ::ca::region_sp rgnWindow(get_app());
-  //    ::ca::region_sp rgnIntersect(get_app());
+//      ::ca2::region_sp rgnWindow(get_app());
+  //    ::ca2::region_sp rgnIntersect(get_app());
 
 //      rgnWindow->create_rect(0, 0, 0, 0);
   //    rgnIntersect->create_rect(0, 0, 0, 0);
 
       /*rect rectIntersect;
-      ::ca::region_sp rgnUpdate(get_app());
+      ::ca2::region_sp rgnUpdate(get_app());
       rgnUpdate->create_rect(rectUpdate);
       void * hwndOrder = ::GetWindow(::GetDesktopWindow(), GW_CHILD);
       for(;;)
@@ -498,7 +498,7 @@ namespace lnx
             {
                if(!bLayered)
                {
-                  rgnUpdate->CombineRgn(rgnUpdate, rgnWindow, ::ca::region::combine_exclude);
+                  rgnUpdate->CombineRgn(rgnUpdate, rgnWindow, ::ca2::region::combine_exclude);
                }
                rect rectDiffBox;
                rgnUpdate->GetRgnBox(rectDiffBox);
@@ -519,7 +519,7 @@ namespace lnx
          {
             if(wndpa[l].oprop("session").is_new())
             {
-               wndpa[l].m_pimpl.cast < ::ca::window >()->_001UpdateWindow();
+               wndpa[l].m_pimpl.cast < ::ca2::window >()->_001UpdateWindow();
             }
             l++;
          }
@@ -544,8 +544,8 @@ namespace lnx
       {
          oswindow hwndTopic = wndaApp[j];
 
-         sp(::ca::window) pwnd = NULL;
-         //::ca::window * pwnd =  (System.window_map().get((int_ptr) hwndTopic));
+         sp(::ca2::window) pwnd = NULL;
+         //::ca2::window * pwnd =  (System.window_map().get((int_ptr) hwndTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
@@ -673,8 +673,8 @@ namespace lnx
       return &m_semaphoreBuffer;
    }
 
-   // The first ::ca::window handle in the array must belong
-   // to the higher z order ::ca::window.
+   // The first ::ca2::window handle in the array must belong
+   // to the higher z order ::ca2::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -682,7 +682,7 @@ namespace lnx
 
    // Remark: this optimization eliminates top level lnxdows
    // that are lower z order siblings of a higher z order
-   // top level ::ca::window that contains all
+   // top level ::ca2::window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent lnxdows
    // obscured by opaque children.
@@ -808,7 +808,7 @@ namespace lnx
          return OptimizeNone;
       }
 
-   //    sp(::ca::window) pwnd = window::FromHandlePermanent(hwnd);
+   //    sp(::ca2::window) pwnd = window::FromHandlePermanent(hwnd);
 
 
       if(ptwi == NULL)
@@ -899,7 +899,7 @@ namespace lnx
       ::GetWindowRect((::oswindow) oswindow, rectWindow);
 
 
-   //   sp(::ca::window) pwnd = ::lnx::window::from_handle(oswindow);
+   //   sp(::ca2::window) pwnd = ::lnx::window::from_handle(oswindow);
 
       if(!TwfGetTopWindow(
             hwndParam,
@@ -944,7 +944,7 @@ throw not_implemented(get_app());
 //      {
 //
 //
-//         iCombine = ::CombineRgn(hrgn, hrgn, hrgnIntersect, ::ca::region::combine_exclude);
+//         iCombine = ::CombineRgn(hrgn, hrgn, hrgnIntersect, ::ca2::region::combine_exclude);
 //
 //         point ptOffset(0, 0);
 //
@@ -1005,7 +1005,7 @@ throw not_implemented(get_app());
    {
       rect rectWindow;
 
-   //   sp(::ca::window) pwndOpaque = window::FromHandlePermanent(hwndOpaque);
+   //   sp(::ca2::window) pwndOpaque = window::FromHandlePermanent(hwndOpaque);
 
       ::GetWindowRect((oswindow) hwndOpaque, rectWindow);
 
@@ -1021,7 +1021,7 @@ throw not_implemented(get_app());
 //         ptOffset.y = 0;
 //         ::ClientToScreen((oswindow) hwnd, &ptOffset);
 //         ::OffsetRgn(hrgn, ptOffset.x, ptOffset.y);
-//         if(::CombineRgn(hrgn, hrgn, hrgnOpaque, ::ca::region::combine_exclude) == NULLREGION)
+//         if(::CombineRgn(hrgn, hrgn, hrgnOpaque, ::ca2::region::combine_exclude) == NULLREGION)
 //         {
 //            ::DeleteObject(hrgn);
 //            hrgna.remove_at(i);
@@ -1061,7 +1061,7 @@ throw not_implemented(get_app());
 
    bool window_draw::ScreenOutput(
       user::buffer * pbuffer,
-      ::ca::region & rgnUpdate)
+      ::ca2::region & rgnUpdate)
    {
       UNREFERENCED_PARAMETER(pbuffer);
       UNREFERENCED_PARAMETER(rgnUpdate);
@@ -1101,7 +1101,7 @@ throw not_implemented(get_app());
       // pdc is the source primitive::memory device context
       // from which bitmap the screen is updated.
       user::buffer * pbuffer,
-      // hwndParam ::ca::window device context
+      // hwndParam ::ca2::window device context
       // is used from screen output
       sp(::user::interaction) pwnd)
    {
@@ -1136,10 +1136,10 @@ throw not_implemented(get_app());
 //
 //      if(hdcScreen == NULL)
 //      {
-//         // If it has failed to get ::ca::window
+//         // If it has failed to get ::ca2::window
 //         // owned device context, try to get
 //         // a device context from the cache.
-//         hdcScreen = ::GetDCEx((oswindow) hwndParam, NULL, DCX_CACHE | DCX_CLIPSIBLINGS | DCX_WINDOW);
+//         hdcScreen = ::GetDCEx((oswindow) hwndParam, NULL, DCX_caCHE | DCX_CLIPSIBLINGS | DCX_WINDOW);
 //
 //         // If no device context could be retrieved,
 //         // nothing can be drawn at the screen.
@@ -1164,13 +1164,13 @@ throw not_implemented(get_app());
 //      // rect rectUpdate;
 //      // rgnUpdate.get_bounding_box(rectUpdate);
 //
-//      // get the ::ca::window client area box
+//      // get the ::ca2::window client area box
 //      // in screen coordinates.
 //      rect64 rectWindow;
 //      rectWindow = pwnd->m_rectParentClient;
 //
 //      // Output rectangle receive the intersection
-//      // of ::ca::window box and update box.
+//      // of ::ca2::window box and update box.
 //      //rect rectOutput;
 //      //rectOutput.intersect(rectWnd, rectUpdate);
 //
@@ -1184,10 +1184,10 @@ throw not_implemented(get_app());
 //      rect64 rectOutputClient(rectWindow);
 //      rectOutputClient -= rectWindow.top_left();
 //
-//      // The ::ca::window owned device context is clipped
+//      // The ::ca2::window owned device context is clipped
 //      // with the update region in screen coordinates
-//      // translated to ::ca::window client coordinates.
-//      //::ca::region_sp rgnClip(get_app());
+//      // translated to ::ca2::window client coordinates.
+//      //::ca2::region_sp rgnClip(get_app());
 //      //rgnClip->create_rect(0, 0, 0, 0);
 //      //rgnClip->CopyRgn(&rgnUpdate);
 //      //rgnClip->translate( - rectWnd.top_left());
@@ -1331,8 +1331,8 @@ throw not_implemented(get_app());
 
 
 
-   // The first ::ca::window handle in the array must belong
-   // to the higher z order ::ca::window.
+   // The first ::ca2::window handle in the array must belong
+   // to the higher z order ::ca2::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -1340,7 +1340,7 @@ throw not_implemented(get_app());
 
    // Remark: this optimization eliminates top level lnxdows
    // that are lower z order siblings of a higher z order
-   // top level ::ca::window that contains all
+   // top level ::ca2::window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent lnxdows
    // obscured by opaque children.

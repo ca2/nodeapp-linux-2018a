@@ -5,8 +5,8 @@ namespace lnx
 {
 
 
-   file_set::file_set(sp(::ca::application) papp) :
-      ca(papp)
+   file_set::file_set(sp(::ca2::application) papp) :
+      ca2(papp)
    {
 
    }

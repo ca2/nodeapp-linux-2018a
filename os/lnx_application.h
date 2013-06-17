@@ -6,7 +6,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx main_init_data :
-      public ::ca::main_init_data
+      public ::ca2::main_init_data
    {
    public:
 
@@ -20,7 +20,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx application :
-      virtual public ::ca::application
+      virtual public ::ca2::application
    {
    public:
 
@@ -32,7 +32,7 @@ namespace lnx
       main_init_data *     m_pmaininitdata;
 
 
-      application(sp(::ca::application) papp);
+      application(sp(::ca2::application) papp);
       virtual ~application();
 
       virtual HINSTANCE GetHinstance();
@@ -75,7 +75,7 @@ namespace lnx
 
       virtual void SetCurrentHandles();
 
-      virtual bool set_main_init_data(::ca::main_init_data * pdata);
+      virtual bool set_main_init_data(::ca2::main_init_data * pdata);
 
       virtual bool process_initialize();
       virtual bool initialize1();
@@ -87,7 +87,7 @@ namespace lnx
 
 
       virtual bool win_init(main_init_data * pdata);
-	  
+
 	  virtual bool update_module_paths();
 
 
@@ -145,17 +145,17 @@ namespace lnx
 
       // called when occurs an standard_exception exception in run
       // return true to call run again
-      virtual bool on_run_exception(::ca::exception & e);
+      virtual bool on_run_exception(::ca2::exception & e);
 
    // Overridables
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::ca::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual ::ca2::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(::ca::signal_object * pobj);
+      virtual void pre_translate_message(::ca2::signal_object * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
       virtual bool is_idle_message(MESSAGE* pMsg);  // checks for special messages
@@ -182,18 +182,18 @@ namespace lnx
 
       bool DispatchThreadMessageEx(MESSAGE* msg);  // helper*/
 
-      //::ca::graphics * graphics_from_os_data(void * pdata);
+      //::ca2::graphics * graphics_from_os_data(void * pdata);
 
       virtual void ShowWaitCursor(bool bShow = true);
 
-      sp(::ca::window) window_from_os_data(void * pdata);
-      sp(::ca::window) window_from_os_data_permanent(void * pdata);
+      sp(::ca2::window) window_from_os_data(void * pdata);
+      sp(::ca2::window) window_from_os_data_permanent(void * pdata);
 
-      virtual ::ca::thread * GetThread();
-      virtual void set_thread(::ca::thread * pthread);
+      virtual ::ca2::thread * GetThread();
+      virtual void set_thread(::ca2::thread * pthread);
 
-      virtual sp(::ca::window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      virtual sp(::ca::window) FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow);
+      virtual sp(::ca2::window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
+      virtual sp(::ca2::window) FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);

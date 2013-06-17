@@ -96,9 +96,20 @@
 		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp">
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/ca/ca.cbp" />
-		<Project filename="../../../app/appseed/ca2/ca2.cbp" />
-		<Project filename="../../os/os.cbp" />
+		<Project filename="../../../app/appseed/ca/ca.cbp">
+			<Depends filename="../../../app/appseed/c/_c.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
+		</Project>
+		<Project filename="../../../app/appseed/ca2/ca2.cbp">
+			<Depends filename="../../../app/appseed/c/_c.cbp" />
+			<Depends filename="../../../app/appseed/ca/ca.cbp" />
+		</Project>
+		<Project filename="../../os/os.cbp">
+			<Depends filename="../../../app/appseed/c/_c.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
+			<Depends filename="../../../app/appseed/ca/ca.cbp" />
+			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
+		</Project>
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />

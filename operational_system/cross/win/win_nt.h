@@ -73,8 +73,8 @@ extern "C" {
 # endif
 #endif
 
-#ifndef DECLSPEC_CACHEALIGN
-# define DECLSPEC_CACHEALIGN DECLSPEC_ALIGN(128)
+#ifndef DECLSPEC_caCHEALIGN
+# define DECLSPEC_caCHEALIGN DECLSPEC_ALIGN(128)
 #endif
 
 #ifndef DECLSPEC_UUID
@@ -127,16 +127,16 @@ extern "C" {
 # endif
 #endif
 
-#ifndef DECLSPEC_DEPRECATED
+#ifndef DECLSPEC_DEPREcaTED
 # if defined(_MSC_VER) && (_MSC_VER >= 1300) && !defined(MIDL_PASS)
-#  define DECLSPEC_DEPRECATED __declspec(deprecated)
-#  define DEPRECATE_SUPPORTED
+#  define DECLSPEC_DEPREcaTED __declspec(deprecated)
+#  define DEPREcaTE_SUPPORTED
 # elif defined(__GNUC__) && ((__GNUC__ > 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ >= 2)))
-#  define DECLSPEC_DEPRECATED __attribute__((deprecated))
-#  define DEPRECATE_SUPPORTED
+#  define DECLSPEC_DEPREcaTED __attribute__((deprecated))
+#  define DEPREcaTE_SUPPORTED
 # else
-#  define DECLSPEC_DEPRECATED
-#  undef  DEPRECATE_SUPPORTED
+#  define DECLSPEC_DEPREcaTED
+#  undef  DEPREcaTE_SUPPORTED
 # endif
 #endif
 
@@ -284,10 +284,10 @@ extern "C" {
 
 #if defined(_WIN64) || (defined(_MSC_VER) && defined(_M_ALPHA)) || defined(__alpha__)
 #define MAX_NATURAL_ALIGNMENT sizeof(ULONGLONG)
-#define MEMORY_ALLOCATION_ALIGNMENT 16
+#define MEMORY_ALLOcaTION_ALIGNMENT 16
 #else
 #define MAX_NATURAL_ALIGNMENT sizeof(DWORD)
-#define MEMORY_ALLOCATION_ALIGNMENT 8
+#define MEMORY_ALLOcaTION_ALIGNMENT 8
 #endif
 
 #if defined(_MSC_VER) && (_MSC_VER >= 1300) && defined(__cplusplus)
@@ -323,7 +323,7 @@ extern "C" {
 #endif
 
 /* Error Masks */
-#define APPLICATION_ERROR_MASK       0x20000000
+#define APPLIcaTION_ERROR_MASK       0x20000000
 #define ERROR_SEVERITY_SUCCESS       0x00000000
 #define ERROR_SEVERITY_INFORMATIONAL 0x40000000
 #define ERROR_SEVERITY_WARNING       0x80000000
@@ -361,7 +361,7 @@ extern "C++" { \
 #define STDAPI_(type)           EXTERN_C type STDAPICALLTYPE
 #define STDMETHODIMP            HRESULT STDMETHODCALLTYPE
 #define STDMETHODIMP_(type)     type STDMETHODCALLTYPE
-#define STDAPIV                 EXTERN_C HRESULT STDAPIVCALLTYPE
+#define STDAPIV                 EXTERN_C HRESULT STDAPIVcaLLTYPE
 #define STDAPIV_(type)          EXTERN_C type STDAPIVCALLTYPE
 #define STDMETHODIMPV           HRESULT STDMETHODVCALLTYPE
 #define STDMETHODIMPV_(type)    type STDMETHODVCALLTYPE
@@ -481,7 +481,7 @@ typedef DWORD FLONG;
 #define STATUS_USER_APC                  ((DWORD) 0x000000C0)
 #define STATUS_TIMEOUT                   ((DWORD) 0x00000102)
 #define STATUS_PENDING                   ((DWORD) 0x00000103)
-#define STATUS_SEGMENT_NOTIFICATION      ((DWORD) 0x40000005)
+#define STATUS_SEGMENT_NOTIFIcaTION      ((DWORD) 0x40000005)
 #define STATUS_GUARD_PAGE_VIOLATION      ((DWORD) 0x80000001)
 #define STATUS_DATATYPE_MISALIGNMENT     ((DWORD) 0x80000002)
 #define STATUS_BREAKPOINT                ((DWORD) 0x80000003)
@@ -604,7 +604,7 @@ typedef struct _MEMORY_BASIC_INFORMATION
 #define	PAGE_EXECUTE_READWRITE	0x40
 #define	PAGE_EXECUTE_WRITECOPY	0x80
 #define	PAGE_GUARD		0x100
-#define	PAGE_NOCACHE		0x200
+#define	PAGE_NOcaCHE		0x200
 #define	PAGE_WRITECOMBINE	0x400
 
 #define MEM_COMMIT              0x00001000
@@ -617,7 +617,7 @@ typedef struct _MEMORY_BASIC_INFORMATION
 #define MEM_RESET               0x00080000
 #define MEM_TOP_DOWN            0x00100000
 #define MEM_WRITE_WATCH         0x00200000
-#define MEM_PHYSICAL            0x00400000
+#define MEM_PHYSIcaL            0x00400000
 #define MEM_LARGE_PAGES         0x20000000
 #define MEM_4MB_PAGES           0x80000000
 
@@ -625,7 +625,7 @@ typedef struct _MEMORY_BASIC_INFORMATION
 #define SEC_IMAGE               0x01000000
 #define SEC_RESERVE             0x04000000
 #define SEC_COMMIT              0x08000000
-#define SEC_NOCACHE             0x10000000
+#define SEC_NOcaCHE             0x10000000
 #define SEC_LARGE_PAGES         0x80000000
 #define MEM_IMAGE               SEC_IMAGE
 
@@ -1019,7 +1019,7 @@ typedef struct _UNWIND_HISTORY_TABLE_ENTRY
 
 #define UNWIND_HISTORY_TABLE_NONE 0
 #define UNWIND_HISTORY_TABLE_GLOBAL 1
-#define UNWIND_HISTORY_TABLE_LOCAL 2
+#define UNWIND_HISTORY_TABLE_LOcaL 2
 
 typedef struct _UNWIND_HISTORY_TABLE
 {
@@ -1885,7 +1885,7 @@ typedef struct _CONTEXT
 
 typedef CONTEXT *PCONTEXT;
 
-NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
+NTSYSAPI void WINAPI RtlcaptureContext(CONTEXT*);
 
 /*
  * Product types
@@ -1954,7 +1954,7 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 
 #define UNREFERENCED_PARAMETER(u)	(void)(u)
 #define DBG_UNREFERENCED_PARAMETER(u)	(void)(u)
-#define DBG_UNREFERENCED_LOCAL_VARIABLE(u) (void)(u)
+#define DBG_UNREFERENCED_LOcaL_VARIABLE(u) (void)(u)
 
 #define LANG_NEUTRAL        0x00
 #define LANG_INVARIANT      0x7f
@@ -1975,11 +1975,11 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define LANG_BOSNIAN_NEUTRAL      0x781a
 #define LANG_BRETON         0x7e
 #define LANG_BULGARIAN      0x02
-#define LANG_CATALAN        0x03
+#define LANG_caTALAN        0x03
 #define LANG_CHINESE        0x04
 #define LANG_CHINESE_SIMPLIFIED   0x0004
 #define LANG_CHINESE_TRADITIONAL  0x7c04
-#define LANG_CORSICAN       0x83
+#define LANG_CORSIcaN       0x83
 #define LANG_CROATIAN       0x1a
 #define LANG_CZECH          0x05
 #define LANG_DANISH         0x06
@@ -2108,7 +2108,7 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_CUSTOM_UNSPECIFIED       0x04
 #define SUBLANG_UI_CUSTOM_DEFAULT        0x05
 
-#define SUBLANG_AFRIKAANS_SOUTH_AFRICA     0x01
+#define SUBLANG_AFRIKAANS_SOUTH_AFRIca     0x01
 #define SUBLANG_ALBANIAN_ALBANIA           0x01
 #define SUBLANG_ALSATIAN_FRANCE            0x01
 #define SUBLANG_AMHARIC_ETHIOPIA           0x01
@@ -2141,13 +2141,13 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_BOSNIAN_BOSNIA_HERZEGOVINA_CYRILLIC 0x08
 #define SUBLANG_BRETON_FRANCE              0x01
 #define SUBLANG_BULGARIAN_BULGARIA         0x01
-#define SUBLANG_CATALAN_CATALAN            0x01
+#define SUBLANG_caTALAN_caTALAN            0x01
 #define SUBLANG_CHINESE_TRADITIONAL        0x01
 #define SUBLANG_CHINESE_SIMPLIFIED         0x02
 #define SUBLANG_CHINESE_HONGKONG           0x03
 #define SUBLANG_CHINESE_SINGAPORE          0x04
-#define SUBLANG_CHINESE_MACAU              0x05
-#define SUBLANG_CORSICAN_FRANCE            0x01
+#define SUBLANG_CHINESE_MAcaU              0x05
+#define SUBLANG_CORSIcaN_FRANCE            0x01
 #define SUBLANG_CROATIAN_CROATIA           0x01
 #define SUBLANG_CROATIAN_BOSNIA_HERZEGOVINA_LATIN 0x04
 #define SUBLANG_CZECH_CZECH_REPUBLIC       0x01
@@ -2159,12 +2159,12 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_ENGLISH_US                 0x01
 #define SUBLANG_ENGLISH_UK                 0x02
 #define SUBLANG_ENGLISH_AUS                0x03
-#define SUBLANG_ENGLISH_CAN                0x04
+#define SUBLANG_ENGLISH_caN                0x04
 #define SUBLANG_ENGLISH_NZ                 0x05
 #define SUBLANG_ENGLISH_EIRE               0x06
-#define SUBLANG_ENGLISH_SOUTH_AFRICA       0x07
-#define SUBLANG_ENGLISH_JAMAICA            0x08
-#define SUBLANG_ENGLISH_CARIBBEAN          0x09
+#define SUBLANG_ENGLISH_SOUTH_AFRIca       0x07
+#define SUBLANG_ENGLISH_JAMAIca            0x08
+#define SUBLANG_ENGLISH_caRIBBEAN          0x09
 #define SUBLANG_ENGLISH_BELIZE             0x0a
 #define SUBLANG_ENGLISH_TRINIDAD           0x0b
 #define SUBLANG_ENGLISH_ZIMBABWE           0x0c
@@ -2178,7 +2178,7 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_FINNISH_FINLAND            0x01
 #define SUBLANG_FRENCH                     0x01
 #define SUBLANG_FRENCH_BELGIAN             0x02
-#define SUBLANG_FRENCH_CANADIAN            0x03
+#define SUBLANG_FRENCH_caNADIAN            0x03
 #define SUBLANG_FRENCH_SWISS               0x04
 #define SUBLANG_FRENCH_LUXEMBOURG          0x05
 #define SUBLANG_FRENCH_MONACO              0x06
@@ -2200,8 +2200,8 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_ICELANDIC_ICELAND          0x01
 #define SUBLANG_IGBO_NIGERIA               0x01
 #define SUBLANG_INDONESIAN_INDONESIA       0x01
-#define SUBLANG_INUKTITUT_CANADA           0x01
-#define SUBLANG_INUKTITUT_CANADA_LATIN     0x02
+#define SUBLANG_INUKTITUT_caNADA           0x01
+#define SUBLANG_INUKTITUT_caNADA_LATIN     0x02
 #define SUBLANG_IRISH_IRELAND              0x02
 #define SUBLANG_ITALIAN                    0x01
 #define SUBLANG_ITALIAN_SWISS              0x02
@@ -2210,7 +2210,7 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_KASHMIRI_SASIA             0x02
 #define SUBLANG_KASHMIRI_INDIA             0x02
 #define SUBLANG_KAZAK_KAZAKHSTAN           0x01
-#define SUBLANG_KHMER_CAMBODIA             0x01
+#define SUBLANG_KHMER_caMBODIA             0x01
 #define SUBLANG_KICHE_GUATEMALA            0x01
 #define SUBLANG_KINYARWANDA_RWANDA         0X01
 #define SUBLANG_KONKANI_INDIA              0x01
@@ -2269,14 +2269,14 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_SINHALESE_SRI_LANKA        0x01
 #define SUBLANG_SLOVAK_SLOVAKIA            0x01
 #define SUBLANG_SLOVENIAN_SLOVENIA         0x01
-#define SUBLANG_SOTHO_NORTHERN_SOUTH_AFRICA 0x01
+#define SUBLANG_SOTHO_NORTHERN_SOUTH_AFRIca 0x01
 #define SUBLANG_SPANISH                    0x01
-#define SUBLANG_SPANISH_MEXICAN            0x02
+#define SUBLANG_SPANISH_MEXIcaN            0x02
 #define SUBLANG_SPANISH_MODERN             0x03
 #define SUBLANG_SPANISH_GUATEMALA          0x04
-#define SUBLANG_SPANISH_COSTA_RICA         0x05
+#define SUBLANG_SPANISH_COSTA_RIca         0x05
 #define SUBLANG_SPANISH_PANAMA             0x06
-#define SUBLANG_SPANISH_DOMINICAN_REPUBLIC 0x07
+#define SUBLANG_SPANISH_DOMINIcaN_REPUBLIC 0x07
 #define SUBLANG_SPANISH_VENEZUELA          0x08
 #define SUBLANG_SPANISH_COLOMBIA           0x09
 #define SUBLANG_SPANISH_PERU               0x0a
@@ -2288,7 +2288,7 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_SPANISH_BOLIVIA            0x10
 #define SUBLANG_SPANISH_EL_SALVADOR        0x11
 #define SUBLANG_SPANISH_HONDURAS           0x12
-#define SUBLANG_SPANISH_NICARAGUA          0x13
+#define SUBLANG_SPANISH_NIcaRAGUA          0x13
 #define SUBLANG_SPANISH_PUERTO_RICO        0x14
 #define SUBLANG_SPANISH_US                 0x15
 #define SUBLANG_SWAHILI_KENYA              0x01
@@ -2304,7 +2304,7 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_TIBETAN_PRC                0x01
 #define SUBLANG_TIBETAN_BHUTAN             0x02
 #define SUBLANG_TIGRIGNA_ERITREA           0x02
-#define SUBLANG_TSWANA_SOUTH_AFRICA        0x01
+#define SUBLANG_TSWANA_SOUTH_AFRIca        0x01
 #define SUBLANG_TURKISH_TURKEY             0x01
 #define SUBLANG_TURKMEN_TURKMENISTAN       0x01
 #define SUBLANG_UIGHUR_PRC                 0x01
@@ -2317,11 +2317,11 @@ NTSYSAPI void WINAPI RtlCaptureContext(CONTEXT*);
 #define SUBLANG_VIETNAMESE_VIETNAM         0x01
 #define SUBLANG_WELSH_UNITED_KINGDOM       0x01
 #define SUBLANG_WOLOF_SENEGAL              0x01
-#define SUBLANG_XHOSA_SOUTH_AFRICA         0x01
+#define SUBLANG_XHOSA_SOUTH_AFRIca         0x01
 #define SUBLANG_YAKUT_RUSSIA               0x01
 #define SUBLANG_YI_PRC                     0x01
 #define SUBLANG_YORUBA_NIGERIA             0x01
-#define SUBLANG_ZULU_SOUTH_AFRICA          0x01
+#define SUBLANG_ZULU_SOUTH_AFRIca          0x01
 
 /* These are documented by the MSDN but are missing from the Windows header */
 #define SUBLANG_ENGLISH_IRELAND            SUBLANG_ENGLISH_EIRE
@@ -2650,7 +2650,7 @@ typedef struct _IMAGE_VXD_HEADER {
 #define IMAGE_FILE_RELOCS_STRIPPED	0x0001 /* No relocation info */
 #define IMAGE_FILE_EXECUTABLE_IMAGE	0x0002
 #define IMAGE_FILE_LINE_NUMS_STRIPPED   0x0004
-#define IMAGE_FILE_LOCAL_SYMS_STRIPPED  0x0008
+#define IMAGE_FILE_LOcaL_SYMS_STRIPPED  0x0008
 #define IMAGE_FILE_AGGRESIVE_WS_TRIM	0x0010
 #define IMAGE_FILE_LARGE_ADDRESS_AWARE	0x0020
 #define IMAGE_FILE_16BIT_MACHINE	0x0040
@@ -2708,8 +2708,8 @@ typedef struct _IMAGE_VXD_HEADER {
 #define IMAGE_SIZEOF_SECTION_HEADER 		40
 #define IMAGE_SIZEOF_SYMBOL 			18
 #define IMAGE_SIZEOF_AUX_SYMBOL 		18
-#define IMAGE_SIZEOF_RELOCATION 		10
-#define IMAGE_SIZEOF_BASE_RELOCATION 		8
+#define IMAGE_SIZEOF_RELOcaTION 		10
+#define IMAGE_SIZEOF_BASE_RELOcaTION 		8
 #define IMAGE_SIZEOF_LINENUMBER 		6
 #define IMAGE_SIZEOF_ARCHIVE_MEMBER_HDR 	60
 
@@ -2732,12 +2732,12 @@ typedef struct _IMAGE_VXD_HEADER {
 #define IMAGE_FILE_RESOURCE_DIRECTORY		2
 #define IMAGE_FILE_EXCEPTION_DIRECTORY		3
 #define IMAGE_FILE_SECURITY_DIRECTORY		4
-#define IMAGE_FILE_BASE_RELOCATION_TABLE	5
+#define IMAGE_FILE_BASE_RELOcaTION_TABLE	5
 #define IMAGE_FILE_DEBUG_DIRECTORY		6
 #define IMAGE_FILE_DESCRIPTION_STRING		7
 #define IMAGE_FILE_MACHINE_VALUE		8  /* Mips */
-#define IMAGE_FILE_THREAD_LOCAL_STORAGE		9
-#define IMAGE_FILE_CALLBACK_DIRECTORY		10
+#define IMAGE_FILE_THREAD_LOcaL_STORAGE		9
+#define IMAGE_FILE_caLLBACK_DIRECTORY		10
 
 /* Directory Entries, indices into the DataDirectory array */
 
@@ -2767,12 +2767,12 @@ typedef struct _IMAGE_VXD_HEADER {
 #define	IMAGE_SUBSYSTEM_POSIX_CUI		7
 #define	IMAGE_SUBSYSTEM_NATIVE_WINDOWS		8	/* native Win9x driver */
 #define	IMAGE_SUBSYSTEM_WINDOWS_CE_GUI		9	/* Windows CE subsystem */
-#define	IMAGE_SUBSYSTEM_EFI_APPLICATION		10
+#define	IMAGE_SUBSYSTEM_EFI_APPLIcaTION		10
 #define	IMAGE_SUBSYSTEM_EFI_BOOT_SERVICE_DRIVER	11
 #define	IMAGE_SUBSYSTEM_EFI_RUNTIME_DRIVER	12
 #define	IMAGE_SUBSYSTEM_EFI_ROM			13
 #define	IMAGE_SUBSYSTEM_XBOX			14
-#define	IMAGE_SUBSYSTEM_WINDOWS_BOOT_APPLICATION	16
+#define	IMAGE_SUBSYSTEM_WINDOWS_BOOT_APPLIcaTION	16
 
 /* DLL Characteristics */
 #define IMAGE_DLLCHARACTERISTICS_DYNAMIC_BASE          0x0040
@@ -2971,8 +2971,8 @@ typedef struct _IMAGE_SECTION_HEADER {
 #define IMAGE_SCN_LNK_NRELOC_OVFL		0x01000000
 
 
-#define IMAGE_SCN_MEM_DISCARDABLE		0x02000000
-#define IMAGE_SCN_MEM_NOT_CACHED		0x04000000
+#define IMAGE_SCN_MEM_DIScaRDABLE		0x02000000
+#define IMAGE_SCN_MEM_NOT_caCHED		0x04000000
 #define IMAGE_SCN_MEM_NOT_PAGED			0x08000000
 #define IMAGE_SCN_MEM_SHARED			0x10000000
 #define IMAGE_SCN_MEM_EXECUTE			0x20000000
@@ -3138,7 +3138,7 @@ typedef IMAGE_AUX_SYMBOL *PIMAGE_AUX_SYMBOL;
 #define DECREF(x) ((((x)>>N_TSHIFT)&~N_BTMASK)|((x)&N_BTMASK))
 #endif
 
-#define IMAGE_COMDAT_SELECT_NODUPLICATES    1
+#define IMAGE_COMDAT_SELECT_NODUPLIcaTES    1
 #define IMAGE_COMDAT_SELECT_ANY             2
 #define IMAGE_COMDAT_SELECT_SAME_SIZE       3
 #define IMAGE_COMDAT_SELECT_EXACT_MATCH     4
@@ -3258,7 +3258,7 @@ typedef struct _IMAGE_BASE_RELOCATION
 
 #include "pshpack2.h"
 
-typedef struct _IMAGE_RELOCATION
+typedef struct _IMAGE_RELOcaTION
 {
     union {
         DWORD   VirtualAddress;
@@ -3266,11 +3266,11 @@ typedef struct _IMAGE_RELOCATION
     } DUMMYUNIONNAME;
     DWORD   SymbolTableIndex;
     WORD    Type;
-} IMAGE_RELOCATION, *PIMAGE_RELOCATION;
+} IMAGE_RELOcaTION, *PIMAGE_RELOcaTION;
 
 #include "poppack.h"
 
-#define IMAGE_SIZEOF_RELOCATION 10
+#define IMAGE_SIZEOF_RELOcaTION 10
 
 /* generic relocation types */
 #define IMAGE_REL_BASED_ABSOLUTE 		0
@@ -3599,7 +3599,7 @@ typedef struct _IMAGE_RESOURCE_DATA_ENTRY {
 } IMAGE_RESOURCE_DATA_ENTRY,*PIMAGE_RESOURCE_DATA_ENTRY;
 
 
-typedef VOID (CALLBACK *PIMAGE_TLS_CALLBACK)(
+typedef VOID (CALLBACK *PIMAGE_TLS_caLLBACK)(
 	LPVOID DllHandle,DWORD Reason,LPVOID Reserved
 );
 
@@ -3607,7 +3607,7 @@ typedef struct _IMAGE_TLS_DIRECTORY64 {
     ULONGLONG   StartAddressOfRawData;
     ULONGLONG   EndAddressOfRawData;
     ULONGLONG   AddressOfIndex;
-    ULONGLONG   AddressOfCallBacks;
+    ULONGLONG   AddressOfcallBacks;
     DWORD       SizeOfZeroFill;
     DWORD       Characteristics;
 } IMAGE_TLS_DIRECTORY64, *PIMAGE_TLS_DIRECTORY64;
@@ -3616,7 +3616,7 @@ typedef struct _IMAGE_TLS_DIRECTORY32 {
     DWORD   StartAddressOfRawData;
     DWORD   EndAddressOfRawData;
     DWORD   AddressOfIndex;
-    DWORD   AddressOfCallBacks;
+    DWORD   AddressOfcallBacks;
     DWORD   SizeOfZeroFill;
     DWORD   Characteristics;
 } IMAGE_TLS_DIRECTORY32, *PIMAGE_TLS_DIRECTORY32;
@@ -3676,7 +3676,7 @@ typedef enum ReplacesCorHdrNumericDefines
     COR_VTABLE_32BIT             = 0x01,
     COR_VTABLE_64BIT             = 0x02,
     COR_VTABLE_FROM_UNMANAGED    = 0x04,
-    COR_VTABLE_CALL_MOST_DERIVED = 0x10,
+    COR_VTABLE_caLL_MOST_DERIVED = 0x10,
 
     IMAGE_COR_EATJ_THUNK_SIZE = 32,
 
@@ -3872,7 +3872,7 @@ typedef enum _TOKEN_INFORMATION_CLASS {
 #define TOKEN_ADJUST_PRIVILEGES      0x0020
 #define TOKEN_ADJUST_SESSIONID       0x0100
 #define TOKEN_ASSIGN_PRIMARY         0x0001
-#define TOKEN_DUPLICATE              0x0002
+#define TOKEN_DUPLIcaTE              0x0002
 #define TOKEN_EXECUTE                STANDARD_RIGHTS_EXECUTE
 #define TOKEN_IMPERSONATE            0x0004
 #define TOKEN_QUERY                  0x0008
@@ -3885,7 +3885,7 @@ typedef enum _TOKEN_INFORMATION_CLASS {
 					TOKEN_ADJUST_DEFAULT )
 #define TOKEN_ALL_ACCESS             (STANDARD_RIGHTS_REQUIRED | \
 					TOKEN_ASSIGN_PRIMARY | \
-					TOKEN_DUPLICATE | \
+					TOKEN_DUPLIcaTE | \
 					TOKEN_IMPERSONATE | \
 					TOKEN_QUERY | \
 					TOKEN_QUERY_SOURCE | \
@@ -3904,7 +3904,7 @@ typedef struct _GENERIC_MAPPING {
     ACCESS_MASK GenericRead;
     ACCESS_MASK GenericWrite;
     ACCESS_MASK GenericExecute;
-    ACCESS_MASK GenericAll;
+    ACCESS_MASK Genericall;
 } GENERIC_MAPPING, *PGENERIC_MAPPING;
 
 #ifndef SID_IDENTIFIER_AUTHORITY_DEFINED
@@ -4078,7 +4078,7 @@ typedef struct _SID_AND_ATTRIBUTES {
 /* security entities */
 #define SECURITY_NULL_RID			(0x00000000L)
 #define SECURITY_WORLD_RID			(0x00000000L)
-#define SECURITY_LOCAL_RID			(0X00000000L)
+#define SECURITY_LOcaL_RID			(0X00000000L)
 
 #define SECURITY_NULL_SID_AUTHORITY		{0,0,0,0,0,0}
 
@@ -4086,7 +4086,7 @@ typedef struct _SID_AND_ATTRIBUTES {
 #define SECURITY_WORLD_SID_AUTHORITY		{0,0,0,0,0,1}
 
 /* S-1-2 */
-#define SECURITY_LOCAL_SID_AUTHORITY		{0,0,0,0,0,2}
+#define SECURITY_LOcaL_SID_AUTHORITY		{0,0,0,0,0,2}
 
 /* S-1-3 */
 #define SECURITY_CREATOR_SID_AUTHORITY		{0,0,0,0,0,3}
@@ -4111,13 +4111,13 @@ typedef struct _SID_AND_ATTRIBUTES {
 #define SECURITY_ENTERPRISE_CONTROLLERS_RID     0x00000009L
 #define SECURITY_SERVER_LOGON_RID               SECURITY_ENTERPRISE_CONTROLLERS_RID
 #define SECURITY_PRINCIPAL_SELF_RID             0x0000000AL
-#define SECURITY_AUTHENTICATED_USER_RID         0x0000000BL
+#define SECURITY_AUTHENTIcaTED_USER_RID         0x0000000BL
 #define SECURITY_RESTRICTED_CODE_RID            0x0000000CL
 #define SECURITY_TERMINAL_SERVER_RID            0x0000000DL
 #define SECURITY_REMOTE_LOGON_RID               0x0000000EL
 #define SECURITY_THIS_ORGANIZATION_RID          0x0000000FL
-#define SECURITY_LOCAL_SYSTEM_RID               0x00000012L
-#define SECURITY_LOCAL_SERVICE_RID              0x00000013L
+#define SECURITY_LOcaL_SYSTEM_RID               0x00000012L
+#define SECURITY_LOcaL_SERVICE_RID              0x00000013L
 #define SECURITY_NETWORK_SERVICE_RID            0x00000014L
 #define SECURITY_NT_NON_UNIQUE                  0x00000015L
 #define SECURITY_BUILTIN_DOMAIN_RID             0x00000020L
@@ -4164,7 +4164,7 @@ typedef struct _SID_AND_ATTRIBUTES {
 #define DOMAIN_ALIAS_RID_PRINT_OPS              0x00000226L
 #define DOMAIN_ALIAS_RID_BACKUP_OPS             0x00000227L
 
-#define DOMAIN_ALIAS_RID_REPLICATOR             0x00000228L
+#define DOMAIN_ALIAS_RID_REPLIcaTOR             0x00000228L
 #define DOMAIN_ALIAS_RID_RAS_SERVERS            0x00000229L
 #define DOMAIN_ALIAS_RID_PREW2KCOMPACCESS       0x0000022AL
 #define DOMAIN_ALIAS_RID_REMOTE_DESKTOP_USERS   0x0000022BL
@@ -4255,8 +4255,8 @@ typedef enum {
     WinSystemLabelSid                           = 69,
     WinWriteRestrictedCodeSid                   = 70,
     WinCreatorOwnerRightsSid                    = 71,
-    WinCacheablePrincipalsGroupSid              = 72,
-    WinNonCacheablePrincipalsGroupSid           = 73,
+    WincacheablePrincipalsGroupSid              = 72,
+    WinNoncacheablePrincipalsGroupSid           = 73,
     WinEnterpriseReadonlyControllersSid         = 74,
     WinAccountReadonlyControllersSid            = 75,
     WinBuiltinEventLogReadersGroup              = 76,
@@ -4456,7 +4456,7 @@ typedef struct _TOKEN_STATISTICS {
   TOKEN_TYPE    TokenType;
   SECURITY_IMPERSONATION_LEVEL ImpersonationLevel;
   DWORD DynamicCharged;
-  DWORD DynamicAvailable;
+  DWORD Dynamicavailable;
   DWORD GroupCount;
   DWORD PrivilegeCount;
   LUID  ModifiedId;
@@ -4705,8 +4705,8 @@ typedef struct _QUOTA_LIMITS_EX {
 #define FILE_GENERIC_EXECUTE      (STANDARD_RIGHTS_EXECUTE | FILE_EXECUTE | \
                                    FILE_READ_ATTRIBUTES | SYNCHRONIZE)
 
-#define DUPLICATE_CLOSE_SOURCE     0x00000001
-#define DUPLICATE_SAME_ACCESS      0x00000002
+#define DUPLIcaTE_CLOSE_SOURCE     0x00000001
+#define DUPLIcaTE_SAME_ACCESS      0x00000002
 
 /* File attribute flags */
 #define FILE_SHARE_READ			0x00000001L
@@ -4751,8 +4751,8 @@ typedef struct _QUOTA_LIMITS_EX {
 #define FILE_ACTION_REMOVED_STREAM      0x00000007
 #define FILE_ACTION_MODIFIED_STREAM     0x00000008
 
-#define FILE_CASE_SENSITIVE_SEARCH      0x00000001
-#define FILE_CASE_PRESERVED_NAMES       0x00000002
+#define FILE_caSE_SENSITIVE_SEARCH      0x00000001
+#define FILE_caSE_PRESERVED_NAMES       0x00000002
 #define FILE_UNICODE_ON_DISK            0x00000004
 #define FILE_PERSISTENT_ACLS            0x00000008
 #define FILE_FILE_COMPRESSION           0x00000010
@@ -4796,7 +4796,7 @@ typedef struct _QUOTA_LIMITS_EX {
 /* ----------------------------- begin power management --------------------- */
 
 typedef enum _LATENCY_TIME {
-	LT_DONT_CARE,
+	LT_DONT_caRE,
 	LT_LOWEST_LATENCY
 } LATENCY_TIME, *PLATENCY_TIME;
 
@@ -4847,7 +4847,7 @@ typedef enum _POWER_INFORMATION_LEVEL {
         SystemPowerPolicyDc,
         VerifySystemPolicyAc,
         VerifySystemPolicyDc,
-        SystemPowerCapabilities,
+        SystemPowercapabilities,
         SystemBatteryState,
         SystemPowerStateHandler,
         ProcessorStateHandler,
@@ -4879,9 +4879,9 @@ typedef struct _ADMINISTRATOR_POWER_POLICY {
 
 typedef struct {
 	ULONG Granularity;
-	ULONG Capacity;
-} BATTERY_REPORTING_SCALE,
-*PBATTERY_REPORTING_SCALE;
+	ULONG capacity;
+} BATTERY_REPORTING_ScaLE,
+*PBATTERY_REPORTING_ScaLE;
 
 typedef struct {
 	POWER_ACTION Action;
@@ -4930,8 +4930,8 @@ typedef struct {
 	WINBOOLEAN Charging;
 	WINBOOLEAN Discharging;
 	WINBOOLEAN Spare1[4];
-	ULONG MaxCapacity;
-	ULONG RemainingCapacity;
+	ULONG Maxcapacity;
+	ULONG Remainingcapacity;
 	ULONG Rate;
 	ULONG EstimatedTime;
 	ULONG DefaultAlert1;
@@ -4962,14 +4962,14 @@ typedef struct {
 	UCHAR spare3[8];
 	WINBOOLEAN SystemBatteriesPresent;
 	WINBOOLEAN BatteriesAreShortTerm;
-	BATTERY_REPORTING_SCALE BatteryScale[3];
+	BATTERY_REPORTING_ScaLE BatteryScale[3];
 	SYSTEM_POWER_STATE AcOnLineWake;
 	SYSTEM_POWER_STATE SoftLidWake;
 	SYSTEM_POWER_STATE RtcWake;
 	SYSTEM_POWER_STATE MinDeviceWakeState;
 	SYSTEM_POWER_STATE DefaultLowLatencyWake;
-} SYSTEM_POWER_CAPABILITIES,
-*PSYSTEM_POWER_CAPABILITIES;
+} SYSTEM_POWER_caPABILITIES,
+*PSYSTEM_POWER_caPABILITIES;
 
 typedef struct _SYSTEM_POWER_INFORMATION {
 	ULONG MaxIdlenessAllowed;
@@ -5006,7 +5006,7 @@ typedef struct _SYSTEM_POWER_POLICY {
 	ULONG WinLogonFlags;
 	ULONG Spare3;
 	ULONG DozeS4Timeout;
-	ULONG BroadcastCapacityResolution;
+	ULONG BroadcastcapacityResolution;
 	SYSTEM_POWER_LEVEL DischargePolicy[NUM_DISCHARGE_POLICIES];
 	ULONG VideoTimeout;
 	WINBOOLEAN VideoDimDisplay;
@@ -5051,8 +5051,8 @@ typedef struct _FILE_NOTIFY_INFORMATION {
 #define TAPE_LONG_FILEMARKS  3
 #define TAPE_REWIND                0
 #define TAPE_ABSOLUTE_BLOCK        1
-#define TAPE_LOGICAL_BLOCK         2
-#define TAPE_PSEUDO_LOGICAL_BLOCK  3
+#define TAPE_LOGIcaL_BLOCK         2
+#define TAPE_PSEUDO_LOGIcaL_BLOCK  3
 #define TAPE_SPACE_END_OF_DATA     4
 #define TAPE_SPACE_RELATIVE_BLOCKS 5
 #define TAPE_SPACE_FILEMARKS       6
@@ -5123,7 +5123,7 @@ typedef struct _TAPE_GET_DRIVE_PARAMETERS {
 } TAPE_GET_DRIVE_PARAMETERS, *PTAPE_GET_DRIVE_PARAMETERS;
 
 typedef struct _TAPE_GET_MEDIA_PARAMETERS {
-    LARGE_INTEGER Capacity;
+    LARGE_INTEGER capacity;
     LARGE_INTEGER Remaining;
     DWORD BlockSize;
     DWORD PartitionCount;
@@ -5222,7 +5222,7 @@ typedef struct _EVENTLOGRECORD {
     DWORD  EventID;
     WORD   EventType;
     WORD   NumStrings;
-    WORD   EventCategory;
+    WORD   Eventcategory;
     WORD   ReservedFlags;
     DWORD  ClosingRecordNumber;
     DWORD  StringOffset;
@@ -5335,8 +5335,8 @@ typedef struct _RTL_CRITICAL_SECTION {
 #define RTL_CRITICAL_SECTION_ALL_FLAG_BITS      0xFF000000
 #define RTL_CRITICAL_SECTION_FLAG_RESERVED      (RTL_CRITICAL_SECTION_ALL_FLAG_BITS & ~0x7000000)
 
-typedef VOID (NTAPI * WAITORTIMERCALLBACKFUNC) (PVOID, WINBOOLEAN );
-typedef VOID (NTAPI * PFLS_CALLBACK_FUNCTION) ( PVOID );
+typedef VOID (NTAPI * WAITORTIMERcaLLBACKFUNC) (PVOID, WINBOOLEAN );
+typedef VOID (NTAPI * PFLS_caLLBACK_FUNCTION) ( PVOID );
 
 #include "pshpack8.h"
 typedef struct _IO_COUNTERS {
@@ -5427,7 +5427,7 @@ NTSYSAPI ULONGLONG WINAPI VerSetConditionMask(ULONGLONG,DWORD,BYTE);
 #define	VER_SUITE_SMALLBUSINESS			0x00000001
 #define	VER_SUITE_ENTERPRISE			0x00000002
 #define	VER_SUITE_BACKOFFICE			0x00000004
-#define	VER_SUITE_COMMUNICATIONS		0x00000008
+#define	VER_SUITE_COMMUNIcaTIONS		0x00000008
 #define	VER_SUITE_TERMINAL			0x00000010
 #define	VER_SUITE_SMALLBUSINESS_RESTRICTED	0x00000020
 #define	VER_SUITE_EMBEDDEDNT			0x00000040
@@ -5491,7 +5491,7 @@ typedef struct _ACTIVATION_CONTEXT_QUERY_INDEX {
     DWORD ulFileIndexInAssembly;
 } ACTIVATION_CONTEXT_QUERY_INDEX, *PACTIVATION_CONTEXT_QUERY_INDEX;
 
-typedef const struct _ACTIVATION_CONTEXT_QUERY_INDEX *PCACTIVATION_CONTEXT_QUERY_INDEX;
+typedef const struct _ACTIVATION_CONTEXT_QUERY_INDEX *PcaCTIVATION_CONTEXT_QUERY_INDEX;
 
 typedef struct _ASSEMBLY_FILE_DETAILED_INFORMATION {
     DWORD ulFlags;
@@ -5501,7 +5501,7 @@ typedef struct _ASSEMBLY_FILE_DETAILED_INFORMATION {
     PCWSTR lpFilePath;
 } ASSEMBLY_FILE_DETAILED_INFORMATION, *PASSEMBLY_FILE_DETAILED_INFORMATION;
 
-typedef const ASSEMBLY_FILE_DETAILED_INFORMATION *PCASSEMBLY_FILE_DETAILED_INFORMATION;
+typedef const ASSEMBLY_FILE_DETAILED_INFORMATION *PcaSSEMBLY_FILE_DETAILED_INFORMATION;
 
 typedef enum _ACTIVATION_CONTEXT_INFO_CLASS {
     ActivationContextBasicInformation                       = 1,
@@ -5531,36 +5531,36 @@ typedef enum _ACTIVATION_CONTEXT_INFO_CLASS {
 
 typedef enum _JOBOBJECTINFOCLASS
 {
-    JobObjectBasicAccountingInformation = 1,
+    JobObjectBasicaccountingInformation = 1,
     JobObjectBasicLimitInformation,
     JobObjectBasicProcessIdList,
     JobObjectBasicUIRestrictions,
     JobObjectSecurityLimitInformation,
     JobObjectEndOfJobTimeInformation,
     JobObjectAssociateCompletionPortInformation,
-    JobObjectBasicAndIoAccountingInformation,
+    JobObjectBasicandIoAccountingInformation,
     JobObjectExtendedLimitInformation,
     JobObjectJobSetInformation,
     MaxJobObjectInfoClass
 } JOBOBJECTINFOCLASS;
 
-typedef enum _LOGICAL_PROCESSOR_RELATIONSHIP
+typedef enum _LOGIcaL_PROCESSOR_RELATIONSHIP
 {
     RelationProcessorCore    = 0,
     RelationNumaNode         = 1,
-    RelationCache            = 2,
+    Relationcache            = 2,
     RelationProcessorPackage = 3,
     RelationGroup            = 4,
     RelationAll              = 0xffff
-} LOGICAL_PROCESSOR_RELATIONSHIP;
+} LOGIcaL_PROCESSOR_RELATIONSHIP;
 
-typedef enum _PROCESSOR_CACHE_TYPE
+typedef enum _PROCESSOR_caCHE_TYPE
 {
-    CacheUnified,
-    CacheInstruction,
-    CacheData,
-    CacheTrace
-} PROCESSOR_CACHE_TYPE;
+    cacheUnified,
+    cacheInstruction,
+    cacheData,
+    cacheTrace
+} PROCESSOR_caCHE_TYPE;
 
 typedef struct _PROCESSOR_GROUP_INFO
 {
@@ -5570,14 +5570,14 @@ typedef struct _PROCESSOR_GROUP_INFO
     KAFFINITY ActiveProcessorMask;
 } PROCESSOR_GROUP_INFO, *PPROCESSOR_GROUP_INFO;
 
-typedef struct _CACHE_DESCRIPTOR
+typedef struct _caCHE_DESCRIPTOR
 {
     BYTE Level;
     BYTE Associativity;
     WORD LineSize;
     DWORD Size;
-    PROCESSOR_CACHE_TYPE Type;
-} CACHE_DESCRIPTOR, *PCACHE_DESCRIPTOR;
+    PROCESSOR_caCHE_TYPE Type;
+} caCHE_DESCRIPTOR, *PcaCHE_DESCRIPTOR;
 
 typedef struct _GROUP_AFFINITY
 {
@@ -5602,15 +5602,15 @@ typedef struct _NUMA_NODE_RELATIONSHIP
     GROUP_AFFINITY GroupMask;
 } NUMA_NODE_RELATIONSHIP, *PNUMA_NODE_RELATIONSHIP;
 
-typedef struct _CACHE_RELATIONSHIP
+typedef struct _caCHE_RELATIONSHIP
 {
     BYTE Level;
     BYTE Associativity;
     WORD LineSize;
-    PROCESSOR_CACHE_TYPE Type;
+    PROCESSOR_caCHE_TYPE Type;
     BYTE Reserved[20];
     GROUP_AFFINITY GroupMask;
-} CACHE_RELATIONSHIP, *PCACHE_RELATIONSHIP;
+} caCHE_RELATIONSHIP, *PcaCHE_RELATIONSHIP;
 
 typedef struct _GROUP_RELATIONSHIP
 {
@@ -5620,10 +5620,10 @@ typedef struct _GROUP_RELATIONSHIP
     PROCESSOR_GROUP_INFO GroupInfo[ANYSIZE_ARRAY];
 } GROUP_RELATIONSHIP, *PGROUP_RELATIONSHIP;
 
-typedef struct _SYSTEM_LOGICAL_PROCESSOR_INFORMATION
+typedef struct _SYSTEM_LOGIcaL_PROCESSOR_INFORMATION
 {
     ULONG_PTR ProcessorMask;
-    LOGICAL_PROCESSOR_RELATIONSHIP Relationship;
+    LOGIcaL_PROCESSOR_RELATIONSHIP Relationship;
     union
     {
         struct
@@ -5634,23 +5634,23 @@ typedef struct _SYSTEM_LOGICAL_PROCESSOR_INFORMATION
         {
             DWORD NodeNumber;
         } NumaNode;
-        CACHE_DESCRIPTOR Cache;
+        caCHE_DESCRIPTOR cache;
         ULONGLONG Reserved[2];
     } DUMMYUNIONNAME;
-} SYSTEM_LOGICAL_PROCESSOR_INFORMATION, *PSYSTEM_LOGICAL_PROCESSOR_INFORMATION;
+} SYSTEM_LOGIcaL_PROCESSOR_INFORMATION, *PSYSTEM_LOGIcaL_PROCESSOR_INFORMATION;
 
-typedef struct _SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX
+typedef struct _SYSTEM_LOGIcaL_PROCESSOR_INFORMATION_EX
 {
-    LOGICAL_PROCESSOR_RELATIONSHIP Relationship;
+    LOGIcaL_PROCESSOR_RELATIONSHIP Relationship;
     DWORD Size;
     union
     {
         PROCESSOR_RELATIONSHIP Processor;
         NUMA_NODE_RELATIONSHIP NumaNode;
-        CACHE_RELATIONSHIP Cache;
+        caCHE_RELATIONSHIP cache;
         GROUP_RELATIONSHIP Group;
     } DUMMYUNIONNAME;
-} SYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX, *PSYSTEM_LOGICAL_PROCESSOR_INFORMATION_EX;
+} SYSTEM_LOGIcaL_PROCESSOR_INFORMATION_EX, *PSYSTEM_LOGIcaL_PROCESSOR_INFORMATION_EX;
 
 NTSYSAPI WINBOOLEAN NTAPI RtlGetProductInfo(DWORD,DWORD,DWORD,DWORD,PDWORD);
 

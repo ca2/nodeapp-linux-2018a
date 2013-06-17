@@ -7,7 +7,7 @@
 #define EINVAL          22
 #define ERANGE          34
 //#define EILSEQ          42
-#define STRUNCATE       80
+#define STRUNcaTE       80
 #endif
 #endif
 

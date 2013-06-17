@@ -1,3 +1,3 @@
 #include "framework.h"
 
-PROCESS_LOCAL(___LNX_STATE, gen_LnxState)
+PROCESS_LOcaL(___LNX_STATE, gen_LnxState)

@@ -66,7 +66,7 @@ typedef char *PSZ;
 
 #define far
 #define near
-#if (!defined(_MAC)) && ((_MSC_VER >= 800) || defined(_STDCALL_SUPPORTED))
+#if (!defined(_MAC)) && ((_MSC_VER >= 800) || defined(_STDcaLL_SUPPORTED))
 #define pascal __stdcall
 #else
 #define pascal
@@ -95,7 +95,7 @@ typedef char *PSZ;
 #else
 #define PASCAL
 #endif
-#elif (_MSC_VER >= 800) || defined(_STDCALL_SUPPORTED)
+#elif (_MSC_VER >= 800) || defined(_STDcaLL_SUPPORTED)
 #define CALLBACK    __stdcall
 #define WINAPI      __stdcall
 #define WINAPIV     __cdecl
@@ -182,9 +182,9 @@ typedef WORD                ATOM;
 /*typedef HANDLE NEAR         *SPHANDLE;
 typedef HANDLE FAR          *LPHANDLE;
 typedef HANDLE              HGLOBAL;
-typedef HANDLE              HLOCAL;
+typedef HANDLE              HLOcaL;
 typedef HANDLE              GLOBALHANDLE;
-typedef HANDLE              LOCALHANDLE;*/
+typedef HANDLE              LOcaLHANDLE;*/
 #ifndef _MANAGED
 #ifndef _MAC
 #ifdef _WIN64

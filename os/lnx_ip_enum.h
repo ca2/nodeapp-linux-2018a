@@ -15,12 +15,12 @@ namespace lnx
 
 
    class CLASS_DECL_lnx ip_enum :
-      virtual public ::ca::ip_enum
+      virtual public ::ca2::ip_enum
    {
    public:
 
 
-      ip_enum(sp(::ca::application) papp);
+      ip_enum(sp(::ca2::application) papp);
       virtual ~ip_enum();
 
 

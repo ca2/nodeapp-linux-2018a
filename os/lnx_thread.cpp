@@ -18,7 +18,7 @@
 	//{
 
 
-struct ___THREAD_STARTUP : ::ca::thread_startup
+struct ___THREAD_STARTUP : ::ca2::thread_startup
 {
    // following are "in" parameters to thread startup
    ___THREAD_STATE* pThreadState;    // thread state of parent thread
@@ -67,7 +67,7 @@ WINBOOL AfxInternalIsIdleMessage(MESSAGE* pMsg);
 __STATIC void CLASS_DECL_lnx __pre_init_dialog(sp(::user::interaction )pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
 __STATIC void CLASS_DECL_lnx __post_init_dialog(sp(::user::interaction) pWnd, const RECT& rectOld, DWORD dwStyleOld);
 
-namespace ca
+namespace ca2
 {
 
    thread_startup::thread_startup() :
@@ -80,7 +80,7 @@ namespace ca
    {
    }
 
-} // namespace ca
+} // namespace ca2
 
 
 
@@ -114,7 +114,7 @@ UINT APIENTRY __thread_entry(void * pParam)
       // forced initialization of the thread
       __init_thread();
 
-      // thread inherits cast's main ::ca::window if not already set
+      // thread inherits cast's main ::ca2::window if not already set
       //if (papp != NULL && GetMainWnd() == NULL)
       {
          // just attach the oswindow
@@ -127,7 +127,7 @@ UINT APIENTRY __thread_entry(void * pParam)
       // Note: DELETE_EXCEPTION(e) not required.
 
       // exception happened during thread initialization!!
-      //TRACE(::ca::trace::category_AppMsg, 0, "Warning: Error during thread initialization!\n");
+      //TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Error during thread initialization!\n");
 
       // set error flag and allow the creating thread to notice the error
 //         threadWnd.Detach();
@@ -168,11 +168,11 @@ CLASS_DECL_lnx ::lnx::thread * __get_thread()
 }
 
 
-CLASS_DECL_lnx void __set_thread(::ca::thread * pthread)
+CLASS_DECL_lnx void __set_thread(::ca2::thread * pthread)
 {
    // check for current thread in module thread state
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
-   pState->m_pCurrentWinThread = dynamic_cast < ::lnx::thread * > (pthread->::ca::thread::m_p.m_p);
+   pState->m_pCurrentWinThread = dynamic_cast < ::lnx::thread * > (pthread->::ca2::thread::m_p.m_p);
 }
 
 
@@ -186,9 +186,9 @@ CLASS_DECL_lnx MESSAGE * AfxGetCurrentMessage()
 
 
 
-CLASS_DECL_lnx void AfxInternalProcessWndProcException(base_exception*, ::ca::signal_object * pobj)
+CLASS_DECL_lnx void AfxInternalProcessWndProcException(base_exception*, ::ca2::signal_object * pobj)
 {
-   SCAST_PTR(::ca::message::base, pbase, pobj);
+   SCAST_PTR(::ca2::message::base, pbase, pobj);
    if (pbase->m_uiMessage == WM_CREATE)
    {
       pbase->set_lresult(-1);
@@ -196,7 +196,7 @@ CLASS_DECL_lnx void AfxInternalProcessWndProcException(base_exception*, ::ca::si
    }
    else if (pbase->m_uiMessage == WM_PAINT)
    {
-      // force validation of ::ca::window to prevent getting WM_PAINT again
+      // force validation of ::ca2::window to prevent getting WM_PAINT again
 //      ValidateRect(pbase->m_hwnd, NULL);
       pbase->set_lresult(0);
       return;
@@ -204,26 +204,26 @@ CLASS_DECL_lnx void AfxInternalProcessWndProcException(base_exception*, ::ca::si
    return;   // sensible default for rest of commands
 }
 
-CLASS_DECL_lnx void AfxProcessWndProcException(base_exception* e, ::ca::signal_object * pobj)
+CLASS_DECL_lnx void AfxProcessWndProcException(base_exception* e, ::ca2::signal_object * pobj)
 {
-   ::ca::thread *pThread = App(pobj->get_app()).GetThread();
+   ::ca2::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->ProcessWndProcException( e, pobj );
    else
       return AfxInternalProcessWndProcException( e, pobj );
 }
 
-void AfxInternalPreTranslateMessage(::ca::signal_object * pobj)
+void AfxInternalPreTranslateMessage(::ca2::signal_object * pobj)
 {
 #ifndef DEBUG
    try
    {
 #endif
-      SCAST_PTR(::ca::message::base, pbase, pobj);
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
 
       //   ASSERT_VALID(this);
 
-      ::ca::thread *pThread = dynamic_cast < ::ca::thread * > (::lnx::get_thread());
+      ::ca2::thread *pThread = dynamic_cast < ::ca2::thread * > (::lnx::get_thread());
       if( pThread )
       {
          // if this is a thread-message, short-circuit this function
@@ -235,7 +235,7 @@ void AfxInternalPreTranslateMessage(::ca::signal_object * pobj)
          }
       }
 
-      // walk from target to main ::ca::window
+      // walk from target to main ::ca2::window
       sp(::user::interaction) pMainWnd = pThread->GetMainWnd();
       if(pMainWnd != NULL && pMainWnd->IsWindow())
       {
@@ -245,8 +245,8 @@ void AfxInternalPreTranslateMessage(::ca::signal_object * pobj)
       }
 
       // in case of modeless dialogs, last chance route through main
-      //   ::ca::window's accelerator table
-      sp(::ca::window) pWnd = pbase->m_pwnd->get_wnd();
+      //   ::ca2::window's accelerator table
+      sp(::ca2::window) pWnd = pbase->m_pwnd->get_wnd();
       if (pMainWnd != NULL)
       {
          if (pWnd != NULL && LNX_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
@@ -303,18 +303,18 @@ void AfxInternalPreTranslateMessage(::ca::signal_object * pobj)
    // no special processing
 }
 
-void __cdecl __pre_translate_message(::ca::signal_object * pobj)
+void __cdecl __pre_translate_message(::ca2::signal_object * pobj)
 {
-   ::ca::thread *pThread = App(pobj->get_app()).GetThread();
+   ::ca2::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->pre_translate_message( pobj );
    else
       return AfxInternalPreTranslateMessage( pobj );
 }
 
-WINBOOL AfxInternalIsIdleMessage(::ca::signal_object * pobj)
+WINBOOL AfxInternalIsIdleMessage(::ca2::signal_object * pobj)
 {
-   SCAST_PTR(::ca::message::base, pbase, pobj);
+   SCAST_PTR(::ca2::message::base, pbase, pobj);
    // Return FALSE if the message just dispatched should _not_
    // cause on_idle to be run.  Messages which do not usually
    // affect the state of the ::fontopus::user interface and happen very
@@ -371,9 +371,9 @@ WINBOOL AfxInternalIsIdleMessage(LPMESSAGE lpmsg)
    return lpmsg->message != WM_PAINT && lpmsg->message != 0x0118;
 }
 
-WINBOOL __cdecl __is_idle_message(::ca::signal_object * pobj)
+WINBOOL __cdecl __is_idle_message(::ca2::signal_object * pobj)
 {
-   ::ca::thread *pThread = App(pobj->get_app()).GetThread();
+   ::ca2::thread *pThread = App(pobj->get_app()).GetThread();
    if( pThread )
       return pThread->is_idle_message(pobj);
    else
@@ -390,7 +390,7 @@ WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg)
 }
 
 
-/*thread* CLASS_DECL_lnx AfxBeginThread(sp(::ca::application) papp, __THREADPROC pfnThreadProc, LPVOID pParam,
+/*thread* CLASS_DECL_lnx AfxBeginThread(sp(::ca2::application) papp, __THREADPROC pfnThreadProc, LPVOID pParam,
                               int32_t nPriority, UINT nStackSize, DWORD dwCreateFlags,
                               LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
@@ -411,7 +411,7 @@ WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg)
 
    return pThread;
 }*/
-void CLASS_DECL_lnx __end_thread(sp(::ca::application) papp, UINT nExitCode, bool bDelete)
+void CLASS_DECL_lnx __end_thread(sp(::ca2::application) papp, UINT nExitCode, bool bDelete)
 {
    // remove current thread object from primitive::memory
    __MODULE_THREAD_STATE* pState = __get_module_thread_state();
@@ -419,7 +419,7 @@ void CLASS_DECL_lnx __end_thread(sp(::ca::application) papp, UINT nExitCode, boo
    if (pThread != NULL)
    {
       ASSERT_VALID(pThread);
-      //ASSERT(pThread != System::smart_pointer < sp(::ca::application)>::m_p);
+      //ASSERT(pThread != System::smart_pointer < sp(::ca2::application)>::m_p);
 
       if (bDelete)
          pThread->Delete();
@@ -434,7 +434,7 @@ void CLASS_DECL_lnx __end_thread(sp(::ca::application) papp, UINT nExitCode, boo
 }
 
 extern __thread thread_local_storage * __thread_data;
-void CLASS_DECL_lnx __term_thread(sp(::ca::application) papp, HINSTANCE hInstTerm)
+void CLASS_DECL_lnx __term_thread(sp(::ca2::application) papp, HINSTANCE hInstTerm)
 {
 
    try
@@ -484,7 +484,7 @@ void CLASS_DECL_lnx AfxInitThread()
 namespace lnx
 {
 
-   void thread::set_p(::ca::thread * p)
+   void thread::set_p(::ca2::thread * p)
    {
       m_p = p;
    }
@@ -510,11 +510,11 @@ namespace lnx
       CommonConstruct();
    }
 
-   thread::thread(sp(::ca::application) papp) :
-      ca(papp),
+   thread::thread(sp(::ca2::application) papp) :
+      ca2(papp),
       message_window_simple_callback(papp),//,
       m_evFinish(papp, FALSE, TRUE),
-      ::ca::thread(NULL),
+      ::ca2::thread(NULL),
       m_mutexUiPtra(papp)
    {
       m_evFinish.SetEvent();
@@ -648,7 +648,7 @@ namespace lnx
       return m_nID;
    }
 
-   void thread::on_delete(::ca::ca * p)
+   void thread::on_delete(::ca2::ca2 * p)
    {
    }
 
@@ -805,7 +805,7 @@ namespace lnx
       return m_bRun && ::os_thread::get_run();
    }
 
-   ::ca::thread * thread::get_app_thread()
+   ::ca2::thread * thread::get_app_thread()
    {
       return m_pAppThread;
    }
@@ -830,7 +830,7 @@ namespace lnx
    }
 
 
-   bool thread::begin(::ca::e_thread_priority epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::begin(::ca2::e_thread_priority epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
       if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
       {
@@ -846,12 +846,12 @@ namespace lnx
    }
 
 
-   bool thread::create_thread(::ca::e_thread_priority epriority, uint32_t dwCreateFlagsParam, uint_ptr nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::create_thread(::ca2::e_thread_priority epriority, uint32_t dwCreateFlagsParam, uint_ptr nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       uint32_t dwCreateFlags = dwCreateFlagsParam;
 
-      if(epriority != ::ca::thread_priority_normal)
+      if(epriority != ::ca2::thread_priority_normal)
       {
          dwCreateFlags |= CREATE_SUSPENDED;
       }
@@ -871,7 +871,7 @@ namespace lnx
       pstartup->dwCreateFlags = dwCreateFlags;
 /*      if (startup.hEvent == NULL || startup.hEvent2 == NULL)
       {
-         TRACE(::ca::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
+         TRACE(::ca2::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::create_thread.\n");
          if (startup.hEvent != NULL)
             ::CloseHandle(startup.hEvent);
          if (startup.hEvent2 != NULL)
@@ -905,7 +905,7 @@ namespace lnx
       // allow thread to continue, once resumed (it may already be resumed)
       pstartup->hEvent2.set_event();
 
-      if(epriority != ::ca::thread_priority_normal)
+      if(epriority != ::ca2::thread_priority_normal)
       {
 
          //VERIFY(set_thread_priority(epriority));
@@ -932,7 +932,7 @@ void thread::Delete()
       if(m_pappDelete != NULL)
          m_pappDelete.release();
       m_evFinish.SetEvent();
-      ::ca::thread * pthread = dynamic_cast < ::ca::thread * > (m_p.m_p);
+      ::ca2::thread * pthread = dynamic_cast < ::ca2::thread * > (m_p.m_p);
 //      if(pthread->m_peventReady != NULL)
   //    {
     //     ::SetEvent((HANDLE) pthread->m_peventReady);
@@ -941,10 +941,10 @@ void thread::Delete()
   //    {
     //     ::SetEvent((HANDLE) m_peventReady);
       //}
-      //pthread->::ca::smart_pointer < ::ca::thread >::m_p = NULL;
+      //pthread->::ca2::smart_pointer < ::ca2::thread >::m_p = NULL;
 //      m_p.release();
 //      delete_this();
-::c::c::release();
+        ::ca::ca::release();
    }
    else
    {
@@ -978,8 +978,8 @@ void thread::Delete()
       // for tracking the idle time state
       WINBOOL bIdle = TRUE;
       LONG lIdleCount = 0;
-      sp(::ca::application) pappThis1 =  (this);
-      sp(::ca::application) pappThis2 =  (m_p);
+      sp(::ca2::application) pappThis1 =  (this);
+      sp(::ca2::application) pappThis2 =  (m_p);
 
 
       XEvent e;
@@ -1025,7 +1025,7 @@ void thread::Delete()
                throw e;
 
             }
-            catch(::ca::exception & e)
+            catch(::ca2::exception & e)
             {
 
                if(!Application.on_run_exception(e))
@@ -1087,7 +1087,7 @@ stop_run:
       return 0;
    }
 
-   bool thread::is_idle_message(::ca::signal_object * pobj)
+   bool thread::is_idle_message(::ca2::signal_object * pobj)
    {
       return AfxInternalIsIdleMessage(pobj);
    }
@@ -1119,7 +1119,7 @@ stop_run:
          // Check for missing LockTempMap calls
          if(m_nTempMapLock != 0)
          {
-            TRACE(::ca::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n", m_nTempMapLock);
+            TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n", m_nTempMapLock);
          }
          LockTempMaps();
          UnlockTempMaps(-1);
@@ -1193,7 +1193,7 @@ stop_run:
             {
                if (pui != NULL && pui->IsWindowVisible())
                {
-                  /*AfxCallWndProc(pMainWnd, pMainWnd->get_handle(),
+                  /*AfxcallWndProc(pMainWnd, pMainWnd->get_handle(),
                      WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
                   pui->send_message(WM_IDLEUPDATECMDUI, (WPARAM)TRUE);
                /*   pui->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
@@ -1211,7 +1211,7 @@ stop_run:
          sp(::user::interaction) pMainWnd = GetMainWnd();
          if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
          {
-            /*AfxCallWndProc(pMainWnd, pMainWnd->get_handle(),
+            /*AfxcallWndProc(pMainWnd, pMainWnd->get_handle(),
                WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
            /* pMainWnd->SendMessage(WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
             pMainWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
@@ -1230,7 +1230,7 @@ stop_run:
                if (pFrameWnd->IsWindowVisible() ||
                   pFrameWnd->m_nShowDelay >= 0)
                {
-                  AfxCallWndProc(pFrameWnd, pFrameWnd->get_handle(),
+                  AfxcallWndProc(pFrameWnd, pFrameWnd->get_handle(),
                      WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
                   pFrameWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
                      (WPARAM)TRUE, 0, TRUE, TRUE);
@@ -1262,17 +1262,17 @@ stop_run:
       return lCount < 0;  // nothing more to do if lCount >= 0
    }
 
-   ::ca::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode)
+   ::ca2::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode)
    {
       UNREFERENCED_PARAMETER(uiMessage);
       UNREFERENCED_PARAMETER(uiCode);
-    return ::ca::message::PrototypeNone;
+    return ::ca2::message::PrototypeNone;
    }
 
 
-   void thread::DispatchThreadMessageEx(::ca::signal_object * pobj)
+   void thread::DispatchThreadMessageEx(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca::message::base, pbase, pobj);
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
       if(pbase->m_uiMessage == WM_APP + 1984 && pbase->m_wparam == 77)
       {
          sp(::user::message) spmessage(pbase->m_lparam);
@@ -1328,11 +1328,11 @@ stop_run:
       for(int32_t i = 0; i < signalptra.get_size(); i++)
       {
          Signal & signal = *signalptra[i];
-         ::ca::signal * psignal = signal.m_psignal;
-         ::ca::message::e_prototype eprototype = signal.m_eprototype;
-         if(eprototype == ::ca::message::PrototypeNone)
+         ::ca2::signal * psignal = signal.m_psignal;
+         ::ca2::message::e_prototype eprototype = signal.m_eprototype;
+         if(eprototype == ::ca2::message::PrototypeNone)
          {
-            //::ca::message::base base(get_app());
+            //::ca2::message::base base(get_app());
             pbase->m_psignal = psignal;
             lresult = 0;
             //base.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
@@ -1345,37 +1345,37 @@ stop_run:
       pbase->m_bRet = true;
    }
 
-   void thread::pre_translate_message(::ca::signal_object * pobj)
+   void thread::pre_translate_message(::ca2::signal_object * pobj)
    {
       ASSERT_VALID(this);
       return AfxInternalPreTranslateMessage(pobj);
    }
 
-   void thread::ProcessWndProcException(base_exception* e, ::ca::signal_object * pobj)
+   void thread::ProcessWndProcException(base_exception* e, ::ca2::signal_object * pobj)
    {
       return AfxInternalProcessWndProcException(e, pobj);
    }
 
-   __STATIC inline WINBOOL IsEnterKey(::ca::signal_object * pobj)
+   __STATIC inline WINBOOL IsEnterKey(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca::message::base, pbase, pobj);
-      SCAST_PTR(::ca::message::key, pkey, pobj);
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
+      SCAST_PTR(::ca2::message::key, pkey, pobj);
       return pbase->m_uiMessage == WM_KEYDOWN && pkey->m_ekey == ::user::key_return;
    }
 
-   __STATIC inline WINBOOL IsButtonUp(::ca::signal_object * pobj)
+   __STATIC inline WINBOOL IsButtonUp(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca::message::base, pbase, pobj);
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
       return pbase->m_uiMessage == WM_LBUTTONUP;
    }
 
-   void thread::ProcessMessageFilter(int32_t code, ::ca::signal_object * pobj)
+   void thread::ProcessMessageFilter(int32_t code, ::ca2::signal_object * pobj)
    {
 
       if(pobj == NULL)
          return;   // not handled
 
-      SCAST_PTR(::ca::message::base, pbase, pobj);
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
 
       sp(::user::frame_window) pTopFrameWnd;
       sp(::user::interaction) pMainWnd;
@@ -1461,7 +1461,7 @@ stop_run:
          MESSAGE msg;
          if(!::GetMessage(&msg, NULL, 0, 0))
          {
-            TRACE(::ca::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
+            TRACE(::ca2::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
             m_nDisablePumpCount++; // application must die
             // Note: prevents calling message loop things in 'exit_instance'
             // will never be decremented
@@ -1479,7 +1479,7 @@ stop_run:
 
          if(m_nDisablePumpCount != 0)
          {
-            TRACE(::ca::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
+            TRACE(::ca2::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
             ASSERT(FALSE);
          }
 
@@ -1488,7 +1488,7 @@ stop_run:
          if(msg.message != WM_KICKIDLE)
          {
 
-            ::c::smart_pointer < ::ca::message::base > spbase;
+            ::ca::smart_pointer < ::ca2::message::base > spbase;
 
             if(msg.message == 126)
             {
@@ -1551,9 +1551,9 @@ stop_run:
          return TRUE;
 
       }
-      catch(const ::ca::exception & e)
+      catch(const ::ca2::exception & e)
       {
-         if(on_run_exception((::ca::exception &) e))
+         if(on_run_exception((::ca2::exception &) e))
             return TRUE;
          return FALSE;
       }
@@ -1613,17 +1613,17 @@ stop_run:
    }
 
 
-   bool thread::on_run_exception(::ca::exception & e)
+   bool thread::on_run_exception(::ca2::exception & e)
    {
 
-      return ::ca::thread::on_run_exception(e);
+      return ::ca2::thread::on_run_exception(e);
 
    }
 
 
-   void thread::message_handler(::ca::signal_object * pobj)
+   void thread::message_handler(::ca2::signal_object * pobj)
    {
-      SCAST_PTR(::ca::message::base, pbase, pobj);
+      SCAST_PTR(::ca2::message::base, pbase, pobj);
       // special message which identifies the window as using AfxWndProc
       //if(pbase->m_uiMessage == WM_QUERYAFXWNDPROC)
       {
@@ -1632,7 +1632,7 @@ stop_run:
       }
 
       // all other messages route through message ::collection::map
-      sp(::ca::window) pwindow = pbase->m_pwnd->get_wnd();
+      sp(::ca2::window) pwindow = pbase->m_pwnd->get_wnd();
 
 /*      ASSERT(pwindow == NULL || LNX_WINDOW(pwindow)->get_handle() == pbase->m_hwnd);
 
@@ -1651,7 +1651,7 @@ stop_run:
 
       __trace_message("message_handler", pobj);
 
-      // Catch exceptions thrown outside the scope of a callback
+      // catch exceptions thrown outside the scope of a CALLBACK
       // in debug builds and warn the ::fontopus::user.
       try
       {
@@ -1676,11 +1676,11 @@ stop_run:
          if(pbase->m_uiMessage == WM_INITDIALOG)
             __post_init_dialog(pwindow, rectOld, dwStyle);
       }
-      catch(const ::ca::exception & e)
+      catch(const ::ca2::exception & e)
       {
-         if(App(get_app()).on_run_exception((::ca::exception &) e))
+         if(App(get_app()).on_run_exception((::ca2::exception &) e))
             goto run;
-         if(App(get_app()).final_handle_exception((::ca::exception &) e))
+         if(App(get_app()).final_handle_exception((::ca2::exception &) e))
             goto run;
          __post_quit_message(-1);
          pbase->set_lresult(-1);
@@ -1689,7 +1689,7 @@ stop_run:
       catch(base_exception * pe)
       {
          AfxProcessWndProcException(pe, pbase);
-         TRACE(::ca::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
+         TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
          pe->Delete();
       }
    run:
@@ -1699,7 +1699,7 @@ stop_run:
 
 //   thread::operator HANDLE() const
   // { return this == NULL ? NULL : m_hThread; }
-   bool thread::set_thread_priority(::ca::e_thread_priority  nPriority)
+   bool thread::set_thread_priority(::ca2::e_thread_priority  nPriority)
    {
       //throw not_implemented(get_app());
 //       return ::SetThreadPriority(thread_ nPriority);
@@ -1741,12 +1741,12 @@ return false;
       //m_nThreadID = (dword_ptr) iData;
    }
 
-   void thread::message_window_message_handler(::ca::signal_object * pobj)
+   void thread::message_window_message_handler(::ca2::signal_object * pobj)
    {
    }
 
 
-   CLASS_DECL_lnx ::ca::thread * get_thread()
+   CLASS_DECL_lnx ::ca2::thread * get_thread()
    {
       ::lnx::thread * pwinthread = __get_thread();
       if(pwinthread == NULL)
@@ -1774,7 +1774,7 @@ return false;
 
 
 #ifndef _AFX_PORTABLE
-      /*sp(::ca::application) papp =  (get_app());
+      /*sp(::ca2::application) papp =  (get_app());
       ___THREAD_STATE* pThreadState = gen_ThreadState.GetDataNA();
       if( pThreadState != NULL )
       {
@@ -1799,7 +1799,7 @@ return false;
                pThreadState->m_pSafetyPoolBuffer = malloc(papp->m_nSafetyPoolSize);
                if (pThreadState->m_pSafetyPoolBuffer == NULL)
                {
-//                  TRACE(::ca::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
+//                  TRACE(::ca2::trace::category_AppMsg, 0, "Warning: failed to reclaim %d bytes for primitive::memory safety pool.\n",
   //                   pApp->m_nSafetyPoolSize);
                   // at least get the old buffer back
                   if (nOldSize != 0)
@@ -1824,7 +1824,7 @@ return false;
       return m_nTempMapLock != 0;
    }
 
-   int32_t thread::thread_entry(::ca::thread_startup * pstartup)
+   int32_t thread::thread_entry(::ca2::thread_startup * pstartup)
    {
 
       ASSERT(pstartup != NULL);
@@ -1843,7 +1843,7 @@ return false;
 
       ::lnx::thread* pThread = dynamic_cast < ::lnx::thread * > (pstartup->m_pthread);
 
-      sp(::ca::application) papp =  (get_app());
+      sp(::ca2::application) papp =  (get_app());
       m_evFinish.ResetEvent();
       install_message_handling(pThread);
       m_p->install_message_handling(pThread);
@@ -1919,11 +1919,11 @@ return false;
                nResult = m_p->run();
 #ifndef DEBUG
             }
-            catch(const ::ca::exception & e)
+            catch(const ::ca2::exception & e)
             {
-               if(on_run_exception((::ca::exception &) e))
+               if(on_run_exception((::ca2::exception &) e))
                   goto run;
-               if(App(get_app()).final_handle_exception((::ca::exception & ) e))
+               if(App(get_app()).final_handle_exception((::ca2::exception & ) e))
                   goto run;
                try
                {
@@ -2457,8 +2457,8 @@ return false;
 
 WINBOOL CLASS_DECL_lnx AfxInternalPumpMessage();
 LRESULT CLASS_DECL_lnx AfxInternalProcessWndProcException(base_exception*, const MESSAGE* pMsg);
-void AfxInternalPreTranslateMessage(::ca::signal_object * pobj);
-WINBOOL AfxInternalIsIdleMessage(::ca::signal_object * pobj);
+void AfxInternalPreTranslateMessage(::ca2::signal_object * pobj);
+WINBOOL AfxInternalIsIdleMessage(::ca2::signal_object * pobj);
 WINBOOL AfxInternalIsIdleMessage(LPMESSAGE lpmsg);
 
 
@@ -2484,7 +2484,7 @@ ___THREAD_STATE *pState = __get_thread_state();
 if (!::GetMessage(&(pState->m_msgCur), NULL, NULL, NULL))
 {
 #ifdef DEBUG
-TRACE(::ca::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
+TRACE(::ca2::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
 pState->m_nDisablePumpCount++; // application must die
 #endif
 // Note: prevents calling message loop things in 'exit_instance'
@@ -2495,7 +2495,7 @@ return FALSE;
 #ifdef DEBUG
 if (pState->m_nDisablePumpCount != 0)
 {
-TRACE(::ca::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
+TRACE(::ca2::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
 ASSERT(FALSE);
 }
 #endif
@@ -2531,7 +2531,7 @@ return -1;  // just fail
 }
 else if (pMsg->message == WM_PAINT)
 {
-// force validation of ::ca::window to prevent getting WM_PAINT again
+// force validation of ::ca2::window to prevent getting WM_PAINT again
 ValidateRect(pMsg->hwnd, NULL);
 return 0;
 }
@@ -2558,16 +2558,16 @@ if (pMsg->hwnd == NULL && pThread->DispatchThreadMessageEx(pMsg))
 return TRUE;
 }
 
-// walk from target to main ::ca::window
+// walk from target to main ::ca2::window
 sp(::user::interaction) pMainWnd = System.GetMainWnd();
-/* trans   if (::ca::window::WalkPreTranslateTree(pMainWnd->GetSafeHwnd(), pMsg))
+/* trans   if (::ca2::window::WalkPreTranslateTree(pMainWnd->GetSafeHwnd(), pMsg))
 return TRUE; */
 
 // in case of modeless dialogs, last chance route through main
-//   ::ca::window's accelerator table
+//   ::ca2::window's accelerator table
 /*   if (pMainWnd != NULL)
 {
-sp(::ca::window) pWnd = ::lnx::window::from_handle(pMsg->hwnd);
+sp(::ca2::window) pWnd = ::lnx::window::from_handle(pMsg->hwnd);
 if (pWnd != NULL && LNX_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
 return pMainWnd->pre_translate_message(pMsg);
 }
@@ -2618,7 +2618,7 @@ return AfxInternalIsIdleMessage( pMsg );
 }
 
 /*
-thread* CLASS_DECL_lnx AfxBeginThread(::ca::type_info pThreadClass,
+thread* CLASS_DECL_lnx AfxBeginThread(::ca2::type_info pThreadClass,
 int32_t nPriority, UINT nStackSize, DWORD dwCreateFlags,
 LPSECURITY_ATTRIBUTES lpSecurityAttrs)
 {
@@ -2727,7 +2727,7 @@ startup.hEvent2 = ::CreateEvent(NULL, TRUE, FALSE, NULL);
 startup.dwCreateFlags = dwCreateFlags;
 if (startup.hEvent == NULL || startup.hEvent2 == NULL)
 {
-TRACE(::ca::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::CreateThread.\n");
+TRACE(::ca2::trace::category_AppMsg, 0, "Warning: CreateEvent failed in thread::CreateThread.\n");
 if (startup.hEvent != NULL)
 ::CloseHandle(startup.hEvent);
 if (startup.hEvent2 != NULL)
@@ -2894,11 +2894,11 @@ ASSERT(__check_memory());
 
 if (lCount <= 0)
 {
-// send WM_IDLEUPDATECMDUI to the main ::ca::window
+// send WM_IDLEUPDATECMDUI to the main ::ca2::window
 sp(::user::interaction) pMainWnd = GetMainWnd();
 if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
 {
-/*AfxCallWndProc(pMainWnd, pMainWnd->get_handle(),
+/*AfxcallWndProc(pMainWnd, pMainWnd->get_handle(),
 WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);*/
 /*       pMainWnd->SendMessage(WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
 pMainWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
@@ -2916,7 +2916,7 @@ pFrameWnd->ShowWindow(pFrameWnd->m_nShowDelay);
 if (pFrameWnd->IsWindowVisible() ||
 pFrameWnd->m_nShowDelay >= 0)
 {
-AfxCallWndProc(pFrameWnd, pFrameWnd->get_handle(),
+AfxcallWndProc(pFrameWnd, pFrameWnd->get_handle(),
 WM_IDLEUPDATECMDUI, (WPARAM)TRUE, 0);
 pFrameWnd->SendMessageToDescendants(WM_IDLEUPDATECMDUI,
 (WPARAM)TRUE, 0, TRUE, TRUE);
@@ -2948,9 +2948,9 @@ ASSERT(__check_memory());
 return lCount < 0;  // nothing more to do if lCount >= 0
 }
 
-::ca::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode)
+::ca2::message::e_prototype thread::GetMessagePrototype(UINT uiMessage, UINT uiCode)
 {
-return ::ca::message::PrototypeNone;
+return ::ca2::message::PrototypeNone;
 }
 
 
@@ -2958,7 +2958,7 @@ WINBOOL thread::DispatchThreadMessageEx(MESSAGE* pmsg)
 {
 if(pmsg->message == WM_APP + 1984 && pmsg->wParam == 77)
 {
-::ca::scoped_ptr < lnx::message > spmessage(pmsg->lParam);
+::ca2::scoped_ptr < lnx::message > spmessage(pmsg->lParam);
 spmessage->send();
 return TRUE;
 }
@@ -2974,7 +2974,7 @@ pMessageMap = (*pMessageMap->pfnGetBaseMap)())
 ASSERT(pMessageMap != (*pMessageMap->pfnGetBaseMap)());
 if (pMsg->message < 0xC000)
 {
-// constant ::ca::window message
+// constant ::ca2::window message
 if ((lpEntry = AfxFindMessageEntry(pMessageMap->lpEntries,
 pMsg->message, 0, 0)) != NULL)
 goto LDispatch;
@@ -3010,11 +3010,11 @@ m_signala.GetSignalsByMessage(signalptra, pmsg->message, 0, 0);
 for(int32_t i = 0; i < signalptra.get_size(); i++)
 {
 Signal & signal = *signalptra[i];
-::ca::signal * psignal = signal.m_psignal;
-::ca::message::e_prototype eprototype = signal.m_eprototype;
-if(eprototype == ::ca::message::PrototypeNone)
+::ca2::signal * psignal = signal.m_psignal;
+::ca2::message::e_prototype eprototype = signal.m_eprototype;
+if(eprototype == ::ca2::message::PrototypeNone)
 {
-::ca::message::base base;
+::ca2::message::base base;
 base.m_psignal = psignal;
 lresult = 0;
 base.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
@@ -3027,7 +3027,7 @@ break;
 return true;
 }
 
-WINBOOL thread::pre_translate_message(::ca::signal_object * pobj)
+WINBOOL thread::pre_translate_message(::ca2::signal_object * pobj)
 {
 ASSERT_VALID(this);
 return AfxInternalPreTranslateMessage( pMsg );
@@ -3276,13 +3276,13 @@ return AfxInternalProcessWndProcException( e, pMsg );
 
 /*LRESULT CALLBACK _AfxMsgFilterHook(int32_t code, WPARAM wParam, LPARAM lParam)
 {
-   ::ca::thread* pthread;
-   if (afxContextIsDLL || (code < 0 && code != MESSAGEF_DDEMGR) || (pthread = dynamic_cast < ::ca::thread * > (::lnx::get_thread())) == NULL)
+   ::ca2::thread* pthread;
+   if (afxContextIsDLL || (code < 0 && code != MESSAGEF_DDEMGR) || (pthread = dynamic_cast < ::ca2::thread * > (::lnx::get_thread())) == NULL)
    {
-      return ::CallNextHookEx(_afxThreadState->m_hHookOldMsgFilter, code, wParam, lParam);
+      return ::callNextHookEx(_afxThreadState->m_hHookOldMsgFilter, code, wParam, lParam);
    }
    ASSERT(pthread != NULL);
-   ::ca::smart_pointer < ::ca::message::base > spbase;
+   ::ca2::smart_pointer < ::ca2::message::base > spbase;
    spbase(pthread->get_base((LPMESSAGE)lParam));
    pthread->ProcessMessageFilter(code, spbase);
    LRESULT lresult = spbase->m_bRet ? 1 : 0;
@@ -3307,10 +3307,10 @@ __STATIC inline WINBOOL IsButtonUp(LPMESSAGE lpMsg)
 { return lpMsg->message == WM_LBUTTONUP; }
 
 */
-namespace ca
+namespace ca2
 {
-   extern CLASS_DECL_ca2 PFN_get_thread g_pfn_get_thread;
-   extern CLASS_DECL_ca2 PFN_get_thread_state g_pfn_get_thread_state;
+   extern CLASS_DECL_ca PFN_get_thread g_pfn_get_thread;
+   extern CLASS_DECL_ca PFN_get_thread_state g_pfn_get_thread_state;
 
 }
 
@@ -3318,6 +3318,6 @@ namespace ca
 
 __attribute__((constructor))
 static void initialize_navigationBarImages() {
-  ::ca::g_pfn_get_thread = &::lnx::get_thread;
-  ::ca::g_pfn_get_thread_state = (::ca::thread_state *(*)() )&__get_thread_state;
+  ::ca2::g_pfn_get_thread = &::lnx::get_thread;
+  ::ca2::g_pfn_get_thread_state = (::ca2::thread_state *(*)() )&__get_thread_state;
 }

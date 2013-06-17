@@ -23,9 +23,9 @@ namespace lnx
 {
 
 
-   ip_enum::ip_enum(sp(::ca::application) papp) :
-      ca(papp),
-      ::ca::ip_enum(papp)
+   ip_enum::ip_enum(sp(::ca2::application) papp) :
+      ca2(papp),
+      ::ca2::ip_enum(papp)
    {
 
    }
@@ -63,7 +63,7 @@ namespace lnx
          return FALSE;
       }
 
-      //call the virtual callback function in a loop
+      //call the virtual CALLBACK function in a loop
 
       int32_t nAdapter = 0;
 

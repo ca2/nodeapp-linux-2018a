@@ -45,7 +45,7 @@ typedef struct midihdr_tag {
     struct midihdr_tag far *lpNext;   /* reserved for driver */
     dword_ptr   reserved;             /* reserved for driver */
 #if (WINVER >= 0x0400)
-    DWORD       dwOffset;             /* Callback offset into buffer */
+    DWORD       dwOffset;             /* CALLBACK offset into buffer */
     dword_ptr   dwReserved[8];        /* Reserved for MMSYSTEM */
 #endif
 } MIDIHDR, *PMIDIHDR, NEAR *NPMIDIHDR, FAR *LPMIDIHDR;
@@ -135,32 +135,32 @@ typedef UINT        MMVERSION;  /* major (high byte), minor (low byte) */
 
 WINMMAPI UINT WINAPI mixerGetNumDevs(void);
 
-typedef struct tagMIXERCAPSA {
+typedef struct tagMIXERcaPSA {
     WORD            wMid;                   /* manufacturer id */
     WORD            wPid;                   /* product id */
     MMVERSION       vDriverVersion;         /* version of the driver */
     CHAR            szPname[MAXPNAMELEN];   /* product name */
     DWORD           fdwSupport;             /* misc. support bits */
     DWORD           cDestinations;          /* count of destinations */
-} MIXERCAPSA, *PMIXERCAPSA, *LPMIXERCAPSA;
-typedef struct tagMIXERCAPSW {
+} MIXERcaPSA, *PMIXERcaPSA, *LPMIXERcaPSA;
+typedef struct tagMIXERcaPSW {
     WORD            wMid;                   /* manufacturer id */
     WORD            wPid;                   /* product id */
     MMVERSION       vDriverVersion;         /* version of the driver */
     WCHAR           szPname[MAXPNAMELEN];   /* product name */
     DWORD           fdwSupport;             /* misc. support bits */
     DWORD           cDestinations;          /* count of destinations */
-} MIXERCAPSW, *PMIXERCAPSW, *LPMIXERCAPSW;
+} MIXERcaPSW, *PMIXERcaPSW, *LPMIXERcaPSW;
 #ifdef UNICODE
-typedef MIXERCAPSW MIXERCAPS;
-typedef PMIXERCAPSW PMIXERCAPS;
-typedef LPMIXERCAPSW LPMIXERCAPS;
+typedef MIXERcaPSW MIXERcaPS;
+typedef PMIXERcaPSW PMIXERcaPS;
+typedef LPMIXERcaPSW LPMIXERcaPS;
 #else
-typedef MIXERCAPSA MIXERCAPS;
-typedef PMIXERCAPSA PMIXERCAPS;
-typedef LPMIXERCAPSA LPMIXERCAPS;
+typedef MIXERcaPSA MIXERcaPS;
+typedef PMIXERcaPSA PMIXERcaPS;
+typedef LPMIXERcaPSA LPMIXERcaPS;
 #endif // UNICODE
-typedef struct tagMIXERCAPS2A {
+typedef struct tagMIXERcaPS2A {
     WORD            wMid;                   /* manufacturer id */
     WORD            wPid;                   /* product id */
     MMVERSION       vDriverVersion;         /* version of the driver */
@@ -170,8 +170,8 @@ typedef struct tagMIXERCAPS2A {
     GUID            ManufacturerGuid;       /* for extensible MID mapping */
     GUID            ProductGuid;            /* for extensible PID mapping */
     GUID            NameGuid;               /* for name lookup in registry */
-} MIXERCAPS2A, *PMIXERCAPS2A, *LPMIXERCAPS2A;
-typedef struct tagMIXERCAPS2W {
+} MIXERcaPS2A, *PMIXERcaPS2A, *LPMIXERcaPS2A;
+typedef struct tagMIXERcaPS2W {
     WORD            wMid;                   /* manufacturer id */
     WORD            wPid;                   /* product id */
     MMVERSION       vDriverVersion;         /* version of the driver */
@@ -181,15 +181,15 @@ typedef struct tagMIXERCAPS2W {
     GUID            ManufacturerGuid;       /* for extensible MID mapping */
     GUID            ProductGuid;            /* for extensible PID mapping */
     GUID            NameGuid;               /* for name lookup in registry */
-} MIXERCAPS2W, *PMIXERCAPS2W, *LPMIXERCAPS2W;
+} MIXERcaPS2W, *PMIXERcaPS2W, *LPMIXERcaPS2W;
 #ifdef UNICODE
-typedef MIXERCAPS2W MIXERCAPS2;
-typedef PMIXERCAPS2W PMIXERCAPS2;
-typedef LPMIXERCAPS2W LPMIXERCAPS2;
+typedef MIXERcaPS2W MIXERcaPS2;
+typedef PMIXERcaPS2W PMIXERcaPS2;
+typedef LPMIXERcaPS2W LPMIXERcaPS2;
 #else
-typedef MIXERCAPS2A MIXERCAPS2;
-typedef PMIXERCAPS2A PMIXERCAPS2;
-typedef LPMIXERCAPS2A LPMIXERCAPS2;
+typedef MIXERcaPS2A MIXERcaPS2;
+typedef PMIXERcaPS2A PMIXERcaPS2;
+typedef LPMIXERcaPS2A LPMIXERcaPS2;
 #endif // UNICODE
 
 

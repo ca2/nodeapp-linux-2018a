@@ -106,7 +106,7 @@ void preview_dc::SetOutputDC(HDC hDC)
 {
    ASSERT(hDC != NULL);
    m_nSaveDCIndex = ::SaveDC(hDC); // restore in ReleaseOutputDC()
-   ::ca::graphics_sp::SetOutputDC(hDC);
+   ::ca2::graphics_sp::SetOutputDC(hDC);
 
    if (get_handle2() != NULL)
    {
@@ -124,13 +124,13 @@ void preview_dc::ReleaseOutputDC()
 {
    ASSERT(get_os_data() != NULL);
    ::RestoreDC(get_os_data(), m_nSaveDCIndex); // Saved in SetOutputDC()
-   ::ca::graphics_sp::ReleaseOutputDC();
+   ::ca2::graphics_sp::ReleaseOutputDC();
 }
 
 void preview_dc::SetAttribDC(HDC hDC)
 {
    ASSERT(hDC != NULL);
-   ::ca::graphics_sp::SetAttribDC(hDC);
+   ::ca2::graphics_sp::SetAttribDC(hDC);
 
    MirrorMappingMode(TRUE);
    MirrorFont();
@@ -158,13 +158,13 @@ void preview_dc::SetScaleRatio(int32_t nNumerator, int32_t nDenominator)
 #ifdef DEBUG
 void preview_dc::assert_valid() const
 {
-   ::ca::graphics_sp::assert_valid();
+   ::ca2::graphics_sp::assert_valid();
 }
 
 
 void preview_dc::dump(dump_context & dumpcontext) const
 {
-   ::ca::graphics_sp::dump(dumpcontext);
+   ::ca2::graphics_sp::dump(dumpcontext);
 
    dumpcontext << "Scale Factor: " << m_nScaleNum << "/" << m_nScaleDen;
    dumpcontext << "\n";
@@ -237,7 +237,7 @@ void preview_dc::MirrorAttributes()
    }
 }
 
-::ca::graphics_object* preview_dc::SelectStockObject(int32_t nIndex)
+::ca2::graphics_object* preview_dc::SelectStockObject(int32_t nIndex)
 {
    ASSERT(get_handle2() != NULL);
 
@@ -254,7 +254,7 @@ void preview_dc::MirrorAttributes()
    case DEFAULT_GUI_FONT:
       // Handle the stock fonts correctly
       {
-         ::ca::graphics_object* pObject = ::lnx::graphics_object::from_handle(
+         ::ca2::graphics_object* pObject = ::lnx::graphics_object::from_handle(
                      ::SelectObject(get_handle2(), hObj));
 
          // Don't re-mirror screen font if this is the same font.
@@ -279,7 +279,7 @@ void preview_dc::MirrorAttributes()
 void preview_dc::MirrorFont()
 {
    if (get_handle2() == NULL)
-      return;         // Can't do anything without Attrib DC
+      return;         // can't do anything without Attrib DC
 
    if (m_hPrinterFont == NULL)
    {
@@ -354,7 +354,7 @@ void preview_dc::MirrorFont()
       if ((logFont.lfPitchAndFamily & 0xf0) == FF_DECORATIVE)
          logFont.lfPitchAndFamily = DEFAULT_PITCH | FF_DECORATIVE;
       else
-         logFont.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTCARE;
+         logFont.lfPitchAndFamily = DEFAULT_PITCH | FF_DONTcaRE;
 
       HFONT hTempFont = ::CreateFontIndirect(&logFont);
       ::SelectObject(get_os_data(), hTempFont);           // Select it in.
@@ -366,7 +366,7 @@ void preview_dc::MirrorFont()
    m_hFont = hNewFont;         // save the new one
 }
 
-::ca::font* preview_dc::SelectObject(::ca::font* pFont)
+::ca2::font* preview_dc::SelectObject(::ca2::font* pFont)
 {
    if (pFont == NULL)
       return NULL;
@@ -374,7 +374,7 @@ void preview_dc::MirrorFont()
    ASSERT(get_handle2() != NULL);
    ASSERT_VALID(pFont);
 
-   ::ca::font* pOldFont = (::ca::font*) ::lnx::graphics_object::from_handle(
+   ::ca2::font* pOldFont = (::ca2::font*) ::lnx::graphics_object::from_handle(
             ::SelectObject(get_handle2(), pFont->get_handle()));
 
    // If same as already selected, don't re-mirror screen font
@@ -785,11 +785,11 @@ int32_t preview_dc::DrawTextEx(__in_ecount(nCount) LPTSTR lpszString, int32_t nC
    return retVal;
 }
 
-WINBOOL preview_dc::GrayString(::ca::brush*,
+WINBOOL preview_dc::GrayString(::ca2::brush*,
             WINBOOL (CALLBACK *)(HDC, LPARAM, int32_t),
                LPARAM lpData, int32_t nCount, int32_t x, int32_t y, int32_t, int32_t)
 {
-   TRACE(::ca::trace::category_AppMsg, 0, "TextOut() substituted for GrayString() in Print Preview.\n");
+   TRACE(::ca2::trace::category_AppMsg, 0, "TextOut() substituted for GrayString() in Print Preview.\n");
    return TextOut(x, y, (const char *)lpData, nCount);
 }
 
@@ -812,12 +812,12 @@ int32_t preview_dc::Escape(int32_t nEscape, int32_t nCount, const char * lpszInD
    case QUERYESCSUPPORT:
    case GETPHYSPAGESIZE:
    case GETPRINTINGOFFSET:
-   case GETSCALINGFACTOR:
+   case GETScaLINGFACTOR:
    case GETPENWIDTH:
    case SETCOPYCOUNT:
    case SELECTPAPERSOURCE:
    case GETTECHNOLOGY:
-   case SETLINECAP:
+   case SETLINEcaP:
    case SETLINEJOIN:
    case SETMITERLIMIT:
    case BANDINFO:
@@ -827,7 +827,7 @@ int32_t preview_dc::Escape(int32_t nEscape, int32_t nCount, const char * lpszInD
    case GETSETPAPERBINS:
    case GETSETPRINTORIENT:
    case ENUMPAPERBINS:
-   case SETDIBSCALING:
+   case SETDIBScaLING:
    case ENUMPAPERMETRICS:
    case GETSETPAPERMETRICS:
    case GETEXTENDEDTEXTMETRICS:
@@ -888,14 +888,14 @@ void preview_dc::MirrorMappingMode(WINBOOL bCompute)
 
       long lTempExt = _AfxMultMultDivDiv(m_sizeVpExt.cx,
          m_nScaleNum, afxData.cxPixelsPerInch,
-         m_nScaleDen, ::GetDeviceCaps(get_handle2(), LOGPIXELSX));
+         m_nScaleDen, ::GetDevicecaps(get_handle2(), LOGPIXELSX));
 
       ASSERT(m_sizeWinExt.cx != 0);
       m_sizeVpExt.cx = (int32_t)lTempExt;
 
       lTempExt = _AfxMultMultDivDiv(m_sizeVpExt.cy,
          m_nScaleNum, afxData.cyPixelsPerInch,
-         m_nScaleDen, ::GetDeviceCaps(get_handle2(), LOGPIXELSY));
+         m_nScaleDen, ::GetDevicecaps(get_handle2(), LOGPIXELSY));
 
       ASSERT(m_sizeWinExt.cy != 0);
       m_sizeVpExt.cy = (int32_t)lTempExt;
@@ -944,8 +944,8 @@ void preview_dc::ClipToPage()
    // the printer to screen mapping mode is approximate and may result
    // in rounding error.
 
-   point pt(::GetDeviceCaps(get_handle2(), HORZRES),
-            ::GetDeviceCaps(get_handle2(), VERTRES));
+   point pt(::GetDevicecaps(get_handle2(), HORZRES),
+            ::GetDevicecaps(get_handle2(), VERTRES));
    PrinterDPtoScreenDP(&pt);
 
    // Set the screen dumpcontext <<to MM_TEXT and no WindowOrg for the interesection
@@ -1010,7 +1010,7 @@ HDC CLASS_DECL_lnx AfxCreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 }
 
 
-// IMPLEMENT_DYNAMIC(preview_dc, ::ca::graphics_sp)
+// IMPLEMENT_DYNAMIC(preview_dc, ::ca2::graphics_sp)
 
 /////////////////////////////////////////////////////////////////////////////
 */

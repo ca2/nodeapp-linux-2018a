@@ -6,16 +6,16 @@ namespace lnx
 
    class CLASS_DECL_lnx palette :
       virtual public ::lnx::graphics_object,
-      virtual public ::ca::palette
+      virtual public ::ca2::palette
    {
    public:
 
-      palette(sp(::ca::application) papp);
+      palette(sp(::ca2::application) papp);
       virtual ~palette();
 
 
 //      bool CreatePalette(LPLOGPALETTE lpLogPalette);
-//      bool CreateHalftonePalette(::ca::graphics * pgraphics);
+//      bool CreateHalftonePalette(::ca2::graphics * pgraphics);
 
    // Attributes
       operator HPALETTE() const;

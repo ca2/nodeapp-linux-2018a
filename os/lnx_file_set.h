@@ -6,7 +6,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx file_set :
-      public ::ca::file_set
+      public ::ca2::file_set
    {
    public:
 
@@ -17,7 +17,7 @@ namespace lnx
       stringa        m_straFile;
 
 
-      file_set(sp(::ca::application) papp);
+      file_set(sp(::ca2::application) papp);
       virtual ~file_set();
 
 

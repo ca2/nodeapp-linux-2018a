@@ -29,8 +29,8 @@ namespace lnx
    double dib::dPi;
 
 
-   dib::dib(sp(::ca::application) papp) :
-      ca(papp),
+   dib::dib(sp(::ca2::application) papp) :
+      ca2(papp),
       m_spbitmap(allocer()),
       m_spgraphics(allocer())
    {
@@ -44,12 +44,12 @@ namespace lnx
    {
       return m_pcolorref;
    }
-   ::ca::bitmap_sp dib::get_bitmap()
+   ::ca2::bitmap_sp dib::get_bitmap()
    {
       return m_spbitmap;
    }
 
-   ::ca::bitmap_sp dib::detach_bitmap()
+   ::ca2::bitmap_sp dib::detach_bitmap()
    {
       return m_spbitmap.detach();
    }
@@ -146,7 +146,7 @@ namespace lnx
       if(m_spbitmap->get_os_data() != NULL)
       {
          //m_spgraphics->CreateCompatibleDC(NULL);
-         ::ca::bitmap * pbitmap = m_spgraphics->SelectObject(m_spbitmap);
+         ::ca2::bitmap * pbitmap = m_spgraphics->SelectObject(m_spbitmap);
          //m_hbitmapOriginal
          /*if(pbitmap == NULL || pbitmap->get_os_data() == NULL)
          {
@@ -178,9 +178,9 @@ namespace lnx
       return true;
    }
 
-   bool dib::create(::ca::graphics * pdc)
+   bool dib::create(::ca2::graphics * pdc)
    {
-      ::ca::bitmap * pbitmap = & (dynamic_cast < ::lnx::graphics * > (pdc))->GetCurrentBitmap();
+      ::ca2::bitmap * pbitmap = & (dynamic_cast < ::lnx::graphics * > (pdc))->GetCurrentBitmap();
       if(pbitmap == NULL)
          return FALSE;
       ::size size = pbitmap->get_size();
@@ -194,12 +194,11 @@ namespace lnx
 
    bool dib::Destroy ()
    {
-      if(m_spbitmap.is_set())
-         ::c::release(m_spbitmap.m_p);
+
+    m_spbitmap.release();
 
 
-      if(m_spgraphics.is_set())
-         ::c::release(m_spgraphics.m_p);
+    m_spgraphics.release();
 
       cx             = 0;
       cy             = 0;
@@ -208,7 +207,7 @@ namespace lnx
       return TRUE;
    }
 
-   bool dib::to(::ca::graphics * pgraphics, point pt, ::size size, point ptSrc)
+   bool dib::to(::ca2::graphics * pgraphics, point pt, ::size size, point ptSrc)
    {
 
       return pgraphics->BitBlt(pt.x, pt.y, size.cx, size.cy, get_graphics(), ptSrc.x, ptSrc.y, SRCCOPY) != FALSE;
@@ -223,11 +222,11 @@ namespace lnx
 
    }
 
-   bool dib::from(::ca::graphics * pdc)
+   bool dib::from(::ca2::graphics * pdc)
    {
-      ::ca::bitmap_sp bitmap(get_app());
+      ::ca2::bitmap_sp bitmap(get_app());
       bitmap->CreateCompatibleBitmap(pdc, 1, 1);
-      ::ca::bitmap * pbitmap = LNX_DC(pdc)->SelectObject(bitmap);
+      ::ca2::bitmap * pbitmap = LNX_DC(pdc)->SelectObject(bitmap);
       if(pbitmap == NULL)
          return false;
       class size size = pbitmap->get_size();
@@ -242,7 +241,7 @@ namespace lnx
       // xxx return bOk;
    }
 
-   bool dib::from(point ptDest, ::ca::graphics * pdc, point pt, class size sz)
+   bool dib::from(point ptDest, ::ca2::graphics * pdc, point pt, class size sz)
    {
       return m_spgraphics->BitBlt(ptDest.x, ptDest.y, sz.cx, sz.cy, pdc, pt.x, pt.y, SRCCOPY) != FALSE;
    }
@@ -304,7 +303,7 @@ namespace lnx
 
       map();
 
-      int32_t size=scan*cy;
+      int32_t size = scan*cy;
 
       BYTE * pbyte = (BYTE *) m_pcolorref;
 
@@ -352,16 +351,16 @@ namespace lnx
 
    //DIB = DIB * SRC_ALPHA
 
-   void dib::mult_alpha(::ca::dib * pdibWork, bool bPreserveAlpha)
+   void dib::mult_alpha(::ca2::dib * pdibWork, bool bPreserveAlpha)
    {
-      ::ca::dib::mult_alpha(pdibWork, bPreserveAlpha);
+      ::ca2::dib::mult_alpha(pdibWork, bPreserveAlpha);
       return ;
       /*
       if(area() <= 0)
          return;
 
-      //return ::ca::dib::mult_alpha(NULL, true);
-      ::ca::dib_sp dibWork;
+      //return ::ca2::dib::mult_alpha(NULL, true);
+      ::ca2::dib_sp dibWork;
 
       if(pdibWork == NULL)
       {
@@ -542,7 +541,7 @@ namespace lnx
    }
 
 
-   void dib::BitBlt(::ca::dib *pdib, int32_t op)
+   void dib::BitBlt(::ca2::dib *pdib, int32_t op)
    {
       if(op == 123) // zero dest RGB, invert alpha, and OR src RGB
       {
@@ -740,7 +739,7 @@ namespace lnx
       }
    }
 
-   void dib::copy(::ca::dib * pdib)
+   void dib::copy(::ca2::dib * pdib)
    {
       // If DibSize Wrong Re-create dib
       if ( (LNX_DIB(pdib)->cx!=cx) || (LNX_DIB(pdib)->cy!=cy) )
@@ -750,7 +749,7 @@ namespace lnx
    }
 
 
-   void dib::Paste ( ::ca::dib * pdib )
+   void dib::Paste ( ::ca2::dib * pdib )
    {
       // If DibSize Wrong Re-create dib
       if ( (cx!=LNX_DIB(pdib)->cx) || (cy!=LNX_DIB(pdib)->cy) )
@@ -784,7 +783,7 @@ namespace lnx
    }
 
 
-   void dib::Blend (::ca::dib * pdib, int32_t A )
+   void dib::Blend (::ca2::dib * pdib, int32_t A )
    {
       if ( size()!=LNX_DIB(pdib)->size() )
          return;
@@ -803,7 +802,7 @@ namespace lnx
       }
    }
 
-   bool dib::Blend(::ca::dib *pdib, ::ca::dib *pdibA, int32_t A)
+   bool dib::Blend(::ca2::dib *pdib, ::ca2::dib *pdibA, int32_t A)
    {
       if(size() != LNX_DIB(pdib)->size() ||
          size() != LNX_DIB(pdibA)->size())
@@ -829,7 +828,7 @@ namespace lnx
       return true;
    }
 
-   void dib::Darken (::ca::dib * pdib )
+   void dib::Darken (::ca2::dib * pdib )
    {
       if ( size()!=LNX_DIB(pdib)->size() )
          return;
@@ -848,7 +847,7 @@ namespace lnx
       }
    }
 
-   void dib::Difference (::ca::dib * pdib )
+   void dib::Difference (::ca2::dib * pdib )
    {
       if ( size()!=LNX_DIB(pdib)->size() )
          return;
@@ -871,7 +870,7 @@ namespace lnx
       }
    }
 
-   void dib::Lighten (::ca::dib * pdib )
+   void dib::Lighten (::ca2::dib * pdib )
    {
       if ( size()!=LNX_DIB(pdib)->size() )
          return;
@@ -891,7 +890,7 @@ namespace lnx
    }
 
 
-   void dib::Multiply (::ca::dib * pdib )
+   void dib::Multiply (::ca2::dib * pdib )
    {
       if ( size()!=LNX_DIB(pdib)->size() )
          return;
@@ -910,7 +909,7 @@ namespace lnx
       }
    }
 
-   void dib::Screen (::ca::dib * pdib )
+   void dib::Screen (::ca2::dib * pdib )
    {
       if ( size()!=LNX_DIB(pdib)->size() )
          return;
@@ -933,7 +932,7 @@ namespace lnx
    // Rectangle Functions
    //////////////////////////////////////////////////////////////////////
 
-   void dib::copy (::ca::dib * pdib, int32_t x, int32_t y )
+   void dib::copy (::ca2::dib * pdib, int32_t x, int32_t y )
    {
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
@@ -964,7 +963,7 @@ namespace lnx
       }
    }
 
-   void dib::PasteRect (::ca::dib * pdib, int32_t x, int32_t y )
+   void dib::PasteRect (::ca2::dib * pdib, int32_t x, int32_t y )
    {
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
@@ -1081,7 +1080,7 @@ namespace lnx
       }
    }
 
-   void dib::BlendRect (::ca::dib * pdib, int32_t x, int32_t y, int32_t A )
+   void dib::BlendRect (::ca2::dib * pdib, int32_t x, int32_t y, int32_t A )
    {
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
@@ -1115,7 +1114,7 @@ namespace lnx
       }
    }
 
-   void dib::DarkenRect (::ca::dib * pdib, int32_t x, int32_t y )
+   void dib::DarkenRect (::ca2::dib * pdib, int32_t x, int32_t y )
    {
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
@@ -1149,7 +1148,7 @@ namespace lnx
       }
    }
 
-   void dib::DifferenceRect (::ca::dib * pdib, int32_t x, int32_t y )
+   void dib::DifferenceRect (::ca2::dib * pdib, int32_t x, int32_t y )
    {
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
@@ -1187,7 +1186,7 @@ namespace lnx
       }
    }
 
-   void dib::LightenRect (::ca::dib * pdib, int32_t x, int32_t y )
+   void dib::LightenRect (::ca2::dib * pdib, int32_t x, int32_t y )
    {
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
@@ -1221,7 +1220,7 @@ namespace lnx
       }
    }
 
-   void dib::MultiplyRect (::ca::dib * pdib, int32_t x, int32_t y )
+   void dib::MultiplyRect (::ca2::dib * pdib, int32_t x, int32_t y )
    {
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
@@ -1255,7 +1254,7 @@ namespace lnx
       }
    }
 
-   void dib::ScreenRect (::ca::dib * pdib, int32_t x, int32_t y )
+   void dib::ScreenRect (::ca2::dib * pdib, int32_t x, int32_t y )
    {
       // Clip Rect
       int32_t px=(x>=0) ? x : 0;
@@ -1819,7 +1818,7 @@ namespace lnx
          DI_IMAGE | DI_MASK);
 
       // Black blend dib
-      ::ca::dib_sp spdib2(allocer());
+      ::ca2::dib_sp spdib2(allocer());
       spdib2->create(cx, cy);
       spdib2->Fill(0, 0, 0, 0);
 
@@ -1881,9 +1880,9 @@ namespace lnx
 
    }
 
-   void dib::rotate(::ca::dib * pdib, double dAngle, double dScale)
+   void dib::rotate(::ca2::dib * pdib, double dAngle, double dScale)
    {
-     // ::ca::dib_sp spdib(get_app());
+     // ::ca2::dib_sp spdib(get_app());
    //   spdib->Paste(this);
 
       int32_t cx = cx;
@@ -1968,7 +1967,7 @@ namespace lnx
    }
 
 
-   void dib::Rotate034(::ca::dib * pdib, double dAngle, double dScale)
+   void dib::Rotate034(::ca2::dib * pdib, double dAngle, double dScale)
    {
 
       int32_t cx = cx;
@@ -2039,12 +2038,12 @@ namespace lnx
    }
 
    void dib::rotate(
-      ::ca::dib * pdib,
+      ::ca2::dib * pdib,
       LPCRECT lpcrect,
       double dAngle,
       double dScale)
    {
-     // ::ca::dib_sp spdib(get_app());
+     // ::ca2::dib_sp spdib(get_app());
    //   spdib->Paste(this);
 
 
@@ -2240,7 +2239,7 @@ namespace lnx
    }
 
 
-   void dib::_xor(::ca::dib * pdib)
+   void dib::_xor(::ca2::dib * pdib)
    {
       if(cx != LNX_DIB(pdib)->cx
       || cy != LNX_DIB(pdib)->cy)
@@ -2466,7 +2465,7 @@ namespace lnx
    }
 
 
-   void dib::stretch_dib(::ca::dib * pdib)
+   void dib::stretch_dib(::ca2::dib * pdib)
    {
 
       throw todo(get_app());
@@ -2495,7 +2494,7 @@ namespace lnx
 
    }
 
-   ::ca::graphics * dib::get_graphics()
+   ::ca2::graphics * dib::get_graphics()
    {
       unmap();
       return m_spgraphics;
@@ -2591,7 +2590,7 @@ namespace lnx
 
 #undef new
 
-   bool dib::from(::ca::graphics * pgraphics, FIBITMAP * pfibitmap, bool bUnloadFI)
+   bool dib::from(::ca2::graphics * pgraphics, FIBITMAP * pfibitmap, bool bUnloadFI)
    {
 
       if(pfibitmap == NULL)
@@ -2643,7 +2642,7 @@ namespace lnx
      int stride = cairo_image_surface_get_stride (surface);
      memcpy(data, m_pcolorref, height * stride);
 
-     // mark the image dirty so Cairo clears its caches.
+     // mark the image dirty so cairo clears its caches.
      cairo_surface_mark_dirty (surface);*/
 
 

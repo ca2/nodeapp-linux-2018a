@@ -6,12 +6,12 @@ namespace lnx
 
 
    class CLASS_DECL_lnx font :
-      virtual public ::ca::font
+      virtual public ::ca2::font
    {
    public:
 
 
-      font(sp(::ca::application) papp);
+      font(sp(::ca2::application) papp);
       virtual ~font();
 
 

@@ -186,9 +186,9 @@ public:
       { return new TYPE; }
 };
 
-#define THREAD_LOCAL(class_name, ident_name, slot) \
+#define THREAD_LOcaL(class_name, ident_name, slot) \
    thread_local < class_name, slot > ident_name;
-#define EXTERN_THREAD_LOCAL(class_name, ident_name, slot) \
+#define EXTERN_THREAD_LOcaL(class_name, ident_name, slot) \
    extern CLASS_DECL_lnx thread_local<class_name, slot> ident_name;
 
 template<class TYPE>
@@ -215,9 +215,9 @@ public:
       { return new TYPE; }
 };
 
-#define PROCESS_LOCAL(class_name, ident_name) \
+#define PROCESS_LOcaL(class_name, ident_name) \
    process_local < class_name > ident_name;
-#define EXTERN_PROCESS_LOCAL(class_name, ident_name) \
+#define EXTERN_PROCESS_LOcaL(class_name, ident_name) \
    extern process_local < class_name > ident_name;
 
 /////////////////////////////////////////////////////////////////////////////

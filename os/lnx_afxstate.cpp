@@ -88,7 +88,7 @@ ___THREAD_STATE::~___THREAD_STATE()
    if (m_pSafetyPoolBuffer != NULL)
       free(m_pSafetyPoolBuffer);
 
-   // parking ::ca::window must have already been cleaned up by now!
+   // parking ::ca2::window must have already been cleaned up by now!
    ASSERT(m_pWndPark == NULL);
 
 
@@ -101,7 +101,7 @@ CLASS_DECL_lnx ___THREAD_STATE * __get_thread_state()
    return pState;
 }
 
-THREAD_LOCAL ( ___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE )
+THREAD_LOcaL ( ___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE )
 
 /////////////////////////////////////////////////////////////////////////////
 // __MODULE_STATE implementation
@@ -116,7 +116,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure,
    m_pmapHMENU             = NULL;
    m_pstrUnregisterList    = NULL;
    /* xxx xxx xxx
-   m_classList.Construct(offsetof(::ca::type_info, m_pNextClass)); */
+   m_classList.Construct(offsetof(::ca2::type_info, m_pNextClass)); */
 
   /* m_fRegisteredClasses = 0;
    m_bDLL = (BYTE)bDLL;
@@ -161,7 +161,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem) :
    m_pmapHMENU             = NULL;
    m_pstrUnregisterList    = NULL;
    /* xxx xxx xxx
-   m_classList.Construct(offsetof(::ca::type_info, m_pNextClass)); */
+   m_classList.Construct(offsetof(::ca2::type_info, m_pNextClass)); */
 
  m_fRegisteredClasses = 0;
    m_bDLL = (BYTE)bDLL;
@@ -200,7 +200,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem) :
 // Activation Context API wrappers
 
 #define __ACTCTX_API_INIT_PROCPTR(hKernel,name) \
-   pfn##name = (PFN_##name) GetProcAddress(hKernel, #name)\
+   pfn##name = (PFN_##name) GetProcaddress(hKernel, #name)\
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -210,7 +210,7 @@ __MODULE_STATE::__MODULE_STATE(bool bDLL, DWORD dwVersion, bool bSystem) :
    PFN_##name pfn##name = NULL;
 
 /*
-__ACTCTX_API_PTR_DEFINE(CreateActCtxW, HANDLE, (PCACTCTXW));
+__ACTCTX_API_PTR_DEFINE(CreateActCtxW, HANDLE, (PcaCTCTXW));
 __ACTCTX_API_PTR_DEFINE(ReleaseActCtx, void, (HANDLE));
 __ACTCTX_API_PTR_DEFINE(ActivateActCtx, bool, (HANDLE, ulong_ptr*));
 __ACTCTX_API_PTR_DEFINE(DeactivateActCtx, bool, (DWORD, ulong_ptr));
@@ -230,7 +230,7 @@ __STATIC void CLASS_DECL_lnx __init_context_api()
 }
 
 #if (_WIN32_WINNT >= 0x0500) || (_WIN32_FUSION >= 0x0100)
-HANDLE CLASS_DECL_lnx __create_act_ctx_w(PCACTCTXW pActCtx)
+HANDLE CLASS_DECL_lnx __create_act_ctx_w(PcaCTCTXW pActCtx)
 {
    HANDLE hCtx = pfnCreateActCtxW != 0 ? pfnCreateActCtxW(pActCtx) : INVALID_HANDLE_VALUE;
    return hCtx;
@@ -351,7 +351,7 @@ public:
       { }
 };
 
-PROCESS_LOCAL(___BASE_MODULE_STATE, gen_BaseModuleState)
+PROCESS_LOcaL(___BASE_MODULE_STATE, gen_BaseModuleState)
 
 #undef __window_procedure
 LRESULT CALLBACK
@@ -399,7 +399,7 @@ bool CLASS_DECL_lnx __is_module_dll()
 
 bool CLASS_DECL_lnx __init_current_state_app()
 {
-   sp(::ca::application) pApp = __get_module_state()->m_pCurrentWinApp;
+   sp(::ca2::application) pApp = __get_module_state()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())
    {
       // Init Failed

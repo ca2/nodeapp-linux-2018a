@@ -5,8 +5,8 @@ namespace lnx
 {
 
 
-   brush::brush(sp(::ca::application) papp) :
-      ca(papp)
+   brush::brush(sp(::ca2::application) papp) :
+      ca2(papp)
    {
 
 
@@ -41,7 +41,7 @@ namespace lnx
        //return Attach(::CreateBrushIndirect(lpLogBrush));
     //   return FALSE;
     //}
-    //bool brush::CreatePatternBrush(::ca::bitmap* pBitmap)
+    //bool brush::CreatePatternBrush(::ca2::bitmap* pBitmap)
     //{
     //   //return Attach(::CreatePatternBrush((HBITMAP)pBitmap->get_os_data()));
     //   return FALSE;
@@ -77,7 +77,7 @@ namespace lnx
 //      //   throw resource_exception();
 //   }
 //
-//   void brush::construct(::ca::bitmap* pBitmap)
+//   void brush::construct(::ca2::bitmap* pBitmap)
 //   {
 //      //ASSERT_VALID(pBitmap);
 //
@@ -99,7 +99,7 @@ namespace lnx
 
    void brush::dump(dump_context & dumpcontext) const
    {
-      ::ca::graphics_object::dump(dumpcontext);
+      ::ca2::graphics_object::dump(dumpcontext);
 
       //if (get_os_data() == NULL)
         // return;

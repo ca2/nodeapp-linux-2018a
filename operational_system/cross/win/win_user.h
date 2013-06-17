@@ -9,13 +9,13 @@ typedef WINBOOL (CALLBACK* WNDENUMPROC)(oswindow, LPARAM);
 typedef LRESULT (CALLBACK* HOOKPROC)(int32_t code, WPARAM wParam, LPARAM lParam);
 typedef VOID (CALLBACK* SENDASYNCPROC)(oswindow, UINT, ulong_ptr, LRESULT);
 
-typedef WINBOOL (CALLBACK* PROPENUMPROCA)(oswindow, LPCSTR, HANDLE);
+typedef WINBOOL (CALLBACK* PROPENUMPROca)(oswindow, LPCSTR, HANDLE);
 typedef WINBOOL (CALLBACK* PROPENUMPROCW)(oswindow, LPCWSTR, HANDLE);
 
 typedef WINBOOL (CALLBACK* PROPENUMPROCEXA)(oswindow, LPSTR, HANDLE, ulong_ptr);
 typedef WINBOOL (CALLBACK* PROPENUMPROCEXW)(oswindow, LPWSTR, HANDLE, ulong_ptr);
 
-typedef int32_t (CALLBACK* EDITWORDBREAKPROCA)(LPSTR lpch, int32_t ichCurrent, int32_t cch, int32_t code);
+typedef int32_t (CALLBACK* EDITWORDBREAKPROca)(LPSTR lpch, int32_t ichCurrent, int32_t cch, int32_t code);
 typedef int32_t (CALLBACK* EDITWORDBREAKPROCW)(LPWSTR lpch, int32_t ichCurrent, int32_t cch, int32_t code);
 
 
@@ -156,7 +156,7 @@ typedef struct {
     GUID PowerSetting;
     DWORD DataLength;
     UCHAR Data[1];
-} POWERBROADCAST_SETTING, *PPOWERBROADCAST_SETTING;
+} POWERBROADcaST_SETTING, *PPOWERBROADcaST_SETTING;
 
 
 #endif // PBT_POWERSETTINGCHANGE
@@ -177,7 +177,7 @@ typedef struct {
 #define WM_MDINEXT                      0x0224
 #define WM_MDIMAXIMIZE                  0x0225
 #define WM_MDITILE                      0x0226
-#define WM_MDICASCADE                   0x0227
+#define WM_MDIcaScaDE                   0x0227
 #define WM_MDIICONARRANGE               0x0228
 #define WM_MDIGETACTIVE                 0x0229
 
@@ -327,7 +327,7 @@ typedef struct {
 #define HTTRANSPARENT       (-1)
 #define HTNOWHERE           0
 #define HTCLIENT            1
-#define HTCAPTION           2
+#define HTcaPTION           2
 #define HTSYSMENU           3
 #define HTGROWBOX           4
 #define HTSIZE              HTGROWBOX
@@ -446,7 +446,7 @@ RegisterWindowMessageW(
 #define WS_CLIPSIBLINGS     0x04000000L
 #define WS_CLIPCHILDREN     0x02000000L
 #define WS_MAXIMIZE         0x01000000L
-#define WS_CAPTION          0x00C00000L     /* WS_BORDER | WS_DLGFRAME  */
+#define WS_caPTION          0x00C00000L     /* WS_BORDER | WS_DLGFRAME  */
 #define WS_BORDER           0x00800000L
 #define WS_DLGFRAME         0x00400000L
 #define WS_VSCROLL          0x00200000L
@@ -469,7 +469,7 @@ RegisterWindowMessageW(
  * Common Window Styles
  */
 #define WS_OVERLAPPEDWINDOW (WS_OVERLAPPED     | \
-                             WS_CAPTION        | \
+                             WS_caPTION        | \
                              WS_SYSMENU        | \
                              WS_THICKFRAME     | \
                              WS_MINIMIZEBOX    | \
@@ -565,7 +565,7 @@ IsWindowEnabled(
 #define DT_TABSTOP                  0x00000080
 #define DT_NOCLIP                   0x00000100
 #define DT_EXTERNALLEADING          0x00000200
-#define DT_CALCRECT                 0x00000400
+#define DT_caLCRECT                 0x00000400
 #define DT_NOPREFIX                 0x00000800
 #define DT_INTERNAL                 0x00001000
 
@@ -818,11 +818,11 @@ GetWindow(
 
 #ifdef _WIN32_WINNT
 #if (_WIN32_WINNT >= 0x0400)
-#define MB_SERVICE_NOTIFICATION          0x00200000L
+#define MB_SERVICE_NOTIFIcaTION          0x00200000L
 #else
-#define MB_SERVICE_NOTIFICATION          0x00040000L
+#define MB_SERVICE_NOTIFIcaTION          0x00040000L
 #endif
-#define MB_SERVICE_NOTIFICATION_NT3X     0x00040000L
+#define MB_SERVICE_NOTIFIcaTION_NT3X     0x00040000L
 #endif
 
 #define MB_TYPEMASK                 0x0000000FL
@@ -837,7 +837,7 @@ WINAPI
 MessageBoxA(
     oswindow hWnd,
     LPCSTR lpText,
-    LPCSTR lpCaption,
+    LPCSTR lpcaption,
     UINT uType);
 
 
@@ -846,7 +846,7 @@ WINAPI
 MessageBoxW(
     oswindow hWnd,
     LPCWSTR lpText,
-    LPCWSTR lpCaption,
+    LPCWSTR lpcaption,
     UINT uType);
 #ifdef UNICODE
 #define MessageBox  MessageBoxW
@@ -872,14 +872,14 @@ MessageBoxW(
 
 #define COLOR_SCROLLBAR         0
 #define COLOR_BACKGROUND        1
-#define COLOR_ACTIVECAPTION     2
-#define COLOR_INACTIVECAPTION   3
+#define COLOR_ACTIVEcaPTION     2
+#define COLOR_INACTIVEcaPTION   3
 #define COLOR_MENU              4
 #define COLOR_WINDOW            5
 #define COLOR_WINDOWFRAME       6
 #define COLOR_MENUTEXT          7
 #define COLOR_WINDOWTEXT        8
-#define COLOR_CAPTIONTEXT       9
+#define COLOR_caPTIONTEXT       9
 #define COLOR_ACTIVEBORDER      10
 #define COLOR_INACTIVEBORDER    11
 #define COLOR_APPWORKSPACE      12
@@ -889,7 +889,7 @@ MessageBoxW(
 #define COLOR_BTNSHADOW         16
 #define COLOR_GRAYTEXT          17
 #define COLOR_BTNTEXT           18
-#define COLOR_INACTIVECAPTIONTEXT 19
+#define COLOR_INACTIVEcaPTIONTEXT 19
 #define COLOR_BTNHIGHLIGHT      20
 
 #if(WINVER >= 0x0400)
@@ -901,8 +901,8 @@ MessageBoxW(
 
 #if(WINVER >= 0x0500)
 #define COLOR_HOTLIGHT          26
-#define COLOR_GRADIENTACTIVECAPTION 27
-#define COLOR_GRADIENTINACTIVECAPTION 28
+#define COLOR_GRADIENTACTIVEcaPTION 27
+#define COLOR_GRADIENTINACTIVEcaPTION 28
 #if(WINVER >= 0x0501)
 #define COLOR_MENUHILIGHT       29
 #define COLOR_MENUBAR           30

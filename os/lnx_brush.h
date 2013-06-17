@@ -6,7 +6,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx brush :
-      virtual public ::ca::brush
+      virtual public ::ca2::brush
    {
    public:
 
@@ -15,10 +15,10 @@ namespace lnx
 //xxx      Gdiplus::Brush * m_pbrush;
 
 
-      brush(sp(::ca::application) papp);
+      brush(sp(::ca2::application) papp);
       //virtual void construct(COLORREF crColor);                // CreateSolidBrush
       //virtual void construct(int32_t nIndex, COLORREF crColor);    // CreateHatchBrush
-      //virtual void construct(::ca::bitmap * pbitmap);                // CreatePatternBrush
+      //virtual void construct(::ca2::bitmap * pbitmap);                // CreatePatternBrush
       virtual ~brush();
 
 
@@ -27,7 +27,7 @@ namespace lnx
 
       //bool CreateSolidBrush(COLORREF crColor);
       //bool CreateHatchBrush(int32_t nIndex, COLORREF crColor);
-      //bool CreatePatternBrush(::ca::bitmap* pBitmap);
+      //bool CreatePatternBrush(::ca2::bitmap* pBitmap);
       //bool CreateDIBPatternBrush(HGLOBAL hPackedDIB, UINT nUsage);
       //bool CreateDIBPatternBrush(const void * lpPackedDIB, UINT nUsage);
       //bool CreateSysColorBrush(int32_t nIndex);

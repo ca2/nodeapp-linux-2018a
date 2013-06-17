@@ -20,7 +20,7 @@
          MulDiv(pLogFont->lfHeight, afxData.cyPixelsPerInch, 72);
       *lpszSize = '\0';
    }
-   _template::checked::tcsncpy_s(pLogFont->lfFaceName, _countof(pLogFont->lfFaceName), szFontInfo, _TRUNCATE);
+   _template::checked::tcsncpy_s(pLogFont->lfFaceName, _countof(pLogFont->lfFaceName), szFontInfo, _TRUNcaTE);
    return TRUE;
 }*/
 
@@ -59,7 +59,7 @@ oswindow CLASS_DECL_lnx _AfxChildWindowFromPoint(oswindow hWnd, POINT pt)
       if (_AfxGetDlgCtrlID(hWndChild) != (WORD)0 &&
          (::GetWindowLong(hWndChild, GWL_STYLE) & WS_VISIBLE))
       {
-         // see if point hits the child ::ca::window
+         // see if point hits the child ::ca2::window
          rect rect;
          ::GetWindowRect(hWndChild, rect);
          if (rect.contains(pt))
@@ -100,26 +100,26 @@ void CLASS_DECL_lnx AfxDeleteObject(HGDIOBJ* pObject)
 }*/
 
 /*
-void CLASS_DECL_lnx AfxCancelModes(oswindow hWndRcvr)
+void CLASS_DECL_lnx AfxcancelModes(oswindow hWndRcvr)
 {
-   // if we receive a message destined for a ::ca::window, cancel any combobox
+   // if we receive a message destined for a ::ca2::window, cancel any combobox
    //  popups that could be in toolbars or dialog bars
-   oswindow hWndCancel = ::GetFocus();
-   if (hWndCancel == NULL)
+   oswindow hWndcancel = ::GetFocus();
+   if (hWndcancel == NULL)
       return;     // nothing to cancel
 
-   if (hWndCancel == hWndRcvr)
-      return;     // let input go to ::ca::window with focus
+   if (hWndcancel == hWndRcvr)
+      return;     // let input go to ::ca2::window with focus
 
    // focus is in part of a combo-box
-   if (!_AfxIsComboBoxControl(hWndCancel, (UINT)CBS_DROPDOWNLIST))
+   if (!_AfxIsComboBoxControl(hWndcancel, (UINT)CBS_DROPDOWNLIST))
    {
       // check as a dropdown
-      hWndCancel = ::GetParent(hWndCancel);   // parent of edit is combo
-      if (hWndCancel == hWndRcvr)
+      hWndcancel = ::GetParent(hWndcancel);   // parent of edit is combo
+      if (hWndcancel == hWndRcvr)
          return;     // let input go to part of combo
 
-      if (!_AfxIsComboBoxControl(hWndCancel, (UINT)CBS_DROPDOWN))
+      if (!_AfxIsComboBoxControl(hWndcancel, (UINT)CBS_DROPDOWN))
          return;     // not a combo-box that is active
    }
 
@@ -130,7 +130,7 @@ void CLASS_DECL_lnx AfxCancelModes(oswindow hWndRcvr)
       return;
 
    // finally, we should cancel the mode!
-   ::SendMessage(hWndCancel, CB_SHOWDROPDOWN, FALSE, 0L);
+   ::SendMessage(hWndcancel, CB_SHOWDROPDOWN, FALSE, 0L);
 }*/
 
 /*
@@ -161,7 +161,7 @@ int32_t __CDECL AfxCriticalNewHandler(size_t nSize)
 {
    // called during critical primitive::memory allocation
    //  free up part of the cast's safety cache
-//   TRACE(::ca::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
+//   TRACE(::ca2::trace::category_Memory, 0, "Warning: Critical primitive::memory allocation failed!\n");
 /*   ___THREAD_STATE* pThreadState = __get_thread_state();
    if (pThreadState != NULL && pThreadState->m_pSafetyPoolBuffer != NULL)
    {
@@ -169,7 +169,7 @@ int32_t __CDECL AfxCriticalNewHandler(size_t nSize)
       if (nOldBufferSize <= nSize + MIN_MALLOC_OVERHEAD)
       {
          // give it all up
-  ///       TRACE(::ca::trace::category_Memory, 0, "Warning: Freeing application's primitive::memory safety pool!\n");
+  ///       TRACE(::ca2::trace::category_Memory, 0, "Warning: Freeing application's primitive::memory safety pool!\n");
          free(pThreadState->m_pSafetyPoolBuffer);
          pThreadState->m_pSafetyPoolBuffer = NULL;
       }
@@ -179,13 +179,13 @@ int32_t __CDECL AfxCriticalNewHandler(size_t nSize)
          _expand(pThreadState->m_pSafetyPoolBuffer,
             nOldBufferSize - (nSize + MIN_MALLOC_OVERHEAD));
          AfxEnableMemoryTracking(bEnable);
-//         TRACE(::ca::trace::category_Memory, 0, "Warning: Shrinking safety pool from %d to %d to satisfy request of %d bytes.\n",
+//         TRACE(::ca2::trace::category_Memory, 0, "Warning: Shrinking safety pool from %d to %d to satisfy request of %d bytes.\n",
   //           nOldBufferSize, _msize(pThreadState->m_pSafetyPoolBuffer), nSize);
       }
       return 1;       // retry it
    }
 */
-//   TRACE(::ca::trace::category_Memory, 0, "ERROR: Critical primitive::memory allocation from safety pool failed!\n");
+//   TRACE(::ca2::trace::category_Memory, 0, "ERROR: Critical primitive::memory allocation from safety pool failed!\n");
 //   AfxThrowMemoryException();      // oops
 }
 #endif // !_AFX_PORTABLE

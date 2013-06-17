@@ -8,9 +8,9 @@ namespace lnx
 {
 
 
-   os::os(sp(::ca::application) papp) :
-      ca(papp),
-      ::ca::os(papp)
+   os::os(sp(::ca2::application) papp) :
+      ca2(papp),
+      ::ca2::os(papp)
    {
    }
 
@@ -289,7 +289,7 @@ namespace lnx
       return false;
 
 /*
-      registry::Key keyKar(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
+      registry::Key keyKar(HKEY_LOcaL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Run", true);
 
 
       keyKar.SetValue(pszKey, pszCommand);
@@ -306,7 +306,7 @@ namespace lnx
 
         throw not_implemented(get_app());
       return false;
-/*    registry::Key keyKar(HKEY_LOCAL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
+/*    registry::Key keyKar(HKEY_LOcaL_MACHINE, "SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\RunOnce", true);
 
 
       keyKar.SetValue(pszKey, pszCommand);
@@ -359,7 +359,7 @@ namespace lnx
 /*
       registry::Key keyPlugins;
 
-      if(keyPlugins.OpenKey(HKEY_LOCAL_MACHINE, "SOFTWARE\\MozillaPlugins", true))
+      if(keyPlugins.OpenKey(HKEY_LOcaL_MACHINE, "SOFTWARE\\MozillaPlugins", true))
       {
 
          registry::Key keyPlugin;
@@ -373,12 +373,12 @@ namespace lnx
             keyPlugin.SetValue("Vendor", "ca2 Desenvolvimento de Software Ltda.");
             keyPlugin.SetValue("Version", Application.file().as_string(System.dir().ca2("appdata/x86/ca2_build.txt")));
 
-            registry::Key keyApplicationCa2;
+            registry::Key keyApplicationca2;
 
-            if(keyApplicationCa2.OpenKey(keyPlugin, "application/ca2", true))
+            if(keyApplicationca2.OpenKey(keyPlugin, "application/ca2", true))
             {
 
-               keyApplicationCa2.SetValue("Description", "ca2 Document");
+               keyApplicationca2.SetValue("Description", "ca2 Document");
 
             }
 
@@ -504,9 +504,9 @@ namespace lnx
          try
          {
 
-            strCommand = ::ca::str::consume_quoted_value(psz);
-            ::ca::str::consume_spaces(psz);
-            ::ca::str::consume(psz, "\"%L\"");
+            strCommand = ::ca2::str::consume_quoted_value(psz);
+            ::ca2::str::consume_spaces(psz);
+            ::ca2::str::consume(psz, "\"%L\"");
             strParam = psz;
 
          }
@@ -584,7 +584,7 @@ namespace lnx
 
       SC_HANDLE hdlSCM = OpenSCManager(0, 0, SC_MANAGER_CREATE_SERVICE);
 
-      string strCalling = papp->m_strModulePath + " : app=" + papp->m_strAppId + " service usehostlogin";
+      string strcalling = papp->m_strModulePath + " : app=" + papp->m_strAppId + " service usehostlogin";
 
       if(hdlSCM == 0)
       {
@@ -594,13 +594,13 @@ namespace lnx
 
       SC_HANDLE hdlServ = ::CreateService(
          hdlSCM,                    // SCManager database
-         "TBSCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service
+         "TBSCSTvotagusca2FontopusMain-" + papp->m_strAppName,               // name of service
          "ccvotagus ca2 fontopus " + papp->m_strAppName,        // service name to display
          STANDARD_RIGHTS_REQUIRED,  // desired access
          SERVICE_WIN32_OWN_PROCESS | SERVICE_INTERACTIVE_PROCESS, // service type
          SERVICE_AUTO_START,      // start type
          SERVICE_ERROR_NORMAL,      // error control type
-         strCalling,                   // service's binary Path name
+         strcalling,                   // service's binary Path name
          0,                      // no load ordering group
          0,                      // no tag identifier
          0,                      // no dependencies
@@ -644,7 +644,7 @@ namespace lnx
 
       SC_HANDLE hdlServ = ::OpenService(
          hdlSCM,                    // SCManager database
-         "TBSCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service
+         "TBSCSTvotagusca2FontopusMain-" + papp->m_strAppName,               // name of service
          DELETE);                     // no password
 
       if (!hdlServ)
@@ -685,7 +685,7 @@ namespace lnx
 
       SC_HANDLE hdlServ = ::OpenService(
          hdlSCM,                    // SCManager database
-         "TBSCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service
+         "TBSCSTvotagusca2FontopusMain-" + papp->m_strAppName,               // name of service
          SERVICE_START);                     // no password
 
 
@@ -726,7 +726,7 @@ namespace lnx
 
       SC_HANDLE hdlServ = ::OpenService(
          hdlSCM,                    // SCManager database
-         "TBSCSTvotagusCa2FontopusMain-" + papp->m_strAppName,               // name of service
+         "TBSCSTvotagusca2FontopusMain-" + papp->m_strAppName,               // name of service
          SERVICE_STOP);                     // no password
 
       if (!hdlServ)
@@ -792,7 +792,7 @@ namespace lnx
 /*
       ::count c;
 
-      ::ca::thread * pthread;
+      ::ca2::thread * pthread;
 
       c = ::win::thread::s_threadptra.get_size();
 
@@ -808,7 +808,7 @@ namespace lnx
 
             try
             {
-               pthread = dynamic_cast < ::ca::thread * >(::win::thread::s_threadptra[i]);
+               pthread = dynamic_cast < ::ca2::thread * >(::win::thread::s_threadptra[i]);
                pthread->m_bRun = false;
                pthread->m_p->m_bRun = false;
             }

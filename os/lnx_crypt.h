@@ -6,12 +6,12 @@ namespace lnx
 
 
    class CLASS_DECL_lnx crypt :
-      virtual public ::ca::crypt
+      virtual public ::ca2::crypt
    {
    public:
 
 
-      crypt(sp(::ca::application) papp);
+      crypt(sp(::ca2::application) papp);
       virtual ~crypt();
 
 

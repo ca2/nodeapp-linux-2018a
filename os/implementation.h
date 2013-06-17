@@ -6,8 +6,8 @@ CLASS_DECL_lnx WINBOOL AfxEndDeferRegisterClass(LONG fToRegister, const char ** 
 
 
 // Temporary ::collection::map management (locks temp ::collection::map on current thread)
-//CLASS_DECL_lnx void AfxLockTempMaps(sp(::ca::application) papp);
-//CLASS_DECL_lnx WINBOOL AfxUnlockTempMaps(sp(::ca::application) papp, WINBOOL bDeleteTemps = TRUE);
+//CLASS_DECL_lnx void AfxLockTempMaps(sp(::ca2::application) papp);
+//CLASS_DECL_lnx WINBOOL AfxUnlockTempMaps(sp(::ca2::application) papp, WINBOOL bDeleteTemps = TRUE);
 
 
 
@@ -22,7 +22,7 @@ extern CLASS_DECL_lnx const char _afxWndOleControl[];
 /////////////////////////////////////////////////////////////////////////////
 // Special helpers
 
-CLASS_DECL_lnx void AfxCancelModes(oswindow hWndRcvr);
+CLASS_DECL_lnx void AfxcancelModes(oswindow hWndRcvr);
 CLASS_DECL_lnx WINBOOL AfxHelpEnabled();  // determine if ID_HELP handler exists
 CLASS_DECL_lnx WINBOOL AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont);
 CLASS_DECL_lnx WINBOOL AfxGetPropSheetFont(string & strFace, WORD& wSize, WINBOOL bWizard);

@@ -1,15 +1,15 @@
 #include "framework.h"
 
 
-CLASS_DECL_ca2 int32_t ca2_main();
+CLASS_DECL_ca int32_t ca2_main();
 
-//CLASS_DECL_ca2 extern fixed_alloc_array * g_pfixedallocaWstring;
+//CLASS_DECL_ca extern fixed_alloc_array * g_pfixedallocaWstring;
 
-//CLASS_DECL_ca2 fixed_alloc_array * new_wstring_manager();
+//CLASS_DECL_ca fixed_alloc_array * new_wstring_manager();
 
 void CLASS_DECL_lnx __cdecl _ca2_purecall()
 {
-    throw simple_exception(::ca::get_thread_app());
+    throw simple_exception(::ca2::get_thread_app());
 }
 
 
@@ -36,13 +36,13 @@ int xlib_error_handler(Display * d, XErrorEvent * e)
 }
 
 
-//sp(::ca::application)     win_application_create(sp(::ca::application) pappSystem, const char * pszId);
-//sp(::ca::application)     win_instantiate_application(sp(::ca::application) pappSystem, const char * pszId);
-//int32_t                     win_application_procedure(sp(::ca::application) pappSystem)
+//sp(::ca2::application)     win_application_create(sp(::ca2::application) pappSystem, const char * pszId);
+//sp(::ca2::application)     win_instantiate_application(sp(::ca2::application) pappSystem, const char * pszId);
+//int32_t                     win_application_procedure(sp(::ca2::application) pappSystem)
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation
-//  Can be replaced as long as '::ca::WinInit' is called first
+//  can be replaced as long as '::ca2::WinInit' is called first
 
 extern char gen_InitAppState;
 
@@ -72,7 +72,7 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 //*pi = 0;
 //}
 
-//throw todo(::ca::get_thread_app());
+//throw todo(::ca2::get_thread_app());
 
    if(!main_initialize())
       return -1;

@@ -108,6 +108,7 @@
 		<Unit filename="../operational_system/operational_system.h" />
 		<Unit filename="../operational_system/osdisplay.h" />
 		<Unit filename="../operational_system/oswindow.h" />
+		<Unit filename="../operational_system/pixman_config.h" />
 		<Unit filename="../operational_system/version.h" />
 		<Unit filename="../operational_system/version_configuration.h" />
 		<Unit filename="../operational_system/version_cpu.h" />

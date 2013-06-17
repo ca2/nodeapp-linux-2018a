@@ -46,7 +46,7 @@ typedef int32_t (__cdecl * _PNH)( size_t );
 
 _PNH CLASS_DECL_lnx __get_new_handler();
 _PNH CLASS_DECL_lnx __set_new_handler(_PNH pfnNewHandler);
-CLASS_DECL_ca2 int32_t c_cdecl __new_handler(size_t nSize);
+CLASS_DECL_ca int32_t c_cdecl __new_handler(size_t nSize);
 
 void CLASS_DECL_lnx __abort();
 
@@ -61,10 +61,10 @@ CLASS_DECL_lnx LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPA
 // xxx CLASS_DECL_lnx WNDPROC __get_window_procedure();
 // xxx #define __window_procedure (*__get_window_procedure())
 
-typedef void (__MSG_CALL ::ca::window::*__PMSGW)();
-   // like '__PMSG' but for ::ca::window derived classes only
+typedef void (__MSG_CALL ::ca2::window::*__PMSGW)();
+   // like '__PMSG' but for ::ca2::window derived classes only
 
-typedef void (__MSG_CALL ::ca::thread::*__PMSGT)();
+typedef void (__MSG_CALL ::ca2::thread::*__PMSGT)();
    // like '__PMSG' but for thread-derived classes only
 
 
@@ -78,13 +78,13 @@ typedef void (__MSG_CALL ::ca::thread::*__PMSGT)();
 
 
 CLASS_DECL_lnx ::lnx::thread * __get_thread();
-CLASS_DECL_lnx void __set_thread(::ca::thread * pthread);
+CLASS_DECL_lnx void __set_thread(::ca2::thread * pthread);
 CLASS_DECL_lnx MESSAGE * __get_current_message();
 
-CLASS_DECL_lnx void __end_thread(sp(::ca::application) papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_lnx void __end_thread(sp(::ca2::application) papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_lnx void __init_thread();
-CLASS_DECL_lnx void __term_thread(sp(::ca::application) papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_lnx void __term_thread(sp(::ca2::application) papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
@@ -99,11 +99,11 @@ CLASS_DECL_lnx void __term_thread(sp(::ca::application) papp, HINSTANCE hInstTer
 
 
 // Advanced initialization: for overriding default WinMain
-//CLASS_DECL_lnx bool ::ca::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
+//CLASS_DECL_lnx bool ::ca2::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_lnx void __lnx_term();
 
-CLASS_DECL_lnx sp(::ca::application)  __get_app();
+CLASS_DECL_lnx sp(::ca2::application)  __get_app();
 CLASS_DECL_lnx sp(::user::interaction) __get_main_window();
 //CLASS_DECL_lnx HINSTANCE CLASS_DECL_lnx System.m_hInstance;
 CLASS_DECL_lnx HINSTANCE __get_resource_handle();

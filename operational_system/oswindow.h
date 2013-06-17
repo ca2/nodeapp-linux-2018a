@@ -24,14 +24,14 @@ class simple_map;
 
 struct hthread;
 
-namespace ca
+namespace ca2
 {
 
 
    class thread_base;
 
 
-} // namespace ca
+} // namespace ca2
 
 
 //class oswindow_data;
@@ -169,7 +169,7 @@ public:
    void post_nc_destroy();
 
 
-   bool is_child(oswindow oswindowCandidateChildOrDescendant); // or descendant
+   bool is_child(oswindow oswindowcandidateChildOrDescendant); // or descendant
    oswindow get_parent();
    oswindow set_parent(oswindow oswindowNewParent);
    long get_state();
@@ -210,9 +210,9 @@ CLASS_DECL_c bool oswindow_remove_message_only_window(::user::interaction_base *
 
 #define HWND_MESSAGE ((::oswindow_data *) (int_ptr) 1)
 
-inline bool IsChild(oswindow oswindowParent, ::oswindow oswindowCandidateChildOrDescendant)
+inline bool IsChild(oswindow oswindowParent, ::oswindow oswindowcandidateChildOrDescendant)
 {
-   return oswindowParent->is_child(oswindowCandidateChildOrDescendant);
+   return oswindowParent->is_child(oswindowcandidateChildOrDescendant);
 }
 
 inline oswindow GetParent(::oswindow oswindow)
