@@ -400,7 +400,6 @@ typedef void * PVOID;
 #define __stdcall
 
 
-#include "cross/win/win.h"
 
 
 

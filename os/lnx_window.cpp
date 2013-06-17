@@ -4135,7 +4135,6 @@ ExitModal:
 
    void window::EndModalLoop(id nResult)
    {
-      throw not_implemented(get_app());
       ASSERT(::IsWindow((oswindow) get_handle()));
 
       // this result will be returned from window::RunModalLoop

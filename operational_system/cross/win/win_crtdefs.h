@@ -181,7 +181,7 @@ typedef unsigned short  wctype_t;
 #endif
 
 #ifndef _ERRNO_T_DEFINED
-typedef int32_t errno_t;
+//typedef int32_t errno_t;
 #define _ERRNO_T_DEFINED
 #endif
 

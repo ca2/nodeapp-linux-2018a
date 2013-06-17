@@ -146,7 +146,7 @@ typedef void far            *LPVOID;
 typedef CONST void far      *LPCVOID;
 
 typedef int32_t                 INT;
-typedef uint32_t        UINT;
+//typedef uint32_t        UINT;
 typedef uint32_t        *PUINT;
 
 #ifndef NT_INCLUDED
@@ -156,9 +156,9 @@ typedef uint32_t        *PUINT;
 // xxx #include <specstrings.h>
 
 /* Types use for passing & returning polymorphic values */
-typedef uint_ptr            WPARAM;
-typedef long_ptr            LPARAM;
-typedef long_ptr            LRESULT;
+//typedef uint_ptr            WPARAM;
+//typedef long_ptr            LPARAM;
+//typedef long_ptr            LRESULT;
 
 
 #define MAKEWORD(a, b)      ((WORD)(((BYTE)(((dword_ptr)(a)) & 0xff)) | ((WORD)((BYTE)(((dword_ptr)(b)) & 0xff))) << 8))

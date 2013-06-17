@@ -47,28 +47,28 @@ struct tagHandle
 
 
 typedef uint32_t       DWORD;
-typedef int32_t                 WINBOOL;
+//typedef int32_t                 WINBOOL;
 typedef unsigned char       BYTE;
-typedef unsigned short      WORD;
-typedef float               FLOAT;
-typedef FLOAT               *PFLOAT;
-typedef WINBOOL near           *PBOOL;
-typedef WINBOOL far            *LPBOOL;
-typedef BYTE near           *PBYTE;
-typedef BYTE far            *LPBYTE;
-typedef int32_t near            *PINT;
-typedef int32_t far             *LPINT;
-typedef WORD near           *PWORD;
-typedef WORD far            *LPWORD;
-typedef int32_t far            *LPLONG;
-typedef DWORD near          *PDWORD;
-typedef DWORD far           *LPDWORD;
-typedef void far            *LPVOID;
-typedef CONST void far      *LPCVOID;
+//typedef unsigned short      WORD;
+//typedef float               FLOAT;
+//typedef FLOAT               *PFLOAT;
+//typedef WINBOOL near           *PBOOL;
+//typedef WINBOOL far            *LPBOOL;
+//typedef BYTE near           *PBYTE;
+//typedef BYTE far            *LPBYTE;
+//typedef int32_t near            *PINT;
+//typedef int32_t far             *LPINT;
+//typedef WORD near           *PWORD;
+//typedef WORD far            *LPWORD;
+//typedef int32_t far            *LPLONG;
+//typedef DWORD near          *PDWORD;
+//typedef DWORD far           *LPDWORD;
+//typedef void far            *LPVOID;
+//typedef CONST void far      *LPCVOID;
 
-typedef int32_t                 INT;
-typedef uint32_t        UINT;
-typedef uint32_t        *PUINT;
+//typedef int32_t                 INT;
+//typedef uint32_t        UINT;
+//typedef uint32_t        *PUINT;
 
 
 
@@ -76,12 +76,12 @@ typedef uint32_t        *PUINT;
 
 
 
-typedef void * LPVOID;
-typedef const void * LPCVOID;
+//typedef void * LPVOID;
+//typedef const void * LPCVOID;
 
-typedef const char * LPCSTR;
+//typedef const char * LPCSTR;
 typedef LPCSTR LPCTSTR;
-typedef char * LPSTR;
+//typedef char * LPSTR;
 typedef LPSTR LPTSTR;
 
 
@@ -119,15 +119,15 @@ typedef unsigned short WCHAR;    // wc,   16-bit UNICODE character
 #endif
 
 
-typedef WCHAR *PWCHAR, *LPWCH, *PWCH;
-typedef CONST WCHAR *LPCWCH, *PCWCH;
+//////typedef WCHAR *PWCHAR, *LPWCH, *PWCH;
+//typedef CONST WCHAR *LPCWCH, *PCWCH;
 
 // null terminated
-typedef  WCHAR *NWPSTR, *LPWSTR, *PWSTR;
+//typedef  WCHAR *NWPSTR, *LPWSTR, *PWSTR;
 typedef  PWSTR *PZPWSTR;
 typedef  CONST PWSTR *PCZPWSTR;
 typedef  WCHAR UNALIGNED *LPUWSTR, *PUWSTR;
-typedef  CONST WCHAR *LPCWSTR, *PCWSTR;
+//typedef  CONST WCHAR *LPCWSTR, *PCWSTR;
 typedef  PCWSTR *PZPCWSTR;
 typedef  CONST WCHAR UNALIGNED *LPCUWSTR, *PCUWSTR;
 
@@ -145,13 +145,13 @@ typedef  CONST WCHAR UNALIGNED *PCUNZWCH;
 //
 // ANSI (Multi-byte Character) types
 //
-typedef CHAR *PCHAR, *LPCH, *PCH;
-typedef CONST CHAR *LPCCH, *PCCH;
+//typedef CHAR *PCHAR, *LPCH, *PCH;
+//typedef CONST CHAR *LPCCH, *PCCH;
 
-typedef  CHAR *NPSTR, *LPSTR, *PSTR;
+//typedef  CHAR *NPSTR, *LPSTR, *PSTR;
 typedef  PSTR *PZPSTR;
 typedef  CONST PSTR *PCZPSTR;
-typedef  CONST CHAR *LPCSTR, *PCSTR;
+//typedef  CONST CHAR *LPCSTR, *PCSTR;
 typedef  PCSTR *PZPCSTR;
 
 typedef  CHAR *PZZSTR;
@@ -170,8 +170,8 @@ typedef unsigned char TBYTE , *PTBYTE ;
 
 typedef LPCH LPTCH, PTCH;
 typedef LPCCH LPCTCH, PCTCH;
-typedef LPSTR PTSTR, LPTSTR, PUTSTR, LPUTSTR;
-typedef LPCSTR PCTSTR, LPCTSTR, PCUTSTR, LPCUTSTR;
+//typedef LPSTR PTSTR, LPTSTR, PUTSTR, LPUTSTR;
+//typedef LPCSTR PCTSTR, LPCTSTR, PCUTSTR, LPCUTSTR;
 typedef PZZSTR PZZTSTR, PUZZTSTR;
 typedef PCZZSTR PCZZTSTR, PCUZZTSTR;
 typedef PNZCH PNZTCH, PUNZTCH;
@@ -180,8 +180,8 @@ typedef PCNZCH PCNZTCH, PCUNZTCH;
 #define TEXT(quote) __TEXT(quote)   // r_winnt
 
 
-typedef SHORT *PSHORT;
-typedef LONG *PLONG;
+//typedef SHORT *PSHORT;
+//typedef LONG *PLONG;
 
 
 //typedef void *HINSTANCE;
