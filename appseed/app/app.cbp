@@ -72,6 +72,7 @@
 			<Add option="-Wl,-R\\$$$ORIGIN" />
 			<Add option="-Wl,-z,origin" />
 			<Add option="-l_ca2c" />
+			<Add option="-l_ca2pixman" />
 			<Add option="-l_ca2zlib" />
 			<Add option="-l_ca2freeimage" />
 			<Add option="-l_ca2freetype" />

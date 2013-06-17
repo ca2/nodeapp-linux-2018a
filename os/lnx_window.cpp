@@ -1464,7 +1464,7 @@ xdisplay d(w->display());
       }
       if(pbase->m_uiMessage == WM_TIMER)
       {
-         m_pthread->m_pthread->step_timer();
+         //m_pthread->m_pthread->step_timer();
       }
       else if(pbase->m_uiMessage == WM_LBUTTONDOWN)
       {
@@ -5344,17 +5344,24 @@ if(psurface == g_cairosurface)
 
    }
 
-   bool window::Drawcaption(::ca2::graphics * pgraphics, LPCRECT lprc, UINT uFlags)
+   bool window::DrawCaption(::ca2::graphics * pgraphics, LPCRECT lprc, UINT uFlags)
    {
 
       throw not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
-      //return ::Drawcaption(get_handle(), (HDC)(dynamic_cast<::lnx::graphics * >(pgraphics))->get_handle(), lprc, uFlags) != FALSE;
+      //return ::DrawCaption(get_handle(), (HDC)(dynamic_cast<::lnx::graphics * >(pgraphics))->get_handle(), lprc, uFlags) != FALSE;
 
    }
 
    uint_ptr window::SetTimer(uint_ptr nIDEvent, UINT nElapse, void (CALLBACK* lpfnTimer)(oswindow, UINT, uint_ptr, DWORD))
    {
+
+
+        UNREFERENCED_PARAMETER(lpfnTimer);
+
+        m_pguie->m_pthread->m_pthread->set_timer(m_pguie, nIDEvent, nElapse);
+
+        return nIDEvent;
 
       //throw not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
@@ -5362,10 +5369,14 @@ if(psurface == g_cairosurface)
 
    }
 
+
    bool window::KillTimer(uint_ptr nIDEvent)
    {
 
-      throw not_implemented(get_app());
+       m_pguie->m_pthread->m_pthread->unset_timer(m_pguie, nIDEvent);
+
+       return TRUE;
+
       //ASSERT(::IsWindow((oswindow) get_handle()));
       //return ::KillTimer(get_handle(), nIDEvent)  != FALSE;
 
