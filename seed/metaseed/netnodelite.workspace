@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
+		<Project filename="../../../app/appseed/c/_c.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
+		</Project>
 		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
@@ -8,9 +12,11 @@
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
 		<Project filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp">
+			<Depends filename="../../../app/appseed/c/_c.cbp" />
+		</Project>
 		<Project filename="../../appseed/app/app.cbp">
-			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 			<Depends filename="../../os/os.cbp" />
 		</Project>
@@ -20,7 +26,6 @@
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
-			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		</Project>
@@ -34,27 +39,26 @@
 			<Depends filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app-core/appseed/netnodelite_library/netnodelite_library.cbp" />
-			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/c/_.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+		<Project filename="../../../app/appseed/ca/ca.cbp">
+			<Depends filename="../../../app/appseed/c/_c.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/ca2/ca2.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
-			<Depends filename="../../../app/appseed/c/_.cbp" />
+			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 		</Project>
 		<Project filename="../../os/os.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
-			<Depends filename="../../../app/appseed/c/_.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
