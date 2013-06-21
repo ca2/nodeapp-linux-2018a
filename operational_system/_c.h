@@ -9,6 +9,11 @@
 #include <stdarg.h>
 #include <stddef.h>
 //#include <unistd.h>
+#ifdef __USE_STRING_H_BSD
+#ifndef __USE_BSD
+#define __USE_BSD
+#endif
+#endif
 #include <string.h>
 #include <time.h>
 #include <limits.h>
