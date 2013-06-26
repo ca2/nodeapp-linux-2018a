@@ -830,7 +830,7 @@ namespace lnx
    }
 
 
-   bool thread::begin(::ca2::e_thread_priority epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::begin(::ca2::e_scheduling_priority epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
       if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
       {
@@ -846,12 +846,12 @@ namespace lnx
    }
 
 
-   bool thread::create_thread(::ca2::e_thread_priority epriority, uint32_t dwCreateFlagsParam, uint_ptr nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
+   bool thread::create_thread(::ca2::e_scheduling_priority epriority, uint32_t dwCreateFlagsParam, uint_ptr nStackSize, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
 
       uint32_t dwCreateFlags = dwCreateFlagsParam;
 
-      if(epriority != ::ca2::thread_priority_normal)
+      if(epriority != ::ca2::scheduling_priority_normal)
       {
          dwCreateFlags |= CREATE_SUSPENDED;
       }
@@ -905,7 +905,7 @@ namespace lnx
       // allow thread to continue, once resumed (it may already be resumed)
       pstartup->hEvent2.set_event();
 
-      if(epriority != ::ca2::thread_priority_normal)
+      if(epriority != ::ca2::scheduling_priority_normal)
       {
 
          //VERIFY(set_thread_priority(epriority));
@@ -1699,7 +1699,7 @@ stop_run:
 
 //   thread::operator HANDLE() const
   // { return this == NULL ? NULL : m_hThread; }
-   bool thread::set_thread_priority(::ca2::e_thread_priority  nPriority)
+   bool thread::set_thread_priority(::ca2::e_scheduling_priority  nPriority)
    {
       //throw not_implemented(get_app());
 //       return ::SetThreadPriority(thread_ nPriority);

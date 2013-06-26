@@ -105,9 +105,9 @@ namespace lnx
       virtual void set_p(::ca2::thread * p);
 
 
-      virtual bool begin(::ca2::e_thread_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool begin(::ca2::e_scheduling_priority epriority = get_thread_priority_normal(), uint_ptr nStackSize = 0, uint32_t dwCreateFlags = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
-      virtual bool create_thread(::ca2::e_thread_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlagsParam = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
+      virtual bool create_thread(::ca2::e_scheduling_priority epriority = get_thread_priority_normal(), uint32_t dwCreateFlagsParam = 0, uint_ptr nStackSize = 0, LPSECURITY_ATTRIBUTES lpSecurityAttrs = NULL);
 
       virtual sp(::user::interaction) SetMainWnd(sp(::user::interaction) pui);
 
@@ -138,7 +138,7 @@ namespace lnx
       virtual void on_delete(::ca2::ca2 * poc);
 
       int32_t GetThreadPriority();
-      bool set_thread_priority(::ca2::e_thread_priority nPriority);
+      bool set_thread_priority(::ca2::e_scheduling_priority nPriority);
 
    // Operations
       DWORD SuspendThread();
