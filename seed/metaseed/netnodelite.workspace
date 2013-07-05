@@ -80,7 +80,18 @@
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/netnode/netnode.cbp" />
+		<Project filename="../../../app-core/appseed/netnode/netnode.cbp">
+			<Depends filename="../../../app/appseed/c/_c.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+			<Depends filename="../../../app/appseed/ca/ca.cbp" />
+			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
+			<Depends filename="../../os/os.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/netnode_dynamic_source_library/netnode_dynamic_source_library.cbp" />
 		<Project filename="../../../app-core/appseed/netnode_dynamic_source_script/netnode_dynamic_source_script.cbp" />
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
