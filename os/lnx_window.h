@@ -31,6 +31,9 @@ namespace lnx
       cairo_t *                     m_cairoWork;
       cairo_surface_t *             m_cairosurfaceWork;
       bool                          m_bExposing;
+      XWindowAttributes             m_attr;
+      int32_t                       m_iDepth;
+      XVisualInfo                   m_visualinfo;
 
 
       //visual::dib_sp                m_spdib;

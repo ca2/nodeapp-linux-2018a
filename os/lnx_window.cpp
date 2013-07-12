@@ -530,14 +530,16 @@ xdisplay d(w->display());
          int depth = 0;
          {
 
-            XVisualInfo visualinfo ;
 
 
-
-            if(XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &visualinfo))
+            if(XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &m_visualinfo))
             {
-                vis = visualinfo.visual;
-                depth = visualinfo.depth;
+                vis = m_visualinfo.visual;
+                depth = m_visualinfo.depth;
+            }
+            else
+            {
+               memset(&m_visualinfo, 0, sizeof(m_visualinfo));
             }
 
 
@@ -597,6 +599,10 @@ xdisplay d(w->display());
 
          m_oswindow = oswindow_get(display, window, vis);
          m_oswindow->set_user_interaction(m_pguie);
+
+         XGetWindowAttributes(m_oswindow->display(), m_oswindow->window(), &m_attr);
+
+         m_iDepth = depth;
 
          if(lpszWindowName != NULL && strlen(lpszWindowName) > 0)
          {
@@ -7370,11 +7376,24 @@ if(m_cairosurfaceWork == g_cairosurface)
 
          cairo_rectangle(m_cairoSource, 0, 0, rectWindow.width(), rectWindow.height());
 
-         cairo_set_source_rgba(m_cairoSource, 0.0, 0.0, 0.0, 0.0);
+         int depth = DefaultDepth(m_oswindow->display(), 0);
+
+         //cairo_format_t format = cairo_image_surface_get_format(m_cairosurface);
+
+         if(depth == 32)
+         {
+
+            cairo_set_source_rgba(m_cairoSource, 1.0, 1.0, 1.0, 0.0);
+
+         }
+         else
+         {
+
+            cairo_set_source_rgba(m_cairoSource, .84, .84, .84, 1.0);
+
+         }
 
          cairo_fill(m_cairoSource);
-
-
 
       }
       catch(...)
