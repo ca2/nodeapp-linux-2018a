@@ -4,6 +4,9 @@
 
 #define TEST 0
 
+#include <X11/extensions/Xcomposite.h>
+
+
 //#define COMPILE_MULTIMON_STUBS
 //#include <multimon.h>
 
@@ -598,11 +601,16 @@ xdisplay d(w->display());
    #endif
 
          m_oswindow = oswindow_get(display, window, vis);
+
          m_oswindow->set_user_interaction(m_pguie);
 
          XGetWindowAttributes(m_oswindow->display(), m_oswindow->window(), &m_attr);
 
          m_iDepth = depth;
+
+         int event_base_return, error_base_return;
+
+         m_bComposite = XCompositeQueryExtension(m_oswindow->display(), &event_base_return, &error_base_return) != False;
 
          if(lpszWindowName != NULL && strlen(lpszWindowName) > 0)
          {
@@ -7376,11 +7384,11 @@ if(m_cairosurfaceWork == g_cairosurface)
 
          cairo_rectangle(m_cairoSource, 0, 0, rectWindow.width(), rectWindow.height());
 
-         int depth = DefaultDepth(m_oswindow->display(), 0);
+         //int depth = DefaultDepth(m_oswindow->display(), 0);
 
          //cairo_format_t format = cairo_image_surface_get_format(m_cairosurface);
 
-         if(depth == 32)
+         if(m_bComposite)
          {
 
             cairo_set_source_rgba(m_cairoSource, 1.0, 1.0, 1.0, 0.0);

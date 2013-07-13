@@ -34,6 +34,7 @@ namespace lnx
       XWindowAttributes             m_attr;
       int32_t                       m_iDepth;
       XVisualInfo                   m_visualinfo;
+      bool                          m_bComposite;
 
 
       //visual::dib_sp                m_spdib;
