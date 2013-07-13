@@ -608,9 +608,14 @@ xdisplay d(w->display());
 
          m_iDepth = depth;
 
-         int event_base_return, error_base_return;
+         int event_base, error_base, major_version, minor_version;
 
-         m_bComposite = XCompositeQueryExtension(m_oswindow->display(), &event_base_return, &error_base_return) != False;
+         //m_bComposite = XCompositeQueryExtension(m_oswindow->display(), &event_base, &error_base) != False
+         //            && XCompositeQueryVersion(m_oswindow->display(), &major_version, &minor_version) != 0
+         //            && (major_version > 0 || minor_version >= 3);
+
+         m_bComposite = XGetSelectionOwner(m_oswindow->display(), XInternAtom(m_oswindow->display(), "_NET_WM_CM_S0", True));
+
 
          if(lpszWindowName != NULL && strlen(lpszWindowName) > 0)
          {

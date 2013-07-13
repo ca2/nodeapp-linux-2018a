@@ -67,13 +67,14 @@
 			<Add option="-Wl,-z,origin" />
 			<Add option="-lpthread" />
 			<Add option="-ldl" />
+			<Add option="-lX11" />
+			<Add option="-lXmu" />
+			<Add option="-lXcomposite" />
 			<Add option="-l_ca2c" />
 			<Add option="-l_ca2freeimage" />
 			<Add option="-l_ca2cairo" />
 			<Add option="-lca2ca" />
 			<Add option="-lca2" />
-			<Add option="-lX11" />
-			<Add option="-lXmu" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../stage/x86" />
 		</Linker>
