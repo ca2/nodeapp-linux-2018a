@@ -1726,6 +1726,7 @@ return false;
    }
    bool thread::post_thread_message(UINT message, WPARAM wParam, lparam lParam)
    {
+
       ASSERT(m_hThread != NULL);
       return ::PostThreadMessage(m_nID, message, wParam, lParam);
    }

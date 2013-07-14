@@ -69,7 +69,6 @@
 			<Add option="-ldl" />
 			<Add option="-lX11" />
 			<Add option="-lXmu" />
-			<Add option="-lXcomposite" />
 			<Add option="-l_ca2c" />
 			<Add option="-l_ca2freeimage" />
 			<Add option="-l_ca2cairo" />
@@ -199,6 +198,7 @@
 		<Extensions>
 			<code_completion />
 			<debugger />
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>

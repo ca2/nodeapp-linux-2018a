@@ -33,9 +33,9 @@
 			<Depends filename="../../../app-core/appseed/projection/projection.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
+			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
@@ -45,8 +45,8 @@
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
@@ -70,8 +70,8 @@
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
@@ -80,8 +80,8 @@
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/projection/projection.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
@@ -90,8 +90,8 @@
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
-			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp">
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />

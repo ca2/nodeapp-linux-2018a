@@ -431,7 +431,7 @@ namespace lnx
 
       pdata = (byte *) m_pcolorref;
 
-      int size = scan * cy / sizeof(COLORREF);
+/*      int size = scan * cy / sizeof(COLORREF);
       while(size > 0)
       {
          if(pdata[3] != 0)
@@ -442,7 +442,7 @@ namespace lnx
          }
          pdata += 4;
          size--;
-      }
+      }*/
 
       m_bMapped = true;
 
@@ -466,7 +466,7 @@ namespace lnx
          return;
 
       byte * pdata =  (byte *) m_pcolorref;
-      int size = scan * cy / sizeof(COLORREF);
+      /*int size = scan * cy / sizeof(COLORREF);
       while(size > 0)
       {
          pdata[0] = pdata[0] * pdata[3] / 255;
@@ -474,7 +474,7 @@ namespace lnx
          pdata[2] = pdata[2] * pdata[3] / 255;
          pdata += 4;
          size--;
-      }
+      }*/
 
       pdata =  (byte *) cairo_image_surface_get_data(surface);
 

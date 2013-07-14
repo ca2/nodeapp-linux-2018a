@@ -4,7 +4,7 @@
 
 #define TEST 0
 
-#include <X11/extensions/Xcomposite.h>
+//#include <X11/extensions/Xcomposite.h>
 
 
 //#define COMPILE_MULTIMON_STUBS

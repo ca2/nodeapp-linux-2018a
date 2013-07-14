@@ -96,6 +96,7 @@
 			<debugger>
 				<search_path add="/ca2/app/appseed/ca/" />
 			</debugger>
+			<envvars />
 		</Extensions>
 	</Project>
 </CodeBlocks_project_file>
