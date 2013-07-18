@@ -405,6 +405,9 @@ typedef void * PVOID;
 #define __stdcall
 
 
+#define strnicmp strncasecmp
+
+
 
 
 
