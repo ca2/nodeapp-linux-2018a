@@ -91,21 +91,18 @@ typedef uint32_t UINT;
 
 
 /* Types use for passing & returning polymorphic values */
-typedef uint_ptr            WPARAM;
-typedef long_ptr            LPARAM;
-typedef long_ptr            LRESULT;
-
-
-typedef struct oswindow_data * oswindow;
-
-typedef struct hthread * HTHREAD;
-
+typedef uint_ptr                 WPARAM;
+typedef long_ptr                 LPARAM;
+typedef long_ptr                 LRESULT;
+typedef struct oswindow_data *   oswindow;
+typedef struct hthread *         HTHREAD;
+typedef XID                      Window;
 
 struct device_context;
-
 struct gdi_object;
 
-typedef XID Window;
+
+
 
 /*struct tag_WINDOW;
 
