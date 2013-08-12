@@ -389,6 +389,9 @@ namespace lnx
    {
       if(m_bRender)
          return false;
+
+
+      mutex_lock ml(user_mutex());
       //single_lock sl(&m_mutexRender, FALSE);
       //if(!sl.lock(duration::zero()))
         // return false;

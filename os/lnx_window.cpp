@@ -633,6 +633,9 @@ xdisplay d(w->display());
             XMapWindow(m_oswindow->display(), m_oswindow->window());
          }
 
+d.unlock();
+         ml.unlock();
+
       //if (!unhook_window_create())
         // PostNcDestroy();        // cleanup if CreateWindowEx fails too soon
 
