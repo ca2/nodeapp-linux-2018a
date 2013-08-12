@@ -158,7 +158,6 @@
 		<Unit filename="lnx_os.h" />
 		<Unit filename="lnx_port_forward.cpp" />
 		<Unit filename="lnx_port_forward.h" />
-		<Unit filename="lnx_preview_dc.cpp" />
 		<Unit filename="lnx_root_tools.h" />
 		<Unit filename="lnx_shell.cpp" />
 		<Unit filename="lnx_shell.h" />
