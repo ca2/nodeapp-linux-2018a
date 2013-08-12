@@ -106,7 +106,7 @@ void preview_dc::SetOutputDC(HDC hDC)
 {
    ASSERT(hDC != NULL);
    m_nSaveDCIndex = ::SaveDC(hDC); // restore in ReleaseOutputDC()
-   ::ca2::graphics_sp::SetOutputDC(hDC);
+   ::draw2d::graphics_sp::SetOutputDC(hDC);
 
    if (get_handle2() != NULL)
    {
@@ -124,13 +124,13 @@ void preview_dc::ReleaseOutputDC()
 {
    ASSERT(get_os_data() != NULL);
    ::RestoreDC(get_os_data(), m_nSaveDCIndex); // Saved in SetOutputDC()
-   ::ca2::graphics_sp::ReleaseOutputDC();
+   ::draw2d::graphics_sp::ReleaseOutputDC();
 }
 
 void preview_dc::SetAttribDC(HDC hDC)
 {
    ASSERT(hDC != NULL);
-   ::ca2::graphics_sp::SetAttribDC(hDC);
+   ::draw2d::graphics_sp::SetAttribDC(hDC);
 
    MirrorMappingMode(TRUE);
    MirrorFont();
@@ -158,13 +158,13 @@ void preview_dc::SetScaleRatio(int32_t nNumerator, int32_t nDenominator)
 #ifdef DEBUG
 void preview_dc::assert_valid() const
 {
-   ::ca2::graphics_sp::assert_valid();
+   ::draw2d::graphics_sp::assert_valid();
 }
 
 
 void preview_dc::dump(dump_context & dumpcontext) const
 {
-   ::ca2::graphics_sp::dump(dumpcontext);
+   ::draw2d::graphics_sp::dump(dumpcontext);
 
    dumpcontext << "Scale Factor: " << m_nScaleNum << "/" << m_nScaleDen;
    dumpcontext << "\n";
@@ -237,7 +237,7 @@ void preview_dc::MirrorAttributes()
    }
 }
 
-::ca2::graphics_object* preview_dc::SelectStockObject(int32_t nIndex)
+::draw2d::graphics_object* preview_dc::SelectStockObject(int32_t nIndex)
 {
    ASSERT(get_handle2() != NULL);
 
@@ -254,7 +254,7 @@ void preview_dc::MirrorAttributes()
    case DEFAULT_GUI_FONT:
       // Handle the stock fonts correctly
       {
-         ::ca2::graphics_object* pObject = ::lnx::graphics_object::from_handle(
+         ::draw2d::graphics_object* pObject = ::lnx::graphics_object::from_handle(
                      ::SelectObject(get_handle2(), hObj));
 
          // Don't re-mirror screen font if this is the same font.
@@ -366,7 +366,7 @@ void preview_dc::MirrorFont()
    m_hFont = hNewFont;         // save the new one
 }
 
-::ca2::font* preview_dc::SelectObject(::ca2::font* pFont)
+::draw2d::font* preview_dc::SelectObject(::draw2d::font* pFont)
 {
    if (pFont == NULL)
       return NULL;
@@ -374,7 +374,7 @@ void preview_dc::MirrorFont()
    ASSERT(get_handle2() != NULL);
    ASSERT_VALID(pFont);
 
-   ::ca2::font* pOldFont = (::ca2::font*) ::lnx::graphics_object::from_handle(
+   ::draw2d::font* pOldFont = (::draw2d::font*) ::lnx::graphics_object::from_handle(
             ::SelectObject(get_handle2(), pFont->get_handle()));
 
    // If same as already selected, don't re-mirror screen font
@@ -1010,7 +1010,7 @@ HDC CLASS_DECL_lnx AfxCreateDC(HGLOBAL hDevNames, HGLOBAL hDevMode)
 }
 
 
-// IMPLEMENT_DYNAMIC(preview_dc, ::ca2::graphics_sp)
+// IMPLEMENT_DYNAMIC(preview_dc, ::draw2d::graphics_sp)
 
 /////////////////////////////////////////////////////////////////////////////
 */

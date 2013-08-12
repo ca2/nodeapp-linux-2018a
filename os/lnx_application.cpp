@@ -536,7 +536,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
       return ::win::thread::DispatchThreadMessageEx(msg);
    }*/
 
-/*   ::ca2::graphics * application::graphics_from_os_data(void * pdata)
+/*   ::draw2d::graphics * application::graphics_from_os_data(void * pdata)
    {
       return ::win::graphics::from_handle((HDC) pdata);
    }*/
@@ -854,5 +854,11 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    }
 
+   string application::draw2d_get_default_library_name()
+   {
+
+         return "draw2d_cairo";
+
+   }
 
 } // namespace lnx

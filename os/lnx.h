@@ -64,17 +64,6 @@ CLASS_DECL_lnx void AfxResetMsgcache();
 // xxx #include "lnx_folder_watch.h"
 #include "lnx_factory_exchange.h"
 #include "lnx_window_draw.h"
-#include "lnx_graphics_path.h"
-#include "lnx_graphics.h"
-#include "lnx_graphics_object.h"
-#include "lnx_bitmap.h"
-#include "lnx_dib.h"
-#include "lnx_palette.h"
-#include "lnx_pen.h"
-#include "lnx_font.h"
-#include "lnx_brush.h"
-#include "lnx_region.h"
-//xxx #include "draw_dib.h"
 #include "lnx_thread.h"
 #include "lnx_window.h"
 #include "lnx_os.h"
@@ -89,11 +78,11 @@ CLASS_DECL_lnx void AfxResetMsgcache();
 
 #define LNX_THREAD(pthread) (dynamic_cast < ::lnx::thread * > (dynamic_cast < ::ca2::thread * >(pthread)))
 #define LNX_WINDOW(pwnd) (dynamic_cast < ::lnx::window * > (((sp(::ca2::window))(pwnd)).m_p))
-#define LNX_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::ca2::graphics * > (pgraphics)))
-#define SP_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (( ::ca2::graphics * )(pgraphics)))
-#define LNX_HDC(pgraphics) ((HDC)*(dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::ca2::graphics * > (pgraphics))))
-#define SP_HDC(pgraphics) ((HDC)*(dynamic_cast < ::lnx::graphics * > ((::ca2::graphics *)(pgraphics))))
-#define LNX_DIB(pdib) (dynamic_cast < ::lnx::dib * > (dynamic_cast < ::ca2::dib * >(pdib)))
+#define LNX_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))
+#define SP_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (( ::draw2d::graphics * )(pgraphics)))
+#define LNX_HDC(pgraphics) ((HDC)*(dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics))))
+#define SP_HDC(pgraphics) ((HDC)*(dynamic_cast < ::lnx::graphics * > ((::draw2d::graphics *)(pgraphics))))
+#define LNX_DIB(pdib) (dynamic_cast < ::lnx::dib * > (dynamic_cast < ::draw2d::dib * >(pdib)))
 
 #include "lnx_shell.h"
 

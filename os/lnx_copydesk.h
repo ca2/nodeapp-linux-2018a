@@ -29,9 +29,9 @@ namespace lnx
       virtual string get_plain_text();
 
 
-      virtual bool desk_to_dib(::ca2::dib * pdib);
+      virtual bool desk_to_dib(::draw2d::dib * pdib);
       // todo
-      //bool dib_to_desk(::ca2::dib * pdib);
+      //bool dib_to_desk(::draw2d::dib * pdib);
 
    };
 

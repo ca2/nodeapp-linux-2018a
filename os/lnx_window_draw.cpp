@@ -45,7 +45,7 @@ namespace lnx
       m_iFramesPerSecond = 20;
    }
 
-   extern void _001DeferPaintLayeredWindowBackground(void * hwnd, ::ca2::graphics * pdc);
+   extern void _001DeferPaintLayeredWindowBackground(void * hwnd, ::draw2d::graphics * pdc);
    window_draw::~window_draw()
    {
 
@@ -195,7 +195,7 @@ namespace lnx
    }
 
    bool window_draw::to(
-      ::ca2::graphics *          pdc,
+      ::draw2d::graphics *          pdc,
       LPCRECT        lpcrectUpdate,
       user::oswindow_tree::Array & hwndtreea,
       bool           bGdiLocked,
@@ -224,7 +224,7 @@ namespace lnx
    }
 
    bool window_draw::to(
-      ::ca2::graphics *          pdc,
+      ::draw2d::graphics *          pdc,
       LPCRECT        lpcrectUpdate,
       user::oswindow_tree & hwndtree,
       bool           bGdiLocked,
@@ -274,7 +274,7 @@ namespace lnx
          //::ClientToScreen(hwndParam, &rectWindow.top_left());
          //::ClientToScreen(hwndParam, &rectWindow.bottom_right());
 
-         (dynamic_cast < ::lnx::graphics * >(pdc))->SetViewportOrg(rectWindow.left, rectWindow.top);
+         //(dynamic_cast < ::lnx::graphics * >(pdc))->SetViewportOrg(rectWindow.left, rectWindow.top);
 
 
          if(ptwi != NULL)
@@ -418,7 +418,7 @@ namespace lnx
       if(m_pbuffer->GetBuffer()->get_os_data() == NULL)
          return true;
 
-      ::ca2::graphics * pdc = (dynamic_cast < ::lnx::graphics * > (m_pbuffer->GetBuffer()));
+      ::draw2d::graphics * pdc = (dynamic_cast < ::lnx::graphics * > (m_pbuffer->GetBuffer()));
 
       if(pdc == NULL)
       {
@@ -457,14 +457,14 @@ namespace lnx
 
       m_wndpaOut.remove_all();
 
-//      ::ca2::region_sp rgnWindow(get_app());
-  //    ::ca2::region_sp rgnIntersect(get_app());
+//      _sp rgnWindow(get_app());
+  //    _sp rgnIntersect(get_app());
 
 //      rgnWindow->create_rect(0, 0, 0, 0);
   //    rgnIntersect->create_rect(0, 0, 0, 0);
 
       /*rect rectIntersect;
-      ::ca2::region_sp rgnUpdate(get_app());
+      _sp rgnUpdate(get_app());
       rgnUpdate->create_rect(rectUpdate);
       void * hwndOrder = ::GetWindow(::GetDesktopWindow(), GW_CHILD);
       for(;;)
@@ -498,7 +498,7 @@ namespace lnx
             {
                if(!bLayered)
                {
-                  rgnUpdate->CombineRgn(rgnUpdate, rgnWindow, ::ca2::region::combine_exclude);
+                  rgnUpdate->CombineRgn(rgnUpdate, rgnWindow, ::combine_exclude);
                }
                rect rectDiffBox;
                rgnUpdate->GetRgnBox(rectDiffBox);
@@ -944,7 +944,7 @@ throw not_implemented(get_app());
 //      {
 //
 //
-//         iCombine = ::CombineRgn(hrgn, hrgn, hrgnIntersect, ::ca2::region::combine_exclude);
+//         iCombine = ::CombineRgn(hrgn, hrgn, hrgnIntersect, ::combine_exclude);
 //
 //         point ptOffset(0, 0);
 //
@@ -1021,7 +1021,7 @@ throw not_implemented(get_app());
 //         ptOffset.y = 0;
 //         ::ClientToScreen((oswindow) hwnd, &ptOffset);
 //         ::OffsetRgn(hrgn, ptOffset.x, ptOffset.y);
-//         if(::CombineRgn(hrgn, hrgn, hrgnOpaque, ::ca2::region::combine_exclude) == NULLREGION)
+//         if(::CombineRgn(hrgn, hrgn, hrgnOpaque, ::combine_exclude) == NULLREGION)
 //         {
 //            ::DeleteObject(hrgn);
 //            hrgna.remove_at(i);
@@ -1061,7 +1061,7 @@ throw not_implemented(get_app());
 
    bool window_draw::ScreenOutput(
       user::buffer * pbuffer,
-      ::ca2::region & rgnUpdate)
+      ::draw2d::region & rgnUpdate)
    {
       UNREFERENCED_PARAMETER(pbuffer);
       UNREFERENCED_PARAMETER(rgnUpdate);
@@ -1187,7 +1187,7 @@ throw not_implemented(get_app());
 //      // The ::ca2::window owned device context is clipped
 //      // with the update region in screen coordinates
 //      // translated to ::ca2::window client coordinates.
-//      //::ca2::region_sp rgnClip(get_app());
+//      //_sp rgnClip(get_app());
 //      //rgnClip->create_rect(0, 0, 0, 0);
 //      //rgnClip->CopyRgn(&rgnUpdate);
 //      //rgnClip->translate( - rectWnd.top_left());

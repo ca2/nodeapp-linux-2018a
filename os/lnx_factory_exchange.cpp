@@ -15,15 +15,6 @@ namespace lnx
       System.factory().cloneable < file_system                 >  (System. type_info < ::ca2::file_system       > (), 1);
       System.factory().cloneable < application                 >  (System. type_info < ::ca2::application_base  > (), 1);
       System.factory().cloneable < dir                         >  (System. type_info < ::ca2::dir::system        > (), 1);
-      System.factory().cloneable_large < dib                   >  (System. type_info < ::ca2::dib                > ());
-      System.factory().cloneable_large < graphics              >  (System. type_info < ::ca2::graphics           > ());
-      System.factory().cloneable_large < bitmap                >  (System. type_info < ::ca2::bitmap             > ());
-      System.factory().cloneable_large < pen                   >  (System. type_info < ::ca2::pen                > ());
-      System.factory().cloneable_large < brush                 >  (System. type_info < ::ca2::brush              > ());
-      System.factory().cloneable_large < palette               >  (System. type_info < ::ca2::palette            > ());
-      System.factory().cloneable_large < region                >  (System. type_info < ::ca2::region             > ());
-      System.factory().cloneable_large < font                  >  (System. type_info < ::ca2::font               > ());
-      System.factory().cloneable_large < graphics_path         >  (System. type_info < ::ca2::graphics_path      > ());
       System.factory().creatable < window_draw                 >  (System. type_info < ::ca2::window_draw        > (), 1);
       System.factory().creatable_large < thread                >  (System. type_info < ::ca2::thread             > ());
       System.factory().creatable_large < window                >  (System. type_info < ::ca2::window             > ());
@@ -32,8 +23,6 @@ namespace lnx
       System.factory().creatable_small < copydesk              >  (System. type_info < ::ca2::copydesk          > (), 1);
       System.factory().creatable_small < crypt                 >  (System. type_info < ::ca2::crypt             > (), 1);
       System.factory().creatable_small < ip_enum               >  (System. type_info < ::ca2::ip_enum           > ());
-
-      ::lnx::dib::s_initialize();
 
    }
 

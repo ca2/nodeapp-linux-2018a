@@ -1,5 +1,4 @@
 #include "framework.h"
-#include <cairo/cairo-xlib.h>
 #include <X11/Xatom.h>
 
 #define TEST 0
@@ -81,12 +80,12 @@ namespace lnx
       m_pfont = NULL;
       m_pguiecapture = NULL;
       m_pmutexGraphics = NULL;
-      m_cairo = NULL;
-      m_cairosurface = NULL;
-      m_cairoSource = NULL;
-      m_cairosurfaceSource = NULL;
-      m_cairoWork = NULL;
-      m_cairosurfaceWork = NULL;
+//      m_cairo = NULL;
+  //    m_cairosurface = NULL;
+    //  m_cairoSource = NULL;
+//      m_cairosurfaceSource = NULL;
+  //    m_cairoWork = NULL;
+//      m_cairosurfaceWork = NULL;
       m_bExposing = false;
       m_oswindow = NULL;
    }
@@ -104,12 +103,12 @@ namespace lnx
       m_pfont = NULL;
       m_pguiecapture = NULL;
       m_pmutexGraphics = NULL;
-      m_cairo = NULL;
-      m_cairosurface = NULL;
-      m_cairoSource = NULL;
-      m_cairosurfaceSource = NULL;
-      m_cairoWork = NULL;
-      m_cairosurfaceWork = NULL;
+//      m_cairo = NULL;
+  //    m_cairosurface = NULL;
+    //  m_cairoSource = NULL;
+      //m_cairosurfaceSource = NULL;
+//      m_cairoWork = NULL;
+  //    m_cairosurfaceWork = NULL;
       m_bExposing = false;
 
    }
@@ -129,12 +128,12 @@ namespace lnx
       m_pfont = NULL;
       m_pguiecapture = NULL;
       m_pmutexGraphics = NULL;
-      m_cairo = NULL;
-      m_cairosurface = NULL;
-      m_cairoSource = NULL;
-      m_cairosurfaceSource = NULL;
-      m_cairoWork = NULL;
-      m_cairosurfaceWork = NULL;
+//      m_cairo = NULL;
+  //    m_cairosurface = NULL;
+    //  m_cairoSource = NULL;
+      //m_cairosurfaceSource = NULL;
+//      m_cairoWork = NULL;
+  //    m_cairosurfaceWork = NULL;
       m_bExposing = false;
       m_oswindow = NULL;
 
@@ -605,6 +604,9 @@ xdisplay d(w->display());
          m_oswindow->set_user_interaction(m_pguie);
 
          XGetWindowAttributes(m_oswindow->display(), m_oswindow->window(), &m_attr);
+
+
+         m_pgraphics = new window_cairo();
 
          m_iDepth = depth;
 
@@ -1280,8 +1282,8 @@ xdisplay d(w->display());
       return ::SetLayeredWindowAttributes((oswindow)get_handle(), crKey, bAlpha, dwFlags) != FALSE;
    }
 
-   bool window::UpdateLayeredWindow(::ca2::graphics * pDCDst, POINT *pptDst, SIZE *psize,
-      ::ca2::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
+   bool window::UpdateLayeredWindow(::draw2d::graphics * pDCDst, POINT *pptDst, SIZE *psize,
+      ::draw2d::graphics * pDCSrc, POINT *pptSrc, COLORREF crKey, BLENDFUNCTION *pblend, DWORD dwFlags)
    {
       ASSERT(::IsWindow((oswindow)get_handle()));
       return ::UpdateLayeredWindow((oswindow)get_handle(), WIN_HDC(pDCDst), pptDst, psize,
@@ -1296,7 +1298,7 @@ xdisplay d(w->display());
       return ::GetLayeredWindowAttributes((oswindow)get_handle(), pcrKey, pbAlpha, pdwFlags) != FALSE;
    }
 
-   bool window::PrintWindow(::ca2::graphics * pgraphics, UINT nFlags) const
+   bool window::PrintWindow(::draw2d::graphics * pgraphics, UINT nFlags) const
    {
       ASSERT(::IsWindow((oswindow)get_handle()));
       return ::PrintWindow((oswindow)get_handle(), (HDC)(dynamic_cast<::lnx::graphics * >(pgraphics))->get_handle(), nFlags) != FALSE;
@@ -1454,7 +1456,7 @@ xdisplay d(w->display());
       return false;
    }
 
-   void window::_002OnDraw(::ca2::graphics * pdc)
+   void window::_002OnDraw(::draw2d::graphics * pdc)
    {
 
 //      ::callWindowProc(*GetSuperWndProcaddr(), get_handle(), WM_PRINT, (WPARAM)((dynamic_cast<::lnx::graphics * >(pdc))->get_handle()), (LPARAM)(PRF_CHILDREN | PRF_CLIENT));
@@ -1964,7 +1966,7 @@ restart_mouse_hover_check:
    // special case for OnCtlColor to avoid too many temporary objects
    ASSERT(message == WM_CTLCOLOR);
    __CTLCOLOR* pCtl = reinterpret_cast<__CTLCOLOR*>(lparam);
-   ::ca2::graphics_sp dcTemp;
+   ::draw2d::graphics_sp dcTemp;
    dcTemp.set_handle1(pCtl->hDC);
    window wndTemp;
    wndTemp.set_handle(pCtl->hWnd);
@@ -1988,7 +1990,7 @@ restart_mouse_hover_check:
    // special case for CtlColor to avoid too many temporary objects
    ASSERT(message == WM_REFLECT_BASE+WM_CTLCOLOR);
    __CTLCOLOR* pCtl = reinterpret_cast<__CTLCOLOR*>(lparam);
-   ::ca2::graphics_sp dcTemp;
+   ::draw2d::graphics_sp dcTemp;
    dcTemp.set_handle1(pCtl->hDC);
    UINT nCtlType = pCtl->nCtlType;
    HBRUSH hbr = (this->*mmf.pfn_B_D_u)(&dcTemp, nCtlType);
@@ -3223,7 +3225,7 @@ return 0;
 //      EnumWindows(GetAppsEnumWindowsProc, (LPARAM) &wnda);
    }
 
-   /*   void window::_001OnDeferPaintLayeredWindowBackground(::ca2::graphics * pdc)
+   /*   void window::_001OnDeferPaintLayeredWindowBackground(::draw2d::graphics * pdc)
    {
    _001DeferPaintLayeredWindowBackground(pdc);
    }*/
@@ -3479,7 +3481,7 @@ throw not_implemented(get_app());
 //      try
 //      {
 //
-//         ::ca2::dib_sp dib(get_app());
+//         ::draw2d::dib_sp dib(get_app());
 //
 //         rect rectWindow;
 //         GetWindowRect(rectWindow);
@@ -3487,7 +3489,7 @@ throw not_implemented(get_app());
 //         if(!dib->create(rectWindow.bottom_right()))
 //            return;
 //
-//         ::ca2::graphics * pdc = dib->get_graphics();
+//         ::draw2d::graphics * pdc = dib->get_graphics();
 //
 //         if((dynamic_cast<::lnx::graphics * >(pdc))->get_handle() == NULL
 //            || (dynamic_cast<::lnx::graphics * >(pdc))->get_os_data2() == NULL)
@@ -3547,10 +3549,10 @@ throw not_implemented(get_app());
 //      if(pbase->m_wparam == NULL)
 //         return;
 //
-//      ::ca2::graphics_sp graphics(get_app());
+//      ::draw2d::graphics_sp graphics(get_app());
 //      WIN_DC(graphics.m_p)->Attach((HDC) pbase->m_wparam);
 //      rect rectx;
-//      ::ca2::bitmap * pbitmap = &graphics->GetCurrentBitmap();
+//      ::draw2d::bitmap * pbitmap = &graphics->GetCurrentBitmap();
 //      ::GetCurrentObject((HDC) pbase->m_wparam, OBJ_BITMAP);
 //      //      DWORD dw = ::GetLastError();
 //      class size size = pbitmap->get_size();
@@ -3563,11 +3565,11 @@ throw not_implemented(get_app());
 //         rect rectWindow;
 //         GetWindowRect(rectWindow);
 //
-//         ::ca2::dib_sp dib(get_app());
+//         ::draw2d::dib_sp dib(get_app());
 //         if(!dib->create(rectWindow.bottom_right()))
 //            return;
 //
-//         ::ca2::graphics * pdc = dib->get_graphics();
+//         ::draw2d::graphics * pdc = dib->get_graphics();
 //
 //         if(pdc->get_handle() == NULL)
 //            return;
@@ -3631,7 +3633,7 @@ throw not_implemented(get_app());
       Default();
    }
 
-   HBRUSH window::OnCtlColor(::ca2::graphics *, sp(::ca2::window) pWnd, UINT)
+   HBRUSH window::OnCtlColor(::draw2d::graphics *, sp(::ca2::window) pWnd, UINT)
    {
       ASSERT(pWnd != NULL && LNX_WINDOW(pWnd)->get_handle() != NULL);
       LRESULT lResult;
@@ -4951,17 +4953,17 @@ throw not_implemented(get_app());
    }
 
 
-   void window::SetFont(::ca2::font* pfont, bool bRedraw)
+   void window::SetFont(::draw2d::font* pfont, bool bRedraw)
    {
 
       UNREFERENCED_PARAMETER(bRedraw);
 
-      ASSERT(::IsWindow((oswindow) get_handle())); m_pfont = new ::ca2::font(*pfont);
+      ASSERT(::IsWindow((oswindow) get_handle())); m_pfont = new ::draw2d::font(*pfont);
 
    }
 
 
-   ::ca2::font* window::GetFont()
+   ::draw2d::font* window::GetFont()
    {
 
       ASSERT(::IsWindow((oswindow) get_handle()));
@@ -5075,10 +5077,10 @@ throw not_implemented(get_app());
    }
 
 
-   ::ca2::graphics * window::GetDC()
+   ::draw2d::graphics * window::GetDC()
    {
 
-      ::ca2::graphics_sp g(allocer());
+      ::draw2d::graphics_sp g(allocer());
 
       xdisplay d(m_oswindow->display());
 
@@ -5105,25 +5107,25 @@ throw not_implemented(get_app());
       rectClient.top = 0;
       rectClient.right = 500;
       rectClient.bottom = 500;
-      (dynamic_cast < ::lnx::graphics * >(g.m_p))->attach(cairo_create(cairo_xlib_surface_create(oswindow->display(), oswindow->window(), oswindow->visual(),rectClient.width(), rectClient.height())));
+//      (dynamic_cast < ::lnx::graphics * >(g.m_p))->attach(cairo_create(cairo_xlib_surface_create(oswindow->display(), oswindow->window(), oswindow->visual(),rectClient.width(), rectClient.height())));
       return g.detach();
    }
 
-   ::ca2::graphics * window::GetWindowDC()
+   ::draw2d::graphics * window::GetWindowDC()
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
-      ::ca2::graphics_sp g(allocer());
+      ::draw2d::graphics_sp g(allocer());
       g->attach(::GetWindowDC(get_handle()));
       return g.detach();
    }
 
-   bool window::ReleaseDC(::ca2::graphics * pgraphics)
+   bool window::ReleaseDC(::draw2d::graphics * pgraphics)
    {
 
       if(pgraphics == NULL)
          return false;
 
-      cairo_t * pcairo = (cairo_t *) pgraphics->get_os_data();
+/*      cairo_t * pcairo = (cairo_t *) pgraphics->get_os_data();
 
       cairo_surface_t * psurface = cairo_get_target(pcairo);
 	if(pcairo ==  g_cairo)
@@ -5137,7 +5139,7 @@ throw not_implemented(get_app());
 if(psurface == g_cairosurface)
 {
    printf("123");
-}      cairo_surface_destroy(psurface);
+}      cairo_surface_destroy(psurface);*/
 
 //      if(((Gdiplus::Graphics *)(dynamic_cast<::lnx::graphics * >(pgraphics))->get_handle()) == NULL)
   //       return false;
@@ -5172,7 +5174,7 @@ if(psurface == g_cairosurface)
       //return ::GetUpdateRect(get_handle(), lpRect, bErase) != FALSE;
    }
 
-   int32_t window::GetUpdateRgn(::ca2::region* pRgn, bool bErase)
+   int32_t window::GetUpdateRgn(draw2d::region * pRgn, bool bErase)
    {
       throw not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
@@ -5193,7 +5195,7 @@ if(psurface == g_cairosurface)
       //::InvalidateRect(get_handle(), lpRect, bErase);
    }
 
-   void window::InvalidateRgn(::ca2::region* pRgn, bool bErase)
+   void window::InvalidateRgn(::draw2d::region* pRgn, bool bErase)
    {
       throw not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
@@ -5207,7 +5209,7 @@ if(psurface == g_cairosurface)
       //::ValidateRect(get_handle(), lpRect);
    }
 
-   void window::ValidateRgn(::ca2::region* pRgn)
+   void window::ValidateRgn(::draw2d::region* pRgn)
    {
       throw not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
@@ -5296,12 +5298,12 @@ if(psurface == g_cairosurface)
    }
 
 
-   ::ca2::graphics * window::GetDCEx(::ca2::region* prgnClip, DWORD flags)
+   ::draw2d::graphics * window::GetDCEx(::draw2d::region * prgnClip, DWORD flags)
    {
 
       throw not_implemented(get_app());
       //ASSERT(::IsWindow((oswindow) get_handle()));
-      //::ca2::graphics_sp g(get_app());
+      //::draw2d::graphics_sp g(get_app());
       //g->attach(::GetDCEx(get_handle(), (HRGN)prgnClip->get_handle(), flags));
       //return g.detach();
 
@@ -5325,7 +5327,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   bool window::RedrawWindow(LPCRECT lpRectUpdate, ::ca2::region* prgnUpdate, UINT flags)
+   bool window::RedrawWindow(LPCRECT lpRectUpdate, ::draw2d::region * prgnUpdate, UINT flags)
    {
 
       if(System.get_twf() == NULL)
@@ -5362,7 +5364,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   bool window::DrawCaption(::ca2::graphics * pgraphics, LPCRECT lprc, UINT uFlags)
+   bool window::DrawCaption(::draw2d::graphics * pgraphics, LPCRECT lprc, UINT uFlags)
    {
 
       throw not_implemented(get_app());
@@ -5654,7 +5656,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   int32_t window::ScrollWindowEx(int32_t dx, int32_t dy, LPCRECT lpRectScroll, LPCRECT lpRectClip, ::ca2::region* prgnUpdate, LPRECT lpRectUpdate, UINT flags)
+   int32_t window::ScrollWindowEx(int32_t dx, int32_t dy, LPCRECT lpRectScroll, LPCRECT lpRectClip, ::draw2d::region * prgnUpdate, LPRECT lpRectUpdate, UINT flags)
    {
 
       throw not_implemented(get_app());
@@ -5827,7 +5829,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   void window::Createcaret(::ca2::bitmap* pBitmap)
+   void window::Createcaret(::draw2d::bitmap* pBitmap)
    {
 
       throw not_implemented(get_app());
@@ -5931,7 +5933,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   void window::Print(::ca2::graphics * pgraphics, DWORD dwFlags) const
+   void window::Print(::draw2d::graphics * pgraphics, DWORD dwFlags) const
    {
 
       throw not_implemented(get_app());
@@ -5940,7 +5942,7 @@ if(psurface == g_cairosurface)
 
    }
 
-   void window::PrintClient(::ca2::graphics * pgraphics, DWORD dwFlags) const
+   void window::PrintClient(::draw2d::graphics * pgraphics, DWORD dwFlags) const
    {
 
       throw not_implemented(get_app());
@@ -5994,7 +5996,7 @@ if(psurface == g_cairosurface)
    void window::OnEndSession(bool)
    { Default(); }
 
-   bool window::OnEraseBkgnd(::ca2::graphics *)
+   bool window::OnEraseBkgnd(::draw2d::graphics *)
    {
 
       return Default() != FALSE;
@@ -6003,7 +6005,7 @@ if(psurface == g_cairosurface)
 
    void window::OnGetMinMaxInfo(MINMAXINFO*)
    { Default(); }
-   void window::OnIconEraseBkgnd(::ca2::graphics *)
+   void window::OnIconEraseBkgnd(::draw2d::graphics *)
    { Default(); }
    void window::OnKillFocus(::ca2::window *)
    { Default(); }
@@ -7177,7 +7179,7 @@ LRESULT CALLBACK
 namespace lnx
 {
 
-   /*   void window::_001DeferPaintLayeredWindowBackground(::ca2::graphics * pdc)
+   /*   void window::_001DeferPaintLayeredWindowBackground(::draw2d::graphics * pdc)
    {
 
 
@@ -7185,32 +7187,18 @@ namespace lnx
    void window::_001Expose()
    {
 
-//      single_lock sl(mutex_graphics(), true);
-
-      mutex_lock sl(user_mutex(), true);
-
       if(m_bExposing)
          return;
 
       keeper < bool > keepExposing(&m_bExposing, true, false, true);
 
-      xdisplay d(m_oswindow->display());
-
-      rect rectWindow32;
-
-      GetWindowRect(rectWindow32);
-
-      if(rectWindow32.area() <= 0)
-      {
-         TRACE("area is null or negative");
-         return;
-      }
-
-      rect64 rectWindow = rectWindow32;
-
       bool bMove;
 
       bool bSize;
+
+      rect64 rectWindow;
+
+      GetWindowRect(rectWindow);
 
       if(rectWindow.top_left() == m_rectParentClient.top_left())
       {
@@ -7257,238 +7245,54 @@ namespace lnx
 
       }
 
-         if(!m_bVisible || (m_pguie != this && m_pguie != NULL && !m_pguie->m_bVisible))
+      if(!m_bVisible || (m_pguie != this && m_pguie != NULL && !m_pguie->m_bVisible))
+      {
+
+         m_bVisible = true;
+
+         if(m_pguie != this && m_pguie != NULL)
          {
 
-            m_bVisible = true;
+            m_pguie->m_bVisible = true;
 
-            if(m_pguie != this && m_pguie != NULL)
-            {
+         }
 
-               m_pguie->m_bVisible = true;
+         send_message(WM_SHOWWINDOW, TRUE);
 
-            }
+      }
 
-            send_message(WM_SHOWWINDOW, TRUE);
+
+      if(bSize || bMove)
+      {
+
+         if(m_pguie != this && m_pguie != NULL)
+         {
+
+            m_pguie->m_rectParentClient = m_rectParentClient;
 
          }
 
 
-         if(bSize || bMove)
+         if(bSize)
          {
 
-            if(m_pguie != this && m_pguie != NULL)
-            {
+            m_bUpdateGraphics = true;
 
-               m_pguie->m_rectParentClient = m_rectParentClient;
+            send_message(WM_SIZE, 0, rectWindow.size().lparam());
 
-            }
+         }
 
-            if(bSize)
-            {
+         if(bMove)
+         {
 
-               send_message(WM_SIZE, 0, rectWindow.size().lparam());
-
-
-               if(m_cairoWork != NULL)
-               {
-	if(m_cairoWork ==  g_cairo)
-	{
-         printf("123");
-
-	}          cairo_destroy(m_cairoWork);
-
-               }
-
-               if(m_cairosurfaceWork != NULL)
-               {
-
-if(m_cairosurfaceWork == g_cairosurface)
-{
-   printf("123");
-}
-                  cairo_surface_destroy(m_cairosurfaceWork);
-
-               }
-
-
-               if(m_cairoSource != NULL)
-               {
-	if(m_cairoSource ==  g_cairo)
-	{
-         printf("123");
-
-	}
-
-                  cairo_destroy(m_cairoSource);
-
-               }
-
-               if(m_cairosurfaceSource != NULL)
-               {
-
-             if(m_cairosurfaceSource == g_cairosurface)
-{
-   printf("123");
-}
-          cairo_surface_destroy(m_cairosurfaceSource);
-
-               }
-
-               if(m_cairosurface == NULL)
-               {
-
-                  m_cairosurface = cairo_xlib_surface_create(m_oswindow->display(), m_oswindow->window(), m_oswindow->visual(), rectWindow.width(), rectWindow.height());
-
-
-                  g_cairosurface = m_cairosurface;
-
-                  m_cairo = cairo_create(m_cairosurface);
-
-                  g_cairo = m_cairo;
-
-               }
-               else
-               {
-
-                  cairo_xlib_surface_set_size(m_cairosurface, rectWindow.width(), rectWindow.height());
-
-               }
-
-               m_cairosurfaceSource = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
-
-               m_cairoSource = cairo_create(m_cairosurfaceSource);
-
-               m_cairosurfaceWork = cairo_image_surface_create(CAIRO_FORMAT_ARGB32, rectWindow.width(), rectWindow.height());
-
-               m_cairoWork = cairo_create(m_cairosurfaceWork);
-
-            }
-
-            if(bMove)
-            {
-
-               send_message(WM_MOVE, 0, rectWindow.top_left().lparam());
-
-            }
+            send_message(WM_MOVE, 0, rectWindow.top_left().lparam());
 
          }
 
 
-
-
-
-     ::ca2::graphics_sp g(allocer());
-
-      try
-      {
-
-         cairo_reset_clip(m_cairoSource);
-
-         cairo_set_operator(m_cairoSource, CAIRO_OPERATOR_SOURCE);
-
-         cairo_rectangle(m_cairoSource, 0, 0, rectWindow.width(), rectWindow.height());
-
-         //int depth = DefaultDepth(m_oswindow->display(), 0);
-
-         //cairo_format_t format = cairo_image_surface_get_format(m_cairosurface);
-
-         if(m_bComposite)
-         {
-
-            cairo_set_source_rgba(m_cairoSource, 1.0, 1.0, 1.0, 0.0);
-
-         }
-         else
-         {
-
-            cairo_set_source_rgba(m_cairoSource, .84, .84, .84, 1.0);
-
-         }
-
-         cairo_fill(m_cairoSource);
-
-      }
-      catch(...)
-      {
-
       }
 
-      cairo_keep keepSource(m_cairoSource);
-
-      try
-      {
-
-         g->attach(m_cairoSource);
-
-         _000OnDraw(g);
-
-
-      }
-      catch(...)
-      {
-
-      }
-
-      try
-      {
-
-         g->detach();
-
-      }
-      catch(...)
-      {
-
-      }
-
-      try
-      {
-
-         keepSource.restore();
-
-      }
-      catch(...)
-      {
-
-      }
-
-
-      //XLockDisplay(m_oswindow->display());
-
-      try
-      {
-
-         cairo_set_operator(m_cairo, CAIRO_OPERATOR_SOURCE);
-
-         cairo_reset_clip(m_cairo);
-
-         cairo_set_source_surface(m_cairo, m_cairosurfaceSource, 0, 0);
-
-         cairo_paint(m_cairo);
-
-
-         #if TEST
-         {
-
-         cairo_rectangle(m_cairo, 10, 10, 50, 50);
-
-         cairo_set_source_rgba(m_cairo, 84 / 255.0, 184 / 255.0, 77 / 255.0, 128 / 255.0);
-
-         cairo_fill(m_cairo);
-
-         }
-         #endif
-
-         cairo_show_page(m_cairo);
-
-      }
-      catch(...)
-      {
-
-
-      }
-
-      //XUnlockDisplay(m_oswindow->display());
+      ::ca2::window::_001UpdateWindow();
 
 }
 
@@ -7496,6 +7300,11 @@ if(m_cairosurfaceWork == g_cairosurface)
 
    void window::_001UpdateWindow()
    {
+
+      single_lock sl(mutex_graphics(), false);
+
+      if(!sl.lock(millis(84)))
+         return;
 
       _001Expose();
 
@@ -7524,7 +7333,7 @@ if(m_cairosurfaceWork == g_cairosurface)
 
   //       cSrc = cairo_create(csSrc);
 
-    //     ::ca2::graphics_sp g(get_app());
+    //     ::draw2d::graphics_sp g(get_app());
 
 /*         cairo_set_operator(cSrc, CAIRO_OPERATOR_SOURCE);
 
@@ -7599,7 +7408,7 @@ if(m_cairosurfaceWork == g_cairosurface)
 
 
 
-         ::ca2::graphics_sp g(get_app());
+         ::draw2d::graphics_sp g(get_app());
 
          g->attach(c);
 
@@ -7694,7 +7503,7 @@ if(m_cairosurfaceWork == g_cairosurface)
 //
 //         Gdiplus::Bitmap b(cx, cy, cx *4 , PixelFormat32bppARGB, (BYTE *) pcolorref);
 //
-//         ::ca2::graphics_sp spg(get_app());
+//         ::draw2d::graphics_sp spg(get_app());
 //
 //         (dynamic_cast < ::lnx::graphics * > (spg.m_p))->attach(new Gdiplus::Graphics(&b));
 //
@@ -7843,7 +7652,7 @@ if(m_cairosurfaceWork == g_cairosurface)
 
   //       cSrc = cairo_create(csSrc);
 
-    //     ::ca2::graphics_sp g(get_app());
+    //     ::draw2d::graphics_sp g(get_app());
 
 /*         cairo_set_operator(cSrc, CAIRO_OPERATOR_SOURCE);
 
@@ -7921,7 +7730,7 @@ if(m_cairosurfaceWork == g_cairosurface)
 //
 //         Gdiplus::Bitmap b(cx, cy, cx *4 , PixelFormat32bppARGB, (BYTE *) pcolorref);
 //
-//         ::ca2::graphics_sp spg(get_app());
+//         ::draw2d::graphics_sp spg(get_app());
 //
 //         (dynamic_cast < ::lnx::graphics * > (spg.m_p))->attach(new Gdiplus::Graphics(&b));
 //
@@ -8039,7 +7848,7 @@ if(m_cairosurfaceWork == g_cairosurface)
 */
    }
 
-   void window::set_view_port_org(::ca2::graphics * pgraphics)
+   void window::set_view_port_org(::draw2d::graphics * pgraphics)
    {
       // graphics will be already set its view port to the window for linux - cairo with xlib
 
