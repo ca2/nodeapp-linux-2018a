@@ -3,6 +3,7 @@
 	<Workspace title="all32">
 		<Project filename="../../../app/appseed/c/_c.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 		</Project>
