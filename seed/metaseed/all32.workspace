@@ -117,6 +117,8 @@
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
+		<Project filename="../../../app/appseed/math/math.cbp" />
+		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		<Project filename="../../os/os.cbp">
 			<Depends filename="../../../app/appseed/c/_c.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
@@ -127,6 +129,8 @@
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
+		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
@@ -134,5 +138,6 @@
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 			<Depends filename="../../os/os.cbp" />
 		</Project>
+		<Project filename="../../../app-veriwell/appseed/mplite/mplite.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
