@@ -8,7 +8,6 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stddef.h>
-//#include <unistd.h>
 #ifdef __USE_STRING_H_BSD
 #ifndef __USE_BSD
 #define __USE_BSD

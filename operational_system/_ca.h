@@ -9,3 +9,4 @@
 
 
 
+#define MOVE_SEMANTICS
