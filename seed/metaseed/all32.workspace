@@ -136,7 +136,11 @@
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
 			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/math/math.cbp" />
+		<Project filename="../../../app/appseed/math/math.cbp">
+			<Depends filename="../../../app/appseed/c/_c.cbp" />
+			<Depends filename="../../../app/appseed/ca/ca.cbp" />
+			<Depends filename="../../../app/appseed/ca2/ca2.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp">
 			<Depends filename="../../../app/appseed/c/_c.cbp" />
 			<Depends filename="../../../app/appseed/ca/ca.cbp" />
