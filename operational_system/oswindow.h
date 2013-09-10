@@ -4,9 +4,9 @@
 // define portable types for 32-bit / 64-bit OS
 typedef int32_t BOOL;
 typedef uint8_t BYTE;
-typedef uint16_t WORD;
+//typedef uint16_t WORD;
 typedef uint32_t DWORD;
-typedef int32_t LONG;
+//typedef int32_t LONG;
 
 
 #undef FAR
@@ -16,6 +16,9 @@ typedef int32_t LONG;
 #ifndef CONST
 #define CONST               const
 #endif
+
+
+#ifdef __cplusplus
 
 template < typename t1, typename t2 >
 class simple_map;
@@ -267,3 +270,6 @@ inline int32_t IsWindowVisible(::oswindow oswindow)
 
 
 CLASS_DECL_c bool IsWindow(oswindow oswindow);
+
+
+#endif

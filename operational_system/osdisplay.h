@@ -1,6 +1,9 @@
 #pragma once
 
 
+#ifdef __cplusplus
+
+
 class osdisplay_dataptra;
 class simple_mutex;
 
@@ -104,4 +107,10 @@ CLASS_DECL_c bool osdisplay_remove(Display * pdisplay);
 
 
 typedef osdisplay_data * osdisplay;
+
+
+#endif
+
+
+
 

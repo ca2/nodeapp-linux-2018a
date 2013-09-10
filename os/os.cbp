@@ -83,6 +83,7 @@
 		<Unit filename="../operational_system/bare_operational_system.h" />
 		<Unit filename="../operational_system/cairo_config.h" />
 		<Unit filename="../operational_system/cairo_features.h" />
+		<Unit filename="../operational_system/config.h" />
 		<Unit filename="../operational_system/cross/win/base_tsd.h" />
 		<Unit filename="../operational_system/cross/win/ntstatus.h" />
 		<Unit filename="../operational_system/cross/win/poppack.h" />

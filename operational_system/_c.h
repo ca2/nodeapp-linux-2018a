@@ -387,7 +387,7 @@ typedef uint32_t dword_ptr;
 #endif
 
 
-typedef uint8_t byte;
+//typedef uint8_t byte;
 
 
 typedef void * PVOID;
