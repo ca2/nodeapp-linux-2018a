@@ -5,7 +5,7 @@
 
 
 class osdisplay_dataptra;
-class simple_mutex;
+class mutex;
 
 
 class CLASS_DECL_c xdisplay
@@ -56,7 +56,7 @@ public:
 
 
    static osdisplay_dataptra * s_pdataptra;
-   static simple_mutex * s_pmutex;
+   static mutex * s_pmutex;
 
 
 

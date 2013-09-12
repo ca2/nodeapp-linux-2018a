@@ -105,8 +105,13 @@
 		</Project>
 		<Project filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
-		<Project filename="../../../app/appseed/boot/boot.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+		</Project>
+		<Project filename="../../../app/appseed/boot/boot.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/core/core.cbp" />
 		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />

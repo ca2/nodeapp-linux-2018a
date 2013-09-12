@@ -1005,7 +1005,7 @@ void thread::Delete()
             if (!on_idle(lIdleCount++))
                bIdle = FALSE; // assume "no idle" state
             step_timer();
-            m_p->m_dwAlive = m_dwAlive = ::GetTickCount();
+            m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
                pappThis1->m_dwAlive = m_dwAlive;
@@ -1066,7 +1066,7 @@ void thread::Delete()
             }
 
             step_timer();
-            m_p->m_dwAlive = m_dwAlive = ::GetTickCount();
+            m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
                pappThis1->m_dwAlive = m_dwAlive;
