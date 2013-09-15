@@ -16,7 +16,7 @@ namespace lnx
    public:
 
 
-	   port_forward(sp(::ca2::application) papp);
+	   port_forward(sp(base_application) papp);
 	   virtual ~port_forward();
 
 
@@ -131,11 +131,11 @@ namespace lnx
 
 	   WINBOOL m_bListeningForUpnpChanges;
 
-	   ::ca2::thread_sp m_pPortMappingThread;
-	   ::ca2::thread_sp m_pDeviceInfoThread;
-	   ::ca2::thread_sp m_pAddMappingThread;
-	   ::ca2::thread_sp m_pEditMappingThread;
-	   ::ca2::thread_sp m_pDeleteMappingThread;
+	   ::thread_sp m_pPortMappingThread;
+	   ::thread_sp m_pDeviceInfoThread;
+	   ::thread_sp m_pAddMappingThread;
+	   ::thread_sp m_pEditMappingThread;
+	   ::thread_sp m_pDeleteMappingThread;
 
 	   array_ptr_alloc<port_map> m_MappingContainer;
 

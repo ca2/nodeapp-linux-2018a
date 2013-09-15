@@ -36,9 +36,9 @@ int xlib_error_handler(Display * d, XErrorEvent * e)
 }
 
 
-//sp(::ca2::application)     win_application_create(sp(::ca2::application) pappSystem, const char * pszId);
-//sp(::ca2::application)     win_instantiate_application(sp(::ca2::application) pappSystem, const char * pszId);
-//int32_t                     win_application_procedure(sp(::ca2::application) pappSystem)
+//sp(base_application)     win_application_create(sp(base_application) pappSystem, const char * pszId);
+//sp(base_application)     win_instantiate_application(sp(base_application) pappSystem, const char * pszId);
+//int32_t                     win_application_procedure(sp(base_application) pappSystem)
 //UINT c_cdecl          win_application_thread_proc(LPVOID);
 /////////////////////////////////////////////////////////////////////////////
 // Standard WinMain implementation

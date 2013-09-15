@@ -59,7 +59,7 @@ oswindow CLASS_DECL_lnx _AfxChildWindowFromPoint(oswindow hWnd, POINT pt)
       if (_AfxGetDlgCtrlID(hWndChild) != (WORD)0 &&
          (::GetWindowLong(hWndChild, GWL_STYLE) & WS_VISIBLE))
       {
-         // see if point hits the child ::ca2::window
+         // see if point hits the child ::user::window
          rect rect;
          ::GetWindowRect(hWndChild, rect);
          if (rect.contains(pt))
@@ -102,14 +102,14 @@ void CLASS_DECL_lnx AfxDeleteObject(HGDIOBJ* pObject)
 /*
 void CLASS_DECL_lnx AfxcancelModes(oswindow hWndRcvr)
 {
-   // if we receive a message destined for a ::ca2::window, cancel any combobox
+   // if we receive a message destined for a ::user::window, cancel any combobox
    //  popups that could be in toolbars or dialog bars
    oswindow hWndcancel = ::GetFocus();
    if (hWndcancel == NULL)
       return;     // nothing to cancel
 
    if (hWndcancel == hWndRcvr)
-      return;     // let input go to ::ca2::window with focus
+      return;     // let input go to ::user::window with focus
 
    // focus is in part of a combo-box
    if (!_AfxIsComboBoxControl(hWndcancel, (UINT)CBS_DROPDOWNLIST))

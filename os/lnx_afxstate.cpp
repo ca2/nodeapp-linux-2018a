@@ -88,7 +88,7 @@ ___THREAD_STATE::~___THREAD_STATE()
    if (m_pSafetyPoolBuffer != NULL)
       free(m_pSafetyPoolBuffer);
 
-   // parking ::ca2::window must have already been cleaned up by now!
+   // parking ::user::window must have already been cleaned up by now!
    ASSERT(m_pWndPark == NULL);
 
 
@@ -399,7 +399,7 @@ bool CLASS_DECL_lnx __is_module_dll()
 
 bool CLASS_DECL_lnx __init_current_state_app()
 {
-   sp(::ca2::application) pApp = __get_module_state()->m_pCurrentWinApp;
+   sp(base_application) pApp = __get_module_state()->m_pCurrentWinApp;
    if (pApp != NULL && !pApp->initialize_instance())
    {
       // Init Failed

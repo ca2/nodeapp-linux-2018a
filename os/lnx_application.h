@@ -32,7 +32,7 @@ namespace lnx
       main_init_data *     m_pmaininitdata;
 
 
-      application(sp(::ca2::application) papp);
+      application(sp(base_application) papp);
       virtual ~application();
 
       virtual HINSTANCE GetHinstance();
@@ -145,17 +145,17 @@ namespace lnx
 
       // called when occurs an standard_exception exception in run
       // return true to call run again
-      virtual bool on_run_exception(::ca2::exception & e);
+      virtual bool on_run_exception(::exception::exception & e);
 
    // Overridables
       // thread initialization
       virtual bool initialize_instance();
 
-      virtual ::ca2::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
+      virtual ::message::e_prototype GetMessagePrototype(UINT uiMessage, UINT uiCode);
 
       // running and idle processing
       virtual int32_t run();
-      virtual void pre_translate_message(::ca2::signal_object * pobj);
+      virtual void pre_translate_message(::signal_details * pobj);
       virtual bool pump_message();     // low level message pump
       virtual bool on_idle(LONG lCount); // return TRUE if more idle processing
       virtual bool is_idle_message(MESSAGE* pMsg);  // checks for special messages
@@ -164,7 +164,7 @@ namespace lnx
       virtual int32_t exit_instance(); // default will 'delete this'
 
       // Advanced: exception handling
-      virtual LRESULT ProcessWndProcException(base_exception* e, const MESSAGE* pMsg);
+      virtual LRESULT ProcessWndProcException(::exception::base* e, const MESSAGE* pMsg);
 
       // Advanced: handling messages sent to message filter hook
       virtual bool ProcessMessageFilter(int32_t code, LPMESSAGE lpMsg);
@@ -186,14 +186,14 @@ namespace lnx
 
       virtual void ShowWaitCursor(bool bShow = true);
 
-      sp(::ca2::window) window_from_os_data(void * pdata);
-      sp(::ca2::window) window_from_os_data_permanent(void * pdata);
+      sp(::user::window) window_from_os_data(void * pdata);
+      sp(::user::window) window_from_os_data_permanent(void * pdata);
 
-      virtual ::ca2::thread * GetThread();
-      virtual void set_thread(::ca2::thread * pthread);
+      virtual ::thread * GetThread();
+      virtual void set_thread(::thread * pthread);
 
-      virtual sp(::ca2::window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
-      virtual sp(::ca2::window) FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow);
+      virtual sp(::user::window) FindWindow(const char * lpszClassName, const char * lpszWindowName);
+      virtual sp(::user::window) FindWindowEx(oswindow hwndParent, oswindow hwndChildAfter, const char * lpszClass, const char * lpszWindow);
 
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);

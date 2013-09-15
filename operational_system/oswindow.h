@@ -55,7 +55,7 @@ namespace user
 class oswindow_dataptra;
 
 
-class simple_event;
+class event;
 
 
 class simple_mutex;

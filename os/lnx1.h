@@ -18,11 +18,11 @@ namespace lnx
 
 
 
-// Placed on frame for EXCEPTION linkage, or base_exception cleanup
+// Placed on frame for EXCEPTION linkage, or ::exception::base cleanup
 struct CLASS_DECL_lnx __exception_link
 {
-   __exception_link* m_pLinkPrev;    // previous top, next in handler chain
-   base_exception* m_pException;   // current exception (NULL in try block)
+   __exception_link * m_pLinkPrev;    // previous top, next in handler chain
+   ::exception::base * m_pException;   // current exception (NULL in try block)
 
    __exception_link();       // for initialization and linking
    ~__exception_link()       // for cleanup and unlinking
@@ -61,10 +61,10 @@ CLASS_DECL_lnx LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPA
 // xxx CLASS_DECL_lnx WNDPROC __get_window_procedure();
 // xxx #define __window_procedure (*__get_window_procedure())
 
-typedef void (__MSG_CALL ::ca2::window::*__PMSGW)();
-   // like '__PMSG' but for ::ca2::window derived classes only
+typedef void (__MSG_CALL ::user::window::*__PMSGW)();
+   // like '__PMSG' but for ::user::window derived classes only
 
-typedef void (__MSG_CALL ::ca2::thread::*__PMSGT)();
+typedef void (__MSG_CALL ::thread::*__PMSGT)();
    // like '__PMSG' but for thread-derived classes only
 
 
@@ -78,13 +78,13 @@ typedef void (__MSG_CALL ::ca2::thread::*__PMSGT)();
 
 
 CLASS_DECL_lnx ::lnx::thread * __get_thread();
-CLASS_DECL_lnx void __set_thread(::ca2::thread * pthread);
+CLASS_DECL_lnx void __set_thread(::thread * pthread);
 CLASS_DECL_lnx MESSAGE * __get_current_message();
 
-CLASS_DECL_lnx void __end_thread(sp(::ca2::application) papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_lnx void __end_thread(sp(base_application) papp, UINT nExitCode, bool bDelete = TRUE);
 
 CLASS_DECL_lnx void __init_thread();
-CLASS_DECL_lnx void __term_thread(sp(::ca2::application) papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_lnx void __term_thread(sp(base_application) papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
@@ -103,7 +103,7 @@ CLASS_DECL_lnx void __term_thread(sp(::ca2::application) papp, HINSTANCE hInstTe
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
 CLASS_DECL_lnx void __lnx_term();
 
-CLASS_DECL_lnx sp(::ca2::application)  __get_app();
+CLASS_DECL_lnx sp(base_application)  __get_app();
 CLASS_DECL_lnx sp(::user::interaction) __get_main_window();
 //CLASS_DECL_lnx HINSTANCE CLASS_DECL_lnx System.m_hInstance;
 CLASS_DECL_lnx HINSTANCE __get_resource_handle();

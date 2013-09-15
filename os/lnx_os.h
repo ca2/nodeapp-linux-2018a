@@ -6,12 +6,12 @@ namespace lnx
 
 
    class CLASS_DECL_lnx os :
-      public ::ca2::os
+      public ::core::os
    {
    public:
 
 
-      os(sp(::ca2::application) papp);
+      os(sp(base_application) papp);
       virtual ~os();
 
 

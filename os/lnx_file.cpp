@@ -22,7 +22,7 @@ namespace lnx
 {
 
 
-   file::file(sp(::ca2::application) papp) :
+   file::file(sp(base_application) papp) :
       ca2(papp)
    {
 
@@ -32,7 +32,7 @@ namespace lnx
 
    }
 
-   file::file(sp(::ca2::application) papp, int32_t hFile) :
+   file::file(sp(base_application) papp, int32_t hFile) :
       ca2(papp)
    {
 
@@ -42,7 +42,7 @@ namespace lnx
 
    }
 
-   file::file(sp(::ca2::application) papp, const char * lpszFileName, UINT nOpenFlags) :
+   file::file(sp(base_application) papp, const char * lpszFileName, UINT nOpenFlags) :
       ca2(papp)
    {
 
@@ -470,13 +470,13 @@ namespace lnx
 
    void file::assert_valid() const
    {
-      ::ca2::object::assert_valid();
+      ::object::assert_valid();
       // we permit the descriptor m_iFile to be any value for derived classes
    }
 
    void file::dump(dump_context & dumpcontext) const
    {
-      ::ca2::object::dump(dumpcontext);
+      ::object::dump(dumpcontext);
 
       dumpcontext << "with handle " << (UINT)m_iFile;
       dumpcontext << " and name \"" << m_strFileName << "\"";
@@ -569,13 +569,13 @@ namespace lnx
 
 
 
-   void PASCAL file_exception::ThrowOsError(sp(::ca2::application) papp, LONG lOsError, const char * lpszFileName /* = NULL */)
+   void PASCAL file_exception::ThrowOsError(sp(base_application) papp, LONG lOsError, const char * lpszFileName /* = NULL */)
    {
       if (lOsError != 0)
          vfxThrowFileException(papp, file_exception::OsErrorToException(lOsError), lOsError, lpszFileName);
    }
 
-   void PASCAL file_exception::ThrowErrno(sp(::ca2::application) papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
+   void PASCAL file_exception::ThrowErrno(sp(base_application) papp, int32_t nErrno, const char * lpszFileName /* = NULL */)
    {
       if (nErrno != 0)
          vfxThrowFileException(papp, file_exception::ErrnoToException(nErrno), errno, lpszFileName);
@@ -752,7 +752,7 @@ namespace lnx
    }
 
 
-   // IMPLEMENT_DYNAMIC(WinFileException, base_exception)
+   // IMPLEMENT_DYNAMIC(WinFileException, ::exception::base)
 
    /////////////////////////////////////////////////////////////////////////////
 
@@ -1668,7 +1668,7 @@ return TRUE;
 /////////////////////////////////////////////////////////////////////////////
 // WinFileException helpers
 
-void CLASS_DECL_lnx vfxThrowFileException(sp(::ca2::application) papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
+void CLASS_DECL_lnx vfxThrowFileException(sp(base_application) papp, int32_t cause, LONG lOsError, const char * lpszFileName /* == NULL */)
 {
 #ifdef DEBUG
    const char * lpsz;

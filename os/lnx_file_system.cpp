@@ -14,7 +14,7 @@ namespace lnx
 {
 
 
-   file_system::file_system(sp(::ca2::application) papp) :
+   file_system::file_system(sp(base_application) papp) :
       ca2(papp)
    {
    }
@@ -177,19 +177,19 @@ namespace lnx
    }
 
 
-   string file_system::time_square(sp(::ca2::application) papp, const char * pszPrefix, const char * pszSuffix)
+   string file_system::time_square(sp(base_application) papp, const char * pszPrefix, const char * pszSuffix)
    {
       string str;
       System.dir().time_square(str);
       return time(papp, str, 25, pszPrefix, pszSuffix);
    }
 
-   string file_system::time_log(sp(::ca2::application) papp, const char * pszId)
+   string file_system::time_log(sp(base_application) papp, const char * pszId)
    {
       return time(papp, System.dir().time_log(pszId), 9);
    }
 
-   string file_system::time(sp(::ca2::application) papp, const char * psz, int32_t iMaxLevel, const char * pszPrefix, const char * pszSuffix)
+   string file_system::time(sp(base_application) papp, const char * psz, int32_t iMaxLevel, const char * pszPrefix, const char * pszSuffix)
    {
       mutex_lock lockMachineEvent(
          (&System.machine_event_central() != NULL) ?
@@ -316,13 +316,13 @@ namespace lnx
       return true;
    }
 
-   string file_system::as_string(var varFile, sp(::ca2::application) papp)
+   string file_system::as_string(var varFile, sp(base_application) papp)
    {
        var varQuery;
        return as_string(varFile, varQuery, papp);
    }
 
-   string file_system::as_string(var varFile, var & varQuery, sp(::ca2::application) papp)
+   string file_system::as_string(var varFile, var & varQuery, sp(base_application) papp)
    {
       primitive::memory storage;
       if(varFile.ca2 < ::ca2::file > () != NULL)
@@ -415,7 +415,7 @@ namespace lnx
       return strResult;
    }
 
-   void file_system::as_memory(var varFile, primitive::memory_base & mem, sp(::ca2::application) papp)
+   void file_system::as_memory(var varFile, primitive::memory_base & mem, sp(base_application) papp)
    {
 
       mem.allocate(0);
@@ -465,7 +465,7 @@ namespace lnx
 
    }
 
-   void file_system::lines(stringa & stra, var varFile, sp(::ca2::application) papp)
+   void file_system::lines(stringa & stra, var varFile, sp(base_application) papp)
    {
       UNREFERENCED_PARAMETER(papp);
       ::ca2::text_file_sp spfile(get_app());
@@ -489,7 +489,7 @@ namespace lnx
 
    }
 
-   bool file_system::put_contents(var varFile, const void * pvoidContents, count count, sp(::ca2::application) papp)
+   bool file_system::put_contents(var varFile, const void * pvoidContents, count count, sp(base_application) papp)
    {
 
       ::ca2::filesp spfile;
@@ -505,7 +505,7 @@ namespace lnx
 
    }
 
-   bool file_system::put_contents(var varFile, const char * lpcszContents, sp(::ca2::application) papp)
+   bool file_system::put_contents(var varFile, const char * lpcszContents, sp(base_application) papp)
    {
       if(lpcszContents == NULL)
       {
@@ -517,7 +517,7 @@ namespace lnx
       }
    }
 
-   bool file_system::put_contents(var varFile, ::ca2::file & file, sp(::ca2::application) papp)
+   bool file_system::put_contents(var varFile, ::ca2::file & file, sp(base_application) papp)
    {
       ::ca2::filesp spfile;
       spfile = App(papp).file().get_file(varFile, ::ca2::file::type_binary | ::ca2::file::mode_write | ::ca2::file::mode_create | ::ca2::file::shareDenyNone | ::ca2::file::defer_create_directory);
@@ -533,12 +533,12 @@ namespace lnx
       return true;
    }
 
-   bool file_system::put_contents(var varFile, primitive::memory & mem, sp(::ca2::application) papp)
+   bool file_system::put_contents(var varFile, primitive::memory & mem, sp(base_application) papp)
    {
       return put_contents(varFile, mem.get_data(), (count) mem.get_size(), papp);
    }
 
-   bool file_system::put_contents_utf8(var varFile, const char * lpcszContents, sp(::ca2::application) papp)
+   bool file_system::put_contents_utf8(var varFile, const char * lpcszContents, sp(base_application) papp)
    {
       ::ca2::filesp spfile;
       spfile = App(papp).file().get_file(varFile, ::ca2::file::type_binary | ::ca2::file::mode_write | ::ca2::file::mode_create | ::ca2::file::shareDenyNone | ::ca2::file::defer_create_directory);
@@ -657,7 +657,7 @@ namespace lnx
 
    }
 
-   void file_system::copy(const char * pszNew, const char * psz, bool bFailIfExists, e_extract eextract, sp(::ca2::application) papp)
+   void file_system::copy(const char * pszNew, const char * psz, bool bFailIfExists, e_extract eextract, sp(base_application) papp)
    {
       if(bFailIfExists)
       {
@@ -875,7 +875,7 @@ namespace lnx
    }
 
 
-   string file_system::copy(const char * psz, sp(::ca2::application) papp)
+   string file_system::copy(const char * psz, sp(base_application) papp)
    {
       string strCopy("copy");
       string strNew;
@@ -916,7 +916,7 @@ namespace lnx
    }
 
 
-   bool file_system::exists(const char * pszPath, sp(::ca2::application) papp)
+   bool file_system::exists(const char * pszPath, sp(base_application) papp)
    {
 
       if(::ca2::str::begins_ci_iws(pszPath, "uifs://"))
@@ -964,7 +964,7 @@ namespace lnx
    }
 
 
-   bool file_system::exists(const string & strPath, sp(::ca2::application) papp)
+   bool file_system::exists(const string & strPath, sp(base_application) papp)
    {
 
       if(::ca2::str::begins_ci_iws(strPath, "uifs://"))
@@ -1024,7 +1024,7 @@ namespace lnx
 
    }
 
-   string file_system::paste(const char * pszLocation, const char * path, sp(::ca2::application) papp)
+   string file_system::paste(const char * pszLocation, const char * path, sp(base_application) papp)
    {
       string strDir = System.dir().name(path);
       string strDest = System.dir().path(pszLocation, "");
@@ -1041,7 +1041,7 @@ namespace lnx
       }
    }
 
-   void file_system::trash_that_is_not_trash(stringa & stra, sp(::ca2::application) papp)
+   void file_system::trash_that_is_not_trash(stringa & stra, sp(base_application) papp)
    {
 
       if(stra.get_size() <= 0)
@@ -1062,7 +1062,7 @@ namespace lnx
 
    }
 
-   void file_system::trash_that_is_not_trash(const char * psz, sp(::ca2::application) papp)
+   void file_system::trash_that_is_not_trash(const char * psz, sp(base_application) papp)
    {
 
       string strDir = System.dir().trash_that_is_not_trash(psz);
@@ -1078,7 +1078,7 @@ namespace lnx
 
    }
 
-   void file_system::replace(const char * pszContext, const char * pszFind, const char * pszReplace, sp(::ca2::application) papp)
+   void file_system::replace(const char * pszContext, const char * pszFind, const char * pszReplace, sp(base_application) papp)
    {
       stringa straTitle;
       System.dir().ls(papp, pszContext, NULL, &straTitle);
@@ -1132,7 +1132,7 @@ namespace lnx
 
    }
 
-   string file_system::sys_temp(const char * pszName, const char * pszExtension, sp(::ca2::application) papp)
+   string file_system::sys_temp(const char * pszName, const char * pszExtension, sp(base_application) papp)
    {
 
       string strTempDir = get_sys_temp_path();
@@ -1174,14 +1174,14 @@ namespace lnx
 
    }
 
-   ::ca2::filesp file_system::time_square_file(sp(::ca2::application) papp, const char * pszPrefix, const char * pszSuffix)
+   ::ca2::filesp file_system::time_square_file(sp(base_application) papp, const char * pszPrefix, const char * pszSuffix)
    {
 
       return get(time_square(papp, pszPrefix, pszSuffix), papp);
 
    }
 
-   ::ca2::filesp file_system::get(const char * name, sp(::ca2::application) papp)
+   ::ca2::filesp file_system::get(const char * name, sp(base_application) papp)
    {
 
       System.dir().mk(System.dir().name(name), papp);

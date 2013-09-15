@@ -2,13 +2,11 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
 		<Project filename="../../appseed/app/app.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
@@ -23,7 +21,6 @@
 			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
@@ -33,13 +30,11 @@
 			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
@@ -47,7 +42,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/flag/flag.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
@@ -56,7 +50,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
@@ -67,7 +60,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/projection/projection.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
@@ -77,7 +69,6 @@
 		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 		<Project filename="../../../app-veriwell/appseed/mplite/mplite.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
@@ -91,16 +82,20 @@
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 		</Project>
+		<Project filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
-		</Project>
-		<Project filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
 		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+		</Project>
+		<Project filename="../../../app/thirdparty/appseed/mysql/mysql.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
 		<Project filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
@@ -112,10 +107,19 @@
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/core/core.cbp" />
+		<Project filename="../../../app/appseed/core/core.cbp">
+			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/mysql/mysql.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+			<Depends filename="../../../app/appseed/boot/boot.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
@@ -126,9 +130,7 @@
 		<Project filename="../../os/os.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/sphere/sphere.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/FreeImage/FreeImage.cbp" />
-		</Project>
+		<Project filename="../../../app/appseed/sphere/sphere.cbp" />
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp">
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />

@@ -58,9 +58,9 @@ namespace lnx
       int32_t            m_iFile;
 
 
-      file(sp(::ca2::application) papp);
-      file(sp(::ca2::application) papp, int32_t hFile);
-      file(sp(::ca2::application) papp, const char * lpszFileName, UINT nOpenFlags);
+      file(sp(base_application) papp);
+      file(sp(base_application) papp, int32_t hFile);
+      file(sp(base_application) papp, const char * lpszFileName, UINT nOpenFlags);
       virtual ~file();
 
 
@@ -112,8 +112,8 @@ namespace lnx
 
       int32_t PASCAL OsErrorToException(LONG lOsError);
       int32_t PASCAL ErrnoToException(int32_t nErrno);
-      void PASCAL ThrowOsError(sp(::ca2::application) papp, LONG lOsError, const char * lpszFileName = NULL);
-      void PASCAL ThrowErrno(sp(::ca2::application) papp, int32_t nErrno, const char * lpszFileName = NULL);
+      void PASCAL ThrowOsError(sp(base_application) papp, LONG lOsError, const char * lpszFileName = NULL);
+      void PASCAL ThrowErrno(sp(base_application) papp, int32_t nErrno, const char * lpszFileName = NULL);
 
 
    }  // namespace file_exception

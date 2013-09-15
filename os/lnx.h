@@ -4,7 +4,7 @@
 #define SECURITY_WIN32
 
 
-#include "ca2.h"
+#include "core.h"
 
 
 #ifdef LINUX
@@ -14,7 +14,7 @@
 
 string get_error_message(DWORD dwError);
 
-sp(::ca2::application)     lnx_instantiate_application(sp(::ca2::application) pappSystem, const char * pszId);
+sp(base_application)     lnx_instantiate_application(sp(base_application) pappSystem, const char * pszId);
 
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
@@ -76,8 +76,8 @@ CLASS_DECL_lnx void AfxResetMsgcache();
 // xxx CLASS_DECL_lnx WNDPROC AfxGetAfxWndProc();
 #define AfxWndProc (*AfxGetAfxWndProc())
 
-#define LNX_THREAD(pthread) (dynamic_cast < ::lnx::thread * > (dynamic_cast < ::ca2::thread * >(pthread)))
-#define LNX_WINDOW(pwnd) (dynamic_cast < ::lnx::window * > (((sp(::ca2::window))(pwnd)).m_p))
+#define LNX_THREAD(pthread) (dynamic_cast < ::lnx::thread * > (dynamic_cast < ::thread * >(pthread)))
+#define LNX_WINDOW(pwnd) (dynamic_cast < ::lnx::window * > (((sp(::user::window))(pwnd)).m_p))
 #define LNX_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))
 #define SP_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (( ::draw2d::graphics * )(pgraphics)))
 #define LNX_HDC(pgraphics) ((HDC)*(dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics))))
@@ -86,15 +86,15 @@ CLASS_DECL_lnx void AfxResetMsgcache();
 
 #include "lnx_shell.h"
 
-CLASS_DECL_lnx void __trace_message(const char * lpszPrefix, ::ca2::signal_object * pobj);
+CLASS_DECL_lnx void __trace_message(const char * lpszPrefix, ::signal_details * pobj);
 CLASS_DECL_lnx void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 
-CLASS_DECL_lnx WINBOOL __cdecl __is_idle_message(::ca2::signal_object * pobj);
+CLASS_DECL_lnx WINBOOL __cdecl __is_idle_message(::signal_details * pobj);
 CLASS_DECL_lnx WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg);
 
 
-CLASS_DECL_lnx void AfxProcessWndProcException(base_exception*, ::ca2::signal_object * pobj);
-CLASS_DECL_lnx void __cdecl __pre_translate_message(::ca2::signal_object * pobj);
+CLASS_DECL_lnx void AfxProcessWndProcException(::exception::base*, ::signal_details * pobj);
+CLASS_DECL_lnx void __cdecl __pre_translate_message(::signal_details * pobj);
 
 
 #include "lnx_application.h"
@@ -119,4 +119,4 @@ WINBOOL GetMessage(
 int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[]);
 
 
-CLASS_DECL_lnx void vfxThrowFileException(sp(::ca2::application) papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);
+CLASS_DECL_lnx void vfxThrowFileException(sp(base_application) papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);

@@ -3,14 +3,14 @@
 
 // Classes declared in this file
 
-//class simple_list;
+//class list;
 class thread_slot_data;                  // for manipulationg thread local storage
 template < int32_t iSlot >
 class thread_local_object;               // for storing thread local data
 class process_local_object;              // for storing thread local data
 class no_track_object;
 
-// template class typed_simple_list<>
+// template class typed_list<>
 // template class thread_local<>
 // template class process_local<>
 

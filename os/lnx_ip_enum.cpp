@@ -23,7 +23,7 @@ namespace lnx
 {
 
 
-   ip_enum::ip_enum(sp(::ca2::application) papp) :
+   ip_enum::ip_enum(sp(base_application) papp) :
       ca2(papp),
       ::ca2::ip_enum(papp)
    {

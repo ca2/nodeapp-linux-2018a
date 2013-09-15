@@ -623,7 +623,7 @@ namespace lnx
 {
 
 
-   copydesk::copydesk(sp(::ca2::application) papp) :
+   copydesk::copydesk(sp(base_application) papp) :
       ca2(papp),
       ::ca2::copydesk(papp)
    {
@@ -746,9 +746,9 @@ namespace lnx
 
       bOk = ::ca2::copydesk::finalize();
 
-//      if(::ca2::window_sp::is_set() && ::ca2::window_sp::m_p->IsWindow())
+//      if(::user::window_sp::is_set() && ::user::window_sp::m_p->IsWindow())
       {
-  //       bOk = ::ca2::window_sp::m_p->DestroyWindow() != FALSE;
+  //       bOk = ::user::window_sp::m_p->DestroyWindow() != FALSE;
       }
     //  else
       {

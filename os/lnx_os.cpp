@@ -8,9 +8,9 @@ namespace lnx
 {
 
 
-   os::os(sp(::ca2::application) papp) :
+   os::os(sp(base_application) papp) :
       ca2(papp),
-      ::ca2::os(papp)
+      ::core::os(papp)
    {
    }
 
@@ -792,7 +792,7 @@ namespace lnx
 /*
       ::count c;
 
-      ::ca2::thread * pthread;
+      ::thread * pthread;
 
       c = ::win::thread::s_threadptra.get_size();
 
@@ -808,7 +808,7 @@ namespace lnx
 
             try
             {
-               pthread = dynamic_cast < ::ca2::thread * >(::win::thread::s_threadptra[i]);
+               pthread = dynamic_cast < ::thread * >(::win::thread::s_threadptra[i]);
                pthread->m_bRun = false;
                pthread->m_p->m_bRun = false;
             }

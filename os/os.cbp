@@ -17,13 +17,6 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add directory="." />
-					<Add directory=".." />
-					<Add directory="../.." />
-					<Add directory="../../app/appseed/ca" />
-					<Add directory="../../app/appseed" />
-					<Add directory="../../app" />
-					<Add directory="../../app/thirdparty/include" />
 				</Compiler>
 			</Target>
 			<Target title="memdleak">
@@ -38,13 +31,6 @@
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DMEMDLEAK" />
-					<Add directory="." />
-					<Add directory=".." />
-					<Add directory="../.." />
-					<Add directory="../../app/appseed/ca" />
-					<Add directory="../../app/appseed" />
-					<Add directory="../../app" />
-					<Add directory="../../app/thirdparty/include" />
 				</Compiler>
 			</Target>
 		</Build>
@@ -59,8 +45,15 @@
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
-			<Add directory="../../app/appseed/ca2" />
+			<Add directory="../../app/appseed/core" />
 			<Add directory="../../app/thirdparty/appseed" />
+			<Add directory="." />
+			<Add directory=".." />
+			<Add directory="../.." />
+			<Add directory="../../app/appseed/ca" />
+			<Add directory="../../app/appseed" />
+			<Add directory="../../app" />
+			<Add directory="../../app/thirdparty/include" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-R\\$$$ORIGIN" />

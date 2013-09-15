@@ -38,7 +38,7 @@ void PASCAL no_track_object::operator delete(void * p)
 
 struct thread_data : public no_track_object
 {
-   thread_data* pNext; // required to be member of simple_list
+   thread_data* pNext; // required to be member of list
    int32_t nCount;         // current size of pData
    LPVOID* pData;      // actual thread local data (indexed by nSlot)
 };
@@ -153,7 +153,7 @@ no_track_object* process_local_object::get_data(
          if (m_pObject == NULL)
             m_pObject = (*pfnCreateObject)();
       }
-      catch(base_exception * pe)
+      catch(::exception::base * pe)
       {
          ::ca2::rethrow(pe);
       }
