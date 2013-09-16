@@ -19,15 +19,6 @@
 				<Compiler>
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
-					<Add directory="." />
-					<Add directory=".." />
-					<Add directory="../.." />
-					<Add directory="../../../app/appseed/ca" />
-					<Add directory="../../../app/appseed/ca2" />
-					<Add directory="../../../app/appseed" />
-					<Add directory="../../../app" />
-					<Add directory="../../../app/thirdparty/include" />
-					<Add directory="../../.." />
 				</Compiler>
 			</Target>
 			<Target title="memdleak">
@@ -43,15 +34,6 @@
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 					<Add option="-DMEMDLEAK" />
-					<Add directory="." />
-					<Add directory=".." />
-					<Add directory="../.." />
-					<Add directory="../../../app/appseed/ca" />
-					<Add directory="../../../app/appseed/ca2" />
-					<Add directory="../../../app/appseed" />
-					<Add directory="../../../app" />
-					<Add directory="../../../app/thirdparty/include" />
-					<Add directory="../../.." />
 				</Compiler>
 			</Target>
 		</Build>
@@ -67,21 +49,30 @@
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
 			<Add directory="../../../app/thirdparty/appseed" />
+			<Add directory="." />
+			<Add directory=".." />
+			<Add directory="../.." />
+			<Add directory="../../../app/appseed/boot" />
+			<Add directory="../../../app/appseed/core" />
+			<Add directory="../../../app/appseed" />
+			<Add directory="../../../app" />
+			<Add directory="../../../app/thirdparty/include" />
+			<Add directory="../../.." />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-R\\$$$ORIGIN" />
 			<Add option="-Wl,-z,origin" />
-			<Add option="-l_ca2c" />
-			<Add option="-l_ca2pixman" />
-			<Add option="-l_ca2zlib" />
-			<Add option="-l_ca2freeimage" />
-			<Add option="-l_ca2freetype" />
-			<Add option="-l_ca2openssl" />
-			<Add option="-l_ca2cairo" />
-			<Add option="-lca2ca" />
-			<Add option="-lca2" />
+			<Add option="-lbase" />
+			<Add option="-lbasepixman" />
+			<Add option="-lbasezlib" />
+			<Add option="-lbasefreeimage" />
+			<Add option="-lbasefreetype" />
+			<Add option="-lbaseopenssl" />
+			<Add option="-lbasemysql" />
+			<Add option="-lbasecairo" />
+			<Add option="-lboot" />
+			<Add option="-lcore" />
 			<Add option="-lca2os" />
-			<Add option="-lmysqlclient" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../stage/x86" />
 			<Add directory="/usr/lib64/mysql/" />

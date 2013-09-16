@@ -62,11 +62,12 @@
 			<Add option="-ldl" />
 			<Add option="-lX11" />
 			<Add option="-lXmu" />
-			<Add option="-l_ca2c" />
-			<Add option="-l_ca2freeimage" />
-			<Add option="-l_ca2cairo" />
-			<Add option="-lca2ca" />
-			<Add option="-lca2" />
+			<Add option="-lbase" />
+			<Add option="-lbasefreeimage" />
+			<Add option="-lbasecairo" />
+			<Add option="-lbaseopenssl" />
+			<Add option="-lboot" />
+			<Add option="-lcore" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../stage/x86" />
 		</Linker>
