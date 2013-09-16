@@ -7321,10 +7321,10 @@ namespace lnx
    void window::_001UpdateWindow()
    {
 
-     // single_lock sl(mutex_graphics(), false);
+     single_lock sl(mutex_graphics(), false);
 
-     // if(!sl.lock(millis(84)))
-    //     return;
+     if(!sl.lock(millis(84)))
+        return;
 
       _001Expose();
 
