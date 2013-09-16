@@ -9,7 +9,7 @@ namespace lnx
 {
 
    application::application(sp(base_application) papp) :
-      ca2(papp)
+      element(papp)
    {
       ::thread::m_p.create(allocer());
       ::thread::m_p->m_p = this;
@@ -54,19 +54,19 @@ namespace lnx
 
    void application::_001OnFileNew()
    {
-      ::ca2::application_base::m_p->_001OnFileNew(NULL);
+      ::application_base::m_p->_001OnFileNew(NULL);
    }
 
    sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
    {
-      return ::ca2::application_base::m_p->_001OpenDocumentFile(varFile);
+      return ::application_base::m_p->_001OpenDocumentFile(varFile);
    }
 
    void application::_001EnableShellOpen()
    {
 // xxx       ASSERT(m_atomApp == NULL && m_atomSystemTopic == NULL); // do once
 
-// xxx       m_atomApp            = ::GlobalAddAtomW(::ca2::international::utf8_to_unicode(m_strAppName));
+// xxx       m_atomApp            = ::GlobalAddAtomW(::str::international::utf8_to_unicode(m_strAppName));
 // xxx       m_atomSystemTopic    = ::GlobalAddAtomW(L"system");
    }
 
@@ -421,7 +421,7 @@ post_thread_message
 */
    bool application::process_initialize()
    {
-      if(::ca2::application_base::m_p->is_system())
+      if(::application_base::m_p->is_system())
       {
 /*
 if(__get_module_state()->m_pmapHWND == NULL)
@@ -477,9 +477,9 @@ if(__get_module_state()->m_pmapHWND == NULL)
       ::thread::m_p->set_os_data(NULL);
 
       LNX_THREAD(::thread::m_p.m_p)->m_bRun = false;
-      //LNX_THREAD(::ca2::application_base::m_p->::thread_sp::m_p)->m_bRun = false;
+      //LNX_THREAD(::application_base::m_p->::thread_sp::m_p)->m_bRun = false;
 
-      int32_t iRet = ::ca2::application::exit_instance();
+      int32_t iRet = ::application::exit_instance();
 
       //::ca2::smart_pointer<::ca2::application>::destroy();
 
@@ -544,9 +544,9 @@ if(__get_module_state()->m_pmapHWND == NULL)
    void application::ShowWaitCursor(bool bShow)
    {
 
-      mutex_lock mlUser(user_mutex(), true);
+      single_lock mlUser(&user_mutex(), true);
 
-      mutex_lock mlOsWindow(*::oswindow_data::s_pmutex, true);
+      single_lock mlOsWindow(::oswindow_data::s_pmutex, true);
 
       unsigned int uiShape;
 
@@ -740,12 +740,12 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
 
 
-   bool application::set_main_init_data(::ca2::main_init_data * pdata)
+   bool application::set_main_init_data(::core::main_init_data * pdata)
    {
 
       m_pmaininitdata = (::lnx::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::ca2::application_base::m_p->is_system())
+      if(m_pmaininitdata != NULL && ::application_base::m_p->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;

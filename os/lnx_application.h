@@ -6,7 +6,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx main_init_data :
-      public ::ca2::main_init_data
+      public ::core::main_init_data
    {
    public:
 
@@ -20,7 +20,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx application :
-      virtual public ::ca2::application
+      virtual public ::application
    {
    public:
 
@@ -75,7 +75,7 @@ namespace lnx
 
       virtual void SetCurrentHandles();
 
-      virtual bool set_main_init_data(::ca2::main_init_data * pdata);
+      virtual bool set_main_init_data(::core::main_init_data * pdata);
 
       virtual bool process_initialize();
       virtual bool initialize1();

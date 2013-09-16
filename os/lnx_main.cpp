@@ -9,7 +9,7 @@ CLASS_DECL_ca int32_t ca2_main();
 
 void CLASS_DECL_lnx __cdecl _ca2_purecall()
 {
-    throw simple_exception(::ca2::get_thread_app());
+    throw simple_exception(::get_thread_app());
 }
 
 
@@ -72,7 +72,7 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 //*pi = 0;
 //}
 
-//throw todo(::ca2::get_thread_app());
+//throw todo(::get_thread_app());
 
    if(!main_initialize())
       return -1;

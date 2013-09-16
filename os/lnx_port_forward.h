@@ -11,7 +11,7 @@ namespace lnx
 
 
    class port_forward :
-      virtual public ::ca2::port_forward
+      virtual public ::net::port_forward
    {
    public:
 
@@ -31,7 +31,7 @@ namespace lnx
 
 	   interface IDerivedNATExternalIPAddresscallback : public INATExternalIPAddresscallback
 	   {
-		   IDerivedNATExternalIPAddresscallback( ::ca2::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
+		   IDerivedNATExternalIPAddresscallback( ::net::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
 
 		   HRESULT STDMETHODcaLLTYPE NewExternalIPAddress( BSTR bstrNewExternalIPAddress )
 		   {
@@ -53,12 +53,12 @@ namespace lnx
 		   }
 
 		   DWORD		m_dwRef;
-		   ::ca2::port_forward_change_callbacks*	m_pointer;
+		   ::net::port_forward_change_callbacks*	m_pointer;
 	   };
 
 	   interface IDerivedNATNumberOfEntriescallback : public INATNumberOfEntriescallback
 	   {
-		   IDerivedNATNumberOfEntriescallback( ::ca2::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
+		   IDerivedNATNumberOfEntriescallback( ::net::port_forward_change_callbacks* p ) : m_pointer( p ), m_dwRef( 0 ) { };
 
 		   HRESULT STDMETHODcaLLTYPE NewNumberOfEntries( long lNewNumberOfEntries )
 		   {
@@ -79,13 +79,13 @@ namespace lnx
 		   }
 
 		   DWORD		m_dwRef;
-		   ::ca2::port_forward_change_callbacks*	m_pointer;
+		   ::net::port_forward_change_callbacks*	m_pointer;
 	   };
 
 	   // public functions -- there are only a few
 
 
-	   virtual HRESULT ListenForUpnpChanges(::ca2::port_forward_change_callbacks *pcallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
+	   virtual HRESULT ListenForUpnpChanges(::net::port_forward_change_callbacks *pcallbacks = NULL);  // NULL==default object; if you provide your own pointer to a port_forward_change_callbacks-derived object it is deleted for you automatically
 	   virtual HRESULT StopListeningForUpnpChanges( );  // Stops listenting for UPnP change events on the router and deletes any port_forward_change_callbacks-derived objects
 
 	   virtual WINBOOL GetDeviceInformationUsingThread( oswindow hWnd );  // starts a thread that will get IGD (router) device information; the thread posts a UWM_PORT_FORWARD_ENGINE_THREAD_NOTIFIcaTION message to hWnd when it's done
@@ -108,7 +108,7 @@ namespace lnx
 	   void DeinitializeCom();
 	   HRESULT PopulateDeviceInfoContainer( IUPnPDevice* piDevice, device & deviceInfo, oswindow hWnd=NULL );
 	   HRESULT GetNextMapping( IEnumVARIANT* piEnumerator, port_map & mappingContainer );
-	   HRESULT SetChangeEventcallbackPointer(::ca2::port_forward_change_callbacks *pcallbacks);
+	   HRESULT SetChangeEventcallbackPointer(::net::port_forward_change_callbacks *pcallbacks);
 
 	   static UINT ThreadForPortRetrieval( LPVOID pVoid );
 	   static UINT ThreadForDeviceInformationRetrieval( LPVOID pVoid );
@@ -127,7 +127,7 @@ namespace lnx
 	   IDerivedNATNumberOfEntriescallback*		m_piNumberOfEntriescallback;
 
 	   INATEventManager*						m_piEventManager;
-	   ::ca2::port_forward_change_callbacks*			m_pChangecallbackFunctions;
+	   ::net::port_forward_change_callbacks*			m_pChangecallbackFunctions;
 
 	   WINBOOL m_bListeningForUpnpChanges;
 

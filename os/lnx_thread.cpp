@@ -18,7 +18,7 @@
 	//{
 
 
-struct ___THREAD_STARTUP : ::thread_startup
+struct ___THREAD_STARTUP : ::lnx::thread_startup
 {
    // following are "in" parameters to thread startup
    ___THREAD_STATE* pThreadState;    // thread state of parent thread
@@ -67,7 +67,7 @@ WINBOOL AfxInternalIsIdleMessage(MESSAGE* pMsg);
 __STATIC void CLASS_DECL_lnx __pre_init_dialog(sp(::user::interaction )pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
 __STATIC void CLASS_DECL_lnx __post_init_dialog(sp(::user::interaction) pWnd, const RECT& rectOld, DWORD dwStyleOld);
 
-namespace ca2
+namespace lnx
 {
 
    thread_startup::thread_startup() :
@@ -133,7 +133,7 @@ UINT APIENTRY __thread_entry(void * pParam)
 //         threadWnd.Detach();
       pStartup->bError = TRUE;
       pStartup->hEvent.set_event();
-      __end_thread( (pThread->m_papp.m_p), (UINT)-1, FALSE);
+      __end_thread(pThread->m_pthread->m_pbaseapp, (UINT)-1, FALSE);
       ASSERT(FALSE);  // unreachable
    }
 
@@ -511,18 +511,21 @@ namespace lnx
    }
 
    thread::thread(sp(base_application) papp) :
-      ca2(papp),
+      element(papp),
       message_window_simple_callback(papp),//,
       m_evFinish(papp, FALSE, TRUE),
       ::thread(NULL),
       m_mutexUiPtra(papp)
    {
+
       m_evFinish.SetEvent();
-      m_pAppThread =  (papp);
+
+      m_pAppThread = papp->m_pplaneapp;
       m_pThreadParams = NULL;
       m_pfnThreadProc = NULL;
 
       CommonConstruct();
+
    }
 
    void thread::CommonConstruct()
@@ -851,9 +854,11 @@ namespace lnx
 
       uint32_t dwCreateFlags = dwCreateFlagsParam;
 
-      if(epriority != ::ca2::scheduling_priority_normal)
+      if(epriority != ::core::scheduling_priority_normal)
       {
+
          dwCreateFlags |= CREATE_SUSPENDED;
+
       }
 
       ENSURE(m_hThread == NULL);  // already created?
@@ -905,7 +910,7 @@ namespace lnx
       // allow thread to continue, once resumed (it may already be resumed)
       pstartup->hEvent2.set_event();
 
-      if(epriority != ::ca2::scheduling_priority_normal)
+      if(epriority != ::core::scheduling_priority_normal)
       {
 
          //VERIFY(set_thread_priority(epriority));
@@ -944,7 +949,8 @@ void thread::Delete()
       //pthread->::ca2::smart_pointer < ::thread >::m_p = NULL;
 //      m_p.release();
 //      delete_this();
-        ::ca::ca::release();
+        ::root::release();
+
    }
    else
    {
@@ -1008,11 +1014,11 @@ void thread::Delete()
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_dwAlive = m_dwAlive;
+               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_dwAlive = m_dwAlive;
+               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
             }
             try
             {
@@ -1069,11 +1075,11 @@ void thread::Delete()
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_dwAlive = m_dwAlive;
+               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_dwAlive = m_dwAlive;
+               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
             }
          }
 //         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
@@ -1119,7 +1125,7 @@ stop_run:
          // Check for missing LockTempMap calls
          if(m_nTempMapLock != 0)
          {
-            TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n", m_nTempMapLock);
+            TRACE(::core::trace::category_AppMsg, 0, "Warning: Temp ::collection::map lock count non-zero (%ld).\n", m_nTempMapLock);
          }
          LockTempMaps();
          UnlockTempMaps(-1);
@@ -1323,27 +1329,46 @@ stop_run:
       (this->*mmf.pfn_THREAD)(pMsg->wParam, pMsg->lParam);*/
 
       LRESULT lresult;
+
       SignalPtrArray signalptra;
+
       m_signala.GetSignalsByMessage(signalptra, pbase->m_uiMessage, 0, 0);
+
       for(int32_t i = 0; i < signalptra.get_size(); i++)
       {
+
          Signal & signal = *signalptra[i];
-         ::ca2::signal * psignal = signal.m_psignal;
+
+         class ::signal * psignal = signal.m_psignal;
+
          ::message::e_prototype eprototype = signal.m_eprototype;
+
          if(eprototype == ::message::PrototypeNone)
          {
+
             //::message::base base(get_app());
+
             pbase->m_psignal = psignal;
+
             lresult = 0;
+
             //base.set(pmsg->message, pmsg->wParam, pmsg->lParam, lresult);
+
             psignal->emit(pbase);
+
             if(pbase->m_bRet)
                return;
+
          }
+
          break;
+
       }
+
       pbase->m_bRet = true;
+
    }
+
 
    void thread::pre_translate_message(::signal_details * pobj)
    {
@@ -1456,16 +1481,22 @@ stop_run:
 
    bool thread::pump_message()
    {
+
       try
       {
+
          MESSAGE msg;
+
          if(!::GetMessage(&msg, NULL, 0, 0))
          {
-            TRACE(::ca2::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
+
+            TRACE(::core::trace::category_AppMsg, 1, "thread::pump_message - Received WM_QUIT.\n");
+
             m_nDisablePumpCount++; // application must die
             // Note: prevents calling message loop things in 'exit_instance'
             // will never be decremented
             return FALSE;
+
          }
 
          bool bRun = get_run();
@@ -1479,8 +1510,11 @@ stop_run:
 
          if(m_nDisablePumpCount != 0)
          {
-            TRACE(::ca2::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
+
+            TRACE(::core::trace::category_AppMsg, 0, "Error: thread::pump_message called when not permitted.\n");
+
             ASSERT(FALSE);
+
          }
 
          __trace_message("pump_message", &msg);
@@ -1488,7 +1522,7 @@ stop_run:
          if(msg.message != WM_KICKIDLE)
          {
 
-            ::ca::smart_pointer < ::message::base > spbase;
+            ::smart_pointer < ::message::base > spbase;
 
             if(msg.message == 126)
             {
@@ -1689,7 +1723,7 @@ stop_run:
       catch(::exception::base * pe)
       {
          AfxProcessWndProcException(pe, pbase);
-         TRACE(::ca2::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
+         TRACE(::core::trace::category_AppMsg, 0, "Warning: Uncaught exception in message_handler (returning %ld).\n", pbase->get_lresult());
          pe->Delete();
       }
    run:
@@ -1747,7 +1781,7 @@ return false;
    }
 
 
-   CLASS_DECL_lnx ::thread * get_thread()
+   CLASS_DECL_lnx base_thread * get_thread()
    {
       ::lnx::thread * pwinthread = __get_thread();
       if(pwinthread == NULL)
@@ -1825,7 +1859,7 @@ return false;
       return m_nTempMapLock != 0;
    }
 
-   int32_t thread::thread_entry(::thread_startup * pstartup)
+   int32_t thread::thread_entry(::lnx::thread_startup * pstartup)
    {
 
       ASSERT(pstartup != NULL);
@@ -1969,7 +2003,7 @@ return false;
 #endif
          // cleanup and shutdown the thread
 //         threadWnd.Detach();
-         __end_thread( (m_papp), nResult);
+         __end_thread(m_pbaseapp, nResult);
 #ifndef DEBUG
       }
       catch(...)
@@ -3308,17 +3342,23 @@ __STATIC inline WINBOOL IsButtonUp(LPMESSAGE lpMsg)
 { return lpMsg->message == WM_LBUTTONUP; }
 
 */
-namespace ca2
-{
-   extern CLASS_DECL_ca PFN_get_thread g_pfn_get_thread;
-   extern CLASS_DECL_ca PFN_get_thread_state g_pfn_get_thread_state;
 
-}
 
+extern CLASS_DECL_ca PFN_get_thread g_pfn_get_thread;
+
+
+extern CLASS_DECL_ca PFN_get_thread_state g_pfn_get_thread_state;
 
 
 __attribute__((constructor))
-static void initialize_navigationBarImages() {
-  ::ca2::g_pfn_get_thread = &::lnx::get_thread;
-  ::ca2::g_pfn_get_thread_state = (::thread_state *(*)() )&__get_thread_state;
+static void initialize_navigationBarImages()
+{
+
+   ::g_pfn_get_thread = &::lnx::get_thread;
+
+   ::g_pfn_get_thread_state = (::thread_state *(*)() ) & __get_thread_state;
+
 }
+
+
+

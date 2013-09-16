@@ -199,11 +199,16 @@ namespace lnx
       virtual WINBOOL UnlockTempMaps(WINBOOL bDeleteTemp);
 
       operator pthread_t() const;
+
+
    };
 
-   CLASS_DECL_lnx ::thread * get_thread();
+
+   CLASS_DECL_lnx base_thread * get_thread();
+
 
 } // namespace lnx
+
 
 
 

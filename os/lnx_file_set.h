@@ -6,7 +6,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx file_set :
-      public ::ca2::file_set
+      public ::file::set
    {
    public:
 

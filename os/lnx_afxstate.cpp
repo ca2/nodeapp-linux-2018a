@@ -400,12 +400,12 @@ bool CLASS_DECL_lnx __is_module_dll()
 bool CLASS_DECL_lnx __init_current_state_app()
 {
    sp(base_application) pApp = __get_module_state()->m_pCurrentWinApp;
-   if (pApp != NULL && !pApp->initialize_instance())
+   if (pApp != NULL && !pApp->m_pplaneapp->initialize_instance())
    {
       // Init Failed
       try
       {
-         pApp->exit();
+         pApp->m_pplaneapp->exit();
       }
       catch(...)
       {

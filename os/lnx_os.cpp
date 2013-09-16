@@ -9,7 +9,7 @@ namespace lnx
 
 
    os::os(sp(base_application) papp) :
-      ca2(papp),
+      element(papp),
       ::core::os(papp)
    {
    }
@@ -504,9 +504,9 @@ namespace lnx
          try
          {
 
-            strCommand = ::ca2::str::consume_quoted_value(psz);
-            ::ca2::str::consume_spaces(psz);
-            ::ca2::str::consume(psz, "\"%L\"");
+            strCommand = ::str::consume_quoted_value(psz);
+            ::str::consume_spaces(psz);
+            ::str::consume(psz, "\"%L\"");
             strParam = psz;
 
          }

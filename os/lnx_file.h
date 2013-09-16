@@ -18,7 +18,7 @@ namespace lnx
 
 
    class CLASS_DECL_lnx file :
-      virtual public ::ca2::file
+      virtual public ::file::binary_buffer
    {
    public:
 
@@ -67,7 +67,7 @@ namespace lnx
       virtual file_position get_position() const;
 
 
-      bool GetStatus(::ca2::file_status & rStatus) const;
+      bool GetStatus(::file::file_status & rStatus) const;
       virtual string GetFileName() const;
       virtual string GetFileTitle() const;
       virtual string GetFilePath() const;
@@ -75,14 +75,14 @@ namespace lnx
 
       virtual bool open(const char * lpszFileName, UINT nOpenFlags);
 
-      virtual bool PASCAL GetStatus(const char * lpszFileName, ::ca2::file_status& rStatus);
+      virtual bool PASCAL GetStatus(const char * lpszFileName, ::file::file_status& rStatus);
 
       uint64_t ReadHuge(void * lpBuffer, uint64_t dwCount);
       void WriteHuge(const void * lpBuffer, uint64_t dwCount);
 
-      virtual sp(::ca2::file) Duplicate() const;
+      virtual sp(::file::stream_buffer) Duplicate() const;
 
-      virtual file_position seek(file_offset lOff, ::ca2::e_seek nFrom);
+      virtual file_position seek(file_offset lOff, ::file::e_seek nFrom);
       virtual void set_length(file_size dwNewLen);
       virtual file_size get_length() const;
 

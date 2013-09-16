@@ -24,7 +24,7 @@ void * PASCAL no_track_object::operator new(size_t nSize)
 {
    void * p = ::malloc(nSize);
    if (p == NULL)
-      throw memory_exception(::ca2::get_thread_app());
+      throw memory_exception(::get_thread_app());
    return p;
 }
 #define new DEBUG_NEW
@@ -142,25 +142,34 @@ void thread_slot_data::delete_data()
 /////////////////////////////////////////////////////////////////////////////
 // CProcessLocalData
 
-no_track_object* process_local_object::get_data(
-   no_track_object* ( * pfnCreateObject)())
+no_track_object* process_local_object::get_data(no_track_object* ( * pfnCreateObject)())
 {
+
    if (m_pObject == NULL)
    {
+
       single_lock sl(&m_mutex, TRUE);
+
       try
       {
+
          if (m_pObject == NULL)
             m_pObject = (*pfnCreateObject)();
+
       }
       catch(::exception::base * pe)
       {
-         ::ca2::rethrow(pe);
+
+         ::exception::rethrow(pe);
+
       }
 
    }
+
    return m_pObject;
+
 }
+
 
 process_local_object::~process_local_object()
 {

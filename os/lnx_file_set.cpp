@@ -6,7 +6,7 @@ namespace lnx
 
 
    file_set::file_set(sp(base_application) papp) :
-      ca2(papp)
+      element(papp)
    {
 
    }

@@ -31,9 +31,9 @@ namespace lnx
       virtual string path(const char * pszFolder, strsize iLenFolder, const char * pszRelative, strsize iLenRelative, const char * psz2, strsize iLen2, bool bUrl);
 
       virtual string relpath(const char * lpcszSource, const char * lpcszRelative, const char * lpcsz2 = NULL);
-      virtual void  ls_pattern(sp(base_application) papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
-      virtual void  ls(sp(base_application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL);
-      virtual void  rls_pattern(sp(base_application) papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, array < bool, bool > * pbaIsDir = NULL, array < int64_t, int64_t > * piaSize = NULL, e_extract eextract = extract_first);
+      virtual void  ls_pattern(sp(base_application) papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, bool_array * pbaIsDir = NULL, int64_array * piaSize = NULL);
+      virtual void  ls(sp(base_application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, bool_array * pbaIsDir = NULL, int64_array * piaSize = NULL);
+      virtual void  rls_pattern(sp(base_application) papp, const char * lpcsz, const char * lpcszPattern, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, bool_array * pbaIsDir = NULL, int64_array * piaSize = NULL, e_extract eextract = extract_first);
       virtual void  rls(sp(base_application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL, e_extract eextract = extract_first);
       virtual void  rls_dir(sp(base_application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL, stringa * pstraRelative = NULL);
       virtual void  ls_dir(sp(base_application) papp, const char * lpcsz, stringa * pstraPath = NULL, stringa * pstraTitle = NULL);
@@ -59,12 +59,12 @@ namespace lnx
       virtual string netseed(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
 
       // stage in ccvotagus spalib
-      virtual string ca2(const char * lpcsz, const char * lpcsz2 = NULL);
-      virtual string ca2();
-      virtual string ca2(const string & str);
-      virtual string ca2(const string & str, const string & str2);
-      virtual string ca2(const char * lpcsz, const string & str2);
-      virtual string ca2(const string & str, const char * lpcsz2);
+      virtual string element(const char * lpcsz, const char * lpcsz2 = NULL);
+      virtual string element();
+      virtual string element(const string & str);
+      virtual string element(const string & str, const string & str2);
+      virtual string element(const char * lpcsz, const string & str2);
+      virtual string element(const string & str, const char * lpcsz2);
 
       virtual string module(const char * lpcsz = NULL, const char * lpcsz2 = NULL);
       virtual string ca2module(const char * lpcsz = NULL, const char * lpcsz2 = NULL);

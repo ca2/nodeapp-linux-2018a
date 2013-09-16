@@ -624,8 +624,8 @@ namespace lnx
 
 
    copydesk::copydesk(sp(base_application) papp) :
-      ca2(papp),
-      ::ca2::copydesk(papp)
+      element(papp),
+      ::core::copydesk(papp)
    {
    }
 
@@ -664,7 +664,7 @@ namespace lnx
          UINT uiLen = ::DragQueryFileW(hdrop, i, NULL, 0);
          wchar_t * lpwsz = (wchar_t *) malloc(sizeof(wchar_t) * (uiLen + 1));
          ::DragQueryFileW(hdrop, i, lpwsz, uiLen + 1);
-         stra.add(::ca2::international::unicode_to_utf8(lpwsz));
+         stra.add(::str::international::unicode_to_utf8(lpwsz));
          free(lpwsz);
       }
       ::CloseClipboard();
@@ -680,7 +680,7 @@ namespace lnx
 
       for(int32_t i = 0; i < stra.get_size(); i++)
       {
-         iLen += ::ca2::international::utf8_to_unicode_count(stra[i]) + 1;
+         iLen += ::str::international::utf8_to_unicode_count(stra[i]) + 1;
       }
 
       throw todo(get_app());
@@ -701,7 +701,7 @@ namespace lnx
       for(int32_t i = 0; i < stra.get_size(); i++)
       {
          ASSERT(m_p->IsWindow());
-         ::ca2::international::utf8_to_unicode(lpwstrCopy, ::ca2::international::utf8_to_unicode_count(stra[i]) + 1, stra[i]);
+         ::str::international::utf8_to_unicode(lpwstrCopy, ::str::international::utf8_to_unicode_count(stra[i]) + 1, stra[i]);
          ASSERT(m_p->IsWindow());
          lpwstrCopy += (stra[i].get_length() + 1);
       }
@@ -728,11 +728,9 @@ namespace lnx
    bool copydesk::initialize()
    {
 
-      if(!::ca2::copydesk::initialize())
+
+      if(!::core::copydesk::initialize())
          return false;
-
-
-
 
       return true;
 
@@ -744,7 +742,7 @@ namespace lnx
 
       bool bOk;
 
-      bOk = ::ca2::copydesk::finalize();
+      bOk = ::core::copydesk::finalize();
 
 //      if(::user::window_sp::is_set() && ::user::window_sp::m_p->IsWindow())
       {
@@ -764,10 +762,10 @@ namespace lnx
 ///      ASSERT(m_p->IsWindow());
    //   int32_t iLen = 0;
 
+
       string str;
-      str = ::ca2::international::utf8_to_unicode(psz);
 
-
+      str = ::str::international::utf8_to_unicode(psz);
 
       //ASSERT(m_p->IsWindow());
       //if(!m_p->OpenClipboard())
@@ -782,10 +780,10 @@ namespace lnx
       EmptyClipboard();
 
 
-      count iCount = ::ca2::international::utf8_to_unicode_count(str) + 1;
+      count iCount = ::str::international::utf8_to_unicode_count(str) + 1;
       HGLOBAL hglbCopy = ::GlobalAlloc(GMEM_MOVEABLE, iCount * sizeof(WCHAR));
       wchar_t * lpwstrCopy  = (wchar_t *) ::GlobalLock(hglbCopy);
-      ::ca2::international::utf8_to_unicode(lpwstrCopy, iCount, str);
+      ::str::international::utf8_to_unicode(lpwstrCopy, iCount, str);
       ::GlobalUnlock(hglbCopy);
 
       HGLOBAL hglbCopy2 = ::GlobalAlloc(GMEM_MOVEABLE, sizeof(CHAR) * (strlen(psz) + 1));
@@ -880,7 +878,7 @@ return "";
          if(!m_p->OpenClipboard())
             return "";
          HGLOBAL hglb = GetClipboardData(CF_UNICODETEXT);
-         string str(::ca2::international::unicode_to_utf8((const wchar_t *) GlobalLock(hglb)));
+         string str(::str::international::unicode_to_utf8((const wchar_t *) GlobalLock(hglb)));
          GlobalUnlock(hglb);
          VERIFY(::CloseClipboard());
          return str;

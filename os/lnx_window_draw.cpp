@@ -27,7 +27,7 @@ namespace lnx
 
 
    window_draw::window_draw(sp(base_application) papp) :
-      ca2(papp),
+      element(papp),
       ::thread(papp),
       ::user::window_draw(papp),
       message_window_simple_callback(papp),
@@ -163,29 +163,29 @@ namespace lnx
                TRACE("window_draw::_synch_redraw :: during prodevian Performance Analysis Time Frame - %d milliseconds -,", iTimeFrame);
                TRACE("window_draw::_synch_redraw :: failure count has exceeded the maximum count - %d", iMaxFailureCount);
                TRACE("window_draw::_synch_redraw :: Going to try to save some resource that may favor drawing perfomance");
-               if(!System.savings().is_trying_to_save(::ca2::resource_blur_background))
+               if(!System.savings().is_trying_to_save(::core::resource_blur_background))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"blur background\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"blur background\" resource");
-                  System.savings().try_to_save(::ca2::resource_blur_background);
+                  System.savings().try_to_save(::core::resource_blur_background);
                }
-               else if(!System.savings().is_trying_to_save(::ca2::resource_blurred_text_embossing))
+               else if(!System.savings().is_trying_to_save(::core::resource_blurred_text_embossing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"blurred text embossing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"blurred text embossing\" resource");
-                  System.savings().try_to_save(::ca2::resource_blurred_text_embossing);
+                  System.savings().try_to_save(::core::resource_blurred_text_embossing);
                }
-               else if(!System.savings().is_warning(::ca2::resource_processing))
+               else if(!System.savings().is_warning(::core::resource_processing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not warning to save \"processing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to warn to save \"processing\" resource");
-                  System.savings().warn(::ca2::resource_processing);
+                  System.savings().warn(::core::resource_processing);
                }
-               else if(!System.savings().is_trying_to_save(::ca2::resource_processing))
+               else if(!System.savings().is_trying_to_save(::core::resource_processing))
                {
                   TRACE("window_draw::_synch_redraw :: System is not trying to save \"processing\" resource");
                   TRACE("window_draw::_synch_redraw :: Going to try to save \"processing\" resource");
-                  System.savings().try_to_save(::ca2::resource_blur_background);
+                  System.savings().try_to_save(::core::resource_blur_background);
                }
             }
             s_iFrameFailureCount = 0;
@@ -333,8 +333,8 @@ namespace lnx
       MESSAGE msg;
       s_bRunning = true;
       m_bRun = true;
-      ::ca2::get_thread()->m_bRun = true;
-      while(m_bRun && ::ca2::get_thread()->get_run())
+      ::get_thread()->m_pthread->m_bRun = true;
+      while(m_bRun && ::get_thread()->get_run())
       {
 #ifndef DEBUG
          try
@@ -391,7 +391,7 @@ namespace lnx
          return false;
 
 
-      mutex_lock ml(user_mutex());
+      single_lock ml(&user_mutex(), true);
       //single_lock sl(&m_mutexRender, FALSE);
       //if(!sl.lock(duration::zero()))
         // return false;
@@ -1045,27 +1045,28 @@ throw not_implemented(get_app());
    void window_draw::get_wnda(user::interaction_ptr_array & wndpa)
    {
 
-      mutex_lock sl(user_mutex(), true);
-
+      single_lock sl(&user_mutex(), true);
 
       wndpa = System.frames();
+
    }
+
 
    void window_draw::get_wnda(user::oswindow_array & hwnda)
    {
 
-      mutex_lock sl(user_mutex(), true);
+      single_lock sl(&user_mutex(), true);
 
       System.frames().get_wnda(hwnda);
+
    }
+
 
    // Both the device context and clip region
    // should be in screen coordinates
-
-   bool window_draw::ScreenOutput(
-      user::buffer * pbuffer,
-      ::draw2d::region & rgnUpdate)
+   bool window_draw::ScreenOutput(user::buffer * pbuffer, ::draw2d::region & rgnUpdate)
    {
+
       UNREFERENCED_PARAMETER(pbuffer);
       UNREFERENCED_PARAMETER(rgnUpdate);
    //   TRACE("//\n");
