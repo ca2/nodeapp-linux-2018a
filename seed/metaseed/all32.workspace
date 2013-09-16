@@ -66,7 +66,11 @@
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../os/os.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
+		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/boot/boot.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+		</Project>
 		<Project filename="../../../app-veriwell/appseed/mplite/mplite.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
@@ -82,7 +86,6 @@
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 		</Project>
-		<Project filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
@@ -90,6 +93,7 @@
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
+		<Project filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
