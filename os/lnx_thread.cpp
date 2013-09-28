@@ -512,7 +512,7 @@ namespace lnx
 
    thread::thread(sp(base_application) papp) :
       element(papp),
-      message_window_simple_callback(papp),//,
+      message_queue(papp),//,
       m_evFinish(papp, FALSE, TRUE),
       ::thread(NULL),
       m_mutexUiPtra(papp)
@@ -1776,7 +1776,7 @@ return false;
       //m_nThreadID = (dword_ptr) iData;
    }
 
-   void thread::message_window_message_handler(::signal_details * pobj)
+   void thread::message_queue_message_handler(::signal_details * pobj)
    {
    }
 
@@ -1989,7 +1989,7 @@ return false;
       try
       {
 #endif
-         finalize_message_window();
+         destroy_message_queue();
 #ifndef DEBUG
       }
       catch(...)

@@ -26,7 +26,7 @@ namespace lnx
 
    class CLASS_DECL_lnx thread :
       virtual public ::thread,
-      virtual public ::message_window_simple_callback
+      virtual public ::message_queue
    {
    public:
 
@@ -190,7 +190,7 @@ namespace lnx
 
 
       virtual void DispatchThreadMessageEx(::signal_details * pobj);  // helper
-      virtual void message_window_message_handler(::signal_details * pobj);
+      virtual void message_queue_message_handler(::signal_details * pobj);
 
       virtual void delete_temp();
 

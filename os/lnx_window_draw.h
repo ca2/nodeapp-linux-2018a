@@ -7,7 +7,7 @@ namespace lnx
 
    class CLASS_DECL_lnx window_draw :
       virtual public ::user::window_draw,
-      virtual public ::message_window_simple_callback
+      virtual public ::message_queue
    {
    public:
 
@@ -133,7 +133,7 @@ namespace lnx
       virtual void synch_redraw();
       virtual void _synch_redraw();
 
-      virtual void message_window_message_handler(::signal_details * pobj);
+      virtual void message_queue_message_handler(::signal_details * pobj);
 
    };
 

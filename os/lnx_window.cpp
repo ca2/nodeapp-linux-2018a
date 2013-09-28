@@ -712,7 +712,7 @@ d.unlock();
          pParentWnd->get_handle(), id, (LPVOID)pContext);
    }
 
-   bool window::create_message_window(const char * pszName, ::message_window_callback * pcallback)
+   bool window::create_message_queue(const char * pszName, ::message_queue_listener * pcallback)
    {
       m_pcallback = pcallback;
       if(IsWindow())
@@ -1491,7 +1491,7 @@ d.unlock();
       if(m_pcallback != NULL)
       {
 
-         m_pcallback->message_window_message_handler(pobj);
+         m_pcallback->message_queue_message_handler(pobj);
 
          if(pobj->m_bRet)
             return;
