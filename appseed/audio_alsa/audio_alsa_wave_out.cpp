@@ -11,8 +11,9 @@ namespace multimedia
 
       wave_out::wave_out(sp(base_application) papp) :
          element(papp),
-         snd_pcm(papp),
          ::thread(papp),
+        wave_base(papp),
+         snd_pcm(papp),
          ::multimedia::audio::wave_out(papp)
       {
 
@@ -80,7 +81,7 @@ namespace multimedia
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize = 0;
 
-         if(snd_pcm_open(SND_PCM_STREAM_PLAYBACK, m_pwaveformat) != MMSYSERR_NOERROR)
+         if(snd_pcm_open(SND_PCM_STREAM_PLAYBACK) != MMSYSERR_NOERROR)
             return MMSYSERR_ERROR;
 
 
@@ -315,7 +316,7 @@ Opened:
 
          m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount);
 
-         int32_t i, iSize;
+         /*int32_t i, iSize;
 
          iSize = wave_out_get_buffer()->GetBufferCount();
 
@@ -331,6 +332,7 @@ Opened:
             //wave_out_add_buffer(i);
 
          }
+         */
 
          m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount() + 4);
 
@@ -357,7 +359,7 @@ Opened:
 
          ::multimedia::result mmr;
 
-         int32_t i, iSize;
+/*         int32_t i, iSize;
 
          iSize =  wave_out_get_buffer()->GetBufferCount();
 
@@ -371,9 +373,9 @@ Opened:
 
             delete wave_hdr(i);
 
-         }
+         }*/
 
-         mmr = waveOutClose(m_ppcm);
+         mmr = snd_pcm_close();
 
          m_ppcm = NULL;
 
@@ -386,7 +388,7 @@ Opened:
       }
 
 
-      void wave_out::OnMultimediaOpen(::signal_details * pobj)
+      /*void wave_out::OnMultimediaOpen(::signal_details * pobj)
       {
          UNREFERENCED_PARAMETER(pobj);
       }
@@ -418,12 +420,6 @@ Opened:
       void wave_out::wave_out_buffer_ready(int iBuffer)
       {
 
-         return wave_out_buffer_ready(wave_hdr(iBuffer));
-
-      }
-
-      void wave_out::wave_out_buffer_ready(LPWAVEHDR lpwavehdr)
-      {
 
          if(wave_out_get_state() != state_playing)
          {
@@ -434,12 +430,12 @@ Opened:
          ::multimedia::result mmr;
          if(m_peffect != NULL)
          {
-            m_peffect->Process16bits((int16_t *) lpwavehdr->lpData, lpwavehdr->dwBytesRecorded / 2);
+            m_peffect->Process16bits((int16_t *) wave_out_get_buffer()->get_buffer_data(iBuffer), wave_out_get_buffer()->m_uiBufferSize);
          }
 
          single_lock sLock(&m_mutex, TRUE);
 
-         mmr = waveOutWrite(m_ppcm, lpwavehdr, sizeof(WAVEHDR));
+         mmr = snd_pcm_writei(m_ppcm, wave_out_get_buffer()->get_buffer_data(iBuffer), wave_out_get_buffer()->m_uiBufferSize);
 
          VERIFY(MMSYSERR_NOERROR == mmr);
 
@@ -471,7 +467,7 @@ Opened:
          // waveform-audio_alsa output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = waveOutReset(m_ppcm);
+         m_mmr = snd_pcm_drain(m_ppcm);
 
 
 
@@ -501,7 +497,7 @@ Opened:
          // waveform-audio_alsa output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = waveOutPause(m_ppcm);
+         m_mmr = snd_pcm_pause(m_ppcm, 1);
 
 
          ASSERT(m_mmr == MMSYSERR_NOERROR);
@@ -530,7 +526,7 @@ Opened:
          // waveform-audio_alsa output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = waveOutRestart(m_ppcm);
+         m_mmr = snd_pcm_pause(m_ppcm, 0);
 
 
          ASSERT(m_mmr == MMSYSERR_NOERROR);
@@ -565,17 +561,17 @@ Opened:
 
 
          ::multimedia::result                mmr;
-         MMTIME                  mmt;
-         mmt.wType = TIME_MS;
+         snd_htimestamp_t                  mmt;
+         snd_pcm_uframes_t ut;
 
          if(m_ppcm != NULL)
          {
-            mmr = waveOutGetPosition(m_ppcm, &mmt, sizeof(mmt));
+            mmr = snd_pcm_htimestamp(m_ppcm, &ut, &mmt);
             try
             {
                if (MMSYSERR_NOERROR != mmr)
                {
-                  TRACE( "waveOutGetPosition() returned %lu", (uint32_t)mmr);
+                  TRACE( "snd_pcm_status_get_htstamp() returned %s", snd_strerror(mmr));
                   //      return MCIERR_DEVICE_NOT_READY;
                   return 0;
                }
@@ -585,18 +581,9 @@ Opened:
                //return MCIERR_DEVICE_NOT_READY;
                return 0;
             }
-            if(mmt.wType == TIME_BYTES)
-            {
-               int64_t i = mmt.u.cb;
-               i *= 8 * 1000;
-               i /= m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels * m_pwaveformat->nSamplesPerSec;
-               return i;
-
-            }
-            else
             {
                //*pTicks += mmt.u.ticks;
-               return (uint32_t) mmt.u.ms;
+               return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
             }
          }
          else
@@ -619,45 +606,41 @@ Opened:
          single_lock sLock(&m_mutex, TRUE);
 
          ::multimedia::result                mmr;
-         MMTIME                  mmt;
-         mmt.wType = TIME_BYTES;
+         snd_htimestamp_t                  mmt;
+         snd_pcm_uframes_t ut;
 
          if(m_ppcm != NULL)
          {
-            mmr = waveOutGetPosition(m_ppcm, &mmt, sizeof(mmt));
+            mmr = snd_pcm_htimestamp(m_ppcm, &ut, &mmt);
             try
             {
                if (MMSYSERR_NOERROR != mmr)
                {
-                  TRACE( "waveOutGetPosition() returned %lu", (uint32_t)mmr);
+                  TRACE( "snd_pcm_status_get_htstamp() returned %s", snd_strerror(mmr));
+                  //      return MCIERR_DEVICE_NOT_READY;
                   return 0;
                }
             }
             catch(...)
             {
+               //return MCIERR_DEVICE_NOT_READY;
                return 0;
             }
-            if(mmt.wType == TIME_MS)
             {
-               imedia::position position = (uint32_t) mmt.u.ms;
-               position *= m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels * m_pwaveformat->nSamplesPerSec;
-               position /= 8 * 1000;
-               return position;
-            }
-            else
-            {
-               return (uint32_t) mmt.u.cb;
+               //*pTicks += mmt.u.ticks;
+               return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
             }
          }
          else
             return 0;
+
 
       }
 
       void wave_out::wave_out_free(int iBuffer)
       {
 
-         wave_out_free(wave_hdr(iBuffer));
+         //wave_out_free(wave_hdr(iBuffer));
 
          multimedia::audio::wave_out::wave_out_free(iBuffer);
 
@@ -690,16 +673,16 @@ Opened:
 
 
 
-      WAVEFORMATEX * wave_out::wave_format()
+/*      WAVEFORMATEX * wave_out::wave_format()
       {
 
          translate(m_waveformatex, m_pwaveformat);
 
          return &m_waveformatex;
 
-      }
+      }*/
 
-      HWAVEOUT wave_out::wave_out_get_safe_HWAVEOUT()
+      snd_pcm_t * wave_out::wave_out_get_safe_PCM()
       {
 
          if(this == NULL)
@@ -714,49 +697,13 @@ Opened:
          return m_ppcm;
       }
 
+/*
       LPWAVEHDR wave_out::wave_hdr(int iBuffer)
       {
          return ::multimedia::audio_alsa::get_os_data(wave_out_get_buffer(), iBuffer);
       }
+*/
 
-
-      int wave_out::run()
-      {
-
-         int iBuffer = 0;
-         int iSize;
-         int err;
-
-         while(m_bRun)
-         {
-
-            if(wave_out_is_playing() && wave_out_get_buffer()->GetBufferCount() > 0)
-            {
-
-               iSize = (int32_t) wave_out_get_buffer()->GetBufferCount();
-
-               if(iBuffer >= iSize)
-                  iBuffer = 0;
-
-               if(iBuffer < iSize)
-               {
-
-                  if ((err = snd_pcm_readi (m_ppcm, wave_out_get_buffer()->get_buffer_data(iBuffer), wave_out_get_buffer()->m_uiBufferSize)) == wave_out_get_buffer()->m_uiBufferSize)
-                  {
-                     wave_out_proc(m_ppcm, 0, 0, iBuffer, 0);
-                  }
-                  else
-                  {
-                     TRACE("read from audio interface failed (%s)\n", snd_strerror (err));
-                  }
-
-               }
-
-            }
-
-         }
-
-      }
 
 
    } // namespace audio_alsa

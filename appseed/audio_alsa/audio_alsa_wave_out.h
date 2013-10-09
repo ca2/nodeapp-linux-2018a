@@ -24,7 +24,7 @@ namespace multimedia
 
          virtual imedia::time wave_out_get_position_millis();
          imedia::position wave_out_get_position();
-         //virtual void wave_out_buffer_ready(int iBuffer);
+         virtual void wave_out_buffer_ready(int iBuffer);
          //virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
          virtual ::multimedia::result wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount);
@@ -47,12 +47,12 @@ namespace multimedia
          //DECL_GEN_SIGNAL(OnMultimediaDone)
          //DECL_GEN_SIGNAL(OnMultimediaClose)
 
-         void CALLBACK wave_out_proc(snd_pcm_t * hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
+         //void CALLBACK wave_out_proc(snd_pcm_t * hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 
          //WAVEFORMATEX * wave_format();
          //LPWAVEHDR wave_hdr(int iBuffer);
 
-         int run();
+         //int run();
 
       };
 

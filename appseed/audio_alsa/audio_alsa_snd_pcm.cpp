@@ -10,7 +10,9 @@ namespace multimedia
 
 
       snd_pcm::snd_pcm(sp(base_application) papp) :
-         element(papp)
+         element(papp),
+         thread(papp),
+         wave_base(papp)
       {
 
          m_ppcm = NULL;
@@ -30,11 +32,14 @@ namespace multimedia
 
       }
 
-      ::multimedia::result snd_pcm::snd_pcm_open(snd_pcm_stream_t stream_type, ::multimedia::audio::wave_format * & pformat)
+      ::multimedia::result snd_pcm::snd_pcm_open(snd_pcm_stream_t stream_type)
       {
 
          ::multimedia::result mmr;
          ASSERT(m_ppcm == NULL);
+
+
+         sp(::multimedia::audio::wave_format) pformat = m_pwaveformat;
 
 
          int i;

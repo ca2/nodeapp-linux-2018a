@@ -73,7 +73,8 @@
 			<Add option="-lbasecairo" />
 			<Add option="-lboot" />
 			<Add option="-lcore" />
-			<Add option="-lca2os" />
+			<Add option="-lasound" />
+			<Add option="-lmultimedia" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../stage/x86" />
 			<Add directory="/usr/lib64/mysql/" />

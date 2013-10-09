@@ -861,4 +861,28 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
    }
 
+
+   string application::multimedia_audio_get_default_library_name()
+   {
+
+        return "audio_alsa";
+
+   }
+
+
+   string application::multimedia_audio_mixer_get_default_library_name()
+   {
+
+        return "audio_mixer_alsa";
+
+   }
+
+
+   string application::veriwell_multimedia_music_midi_get_default_library_name()
+   {
+
+        return "music_midi_alsa";
+
+   }
+
 } // namespace lnx

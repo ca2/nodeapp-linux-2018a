@@ -11,8 +11,9 @@ namespace multimedia
 
       wave_in::wave_in(sp(base_application) papp) :
          element(papp),
-         snd_pcm(papp),
          ::thread(papp),
+         wave_base(papp),
+         snd_pcm(papp),
          ::multimedia::audio::wave_in(papp)
       {
 
@@ -67,7 +68,7 @@ namespace multimedia
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize = 0;
 
-         if(snd_pcm_open(SND_PCM_STREAM_CAPTURE, m_pwaveformat) != MMSYSERR_NOERROR)
+         if(snd_pcm_open(SND_PCM_STREAM_CAPTURE) != MMSYSERR_NOERROR)
             return MMSYSERR_ERROR;
 
 
@@ -336,6 +337,10 @@ Opened:
 
                }
 
+            }
+            else
+            {
+                Sleep(5);
             }
 
          }

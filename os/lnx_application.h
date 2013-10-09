@@ -198,8 +198,11 @@ namespace lnx
       virtual void get_time(struct timeval *p);
       virtual void set_env_var(const string & var,const string & value);
       virtual uint32_t get_thread_id();
-   string draw2d_get_default_library_name();
+      string draw2d_get_default_library_name();
 
+      string multimedia_audio_get_default_library_name();
+      string multimedia_audio_mixer_get_default_library_name();
+      string veriwell_multimedia_music_midi_get_default_library_name();
 
    };
 
