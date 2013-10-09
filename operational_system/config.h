@@ -5,3 +5,4 @@
 #define LINUX
 #endif
 #define BSD_STYLE_SOCKETS
+#define VARIADIC_TEMPLATE

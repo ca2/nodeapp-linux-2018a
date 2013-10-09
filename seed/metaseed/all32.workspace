@@ -86,6 +86,7 @@
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 		</Project>
+		<Project filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
@@ -129,6 +130,9 @@
 		</Project>
 		<Project filename="../../../app/appseed/math/math.cbp" />
 		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/boot/boot.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/math/math.cbp" />
 		</Project>
 		<Project filename="../../os/os.cbp">
