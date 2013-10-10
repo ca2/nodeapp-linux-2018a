@@ -1,0 +1,1 @@
+#define ASMALIGN_BALIGN
