@@ -83,6 +83,7 @@ namespace lnx
 
    string application::get_version()
    {
+   return "";
 
       throw todo(get_app());
 

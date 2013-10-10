@@ -448,7 +448,11 @@ namespace lnx
 
    bool os::file_association_set_shell_open_command(const char * pszExtension, const char * pszExtensionNamingClass,  const char * pszCommand, const char * pszParam)
    {
+
+      return false;
+
       throw not_implemented(get_app());
+
       return false;
 
 /*
