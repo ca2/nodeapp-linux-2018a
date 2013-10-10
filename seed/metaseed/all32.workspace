@@ -101,6 +101,7 @@
 		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
+		<Project filename="../../../app-veriwell/appseed/libmpg123/libmpg123.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/mysql/mysql.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
