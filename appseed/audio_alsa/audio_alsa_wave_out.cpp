@@ -276,6 +276,11 @@ Opened:
          uint32_t uiSkippedSamplesCount;
          uint32_t uiBufferCount = iBufferCount;
 
+         if(iBufferSampleCount < 1024 * 512)
+         {
+//            iBufferSampleCount = 1024 * 512;
+         }
+
          //   if(m_pwaveformat->nSamplesPerSec == 44100)
          if(true)
          {
@@ -423,26 +428,69 @@ Opened:
 
          if(wave_out_get_state() != state_playing)
          {
+
             TRACE("ERROR wave_out::BufferReady while wave_out_get_state() != state_playing");
+
             return;
+
          }
 
          ::multimedia::result mmr;
+
          if(m_peffect != NULL)
          {
-            m_peffect->Process16bits((int16_t *) wave_out_get_buffer()->get_buffer_data(iBuffer), wave_out_get_buffer()->m_uiBufferSize);
+
+            m_peffect->Process16bits((int16_t *) wave_out_get_buffer_data(iBuffer), wave_out_get_buffer_size());
+
          }
 
          single_lock sLock(&m_mutex, TRUE);
 
-         mmr = snd_pcm_writei(m_ppcm, wave_out_get_buffer()->get_buffer_data(iBuffer), wave_out_get_buffer()->m_uiBufferSize);
 
-         VERIFY(MMSYSERR_NOERROR == mmr);
+         int iWrittenFrameCount;
+
+         int iFrameSize = (m_pwaveformat->nChannels * m_pwaveformat->wBitsPerSample) / 8;
+
+         if(iFrameSize == 0)
+            return;
+
+         int iFrameCount = wave_out_get_buffer_size() / iFrameSize;
+
+         int iBytePos = 0;
+
+         mmr = MMSYSERR_NOERROR;
+
+         while(iFrameCount > 0)
+         {
+
+            iWrittenFrameCount = snd_pcm_writei(m_ppcm, &((byte *)wave_out_get_buffer_data(iBuffer))[iBytePos], iFrameCount);
+
+            if(iWrittenFrameCount == -EAGAIN)
+               continue;
+
+            if(iWrittenFrameCount < 0)
+            {
+
+               mmr = MMSYSERR_ERROR;
+
+               break;
+
+            }
+
+            iFrameCount -= iWrittenFrameCount;
+
+            iBytePos += iWrittenFrameCount * iFrameSize;
+
+         }
+
+         //VERIFY(MMSYSERR_NOERROR == mmr);
 
          if(mmr == MMSYSERR_NOERROR)
          {
 
             m_iBufferedCount++;
+
+            wave_out_free(iBuffer);
 
          }
 

@@ -42,7 +42,6 @@ namespace multimedia
          sp(::multimedia::audio::wave_format) pformat = m_pwaveformat;
 
 
-         int i;
          int err;
          short buf[128];
 
@@ -50,10 +49,15 @@ namespace multimedia
          int cardNum = -1;
          int devNum = -1;
          int subDevNum = -1;
+         int subDevCount = 0;
+         string strFormat;
+         stringa straName;
+         stringa straDevice;
 
 
          // Start with first card
          cardNum = -1;
+         bool bFound = false;
 
          for (;;)
          {
@@ -75,10 +79,10 @@ namespace multimedia
             // any device nor sub-device too
             {
 
-               char   str[64];
+               string strFormat;
 
-               sprintf(str, "hw:%i", cardNum);
-               if ((err = snd_ctl_open(&cardHandle, str, 0)) < 0)
+               strFormat.Format("hw:%i", cardNum);
+               if ((err = snd_ctl_open(&cardHandle, strFormat, 0)) < 0)
                {
                   TRACE("Can't open card %i: %s\n", cardNum, snd_strerror(err));
                   continue;
@@ -96,7 +100,7 @@ namespace multimedia
                {
 
                   snd_pcm_info_t  *pcmInfo;
-                  register int        subDevCount, i;
+
 
                   // Get the number of the next wave device on this card
                   if ((err = snd_ctl_pcm_next_device(cardHandle, &devNum)) < 0)
@@ -128,24 +132,51 @@ namespace multimedia
                   // More subdevices?
                   while (++subDevNum < subDevCount)
                   {
+
                      // Tell ALSA to fill in our snd_pcm_info_t with info on this subdevice
+
                      snd_pcm_info_set_subdevice(pcmInfo, subDevNum);
+
                      if ((err = snd_ctl_pcm_info(cardHandle, pcmInfo)) < 0)
                      {
-                        TRACE("Can't get info for wave output subdevice hw:%i,%i,%i: %s\n", cardNum, devNum, i, snd_strerror(err));
+
+                        TRACE("No wave output subdevice hw:%i,%i : %s\n", cardNum, devNum, snd_strerror(err));
+
                         continue;
+
                      }
 
                      // Print out how many subdevices (once only)
                      if (!subDevNum)
                      {
+
                         subDevCount = snd_pcm_info_get_subdevices_count(pcmInfo);
-                        TRACE("\nFound %i wave output subdevices on card %i\n", subDevCount, cardNum);
+
+                        TRACE("\nFound %i wave output subdevices on card %i, %i : %s \n", subDevCount, cardNum, devNum, snd_strerror(err));
+
                      }
 
                      // NOTE: If there's only one subdevice, then the subdevice number is immaterial,
                      // and can be omitted when you specify the hardware name
-                     TRACE((subDevCount > 1 ? "    hw:%i,%i,%i\n" : "    hw:%i,%i\n"), cardNum, devNum, i);
+                     //TRACE((subDevCount > 1 ? "    hw:%i,%i,%i\n" : "    hw:%i,%i\n"), cardNum, devNum, subDevNum);
+
+                     if(subDevCount > 1)
+                     {
+
+                        strFormat.Format("hw:%d,%d,%d", cardNum, devNum, subDevNum);
+
+                     }
+                     else
+                     {
+
+                        strFormat.Format("hw:%d,%d", cardNum, devNum);
+
+                     }
+
+                     straName.add(snd_pcm_info_get_name(pcmInfo));
+
+                     straDevice.add(strFormat);
+
                   }
 
                }
@@ -158,20 +189,20 @@ namespace multimedia
 
          snd_config_update_free_global();
 
-         string strHw;
-
-         if(cardNum < 0)
+         if(straDevice.get_count() < 0)
             return MMSYSERR_ERROR;
 
-         strHw = "hw:" + str::from(cardNum);
+         for(int i = 0; i < straDevice.get_count(); i++)
+         {
 
-         if(devNum >= 0)
-            strHw += "," + str::from(devNum);
+            TRACE0(straName[i] + " : " + straDevice[i]);
 
-         if(subDevNum >= 0)
-            strHw += "," + str::from(subDevNum);
+         }
 
-         if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, 0)) < 0)
+         string strHw = "hw:1,0,0";
+
+
+         if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, SND_PCM_NONBLOCK)) < 0)
          {
             TRACE ("cannot open audio device %s (%s)\n", strHw, snd_strerror (err));
             return MMSYSERR_ERROR;

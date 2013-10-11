@@ -68,6 +68,8 @@ namespace multimedia
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize = 0;
 
+         return MMSYSERR_ERROR;
+
          if(snd_pcm_open(SND_PCM_STREAM_CAPTURE) != MMSYSERR_NOERROR)
             return MMSYSERR_ERROR;
 
