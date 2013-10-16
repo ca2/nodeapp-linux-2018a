@@ -65,13 +65,16 @@ namespace multimedia
       CLASS_DECL_AUDIO_MMSYSTEM ::multimedia::e_result translate_alsa(int err)
       {
 
-         switch(err)
+         if(err < 0)
          {
-         case 0:
-            return result_success;
 
-         default:
             return result_error;
+
+         }
+         else
+         {
+
+            return result_success;
 
          };
 

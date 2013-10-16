@@ -46,6 +46,8 @@ namespace multimedia
          //DECL_GEN_SIGNAL(OnMultimediaOpen)
          //DECL_GEN_SIGNAL(OnMultimediaDone)
          //DECL_GEN_SIGNAL(OnMultimediaClose)
+         DECL_GEN_SIGNAL(OnReady)
+         DECL_GEN_SIGNAL(OnFree)
 
          //void CALLBACK wave_out_proc(snd_pcm_t * hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 
