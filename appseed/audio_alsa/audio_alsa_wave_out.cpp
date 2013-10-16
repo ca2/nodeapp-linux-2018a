@@ -20,7 +20,7 @@ namespace multimedia
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
          m_iBufferedCount     = 0;
-         m_mmr                = MMSYSERR_NOERROR;
+         m_mmr                = result_success;
          m_peffect            = NULL;
          m_dwLostSampleCount  = 0;
       }
@@ -61,14 +61,14 @@ namespace multimedia
 
       }
 
-      ::multimedia::result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
+      ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
       {
          single_lock sLock(&m_mutex, TRUE);
          if(m_ppcm != NULL &&
             m_estate != state_initial)
-            return MMSYSERR_NOERROR;
+            return result_success;
          m_pthreadCallback = pthreadCallback;
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          ASSERT(m_ppcm == NULL);
          ASSERT(m_estate == state_initial);
 
@@ -81,13 +81,13 @@ namespace multimedia
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize = 0;
 
-         if(snd_pcm_open(SND_PCM_STREAM_PLAYBACK) != MMSYSERR_NOERROR)
-            return MMSYSERR_ERROR;
+         if(snd_pcm_open(SND_PCM_STREAM_PLAYBACK) != result_success)
+            return result_error;
 
 
 /*       sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
-         if(MMSYSERR_NOERROR == (mmr = waveOutOpen(
+         if(result_success == (mmr = waveOutOpen(
             &m_ppcm,
             audiowave->m_uiWaveInDevice,
             wave_format(),
@@ -97,7 +97,7 @@ namespace multimedia
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 22050;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = waveOutOpen(
+         if(result_success == (mmr = waveOutOpen(
             &m_ppcm,
             WAVE_MAPPER,
             wave_format(),
@@ -107,7 +107,7 @@ namespace multimedia
             goto Opened;
          m_pwaveformat->nSamplesPerSec = 11025;
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(MMSYSERR_NOERROR == (mmr = waveOutOpen(
+         if(result_success == (mmr = waveOutOpen(
             &m_ppcm,
             WAVE_MAPPER,
             wave_format(),
@@ -116,7 +116,7 @@ namespace multimedia
             CALLBACK_THREAD)))
             goto Opened;
 
-         if(mmr !=MMSYSERR_NOERROR)
+         if(mmr !=result_success)
          {
             if(mmr == MMSYSERR_ALLOCATED)
             {
@@ -178,7 +178,7 @@ Opened:
             uiSkippedSamplesCount = 1;
          }
 
-         wave_out_get_buffer()->PCMOutOpen(uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
+         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(
             this, // callback thread (thread)
@@ -191,24 +191,24 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
 
-            if(MMSYSERR_NOERROR != (mmr =  waveOutPrepareHeader(m_ppcm, create_new_WAVEHDR(m_pwavebuffer, i), sizeof(WAVEHDR))))
+            if(result_success != (mmr =  waveOutPrepareHeader(m_ppcm, create_new_WAVEHDR(m_pwavebuffer, i), sizeof(WAVEHDR))))
             {
                TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
                return mmr;
             }
          }*/
          m_estate = state_opened;
-         return MMSYSERR_NOERROR;
+         return result_success;
       }
 
-      ::multimedia::result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample)
       {
          single_lock sLock(&m_mutex, TRUE);
          if(m_ppcm != NULL &&
             m_estate != state_initial)
-            return MMSYSERR_NOERROR;
+            return result_success;
          m_pthreadCallback = pthreadCallback;
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          ASSERT(m_ppcm == NULL);
          ASSERT(m_estate == state_initial);
 
@@ -224,14 +224,14 @@ Opened:
          m_pwaveformat->cbSize            = 0;
          //m_pwaveformat->cbSize            = sizeof(m_waveformatex);
 
-         if(snd_pcm_open(SND_PCM_STREAM_PLAYBACK) != MMSYSERR_NOERROR)
-            return MMSYSERR_ERROR;
+         if(snd_pcm_open(SND_PCM_STREAM_PLAYBACK) != result_success)
+            return result_error;
 
 /*         sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
          try
          {
-            if(MMSYSERR_NOERROR == (mmr = waveOutOpen(
+            if(result_success == (mmr = waveOutOpen(
                &m_ppcm,
                audiowave->m_uiWaveInDevice,
                wave_format(),
@@ -242,14 +242,14 @@ Opened:
          }
          catch(const ::exception::exception &)
          {
-            return MMSYSERR_ERROR;
+            return result_error;
          }
          catch(...)
          {
-            return MMSYSERR_ERROR;
+            return result_error;
          }
 
-         if(mmr != MMSYSERR_NOERROR)
+         if(mmr != result_success)
          {
             if(mmr == MMSYSERR_ALLOCATED)
             {
@@ -317,7 +317,7 @@ Opened:
             uiSkippedSamplesCount = 1;
          }
 
-         wave_out_get_buffer()->PCMOutOpen(uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
+         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount);
 
@@ -328,7 +328,7 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
 
-            if(MMSYSERR_NOERROR != (mmr =  waveOutPrepareHeader(m_ppcm, create_new_WAVEHDR(wave_out_get_buffer(), i), sizeof(WAVEHDR))))
+            if(result_success != (mmr =  waveOutPrepareHeader(m_ppcm, create_new_WAVEHDR(wave_out_get_buffer(), i), sizeof(WAVEHDR))))
             {
                TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
                return mmr;
@@ -343,13 +343,13 @@ Opened:
 
          m_estate = state_opened;
 
-         return MMSYSERR_NOERROR;
+         return result_success;
 
       }
 
 
 
-      ::multimedia::result wave_out::wave_out_close()
+      ::multimedia::e_result wave_out::wave_out_close()
       {
 
          single_lock sLock(&m_mutex, TRUE);
@@ -360,9 +360,9 @@ Opened:
          }
 
          if(m_estate != state_opened)
-            return MMSYSERR_NOERROR;
+            return result_success;
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
 
 /*         int32_t i, iSize;
 
@@ -371,7 +371,7 @@ Opened:
          for(i = 0; i < iSize; i++)
          {
 
-            if(MMSYSERR_NOERROR != (mmr = waveOutUnprepareHeader(m_ppcm, wave_hdr(i), sizeof(WAVEHDR))))
+            if(result_success != (mmr = waveOutUnprepareHeader(m_ppcm, wave_hdr(i), sizeof(WAVEHDR))))
             {
                TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer =%d", mmr);
             }
@@ -388,7 +388,7 @@ Opened:
 
          m_estate = state_initial;
 
-         return MMSYSERR_NOERROR;
+         return result_success;
 
       }
 
@@ -435,7 +435,7 @@ Opened:
 
          }
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
 
          if(m_peffect != NULL)
          {
@@ -458,7 +458,7 @@ Opened:
 
          int iBytePos = 0;
 
-         mmr = MMSYSERR_NOERROR;
+         mmr = result_success;
 
          while(iFrameCount > 0)
          {
@@ -471,7 +471,7 @@ Opened:
             if(iWrittenFrameCount < 0)
             {
 
-               mmr = MMSYSERR_ERROR;
+               mmr = result_error;
 
                break;
 
@@ -483,9 +483,9 @@ Opened:
 
          }
 
-         //VERIFY(MMSYSERR_NOERROR == mmr);
+         //VERIFY(result_success == mmr);
 
-         if(mmr == MMSYSERR_NOERROR)
+         if(mmr == result_success)
          {
 
             m_iBufferedCount++;
@@ -496,13 +496,14 @@ Opened:
 
       }
 
-      bool wave_out::wave_out_stop()
+
+      ::multimedia::e_result wave_out::wave_out_stop()
       {
 
          single_lock sLock(&m_mutex, TRUE);
 
          if(m_estate != state_playing && m_estate != state_paused)
-            return false;
+            return result_error;
 
          m_eventStopped.ResetEvent();
 
@@ -515,20 +516,21 @@ Opened:
          // waveform-audio_alsa output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = snd_pcm_drain(m_ppcm);
+         m_mmr = translate_alsa(snd_pcm_drain(m_ppcm));
 
 
-
-         if(m_mmr == MMSYSERR_NOERROR)
+         if(m_mmr == result_success)
          {
+
             m_estate = state_opened;
+
          }
 
-         return m_mmr == MMSYSERR_NOERROR;
+         return m_mmr;
 
       }
 
-      bool wave_out::wave_out_pause()
+      ::multimedia::e_result wave_out::wave_out_pause()
       {
 
          single_lock sLock(&m_mutex, TRUE);
@@ -536,30 +538,27 @@ Opened:
          ASSERT(m_estate == state_playing);
 
          if(m_estate != state_playing)
-            return false;
-
-
+            return result_error;
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
          // waveform-audio_alsa output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = snd_pcm_pause(m_ppcm, 1);
+         m_mmr = translate_alsa(snd_pcm_pause(m_ppcm, 1));
 
+         ASSERT(m_mmr == result_success);
 
-         ASSERT(m_mmr == MMSYSERR_NOERROR);
-
-         if(m_mmr == MMSYSERR_NOERROR)
+         if(m_mmr == result_success)
          {
             m_estate = state_paused;
          }
 
-         return m_mmr == MMSYSERR_NOERROR;
+         return m_mmr;
 
       }
 
-      bool wave_out::wave_out_restart()
+      ::multimedia::e_result wave_out::wave_out_restart()
       {
 
          single_lock sLock(&m_mutex, TRUE);
@@ -567,24 +566,23 @@ Opened:
          ASSERT(m_estate == state_paused);
 
          if(m_estate != state_paused)
-            return false;
+            return result_error;
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
          // waveform-audio_alsa output device and resets the current position
          // to zero. All pending playback buffers are marked as done and
          // returned to the application.
-         m_mmr = snd_pcm_pause(m_ppcm, 0);
+         m_mmr = translate_alsa(snd_pcm_pause(m_ppcm, 0));
 
+         ASSERT(m_mmr == result_success);
 
-         ASSERT(m_mmr == MMSYSERR_NOERROR);
-
-         if(m_mmr == MMSYSERR_NOERROR)
+         if(m_mmr == result_success)
          {
             m_estate = state_playing;
          }
 
-         return m_mmr == MMSYSERR_NOERROR;
+         return m_mmr;
 
       }
 
@@ -604,20 +602,23 @@ Opened:
 
       imedia::time wave_out::wave_out_get_position_millis()
       {
+
          single_lock sLock(&m_mutex, TRUE);
 
+         ::multimedia::e_result                mmr;
 
-
-         ::multimedia::result                mmr;
          snd_htimestamp_t                  mmt;
+
          snd_pcm_uframes_t ut;
 
          if(m_ppcm != NULL)
          {
-            mmr = snd_pcm_htimestamp(m_ppcm, &ut, &mmt);
+
+            mmr = translate_alsa(snd_pcm_htimestamp(m_ppcm, &ut, &mmt));
+
             try
             {
-               if (MMSYSERR_NOERROR != mmr)
+               if (result_success != mmr)
                {
                   TRACE( "snd_pcm_status_get_htstamp() returned %s", snd_strerror(mmr));
                   //      return MCIERR_DEVICE_NOT_READY;
@@ -651,39 +652,62 @@ Opened:
 
       imedia::position wave_out::wave_out_get_position()
       {
+
          single_lock sLock(&m_mutex, TRUE);
 
-         ::multimedia::result                mmr;
-         snd_htimestamp_t                  mmt;
-         snd_pcm_uframes_t ut;
+         ::multimedia::e_result                mmr;
+
+         snd_htimestamp_t                    mmt;
+
+         snd_pcm_uframes_t                   ut;
 
          if(m_ppcm != NULL)
          {
-            mmr = snd_pcm_htimestamp(m_ppcm, &ut, &mmt);
+
+            mmr = translate_alsa(snd_pcm_htimestamp(m_ppcm, &ut, &mmt));
+
             try
             {
-               if (MMSYSERR_NOERROR != mmr)
+
+               if (result_success != mmr)
                {
+
                   TRACE( "snd_pcm_status_get_htstamp() returned %s", snd_strerror(mmr));
+
                   //      return MCIERR_DEVICE_NOT_READY;
+
                   return 0;
+
                }
+
             }
             catch(...)
             {
+
                //return MCIERR_DEVICE_NOT_READY;
+
                return 0;
+
             }
+
             {
+
                //*pTicks += mmt.u.ticks;
+
                return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
+
             }
+
          }
          else
+         {
+
             return 0;
 
+         }
 
       }
+
 
       void wave_out::wave_out_free(int iBuffer)
       {

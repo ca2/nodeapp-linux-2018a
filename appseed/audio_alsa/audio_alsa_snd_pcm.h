@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      class  CLASS_DECL_AUDIO_MMSYSTEM snd_pcm :
+      class CLASS_DECL_AUDIO_MMSYSTEM snd_pcm :
          virtual public ::multimedia::audio::wave_base
       {
       public:
@@ -25,8 +25,8 @@ namespace multimedia
          virtual ~snd_pcm();
 
 
-         ::multimedia::result snd_pcm_open(snd_pcm_stream_t stream_type);
-         ::multimedia::result snd_pcm_close();
+         ::multimedia::e_result snd_pcm_open(snd_pcm_stream_t stream_type);
+         ::multimedia::e_result snd_pcm_close();
 
 
       };

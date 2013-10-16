@@ -32,10 +32,10 @@ namespace multimedia
 
       }
 
-      ::multimedia::result snd_pcm::snd_pcm_open(snd_pcm_stream_t stream_type)
+      ::multimedia::e_result snd_pcm::snd_pcm_open(snd_pcm_stream_t stream_type)
       {
 
-         ::multimedia::result mmr;
+         ::multimedia::e_result mmr;
          ASSERT(m_ppcm == NULL);
 
 
@@ -190,7 +190,7 @@ namespace multimedia
          snd_config_update_free_global();
 
          if(straDevice.get_count() < 0)
-            return MMSYSERR_ERROR;
+            return result_error;
 
          for(int i = 0; i < straDevice.get_count(); i++)
          {
@@ -204,26 +204,41 @@ namespace multimedia
 
          if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, SND_PCM_NONBLOCK)) < 0)
          {
+
             TRACE ("cannot open audio device %s (%s)\n", strHw, snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
+
 
          if ((err = snd_pcm_hw_params_malloc (&m_phwparams)) < 0)
          {
+
             TRACE("cannot allocate hardware parameter structure (%s)\n", snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
 
-         if ((err = snd_pcm_hw_params_any (m_ppcm, m_phwparams)) < 0) {
-            TRACE ("cannot initialize hardware parameter structure (%s)\n",
-                snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+         if ((err = snd_pcm_hw_params_any (m_ppcm, m_phwparams)) < 0)
+         {
+
+            TRACE ("cannot initialize hardware parameter structure (%s)\n", snd_strerror (err));
+
+            return result_error;
+
          }
+
 
          if ((err = snd_pcm_hw_params_set_access (m_ppcm, m_phwparams, SND_PCM_ACCESS_RW_INTERLEAVED)) < 0)
          {
+
             TRACE ("cannot set access type (%s)\n", snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
 
          snd_pcm_format_t format = SND_PCM_FORMAT_S16_LE;
@@ -237,61 +252,79 @@ namespace multimedia
 
          if ((err = snd_pcm_hw_params_set_format (m_ppcm, m_phwparams, format)) < 0)
          {
+
             TRACE ("cannot set sample format (%s)\n", snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
 
          unsigned int uiFreq = pformat->nSamplesPerSec;
 
          if ((err = snd_pcm_hw_params_set_rate_near (m_ppcm, m_phwparams, &uiFreq, 0)) < 0)
          {
+
             TRACE ("cannot set sample rate (%s)\n", snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
 
          pformat->nSamplesPerSec = uiFreq;
 
          if ((err = snd_pcm_hw_params_set_channels (m_ppcm, m_phwparams, pformat->nChannels)) < 0)
          {
+
             TRACE ("cannot set channel count (%s)\n", snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
 
          if ((err = snd_pcm_hw_params (m_ppcm, m_phwparams)) < 0)
          {
+
             TRACE("cannot set parameters (%s)\n", snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
 
          snd_pcm_hw_params_free (m_phwparams);
 
          if ((err = snd_pcm_prepare (m_ppcm)) < 0)
          {
+
             TRACE ("cannot prepare audio interface for use (%s)\n",snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
 
-         return MMSYSERR_NOERROR;
+         return result_success;
 
       }
 
 
-      ::multimedia::result snd_pcm::snd_pcm_close()
+      ::multimedia::e_result snd_pcm::snd_pcm_close()
       {
 
          if(m_ppcm == NULL)
-            return MMSYSERR_NOERROR;
+            return result_success;
 
 
          int err;
 
          if ((err = ::snd_pcm_close(m_ppcm)) < 0)
          {
+
             TRACE ("failed to close successfully sound interface (%s)\n",snd_strerror (err));
-            return MMSYSERR_ERROR;
+
+            return result_error;
+
          }
 
-         return MMSYSERR_NOERROR;
+         return result_success;
 
       }
 

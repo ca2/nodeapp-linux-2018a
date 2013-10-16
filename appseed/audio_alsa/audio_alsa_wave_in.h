@@ -24,17 +24,17 @@ namespace multimedia
 
          virtual bool wave_in_initialize_encoder();
 
-         //virtual ::multimedia::result wave_in_add_buffer(int32_t iBuffer);
-         //virtual ::multimedia::result wave_in_add_buffer(LPWAVEHDR lpwavehdr);
+         //virtual ::multimedia::e_result wave_in_add_buffer(int32_t iBuffer);
+         //virtual ::multimedia::e_result wave_in_add_buffer(LPWAVEHDR lpwavehdr);
 
          snd_pcm_t * wave_in_get_safe_PCM();
          virtual void * get_os_data();
 
-         ::multimedia::result wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount);
-         ::multimedia::result wave_in_close();
-         ::multimedia::result wave_in_stop();
-         ::multimedia::result wave_in_start();
-         ::multimedia::result wave_in_reset();
+         ::multimedia::e_result wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount);
+         ::multimedia::e_result wave_in_close();
+         ::multimedia::e_result wave_in_stop();
+         ::multimedia::e_result wave_in_start();
+         ::multimedia::e_result wave_in_reset();
 
          //virtual void translate_wave_in_message(::signal_details * pobj);
 
