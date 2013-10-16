@@ -88,8 +88,16 @@
 			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
-		<Project filename="../../appseed/audio_alsa/audio_alsa.cbp" />
+		<Project filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/libmpg123/libmpg123.cbp" />
+			<Depends filename="../../../app/appseed/boot/boot.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+		</Project>
+		<Project filename="../../appseed/audio_alsa/audio_alsa.cbp">
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/base/base.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
@@ -101,7 +109,12 @@
 		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
-		<Project filename="../../../app-veriwell/appseed/libmpg123/libmpg123.cbp" />
+		<Project filename="../../../app-veriwell/appseed/libmpg123/libmpg123.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/boot/boot.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+		</Project>
 		<Project filename="../../../app/thirdparty/appseed/mysql/mysql.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />

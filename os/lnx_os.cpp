@@ -790,7 +790,7 @@ namespace lnx
    void os::post_to_all_threads(UINT message, WPARAM wparam, LPARAM lparam)
    {
 
-      throw not_implemented(get_app());
+      //throw not_implemented(get_app());
       return;
 
 /*
