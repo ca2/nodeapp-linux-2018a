@@ -202,7 +202,8 @@ namespace multimedia
          string strHw = "hw:0,0,0";
 
 
-         if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, SND_PCM_NONBLOCK)) < 0)
+         //if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, SND_PCM_NONBLOCK)) < 0)
+         if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, 0)) < 0)
          {
 
             TRACE ("cannot open audio device %s (%s)\n", strHw, snd_strerror (err));

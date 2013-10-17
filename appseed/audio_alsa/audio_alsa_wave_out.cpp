@@ -204,6 +204,13 @@ Opened:
          return result_success;
       }
 
+
+
+
+
+
+
+
       ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample)
       {
          single_lock sLock(&m_mutex, TRUE);
@@ -282,6 +289,16 @@ Opened:
          if(iBufferSampleCount < 1024 * 8)
          {
             iBufferSampleCount = 1024 * 8;
+         }
+
+         long l =  snd_pcm_avail(m_ppcm);
+
+
+         if(l > 0 && iBufferSampleCount >= (l / 2))
+         {
+
+            iBufferSampleCount = l / 4;
+
          }
 
          //   if(m_pwaveformat->nSamplesPerSec == 44100)
@@ -694,7 +711,7 @@ Opened:
          //if(m_bWrite)
            // return;
 
-         post_thread_message(MessageFree, iBuffer);
+         post_thread_message(MessageReady, iBuffer);
 
       }
 
@@ -762,7 +779,45 @@ Opened:
 
          int iFrameCount = wave_out_get_buffer_size() / iFrameSize;
 
-         long l = snd_pcm_avail(m_ppcm);
+
+		/* wait till the interface is ready for data, or 1 second
+			   has elapsed.
+			*/
+
+			long l;
+
+			while(true)
+			{
+
+            if ((l = snd_pcm_wait (m_ppcm, 1984)) < 0)
+            {
+              TRACE("poll failed (%s)\n", ::strerror (errno));
+              break;
+            }
+
+			/* find out how much space is available for playback data */
+
+            if((l = snd_pcm_avail_update (m_ppcm)) < 0)
+            {
+               if (l == -EPIPE)
+               {
+                  TRACE0("an xrun occured\n");
+                  break;
+               }
+               else
+               {
+                  TRACE("unknown ALSA avail update return value (%d)\n", l);
+                  break;
+               }
+            }
+
+            if(l >= iFrameCount)
+               break;
+
+         }
+
+
+/*         long l = snd_pcm_avail(m_ppcm);
 
          while(l >= 0 && l < iFrameCount)
          {
@@ -776,6 +831,14 @@ Opened:
             l = snd_pcm_avail(m_ppcm);
 
          }
+
+         if(l < 0)
+         {
+
+            snd_pcm_prepare(m_ppcm);
+
+         }
+         */
 
          if(l < 0)
          {
@@ -797,7 +860,7 @@ Opened:
 
          m_iBufferedCount++;
 
-        // sLock.unlock();
+         sLock.unlock();
 
          wave_out_free(iBuffer);
 
