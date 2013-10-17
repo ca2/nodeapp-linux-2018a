@@ -23,6 +23,7 @@ namespace multimedia
          m_mmr                = result_success;
          m_peffect            = NULL;
          m_dwLostSampleCount  = 0;
+         m_bWrite             = false;
       }
 
       wave_out::~wave_out()
@@ -35,110 +36,12 @@ namespace multimedia
 
          ::multimedia::audio::wave_out::install_message_handling(pinterface);
 
-/*         IGUI_WIN_MSG_LINK(MM_WOM_OPEN, pinterface, this, &wave_out::OnMultimediaOpen);
-         IGUI_WIN_MSG_LINK(MM_WOM_DONE, pinterface, this, &wave_out::OnMultimediaDone);
-         IGUI_WIN_MSG_LINK(MM_WOM_CLOSE, pinterface, this, &wave_out::OnMultimediaClose);*/
-         IGUI_WIN_MSG_LINK(WM_APP + 1984, pinterface, this, &wave_out::OnReady);
-         IGUI_WIN_MSG_LINK(WM_APP + 1977, pinterface, this, &wave_out::OnFree);
-      }
-
-
-      void wave_out::OnReady(::signal_details * pobj)
-      {
-
-         SCAST_PTR(::message::base, pbase, pobj);
-
-         int iBuffer = pbase->m_wparam;
-
-         if(wave_out_get_state() != state_playing)
-         {
-
-            TRACE("ERROR wave_out::BufferReady while wave_out_get_state() != state_playing");
-
-            return;
-
-         }
-
-         ::multimedia::e_result mmr;
-
-         if(m_peffect != NULL)
-         {
-
-            m_peffect->Process16bits((int16_t *) wave_out_get_buffer_data(iBuffer), wave_out_get_buffer_size());
-
-         }
-
-         single_lock sLock(&m_mutex, TRUE);
-
-
-         int iWrittenFrameCount;
-
-         int iFrameSize = (m_pwaveformat->nChannels * m_pwaveformat->wBitsPerSample) / 8;
-
-         if(iFrameSize == 0)
-            return;
-
-         int iFrameCount = wave_out_get_buffer_size() / iFrameSize;
-
-         int iBytePos = 0;
-
-         mmr = result_success;
-
-         long l = snd_pcm_avail(m_ppcm);
-
-
-
-         while(l > (iFrameCount * (wave_out_get_buffer()->GetBufferCount() - 1)))
-         {
-            Sleep(84);
-         }
-
-         while(iFrameCount > 0)
-         {
-
-            iWrittenFrameCount = snd_pcm_writei(m_ppcm, &((byte *)wave_out_get_buffer_data(iBuffer))[iBytePos], iFrameCount);
-
-            if(iWrittenFrameCount == -EAGAIN)
-               continue;
-
-            if(iWrittenFrameCount < 0)
-            {
-
-               mmr = result_error;
-
-               break;
-
-            }
-
-            iFrameCount -= iWrittenFrameCount;
-
-            iBytePos += iWrittenFrameCount * iFrameSize;
-
-         }
-
-         //VERIFY(result_success == mmr);
-
-         if(mmr == result_success)
-         {
-
-            m_iBufferedCount++;
-
-            post_thread_message(WM_APP + 1977, iBuffer);
-
-         }
+         IGUI_WIN_MSG_LINK(MessageReady, pinterface, this, &wave_out::OnReady);
+         IGUI_WIN_MSG_LINK(MessageFree, pinterface, this, &wave_out::OnFree);
 
       }
 
-      void wave_out::OnFree(::signal_details * pobj)
-      {
 
-         SCAST_PTR(::message::base, pbase, pobj);
-
-         int iBuffer = pbase->m_wparam;
-
-         wave_out_free(iBuffer);
-
-      }
 
       bool wave_out::initialize_instance()
       {
@@ -276,6 +179,8 @@ Opened:
             uiSkippedSamplesCount = 1;
          }
 
+         //uiBufferCount = 1;
+
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(
@@ -374,9 +279,9 @@ Opened:
          uint32_t uiSkippedSamplesCount;
          uint32_t uiBufferCount = iBufferCount;
 
-         if(iBufferSampleCount < 1024 * 512)
+         if(iBufferSampleCount < 1024 * 8)
          {
-//            iBufferSampleCount = 1024 * 512;
+            iBufferSampleCount = 1024 * 8;
          }
 
          //   if(m_pwaveformat->nSamplesPerSec == 44100)
@@ -414,6 +319,8 @@ Opened:
             uiInterestSize = 200;
             uiSkippedSamplesCount = 1;
          }
+
+         //uiBufferCount = 1;
 
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
 
@@ -520,12 +427,7 @@ Opened:
          UNREFERENCED_PARAMETER(pobj);
       }*/
 
-      void wave_out::wave_out_buffer_ready(int iBuffer)
-      {
 
-         post_thread_message(WM_APP + 1984, iBuffer);
-
-      }
 
 
       ::multimedia::e_result wave_out::wave_out_stop()
@@ -740,22 +642,6 @@ Opened:
       }
 
 
-      void wave_out::wave_out_free(int iBuffer)
-      {
-
-         //wave_out_free(wave_hdr(iBuffer));
-
-         multimedia::audio::wave_out::wave_out_free(iBuffer);
-
-      }
-
-
-      void wave_out::wave_out_free(LPWAVEHDR lpwavehdr)
-      {
-
-
-      }
-
       void wave_out::wave_out_on_playback_end()
       {
 
@@ -776,15 +662,6 @@ Opened:
 
 
 
-/*      WAVEFORMATEX * wave_out::wave_format()
-      {
-
-         translate(m_waveformatex, m_pwaveformat);
-
-         return &m_waveformatex;
-
-      }*/
-
       snd_pcm_t * wave_out::wave_out_get_safe_PCM()
       {
 
@@ -797,16 +674,140 @@ Opened:
 
       void * wave_out::get_os_data()
       {
+
          return m_ppcm;
+
       }
 
-/*
-      LPWAVEHDR wave_out::wave_hdr(int iBuffer)
+
+      void wave_out::wave_out_free(int iBuffer)
       {
-         return ::multimedia::audio_alsa::get_os_data(wave_out_get_buffer(), iBuffer);
-      }
-*/
 
+         post_thread_message(MessageFree, iBuffer);
+
+      }
+
+
+      void wave_out::wave_out_buffer_ready(int iBuffer)
+      {
+
+         //if(m_bWrite)
+           // return;
+
+         post_thread_message(MessageFree, iBuffer);
+
+      }
+
+
+      void wave_out::OnReady(::signal_details * pobj)
+      {
+
+         SCAST_PTR(::message::base, pbase, pobj);
+
+         int iBuffer = pbase->m_wparam;
+
+         alsa_out_buffer_ready(iBuffer);
+
+      }
+
+
+      void wave_out::OnFree(::signal_details * pobj)
+      {
+
+         SCAST_PTR(::message::base, pbase, pobj);
+
+         int iBuffer = pbase->m_wparam;
+
+         multimedia::audio::wave_out::wave_out_free(iBuffer);
+
+      }
+
+
+
+      void wave_out::alsa_out_buffer_ready(int iBuffer)
+      {
+
+         single_lock sLock(&m_mutex, TRUE);
+
+         //if(m_bWrite)
+           // return;
+
+         //keeper < bool > kWrite(&m_bWrite, true, false, true);
+
+//         while(true)
+  //       {
+
+         if(wave_out_get_state() != state_playing)
+         {
+
+            TRACE("ERROR wave_out::BufferReady while wave_out_get_state() != state_playing");
+
+            return;
+
+         }
+
+         if(m_peffect != NULL)
+         {
+
+            m_peffect->Process16bits((int16_t *) wave_out_get_buffer_data(iBuffer), wave_out_get_buffer_size());
+
+         }
+
+         int iWrittenFrameCount;
+
+         int iFrameSize = (m_pwaveformat->nChannels * m_pwaveformat->wBitsPerSample) / 8;
+
+         if(iFrameSize == 0)
+            return;
+
+         int iFrameCount = wave_out_get_buffer_size() / iFrameSize;
+
+         long l = snd_pcm_avail(m_ppcm);
+
+         while(l >= 0 && l < iFrameCount)
+         {
+
+            sLock.unlock();
+
+            Sleep(5);
+
+            sLock.lock();
+
+            l = snd_pcm_avail(m_ppcm);
+
+         }
+
+         if(l < 0)
+         {
+
+            snd_pcm_prepare(m_ppcm);
+
+         }
+
+         ::multimedia::e_result mmr = result_success;
+
+         int err = snd_pcm_writei(m_ppcm, wave_out_get_buffer_data(iBuffer), iFrameCount);
+
+         if(err < 0 || err < iFrameCount)
+         {
+
+            snd_pcm_prepare(m_ppcm);
+
+         }
+
+         m_iBufferedCount++;
+
+        // sLock.unlock();
+
+         wave_out_free(iBuffer);
+
+         //multimedia::audio::wave_out::wave_out_free(iBuffer);
+
+      //   sLock.lock();
+
+    //     }
+
+      }
 
 
    } // namespace audio_alsa

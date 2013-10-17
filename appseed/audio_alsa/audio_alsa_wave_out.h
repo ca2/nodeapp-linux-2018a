@@ -10,10 +10,21 @@ namespace multimedia
 
 
       class  CLASS_DECL_AUDIO_MMSYSTEM wave_out :
-         public snd_pcm,
+         virtual public snd_pcm,
          virtual public ::multimedia::audio::wave_out
       {
       public:
+
+
+         enum e_impl_message
+         {
+            MessageReady = 5555,
+            MessageFree
+         };
+
+
+         bool                    m_bWrite;
+         int                     m_iBuffer;
 
 
          wave_out(sp(base_application) papp);
@@ -25,6 +36,7 @@ namespace multimedia
          virtual imedia::time wave_out_get_position_millis();
          imedia::position wave_out_get_position();
          virtual void wave_out_buffer_ready(int iBuffer);
+         virtual void alsa_out_buffer_ready(int iBuffer);
          //virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
          virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount);
@@ -38,23 +50,13 @@ namespace multimedia
 
          virtual void wave_out_on_playback_end();
          virtual void wave_out_free(int iBuffer);
-         virtual void wave_out_free(LPWAVEHDR lpwavehdr);
 
          virtual bool initialize_instance();
          virtual int32_t exit_instance();
 
-         //DECL_GEN_SIGNAL(OnMultimediaOpen)
-         //DECL_GEN_SIGNAL(OnMultimediaDone)
-         //DECL_GEN_SIGNAL(OnMultimediaClose)
          DECL_GEN_SIGNAL(OnReady)
          DECL_GEN_SIGNAL(OnFree)
 
-         //void CALLBACK wave_out_proc(snd_pcm_t * hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
-
-         //WAVEFORMATEX * wave_format();
-         //LPWAVEHDR wave_hdr(int iBuffer);
-
-         //int run();
 
       };
 
