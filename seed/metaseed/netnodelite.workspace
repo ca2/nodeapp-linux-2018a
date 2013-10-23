@@ -60,7 +60,10 @@
 		<Project filename="../../../app/thirdparty/appseed/zlib/zlib.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/boot/boot.cbp" />
+		<Project filename="../../../app/appseed/boot/boot.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/mysql/mysql.cbp" />
 		</Project>
