@@ -3344,10 +3344,10 @@ __STATIC inline WINBOOL IsButtonUp(LPMESSAGE lpMsg)
 */
 
 
-extern CLASS_DECL_ca PFN_get_thread g_pfn_get_thread;
+extern CLASS_DECL_BOOT PFN_get_thread g_pfn_get_thread;
 
 
-extern CLASS_DECL_ca PFN_get_thread_state g_pfn_get_thread_state;
+extern CLASS_DECL_BOOT PFN_get_thread_state g_pfn_get_thread_state;
 
 
 __attribute__((constructor))

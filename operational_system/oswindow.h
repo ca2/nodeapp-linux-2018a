@@ -67,15 +67,15 @@ class mutex;
 class oswindow_data;
 
 
-CLASS_DECL_c int32_t oswindow_find_message_only_window(::user::base_interaction * puibaseMessageWindow);
-CLASS_DECL_c int32_t oswindow_find(Display * pdisplay, Window window);
-CLASS_DECL_c int32_t oswindow_find(Window window);
-CLASS_DECL_c oswindow_data * oswindow_get_message_only_window(::user::base_interaction * puibaseMessageWindow);
-CLASS_DECL_c oswindow_data * oswindow_get(Display * pdisplay, Window window, Visual * pvisual = NULL);
-CLASS_DECL_c oswindow_data * oswindow_get(Window window);
-CLASS_DECL_c oswindow oswindow_defer_get(Window w);
-CLASS_DECL_c bool oswindow_remove(Display * pdisplay, Window window);
-CLASS_DECL_c bool oswindow_remove_message_only_window(::user::base_interaction * puibaseMessageOnlyWindow);
+CLASS_DECL_BASE int32_t oswindow_find_message_only_window(::user::base_interaction * puibaseMessageWindow);
+CLASS_DECL_BASE int32_t oswindow_find(Display * pdisplay, Window window);
+CLASS_DECL_BASE int32_t oswindow_find(Window window);
+CLASS_DECL_BASE oswindow_data * oswindow_get_message_only_window(::user::base_interaction * puibaseMessageWindow);
+CLASS_DECL_BASE oswindow_data * oswindow_get(Display * pdisplay, Window window, Visual * pvisual = NULL);
+CLASS_DECL_BASE oswindow_data * oswindow_get(Window window);
+CLASS_DECL_BASE oswindow oswindow_defer_get(Window w);
+CLASS_DECL_BASE bool oswindow_remove(Display * pdisplay, Window window);
+CLASS_DECL_BASE bool oswindow_remove_message_only_window(::user::base_interaction * puibaseMessageOnlyWindow);
 
 
 
@@ -99,7 +99,7 @@ inline int32_t IsWindowVisible(::oswindow oswindow);
 
 
 
-CLASS_DECL_c bool IsWindow(oswindow oswindow);
+CLASS_DECL_BASE bool IsWindow(oswindow oswindow);
 
 
 #endif
