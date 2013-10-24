@@ -31,6 +31,7 @@
 			<Depends filename="../../../app/thirdparty/appseed/openssl/openssl.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../os/os.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		</Project>
@@ -66,6 +67,12 @@
 		</Project>
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/mysql/mysql.cbp" />
+		</Project>
+		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
+			<Depends filename="../../../app/appseed/boot/boot.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
 		<Project filename="../../os/os.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
