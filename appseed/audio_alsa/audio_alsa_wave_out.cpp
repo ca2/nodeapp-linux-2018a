@@ -786,6 +786,8 @@ Opened:
 
 			long l;
 
+			int iTimes = 0;
+
 			while(true)
 			{
 
@@ -813,6 +815,13 @@ Opened:
 
             if(l >= iFrameCount)
                break;
+
+            iTimes++;
+
+            if(iTimes > 64)
+            {
+               break;
+            }
 
          }
 
