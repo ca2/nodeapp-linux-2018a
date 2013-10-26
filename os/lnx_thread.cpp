@@ -833,6 +833,28 @@ namespace lnx
    }
 
 
+   void thread::on_run_step()
+   {
+      sp(base_application) pappThis1 =  (this);
+      sp(base_application) pappThis2 =  (m_p);
+
+
+            m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
+            if(pappThis1 != NULL)
+            {
+               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
+            }
+            if(pappThis2 != NULL)
+            {
+               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
+            }
+      step_timer();
+
+
+   }
+
+
+
    bool thread::begin(int32_t epriority, uint_ptr nStackSize, uint32_t dwCreateFlags, LPSECURITY_ATTRIBUTES lpSecurityAttrs)
    {
       if(!create_thread(epriority, dwCreateFlags, nStackSize, lpSecurityAttrs))
@@ -984,8 +1006,6 @@ void thread::Delete()
       // for tracking the idle time state
       WINBOOL bIdle = TRUE;
       LONG lIdleCount = 0;
-      sp(base_application) pappThis1 =  (this);
-      sp(base_application) pappThis2 =  (m_p);
 
 
       XEvent e;
@@ -1010,16 +1030,11 @@ void thread::Delete()
             // call on_idle while in bIdle state
             if (!on_idle(lIdleCount++))
                bIdle = FALSE; // assume "no idle" state
-            step_timer();
+
+            m_p->on_run_step();
+
             m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
-            if(pappThis1 != NULL)
-            {
-               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
-            }
-            if(pappThis2 != NULL)
-            {
-               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
-            }
+
             try
             {
                if(!m_p->verb())
@@ -1071,16 +1086,8 @@ void thread::Delete()
                lIdleCount = 0;
             }
 
-            step_timer();
-            m_p->m_dwAlive = m_dwAlive = ::get_tick_count();
-            if(pappThis1 != NULL)
-            {
-               pappThis1->m_pplaneapp->m_dwAlive = m_dwAlive;
-            }
-            if(pappThis2 != NULL)
-            {
-               pappThis2->m_pplaneapp->m_dwAlive = m_dwAlive;
-            }
+            m_p->on_run_step();
+
          }
 //         while (::PeekMessage(&msg, NULL, NULL, NULL, PM_NOREMOVE) != FALSE);
          while (get_run() && ::PeekMessage(&msg, NULL, 0, 0, 0) != FALSE);

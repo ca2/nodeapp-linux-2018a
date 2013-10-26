@@ -1,6 +1,7 @@
 #include "framework.h"
 
 
+
 namespace multimedia
 {
 
@@ -38,6 +39,7 @@ namespace multimedia
 
          IGUI_WIN_MSG_LINK(MessageReady, pinterface, this, &wave_out::OnReady);
          IGUI_WIN_MSG_LINK(MessageFree, pinterface, this, &wave_out::OnFree);
+         IGUI_WIN_MSG_LINK(MessageDone, pinterface, this, &wave_out::OnDone);
 
       }
 
@@ -82,60 +84,15 @@ namespace multimedia
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize = 0;
 
-         if(snd_pcm_open(SND_PCM_STREAM_PLAYBACK) != result_success)
+         if((m_mmr = snd_pcm_open(SND_PCM_STREAM_PLAYBACK)) != result_success)
+         {
+
             return result_error;
 
+         }
 
-/*       sp(::multimedia::audio::wave) audiowave = Application.audiowave();
 
-         if(result_success == (mmr = waveOutOpen(
-            &m_ppcm,
-            audiowave->m_uiWaveInDevice,
-            wave_format(),
-            get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD)))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 22050;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(result_success == (mmr = waveOutOpen(
-            &m_ppcm,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t) get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD)))
-            goto Opened;
-         m_pwaveformat->nSamplesPerSec = 11025;
-         m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
-         if(result_success == (mmr = waveOutOpen(
-            &m_ppcm,
-            WAVE_MAPPER,
-            wave_format(),
-            (uint32_t) get_os_int(),
-            (uint32_t) 0,
-            CALLBACK_THREAD)))
-            goto Opened;
 
-         if(mmr !=result_success)
-         {
-            if(mmr == MMSYSERR_ALLOCATED)
-            {
-               TRACE("Specified resource is already allocated.");
-            }
-            else if(mmr == MMSYSERR_BADDEVICEID)
-            {
-               TRACE("Specified device identifier is out of range.");
-            }
-            else if(mmr == WAVERR_BADFORMAT)
-            {
-               TRACE("Attempted to open with an unsupported waveform-audio_alsa format.");
-            }
-            TRACE("ERROR OPENING WAVE INPUT DEVICE");
-            return mmr;
-         }*/
-
-Opened:
          uint32_t uiBufferSizeLog2;
          uint32_t uiBufferSize;
          uint32_t uiAnalysisSize;
@@ -183,23 +140,61 @@ Opened:
 
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
 
-         m_pprebuffer->open(
-            this, // callback thread (thread)
-            m_pwaveformat->nChannels, // channel count
-            uiBufferCount, // group count
-            iBufferSampleCount); // group sample count
+         m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount); // group sample count
 
-         /*int32_t i, iSize;
-         iSize = wave_out_get_buffer()->GetBufferCount();
-         for(i = 0; i < iSize; i++)
+         int iFrameSize = (m_pwaveformat->nChannels * m_pwaveformat->wBitsPerSample) / 8;
+
+         int err;
+
+         snd_pcm_sw_params_alloca(&m_pswparams);
+
+         /* get the current m_pswparams */
+         err = snd_pcm_sw_params_current(m_ppcm, m_pswparams);
+
+         if (err < 0)
          {
 
-            if(result_success != (mmr =  waveOutPrepareHeader(m_ppcm, create_new_WAVEHDR(m_pwavebuffer, i), sizeof(WAVEHDR))))
-            {
-               TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
-               return mmr;
-            }
-         }*/
+            TRACE("Unable to determine current m_pswparams for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+
+         /* start the transfer when the buffer is almost full: */
+         /* (buffer_size / avail_min) * avail_min */
+         err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, (buffer_size / period_size) * period_size);
+         if (err < 0)
+         {
+
+            TRACE("Unable to set start threshold mode for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         /* allow the transfer when at least period_size samples can be processed */
+         err = snd_pcm_sw_params_set_avail_min(m_ppcm, m_pswparams, period_size);
+         if (err < 0)
+         {
+
+            TRACE("Unable to set avail min for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         /* write the parameters to the playback device */
+         err = snd_pcm_sw_params(m_ppcm, m_pswparams);
+         if (err < 0)
+         {
+
+            TRACE("Unable to set sw params for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
          m_estate = state_opened;
          return result_success;
       }
@@ -208,23 +203,20 @@ Opened:
 
 
 
-
-
-
       ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample)
       {
+
          single_lock sLock(&m_mutex, TRUE);
-         if(m_ppcm != NULL &&
-            m_estate != state_initial)
+
+         if(m_ppcm != NULL && m_estate != state_initial)
             return result_success;
+
          m_pthreadCallback = pthreadCallback;
-         ::multimedia::e_result mmr;
+
          ASSERT(m_ppcm == NULL);
+
          ASSERT(m_estate == state_initial);
 
-
-
-         //m_pwaveformat->wFormatTag        = WAVE_FORMAT_PCM;
          m_pwaveformat->wFormatTag        = 0;
          m_pwaveformat->nChannels         = (WORD) uiChannelCount;
          m_pwaveformat->nSamplesPerSec    = uiSamplesPerSec;
@@ -232,76 +224,25 @@ Opened:
          m_pwaveformat->nBlockAlign       = m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
          m_pwaveformat->nAvgBytesPerSec   = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize            = 0;
-         //m_pwaveformat->cbSize            = sizeof(m_waveformatex);
 
-         if(snd_pcm_open(SND_PCM_STREAM_PLAYBACK) != result_success)
-            return result_error;
+         if((m_mmr = snd_pcm_open(SND_PCM_STREAM_PLAYBACK)) != result_success)
+         {
 
-/*         sp(::multimedia::audio::wave) audiowave = Application.audiowave();
+            return m_mmr;
 
-         try
-         {
-            if(result_success == (mmr = waveOutOpen(
-               &m_ppcm,
-               audiowave->m_uiWaveInDevice,
-               wave_format(),
-               get_os_int(),
-               (uint32_t) 0,
-               CALLBACK_THREAD)))
-               goto Opened;
-         }
-         catch(const ::exception::exception &)
-         {
-            return result_error;
-         }
-         catch(...)
-         {
-            return result_error;
          }
 
-         if(mmr != result_success)
-         {
-            if(mmr == MMSYSERR_ALLOCATED)
-            {
-               TRACE("Specified resource is already allocated.");
-            }
-            else if(mmr == MMSYSERR_BADDEVICEID)
-            {
-               TRACE("Specified device identifier is out of range.");
-            }
-            else if(mmr == WAVERR_BADFORMAT)
-            {
-               TRACE("Attempted to open with an unsupported waveform-audio_alsa format.");
-            }
-            TRACE("ERROR OPENING WAVE INPUT DEVICE");
-            return mmr;
-         }*/
-
-Opened:
          uint32_t uiBufferSizeLog2;
          uint32_t uiBufferSize;
          uint32_t uiAnalysisSize;
          uint32_t uiAllocationSize;
          uint32_t uiInterestSize;
          uint32_t uiSkippedSamplesCount;
-         uint32_t uiBufferCount = iBufferCount;
 
-         if(iBufferSampleCount < 1024 * 8)
-         {
-            iBufferSampleCount = 1024 * 8;
-         }
+         iBufferCount            = buffer_size / period_size;
 
-         long l =  snd_pcm_avail(m_ppcm);
+         iBufferSampleCount      = period_size;
 
-
-         if(l > 0 && iBufferSampleCount >= (l / 2))
-         {
-
-            iBufferSampleCount = l / 4;
-
-         }
-
-         //   if(m_pwaveformat->nSamplesPerSec == 44100)
          if(true)
          {
             uiBufferSizeLog2 = 16;
@@ -337,31 +278,55 @@ Opened:
             uiSkippedSamplesCount = 1;
          }
 
-         //uiBufferCount = 1;
+         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, iBufferCount, m_pwaveformat, m_pwaveformat);
 
-         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
-
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount);
-
-         /*int32_t i, iSize;
-
-         iSize = wave_out_get_buffer()->GetBufferCount();
-
-         for(i = 0; i < iSize; i++)
-         {
-
-            if(result_success != (mmr =  waveOutPrepareHeader(m_ppcm, create_new_WAVEHDR(wave_out_get_buffer(), i), sizeof(WAVEHDR))))
-            {
-               TRACE("ERROR OPENING Preparing INPUT DEVICE buffer");
-               return mmr;
-            }
-
-            //wave_out_add_buffer(i);
-
-         }
-         */
+         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
 
          m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount() + 4);
+
+         int err;
+
+         snd_pcm_sw_params_alloca(&m_pswparams);
+
+         // get the current m_pswparams
+         if((err = snd_pcm_sw_params_current(m_ppcm, m_pswparams)) < 0)
+         {
+
+            TRACE("Unable to determine current m_pswparams for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         // start the transfer when the buffer is almost full:
+         if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, (iBufferCount - 1) * period_size)) < 0)
+         {
+
+            TRACE("Unable to set start threshold mode for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         // allow the transfer when at least period_size samples can be processed
+         if((err = snd_pcm_sw_params_set_avail_min(m_ppcm, m_pswparams, period_size)) < 0)
+         {
+
+            TRACE("Unable to set avail min for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         // write the parameters to the playback device
+         if((err = snd_pcm_sw_params(m_ppcm, m_pswparams)) < 0)
+         {
+
+            TRACE("Unable to set sw params for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
 
          m_estate = state_opened;
 
@@ -414,35 +379,6 @@ Opened:
 
       }
 
-
-      /*void wave_out::OnMultimediaOpen(::signal_details * pobj)
-      {
-         UNREFERENCED_PARAMETER(pobj);
-      }
-
-
-      void wave_out::OnMultimediaDone(::signal_details * pobj)
-      {
-
-         SCAST_PTR(::message::base, pbase, pobj);
-
-         m_iBufferedCount--;
-
-         LPWAVEHDR lpwavehdr = (LPWAVEHDR) pbase->m_lparam.m_lparam;
-
-         wave_out_out_buffer_done((int32_t) lpwavehdr->dwUser);
-
-      }
-
-      void wave_out::OnMultimediaClose(::signal_details * pobj)
-      {
-         UNREFERENCED_PARAMETER(pobj);
-      }
-
-      /*void wave_out::wave_out_on_buffer_ready(::signal_details * pobj)
-      {
-         UNREFERENCED_PARAMETER(pobj);
-      }*/
 
 
 
@@ -700,7 +636,9 @@ Opened:
       void wave_out::wave_out_free(int iBuffer)
       {
 
-         post_thread_message(MessageFree, iBuffer);
+         //post_thread_message(MessageFree, iBuffer);
+
+         multimedia::audio::wave_out::wave_out_free(iBuffer);
 
       }
 
@@ -708,12 +646,13 @@ Opened:
       void wave_out::wave_out_buffer_ready(int iBuffer)
       {
 
-         //if(m_bWrite)
-           // return;
+         //post_thread_message(MessageReady, iBuffer);
 
-         post_thread_message(MessageReady, iBuffer);
+         alsa_out_buffer_ready(iBuffer);
+
 
       }
+
 
 
       void wave_out::OnReady(::signal_details * pobj)
@@ -739,29 +678,22 @@ Opened:
 
       }
 
+      void wave_out::OnDone(::signal_details * pobj)
+      {
+
+         SCAST_PTR(::message::base, pbase, pobj);
+
+         int iBuffer = pbase->m_wparam;
+
+         wave_out_out_buffer_done(iBuffer);
+
+      }
 
 
       void wave_out::alsa_out_buffer_ready(int iBuffer)
       {
 
          single_lock sLock(&m_mutex, TRUE);
-
-         //if(m_bWrite)
-           // return;
-
-         //keeper < bool > kWrite(&m_bWrite, true, false, true);
-
-//         while(true)
-  //       {
-
-         if(wave_out_get_state() != state_playing)
-         {
-
-            TRACE("ERROR wave_out::BufferReady while wave_out_get_state() != state_playing");
-
-            return;
-
-         }
 
          if(m_peffect != NULL)
          {
@@ -770,100 +702,73 @@ Opened:
 
          }
 
-         int iWrittenFrameCount;
 
-         int iFrameSize = (m_pwaveformat->nChannels * m_pwaveformat->wBitsPerSample) / 8;
-
-         if(iFrameSize == 0)
-            return;
-
-         int iFrameCount = wave_out_get_buffer_size() / iFrameSize;
+         int result = 0;
 
 
-		/* wait till the interface is ready for data, or 1 second
-			   has elapsed.
-			*/
+/*
 
-			long l;
+         snd_pcm_sframes_t avail = snd_pcm_avail_update(m_ppcm);
 
-			int iTimes = 0;
+         while(avail >= 0 && avail < period_size)
+         {
 
-			while(true)
-			{
-
-            if ((l = snd_pcm_wait (m_ppcm, 1984)) < 0)
+            if((result = snd_pcm_wait (m_ppcm, -1)) < 0)
             {
-              TRACE("poll failed (%s)\n", ::strerror (errno));
-              break;
-            }
 
-			/* find out how much space is available for playback data */
+               m_estate = state_opened;
 
-            if((l = snd_pcm_avail_update (m_ppcm)) < 0)
-            {
-               if (l == -EPIPE)
-               {
-                  TRACE0("an xrun occured\n");
-                  break;
-               }
-               else
-               {
-                  TRACE("unknown ALSA avail update return value (%d)\n", l);
-                  break;
-               }
-            }
+               m_mmr = result_error;
 
-            if(l >= iFrameCount)
-               break;
+               TRACE("alsa wave_out wait error: %s\n", snd_strerror(result));
 
-            iTimes++;
+               return;
 
-            if(iTimes > 64)
-            {
-               break;
             }
 
          }
 
-
-/*         long l = snd_pcm_avail(m_ppcm);
-
-         while(l >= 0 && l < iFrameCount)
-         {
-
-            sLock.unlock();
-
-            Sleep(5);
-
-            sLock.lock();
-
-            l = snd_pcm_avail(m_ppcm);
-
-         }
-
-         if(l < 0)
-         {
-
-            snd_pcm_prepare(m_ppcm);
-
-         }
-         */
-
-         if(l < 0)
-         {
-
-            snd_pcm_prepare(m_ppcm);
-
-         }
+*/
 
          ::multimedia::e_result mmr = result_success;
 
-         int err = snd_pcm_writei(m_ppcm, wave_out_get_buffer_data(iBuffer), iFrameCount);
+         signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
-         if(err < 0 || err < iFrameCount)
+         int cptr = period_size;
+
+
+         while (cptr > 0)
          {
 
-            snd_pcm_prepare(m_ppcm);
+            result = snd_pcm_writei(m_ppcm, ptr, cptr);
+
+            if(result == -EAGAIN)
+               continue;
+
+            if(result < 0)
+            {
+
+               if((result = underrun_recovery(result)) < 0)
+               {
+
+                  m_estate = state_opened;
+
+                  m_mmr = result_error;
+
+                  TRACE("alsa wave_out Write error: %s\n", snd_strerror(result));
+
+                  return;
+
+               }
+
+               break; // skip one buffer
+
+            }
+
+            ptr += result * m_pwaveformat->nChannels;
+
+            cptr -= result;
+
 
          }
 
@@ -871,13 +776,101 @@ Opened:
 
          sLock.unlock();
 
-         wave_out_free(iBuffer);
+         post_thread_message(MessageDone, iBuffer);
 
-         //multimedia::audio::wave_out::wave_out_free(iBuffer);
+      }
 
-      //   sLock.lock();
 
-    //     }
+      ::multimedia::e_result wave_out::wave_out_start(const imedia::position & position)
+      {
+
+         single_lock sLock(&m_mutex, TRUE);
+
+         if(m_estate == state_playing)
+            return result_success;
+
+         if(m_estate != state_opened && m_estate != state_stopped)
+            return result_error;
+
+         int err = 0;
+
+         if ((err = snd_pcm_prepare (m_ppcm)) < 0)
+         {
+
+            TRACE ("cannot prepare audio interface for use (%s)\n",snd_strerror (err));
+
+            return result_error;
+
+         }
+
+         m_mmr = ::multimedia::audio::wave_out::wave_out_start(position);
+
+         if(failed(m_mmr))
+            return m_mmr;
+
+
+         return result_success;
+
+      }
+
+
+      void wave_out::on_run_step()
+      {
+
+         ::multimedia::audio::wave_out::on_run_step();
+
+      }
+
+
+      int wave_out::underrun_recovery(int err)
+      {
+
+         //if(verbose)
+           //printf("stream recovery\n");
+
+         if (err == -EPIPE)
+         {
+
+            // under-run
+            err = snd_pcm_prepare(m_ppcm);
+
+            if (err < 0)
+            {
+
+               TRACE("Can't recovery from underrun, prepare failed: %s\n", snd_strerror(err));
+
+            }
+            else if (err == -ESTRPIPE)
+            {
+
+               while ((err = snd_pcm_resume(m_ppcm)) == -EAGAIN)
+               {
+
+                  sleep(1); /* wait until the suspend flag is released */
+
+               }
+
+               if (err < 0)
+               {
+
+                  err = snd_pcm_prepare(m_ppcm);
+
+                  if (err < 0)
+                  {
+
+                     TRACE("Can't recovery from suspend, prepare failed: %s\n", snd_strerror(err));
+
+                  }
+
+               }
+
+            }
+
+            return 0;
+
+         }
+
+         return err;
 
       }
 

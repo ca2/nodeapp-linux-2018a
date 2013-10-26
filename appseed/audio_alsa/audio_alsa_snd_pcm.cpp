@@ -15,9 +15,13 @@ namespace multimedia
          wave_base(papp)
       {
 
-         m_ppcm = NULL;
-         m_phwparams = NULL;
-
+         m_ppcm            = NULL;
+         m_phwparams       = NULL;
+         m_pswparams       = NULL;
+         m_phandler        = NULL;
+         m_iCurrentBuffer  = 0;
+         buffer_time       = 500000; /* ring buffer length in us */
+         period_time       = 100000; /* period time in us */
       }
 
       snd_pcm::~snd_pcm()
@@ -199,7 +203,7 @@ namespace multimedia
 
          }
 
-         string strHw = "hw:1,0,0";
+         string strHw = "hw:0,0,0";
 
 
          //if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, SND_PCM_NONBLOCK)) < 0)
@@ -271,6 +275,7 @@ namespace multimedia
 
          }
 
+
          pformat->nSamplesPerSec = uiFreq;
 
          if ((err = snd_pcm_hw_params_set_channels (m_ppcm, m_phwparams, pformat->nChannels)) < 0)
@@ -281,6 +286,52 @@ namespace multimedia
             return result_error;
 
          }
+
+         snd_pcm_uframes_t size;
+
+         int dir;
+
+         // set the buffer time
+         if((err = snd_pcm_hw_params_set_buffer_time_near(m_ppcm, m_phwparams, &buffer_time, &dir)) < 0)
+         {
+
+            TRACE("Unable to set buffer time %i for playback: %s\n", buffer_time, snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         if((err = snd_pcm_hw_params_get_buffer_size(m_phwparams, &size)) < 0)
+         {
+
+            TRACE("Unable to get buffer size for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         buffer_size = size;
+
+         // set the period time
+         if((err = snd_pcm_hw_params_set_period_time_near(m_ppcm, m_phwparams, &period_time, &dir)) < 0)
+         {
+
+            TRACE("Unable to set period time %i for playback: %s\n", period_time, snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         if((err = snd_pcm_hw_params_get_period_size(m_phwparams, &size, &dir)) < 0)
+         {
+
+            TRACE("Unable to get period size for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         period_size = size;
 
          if ((err = snd_pcm_hw_params (m_ppcm, m_phwparams)) < 0)
          {
@@ -293,14 +344,6 @@ namespace multimedia
 
          snd_pcm_hw_params_free (m_phwparams);
 
-         if ((err = snd_pcm_prepare (m_ppcm)) < 0)
-         {
-
-            TRACE ("cannot prepare audio interface for use (%s)\n",snd_strerror (err));
-
-            return result_error;
-
-         }
 
          return result_success;
 

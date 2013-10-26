@@ -3,6 +3,7 @@
 
 #include "app-core/appseed/multimedia/multimedia/multimedia.h"
 #include <alsa/asoundlib.h>
+// Ubuntu libasound2-dev
 
 
 #if defined(_AUDIO_ALSA_LIBRARY)
