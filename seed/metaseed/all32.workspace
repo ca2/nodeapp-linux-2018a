@@ -2,8 +2,8 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
 		<Project filename="../../appseed/app/app.cbp">
-			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
@@ -106,7 +106,10 @@
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>
-		<Project filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
+		<Project filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
+		</Project>
 		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
 			<Depends filename="../../../app/thirdparty/appseed/zlib/zlib.cbp" />
 		</Project>

@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_lnx os :
+   class CLASS_DECL_LINUX os :
       public ::core::os
    {
    public:

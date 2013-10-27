@@ -21,7 +21,7 @@ struct thread_data; // private to implementation
 struct slot_data;   // private to implementation
 
 
-class CLASS_DECL_lnx thread_slot_data
+class CLASS_DECL_LINUX thread_slot_data
 {
 public:
 
@@ -35,7 +35,7 @@ public:
 };
 
 
-class CLASS_DECL_lnx thread_local_storage
+class CLASS_DECL_LINUX thread_local_storage
 {
 public:
 
@@ -59,7 +59,7 @@ extern __thread BYTE _gen_ThreadData[sizeof(thread_local_storage)];
 extern __thread thread_local_storage * __thread_data;
 
 
-class CLASS_DECL_lnx no_track_object
+class CLASS_DECL_LINUX no_track_object
 {
 public:
 #undef new
@@ -133,7 +133,7 @@ thread_local_object < iSlot > ::~thread_local_object()
 }
 
 
-class CLASS_DECL_lnx process_local_object
+class CLASS_DECL_LINUX process_local_object
 {
 public:
 
@@ -155,7 +155,7 @@ public:
 
 
 template < class TYPE, int32_t iSlot >
-class thread_local :
+class thread_local_ :
    public thread_local_object < iSlot >
 {
 // Attributes
@@ -186,10 +186,10 @@ public:
       { return new TYPE; }
 };
 
-#define THREAD_LOcaL(class_name, ident_name, slot) \
-   thread_local < class_name, slot > ident_name;
-#define EXTERN_THREAD_LOcaL(class_name, ident_name, slot) \
-   extern CLASS_DECL_lnx thread_local<class_name, slot> ident_name;
+#define THREAD_LOCAL(class_name, ident_name, slot) \
+   thread_local_ < class_name, slot > ident_name;
+#define EXTERN_THREAD_LOCAL(class_name, ident_name, slot) \
+   extern CLASS_DECL_LINUX thread_local_ < class_name, slot > ident_name;
 
 template<class TYPE>
 class process_local : public process_local_object
@@ -222,8 +222,8 @@ public:
 
 /////////////////////////////////////////////////////////////////////////////
 
-void CLASS_DECL_lnx __init_local_data(HINSTANCE hInstInit);
-void CLASS_DECL_lnx __term_local_data(HINSTANCE hInstTerm, bool bAll = FALSE);
-void CLASS_DECL_lnx __tls_add_ref();
-void CLASS_DECL_lnx __tls_release();
+void CLASS_DECL_LINUX __init_local_data(HINSTANCE hInstInit);
+void CLASS_DECL_LINUX __term_local_data(HINSTANCE hInstTerm, bool bAll = FALSE);
+void CLASS_DECL_LINUX __tls_add_ref();
+void CLASS_DECL_LINUX __tls_release();
 

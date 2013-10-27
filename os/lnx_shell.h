@@ -6,7 +6,7 @@
 namespace lnx
 {
 
-class CLASS_DECL_lnx shell
+class CLASS_DECL_LINUX shell
 {
 public:
    shell();

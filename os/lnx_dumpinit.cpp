@@ -142,7 +142,7 @@ ___DEBUG_STATE::~___DEBUG_STATE()
 
 PROCESS_LOcaL(___DEBUG_STATE, afxDebugState)
 
-bool CLASS_DECL_lnx __diagnostic_init()
+bool CLASS_DECL_LINUX __diagnostic_init()
 {
    // just get the debug state to cause initialization
    ___DEBUG_STATE* pState = afxDebugState.get_data();

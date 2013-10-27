@@ -5,8 +5,8 @@ class FileException;
 struct FileStatus;
 
 
-void CLASS_DECL_lnx vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
-void CLASS_DECL_lnx vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath);
+void CLASS_DECL_LINUX vfxGetRoot(const wchar_t * lpszPath, string& wstrRoot);
+void CLASS_DECL_LINUX vfxGetRoot(wstring & wstrRoot, const wstring & wstrPath);
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -17,7 +17,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_lnx file :
+   class CLASS_DECL_LINUX file :
       virtual public ::file::binary_buffer
    {
    public:
@@ -124,7 +124,7 @@ namespace lnx
 
 
 
-bool CLASS_DECL_lnx vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath);
+bool CLASS_DECL_LINUX vfxFullPath(wstring & wstrFullPath, const wstring & wstrPath);
 
 
 

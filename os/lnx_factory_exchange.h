@@ -4,7 +4,7 @@
 namespace lnx
 {
 
-   class CLASS_DECL_lnx factory_exchange :
+   class CLASS_DECL_LINUX factory_exchange :
       virtual public ::object
    {
    public:

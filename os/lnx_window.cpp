@@ -11,11 +11,11 @@
 
 //#include "sal.h"
 
-CLASS_DECL_lnx void hook_window_create(sp(::user::interaction) pWnd);
-CLASS_DECL_lnx bool unhook_window_create();
-void CLASS_DECL_lnx __pre_init_dialog(
+CLASS_DECL_LINUX void hook_window_create(sp(::user::interaction) pWnd);
+CLASS_DECL_LINUX bool unhook_window_create();
+void CLASS_DECL_LINUX __pre_init_dialog(
    sp(::user::interaction) pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld);
-void CLASS_DECL_lnx __post_init_dialog(
+void CLASS_DECL_LINUX __post_init_dialog(
    sp(::user::interaction) pWnd, const RECT& rectOld, DWORD dwStyleOld);
 LRESULT CALLBACK
    __activation_window_procedure(oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam);
@@ -181,7 +181,7 @@ namespace lnx
 
    // Change a window's style
 
-   /*__STATIC bool CLASS_DECL_lnx __modify_style(oswindow hWnd, int32_t nStyleOffset,
+   /*__STATIC bool CLASS_DECL_LINUX __modify_style(oswindow hWnd, int32_t nStyleOffset,
       DWORD dwRemove, DWORD dwAdd, UINT nFlags)
    {
       ASSERT(hWnd != NULL);
@@ -2345,7 +2345,7 @@ restart_mouse_hover_check:
 
    }
 
-   /* trans oswindow CLASS_DECL_lnx __get_parent_owner(sp(::user::interaction) hWnd)
+   /* trans oswindow CLASS_DECL_LINUX __get_parent_owner(sp(::user::interaction) hWnd)
    {
    // check for permanent-owned window first
    sp(::user::window) pWnd = ::lnx::window::FromHandlePermanent(hWnd);
@@ -6381,7 +6381,7 @@ if(psurface == g_cairosurface)
    /////////////////////////////////////////////////////////////////////////////
    // Official way to send message to a window
 
-   CLASS_DECL_lnx LRESULT __call_window_procedure(sp(::user::interaction) pinteraction, oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam)
+   CLASS_DECL_LINUX LRESULT __call_window_procedure(sp(::user::interaction) pinteraction, oswindow hWnd, UINT nMsg, WPARAM wparam, LPARAM lparam)
    {
       ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
       MESSAGE oldState = pThreadState->m_lastSentMsg;   // save for nesting
@@ -6724,14 +6724,14 @@ LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPARAM wparam, LPA
 }
 
 // always indirectly accessed via __get_window_procedure
-//WNDPROC CLASS_DECL_lnx __get_window_procedure()
+//WNDPROC CLASS_DECL_LINUX __get_window_procedure()
 //{
 //   return __get_module_state()->m_pfn_window_procedure;
 //}
 /////////////////////////////////////////////////////////////////////////////
 // Special helpers for certain windows messages
 
-__STATIC void CLASS_DECL_lnx __pre_init_dialog(
+__STATIC void CLASS_DECL_LINUX __pre_init_dialog(
    sp(::user::interaction) pWnd, LPRECT lpRectOld, DWORD* pdwStyleOld)
 {
    ASSERT(lpRectOld != NULL);
@@ -6741,7 +6741,7 @@ __STATIC void CLASS_DECL_lnx __pre_init_dialog(
    *pdwStyleOld = LNX_WINDOW(pWnd)->GetStyle();
 }
 
-__STATIC void CLASS_DECL_lnx __post_init_dialog(
+__STATIC void CLASS_DECL_LINUX __post_init_dialog(
    sp(::user::interaction) pWnd, const RECT& rectOld, DWORD dwStyleOld)
 {
    // must be hidden to start with
@@ -6772,7 +6772,7 @@ __STATIC void CLASS_DECL_lnx __post_init_dialog(
 
 
 
-CLASS_DECL_lnx void hook_window_create(sp(::user::interaction) pWnd)
+CLASS_DECL_LINUX void hook_window_create(sp(::user::interaction) pWnd)
 {
 
 //      throw not_implemented(::get_thread_app());
@@ -6796,7 +6796,7 @@ CLASS_DECL_lnx void hook_window_create(sp(::user::interaction) pWnd)
 }
 
 
-CLASS_DECL_lnx bool unhook_window_create()
+CLASS_DECL_LINUX bool unhook_window_create()
 {
    ___THREAD_STATE* pThreadState = gen_ThreadState.get_data();
    if (pThreadState->m_pWndInit != NULL)
@@ -6809,7 +6809,7 @@ CLASS_DECL_lnx bool unhook_window_create()
 
 
 
-CLASS_DECL_lnx const char * __register_window_class(UINT nClassStyle,
+CLASS_DECL_LINUX const char * __register_window_class(UINT nClassStyle,
                                                     HCURSOR hCursor, HBRUSH hbrBackground, HICON hIcon)
 {
 
@@ -6867,7 +6867,7 @@ CLASS_DECL_lnx const char * __register_window_class(UINT nClassStyle,
 }
 
 
-__STATIC void CLASS_DECL_lnx
+__STATIC void CLASS_DECL_LINUX
    __handle_activate(::user::window * pWnd, WPARAM nState, sp(::user::window) pWndOther)
 {
 
@@ -6898,7 +6898,7 @@ __STATIC void CLASS_DECL_lnx
 //   }
 }
 
-__STATIC bool CLASS_DECL_lnx
+__STATIC bool CLASS_DECL_LINUX
    __handle_set_cursor(::user::window * pWnd, UINT nHitTest, UINT nMsg)
 {
 
@@ -6927,7 +6927,7 @@ __STATIC bool CLASS_DECL_lnx
 /////////////////////////////////////////////////////////////////////////////
 // Standard init called by WinMain
 
-//__STATIC bool CLASS_DECL_lnx __register_with_icon(WNDCLASS* pWndCls,
+//__STATIC bool CLASS_DECL_LINUX __register_with_icon(WNDCLASS* pWndCls,
 //                                                  const char * lpszClassName, UINT nIDIcon)
 //{
 //   pWndCls->lpszClassName = lpszClassName;
@@ -6936,7 +6936,7 @@ __STATIC bool CLASS_DECL_lnx
 //}
 
 
-//bool CLASS_DECL_lnx __end_defer_register_class(LONG fToRegisterParam, const char ** ppszClass)
+//bool CLASS_DECL_LINUX __end_defer_register_class(LONG fToRegisterParam, const char ** ppszClass)
 //{
 //   // mask off all classes that are already registered
 //   __MODULE_STATE* pModuleState = __get_module_state();
@@ -7148,7 +7148,7 @@ LRESULT CALLBACK
 // Additional helpers for WNDCLASS init
 
 // like RegisterClass, except will automatically call UnregisterClass
-//bool CLASS_DECL_lnx __register_class(WNDCLASS* lpWndClass)
+//bool CLASS_DECL_LINUX __register_class(WNDCLASS* lpWndClass)
 //{
 //   WNDCLASS wndcls;
 //   if (GetClassInfo(lpWndClass->hInstance, lpWndClass->lpszClassName,

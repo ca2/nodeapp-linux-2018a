@@ -11,9 +11,7 @@ namespace win
 //#include "types.h"
 //#include "template.h"
 
-#ifndef __AFXTLS_H__
-   #include "lnx_thread_slots.h"
-#endif
+#include "lnx_thread_slots.h"
 
 /////////////////////////////////////////////////////////////////////////////
 // ___DEBUG_STATE
@@ -80,7 +78,7 @@ public:
 };
 
 // __MODULE_THREAD_STATE (local to thread *and* module)
-class CLASS_DECL_lnx __MODULE_THREAD_STATE :
+class CLASS_DECL_LINUX __MODULE_THREAD_STATE :
    public no_track_object
 {
 public:
@@ -120,7 +118,7 @@ class CComCtlWrapper;
 class CCommDlgWrapper;
 
 // __MODULE_STATE (global data for a module)
-class CLASS_DECL_lnx __MODULE_STATE : public no_track_object
+class CLASS_DECL_LINUX __MODULE_STATE : public no_track_object
 {
 public:
 // xxx  __MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion,
@@ -166,7 +164,7 @@ public:
 
 
    // define thread local portions of module state
-   thread_local<__MODULE_THREAD_STATE, slot___MODULE_THREAD_STATE> m_thread;
+   thread_local_ < __MODULE_THREAD_STATE, slot___MODULE_THREAD_STATE > m_thread;
 
    //Fusion: declare pointer to array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
@@ -177,21 +175,21 @@ public:
    void CreateActivationContext();
 };
 
-CLASS_DECL_lnx __MODULE_STATE* __set_module_state(__MODULE_STATE* pNewState);
-CLASS_DECL_lnx __MODULE_STATE* __get_module_state();
-CLASS_DECL_lnx bool __is_module_dll();
-CLASS_DECL_lnx bool __init_current_state_app();
-CLASS_DECL_lnx __MODULE_STATE* __get_static_module_state();
-CLASS_DECL_lnx HINSTANCE __get_instance_handle_helper();
+CLASS_DECL_LINUX __MODULE_STATE* __set_module_state(__MODULE_STATE* pNewState);
+CLASS_DECL_LINUX __MODULE_STATE* __get_module_state();
+CLASS_DECL_LINUX bool __is_module_dll();
+CLASS_DECL_LINUX bool __init_current_state_app();
+CLASS_DECL_LINUX __MODULE_STATE* __get_static_module_state();
+CLASS_DECL_LINUX HINSTANCE __get_instance_handle_helper();
 
-CLASS_DECL_lnx __MODULE_THREAD_STATE* __get_module_thread_state();
+CLASS_DECL_LINUX __MODULE_THREAD_STATE* __get_module_thread_state();
 
 #define ___CMDTARGET_GETSTATE() (m_pModuleState)
 
 /////////////////////////////////////////////////////////////////////////////
 // macros & classes to manage pushing/popping the module state
 
-struct CLASS_DECL_lnx __MAINTAIN_STATE
+struct CLASS_DECL_LINUX __MAINTAIN_STATE
 {
    explicit __MAINTAIN_STATE(__MODULE_STATE* pModuleState) throw();
    ~__MAINTAIN_STATE();
@@ -201,7 +199,7 @@ protected:
 };
 
 class ___THREAD_STATE;
-struct CLASS_DECL_lnx __MAINTAIN_STATE2
+struct CLASS_DECL_LINUX __MAINTAIN_STATE2
 {
    explicit __MAINTAIN_STATE2(__MODULE_STATE* pModuleState);
    ~__MAINTAIN_STATE2();
@@ -226,7 +224,7 @@ class push_routing_frame;
 class CPushRoutingView;
 
 #define ___TEMP_CLASS_NAME_SIZE 96
-class CLASS_DECL_lnx ___THREAD_STATE :
+class CLASS_DECL_LINUX ___THREAD_STATE :
    public no_track_object,
    public ::thread_state
 {
@@ -284,6 +282,6 @@ public:
    bool m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 };
 
-EXTERN_THREAD_LOcaL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
+EXTERN_THREAD_LOCAL(___THREAD_STATE, gen_ThreadState, slot___THREAD_STATE)
 
-CLASS_DECL_lnx ___THREAD_STATE* __get_thread_state();
+CLASS_DECL_LINUX ___THREAD_STATE* __get_thread_state();

@@ -299,7 +299,7 @@ namespace multimedia
          }
 
          // start the transfer when the buffer is almost full:
-         if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, (iBufferCount - 1) * period_size)) < 0)
+         if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, buffer_size)) < 0)
          {
 
             TRACE("Unable to set start threshold mode for playback: %s\n", snd_strerror(err));
@@ -706,14 +706,14 @@ namespace multimedia
          int result = 0;
 
 
-/*
+
 
          snd_pcm_sframes_t avail = snd_pcm_avail_update(m_ppcm);
 
          while(avail >= 0 && avail < period_size)
          {
 
-            if((result = snd_pcm_wait (m_ppcm, -1)) < 0)
+            if((result = snd_pcm_wait (m_ppcm, 1984)) < 0)
             {
 
                m_estate = state_opened;
@@ -726,9 +726,11 @@ namespace multimedia
 
             }
 
+            avail = snd_pcm_avail_update(m_ppcm);
+
          }
 
-*/
+
 
          ::multimedia::e_result mmr = result_success;
 
@@ -736,6 +738,30 @@ namespace multimedia
 
          int cptr = period_size;
 
+
+         /*
+
+         int l = 0;
+         for(int i = 0; i < period_size; i++)
+         {
+            if(l %  40 < 20)
+            {
+               ptr[0] = 1000;
+               ptr[1] = 1000;
+            }
+            else
+            {
+               ptr[0] = -1000;
+               ptr[1] = -1000;
+            }
+
+            ptr+=2;
+            l++;
+         }
+
+         ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
+
+         */
 
          while (cptr > 0)
          {
@@ -818,6 +844,19 @@ namespace multimedia
       {
 
          ::multimedia::audio::wave_out::on_run_step();
+
+         /*if(m_estate == state_playing)
+         {
+
+            wave_out_out_buffer_done(m_iCurrentBuffer);
+
+            m_iCurrentBuffer++;
+
+            if(m_iCurrentBuffer >= wave_out_get_buffer()->GetBufferCount())
+               m_iCurrentBuffer = 0;
+
+         }*/
+
 
       }
 

@@ -5,13 +5,13 @@ namespace lnx
 {
 
 
-   CLASS_DECL_lnx LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
-   //CLASS_DECL_lnx void _::ca2::StandardSubclass(oswindow);
-   CLASS_DECL_lnx LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
-   CLASS_DECL_lnx LRESULT __call_window_procedure(sp(::user::interaction) pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+   CLASS_DECL_LINUX LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
+   //CLASS_DECL_LINUX void _::ca2::StandardSubclass(oswindow);
+   CLASS_DECL_LINUX LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
+   CLASS_DECL_LINUX LRESULT __call_window_procedure(sp(::user::interaction) pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
 
-   class CLASS_DECL_lnx window :
+   class CLASS_DECL_LINUX window :
       virtual public ::user::window
    {
    public:
@@ -676,10 +676,10 @@ virtual    void set_view_port_org(::draw2d::graphics * pgraphics);
 
 
       // implementation of message dispatch/hooking
-      CLASS_DECL_lnx friend LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
-      //CLASS_DECL_lnx friend void _::ca2::StandardSubclass(oswindow);
-      CLASS_DECL_lnx friend LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
-      CLASS_DECL_lnx friend LRESULT __call_window_procedure(sp(::user::interaction) pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+      CLASS_DECL_LINUX friend LRESULT CALLBACK __send_message_hook(int32_t, WPARAM, LPARAM);
+      //CLASS_DECL_LINUX friend void _::ca2::StandardSubclass(oswindow);
+      CLASS_DECL_LINUX friend LRESULT CALLBACK __cbt_filter_hook(int32_t, WPARAM, LPARAM);
+      CLASS_DECL_LINUX friend LRESULT __call_window_procedure(sp(::user::interaction) pWnd, oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
 
       // standard message implementation
       LRESULT OnNTCtlColor(WPARAM wParam, LPARAM lParam);

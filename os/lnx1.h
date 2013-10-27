@@ -19,7 +19,7 @@ namespace lnx
 
 
 // Placed on frame for EXCEPTION linkage, or ::exception::base cleanup
-struct CLASS_DECL_lnx __exception_link
+struct CLASS_DECL_LINUX __exception_link
 {
    __exception_link * m_pLinkPrev;    // previous top, next in handler chain
    ::exception::base * m_pException;   // current exception (NULL in try block)
@@ -32,7 +32,7 @@ struct CLASS_DECL_lnx __exception_link
 };
 
 // Exception global state - never access directly
-struct CLASS_DECL_lnx __EXCEPTION_CONTEXT
+struct CLASS_DECL_LINUX __EXCEPTION_CONTEXT
 {
    __exception_link* m_pLinkTop;
 
@@ -44,21 +44,21 @@ typedef int32_t (__cdecl * _PNH)( size_t );
 #define _PNH_DEFINED
 #endif
 
-_PNH CLASS_DECL_lnx __get_new_handler();
-_PNH CLASS_DECL_lnx __set_new_handler(_PNH pfnNewHandler);
+_PNH CLASS_DECL_LINUX __get_new_handler();
+_PNH CLASS_DECL_LINUX __set_new_handler(_PNH pfnNewHandler);
 CLASS_DECL_BOOT int32_t c_cdecl __new_handler(size_t nSize);
 
-void CLASS_DECL_lnx __abort();
+void CLASS_DECL_LINUX __abort();
 
 
 // helpers for registering your own WNDCLASSes
-CLASS_DECL_lnx const char * __register_window_class(UINT nClassStyle, HCURSOR hCursor = 0, HBRUSH hbrBackground = 0, HICON hIcon = 0);
+CLASS_DECL_LINUX const char * __register_window_class(UINT nClassStyle, HCURSOR hCursor = 0, HBRUSH hbrBackground = 0, HICON hIcon = 0);
 
-// xxx CLASS_DECL_lnx bool __register_class(WNDCLASS* lpWndClass);
+// xxx CLASS_DECL_LINUX bool __register_class(WNDCLASS* lpWndClass);
 
 
-CLASS_DECL_lnx LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
-// xxx CLASS_DECL_lnx WNDPROC __get_window_procedure();
+CLASS_DECL_LINUX LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, WPARAM wParam, LPARAM lParam);
+// xxx CLASS_DECL_LINUX WNDPROC __get_window_procedure();
 // xxx #define __window_procedure (*__get_window_procedure())
 
 typedef void (__MSG_CALL ::user::window::*__PMSGW)();
@@ -70,21 +70,21 @@ typedef void (__MSG_CALL ::thread::*__PMSGT)();
 
 
 
-// xxx CLASS_DECL_lnx LONG delete_registry_tree_helper(HKEY hParentKey, const string & strKeyName);
+// xxx CLASS_DECL_LINUX LONG delete_registry_tree_helper(HKEY hParentKey, const string & strKeyName);
 
 
 // Advanced initialization: for overriding default diagnostics
-//CLASS_DECL_lnx bool __diagnostic_init();
+//CLASS_DECL_LINUX bool __diagnostic_init();
 
 
-CLASS_DECL_lnx ::lnx::thread * __get_thread();
-CLASS_DECL_lnx void __set_thread(::thread * pthread);
-CLASS_DECL_lnx MESSAGE * __get_current_message();
+CLASS_DECL_LINUX ::lnx::thread * __get_thread();
+CLASS_DECL_LINUX void __set_thread(::thread * pthread);
+CLASS_DECL_LINUX MESSAGE * __get_current_message();
 
-CLASS_DECL_lnx void __end_thread(sp(base_application) papp, UINT nExitCode, bool bDelete = TRUE);
+CLASS_DECL_LINUX void __end_thread(sp(base_application) papp, UINT nExitCode, bool bDelete = TRUE);
 
-CLASS_DECL_lnx void __init_thread();
-CLASS_DECL_lnx void __term_thread(sp(base_application) papp, HINSTANCE hInstTerm = NULL);
+CLASS_DECL_LINUX void __init_thread();
+CLASS_DECL_LINUX void __term_thread(sp(base_application) papp, HINSTANCE hInstTerm = NULL);
 
 /////////////////////////////////////////////////////////////////////////////
 // Global functions for access to the one and only application
@@ -99,20 +99,20 @@ CLASS_DECL_lnx void __term_thread(sp(base_application) papp, HINSTANCE hInstTerm
 
 
 // Advanced initialization: for overriding default WinMain
-//CLASS_DECL_lnx bool ::ca2::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
+//CLASS_DECL_LINUX bool ::ca2::WinInit(__in HINSTANCE hInstance, __in HINSTANCE hPrevInstance,
   // __in_z LPTSTR lpCmdLine, __in int32_t nCmdShow);
-CLASS_DECL_lnx void __lnx_term();
+CLASS_DECL_LINUX void __lnx_term();
 
-CLASS_DECL_lnx sp(base_application)  __get_app();
-CLASS_DECL_lnx sp(::user::interaction) __get_main_window();
-//CLASS_DECL_lnx HINSTANCE CLASS_DECL_lnx System.m_hInstance;
-CLASS_DECL_lnx HINSTANCE __get_resource_handle();
-CLASS_DECL_lnx void __set_resource_handle(HINSTANCE hInstResource);
-CLASS_DECL_lnx const char * __get_app_name();
+CLASS_DECL_LINUX sp(base_application)  __get_app();
+CLASS_DECL_LINUX sp(::user::interaction) __get_main_window();
+//CLASS_DECL_LINUX HINSTANCE CLASS_DECL_LINUX System.m_hInstance;
+CLASS_DECL_LINUX HINSTANCE __get_resource_handle();
+CLASS_DECL_LINUX void __set_resource_handle(HINSTANCE hInstResource);
+CLASS_DECL_LINUX const char * __get_app_name();
 
-CLASS_DECL_lnx HINSTANCE __get_resource_handle();
-CLASS_DECL_lnx HINSTANCE __find_string_resource_handle(UINT nID);
+CLASS_DECL_LINUX HINSTANCE __get_resource_handle();
+CLASS_DECL_LINUX HINSTANCE __find_string_resource_handle(UINT nID);
 
-CLASS_DECL_lnx void __delete_object(HGDIOBJ* pObject);
+CLASS_DECL_LINUX void __delete_object(HGDIOBJ* pObject);
 
-void CLASS_DECL_lnx __global_free(HGLOBAL hGlobal);
+void CLASS_DECL_LINUX __global_free(HGLOBAL hGlobal);

@@ -4,7 +4,7 @@
 namespace lnx
 {
 
-   class CLASS_DECL_lnx path :
+   class CLASS_DECL_LINUX path :
       virtual public ::file::path
    {
    public:
@@ -12,7 +12,7 @@ namespace lnx
       virtual bool  is_equal(const char * lpszFilPathA, const char * lpszFilPathB);
    };
 
-   class CLASS_DECL_lnx dir :
+   class CLASS_DECL_LINUX dir :
       virtual public ::file::dir::system
    {
    public:

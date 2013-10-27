@@ -7,7 +7,7 @@ CLASS_DECL_BOOT int32_t ca2_main();
 
 //CLASS_DECL_BOOT fixed_alloc_array * new_wstring_manager();
 
-void CLASS_DECL_lnx __cdecl _ca2_purecall()
+void CLASS_DECL_LINUX __cdecl _ca2_purecall()
 {
     throw simple_exception(::get_thread_app());
 }
@@ -46,9 +46,9 @@ int xlib_error_handler(Display * d, XErrorEvent * e)
 
 extern char gen_InitAppState;
 
-CLASS_DECL_lnx bool __initialize(bool bDLL, DWORD dwVersion);
+CLASS_DECL_LINUX bool __initialize(bool bDLL, DWORD dwVersion);
 
-int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
+int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
 {
 
    if(!XInitThreads())
@@ -216,7 +216,7 @@ int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[])
 }
 
 
-int32_t CLASS_DECL_lnx ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int32_t nCmdShow)
+int32_t CLASS_DECL_LINUX ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int32_t nCmdShow)
 {
    try
    {

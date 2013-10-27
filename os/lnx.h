@@ -7,9 +7,7 @@
 #include "core.h"
 
 
-#ifdef LINUX
-    #define CLASS_DECL_lnx
-#endif
+#define CLASS_DECL_LINUX
 
 
 string get_error_message(DWORD dwError);
@@ -19,37 +17,37 @@ sp(base_application)     lnx_instantiate_application(sp(base_application) pappSy
 /////////////////////////////////////////////////////////////////////////////
 // explicit initialization for general purpose classes
 
-//CLASS_DECL_lnx WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = _MFC_VER);
-CLASS_DECL_lnx WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = 0);
+//CLASS_DECL_LINUX WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = _MFC_VER);
+CLASS_DECL_LINUX WINBOOL AfxInitialize(WINBOOL bDLL = FALSE, DWORD dwVersion = 0);
 
 /////////////////////////////////////////////////////////////////////////////
 // stop on a specific primitive::memory request
 
 // Debugger hook on specified allocation request - Obsolete
-CLASS_DECL_lnx void AfxSetAllocStop(LONG lRequestNumber);
+CLASS_DECL_LINUX void AfxSetAllocStop(LONG lRequestNumber);
 
 // Return TRUE if primitive::memory is sane or print out what is wrong
-CLASS_DECL_lnx bool __check_memory();
+CLASS_DECL_LINUX bool __check_memory();
 
 // Return TRUE if valid primitive::memory block of nBytes
-CLASS_DECL_lnx WINBOOL AfxIsMemoryBlock(const void * p, UINT nBytes,
+CLASS_DECL_LINUX WINBOOL AfxIsMemoryBlock(const void * p, UINT nBytes,
    LONG* plRequestNumber = NULL);
 
 // helper routines for non-C++ EH implementations
 // for THROW_LAST auto-delete backward compatiblity
-CLASS_DECL_lnx void AfxThrowLastCleanup();
+CLASS_DECL_LINUX void AfxThrowLastCleanup();
 
 // other out-of-line helper functions
-CLASS_DECL_lnx void AfxTryCleanup();
+CLASS_DECL_LINUX void AfxTryCleanup();
 
 
 /////////////////////////////////////////////////////////////////////////////
 // Global implementation helpers
 
 // window creation hooking
-CLASS_DECL_lnx void AfxHookWindowCreate(sp(::user::interaction) pWnd);
-CLASS_DECL_lnx WINBOOL AfxUnhookWindowCreate();
-CLASS_DECL_lnx void AfxResetMsgcache();
+CLASS_DECL_LINUX void AfxHookWindowCreate(sp(::user::interaction) pWnd);
+CLASS_DECL_LINUX WINBOOL AfxUnhookWindowCreate();
+CLASS_DECL_LINUX void AfxResetMsgcache();
 
 // for backward compatibility to previous versions
 #define _AfxHookWindowCreate    AfxHookWindowCreate
@@ -73,7 +71,7 @@ CLASS_DECL_lnx void AfxResetMsgcache();
 #include "lnx_ip_enum.h"
 
 #define NULL_REF(class) (*((class *) NULL))
-// xxx CLASS_DECL_lnx WNDPROC AfxGetAfxWndProc();
+// xxx CLASS_DECL_LINUX WNDPROC AfxGetAfxWndProc();
 #define AfxWndProc (*AfxGetAfxWndProc())
 
 #define LNX_THREAD(pthread) (dynamic_cast < ::lnx::thread * > (dynamic_cast < ::thread * >(pthread)))
@@ -86,15 +84,15 @@ CLASS_DECL_lnx void AfxResetMsgcache();
 
 #include "lnx_shell.h"
 
-CLASS_DECL_lnx void __trace_message(const char * lpszPrefix, ::signal_details * pobj);
-CLASS_DECL_lnx void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
+CLASS_DECL_LINUX void __trace_message(const char * lpszPrefix, ::signal_details * pobj);
+CLASS_DECL_LINUX void __trace_message(const char * lpszPrefix, LPMESSAGE lpmsg);
 
-CLASS_DECL_lnx WINBOOL __cdecl __is_idle_message(::signal_details * pobj);
-CLASS_DECL_lnx WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg);
+CLASS_DECL_LINUX WINBOOL __cdecl __is_idle_message(::signal_details * pobj);
+CLASS_DECL_LINUX WINBOOL __cdecl __is_idle_message(MESSAGE* pMsg);
 
 
-CLASS_DECL_lnx void AfxProcessWndProcException(::exception::base*, ::signal_details * pobj);
-CLASS_DECL_lnx void __cdecl __pre_translate_message(::signal_details * pobj);
+CLASS_DECL_LINUX void AfxProcessWndProcException(::exception::base*, ::signal_details * pobj);
+CLASS_DECL_LINUX void __cdecl __pre_translate_message(::signal_details * pobj);
 
 
 #include "lnx_application.h"
@@ -116,7 +114,7 @@ WINBOOL GetMessage(
 
 
 
-int32_t CLASS_DECL_lnx __lnx_main(int32_t argc, char * argv[]);
+int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[]);
 
 
-CLASS_DECL_lnx void vfxThrowFileException(sp(base_application) papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);
+CLASS_DECL_LINUX void vfxThrowFileException(sp(base_application) papp, int32_t cause, LONG lOsError, const char * lpszFileName = NULL);

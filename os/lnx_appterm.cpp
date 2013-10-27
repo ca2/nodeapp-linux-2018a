@@ -8,7 +8,7 @@
 /////////////////////////////////////////////////////////////////////////////
 // Standard cleanup called by WinMain and __abort
 
-void CLASS_DECL_lnx __gen_unregister_window_classes()
+void CLASS_DECL_LINUX __gen_unregister_window_classes()
 {
 
    // unregister Window classes
@@ -30,7 +30,7 @@ void CLASS_DECL_lnx __gen_unregister_window_classes()
    }
 
 }
-void CLASS_DECL_lnx __lnx_term()
+void CLASS_DECL_LINUX __lnx_term()
 {
    __gen_unregister_window_classes();
    // cleanup OLE if required

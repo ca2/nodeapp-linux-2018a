@@ -216,16 +216,7 @@ namespace multimedia
 
          }
 
-
-         if ((err = snd_pcm_hw_params_malloc (&m_phwparams)) < 0)
-         {
-
-            TRACE("cannot allocate hardware parameter structure (%s)\n", snd_strerror (err));
-
-            return result_error;
-
-         }
-
+         snd_pcm_hw_params_alloca (&m_phwparams);
 
          if ((err = snd_pcm_hw_params_any (m_ppcm, m_phwparams)) < 0)
          {
@@ -342,7 +333,7 @@ namespace multimedia
 
          }
 
-         snd_pcm_hw_params_free (m_phwparams);
+         //snd_pcm_hw_params_free (m_phwparams);
 
 
          return result_success;

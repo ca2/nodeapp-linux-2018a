@@ -24,7 +24,7 @@ namespace lnx
    };
 
 
-   class CLASS_DECL_lnx thread :
+   class CLASS_DECL_LINUX thread :
       virtual public ::thread,
       virtual public ::message_queue
    {
@@ -207,7 +207,7 @@ namespace lnx
    };
 
 
-   CLASS_DECL_lnx base_thread * get_thread();
+   CLASS_DECL_LINUX base_thread * get_thread();
 
 
 } // namespace lnx

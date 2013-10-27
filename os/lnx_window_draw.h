@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_lnx window_draw :
+   class CLASS_DECL_LINUX window_draw :
       virtual public ::user::window_draw,
       virtual public ::message_queue
    {

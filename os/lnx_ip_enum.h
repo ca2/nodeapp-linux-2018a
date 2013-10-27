@@ -14,7 +14,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_lnx ip_enum :
+   class CLASS_DECL_LINUX ip_enum :
       virtual public ::net::ip_enum
    {
    public:

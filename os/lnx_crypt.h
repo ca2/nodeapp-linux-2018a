@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_lnx crypt :
+   class CLASS_DECL_LINUX crypt :
       virtual public ::core::crypt
    {
    public:

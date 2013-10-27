@@ -180,13 +180,13 @@ process_local_object::~process_local_object()
 /////////////////////////////////////////////////////////////////////////////
 // Init/Term for thread/process local data
 
-/*void CLASS_DECL_lnx ::ca2::InitLocalData(HINSTANCE hInst)
+/*void CLASS_DECL_LINUX ::ca2::InitLocalData(HINSTANCE hInst)
 {
    if (__thread_data != NULL)
       __thread_data->AssignInstance(hInst);
 }
 
-void CLASS_DECL_lnx __term_local_data(HINSTANCE hInst, bool bAll)
+void CLASS_DECL_LINUX __term_local_data(HINSTANCE hInst, bool bAll)
 {
    if (__thread_data != NULL)
       __thread_data->DeleteValues(hInst, bAll);
@@ -199,12 +199,12 @@ void CLASS_DECL_lnx __term_local_data(HINSTANCE hInst, bool bAll)
 
 long gen_TlsRef = 0;
 
-void CLASS_DECL_lnx __tls_add_ref()
+void CLASS_DECL_LINUX __tls_add_ref()
 {
    ++gen_TlsRef;
 }
 
-void CLASS_DECL_lnx __tls_release()
+void CLASS_DECL_LINUX __tls_release()
 {
    if (gen_TlsRef == 0 || --gen_TlsRef == 0)
    {

@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_lnx file_set :
+   class CLASS_DECL_LINUX file_set :
       public ::file::set
    {
    public:

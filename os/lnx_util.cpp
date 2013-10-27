@@ -2,7 +2,7 @@
 
 
 // interesting function
-/*WINBOOL CLASS_DECL_lnx AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont)
+/*WINBOOL CLASS_DECL_LINUX AfxCustomLogFont(UINT nIDS, LOGFONT* pLogFont)
 {
    ENSURE_ARG(pLogFont != NULL);
    ASSERT(nIDS != 0);
@@ -25,7 +25,7 @@
 }*/
 
 /*
-WINBOOL CLASS_DECL_lnx _AfxIsComboBoxControl(oswindow hWnd, UINT nStyle)
+WINBOOL CLASS_DECL_LINUX _AfxIsComboBoxControl(oswindow hWnd, UINT nStyle)
 {
    if (hWnd == NULL)
       return FALSE;
@@ -39,7 +39,7 @@ WINBOOL CLASS_DECL_lnx _AfxIsComboBoxControl(oswindow hWnd, UINT nStyle)
    return ::AfxInvariantStrICmp(szCompare, "combobox") == 0;
 }
 
-WINBOOL CLASS_DECL_lnx _AfxCompareClassName(oswindow hWnd, const char * lpszClassName)
+WINBOOL CLASS_DECL_LINUX _AfxCompareClassName(oswindow hWnd, const char * lpszClassName)
 {
    ASSERT(::IsWindow(hWnd));
    char szTemp[32];
@@ -47,7 +47,7 @@ WINBOOL CLASS_DECL_lnx _AfxCompareClassName(oswindow hWnd, const char * lpszClas
    return ::AfxInvariantStrICmp(szTemp, lpszClassName) == 0;
 }
 
-oswindow CLASS_DECL_lnx _AfxChildWindowFromPoint(oswindow hWnd, POINT pt)
+oswindow CLASS_DECL_LINUX _AfxChildWindowFromPoint(oswindow hWnd, POINT pt)
 {
    ASSERT(hWnd != NULL);
 
@@ -70,7 +70,7 @@ oswindow CLASS_DECL_lnx _AfxChildWindowFromPoint(oswindow hWnd, POINT pt)
    return NULL;    // not found
 }
 
-void CLASS_DECL_lnx AfxSetWindowText(sp(::user::interaction) hWndCtrl, const char * lpszNew)
+void CLASS_DECL_LINUX AfxSetWindowText(sp(::user::interaction) hWndCtrl, const char * lpszNew)
 {
    hWndCtrl->SetWindowText(lpszNew);
    /*ENSURE(hWndCtrl);
@@ -89,7 +89,7 @@ void CLASS_DECL_lnx AfxSetWindowText(sp(::user::interaction) hWndCtrl, const cha
 //}
 
 /*
-void CLASS_DECL_lnx AfxDeleteObject(HGDIOBJ* pObject)
+void CLASS_DECL_LINUX AfxDeleteObject(HGDIOBJ* pObject)
 {
    ENSURE_ARG(pObject != NULL);
    if (*pObject != NULL)
@@ -100,7 +100,7 @@ void CLASS_DECL_lnx AfxDeleteObject(HGDIOBJ* pObject)
 }*/
 
 /*
-void CLASS_DECL_lnx AfxcancelModes(oswindow hWndRcvr)
+void CLASS_DECL_LINUX AfxcancelModes(oswindow hWndRcvr)
 {
    // if we receive a message destined for a ::user::window, cancel any combobox
    //  popups that could be in toolbars or dialog bars
@@ -134,7 +134,7 @@ void CLASS_DECL_lnx AfxcancelModes(oswindow hWndRcvr)
 }*/
 
 /*
-void CLASS_DECL_lnx AfxGlobalFree(HGLOBAL hGlobal)
+void CLASS_DECL_LINUX AfxGlobalFree(HGLOBAL hGlobal)
 {
    if (hGlobal == NULL)
       return;

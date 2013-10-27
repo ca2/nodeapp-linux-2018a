@@ -5,7 +5,7 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_lnx main_init_data :
+   class CLASS_DECL_LINUX main_init_data :
       public ::core::main_init_data
    {
    public:
@@ -19,7 +19,7 @@ namespace lnx
    };
 
 
-   class CLASS_DECL_lnx application :
+   class CLASS_DECL_LINUX application :
       virtual public ::application
    {
    public:
