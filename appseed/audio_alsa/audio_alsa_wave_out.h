@@ -65,6 +65,8 @@ namespace multimedia
 
          virtual int underrun_recovery(int err);
 
+         int32_t wave_out_get_buffered_buffer_count();
+
       };
 
 

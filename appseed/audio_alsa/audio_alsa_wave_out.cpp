@@ -636,9 +636,9 @@ namespace multimedia
       void wave_out::wave_out_free(int iBuffer)
       {
 
-         //post_thread_message(MessageFree, iBuffer);
+         m_iBufferedCount++;
 
-         multimedia::audio::wave_out::wave_out_free(iBuffer);
+         post_thread_message(MessageFree, iBuffer);
 
       }
 
@@ -646,10 +646,7 @@ namespace multimedia
       void wave_out::wave_out_buffer_ready(int iBuffer)
       {
 
-         //post_thread_message(MessageReady, iBuffer);
-
-         alsa_out_buffer_ready(iBuffer);
-
+         post_thread_message(MessageReady, iBuffer);
 
       }
 
@@ -685,6 +682,11 @@ namespace multimedia
 
          int iBuffer = pbase->m_wparam;
 
+         m_iBufferedCount--;
+
+         if(m_iBufferedCount < 0)
+            m_iBufferedCount = 0;
+
          wave_out_out_buffer_done(iBuffer);
 
       }
@@ -706,23 +708,36 @@ namespace multimedia
          int result = 0;
 
 
+         int cptr = period_size;
+
+         ::multimedia::e_result mmr = result_success;
+
+         signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
 
-         snd_pcm_sframes_t avail = snd_pcm_avail_update(m_ppcm);
+         snd_pcm_sframes_t avail = 0;
+
+         if(m_ppcm == NULL)
+         {
+
+            goto finalize;
+
+         }
+
+
 
          while(avail >= 0 && avail < period_size)
          {
 
             if((result = snd_pcm_wait (m_ppcm, 1984)) < 0)
             {
-
                m_estate = state_opened;
 
                m_mmr = result_error;
 
                TRACE("alsa wave_out wait error: %s\n", snd_strerror(result));
 
-               return;
+               goto finalize;
 
             }
 
@@ -732,11 +747,6 @@ namespace multimedia
 
 
 
-         ::multimedia::e_result mmr = result_success;
-
-         signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
-
-         int cptr = period_size;
 
 
          /*
@@ -783,11 +793,9 @@ namespace multimedia
 
                   TRACE("alsa wave_out Write error: %s\n", snd_strerror(result));
 
-                  return;
-
                }
 
-               break; // skip one buffer
+               goto finalize;
 
             }
 
@@ -798,7 +806,7 @@ namespace multimedia
 
          }
 
-         m_iBufferedCount++;
+         finalize:
 
          sLock.unlock();
 
@@ -834,7 +842,6 @@ namespace multimedia
          if(failed(m_mmr))
             return m_mmr;
 
-
          return result_success;
 
       }
@@ -867,7 +874,13 @@ namespace multimedia
          //if(verbose)
            //printf("stream recovery\n");
 
-         if (err == -EPIPE)
+         if(m_pprebuffer->IsEOF() || wave_out_get_state() == state_stopping)
+         {
+
+            return 0;
+
+         }
+         else if (err == -EPIPE)
          {
 
             // under-run
@@ -910,6 +923,14 @@ namespace multimedia
          }
 
          return err;
+
+      }
+
+
+      int32_t wave_out::wave_out_get_buffered_buffer_count()
+      {
+
+         return m_iBufferedCount;
 
       }
 
