@@ -1788,7 +1788,7 @@ return false;
    }
 
 
-   CLASS_DECL_LINUX base_thread * get_thread()
+   CLASS_DECL_LINUX ::thread * get_thread()
    {
       ::lnx::thread * pwinthread = __get_thread();
       if(pwinthread == NULL)

@@ -207,7 +207,7 @@ namespace lnx
    };
 
 
-   CLASS_DECL_LINUX base_thread * get_thread();
+   CLASS_DECL_LINUX ::thread * get_thread();
 
 
 } // namespace lnx
