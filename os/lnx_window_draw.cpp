@@ -333,7 +333,7 @@ namespace lnx
       MESSAGE msg;
       s_bRunning = true;
       m_bRun = true;
-      ::get_thread()->m_pthread->m_bRun = true;
+      ::get_thread()->m_bRun = true;
       while(m_bRun && ::get_thread()->get_run())
       {
 #ifndef DEBUG

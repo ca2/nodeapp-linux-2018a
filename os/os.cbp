@@ -54,6 +54,7 @@
 			<Add directory="../../app/appseed" />
 			<Add directory="../../app" />
 			<Add directory="../../app/thirdparty/include" />
+			<Add directory="../../app/appseed/base" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-R\\$$$ORIGIN" />
@@ -64,9 +65,6 @@
 			<Add option="-lXmu" />
 			<Add option="-lbase" />
 			<Add option="-lbasefreeimage" />
-			<Add option="-lbasecairo" />
-			<Add option="-lbaseopenssl" />
-			<Add option="-lboot" />
 			<Add option="-lcore" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../stage/x86" />

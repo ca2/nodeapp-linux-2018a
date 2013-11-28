@@ -54,12 +54,12 @@ namespace lnx
 
    void application::_001OnFileNew()
    {
-      ::application_base::m_p->_001OnFileNew(NULL);
+      m_pimpl->_001OnFileNew(NULL);
    }
 
-   sp(::user::document_interface) application::_001OpenDocumentFile(var varFile)
+   sp(::user::object) application::_001OpenDocumentFile(var varFile)
    {
-      return ::application_base::m_p->_001OpenDocumentFile(varFile);
+      return m_pimpl->_001OpenDocumentFile(varFile);
    }
 
    void application::_001EnableShellOpen()
@@ -422,7 +422,7 @@ post_thread_message
 */
    bool application::process_initialize()
    {
-      if(::application_base::m_p->is_system())
+      if(m_pimpl->is_system())
       {
 /*
 if(__get_module_state()->m_pmapHWND == NULL)
@@ -478,7 +478,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
       ::thread::m_p->set_os_data(NULL);
 
       LNX_THREAD(::thread::m_p.m_p)->m_bRun = false;
-      //LNX_THREAD(::application_base::m_p->::thread_sp::m_p)->m_bRun = false;
+      //LNX_THREAD(m_pimpl->::thread_sp::m_p)->m_bRun = false;
 
       int32_t iRet = ::application::exit_instance();
 
@@ -575,9 +575,10 @@ if(__get_module_state()->m_pmapHWND == NULL)
          if(window->display() == NULL)
             continue;
 
-         Cursor cursor = XCreateFontCursor(window->display(), uiShape);
 
-         XDefineCursor(window->display(), window->window(), cursor);
+//         Cursor cursor = XCreateFontCursor(window->display(), uiShape);
+
+  //       XDefineCursor(window->display(), window->window(), cursor);
 
       }
 
@@ -746,7 +747,7 @@ if(__get_module_state()->m_pmapHWND == NULL)
 
       m_pmaininitdata = (::lnx::main_init_data *) pdata;
 
-      if(m_pmaininitdata != NULL && ::application_base::m_p->is_system())
+      if(m_pmaininitdata != NULL && m_pimpl->is_system())
       {
          if(!win_init(m_pmaininitdata))
             return false;

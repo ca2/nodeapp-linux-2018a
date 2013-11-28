@@ -102,7 +102,6 @@ typedef signed __int64   DECLSPEC_ALIGN(8) LONG64, *PLONG64;
 typedef unsigned __int64 DECLSPEC_ALIGN(8) ULONG64, *PULONG64;
 typedef unsigned __int64 DECLSPEC_ALIGN(8) DWORD64, *PDWORD64;
 #endif
-
 /* Basic pointer-sized integer types */
 
 #if defined(__midl) || defined(__WIDL__)

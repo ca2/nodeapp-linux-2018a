@@ -5,14 +5,14 @@ namespace lnx
 {
 
 
-   class CLASS_DECL_LINUX crypt :
-      virtual public ::core::crypt
+   class CLASS_DECL_LINUX crypto :
+      virtual public ::crypto::crypto
    {
    public:
 
 
-      crypt(sp(base_application) papp);
-      virtual ~crypt();
+      crypto(sp(base_application) papp);
+      virtual ~crypto();
 
 
       virtual bool encrypt(primitive::memory & storageEncrypt, const primitive::memory & storageDecrypt, const char * pszSalt);

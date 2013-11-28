@@ -133,7 +133,7 @@ UINT APIENTRY __thread_entry(void * pParam)
 //         threadWnd.Detach();
       pStartup->bError = TRUE;
       pStartup->hEvent.set_event();
-      __end_thread(pThread->m_pthread->m_pbaseapp, (UINT)-1, FALSE);
+      __end_thread(pThread->m_pbaseapp, (UINT)-1, FALSE);
       ASSERT(FALSE);  // unreachable
    }
 
@@ -591,9 +591,9 @@ namespace lnx
                try
                {
 #endif
-                  if(LNX_THREAD(pui->m_pthread->m_pthread) == this
-                  || LNX_THREAD(pui->m_pthread->m_pthread->m_p.m_p) == LNX_THREAD(m_p.m_p)
-                  || LNX_THREAD(pui->m_pthread->m_pthread) == LNX_THREAD(m_p.m_p))
+                  if(LNX_THREAD(pui->m_pthread.m_p) == this
+                  || LNX_THREAD(pui->m_pthread->m_p.m_p) == LNX_THREAD(m_p.m_p)
+                  || LNX_THREAD(pui->m_pthread.m_p) == LNX_THREAD(m_p.m_p))
                   {
                      pui->m_pthread = NULL;
                   }
@@ -705,7 +705,7 @@ namespace lnx
       try
       {
 #endif
-         if(LNX_THREAD(pui->m_pthread) == this)
+         if(LNX_THREAD(pui->m_pthread.m_p) == this)
          {
             pui->m_pthread = NULL;
          }
@@ -722,7 +722,7 @@ namespace lnx
 #endif
          if(pui->m_pimpl != NULL && pui->m_pimpl != pui)
          {
-            if(LNX_THREAD(pui->m_pimpl->m_pthread) == this)
+            if(LNX_THREAD(pui->m_pimpl->m_pthread.m_p) == this)
             {
                pui->m_pimpl->m_pthread = NULL;
             }
@@ -737,7 +737,7 @@ namespace lnx
       {
          if(pui->m_pguie != NULL && pui->m_pguie != pui)
          {
-            if(LNX_THREAD(pui->m_pguie->m_pthread) == this)
+            if(LNX_THREAD(pui->m_pguie->m_pthread.m_p) == this)
             {
                pui->m_pguie->m_pthread = NULL;
             }
@@ -1155,9 +1155,9 @@ stop_run:
                sp(::user::interaction) pui = puiptra->element_at(i);
                if(pui->m_pthread != NULL)
                {
-                  if(LNX_THREAD(pui->m_pthread->m_pthread) == this
-                  || LNX_THREAD(pui->m_pthread->m_pthread->m_p.m_p) == LNX_THREAD(m_p.m_p)
-                  || LNX_THREAD(pui->m_pthread->m_pthread) == LNX_THREAD(m_p.m_p))
+                  if(LNX_THREAD(pui->m_pthread.m_p) == this
+                  || LNX_THREAD(pui->m_pthread->m_p.m_p) == LNX_THREAD(m_p.m_p)
+                  || LNX_THREAD(pui->m_pthread.m_p) == LNX_THREAD(m_p.m_p))
                   {
                      pui->m_pthread = NULL;
                   }
@@ -1193,8 +1193,8 @@ stop_run:
 
    #if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
       // check ca2 API's allocator (before idle)
-      if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
-         ASSERT(__check_memory());
+      //if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
+        // ASSERT(__check_memory());
    #endif
 
       if(lCount <= 0 && m_puiptra != NULL)
@@ -1268,8 +1268,8 @@ stop_run:
 
    #if defined(DEBUG) && !defined(_AFX_NO_DEBUG_CRT)
       // check ca2 API's allocator (after idle)
-      if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
-         ASSERT(__check_memory());
+//      if (_CrtSetDbgFlag(_CRTDBG_REPORT_FLAG) & _CRTDBG_CHECK_ALWAYS_DF)
+  //       ASSERT(__check_memory());
    #endif
 
       return lCount < 0;  // nothing more to do if lCount >= 0
@@ -3351,10 +3351,10 @@ __STATIC inline WINBOOL IsButtonUp(LPMESSAGE lpMsg)
 */
 
 
-extern CLASS_DECL_BOOT PFN_get_thread g_pfn_get_thread;
+extern CLASS_DECL_LINUX PFN_get_thread g_pfn_get_thread;
 
 
-extern CLASS_DECL_BOOT PFN_get_thread_state g_pfn_get_thread_state;
+extern CLASS_DECL_LINUX PFN_get_thread_state g_pfn_get_thread_state;
 
 
 __attribute__((constructor))

@@ -5,19 +5,19 @@ namespace lnx
 {
 
 
-   crypt::crypt(sp(base_application) papp) :
+   crypto::crypto(sp(base_application) papp) :
       element(papp),
-      ::core::crypt(papp)
+      ::crypto::crypto(papp)
    {
    }
 
 
-   crypt::~crypt()
+   crypto::~crypto()
    {
    }
 
 
-   string crypt::get_crypt_key_file_path()
+   string crypto::get_crypt_key_file_path()
    {
 
       return System.dir().path(getenv("home"), ".ca2/cryptkey");
@@ -25,7 +25,7 @@ namespace lnx
    }
 
 
-   bool crypt::decrypt(primitive::memory & storageDecrypt, const primitive::memory & storageEncrypt, const char * pszSalt)
+   bool crypto::decrypt(primitive::memory & storageDecrypt, const primitive::memory & storageEncrypt, const char * pszSalt)
    {
 
       ::primitive::memory memOut;
@@ -34,7 +34,7 @@ namespace lnx
 
       memIn.append(storageEncrypt.get_data(), storageEncrypt.get_size());
 
-      if(!::crypt_decrypt(memOut, memIn, pszSalt))
+      if(!::crypto_decrypt(memOut, memIn, pszSalt))
          return false;
 
 
@@ -44,7 +44,7 @@ namespace lnx
 
    }
 
-   bool crypt::encrypt(primitive::memory & storageEncrypt, const primitive::memory & storageDecrypt, const char * pszSalt)
+   bool crypto::encrypt(primitive::memory & storageEncrypt, const primitive::memory & storageDecrypt, const char * pszSalt)
    {
 
       ::primitive::memory memOut;
@@ -53,7 +53,7 @@ namespace lnx
 
       memIn.append(storageDecrypt.get_data(), storageDecrypt.get_size());
 
-      if(!::crypt_encrypt(memOut, memIn, pszSalt))
+      if(!::crypto_encrypt(memOut, memIn, pszSalt))
          return false;
 
 

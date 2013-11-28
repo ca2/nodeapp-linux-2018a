@@ -1,11 +1,11 @@
 #include "framework.h"
 
 
-CLASS_DECL_BOOT int32_t ca2_main();
+CLASS_DECL_LINUX int32_t ca2_main();
 
-//CLASS_DECL_BOOT extern fixed_alloc_array * g_pfixedallocaWstring;
+//CLASS_DECL_LINUX extern fixed_alloc_array * g_pfixedallocaWstring;
 
-//CLASS_DECL_BOOT fixed_alloc_array * new_wstring_manager();
+//CLASS_DECL_LINUX fixed_alloc_array * new_wstring_manager();
 
 void CLASS_DECL_LINUX __cdecl _ca2_purecall()
 {
@@ -132,6 +132,8 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
 
    //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
 
+   ::draw2d_xlib::factory_exchange f(psystem);
+
    nReturnCode = psystem->main();
 
    try
@@ -208,7 +210,7 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
    }*/
 
 
-   set_heap_mutex(NULL);
+//   set_heap_mutex(NULL);
 
    return nReturnCode;
 
@@ -304,7 +306,7 @@ int32_t CLASS_DECL_LINUX ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
       {
       }*/
 
-      set_heap_mutex(NULL);
+//      set_heap_mutex(NULL);
 
 
       return nReturnCode;

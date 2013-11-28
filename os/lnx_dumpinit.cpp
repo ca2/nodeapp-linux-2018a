@@ -12,7 +12,7 @@ static _CRT_DUMP_CLIENT pfnOldCrtDumpClient = NULL;
 
 void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
 {
-   char sz[1024];
+/*   char sz[1024];
    try
    {
 
@@ -41,7 +41,7 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
             break;
       }*/
 
-      if(pobject == NULL)
+/*      if(pobject == NULL)
       {
 // xxx            C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "unknown object at $%p, %u bytes long\n", pvData, nBytes));
       }
@@ -58,20 +58,20 @@ void __cdecl __crt_dump_client(void * pvData, size_t nBytes)
 // xxx         C_RUNTIME_ERRORCHECK_SPRINTF(_snprintf_s(sz, _countof(sz), _countof(sz) - 1, "a %hs object at $%p, %u bytes long\n", typeid(obj).name(), pvData, nBytes));
          g_dumpcontext << sz;
       }
-   }
+   }*/
 /* xxx   catch(std::__non_rtti_object & e)
    {
       g_dumpcontext << "_::ca2::CrtdumpClient __non_rtti_object ";
       g_dumpcontext << e.what();
    } */
-   catch(...)
+/*   catch(...)
    {
       // short form for trashed objects
 // xxx      sprintf_s(sz, _countof(sz), "faulted while dumping object at $%p, %u bytes long\n", pvData, nBytes);
       g_dumpcontext << sz;
    }
    if (pfnOldCrtDumpClient != NULL)
-      (*pfnOldCrtDumpClient)(pvData, nBytes);
+      (*pfnOldCrtDumpClient)(pvData, nBytes);*/
 }
 
 int32_t __cdecl __crt_report_hook(int32_t nRptType, char *szMsg, int32_t* pResult)
@@ -104,30 +104,30 @@ int32_t __cdecl __crt_report_hook(int32_t nRptType, char *szMsg, int32_t* pResul
 ___DEBUG_STATE::___DEBUG_STATE()
 {
 #ifndef ___NO_DEBUG_CRT
-   ASSERT(pfnOldCrtDumpClient == NULL);
+   /*ASSERT(pfnOldCrtDumpClient == NULL);
    pfnOldCrtDumpClient = _CrtSetDumpClient(__crt_dump_client);
 
    ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_INSTALL,__crt_report_hook) != -1);
-   _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_WNDW);
+   _CrtSetReportMode(_CRT_ASSERT, _CRTDBG_MODE_WNDW);*/
 #endif // ___NO_DEBUG_CRT
 }
 
 ___DEBUG_STATE::~___DEBUG_STATE()
 {
 #ifndef ___NO_DEBUG_CRT
-   if(::is_debugger_attached() && false)
+/*   if(::is_debugger_attached() && false)
    {
       try
       {
          _CrtDumpMemoryLeaks();
-      }
+      }*/
 /*  xxx     catch(std::__non_rtti_object & e)
       {
          ::OutputDebugString("~___DEBUG_STATE _CrtdumpMemoryLeaks std::__non_rtti_object\n");
          ::OutputDebugString(e.what());
          ::OutputDebugString("\n");
       } */
-      catch(...)
+/*      catch(...)
       {
          ::OutputDebugString("~___DEBUG_STATE _CrtdumpMemoryLeaks exception\n");
       }
@@ -136,7 +136,7 @@ ___DEBUG_STATE::~___DEBUG_STATE()
    _CrtSetDbgFlag(nOldState & ~_CRTDBG_LEAK_CHECK_DF);
 
    ASSERT(_CrtSetReportHook2(_CRT_RPTHOOK_REMOVE,__crt_report_hook) != -1);
-   _CrtSetDumpClient(pfnOldCrtDumpClient);
+   _CrtSetDumpClient(pfnOldCrtDumpClient);*/
 #endif // ___NO_DEBUG_CRT
 }
 

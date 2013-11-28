@@ -26,6 +26,7 @@ namespace lnx
       bool                          m_bExposing;
       XWindowAttributes             m_attr;
       int32_t                       m_iDepth;
+      int32_t                       m_iScreen;
       XVisualInfo                   m_visualinfo;
 
 
@@ -61,7 +62,7 @@ namespace lnx
 
       virtual oswindow get_handle() const;
 
-      virtual bool _001OnCmdMsg(BaseCmdMsg * pcmdmsg);
+      virtual bool _001OnCmdMsg(base_cmd_msg * pcmdmsg);
 
       virtual bool BaseOnControlEvent(::user::control_event * pevent);
 
@@ -155,8 +156,8 @@ namespace lnx
 
    #endif   // WINVER >= 0x0500
 
-      LRESULT send_message(UINT message, WPARAM wParam = 0, lparam lParam = NULL);
-      bool post_message(UINT message, WPARAM wParam = 0, lparam lParam = NULL);
+      LRESULT send_message(UINT message, WPARAM wParam = 0, lparam lparam = 0);
+      bool post_message(UINT message, WPARAM wParam = 0, lparam lparam = 0);
 
       bool SendNotifyMessage(UINT message, WPARAM wParam, lparam lParam);
       bool SendChildNotifyLastMsg(LRESULT* pResult = NULL);

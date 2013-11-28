@@ -34,8 +34,8 @@ struct __CTLCOLOR
    UINT nCtlType;
 };
 
-extern cairo_surface_t *  g_cairosurface;
-extern cairo_t *  g_cairo;
+//extern cairo_surface_t *  g_cairosurface;
+//extern cairo_t *  g_cairo;
 
 WINBOOL PeekMessage(
     LPMESSAGE lpMsg,
@@ -147,7 +147,7 @@ namespace lnx
          System.user()->m_pwindowmap->m_map.remove_key((int_ptr) get_handle());
       }
 
-      //single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
+      //single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
       if(m_pfont != NULL)
       {
          delete m_pfont;
@@ -330,89 +330,7 @@ namespace lnx
    }
 
 
- /* MWM decorations values */
- #define MWM_DECOR_NONE          0
- #define MWM_DECOR_ALL           (1L << 0)
- #define MWM_DECOR_BORDER        (1L << 1)
- #define MWM_DECOR_RESIZEH       (1L << 2)
- #define MWM_DECOR_TITLE         (1L << 3)
- #define MWM_DECOR_MENU          (1L << 4)
- #define MWM_DECOR_MINIMIZE      (1L << 5)
- #define MWM_DECOR_MAXIMIZE      (1L << 6)
 
- /* KDE decoration values */
- enum {
-  KDE_noDecoration = 0,
-  KDE_normalDecoration = 1,
-  KDE_tinyDecoration = 2,
-  KDE_noFocus = 256,
-  KDE_standaloneMenuBar = 512,
-  KDE_desktopIcon = 1024 ,
-  KDE_staysOnTop = 2048
- };
-
- void wm_nodecorations(oswindow w, int map) {
-    Atom WM_HINTS;
-    int set;
-
-
-   single_lock sl(&user_mutex(), true);
-
-xdisplay d(w->display());
-    Display * dpy = w->display();
-    Window window = w->window();
-
-   int scr=DefaultScreen(dpy);
-   Window rootw=RootWindow(dpy, scr);
-
-    WM_HINTS = XInternAtom(dpy, "_MOTIF_WM_HINTS", True);
-    if ( WM_HINTS != None ) {
-        #define MWM_HINTS_DECORATIONS   (1L << 1)
-        struct {
-          unsigned long flags;
-          unsigned long functions;
-          unsigned long decorations;
-                   long input_mode;
-          unsigned long status;
-        } MWMHints = { MWM_HINTS_DECORATIONS, 0,
-            MWM_DECOR_NONE, 0, 0 };
-        XChangeProperty(dpy, window, WM_HINTS, WM_HINTS, 32,
-                        PropModeReplace, (unsigned char *)&MWMHints,
-                        sizeof(MWMHints)/4);
-    }
-    WM_HINTS = XInternAtom(dpy, "KWM_WIN_DECORATION", True);
-    if ( WM_HINTS != None ) {
-        long KWMHints = KDE_tinyDecoration;
-        XChangeProperty(dpy, window, WM_HINTS, WM_HINTS, 32,
-                        PropModeReplace, (unsigned char *)&KWMHints,
-                        sizeof(KWMHints)/4);
-    }
-
-    WM_HINTS = XInternAtom(dpy, "_WIN_HINTS", True);
-    if ( WM_HINTS != None ) {
-        long GNOMEHints = 0;
-        XChangeProperty(dpy, window, WM_HINTS, WM_HINTS, 32,
-                        PropModeReplace, (unsigned char *)&GNOMEHints,
-                        sizeof(GNOMEHints)/4);
-    }
-    WM_HINTS = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", True);
-    if ( WM_HINTS != None ) {
-        Atom NET_WMHints[2];
-        NET_WMHints[0] = XInternAtom(dpy,
-            "_KDE_NET_WM_WINDOW_TYPE_OVERRIDE", True);
-        NET_WMHints[1] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_NORMAL", True);
-        XChangeProperty(dpy, window,
-                        WM_HINTS, XA_ATOM, 32, PropModeReplace,
-                        (unsigned char *)&NET_WMHints, 2);
-    }
-    XSetTransientForHint(dpy, window, rootw);
-    if(map)
-    {
-    XUnmapWindow(dpy, window);
-    XMapWindow(dpy, window);
-
-    }
- }
 
    bool window::CreateEx(DWORD dwExStyle, const char * lpszClassName,
       const char * lpszWindowName, DWORD dwStyle,
@@ -485,7 +403,6 @@ xdisplay d(w->display());
          Window rootwin;
 
          XEvent e;
-         int32_t scr;
    //      cairo_surface_t *cs;
 
 
@@ -504,8 +421,8 @@ xdisplay d(w->display());
 
         xdisplay d(display);
 
-         scr      =  DefaultScreen(display);
-         rootwin  =  RootWindow(display, scr);
+         m_iScreen      =  DefaultScreen(display);
+         rootwin        =  RootWindow(display, m_iScreen);
 
          if(cs.cx <= 256)
             cs.cx = 256;
@@ -532,7 +449,9 @@ xdisplay d(w->display());
 
          // query Visual for "TrueColor" and 32 bits depth (RGBA)
          Visual * vis = DefaultVisual(display, DefaultScreen(display));
-         int depth = 0;
+
+         m_iDepth = 0;
+
          {
 
 
@@ -540,7 +459,6 @@ xdisplay d(w->display());
             if(XMatchVisualInfo(display, DefaultScreen(display), 32, TrueColor, &m_visualinfo))
             {
                 vis = m_visualinfo.visual;
-                depth = m_visualinfo.depth;
             }
             else
             {
@@ -549,6 +467,9 @@ xdisplay d(w->display());
 
 
          }
+
+         m_iDepth = m_visualinfo.depth;
+
          // create window
 
          XSetWindowAttributes attr;
@@ -567,10 +488,7 @@ xdisplay d(w->display());
 
          attr.override_redirect = True;
 
-         Window window = XCreateWindow( display, DefaultRootWindow(display), 256, 256, cs.cx, cs.cy, 0, depth, InputOutput, vis, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
-
-
-
+         Window window = XCreateWindow( display, DefaultRootWindow(display), 256, 256, cs.cx, cs.cy, 0, m_iDepth, InputOutput, vis, CWColormap|CWEventMask|CWBackPixmap|CWBorderPixel, &attr);
 
          /*oswindow hWnd = ::CreateWindowEx(cs.dwExStyle, cs.lpszClass,
             cs.lpszName, cs.style, cs.x, cs.y, cs.cx, cs.cy,
@@ -604,16 +522,13 @@ xdisplay d(w->display());
          }
    #endif
 
-         m_oswindow = oswindow_get(display, window, vis);
+         m_oswindow = oswindow_get(display, window, vis, m_iDepth, m_iScreen, attr.colormap);
 
          m_oswindow->set_user_interaction(m_pguie);
 
          XGetWindowAttributes(m_oswindow->display(), m_oswindow->window(), &m_attr);
 
-
-         m_pgraphics = new window_cairo();
-
-         m_iDepth = depth;
+         m_pgraphics = new window_xlib();
 
          int event_base, error_base, major_version, minor_version;
 
@@ -653,7 +568,7 @@ d.unlock();
 
          send_message(WM_SIZE);
 
-         LNX_THREAD(m_pthread->m_pthread->m_p.m_p)->m_oswindowa.add(m_oswindow);
+         LNX_THREAD(m_pthread->m_p.m_p)->m_oswindowa.add(m_oswindow);
 
       }
 
@@ -819,7 +734,7 @@ d.unlock();
          pdraw->m_wndpaOut.remove(this);
          pdraw->m_wndpaOut.remove(m_pguie);
       }
-      LNX_THREAD(m_pthread)->m_oswindowa.remove(m_oswindow);
+      LNX_THREAD(m_pthread.m_p)->m_oswindowa.remove(m_oswindow);
       oswindow_remove(m_oswindow->display(), m_oswindow->window());
    }
 
@@ -833,7 +748,7 @@ d.unlock();
    void window::_001OnNcDestroy(::signal_details * pobj)
    {
 
-      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
+      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
 
       pobj->m_bRet = true;
 
@@ -1043,7 +958,7 @@ d.unlock();
 
       }
 
-      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_pthread->m_mutex, TRUE);
+      single_lock sl(m_pthread == NULL ? NULL : &m_pthread->m_mutex, TRUE);
       sp(::user::window) pWnd;
       hwnd_map * pMap;
       oswindow hWndOrig;
@@ -1445,7 +1360,7 @@ d.unlock();
 
 
 
-   bool window::_001OnCmdMsg(BaseCmdMsg * pcmdmsg)
+   bool window::_001OnCmdMsg(base_cmd_msg * pcmdmsg)
    {
       if(command_target_interface::_001OnCmdMsg(pcmdmsg))
          return TRUE;
@@ -1501,7 +1416,7 @@ d.unlock();
 
       if(pbase->m_uiMessage == WM_TIMER)
       {
-         //m_pthread->m_pthread->step_timer();
+         //m_pthread->step_timer();
       }
       else if(pbase->m_uiMessage == WM_LBUTTONDOWN)
       {
@@ -2472,7 +2387,7 @@ restart_mouse_hover_check:
    sp(::user::interaction) PASCAL window::GetDescendantWindow(sp(::user::interaction) hWnd, id id)
    {
 
-      single_lock sl(&hWnd->m_pthread->m_pthread->m_mutex, TRUE);
+      single_lock sl(&hWnd->m_pthread->m_mutex, TRUE);
 
       for(int32_t i = 0; i < hWnd->m_uiptraChild.get_count(); i++)
       {
@@ -4028,8 +3943,8 @@ throw not_implemented(get_app());
       m_iModalCount++;
 
       m_iaModalThread.add(::GetCurrentThreadId());
-      sp(base_application) pappThis1 =  (m_pthread->m_pthread->m_p);
-      sp(base_application) pappThis2 =  (m_pthread->m_pthread);
+      sp(base_application) pappThis1 =  (m_pthread->m_p);
+      sp(base_application) pappThis2 =  (m_pthread);
 
             //Display * d = XOpenDisplay(NULL);
             //XEvent  e;
@@ -4045,7 +3960,7 @@ throw not_implemented(get_app());
          // phase1: check to see if we can do idle work
          while (bIdle && !::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE))
          {
-            LNX_THREAD(m_pthread->m_pthread->m_p.m_p)->defer_process_windows_messages();
+            LNX_THREAD(m_pthread->m_p.m_p)->defer_process_windows_messages();
 //            if(XCheckTypedEvent(d, -1, &e))
             {
 
@@ -4075,14 +3990,14 @@ throw not_implemented(get_app());
 
             }
 
-            m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
+            m_pthread->m_p->m_dwAlive = m_pthread->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_pplaneapp->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+               pappThis1->m_pplaneapp->m_dwAlive = m_pthread->m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_pplaneapp->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+               pappThis2->m_pplaneapp->m_dwAlive = m_pthread->m_dwAlive;
             }
             if(pliveobject != NULL)
             {
@@ -4094,7 +4009,7 @@ throw not_implemented(get_app());
          // phase2: pump messages while available
          do
          {
-            LNX_THREAD(m_pthread->m_pthread->m_p.m_p)->defer_process_windows_messages();
+            LNX_THREAD(m_pthread->m_p.m_p)->defer_process_windows_messages();
 //            if(XCheckTypedEvent(d, -1, &e))
             {
 
@@ -4104,7 +4019,7 @@ throw not_implemented(get_app());
                goto ExitModal;
 
             // pump message, but quit on WM_QUIT
-            if (!m_pthread->m_pthread->pump_message())
+            if (!m_pthread->pump_message())
             {
                __post_quit_message(0);
                return -1;
@@ -4129,14 +4044,14 @@ throw not_implemented(get_app());
                lIdleCount = 0;
             }
 
-            m_pthread->m_pthread->m_p->m_dwAlive = m_pthread->m_pthread->m_dwAlive = ::get_tick_count();
+            m_pthread->m_p->m_dwAlive = m_pthread->m_dwAlive = ::get_tick_count();
             if(pappThis1 != NULL)
             {
-               pappThis1->m_pplaneapp->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+               pappThis1->m_pplaneapp->m_dwAlive = m_pthread->m_dwAlive;
             }
             if(pappThis2 != NULL)
             {
-               pappThis2->m_pplaneapp->m_dwAlive = m_pthread->m_pthread->m_dwAlive;
+               pappThis2->m_pplaneapp->m_dwAlive = m_pthread->m_dwAlive;
             }
             if(pliveobject != NULL)
             {
@@ -4154,7 +4069,7 @@ throw not_implemented(get_app());
 
          if(m_pguie->m_pthread != NULL)
          {
-            m_pguie->m_pthread->m_pthread->step_timer();
+            m_pguie->m_pthread->step_timer();
          }
          if (!ContinueModal(iLevel))
             goto ExitModal;
@@ -5399,7 +5314,7 @@ if(psurface == g_cairosurface)
 
         UNREFERENCED_PARAMETER(lpfnTimer);
 
-        m_pguie->m_pthread->m_pthread->set_timer(m_pguie, nIDEvent, nElapse);
+        m_pguie->m_pthread->set_timer(m_pguie, nIDEvent, nElapse);
 
         return nIDEvent;
 
@@ -5413,7 +5328,7 @@ if(psurface == g_cairosurface)
    bool window::KillTimer(uint_ptr nIDEvent)
    {
 
-       m_pguie->m_pthread->m_pthread->unset_timer(m_pguie, nIDEvent);
+       m_pguie->m_pthread->unset_timer(m_pguie, nIDEvent);
 
        return TRUE;
 
