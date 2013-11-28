@@ -53,8 +53,8 @@
 			<Add directory="." />
 			<Add directory=".." />
 			<Add directory="../.." />
-			<Add directory="../../../app/appseed/boot" />
 			<Add directory="../../../app/appseed/core" />
+			<Add directory="../../../app/appseed/base" />
 			<Add directory="../../../app/appseed" />
 			<Add directory="../../../app" />
 			<Add directory="../../../app/thirdparty/include" />
@@ -65,13 +65,10 @@
 			<Add option="-Wl,-z,origin" />
 			<Add option="-lbase" />
 			<Add option="-lbasepixman" />
-			<Add option="-lbasezlib" />
 			<Add option="-lbasefreeimage" />
 			<Add option="-lbasefreetype" />
-			<Add option="-lbaseopenssl" />
 			<Add option="-lbasemysql" />
 			<Add option="-lbasecairo" />
-			<Add option="-lboot" />
 			<Add option="-lcore" />
 			<Add option="-lasound" />
 			<Add option="-lmultimedia" />
