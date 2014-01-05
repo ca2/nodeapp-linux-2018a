@@ -355,23 +355,24 @@ namespace lnx
          else if(::str::begins_ci(strFilePath, "http://")
          || ::str::begins_ci(strFilePath, "https://"))
          {
-            ::property_set post;
-            ::property_set headers;
+
             if(varQuery.has_property("post"))
             {
-               post = varQuery["post"].propset();
+               //varpost = varQuery["post"].propset();
             }
             if(varQuery.has_property("in_headers"))
             {
-               headers = varQuery["in_headers"].propset();
+               varQuery["headers"] = varQuery["in_headers"].propset();
             }
             if(varQuery.propset()["disable_ca2_sessid"])
             {
-               App(papp).http().get(strFilePath, storage, post, headers, varQuery.propset(), NULL, NULL);
+
+               App(papp).http().get(strFilePath, storage, varQuery.propset());
+
             }
             else if(varQuery.propset()["optional_ca2_sessid"])
             {
-               App(papp).http().get(strFilePath, storage, post, headers, varQuery.propset(), NULL, NULL);
+               App(papp).http().get(strFilePath, storage, varQuery.propset());
             }
             else if(strFilePath.contains("/matter.ca2.cc/") || strFilePath.contains(".matter.ca2.cc/"))
             {
@@ -385,9 +386,15 @@ namespace lnx
             }
             else
             {
-               App(papp).http().get(strFilePath, storage, post, headers, varQuery.propset(), NULL, &AppUser(papp));
+
+               varQuery.propset().set_app(papp);
+
+               App(papp).http().get(strFilePath, storage, varQuery.propset());
+
             }
-            varQuery["out_headers"] = headers;
+
+            varQuery["out_headers"] = varQuery["get_headers"];
+
          }
          else
          {
@@ -440,7 +447,9 @@ namespace lnx
          if((::str::begins(strPath, "http://") || ::str::begins(strPath, "https://")))
          {
 
-            App(papp).http().get(strPath, mem, &AppUser(papp));
+            property_set set(papp);
+
+            App(papp).http().get(strPath, mem, set);
 
             return;
 
@@ -960,7 +969,11 @@ namespace lnx
       }
       else if(::str::begins_ci_iws(pszPath, "http://") || ::str::begins_ci_iws(pszPath, "https://"))
       {
-         return App(papp).http().exists(pszPath);
+
+         property_set set(papp);
+
+         return App(papp).http().exists(pszPath, set);
+
       }
 
       if(papp->m_pplaneapp->m_bZipIsDir)
@@ -1010,7 +1023,11 @@ namespace lnx
       if(::str::begins_ci_iws(strPath, "http://")
       || ::str::begins_ci_iws(strPath, "https://"))
       {
-         return App(papp).http().exists(strPath);
+
+         property_set set(papp);
+
+         return App(papp).http().exists(strPath, set);
+
       }
 
 

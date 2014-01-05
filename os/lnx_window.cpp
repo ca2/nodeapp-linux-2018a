@@ -1542,15 +1542,22 @@ d.unlock();
 
          }
 
-         ::plane::session * psession = NULL;
+         sp(base_session) psession;
+
          if(m_pbaseapp->m_pplaneapp->is_system())
          {
+
             psession = System.query_session(0);
+
             if(psession != NULL && psession->m_bSessionSynchronizedCursor)
             {
+
                psession->m_ptCursor = pmouse->m_pt;
+
             }
+
          }
+
 
          if(m_bTranslateMouseMessageCursor && !pmouse->m_bTranslated)
          {
@@ -6550,35 +6557,6 @@ if(psurface == g_cairosurface)
 
 
 } // namespace lnx
-
-
-CTestCmdUI::CTestCmdUI(sp(base_application) papp) :
-   element(papp),
-   cmd_ui(papp)
-{
-   m_bEnabled = TRUE;  // assume it is enabled
-}
-
-void CTestCmdUI::Enable(bool bOn)
-{
-   m_bEnabled = bOn;
-   m_bEnableChanged = TRUE;
-}
-
-void CTestCmdUI::SetCheck(int32_t)
-{
-   // do nothing -- just want to know about calls to Enable
-}
-
-void CTestCmdUI::SetRadio(bool)
-{
-   // do nothing -- just want to know about calls to Enable
-}
-
-void CTestCmdUI::SetText(const char *)
-{
-   // do nothing -- just want to know about calls to Enable
-}
 
 
 /////////////////////////////////////////////////////////////////////////////

@@ -6,7 +6,7 @@
 #include <ctype.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
-#include <X11/Xmu/Atoms.h>
+#include <X11/Xmu/Atoms.h> // Ubutnu libxmu-dev
 //#include "xcdef.h"
 //#include "xcprint.h"
 //#include "xclib.h"
