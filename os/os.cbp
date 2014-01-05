@@ -45,6 +45,8 @@
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
 			<Add option="-fPIC" />
+			<Add directory="../../include" />
+			<Add directory="../../app/include" />
 			<Add directory="../../app/appseed/core" />
 			<Add directory="../../app/thirdparty/appseed" />
 			<Add directory="." />
