@@ -49,6 +49,8 @@
 			<Add option="-Wno-conversion-null" />
 			<Add option="-fPIC" />
 			<Add option="-D_AUDIO_ALSA_LIBRARY" />
+			<Add directory="../../../include" />
+			<Add directory="../../../app/include" />
 			<Add directory="../../../app/thirdparty/appseed" />
 			<Add directory="." />
 			<Add directory=".." />
