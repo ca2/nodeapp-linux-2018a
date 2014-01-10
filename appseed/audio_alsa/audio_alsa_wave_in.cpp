@@ -48,6 +48,8 @@ namespace multimedia
       ::multimedia::e_result wave_in::wave_in_open(int32_t iBufferCount, int32_t iBufferSampleCount)
       {
 
+         return result_success;
+
          if(m_ppcm != NULL && m_estate != state_initial)
          {
 
@@ -262,6 +264,7 @@ Opened:
 
       ::multimedia::e_result wave_in::wave_in_start()
       {
+         return result_success;
 
          single_lock sLock(&m_mutex, TRUE);
 

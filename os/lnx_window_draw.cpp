@@ -391,7 +391,7 @@ namespace lnx
          return false;
 
 
-      single_lock ml(&user_mutex(), true);
+      //single_lock ml(&user_mutex(), true);
       //single_lock sl(&m_mutexRender, FALSE);
       //if(!sl.lock(duration::zero()))
         // return false;
