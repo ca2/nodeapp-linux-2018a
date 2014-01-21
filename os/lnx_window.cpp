@@ -840,7 +840,7 @@ d.unlock();
 
    void window::assert_valid() const
    {
-      if (get_handle() == NULL)
+      if (((window *) this)->get_handle() == NULL)
          return;     // null (unattached) windows are valid
 
       // check for special wnd??? values
@@ -896,7 +896,7 @@ d.unlock();
    {
       ::object::dump(dumpcontext);
 
-      dumpcontext << "\nm_hWnd = " << (void *)get_handle();
+      dumpcontext << "\nm_hWnd = " << (void *)((window *) this)->get_handle();
 
 /*      if (get_handle() == NULL || get_handle() == oswindow_BOTTOM ||
          get_handle() == oswindow_TOPMOST || get_handle() == oswindow_NOTOPMOST)
@@ -4246,7 +4246,7 @@ throw not_implemented(get_app());
       return ::IsWindow((oswindow) get_handle()) != FALSE;
    }
 
-   oswindow window::get_handle() const
+   oswindow window::get_handle()
    {
       return (oswindow) get_os_data();
    }
@@ -4661,7 +4661,7 @@ throw not_implemented(get_app());
    }
 
 
-   sp(::user::interaction) window::get_parent() const
+   sp(::user::interaction) window::get_parent()
    {
       if(!::IsWindow((oswindow) get_handle()))
          return NULL;
@@ -4751,12 +4751,12 @@ throw not_implemented(get_app());
    { return this == NULL ? NULL : get_handle(); }*/
    bool window::operator==(const ::user::window& wnd) const
    {
-      return LNX_WINDOW(const_cast < ::user::window * >  (&wnd))->get_handle() == get_handle();
+      return LNX_WINDOW(const_cast < ::user::window * >  (&wnd))->get_handle() ==((window *)this)->get_handle();
    }
 
    bool window::operator!=(const ::user::window& wnd) const
    {
-      return LNX_WINDOW(const_cast < ::user::window * >  (&wnd))->get_handle() != get_handle();
+      return LNX_WINDOW(const_cast < ::user::window * >  (&wnd))->get_handle() != ((window *)this)->get_handle();
    }
 
    DWORD window::GetStyle()
