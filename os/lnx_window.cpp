@@ -913,7 +913,7 @@ d.unlock();
       }*/
 
       sp(::user::window) pWnd = (::user::window *) this;
-      if (pWnd != this)
+      if (pWnd.m_p != this)
          dumpcontext << " (Detached or temporary window)";
       else
          dumpcontext << " (permanent window)";
