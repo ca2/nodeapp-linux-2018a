@@ -24,6 +24,7 @@ namespace music
          m_midicallbackdata.m_psequence = this;
 
          m_iClient = 128;
+         //m_iClient = 16;
          m_iPort = 0;
 
 
