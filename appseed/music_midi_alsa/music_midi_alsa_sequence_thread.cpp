@@ -360,6 +360,8 @@ namespace music
 
                PostMidiSequenceEvent(pseq, ::music::midi::sequence::EventMidiPlaybackEnd);
 
+               return;
+
             }
 
             Sleep(84);
