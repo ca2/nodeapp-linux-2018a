@@ -11,6 +11,7 @@ namespace music
 
       out::out(sp(base_application) papp) :
          element(papp),
+         ::music::midi::object(papp),
          ::music::midi::out(papp)
       {
 

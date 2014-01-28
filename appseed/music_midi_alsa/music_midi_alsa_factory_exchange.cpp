@@ -18,6 +18,7 @@ namespace music
          System.factory().cloneable_large < sequence_thread              >  (System.type_info < ::music::midi::sequence_thread                 > ());
          System.factory().cloneable_large < ::music::midi_alsa::player::player              >  (System.type_info < ::music::midi::player::player                 > ());
          System.factory().cloneable_large < ::music::midi_alsa::player:: player_interface              >  (System.type_info < ::music::midi::player::player_interface                 > ());
+         System.factory().cloneable_large < ::music::midi_alsa::midi              >  (System.type_info < ::music::midi::midi                 > ());
 
       }
 

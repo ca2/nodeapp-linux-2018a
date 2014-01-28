@@ -14,13 +14,14 @@ namespace music
 
       sequence::sequence(sp(base_application) papp) :
          element(papp),
+         ::music::midi::object(papp),
          ::ikaraoke::karaoke(papp),
          ::music::midi::sequence(papp)
       {
 
          m_pseq = NULL;
 
-         m_buffera.Initialize(16, m_cbPreroll, 0);
+         m_buffera.Initialize(16, 4 * 1024, 0);
          m_midicallbackdata.m_psequence = this;
 
          m_iClient = 128;
