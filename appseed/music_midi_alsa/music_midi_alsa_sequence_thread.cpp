@@ -395,6 +395,7 @@ namespace music
          catch(...)
          {
          }
+         spcommand->OnFinish();
       }
 
 
@@ -416,7 +417,6 @@ namespace music
                {
                   Play();
                }
-               spcommand->OnFinish();
             }
             break;
          case ::music::midi::player::command_close_device:
@@ -425,7 +425,6 @@ namespace music
                {
                   get_sequence()->CloseFile();
                }
-               spcommand->OnFinish();
             }
             break;
          case ::music::midi::player::command_stop:
