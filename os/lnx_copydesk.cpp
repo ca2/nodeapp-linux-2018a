@@ -638,7 +638,7 @@ namespace lnx
 //      if(!m_p->OpenClipboard())
   //       return 0;
       int32_t iCount = 0;
-      throw todo(get_app());
+      //throw todo(get_app());
       /* xxx HDROP hdrop = (HDROP) ::GetClipboardData(CF_HDROP);
       if(hdrop != NULL)
       {
