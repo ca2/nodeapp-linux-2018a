@@ -54,6 +54,7 @@
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../os/os.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/rdpclient/rdpclient.cbp" />
 		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
@@ -95,9 +96,11 @@
 			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 		</Project>
+		<Project filename="../../../app/thirdparty/appseed/channels/clientchannels.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
+		<Project filename="../../../app/thirdparty/appseed/freerdp/freerdp.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
@@ -112,6 +115,7 @@
 		<Project filename="../../../app/thirdparty/appseed/pixman/pixman.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
+		<Project filename="../../../app/thirdparty/appseed/winpr/winpr.cbp" />
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
