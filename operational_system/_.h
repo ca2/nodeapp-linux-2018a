@@ -43,7 +43,7 @@
 #define OS64BIT
 #endif
 
-
+//#define NO_LCMS
 
 
 

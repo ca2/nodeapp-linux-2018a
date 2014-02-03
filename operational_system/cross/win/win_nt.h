@@ -271,7 +271,7 @@ extern "C" {
 #ifndef UNALIGNED
 #if defined(_MSC_VER) && (defined(_M_MRX000) || defined(_M_ALPHA) || defined(_M_PPC) || defined(_M_IA64) || defined(_M_AMD64))
 # define UNALIGNED __unaligned
-# ifdef _WIN64
+# ifdef OS64BIT
 #  define UNALIGNED64 __unaligned
 # else
 #  define UNALIGNED64
@@ -284,7 +284,7 @@ extern "C" {
 
 /* Alignment macros */
 
-#if defined(_WIN64) || (defined(_MSC_VER) && defined(_M_ALPHA)) || defined(__alpha__)
+#if defined(OS64BIT) || (defined(_MSC_VER) && defined(_M_ALPHA)) || defined(__alpha__)
 #define MAX_NATURAL_ALIGNMENT sizeof(ULONGLONG)
 #define MEMORY_ALLOcaTION_ALIGNMENT 16
 #else
@@ -300,7 +300,7 @@ extern "C" {
 # define TYPE_ALIGNMENT(t) FIELD_OFFSET(struct { char x; t test; }, test)
 #endif
 
-#ifdef _WIN64
+#ifdef OS64BIT
 # define PROBE_ALIGNMENT(_s) \
     (TYPE_ALIGNMENT(_s) > TYPE_ALIGNMENT(DWORD) ? \
     TYPE_ALIGNMENT(_s) : TYPE_ALIGNMENT(DWORD))
@@ -580,7 +580,7 @@ typedef DWORD FLONG;
 #define PROCESSOR_ARM_7TDMI      70001
 #define PROCESSOR_OPTIL          18767
 
-#ifdef _WIN64
+#ifdef OS64BIT
 #define MAXIMUM_PROCESSORS       64
 #else
 #define MAXIMUM_PROCESSORS       32
@@ -663,7 +663,7 @@ typedef struct _SINGLE_LIST_ENTRY {
   struct _SINGLE_LIST_ENTRY *Next;
 } SINGLE_LIST_ENTRY, *PSINGLE_LIST_ENTRY;
 
-#ifdef _WIN64
+#ifdef OS64BIT
 
 //typedef struct DECLSPEC_ALIGN(16) _SLIST_ENTRY *PSLIST_ENTRY;
 typedef struct _SLIST_ENTRY *PSLIST_ENTRY;
@@ -2722,7 +2722,7 @@ typedef struct _IMAGE_VXD_HEADER {
 #define IMAGE_NT_OPTIONAL_HDR64_MAGIC      0x20b
 #define IMAGE_ROM_OPTIONAL_HDR_MAGIC       0x107
 
-#ifdef _WIN64
+#ifdef OS64BIT
 #define IMAGE_SIZEOF_NT_OPTIONAL_HEADER IMAGE_SIZEOF_NT_OPTIONAL64_HEADER
 #define IMAGE_NT_OPTIONAL_HDR_MAGIC     IMAGE_NT_OPTIONAL_HDR64_MAGIC
 #else
@@ -2891,7 +2891,7 @@ typedef struct _IMAGE_NT_HEADERS {
   IMAGE_OPTIONAL_HEADER32 OptionalHeader;	/* 0x18 */
 } IMAGE_NT_HEADERS32, *PIMAGE_NT_HEADERS32;
 
-#ifdef _WIN64
+#ifdef OS64BIT
 typedef IMAGE_NT_HEADERS64  IMAGE_NT_HEADERS;
 typedef PIMAGE_NT_HEADERS64 PIMAGE_NT_HEADERS;
 typedef IMAGE_OPTIONAL_HEADER64 IMAGE_OPTIONAL_HEADER;
@@ -3224,7 +3224,7 @@ typedef struct _IMAGE_IMPORT_DESCRIPTOR {
 #define IMAGE_ORDINAL64(ordinal)         ((ordinal) & 0xffff)
 #define IMAGE_ORDINAL32(ordinal)         ((ordinal) & 0xffff)
 
-#ifdef _WIN64
+#ifdef OS64BIT
 #define IMAGE_ORDINAL_FLAG              IMAGE_ORDINAL_FLAG64
 #define IMAGE_SNAP_BY_ORDINAL(Ordinal)  IMAGE_SNAP_BY_ORDINAL64(Ordinal)
 #define IMAGE_ORDINAL(Ordinal)          IMAGE_ORDINAL64(Ordinal)
@@ -3625,7 +3625,7 @@ typedef struct _IMAGE_TLS_DIRECTORY32 {
     DWORD   Characteristics;
 } IMAGE_TLS_DIRECTORY32, *PIMAGE_TLS_DIRECTORY32;
 
-#ifdef _WIN64
+#ifdef OS64BIT
 typedef IMAGE_TLS_DIRECTORY64           IMAGE_TLS_DIRECTORY;
 typedef PIMAGE_TLS_DIRECTORY64          PIMAGE_TLS_DIRECTORY;
 #else

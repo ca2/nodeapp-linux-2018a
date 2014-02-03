@@ -32,14 +32,14 @@ typedef int32_t (CALLBACK* EDITWORDBREAKPROCW)(LPWSTR lpch, int32_t ichCurrent, 
 #define GWL_USERDATA        (-21)
 #define GWL_ID              (-12)
 
-#ifdef _WIN64
+#ifdef OS64BIT
 
 #undef GWL_WNDPROC
 #undef GWL_HINSTANCE
 #undef GWL_HWNDPARENT
 #undef GWL_USERDATA
 
-#endif /* _WIN64 */
+#endif /* OS64BIT */
 
 #define GWLP_WNDPROC        (-4)
 #define GWLP_HINSTANCE      (-6)
@@ -65,7 +65,7 @@ typedef int32_t (CALLBACK* EDITWORDBREAKPROCW)(LPWSTR lpch, int32_t ichCurrent, 
 #define GCL_HICONSM         (-34)
 #endif /* WINVER >= 0x0400 */
 
-#ifdef _WIN64
+#ifdef OS64BIT
 
 #undef GCL_MENUNAME
 #undef GCL_HBRBACKGROUND
@@ -75,7 +75,7 @@ typedef int32_t (CALLBACK* EDITWORDBREAKPROCW)(LPWSTR lpch, int32_t ichCurrent, 
 #undef GCL_WNDPROC
 #undef GCL_HICONSM
 
-#endif /* _WIN64 */
+#endif /* OS64BIT */
 
 #define GCLP_MENUNAME       (-8)
 #define GCLP_HBRBACKGROUND  (-10)

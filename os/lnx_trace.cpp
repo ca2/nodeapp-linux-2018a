@@ -327,7 +327,7 @@ void __trace_message(const char * lpszPrefix, ::signal_details * pobj)
 
    if (lpszMsgName != NULL)
    {
-#ifdef _WIN64
+#ifdef OS64BIT
       //TRACE(::ca2::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = %s (%p, %p)\n",
         // lpszPrefix, pbase->m_hwnd, lpszMsgName,
          //pbase->m_wparam, pbase->m_lparam);
@@ -339,7 +339,7 @@ void __trace_message(const char * lpszPrefix, ::signal_details * pobj)
    }
    else
    {
-#ifdef _WIN64
+#ifdef OS64BIT
 //      ::OutputDebugString(::ca2::trace::category_WinMsg, 4, "%s: hwnd=%p, msg = 0x%04X (%p, %p)\n",
   //       lpszPrefix, pbase->m_hwnd, lpszMsgName,
     //     pbase->m_wparam, pbase->m_lparam);

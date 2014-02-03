@@ -39,8 +39,8 @@ extern "C" {
  * type model where int32_t and long are 32 bit and pointer is 64-bit.
  */
 
-#if defined(__x86_64__) && !defined(_WIN64)
-#define _WIN64
+#if defined(__x86_64__) && !defined(OS64BIT)
+#define OS64BIT
 #endif
 
 /* Type model independent typedefs */
@@ -60,7 +60,7 @@ extern "C" {
 #    define __int32 int32_t
 #  endif
 #  ifndef __int64
-#    if defined(_WIN64) && !defined(__MINGW64__)
+#    if defined(OS64BIT) && !defined(__MINGW64__)
 #      define __int64 long
 #    else
 #      define __int64 long long
@@ -112,7 +112,7 @@ typedef /* [public] */ unsigned __int3264 UINT_PTR, *PUINT_PTR;
 typedef /* [public] */ unsigned __int3264 ULONG_PTR, *PULONG_PTR;
 typedef ULONG_PTR                   DWORD_PTR, *PDWORD_PTR;
 
-#elif defined(_WIN64)
+#elif defined(OS64BIT)
 
 #define __int3264 __int64
 
@@ -136,7 +136,7 @@ typedef ULONG_PTR     DWORD_PTR, *PDWORD_PTR;
 
 /* Win32 or Win64 dependent typedef/defines. */
 
-#ifdef _WIN64
+#ifdef OS64BIT
 
 #define MAXINT_PTR 0x7fffffffffffffff
 #define MININT_PTR 0x8000000000000000
@@ -255,7 +255,7 @@ typedef unsigned short UHALF_PTR, *PUHALF_PTR;
 #define LongToPtr(l)            ((void *)(LONG_PTR)((LONG)l))
 #define ULongToPtr(ul)          ((void *)(ULONG_PTR)((ULONG)ul))
 
-#endif /* defined(_WIN64) || defined(_WIN32) */
+#endif /* defined(OS64BIT) || defined(_WIN32) */
 
 #define HandleToUlong(h)        HandleToULong(h)
 #define UlongToHandle(ul)       ULongToHandle(ul)

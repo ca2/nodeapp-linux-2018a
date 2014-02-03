@@ -187,7 +187,7 @@ typedef HANDLE              GLOBALHANDLE;
 typedef HANDLE              LOcaLHANDLE;*/
 #ifndef _MANAGED
 #ifndef _MAC
-#ifdef _WIN64
+#ifdef OS64BIT
 typedef int_ptr (FAR WINAPI *FARPROC)();
 typedef int_ptr (NEAR WINAPI *NEARPROC)();
 typedef int_ptr (WINAPI *PROC)();
@@ -195,7 +195,7 @@ typedef int_ptr (WINAPI *PROC)();
 typedef int32_t (FAR WINAPI *FARPROC)();
 typedef int32_t (NEAR WINAPI *NEARPROC)();
 typedef int32_t (WINAPI *PROC)();
-#endif  // _WIN64
+#endif  // OS64BIT
 #else
 typedef int32_t (CALLBACK *FARPROC)();
 typedef int32_t (CALLBACK *NEARPROC)();
