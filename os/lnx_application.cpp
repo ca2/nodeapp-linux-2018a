@@ -1,6 +1,7 @@
 #include "framework.h"
 #include <X11/cursorfont.h>
-#include <dlfcn.h>
+
+#define __USE_GNU
 #include <link.h>
 
 extern __thread thread_local_storage * __thread_data;

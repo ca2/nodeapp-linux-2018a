@@ -2,8 +2,12 @@
 
 #include <fcntl.h>
 #include <unistd.h>
-#include <dlfcn.h>
+
+
+#define __USE_GNU
 #include <link.h>
+
+
 #include <ctype.h>
 #include <sys/stat.h>
 
