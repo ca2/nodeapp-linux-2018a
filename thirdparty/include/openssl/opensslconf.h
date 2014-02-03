@@ -1,3 +1,4 @@
+#ifndef CA2_APP_BASE_BASE_BASE_BASE_H
 // ca2 configuration for openssl
 #include "app/appseed/base/base/base/base.h"
 #define OPENSSL_NO_ASM
@@ -6,7 +7,7 @@
 #define OPENSSL_NO_HW
 #define OPENSSL_NO_RDRAND
 // end of ca2 configuration for openssl
-
+#endif
 
 
 

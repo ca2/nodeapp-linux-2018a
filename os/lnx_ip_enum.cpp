@@ -11,8 +11,9 @@ http://www.doctort.org/adam/
 
 */
 
-
+#ifndef __USE_MISC
 #define __USE_MISC
+#endif
 #include <sys/ioctl.h>
 #include <net/if.h>
 #include <netinet/in.h>
