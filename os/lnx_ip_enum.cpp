@@ -8,7 +8,7 @@
   by Adam Pierce <adam@doctort.org>
 
 http://www.doctort.org/adam/
-
+Ķ
 */
 
 #ifndef __USE_MISC
