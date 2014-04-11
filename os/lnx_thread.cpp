@@ -266,12 +266,12 @@ void AfxInternalPreTranslateMessage(::signal_details * pobj)
 #endif
             if(pui != NULL)
             {
-               if(pui->m_pguie != NULL)
+               if(pui->m_pui != NULL)
                {
-                  if(pui->m_pguie != pMainWnd
+                  if(pui->m_pui != pMainWnd
                   && pui != pMainWnd)
                   {
-                     pui->m_pguie->pre_translate_message(pobj);
+                     pui->m_pui->pre_translate_message(pobj);
                      if(pobj->m_bRet)
                         return;
                   }
@@ -690,14 +690,14 @@ namespace lnx
       if(m_puiptra != NULL)
       {
          m_puiptra->remove(pui);
-         m_puiptra->remove(pui->m_pguie);
+         m_puiptra->remove(pui->m_pui);
          m_puiptra->remove(pui->m_pimpl);
       }
       sl.unlock();
       if(m_ptimera != NULL)
       {
          m_ptimera->unset(pui);
-         m_ptimera->unset(pui->m_pguie);
+         m_ptimera->unset(pui->m_pui);
          m_ptimera->unset(pui->m_pimpl);
       }
 
@@ -735,11 +735,11 @@ namespace lnx
 #endif
       try
       {
-         if(pui->m_pguie != NULL && pui->m_pguie != pui)
+         if(pui->m_pui != NULL && pui->m_pui != pui)
          {
-            if(LNX_THREAD(pui->m_pguie->m_pthread.m_p) == this)
+            if(LNX_THREAD(pui->m_pui->m_pthread.m_p) == this)
             {
-               pui->m_pguie->m_pthread = NULL;
+               pui->m_pui->m_pthread = NULL;
             }
          }
       }
@@ -833,7 +833,7 @@ namespace lnx
    }
 
 
-   void thread::on_run_step()
+   bool thread::on_run_step()
    {
       sp(base_application) pappThis1 =  (this);
       sp(base_application) pappThis2 =  (m_p);
@@ -1646,7 +1646,7 @@ stop_run:
 //      if(m_hThread == NULL)
   //       return false;
       ::user::message * pmessage = new ::user::message;
-      pmessage->m_pguie       = pguie;
+      pmessage->m_pui       = pguie;
       pmessage->m_uiMessage   = uiMessage;
       pmessage->m_wparam      = wparam;
       pmessage->m_lparam      = lparam;
@@ -1704,9 +1704,9 @@ stop_run:
             __pre_init_dialog(pwindow, &rectOld, &dwStyle);
 
          // delegate to object's message_handler
-         if(pwindow->m_pguie != NULL && pwindow->m_pguie != pwindow)
+         if(pwindow->m_pui != NULL && pwindow->m_pui != pwindow)
          {
-            pwindow->m_pguie->message_handler(pobj);
+            pwindow->m_pui->message_handler(pobj);
          }
          else
          {
@@ -3170,15 +3170,15 @@ return AfxInternalProcessWndProcException( e, pMsg );
 
                }
 
-               if(!pw->m_bVisible || (pw->m_pguie != pw && pw->m_pguie != NULL && !pw->m_pguie->m_bVisible))
+               if(!pw->m_bVisible || (pw->m_pui != pw && pw->m_pui != NULL && !pw->m_pui->m_bVisible))
                {
 
                   pw->m_bVisible = true;
 
-                  if(pw->m_pguie != pw && pw->m_pguie != NULL)
+                  if(pw->m_pui != pw && pw->m_pui != NULL)
                   {
 
-                     pw->m_pguie->m_bVisible = true;
+                     pw->m_pui->m_bVisible = true;
 
                   }
 
@@ -3191,10 +3191,10 @@ return AfxInternalProcessWndProcException( e, pMsg );
                if(bSize || bMove)
                {
 
-                  if(pw->m_pguie != pw && pw->m_pguie != NULL)
+                  if(pw->m_pui != pw && pw->m_pui != NULL)
                   {
 
-                     pw->m_pguie->m_rectParentClient = pw->m_rectParentClient;
+                     pw->m_pui->m_rectParentClient = pw->m_rectParentClient;
 
                   }
 

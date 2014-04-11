@@ -22,7 +22,7 @@ namespace lnx
       string                        m_strWindowText;
       oswindow                      m_oswindow;
       ::user::window_interface *    m_pbasewnd;
-      sp(::user::interaction)       m_pguiecapture;
+      sp(::user::interaction)       m_puicapture;
       bool                          m_bExposing;
       XWindowAttributes             m_attr;
       int32_t                       m_iDepth;
@@ -380,7 +380,7 @@ virtual    void set_view_port_org(::draw2d::graphics * pgraphics);
       virtual sp(::user::interaction) GetLastActivePopup();
 
       virtual bool IsChild(sp(::user::interaction)  pWnd);
-      virtual sp(::user::interaction) get_parent();
+      virtual ::user::interaction * get_parent();
       using ::user::interaction::set_parent;
       sp(::window) set_parent(::window * pWndNewParent);
       static sp(::window) PASCAL oswindowFromPoint(POINT point);

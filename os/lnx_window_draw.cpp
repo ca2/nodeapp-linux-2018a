@@ -29,7 +29,7 @@ namespace lnx
    window_draw::window_draw(sp(base_application) papp) :
       element(papp),
       ::thread(papp),
-      ::window_draw(papp),
+      ::user::window_draw(papp),
       message_queue(papp),
       m_mutexRendering(papp),
       m_mutexRgnUpdate(papp),
@@ -266,7 +266,7 @@ namespace lnx
       }
       else
       {
-         ::window_interface * ptwi = System.user()->window_map().get((int_ptr) hwndParam);
+         ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) hwndParam);
          sp(::user::interaction) pguie =  (ptwi);
          rect rectWindow;
          ::GetWindowRect((oswindow) hwndParam, rectWindow);
@@ -780,7 +780,7 @@ namespace lnx
 
       ::oswindow oswindow = hwndtree.m_oswindow;
 
-      ::window_interface * ptwi = oswindow->get_user_interaction();
+      ::user::window_interface * ptwi = oswindow->get_user_interaction();
 
       if(!::IsWindowVisible(oswindow))
       {
@@ -1119,11 +1119,11 @@ throw not_implemented(get_app());
          {
             return true;
          }
-         if(pwnd->IsIconic())
+         if(pwnd->WfiIsIconic())
          {
             return true;
          }
-         if(pwnd->m_pguie != NULL && pwnd->m_pguie != pwnd && !pwnd->m_pguie->m_bVisible)
+         if(pwnd->m_pui != NULL && pwnd->m_pui != pwnd && !pwnd->m_pui->m_bVisible)
          {
             return true;
          }
@@ -1273,25 +1273,25 @@ throw not_implemented(get_app());
 //
 //         class rect rectWin;
 //         ::GetWindowRect((oswindow) hwndParam, rectWin);
-//         if(rect(rectWindow) != rectWin || (pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout")))
+//         if(rect(rectWindow) != rectWin || (pwnd->m_pui != NULL && (bool) pwnd->m_pui->oprop("pending_layout")))
 //         {
 //
 //
-//            if(pwnd->m_pguie != NULL && (bool) pwnd->m_pguie->oprop("pending_layout"))
+//            if(pwnd->m_pui != NULL && (bool) pwnd->m_pui->oprop("pending_layout"))
 //            {
-//               void * hwndZOrder = (void *) pwnd->m_pguie->oprop("pending_zorder").get_integer();
+//               void * hwndZOrder = (void *) pwnd->m_pui->oprop("pending_zorder").get_integer();
 //               ::SetWindowPos((oswindow) hwndParam, HWND_TOPMOST,
 //                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
 //               ::SetWindowPos((oswindow) hwndParam, HWND_NOTOPMOST,
 //                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW);
 //               ::SetWindowPos((oswindow) hwndParam, (oswindow) hwndZOrder,
 //                  (int32_t) rectWindow.left, (int32_t) rectWindow.top, (int32_t) rectWindow.width(), (int32_t) rectWindow.height(), SWP_SHOWWINDOW | SWP_FRAMECHANGED);
-//               /*simple_frame_window * pframe = dynamic_cast < simple_frame_window * > (pwnd->m_pguie);
+//               /*simple_frame_window * pframe = dynamic_cast < simple_frame_window * > (pwnd->m_pui);
 //               if(pframe != NULL)
 //               {
 //                  pframe->ActivateFrame();
 //               }*/
-//               pwnd->m_pguie->oprop("pending_layout") = false;
+//               pwnd->m_pui->oprop("pending_layout") = false;
 //            }
 //            else
 //            {

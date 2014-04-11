@@ -70,15 +70,15 @@ namespace lnx
    window::window()
    {
       m_pcallback = NULL;
-      m_pguie = this;
+      m_pui = this;
 //      set_handle(NULL);
-      m_pguieOwner = NULL;
-      m_pguie->m_nFlags = 0;
+      m_puiOwner = NULL;
+      m_pui->m_nFlags = 0;
 //      m_pfnSuper = NULL;
       m_nModalResult = 0;
       m_bMouseHover = false;
       m_pfont = NULL;
-      m_pguiecapture = NULL;
+      m_puicapture = NULL;
       m_pmutexGraphics = NULL;
 //      m_cairo = NULL;
   //    m_cairosurface = NULL;
@@ -93,15 +93,15 @@ namespace lnx
    void window::construct(oswindow hWnd)
    {
       m_pcallback = NULL;
-      m_pguie = this;
+      m_pui = this;
       m_oswindow = hWnd;
       //set_handle(hWnd);
-      m_pguie->m_nFlags = 0;
+      m_pui->m_nFlags = 0;
 //      m_pfnSuper = NULL;
       m_nModalResult = 0;
       m_bMouseHover = false;
       m_pfont = NULL;
-      m_pguiecapture = NULL;
+      m_puicapture = NULL;
       m_pmutexGraphics = NULL;
 //      m_cairo = NULL;
   //    m_cairosurface = NULL;
@@ -118,15 +118,15 @@ namespace lnx
       ::user::interaction(papp)
    {
       m_pcallback = NULL;
-      m_pguie = this;
+      m_pui = this;
 //      set_handle(NULL);
-      m_pguieOwner = NULL;
-      m_pguie->m_nFlags = 0;
+      m_puiOwner = NULL;
+      m_pui->m_nFlags = 0;
 //      m_pfnSuper = NULL;
       m_nModalResult = 0;
       m_bMouseHover = false;
       m_pfont = NULL;
-      m_pguiecapture = NULL;
+      m_puicapture = NULL;
       m_pmutexGraphics = NULL;
 //      m_cairo = NULL;
   //    m_cairosurface = NULL;
@@ -278,9 +278,9 @@ namespace lnx
       //ASSERT(pMap != NULL);
 
       //pMap->set_permanent(set_handle(hWndNew), this);
-      //if(m_pguie == NULL)
+      //if(m_pui == NULL)
       {
-         //m_pguie = this;
+         //m_pui = this;
       }
 
       m_oswindow = hWndNew;
@@ -359,9 +359,9 @@ namespace lnx
       cs.lpCreateParams = lpParam;
 
 
-      if(m_pguie != NULL && m_pguie != this)
+      if(m_pui != NULL && m_pui != this)
       {
-         if(!m_pguie->pre_create_window(cs))
+         if(!m_pui->pre_create_window(cs))
          {
             PostNcDestroy();
             return FALSE;
@@ -385,11 +385,11 @@ namespace lnx
 
 
       m_pthread = ::get_thread();
-      m_pguie->m_pthread = ::get_thread();
+      m_pui->m_pthread = ::get_thread();
 
       if(cs.hwndParent == (oswindow) HWND_MESSAGE)
       {
-         m_oswindow = oswindow_get_message_only_window(m_pguie.m_p);
+         m_oswindow = oswindow_get_message_only_window(m_pui.m_p);
 
          send_message(WM_CREATE, 0, (LPARAM) &cs);
 
@@ -524,7 +524,7 @@ namespace lnx
 
          m_oswindow = oswindow_get(display, window, vis, m_iDepth, m_iScreen, attr.colormap);
 
-         m_oswindow->set_user_interaction(m_pguie);
+         m_oswindow->set_user_interaction(m_pui);
 
          XGetWindowAttributes(m_oswindow->display(), m_oswindow->window(), &m_attr);
 
@@ -564,7 +564,7 @@ d.unlock();
 
          send_message(WM_CREATE, 0, (LPARAM) &cs);
 
-   //      m_pguie->SetWindowPos(0, 256, 256, cs.cx, cs.cy, 0);
+   //      m_pui->SetWindowPos(0, 256, 256, cs.cx, cs.cy, 0);
 
          send_message(WM_SIZE);
 
@@ -585,8 +585,8 @@ d.unlock();
          GetClassInfo(System.m_hInstance, lpszClassName, &wndcls) &&
          wndcls.hIcon != NULL)
       {
-         m_pguie->set_icon(new ::visual::icon(wndcls.hIcon), false);
-         m_pguie->set_icon(new ::visual::icon(wndcls.hIcon), true);
+         m_pui->set_icon(new ::visual::icon(wndcls.hIcon), false);
+         m_pui->set_icon(new ::visual::icon(wndcls.hIcon), true);
       }*/
       //      oswindow hwndHandle = get_handle();
 /*      if(lnx != get_handle())
@@ -655,9 +655,9 @@ d.unlock();
       IGUI_WIN_MSG_LINK(WM_NCDESTROY         , pinterface, this, &window::_001OnNcDestroy);
       IGUI_WIN_MSG_LINK(WM_PAINT             , pinterface, this, &window::_001OnPaint);
       IGUI_WIN_MSG_LINK(WM_PRINT             , pinterface, this, &window::_001OnPrint);
-      if(m_pguie != NULL && m_pguie != this)
+      if(m_pui != NULL && m_pui != this)
       {
-         m_pguie->install_message_handling(pinterface);
+         m_pui->install_message_handling(pinterface);
       }
       IGUI_WIN_MSG_LINK(WM_CAPTURECHANGED    , pinterface, this, &window::_001OncaptureChanged);
       IGUI_WIN_MSG_LINK(WM_CREATE            , pinterface, this, &window::_001OnCreate);
@@ -676,7 +676,7 @@ d.unlock();
       {
          class rect rectWindow;
          ::GetWindowRect(get_handle(), rectWindow);
-         m_pguie->m_rectParentClient = rectWindow;
+         m_pui->m_rectParentClient = rectWindow;
          m_rectParentClient = rectWindow;
       }*/
    }
@@ -690,7 +690,7 @@ d.unlock();
       {
          class rect rectWindow;
          ::GetWindowRect(get_handle(), rectWindow);
-         m_pguie->m_rectParentClient = rectWindow;
+         m_pui->m_rectParentClient = rectWindow;
          m_rectParentClient = rectWindow;
       }*/
 
@@ -709,7 +709,7 @@ d.unlock();
       m_spdib->create(m_rectParentClient.size());
       }*/
 
-      m_pguie->layout();
+      m_pui->layout();
 
 
 
@@ -719,8 +719,8 @@ d.unlock();
    {
       SCAST_PTR(::message::show_window, pshowwindow, pobj);
       m_bVisible = pshowwindow->m_bShow != FALSE;
-      if(m_pguie != NULL && m_pguie != this)
-         m_pguie->m_bVisible = m_bVisible;
+      if(m_pui != NULL && m_pui != this)
+         m_pui->m_bVisible = m_bVisible;
    }
 
    void window::_001OnDestroy(::signal_details * pobj)
@@ -732,7 +732,7 @@ d.unlock();
       {
          retry_single_lock sl(&pdraw->m_eventFree, millis(84), millis(84));
          pdraw->m_wndpaOut.remove(this);
-         pdraw->m_wndpaOut.remove(m_pguie);
+         pdraw->m_wndpaOut.remove(m_pui);
       }
       LNX_THREAD(m_pthread.m_p)->m_oswindowa.remove(m_oswindow);
       oswindow_remove(m_oswindow->display(), m_oswindow->window());
@@ -741,7 +741,7 @@ d.unlock();
    void window::_001OncaptureChanged(::signal_details * pobj)
    {
       UNREFERENCED_PARAMETER(pobj);
-      m_pguiecapture = NULL;
+      m_puicapture = NULL;
    }
 
    // WM_NCDESTROY is the absolute LAST message sent.
@@ -783,10 +783,10 @@ d.unlock();
 
       // cleanup tooltip support
 
-      if(m_pguie != NULL)
+      if(m_pui != NULL)
       {
 
-         if (m_pguie->m_nFlags & WF_TOOLTIPS)
+         if (m_pui->m_nFlags & WF_TOOLTIPS)
          {
 
          }
@@ -816,9 +816,9 @@ d.unlock();
 
       PostNcDestroy();
 
-      if(m_pguie != NULL && m_pguie != this)
+      if(m_pui != NULL && m_pui != this)
       {
-         m_pguie->PostNcDestroy();
+         m_pui->PostNcDestroy();
       }
 
    }
@@ -950,9 +950,9 @@ d.unlock();
       if(m_oswindow->m_bMessageOnlyWindow)
       {
 
-         ::oswindow_remove_message_only_window(m_pguie);
+         ::oswindow_remove_message_only_window(m_pui);
 
-         m_pguie = NULL;
+         m_pui = NULL;
 
          return true;
 
@@ -1395,9 +1395,9 @@ d.unlock();
    {
       SCAST_PTR(::message::base, pbase, pobj);
 
-      if(m_pguie != NULL)
+      if(m_pui != NULL)
       {
-         m_pguie->pre_translate_message(pobj);
+         m_pui->pre_translate_message(pobj);
          if(pobj->m_bRet)
             return;
       }
@@ -1474,7 +1474,7 @@ d.unlock();
          {
             if(m_guieptraMouseHover[i] == this
                || m_guieptraMouseHover[i]->m_pimpl == this
-               || m_guieptraMouseHover[i]->m_pguie == this)
+               || m_guieptraMouseHover[i]->m_pui == this)
                continue;
             m_guieptraMouseHover[i]->send_message(WM_MOUSELEAVE);
          }
@@ -1535,10 +1535,10 @@ d.unlock();
             }
          }
 
-         if(m_pguie != NULL && m_pguie != this && m_pguie->m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession != NULL && m_pguie->m_pbaseapp->m_pplaneapp->m_psession != m_pbaseapp->m_pplaneapp->m_psession)
+         if(m_pui != NULL && m_pui != this && m_pui->m_pbaseapp->m_pplaneapp->m_psession->m_pplanesession != NULL && m_pui->m_pbaseapp->m_pplaneapp->m_psession != m_pbaseapp->m_pplaneapp->m_psession)
          {
 
-            Sess(m_pguie->m_pbaseapp->m_pplaneapp->m_psession).m_ptCursor = pmouse->m_pt;
+            Sess(m_pui->m_pbaseapp->m_pplaneapp->m_psession).m_ptCursor = pmouse->m_pt;
 
          }
 
@@ -1567,12 +1567,12 @@ d.unlock();
             {
                class rect rectWindow32;
                ::GetWindowRect((oswindow) get_handle(), &rectWindow32);
-               //rectWindow32 = m_pguie->m_rectParentClient;
+               //rectWindow32 = m_pui->m_rectParentClient;
                ::copy(rectWindow, rectWindow32);
             }
             else
             {
-               m_pguie->GetWindowRect(rectWindow);
+               m_pui->GetWindowRect(rectWindow);
             }
             if(System.get_monitor_count() > 0)
             {
@@ -1614,16 +1614,16 @@ restart_mouse_hover_check:
          }
          if(!m_bMouseHover)
          {
-            m_pguie->_001OnTriggerMouseInside();
+            m_pui->_001OnTriggerMouseInside();
          }
-         if(m_pguiecapture != NULL)
+         if(m_puicapture != NULL)
          {
-            if(m_pguiecapture->m_pimpl != NULL)
+            if(m_puicapture->m_pimpl != NULL)
             {
-               //m_pguiecapture->m_pimpl->SendMessage(pbase);
+               //m_puicapture->m_pimpl->SendMessage(pbase);
                try
                {
-                  (m_pguiecapture->m_pimpl->*m_pguiecapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < ::signal_details * > (pmouse));
+                  (m_puicapture->m_pimpl->*m_puicapture->m_pimpl->m_pfnDispatchWindowProc)(dynamic_cast < ::signal_details * > (pmouse));
                   if(pmouse->get_lresult() != 0)
                      return;
                }
@@ -1634,10 +1634,10 @@ restart_mouse_hover_check:
             }
             else
             {
-               //m_pguiecapture->SendMessage(pbase);
+               //m_puicapture->SendMessage(pbase);
                try
                {
-                  (m_pguiecapture->*m_pguiecapture->m_pfnDispatchWindowProc)(dynamic_cast < ::signal_details * > (pmouse));
+                  (m_puicapture->*m_puicapture->m_pfnDispatchWindowProc)(dynamic_cast < ::signal_details * > (pmouse));
                   if(pmouse->get_lresult() != 0)
                      return;
                }
@@ -1655,9 +1655,9 @@ restart_mouse_hover_check:
          for(int32_t i = 0; i < hwnda.get_size(); i++)
          {
             sp(::user::interaction) pguie = wnda.find_first(hwnda[i]);
-            if(pguie != NULL && pguie->m_pguie != NULL)
+            if(pguie != NULL && pguie->m_pui != NULL)
             {
-               pguie->m_pguie->_000OnMouse(pmouse);
+               pguie->m_pui->_000OnMouse(pmouse);
                if(pmouse->m_bRet)
                   return;
             }
@@ -1682,9 +1682,9 @@ restart_mouse_hover_check:
          }
          else if(!pkey->m_bRet)
          {
-            if(m_pguie != this && m_pguie != NULL)
+            if(m_pui != this && m_pui != NULL)
             {
-               m_pguie->_000OnKey(pkey);
+               m_pui->_000OnKey(pkey);
                if(pbase->m_bRet)
                   return;
             }
@@ -1700,9 +1700,9 @@ restart_mouse_hover_check:
       }
       if(pbase->m_uiMessage == ::message::message_event)
       {
-         if(m_pguie != this && m_pguie != NULL)
+         if(m_pui != this && m_pui != NULL)
          {
-            m_pguie->BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
+            m_pui->BaseOnControlEvent((::user::control_event *) pbase->m_lparam.m_lparam);
          }
          else
          {
@@ -1714,9 +1714,9 @@ restart_mouse_hover_check:
       if(pobj->m_bRet)
          return;
       /*
-      if(m_pguie != NULL && m_pguie != this)
+      if(m_pui != NULL && m_pui != this)
       {
-      m_pguie->_user_message_handler(pobj);
+      m_pui->_user_message_handler(pobj);
       if(pobj->m_bRet)
       return;
       }
@@ -2361,8 +2361,8 @@ restart_mouse_hover_check:
       ASSERT_VALID(this);
 
       sp(::user::frame_window) pFrameWnd = NULL;
-      if(m_pguie != this)
-         pFrameWnd =  (m_pguie);
+      if(m_pui != this)
+         pFrameWnd =  (m_pui);
       else
          pFrameWnd =  (this);
       if (pFrameWnd == NULL || !pFrameWnd->is_frame_window())
@@ -2588,8 +2588,8 @@ return 0;
    layout.rect = *lpRectClient;    // starting rect comes from parameter
    else
    {
-   if(m_pguie != this)
-   m_pguie->GetClientRect(&layout.rect);    // starting rect comes from client rect
+   if(m_pui != this)
+   m_pui->GetClientRect(&layout.rect);    // starting rect comes from client rect
    else
    GetClientRect(&layout.rect);    // starting rect comes from client rect
    }
@@ -2599,9 +2599,9 @@ return 0;
    else
    layout.hDWP = NULL; // not actually doing layout
 
-   if(m_pguie != this && m_pguie != NULL)
+   if(m_pui != this && m_pui != NULL)
    {
-   for (sp(::user::interaction) hWndChild = m_pguie->GetTopWindow(); hWndChild != NULL;
+   for (sp(::user::interaction) hWndChild = m_pui->GetTopWindow(); hWndChild != NULL;
    hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
    {
    string strIdc = hWndChild->GetDlgCtrlId();
@@ -2611,9 +2611,9 @@ return 0;
    else if (::str::begins(strIdc, pszPrefix) && pWnd != NULL)
    hWndChild->SendMessage(WM_SIZEPARENT, 0, (LPARAM)&layout);
    }
-   for (int32_t i = 0; i < m_pguie->m_uiptra.get_count();   i++)
+   for (int32_t i = 0; i < m_pui->m_uiptra.get_count();   i++)
    {
-   sp(::user::interaction) hWndChild = m_pguie->m_uiptra[i];
+   sp(::user::interaction) hWndChild = m_pui->m_uiptra[i];
    string strIdc = hWndChild->GetDlgCtrlId();
    sp(::user::interaction) pWnd = hWndChild;
    if (strIdc == pszIdLeftOver)
@@ -2712,8 +2712,8 @@ return 0;
          layout.rect = *lpRectClient;    // starting rect comes from parameter
       else
       {
-         if(m_pguie != this)
-            m_pguie->GetClientRect(&layout.rect);    // starting rect comes from client rect
+         if(m_pui != this)
+            m_pui->GetClientRect(&layout.rect);    // starting rect comes from client rect
          else
             GetClientRect(&layout.rect);    // starting rect comes from client rect
       }
@@ -2723,9 +2723,9 @@ return 0;
     //  else
          layout.hDWP = NULL; // not actually doing layout
 
-      if(m_pguie != this && m_pguie != NULL)
+      if(m_pui != this && m_pui != NULL)
       {
-         for (sp(::user::interaction) hWndChild = m_pguie->GetTopWindow(); hWndChild != NULL;
+         for (sp(::user::interaction) hWndChild = m_pui->GetTopWindow(); hWndChild != NULL;
             hWndChild = hWndChild->GetNextWindow(GW_HWNDNEXT))
          {
             id id = hWndChild->GetDlgCtrlId();
@@ -2735,7 +2735,7 @@ return 0;
             else if (pWnd != NULL)
                hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
-         for (sp(::user::interaction) hWndChild = m_pguie->get_top_child(); hWndChild != NULL;
+         for (sp(::user::interaction) hWndChild = m_pui->get_top_child(); hWndChild != NULL;
             hWndChild = hWndChild->under_sibling())
          {
             id id = hWndChild->GetDlgCtrlId();
@@ -2758,7 +2758,7 @@ return 0;
             else if (pWnd != NULL)
                hWndChild->send_message(WM_SIZEPARENT, 0, (LPARAM)&layout);
          }
-         for (sp(::user::interaction) hWndChild = m_pguie->get_top_child(); hWndChild != NULL;
+         for (sp(::user::interaction) hWndChild = m_pui->get_top_child(); hWndChild != NULL;
             hWndChild = hWndChild->under_sibling())
          {
             id id = hWndChild->GetDlgCtrlId();
@@ -3409,7 +3409,7 @@ throw not_implemented(get_app());
 
       _001Expose();
 
-      //lock lock(m_pguie, 1984);
+      //lock lock(m_pui, 1984);
 
 //throw not_implemented(get_app());
 
@@ -3452,9 +3452,9 @@ throw not_implemented(get_app());
 //            ClientToScreen(rectUpdate);
 //         }
 //         (dynamic_cast<::lnx::graphics * >(pdc))->SelectClipRgn(NULL);
-//         if(m_pguie != NULL && m_pguie != this)
+//         if(m_pui != NULL && m_pui != this)
 //         {
-//            m_pguie->_001OnDeferPaintLayeredWindowBackground(pdc);
+//            m_pui->_001OnDeferPaintLayeredWindowBackground(pdc);
 //         }
 //         else
 //         {
@@ -3522,9 +3522,9 @@ throw not_implemented(get_app());
 //         rectPaint = rectWindow;
 //         rectPaint.offset(-rectPaint.top_left());
 //         (dynamic_cast<::lnx::graphics * >(pdc))->SelectClipRgn(NULL);
-//         if(m_pguie != NULL && m_pguie != this)
+//         if(m_pui != NULL && m_pui != this)
 //         {
-//            m_pguie->_001OnDeferPaintLayeredWindowBackground(pdc);
+//            m_pui->_001OnDeferPaintLayeredWindowBackground(pdc);
 //         }
 //         else
 //         {
@@ -4074,9 +4074,9 @@ throw not_implemented(get_app());
          while (::PeekMessage(&msg, NULL, 0, 0, PM_NOREMOVE) != FALSE);
 
 
-         if(m_pguie->m_pthread != NULL)
+         if(m_pui->m_pthread != NULL)
          {
-            m_pguie->m_pthread->step_timer();
+            m_pui->m_pthread->step_timer();
          }
          if (!ContinueModal(iLevel))
             goto ExitModal;
@@ -4393,10 +4393,10 @@ throw not_implemented(get_app());
          {
             ::SetWindowPos(get_handle(), (oswindow) z, x, y, cx, cy, nFlags);
          }
-         /*if(m_pguie != NULL)
+         /*if(m_pui != NULL)
          {
-         m_pguie->oprop("pending_layout") = true;
-         m_pguie->oprop("pending_zorder") = z;
+         m_pui->oprop("pending_layout") = true;
+         m_pui->oprop("pending_zorder") = z;
          }*/
          /*if(&System != NULL && System.get_twf() != NULL)
          {
@@ -4518,7 +4518,7 @@ throw not_implemented(get_app());
       if(!::IsWindow((oswindow) get_handle()))
          throw simple_exception(get_app(), "no more a window");
       // if it is temporary window - probably not ca2 wrapped window
-      //if(m_pguie == NULL || m_pguie == this)
+      //if(m_pui == NULL || m_pui == this)
       {
          rect rect32;
          ::GetWindowRect((oswindow) get_handle(), rect32);
@@ -4534,7 +4534,7 @@ throw not_implemented(get_app());
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
       // if it is temporary window - probably not ca2 wrapped window
-      //if(m_pguie == NULL || m_pguie == this)
+      //if(m_pui == NULL || m_pui == this)
       {
          rect rect32;
          ::GetClientRect((oswindow) get_handle(), rect32);
@@ -4560,14 +4560,14 @@ throw not_implemented(get_app());
    /*   guie_message_wnd::guie_message_wnd(sp(base_application) papp) :
    element(papp)
    {
-   m_pguieForward = NULL;
+   m_puiForward = NULL;
    }
 
    LRESULT guie_message_wnd::message_handler(::signal_details * pobj)
    {
-   if(m_pguieForward != NULL)
+   if(m_puiForward != NULL)
    {
-   return m_pguieForward->message_handler(uiMessage, wparam, lparam);
+   return m_puiForward->message_handler(uiMessage, wparam, lparam);
    }
    else
    {
@@ -4582,9 +4582,9 @@ throw not_implemented(get_app());
 
    void window::_001WindowRestore()
    {
-      m_eappearance = appearance_normal;
-      if(m_pguie != NULL)
-         m_pguie->m_eappearance = appearance_normal;
+      m_eappearance = ::user::AppearanceNormal;
+      if(m_pui != NULL)
+         m_pui->m_eappearance = ::user::AppearanceNormal;
       ::ShowWindow((oswindow) get_handle(), SW_RESTORE);
    }
 
@@ -4616,14 +4616,14 @@ throw not_implemented(get_app());
          {
             if(nCmdShow == SW_MINIMIZE)
             {
-               m_pguie->m_eappearance = appearance_iconic;
+               m_pui->m_eappearance = appearance_iconic;
                m_eappearance = appearance_iconic;
             }
             ::ShowWindow(get_handle(), nCmdShow);
          }
 //         m_bVisible = ::IsWindowVisible(get_handle()) != FALSE;
-         if(m_pguie!= NULL && m_pguie != this)
-//            m_pguie->m_bVisible = m_bVisible;
+         if(m_pui!= NULL && m_pui != this)
+//            m_pui->m_bVisible = m_bVisible;
          if(!m_bVisible || IsIconic())
          {
             ::UpdateLayeredWindow(get_handle(), NULL, NULL, NULL, NULL, NULL, 0, NULL, 0);
@@ -4634,8 +4634,8 @@ throw not_implemented(get_app());
       {
          ::ShowWindow((oswindow) get_handle(), nCmdShow);
          m_bVisible = ::IsWindowVisible((oswindow) get_handle()) != FALSE;
-         if(m_pguie!= NULL && m_pguie != this)
-            m_pguie->m_bVisible = m_bVisible;
+         if(m_pui!= NULL && m_pui != this)
+            m_pui->m_bVisible = m_bVisible;
          return m_bVisible;
       }
    }
@@ -4646,7 +4646,7 @@ throw not_implemented(get_app());
       ASSERT(::IsWindow((oswindow) get_handle()));
       if(GetExStyle() & WS_EX_LAYERED)
       {
-         return m_pguie->m_eappearance == appearance_iconic;
+         return m_pui->m_eappearance == ::user::AppearanceIconic;
       }
       else
       {
@@ -4657,11 +4657,11 @@ throw not_implemented(get_app());
    bool window::IsZoomed()
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
-      return m_pguie->m_eappearance == appearance_zoomed;
+      return m_pui->m_eappearance == ::user::AppearanceZoomed;
    }
 
 
-   sp(::user::interaction) window::get_parent()
+   ::user::interaction * window::get_parent()
    {
       if(!::IsWindow((oswindow) get_handle()))
          return NULL;
@@ -4693,7 +4693,7 @@ throw not_implemented(get_app());
          sp(::user::interaction) puiecapture = get_capture();
          if(::ReleaseCapture())
          {
-            m_pguiecapture = NULL;
+            m_puicapture = NULL;
             return puiecapture;
          }
          else
@@ -4715,21 +4715,21 @@ throw not_implemented(get_app());
          return NULL;
       if(((void *) hwndcapture) == get_handle())
       {
-         if(m_pguiecapture != NULL)
+         if(m_puicapture != NULL)
          {
-            return m_pguiecapture;
+            return m_puicapture;
          }
          else
          {
-            if(m_pguie != NULL)
+            if(m_pui != NULL)
             {
-               if(m_pguie->get_wnd() != NULL && LNX_WINDOW(m_pguie->get_wnd())->m_pguiecapture != NULL)
+               if(m_pui->get_wnd() != NULL && LNX_WINDOW(m_pui->get_wnd())->m_puicapture != NULL)
                {
-                  return LNX_WINDOW(m_pguie->get_wnd())->m_pguiecapture;
+                  return LNX_WINDOW(m_pui->get_wnd())->m_puicapture;
                }
                else
                {
-                  return m_pguie;
+                  return m_pui;
                }
             }
             else
@@ -4785,7 +4785,7 @@ throw not_implemented(get_app());
 
    void window::set_owner(sp(::user::interaction) pOwnerWnd)
    {
-      m_pguieOwner = pOwnerWnd;
+      m_puiOwner = pOwnerWnd;
    }
 
    LRESULT window::send_message(UINT message, WPARAM wparam, lparam lparam)
@@ -4798,7 +4798,7 @@ throw not_implemented(get_app());
       try
       {
 
-         sp(::user::interaction) pui = m_pguie;
+         sp(::user::interaction) pui = m_pui;
 
          while(pui != NULL && pui->get_parent() != NULL)
          {
@@ -5166,13 +5166,13 @@ if(psurface == g_cairosurface)
       if(!::IsWindow((oswindow) get_handle()))
          return false;
 
-      if(m_pguie != NULL)
+      if(m_pui != NULL)
       {
 
-         if(!m_pguie->m_bVisible)
+         if(!m_pui->m_bVisible)
             return false;
 
-         if(m_pguie->get_parent() != NULL && !m_pguie->get_parent()->IsWindowVisible())
+         if(m_pui->get_parent() != NULL && !m_pui->get_parent()->IsWindowVisible())
             return false;
 
       }
@@ -5201,7 +5201,7 @@ if(psurface == g_cairosurface)
 
       // walk through oswindows to avoid creating temporary window objects
       // unless we need to call this function recursively
-      user::interaction * pui = m_pguie->get_top_child();
+      user::interaction * pui = m_pui->get_top_child();
       while(pui != NULL)
       {
          try
@@ -5321,7 +5321,7 @@ if(psurface == g_cairosurface)
 
         UNREFERENCED_PARAMETER(lpfnTimer);
 
-        m_pguie->m_pthread->set_timer(m_pguie, nIDEvent, nElapse);
+        m_pui->m_pthread->set_timer(m_pui, nIDEvent, nElapse);
 
         return nIDEvent;
 
@@ -5335,7 +5335,7 @@ if(psurface == g_cairosurface)
    bool window::KillTimer(uint_ptr nIDEvent)
    {
 
-       m_pguie->m_pthread->unset_timer(m_pguie, nIDEvent);
+       m_pui->m_pthread->unset_timer(m_pui, nIDEvent);
 
        return TRUE;
 
@@ -5408,7 +5408,7 @@ if(psurface == g_cairosurface)
       {
 
          if(pinterface != NULL)
-            m_pguiecapture = pinterface;
+            m_puicapture = pinterface;
 
       }
 
@@ -5664,10 +5664,10 @@ if(psurface == g_cairosurface)
    sp(::user::interaction) window::GetTopWindow()
    {
 
-      if(m_pguie->m_uiptraChild.get_size() <= 0)
+      if(m_pui->m_uiptraChild.get_size() <= 0)
          return NULL;
 
-      return m_pguie->m_uiptraChild(0);
+      return m_pui->m_uiptraChild(0);
     //  throw not_implemented(get_app());
 //      ASSERT(::IsWindow((oswindow) get_handle()));
 //      return ::lnx::window::from_handle(::GetTopWindow(get_handle()));
@@ -6333,9 +6333,9 @@ if(psurface == g_cairosurface)
 //            __pre_init_dialog(pinteraction, &rectOld, &dwStyle);
 //
 //         // delegate to object's message_handler
-//         if(pinteraction->m_pguie != NULL && pinteraction->m_pguie != pinteraction)
+//         if(pinteraction->m_pui != NULL && pinteraction->m_pui != pinteraction)
 //         {
-//            pinteraction->m_pguie->message_handler(spbase);
+//            pinteraction->m_pui->message_handler(spbase);
 //         }
 //         else
 //         {
@@ -6448,9 +6448,9 @@ if(psurface == g_cairosurface)
 //
 //            pWndInit->m_pthread = dynamic_cast < ::thread * > (::lnx::get_thread());
 //            pWndInit->m_pthread->add(pWndInit);
-//            pWndInit->m_pguie->m_pthread = pWndInit->m_pthread;
-//            pWndInit->m_pguie->m_pthread->add(pWndInit->m_pguie);
-//            pWndInit->m_pguie->m_pimpl = pWndInit;
+//            pWndInit->m_pui->m_pthread = pWndInit->m_pthread;
+//            pWndInit->m_pui->m_pthread->add(pWndInit->m_pui);
+//            pWndInit->m_pui->m_pimpl = pWndInit;
 //
 //            // connect the oswindow to pWndInit...
 //            pWndInit->Attach(hWnd);
@@ -6653,7 +6653,7 @@ __STATIC void CLASS_DECL_LINUX __post_init_dialog(
 
    // must be unowned or owner disabled
    sp(::user::interaction) pParent = LNX_WINDOW(pWnd)->GetWindow(GW_OWNER);
-   if (pParent != NULL && pParent->IsWindowEnabled())
+   if (pParent != NULL && pParent->is_window_enabled())
       return;
 
    if (!LNX_WINDOW(pWnd)->CheckAutoCenter())
@@ -7158,15 +7158,15 @@ namespace lnx
 
       }
 
-      if(!m_bVisible || (m_pguie != this && m_pguie != NULL && !m_pguie->m_bVisible))
+      if(!m_bVisible || (m_pui != this && m_pui != NULL && !m_pui->m_bVisible))
       {
 
          m_bVisible = true;
 
-         if(m_pguie != this && m_pguie != NULL)
+         if(m_pui != this && m_pui != NULL)
          {
 
-            m_pguie->m_bVisible = true;
+            m_pui->m_bVisible = true;
 
          }
 
@@ -7178,10 +7178,10 @@ namespace lnx
       if(bSize || bMove)
       {
 
-         if(m_pguie != this && m_pguie != NULL)
+         if(m_pui != this && m_pui != NULL)
          {
 
-            m_pguie->m_rectParentClient = m_rectParentClient;
+            m_pui->m_rectParentClient = m_rectParentClient;
 
          }
 
