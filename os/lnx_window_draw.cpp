@@ -29,7 +29,7 @@ namespace lnx
    window_draw::window_draw(sp(base_application) papp) :
       element(papp),
       ::thread(papp),
-      ::user::window_draw(papp),
+      ::window_draw(papp),
       message_queue(papp),
       m_mutexRendering(papp),
       m_mutexRgnUpdate(papp),
@@ -266,7 +266,7 @@ namespace lnx
       }
       else
       {
-         ::user::window_interface * ptwi = System.user()->window_map().get((int_ptr) hwndParam);
+         ::window_interface * ptwi = System.user()->window_map().get((int_ptr) hwndParam);
          sp(::user::interaction) pguie =  (ptwi);
          rect rectWindow;
          ::GetWindowRect((oswindow) hwndParam, rectWindow);
@@ -522,7 +522,7 @@ namespace lnx
          {
             if(wndpa[l].oprop("session").is_new())
             {
-               wndpa[l].m_pimpl.cast < ::user::window >()->_001UpdateWindow();
+               wndpa[l].m_pimpl.cast < ::window >()->_001UpdateWindow();
             }
             l++;
          }
@@ -547,8 +547,8 @@ namespace lnx
       {
          oswindow hwndTopic = wndaApp[j];
 
-         sp(::user::window) pwnd = NULL;
-         //::user::window * pwnd =  (System.window_map().get((int_ptr) hwndTopic));
+         sp(::window) pwnd = NULL;
+         //::window * pwnd =  (System.window_map().get((int_ptr) hwndTopic));
          //if(pwnd == NULL)
          //{
          for(int32_t l = 0; l < wndpa.get_count(); l++)
@@ -676,8 +676,8 @@ namespace lnx
       return &m_semaphoreBuffer;
    }
 
-   // The first ::user::window handle in the array must belong
-   // to the higher z order ::user::window.
+   // The first ::window handle in the array must belong
+   // to the higher z order ::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -685,7 +685,7 @@ namespace lnx
 
    // Remark: this optimization eliminates top level lnxdows
    // that are lower z order siblings of a higher z order
-   // top level ::user::window that contains all
+   // top level ::window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent lnxdows
    // obscured by opaque children.
@@ -780,7 +780,7 @@ namespace lnx
 
       ::oswindow oswindow = hwndtree.m_oswindow;
 
-      ::user::window_interface * ptwi = oswindow->get_user_interaction();
+      ::window_interface * ptwi = oswindow->get_user_interaction();
 
       if(!::IsWindowVisible(oswindow))
       {
@@ -811,13 +811,13 @@ namespace lnx
          return OptimizeNone;
       }
 
-   //    sp(::user::window) pwnd = window::FromHandlePermanent(hwnd);
+   //    sp(::window) pwnd = window::FromHandlePermanent(hwnd);
 
 
       if(ptwi == NULL)
       {
 
-   //      ::user::window_interface::GetProperty getp;
+   //      ::window_interface::GetProperty getp;
    //      getp.m_eproperty = CTransparentWndInterface::PropertyInterface;
    //      ::SendMessage(hwnd, CTransparentWndInterface::MessageGetProperty, 0, (LPARAM) &getp);
    //      ptwi = getp.m_pinterface;
@@ -902,7 +902,7 @@ namespace lnx
       ::GetWindowRect((::oswindow) oswindow, rectWindow);
 
 
-   //   sp(::user::window) pwnd = ::lnx::window::from_handle(oswindow);
+   //   sp(::window) pwnd = ::lnx::window::from_handle(oswindow);
 
       if(!TwfGetTopWindow(
             hwndParam,
@@ -930,14 +930,14 @@ throw not_implemented(get_app());
 //
 //
 //
-//      ::user::window_interface * pwndi = System.window_map().get((int_ptr) hwnd);
+//      ::window_interface * pwndi = System.window_map().get((int_ptr) hwnd);
 //
 //      if(pwndi == NULL)
 //      {
 //         ::SendMessage(
 //            (oswindow) hwnd,
-//            ::user::window_interface::MessageBaseWndGetProperty,
-//            ::user::window_interface::PropertyDrawBaseWndInterface,
+//            ::window_interface::MessageBaseWndGetProperty,
+//            ::window_interface::PropertyDrawBaseWndInterface,
 //            (LPARAM) &pwndi);
 //      }
 //
@@ -1008,7 +1008,7 @@ throw not_implemented(get_app());
    {
       rect rectWindow;
 
-   //   sp(::user::window) pwndOpaque = window::FromHandlePermanent(hwndOpaque);
+   //   sp(::window) pwndOpaque = window::FromHandlePermanent(hwndOpaque);
 
       ::GetWindowRect((oswindow) hwndOpaque, rectWindow);
 
@@ -1105,7 +1105,7 @@ throw not_implemented(get_app());
       // pdc is the source primitive::memory device context
       // from which bitmap the screen is updated.
       user::buffer * pbuffer,
-      // hwndParam ::user::window device context
+      // hwndParam ::window device context
       // is used from screen output
       sp(::user::interaction) pwnd)
    {
@@ -1140,7 +1140,7 @@ throw not_implemented(get_app());
 //
 //      if(hdcScreen == NULL)
 //      {
-//         // If it has failed to get ::user::window
+//         // If it has failed to get ::window
 //         // owned device context, try to get
 //         // a device context from the cache.
 //         hdcScreen = ::GetDCEx((oswindow) hwndParam, NULL, DCX_caCHE | DCX_CLIPSIBLINGS | DCX_WINDOW);
@@ -1168,13 +1168,13 @@ throw not_implemented(get_app());
 //      // rect rectUpdate;
 //      // rgnUpdate.get_bounding_box(rectUpdate);
 //
-//      // get the ::user::window client area box
+//      // get the ::window client area box
 //      // in screen coordinates.
 //      rect64 rectWindow;
 //      rectWindow = pwnd->m_rectParentClient;
 //
 //      // Output rectangle receive the intersection
-//      // of ::user::window box and update box.
+//      // of ::window box and update box.
 //      //rect rectOutput;
 //      //rectOutput.intersect(rectWnd, rectUpdate);
 //
@@ -1188,9 +1188,9 @@ throw not_implemented(get_app());
 //      rect64 rectOutputClient(rectWindow);
 //      rectOutputClient -= rectWindow.top_left();
 //
-//      // The ::user::window owned device context is clipped
+//      // The ::window owned device context is clipped
 //      // with the update region in screen coordinates
-//      // translated to ::user::window client coordinates.
+//      // translated to ::window client coordinates.
 //      //_sp rgnClip(get_app());
 //      //rgnClip->create_rect(0, 0, 0, 0);
 //      //rgnClip->CopyRgn(&rgnUpdate);
@@ -1335,8 +1335,8 @@ throw not_implemented(get_app());
 
 
 
-   // The first ::user::window handle in the array must belong
-   // to the higher z order ::user::window.
+   // The first ::window handle in the array must belong
+   // to the higher z order ::window.
    // The rectangle must contain all update region.
    // It must be in screen coordinates.
 
@@ -1344,7 +1344,7 @@ throw not_implemented(get_app());
 
    // Remark: this optimization eliminates top level lnxdows
    // that are lower z order siblings of a higher z order
-   // top level ::user::window that contains all
+   // top level ::window that contains all
    // the update region in a opaque area.
    // It doesn´t eliminates from the update parent lnxdows
    // obscured by opaque children.

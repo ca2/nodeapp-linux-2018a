@@ -201,7 +201,7 @@ namespace lnx
       operator pthread_t() const;
 
 
-      virtual void on_run_step();
+      virtual bool on_run_step();
 
 
    };

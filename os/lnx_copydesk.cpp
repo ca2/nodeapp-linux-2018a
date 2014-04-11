@@ -744,9 +744,9 @@ namespace lnx
 
       bOk = ::core::copydesk::finalize();
 
-//      if(::user::window_sp::is_set() && ::user::window_sp::m_p->IsWindow())
+//      if(::window_sp::is_set() && ::window_sp::m_p->IsWindow())
       {
-  //       bOk = ::user::window_sp::m_p->DestroyWindow() != FALSE;
+  //       bOk = ::window_sp::m_p->DestroyWindow() != FALSE;
       }
     //  else
       {

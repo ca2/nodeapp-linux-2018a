@@ -61,8 +61,8 @@ CLASS_DECL_LINUX LRESULT CALLBACK __window_procedure(oswindow hWnd, UINT nMsg, W
 // xxx CLASS_DECL_LINUX WNDPROC __get_window_procedure();
 // xxx #define __window_procedure (*__get_window_procedure())
 
-typedef void (__MSG_CALL ::user::window::*__PMSGW)();
-   // like '__PMSG' but for ::user::window derived classes only
+typedef void (__MSG_CALL ::window::*__PMSGW)();
+   // like '__PMSG' but for ::window derived classes only
 
 typedef void (__MSG_CALL ::thread::*__PMSGT)();
    // like '__PMSG' but for thread-derived classes only

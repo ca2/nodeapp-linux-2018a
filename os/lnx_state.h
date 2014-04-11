@@ -96,7 +96,7 @@ public:
 
    // common controls thread state
    CToolTipCtrl* m_pToolTip;
-   sp(::user::window) m_pLastHit;       // last ::user::window to own tooltip
+   sp(::window) m_pLastHit;       // last ::window to own tooltip
    int_ptr m_nLastHit;         // last hittest code
 // xxx   TOOLINFO* m_pLastInfo;    // last TOOLINFO structure
    int_ptr m_nLastStatus;      // last flyby status message
@@ -107,7 +107,7 @@ public:
 class application;
 
 
-// xxx class ::user::window;
+// xxx class ::window;
 
 
 
@@ -134,7 +134,7 @@ public:
    bool m_bSystem; // TRUE if module is a "system" module, FALSE if not
    bool m_bReserved[2]; // padding
 
-   DWORD m_fRegisteredClasses; // flags for registered ::user::window classes
+   DWORD m_fRegisteredClasses; // flags for registered ::window classes
 
    mutex       m_mutexRegClassList;
 
@@ -160,7 +160,7 @@ public:
 
    // variables related to a given process in a module
    //  (used to be __MODULE_PROCESS_STATE)
-   void (PASCAL *m_pfnFilterToolTipMessage)(MESSAGE*, ::user::window *);
+   void (PASCAL *m_pfnFilterToolTipMessage)(MESSAGE*, ::window *);
 
 
    // define thread local portions of module state
@@ -244,9 +244,9 @@ public:
    // thread local exception context
    __EXCEPTION_CONTEXT m_exceptionContext;
 
-   // ::user::window create, gray dialog hook, and other hook data
+   // ::window create, gray dialog hook, and other hook data
    sp(::user::interaction) m_pWndInit;
-   sp(::user::window) m_pAlternateWndInit;      // special case commdlg hooking
+   sp(::window) m_pAlternateWndInit;      // special case commdlg hooking
    DWORD m_dwPropStyle;
    DWORD m_dwPropExStyle;
    oswindow m_hWndInit;
@@ -262,12 +262,12 @@ public:
       int32_t m_nDisablePumpCount; // Diagnostic trap to detect illegal re-entrancy
 #endif
 
-   // other ::user::window modal data
-   MESSAGE m_lastSentMsg;              // see ::user::windowmessage_handler
-   oswindow m_hTrackingWindow;         // see ::user::windowTrackPopupMenu
+   // other ::window modal data
+   MESSAGE m_lastSentMsg;              // see ::windowmessage_handler
+   oswindow m_hTrackingWindow;         // see ::windowTrackPopupMenu
    HMENU m_hTrackingMenu;
    char m_szTempClassName[___TEMP_CLASS_NAME_SIZE];    // see System.RegisterWndClass
-   oswindow m_hLockoutNotifyWindow;    // see ::user::windowOnCommand
+   oswindow m_hLockoutNotifyWindow;    // see ::windowOnCommand
    bool m_bInMsgFilter;
 
    // other framework modal data
@@ -277,8 +277,8 @@ public:
    bool m_bWaitForDataSource;
 
    // OLE control thread-local data
-   sp(::user::window) m_pWndPark;       // "parking space" ::user::window
-   long m_nCtrlRef;        // reference count on parking ::user::window
+   sp(::window) m_pWndPark;       // "parking space" ::window
+   long m_nCtrlRef;        // reference count on parking ::window
    bool m_bNeedTerm;       // TRUE if OleUninitialize needs to be called
 };
 

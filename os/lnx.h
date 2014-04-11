@@ -75,7 +75,7 @@ CLASS_DECL_LINUX void AfxResetMsgcache();
 #define AfxWndProc (*AfxGetAfxWndProc())
 
 #define LNX_THREAD(pthread) (dynamic_cast < ::lnx::thread * > (dynamic_cast < ::thread * >(pthread)))
-#define LNX_WINDOW(pwnd) (dynamic_cast < ::lnx::window * > (((sp(::user::window))(pwnd)).m_p))
+#define LNX_WINDOW(pwnd) (dynamic_cast < ::lnx::window * > (((sp(::window))(pwnd)).m_p))
 #define LNX_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics)))
 #define SP_DC(pgraphics) (dynamic_cast < ::lnx::graphics * > (( ::draw2d::graphics * )(pgraphics)))
 #define LNX_HDC(pgraphics) ((HDC)*(dynamic_cast < ::lnx::graphics * > (dynamic_cast < ::draw2d::graphics * > (pgraphics))))

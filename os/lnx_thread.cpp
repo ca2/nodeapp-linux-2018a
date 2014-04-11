@@ -114,7 +114,7 @@ UINT APIENTRY __thread_entry(void * pParam)
       // forced initialization of the thread
       __init_thread();
 
-      // thread inherits cast's main ::user::window if not already set
+      // thread inherits cast's main ::window if not already set
       //if (papp != NULL && GetMainWnd() == NULL)
       {
          // just attach the oswindow
@@ -196,7 +196,7 @@ CLASS_DECL_LINUX void AfxInternalProcessWndProcException(::exception::base*, ::s
    }
    else if (pbase->m_uiMessage == WM_PAINT)
    {
-      // force validation of ::user::window to prevent getting WM_PAINT again
+      // force validation of ::window to prevent getting WM_PAINT again
 //      ValidateRect(pbase->m_hwnd, NULL);
       pbase->set_lresult(0);
       return;
@@ -235,7 +235,7 @@ void AfxInternalPreTranslateMessage(::signal_details * pobj)
          }
       }
 
-      // walk from target to main ::user::window
+      // walk from target to main ::window
       sp(::user::interaction) pMainWnd = pThread->GetMainWnd();
       if(pMainWnd != NULL && pMainWnd->IsWindow())
       {
@@ -245,8 +245,8 @@ void AfxInternalPreTranslateMessage(::signal_details * pobj)
       }
 
       // in case of modeless dialogs, last chance route through main
-      //   ::user::window's accelerator table
-      sp(::user::window) pWnd = pbase->m_pwnd->get_wnd();
+      //   ::window's accelerator table
+      sp(::window) pWnd = pbase->m_pwnd->get_wnd();
       if (pMainWnd != NULL)
       {
          if (pWnd != NULL && LNX_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
@@ -1673,7 +1673,7 @@ stop_run:
       }
 
       // all other messages route through message ::collection::map
-      sp(::user::window) pwindow = pbase->m_pwnd->get_wnd();
+      sp(::window) pwindow = pbase->m_pwnd->get_wnd();
 
 /*      ASSERT(pwindow == NULL || LNX_WINDOW(pwindow)->get_handle() == pbase->m_hwnd);
 
@@ -2573,7 +2573,7 @@ return -1;  // just fail
 }
 else if (pMsg->message == WM_PAINT)
 {
-// force validation of ::user::window to prevent getting WM_PAINT again
+// force validation of ::window to prevent getting WM_PAINT again
 ValidateRect(pMsg->hwnd, NULL);
 return 0;
 }
@@ -2600,16 +2600,16 @@ if (pMsg->hwnd == NULL && pThread->DispatchThreadMessageEx(pMsg))
 return TRUE;
 }
 
-// walk from target to main ::user::window
+// walk from target to main ::window
 sp(::user::interaction) pMainWnd = System.GetMainWnd();
-/* trans   if (::user::window::WalkPreTranslateTree(pMainWnd->GetSafeHwnd(), pMsg))
+/* trans   if (::window::WalkPreTranslateTree(pMainWnd->GetSafeHwnd(), pMsg))
 return TRUE; */
 
 // in case of modeless dialogs, last chance route through main
-//   ::user::window's accelerator table
+//   ::window's accelerator table
 /*   if (pMainWnd != NULL)
 {
-sp(::user::window) pWnd = ::lnx::window::from_handle(pMsg->hwnd);
+sp(::window) pWnd = ::lnx::window::from_handle(pMsg->hwnd);
 if (pWnd != NULL && LNX_WINDOW(pWnd)->GetTopLevelParent() != pMainWnd)
 return pMainWnd->pre_translate_message(pMsg);
 }
@@ -2936,7 +2936,7 @@ ASSERT(__check_memory());
 
 if (lCount <= 0)
 {
-// send WM_IDLEUPDATECMDUI to the main ::user::window
+// send WM_IDLEUPDATECMDUI to the main ::window
 sp(::user::interaction) pMainWnd = GetMainWnd();
 if (pMainWnd != NULL && pMainWnd->IsWindowVisible())
 {
@@ -3016,7 +3016,7 @@ pMessageMap = (*pMessageMap->pfnGetBaseMap)())
 ASSERT(pMessageMap != (*pMessageMap->pfnGetBaseMap)());
 if (pMsg->message < 0xC000)
 {
-// constant ::user::window message
+// constant ::window message
 if ((lpEntry = AfxFindMessageEntry(pMessageMap->lpEntries,
 pMsg->message, 0, 0)) != NULL)
 goto LDispatch;
