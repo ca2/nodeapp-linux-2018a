@@ -83,9 +83,6 @@
 		<Project filename="../../appseed/audio_alsa/audio_alsa.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/mysql/mysql.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
@@ -93,15 +90,13 @@
 		<Project filename="../../../app/appseed/base/base.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
 		</Project>
 		<Project filename="../../../app/thirdparty/appseed/channels/clientchannels.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp">
+		<Project filename="../../../app/thirdparty/appseed/freeimage/basefreeimage.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
 		<Project filename="../../../app/thirdparty/appseed/freerdp/freerdp.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/freetype/freetype.cbp">
+		<Project filename="../../../app/thirdparty/appseed/freetype/basefreetype.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/libmpg123/libmpg123.cbp">
@@ -109,18 +104,16 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app/thirdparty/appseed/mysql/mysql.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-		</Project>
+		<Project filename="../../../app/thirdparty/appseed/mysql/basemysql.cbp" />
 		<Project filename="../../../app/thirdparty/appseed/pixman/pixman.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
 		<Project filename="../../../app/thirdparty/appseed/winpr/winpr.cbp" />
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freeimage/FreeImage.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freetype/freetype.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/mysql/mysql.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freeimage/basefreeimage.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freetype/basefreetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/mysql/basemysql.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />

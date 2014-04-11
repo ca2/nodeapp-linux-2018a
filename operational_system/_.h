@@ -10,25 +10,23 @@
 #define LINUX
 #endif
 
-
-#ifdef __STRICT_ANSI__
-#undef __STRICT_ANSI__
-#endif // __STRICT_ANSI__
-
-
-#define __STRICT_ANSI__ 1
-#define _ISOC99_SOURCE	1
-#define _ISOC11_SOURCE	1
-#define _POSIX_SOURCE	2
-#define _POSIX_C_SOURCE 200809L
-#define _XOPEN_SOURCE 1
-#define _XOPEN_SOURCE_EXTENDED 1
-#define _LARGEFILE_SOURCE 1
-#define _LARGEFILE64_SOURCE 1
-#undef _BSD_SOURCE
-#define _SVID_SOURCE 1
-#define _ATFILE_SOURCE 1
 #undef _GNU_SOURCE
+
+#ifdef _GNU_SOURCE
+xxx
+#endif
+
+
+#define _ISOC99_SOURCE
+#define _ISOC11_SOURCE
+#define _POSIX_SOURCE
+#define _POSIX_C_SOURCE 200809L
+#define _XOPEN_SOURCE 700
+#define _XOPEN_SOURCE_EXTENDED
+#define _LARGEFILE_SOURCE
+#define _LARGEFILE64_SOURCE
+#define _SVID_SOURCE
+#define _ATFILE_SOURCE
 
 
 #define __WINESRC__
@@ -42,6 +40,7 @@
 #ifdef _LP64
 #define OS64BIT
 #endif
+
 
 //#define NO_LCMS
 
