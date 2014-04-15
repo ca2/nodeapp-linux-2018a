@@ -74,11 +74,11 @@ typedef uint32_t UINT;
 #define _NORMAL_BLOCK  1
 
 
-// Ubuntu apt-get install libx11-dev
 // CentOS yum install libX11-devel
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
-
+// Ubuntu apt-get install libx11-dev
+// openSUSE zypper install libx11-devel
 
 /* Types use for passing & returning polymorphic values */
 typedef uint_ptr                 WPARAM;
