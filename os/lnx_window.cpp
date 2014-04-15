@@ -4641,7 +4641,7 @@ throw not_implemented(get_app());
    }
 
 
-   bool window::IsIconic()
+   bool window::WfiIsIconic()
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
       if(GetExStyle() & WS_EX_LAYERED)
@@ -4654,7 +4654,7 @@ throw not_implemented(get_app());
       }
    }
 
-   bool window::IsZoomed()
+   bool window::WfiIsZoomed()
    {
       ASSERT(::IsWindow((oswindow) get_handle()));
       return m_pui->m_eappearance == ::user::AppearanceZoomed;
