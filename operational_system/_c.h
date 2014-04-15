@@ -75,6 +75,7 @@ typedef uint32_t UINT;
 
 
 // Ubuntu apt-get install libx11-dev
+// CentOS yum install libX11-devel
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
 
