@@ -13,7 +13,7 @@
 
 
 
-/*
+/*Ķ
 *
 *
 *  xclib.c - xclip library to look after xlib mechanics for xclip
