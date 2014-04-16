@@ -16,9 +16,7 @@
 xxx
 #endif
 
-#ifdef __GNUC__
-#undef __GNUC__
-#endif // __GNUC__
+
 
 
 #define _ISOC99_SOURCE
