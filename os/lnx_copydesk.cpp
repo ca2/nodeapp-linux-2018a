@@ -8,8 +8,8 @@
 #include <X11/Xatom.h>
 #include <X11/Xmu/Atoms.h>
 // Ubuntu apt-get install libxmu-dev
+// CentOS yum install libXmu-devel
 // openSUSE zypper install libxmu-devel
-
 //#include "xcdef.h"
 //#include "xcprint.h"
 //#include "xclib.h"
