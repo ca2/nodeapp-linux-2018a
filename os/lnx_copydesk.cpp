@@ -6,7 +6,10 @@
 #include <ctype.h>
 #include <X11/Xlib.h>
 #include <X11/Xatom.h>
-#include <X11/Xmu/Atoms.h> // Ubutnu libxmu-dev
+#include <X11/Xmu/Atoms.h>
+// Ubuntu apt-get install libxmu-dev
+// openSUSE zypper install libxmu-devel
+
 //#include "xcdef.h"
 //#include "xcprint.h"
 //#include "xclib.h"
