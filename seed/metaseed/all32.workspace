@@ -2,8 +2,12 @@
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
 		<Project filename="../../appseed/app/app.cbp">
-			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freeimage/basefreeimage.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/freetype/basefreetype.cbp" />
+			<Depends filename="../../../app/thirdparty/appseed/mysql/basemysql.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../os/os.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
