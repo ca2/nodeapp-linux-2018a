@@ -17,9 +17,6 @@ namespace lnx
 
       LNX_THREAD(::thread::m_p.m_p)->m_pAppThread = this;
 
-      m_pfilemanager = NULL;
-
-
 
       // in non-running state until WinMain
 // xxx      m_hInstance = NULL;

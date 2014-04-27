@@ -40,7 +40,16 @@ xxx
 
 
 #ifdef _LP64
+
 #define OS64BIT
+
+#endif
+
+
+#ifdef cplus
+
+#define inline static
+
 #endif
 
 

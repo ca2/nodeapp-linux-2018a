@@ -2482,7 +2482,7 @@ static FORCEINLINE struct _TEB * WINAPI NtCurrentTeb(void)
     return teb;
 }
 #elif defined(__i386__) && defined(_MSC_VER)
-static FORCEINLINE struct _TEB * WINAPI NtCurrentTeb(void)
+inline struct _TEB * WINAPI NtCurrentTeb(void)
 {
   struct _TEB *teb;
   __asm mov eax, fs:[0x18];
@@ -2490,14 +2490,14 @@ static FORCEINLINE struct _TEB * WINAPI NtCurrentTeb(void)
   return teb;
 }
 #elif defined(__x86_64__) && defined(__GNUC__)
-static FORCEINLINE struct _TEB * WINAPI NtCurrentTeb(void)
+inline struct _TEB * WINAPI NtCurrentTeb(void)
 {
     struct _TEB *teb;
     __asm__(".byte 0x65\n\tmovq (0x30),%0" : "=r" (teb));
     return teb;
 }
 #elif defined(__x86_64__) && defined (_MSC_VER)
-static FORCEINLINE struct _TEB * WINAPI NtCurrentTeb(void)
+inline struct _TEB * WINAPI NtCurrentTeb(void)
 {
   struct _TEB *teb;
   __asm mov rax, gs:[0x30];
@@ -2506,14 +2506,14 @@ static FORCEINLINE struct _TEB * WINAPI NtCurrentTeb(void)
 }
 #elif defined(LINUX)
 #if defined(__x86_64__)
-static FORCEINLINE struct _TEB * WINAPI NtCurrentTeb(void)
+inline struct _TEB * WINAPI NtCurrentTeb(void)
 {
     struct _TEB *teb;
     __asm__(".byte 0x65\n\tmovq (0x30),%0" : "=r" (teb));
     return teb;
 }
 #else
-static FORCEINLINE struct _TEB * WINAPI NtCurrentTeb(void)
+inline struct _TEB * WINAPI NtCurrentTeb(void)
 {
     struct _TEB *teb;
     __asm__(".byte 0x64\n\tmovl (0x18),%0" : "=r" (teb));

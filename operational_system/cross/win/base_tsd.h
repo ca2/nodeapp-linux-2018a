@@ -153,72 +153,72 @@ typedef uint32_t UHALF_PTR, *PUHALF_PTR;
 
 #if !defined(__midl) && !defined(__WIDL__)
 
-static inline ULONG32 HandleToULong(const void *h)
+inline ULONG32 HandleToULong(const void *h)
 {
     return (ULONG_PTR)h;
 }
 
-static inline LONG32 HandleToLong(const void *h)
+inline LONG32 HandleToLong(const void *h)
 {
     return (LONG_PTR)h;
 }
 
-static inline void *ULongToHandle(ULONG32 ul)
+inline void *ULongToHandle(ULONG32 ul)
 {
     return (void *)(ULONG_PTR)ul;
 }
 
-static inline void *LongToHandle(LONG32 l)
+inline void *LongToHandle(LONG32 l)
 {
     return (void *)(LONG_PTR)l;
 }
 
-static inline ULONG32 PtrToUlong(const void *p)
+inline ULONG32 PtrToUlong(const void *p)
 {
     return (ULONG_PTR)p;
 }
 
-static inline LONG32 PtrToLong(const void *p)
+inline LONG32 PtrToLong(const void *p)
 {
     return (LONG_PTR)p;
 }
 
-static inline UINT32 PtrToUint(const void *p)
+inline UINT32 PtrToUint(const void *p)
 {
     return (UINT_PTR)p;
 }
 
-static inline INT32 PtrToInt(const void *p)
+inline INT32 PtrToInt(const void *p)
 {
     return (INT_PTR)p;
 }
 
-static inline UINT16 PtrToUshort(const void *p)
+inline UINT16 PtrToUshort(const void *p)
 {
     return (ULONG_PTR)p;
 }
 
-static inline INT16 PtrToShort(const void *p)
+inline INT16 PtrToShort(const void *p)
 {
     return (LONG_PTR)p;
 }
 
-static inline void *IntToPtr(INT32 i)
+inline void *IntToPtr(INT32 i)
 {
     return (void *)(INT_PTR)i;
 }
 
-static inline void *UIntToPtr(UINT32 ui)
+inline void *UIntToPtr(UINT32 ui)
 {
     return (void *)(UINT_PTR)ui;
 }
 
-static inline void *LongToPtr(LONG32 l)
+inline void *LongToPtr(LONG32 l)
 {
     return (void *)(LONG_PTR)l;
 }
 
-static inline void *ULongToPtr(ULONG32 ul)
+inline void *ULongToPtr(ULONG32 ul)
 {
     return (void *)(ULONG_PTR)ul;
 }
