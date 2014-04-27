@@ -1497,7 +1497,7 @@ d.unlock();
             || pbase->m_uiMessage == WM_MBUTTONDOWN
             || pbase->m_uiMessage == WM_MOUSEMOVE)
          {
-            if(Application.fontopus()->m_puser != NULL)
+            if(Session.fontopus()->m_puser != NULL)
             {
                if(&ApplicationUser != NULL)
                {

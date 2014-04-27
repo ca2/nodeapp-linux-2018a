@@ -4,7 +4,7 @@
 #define __USE_GNU
 #include <link.h>
 
-extern __thread thread_local_storage * __thread_data;
+extern __thread ::lnx::thread_local_storage * __thread_data;
 
 namespace lnx
 {

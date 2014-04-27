@@ -433,7 +433,7 @@ void CLASS_DECL_LINUX __end_thread(sp(base_application) papp, UINT nExitCode, bo
 //   _endthreadex(nExitCode);
 }
 
-extern __thread thread_local_storage * __thread_data;
+extern __thread ::lnx::thread_local_storage * __thread_data;
 void CLASS_DECL_LINUX __term_thread(sp(base_application) papp, HINSTANCE hInstTerm)
 {
 
@@ -453,8 +453,8 @@ void CLASS_DECL_LINUX __term_thread(sp(base_application) papp, HINSTANCE hInstTe
    try
    {
       // cleanup the rest of the thread local data
-      if (__thread_data != NULL)
-         __thread_data->delete_data();
+      if (::lnx::__thread_data != NULL)
+         ::lnx::__thread_data->delete_data();
          //__thread_data->DeleteValues(hInstTerm, FALSE);
    }
    catch( ::exception::base* e )

@@ -3,7 +3,7 @@
 #define slot___MODULE_THREAD_STATE 1
 #define slot___THREAD_STATE 2
 
-namespace win
+namespace lnx
 {
    class thread;
 } // namespace win
@@ -18,7 +18,7 @@ namespace win
 
 #ifdef DEBUG
 
-class ___DEBUG_STATE : public no_track_object
+class ___DEBUG_STATE : public ::lnx::no_track_object
 {
 public:
    ___DEBUG_STATE();
@@ -33,7 +33,7 @@ EXTERN_PROCESS_LOcaL(___DEBUG_STATE, afxDebugState)
 // ___LNX_STATE
 
 
-class ___LNX_STATE : public no_track_object
+class ___LNX_STATE : public ::lnx::no_track_object
 {
 public:
    // printing abort
@@ -79,7 +79,7 @@ public:
 
 // __MODULE_THREAD_STATE (local to thread *and* module)
 class CLASS_DECL_LINUX __MODULE_THREAD_STATE :
-   public no_track_object
+   public ::lnx::no_track_object
 {
 public:
    __MODULE_THREAD_STATE();
@@ -118,7 +118,7 @@ class CComCtlWrapper;
 class CCommDlgWrapper;
 
 // __MODULE_STATE (global data for a module)
-class CLASS_DECL_LINUX __MODULE_STATE : public no_track_object
+class CLASS_DECL_LINUX __MODULE_STATE : public ::lnx::no_track_object
 {
 public:
 // xxx  __MODULE_STATE(bool bDLL, WNDPROC pfn_window_procedure, DWORD dwVersion,
@@ -164,7 +164,7 @@ public:
 
 
    // define thread local portions of module state
-   thread_local_ < __MODULE_THREAD_STATE, slot___MODULE_THREAD_STATE > m_thread;
+   ::lnx::thread_local_ < __MODULE_THREAD_STATE, slot___MODULE_THREAD_STATE > m_thread;
 
    //Fusion: declare pointer to array of pointers to isolation aware dll wrappers (ex: comctl32).
    CDllIsolationWrapperBase** m_pDllIsolationWrappers;
@@ -225,7 +225,7 @@ class CPushRoutingView;
 
 #define ___TEMP_CLASS_NAME_SIZE 96
 class CLASS_DECL_LINUX ___THREAD_STATE :
-   public no_track_object,
+   public ::lnx::no_track_object,
    public ::thread_state
 {
 public:

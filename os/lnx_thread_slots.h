@@ -1,6 +1,8 @@
 #pragma once
 
 
+namespace lnx{
+
 // Classes declared in this file
 
 //class list;
@@ -187,9 +189,9 @@ public:
 };
 
 #define THREAD_LOCAL(class_name, ident_name, slot) \
-   thread_local_ < class_name, slot > ident_name;
+   ::lnx::thread_local_ < class_name, slot > ident_name;
 #define EXTERN_THREAD_LOCAL(class_name, ident_name, slot) \
-   extern CLASS_DECL_LINUX thread_local_ < class_name, slot > ident_name;
+   extern CLASS_DECL_LINUX ::lnx::thread_local_ < class_name, slot > ident_name;
 
 template<class TYPE>
 class process_local : public process_local_object
@@ -216,9 +218,9 @@ public:
 };
 
 #define PROCESS_LOcaL(class_name, ident_name) \
-   process_local < class_name > ident_name;
+   ::lnx::process_local < class_name > ident_name;
 #define EXTERN_PROCESS_LOcaL(class_name, ident_name) \
-   extern process_local < class_name > ident_name;
+   extern ::lnx::process_local < class_name > ident_name;
 
 /////////////////////////////////////////////////////////////////////////////
 
@@ -227,3 +229,4 @@ void CLASS_DECL_LINUX __term_local_data(HINSTANCE hInstTerm, bool bAll = FALSE);
 void CLASS_DECL_LINUX __tls_add_ref();
 void CLASS_DECL_LINUX __tls_release();
 
+} // namespace lnx
