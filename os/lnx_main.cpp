@@ -132,7 +132,7 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
 
    //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
 
-   ::draw2d_xlib::factory_exchange f(psystem);
+   //::draw2d_xlib::factory_exchange f(psystem);
 
    nReturnCode = psystem->main();
 
