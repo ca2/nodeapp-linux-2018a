@@ -4971,7 +4971,10 @@ throw not_implemented(get_app());
    int32_t window::SetWindowRgn(HRGN hRgn, bool bRedraw)
    {
 
-      throw not_implemented(get_app());
+   UNREFERENCED_PARAMETER(hRgn);
+   UNREFERENCED_PARAMETER(bRedraw);
+
+      //throw not_implemented(get_app());
 
 //      ASSERT(::IsWindow((oswindow) get_handle())); return ::SetWindowRgn(get_handle(), hRgn, bRedraw);
 
