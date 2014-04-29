@@ -124,6 +124,9 @@
 			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
 			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 		</Project>
+		<Project filename="../../../app/appseed/draw2d_xlib/draw2d_xlib.cbp">
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/math/math.cbp" />
 		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
