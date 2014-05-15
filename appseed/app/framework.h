@@ -3,4 +3,4 @@
 #endif
 
 
-#include "nodeapp/os/lnx.h"
+#include "nodeapp/os/linux.h"
