@@ -35,7 +35,7 @@ namespace music
          public:
 
 
-            player(sp(base_application) papp);
+            player(sp(::base::application) papp);
             virtual ~player();
 
 

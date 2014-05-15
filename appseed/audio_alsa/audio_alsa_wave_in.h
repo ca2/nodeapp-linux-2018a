@@ -18,7 +18,7 @@ namespace multimedia
 
 
 
-         wave_in(sp(base_application) papp);
+         wave_in(sp(::base::application) papp);
          virtual ~wave_in();
 
 

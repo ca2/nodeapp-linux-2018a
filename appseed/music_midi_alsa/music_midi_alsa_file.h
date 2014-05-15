@@ -18,8 +18,8 @@ namespace music
 
 
 
-         file(sp(base_application) papp);
-         virtual ~file();
+         file(sp(::base::application) papp);
+         virtual ~file();Ķ
 
 
 /*         double GetTempoShiftRate();

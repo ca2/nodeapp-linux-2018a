@@ -129,7 +129,7 @@ namespace music
 
 
 
-         sequence(sp(base_application) papp);
+         sequence(sp(::base::application) papp);
          virtual ~sequence();
 
 
