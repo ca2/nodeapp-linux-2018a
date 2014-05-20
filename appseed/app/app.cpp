@@ -15,27 +15,7 @@ int32_t main(int32_t argc, char * argv[])
 
 }
 
-
-bool CLASS_DECL_LINUX __init_current_state_app()
-{
-   sp(::base::application) pApp = __get_module_state()->m_pCurrentWinApp;
-   if (pApp != NULL && !pApp->m_pplaneapp->initialize_instance())
-   {
-      // Init Failed
-      try
-      {
-         pApp->m_pplaneapp->exit();
-      }
-      catch(...)
-      {
-      }
-      __lnx_term();
-      return FALSE;
-   }
-   return TRUE;
-}
-
-
+int xlib_error_handler(Display * d, XErrorEvent * e);
 
 
 int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
@@ -51,6 +31,7 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
 
    XSetErrorHandler(xlib_error_handler);
 
+::multithreading::init_multithreading();
 
 //   ::CoInitialize(NULL);
 //{
@@ -122,6 +103,8 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
 
    nReturnCode = psystem->main();
 
+::multithreading::term_multithreading();
+
    try
    {
       main_finalize();
@@ -150,53 +133,7 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
    psystem = NULL;
 
 
-   try
-   {
-//      delete __get_module_state()->m_pmapHWND;
-   }
-   catch(...)
-   {
-   }
-/*   try
-   {
-      delete __get_module_state()->m_pmapHDC;
-   }
-   catch(...)
-   {
-   }*/
-/*   try
-   {
-      delete __get_module_state()->m_pmapHGDIOBJ;
-   }
-   catch(...)
-   {
-   }*/
-//      delete __get_module_state()->m_pmapHMENU;
-
-   try
-   {
-      __get_module_state()->m_pmapHWND     = NULL;
-   }
-   catch(...)
-   {
-   }
-/*   try
-   {
-      __get_module_state()->m_pmapHDC      = NULL;
-   }
-   catch(...)
-   {
-   }*/
-/*   try
-   {
-      __get_module_state()->m_pmapHGDIOBJ  = NULL;
-   }
-   catch(...)
-   {
-   }*/
-
-
-//   set_heap_mutex(NULL);
+//  set_heap_mutex(NULL);
 
    return nReturnCode;
 
@@ -249,49 +186,7 @@ int32_t CLASS_DECL_LINUX ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
 
       psystem = NULL;
 
-      try
-      {
-//         delete __get_module_state()->m_pmapHWND;
-      }
-      catch(...)
-      {
-      }
-/*      try
-      {
-         delete __get_module_state()->m_pmapHDC;
-      }
-      catch(...)
-      {
-      }*/
-/*      try
-      {
-         delete __get_module_state()->m_pmapHGDIOBJ;
-      }
-      catch(...)
-      {
-      }*/
-//      delete __get_module_state()->m_pmapHMENU;
-      try
-      {
-         __get_module_state()->m_pmapHWND     = NULL;
-      }
-      catch(...)
-      {
-      }
-/*      try
-      {
-         __get_module_state()->m_pmapHDC      = NULL;
-      }
-      catch(...)
-      {
-      }
-      try
-      {
-         __get_module_state()->m_pmapHGDIOBJ  = NULL;
-      }
-      catch(...)
-      {
-      }*/
+
 
 //      set_heap_mutex(NULL);
 
