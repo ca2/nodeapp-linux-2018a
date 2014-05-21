@@ -65,6 +65,7 @@
 		<Linker>
 			<Add option="-Wl,-R\\$$$ORIGIN" />
 			<Add option="-Wl,-z,origin" />
+			<Add option="-lX11" />
 			<Add option="-lbase" />
 			<Add option="-lbasepixman" />
 			<Add option="-lbasefreeimage" />
