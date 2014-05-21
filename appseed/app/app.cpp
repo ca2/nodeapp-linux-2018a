@@ -9,6 +9,8 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[]);
 int32_t main(int32_t argc, char * argv[])
 {
 
+   ::base::static_start::init();
+
    br_init_set_symbol(g_psz_br_init_symbol_app);
 
    return __lnx_main(argc, argv);
@@ -113,13 +115,6 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
    {
    }
 
-   try
-   {
-      __lnx_term();
-   }
-   catch(...)
-   {
-   }
 
 
    try
@@ -133,7 +128,20 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
    psystem = NULL;
 
 
+
+   try
+   {
+      __lnx_term();
+   }
+   catch(...)
+   {
+   }
+
+
+
 //  set_heap_mutex(NULL);
+
+   ::base::static_start::term();
 
    return nReturnCode;
 
