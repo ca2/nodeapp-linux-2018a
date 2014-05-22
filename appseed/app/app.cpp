@@ -26,125 +26,81 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
    if(!XInitThreads())
       return -1;
 
-
    c_xstart();
-
-
 
    XSetErrorHandler(xlib_error_handler);
 
-::multithreading::init_multithreading();
-
-//   ::CoInitialize(NULL);
-//{
-//int * pi = NULL;
-//*pi = 0;
-//}
-
-//throw todo(::get_thread_app());
-
-   if(!main_initialize())
+   if(!defer_core_init())
       return -1;
-
-
-//   _set_purecall_handler(_ca2_purecall);
 
    ::plane::system * psystem = new ::plane::system();
 
     psystem->::exception::translator::attach();
 
-           //sigset_t set;
-           //sigemptyset(&set);
-           //sigaddset(&set, SIGSEGV);
-           //sigprocmask(SIG_BLOCK, &set, ::null());
-
-//{
-//int * pi = NULL;
-//*pi = 0;
-//}
-
-
-//   ASSERT(hPrevInstance == NULL);
-
    int32_t nReturnCode = 0;
-
 
    ::linux::main_init_data * pinitmaindata  = new ::linux::main_init_data;
 
-
    pinitmaindata->m_hInstance             = NULL;
+
    pinitmaindata->m_hPrevInstance         = NULL;
+
    if(argc > 0)
    {
+
       pinitmaindata->m_vssCommandLine     = argv[0];
+
    }
+
    bool bColon = false;
+
    for(int32_t i = 1; i < argc; i++)
    {
+
       if(bColon || (bColon = (strcmp(argv[i], ":") == 0)))
       {
+
          pinitmaindata->m_vssCommandLine     += " ";
+
          pinitmaindata->m_vssCommandLine     += argv[i];
 
       }
       else
       {
-         pinitmaindata->m_vssCommandLine     += " \"";
-         pinitmaindata->m_vssCommandLine     += argv[i];
-         pinitmaindata->m_vssCommandLine     += "\"";
-      }
-   }
-   pinitmaindata->m_nCmdShow              = SW_SHOW;
 
+         pinitmaindata->m_vssCommandLine     += " \"";
+
+         pinitmaindata->m_vssCommandLine     += argv[i];
+
+         pinitmaindata->m_vssCommandLine     += "\"";
+
+      }
+
+   }
+
+   pinitmaindata->m_nCmdShow              = SW_SHOW;
 
    psystem->init_main_data(pinitmaindata);
 
-   //MessageBox(NULL, "box1", "box1", MB_ICONINFORMATION);
-
-   //::draw2d_xlib::factory_exchange f(psystem);
-
    nReturnCode = psystem->main();
 
-::multithreading::term_multithreading();
-
    try
    {
-      main_finalize();
-   }
-   catch(...)
-   {
-   }
 
-
-
-   try
-   {
       delete psystem;
+
    }
    catch(...)
    {
+
    }
 
    psystem = NULL;
 
 
-
-   try
-   {
-      __lnx_term();
-   }
-   catch(...)
-   {
-   }
-
-
-
-//  set_heap_mutex(NULL);
-
-   ::base::static_start::term();
+   defer_core_term();
 
    return nReturnCode;
-
 
 }
 
@@ -181,9 +137,6 @@ int32_t CLASS_DECL_LINUX ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
       nReturnCode = psystem->main();
 
 
-      __lnx_term();
-
-
       try
       {
          delete psystem;
@@ -194,10 +147,7 @@ int32_t CLASS_DECL_LINUX ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
 
       psystem = NULL;
 
-
-
-//      set_heap_mutex(NULL);
-
+      defer_base_term();
 
       return nReturnCode;
    }
