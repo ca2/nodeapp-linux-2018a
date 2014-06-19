@@ -82,6 +82,50 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
 
    psystem->init_main_data(pinitmaindata);
 
+   bool bOk = true;
+
+   try
+   {
+
+      if(psystem->pre_run())
+      {
+
+         bOk = true;
+
+      }
+
+   }
+   catch(...)
+   {
+
+   }
+
+   try
+   {
+
+      if(!bOk)
+      {
+
+         if(psystem->m_iReturnCode == 0)
+         {
+
+            return -1;
+
+         }
+
+         return psystem->m_iReturnCode;
+
+      }
+
+
+   }
+   catch(...)
+   {
+
+      return -1;
+
+   }
+
    nReturnCode = psystem->main();
 
    try
