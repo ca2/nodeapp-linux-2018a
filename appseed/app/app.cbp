@@ -72,7 +72,6 @@
 			<Add option="-lbasefreetype" />
 			<Add option="-lbasemysql" />
 			<Add option="-lcore" />
-			<Add option="-lca2os" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../stage/x86" />
 			<Add directory="/usr/lib64/mysql/" />
