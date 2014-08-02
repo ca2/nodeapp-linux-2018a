@@ -772,9 +772,9 @@ GetWindow(
 #define MB_YESNOCANCEL              0x00000003L
 #define MB_YESNO                    0x00000004L
 #define MB_RETRYCANCEL              0x00000005L
-#if(WINVER >= 0x0500)
+//#if(WINVER >= 0x0500)
 #define MB_CANCELTRYCONTINUE        0x00000006L
-#endif /* WINVER >= 0x0500 */
+//#endif /* WINVER >= 0x0500 */
 
 
 #define MB_ICONHAND                 0x00000010L
@@ -933,21 +933,21 @@ MessageBoxW(
 #define IDIGNORE            5
 #define IDYES               6
 #define IDNO                7
-#if(WINVER >= 0x0400)
+//#if(WINVER >= 0x0400)
 #define IDCLOSE         8
 #define IDHELP          9
-#endif /* WINVER >= 0x0400 */
+//#endif /* WINVER >= 0x0400 */
 
-#if(WINVER >= 0x0500)
+//#if(WINVER >= 0x0500)
 #define IDTRYAGAIN      10
 #define IDCONTINUE      11
-#endif /* WINVER >= 0x0500 */
+//#endif /* WINVER >= 0x0500 */
 
-#if(WINVER >= 0x0501)
+//#if(WINVER >= 0x0501)
 #ifndef IDTIMEOUT
 #define IDTIMEOUT 32000
 #endif
-#endif /* WINVER >= 0x0501 */
+//#endif /* WINVER >= 0x0501 */
 
 
 struct user_menu;
