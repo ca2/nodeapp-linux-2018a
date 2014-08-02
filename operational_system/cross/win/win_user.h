@@ -782,11 +782,11 @@ GetWindow(
 #define MB_ICONEXCLAMATION          0x00000030L
 #define MB_ICONASTERISK             0x00000040L
 
-#if(WINVER >= 0x0400)
+//#if(WINVER >= 0x0400)
 #define MB_USERICON                 0x00000080L
 #define MB_ICONWARNING              MB_ICONEXCLAMATION
 #define MB_ICONERROR                MB_ICONHAND
-#endif /* WINVER >= 0x0400 */
+//#endif /* WINVER >= 0x0400 */
 
 #define MB_ICONINFORMATION          MB_ICONASTERISK
 #define MB_ICONSTOP                 MB_ICONHAND
@@ -794,9 +794,9 @@ GetWindow(
 #define MB_DEFBUTTON1               0x00000000L
 #define MB_DEFBUTTON2               0x00000100L
 #define MB_DEFBUTTON3               0x00000200L
-#if(WINVER >= 0x0400)
+//#if(WINVER >= 0x0400)
 #define MB_DEFBUTTON4               0x00000300L
-#endif /* WINVER >= 0x0400 */
+//#endif /* WINVER >= 0x0400 */
 
 #define MB_APPLMODAL                0x00000000L
 #define MB_SYSTEMMODAL              0x00001000L
