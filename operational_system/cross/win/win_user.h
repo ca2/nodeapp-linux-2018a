@@ -1062,7 +1062,7 @@ typedef WINDOWPLACEMENT *PWINDOWPLACEMENT, *LPWINDOWPLACEMENT;
 #endif /* _WIN32_WINNT >= 0x0500 */
 
 
-
+/*
 
 typedef struct tag_MSG
 {
@@ -1073,7 +1073,7 @@ typedef struct tag_MSG
    POINT       pt;
 } MESSAGE, * LPMESSAGE;
 
-
+*/
 
 HDC BeginPaint(oswindow hwnd, PAINTSTRUCT * ps);
 
