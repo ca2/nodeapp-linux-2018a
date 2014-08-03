@@ -777,26 +777,3 @@ typedef struct tagENHMETAHEADER
 
 
 
-
-/* Region Flags */
-#define ERROR               0
-#define NULLREGION          1
-#define SIMPLEREGION        2
-#define COMPLEXREGION       3
-#define RGN_ERROR ERROR
-
-/* CombineRgn() Styles */
-#define RGN_AND             1
-#define RGN_OR              2
-#define RGN_XOR             3
-#define RGN_DIFF            4
-#define RGN_COPY            5
-#define RGN_MIN             RGN_AND
-#define RGN_MAX             RGN_COPY
-
-/* StretchBlt() Modes */
-#define BLACKONWHITE                 1
-#define WHITEONBLACK                 2
-#define COLORONCOLOR                 3
-#define HALFTONE                     4
-#define MAXSTRETCHBLTMODE            4
