@@ -33,7 +33,7 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
    if(!defer_core_init())
       return -1;
 
-   ::plane::system * psystem = new ::plane::system();
+   ::core::system * psystem = new ::core::system();
 
     psystem->::exception::translator::attach();
 
@@ -157,7 +157,7 @@ int32_t CLASS_DECL_LINUX ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, 
 
 //      _set_purecall_handler(_ca2_purecall);
 
-      ::plane::system * psystem = new ::plane::system();
+      ::core::system * psystem = new ::core::system();
 
 
       //Sleep(30 * 1000);
