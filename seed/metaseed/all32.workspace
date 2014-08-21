@@ -3,10 +3,6 @@
 	<Workspace title="all32">
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freeimage/basefreeimage.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freetype/basefreetype.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/mysql/basemysql.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
@@ -42,8 +38,6 @@
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/projection/projection.cbp">
@@ -78,39 +72,23 @@
 		</Project>
 		<Project filename="../../appseed/audio_alsa/audio_alsa.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
+		<Project filename="../../../app/appseed/axis/axis.cbp" />
+		<Project filename="../../../app/axis/bsdiff/axisbsdiff.cbp" />
+		<Project filename="../../../app/axis/bzip2/axisbzip2.cbp" />
+		<Project filename="../../../app/axis/cairo/axiscairo.cbp" />
+		<Project filename="../../../app/axis/mysql/axismysql.cbp" />
+		<Project filename="../../../app/axis/openssl/axisopenssl.cbp" />
+		<Project filename="../../../app/axis/pixman/axispixman.cbp" />
+		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/cairo/cairo.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-		</Project>
-		<Project filename="../../../app/thirdparty/appseed/channels/clientchannels.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/freeimage/basefreeimage.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-		</Project>
-		<Project filename="../../../app/thirdparty/appseed/freerdp/freerdp.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/freetype/basefreetype.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-		</Project>
-		<Project filename="../../../app-veriwell/appseed/libmpg123/libmpg123.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/mysql/basemysql.cbp" />
-		<Project filename="../../../app/thirdparty/appseed/pixman/pixman.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-		</Project>
-		<Project filename="../../../app/thirdparty/appseed/winpr/winpr.cbp" />
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freeimage/basefreeimage.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/freetype/basefreetype.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/mysql/basemysql.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/cairo/cairo.cbp" />
-			<Depends filename="../../../app/thirdparty/appseed/pixman/pixman.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/draw2d_xlib/draw2d_xlib.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
