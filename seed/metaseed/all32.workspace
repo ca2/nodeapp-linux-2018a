@@ -83,7 +83,13 @@
 		<Project filename="../../../app/axis/openssl/axisopenssl.cbp" />
 		<Project filename="../../../app/axis/pixman/axispixman.cbp" />
 		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
-		<Project filename="../../../app/appseed/base/base.cbp" />
+		<Project filename="../../../app/appseed/base/base.cbp">
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/axis/bsdiff/axisbsdiff.cbp" />
+			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
+			<Depends filename="../../../app/axis/mysql/axismysql.cbp" />
+			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
