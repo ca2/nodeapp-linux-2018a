@@ -208,12 +208,12 @@ typedef std::type_info std_type_info;
 // std:: includes can undef min max macros
 
 
-#define max(x,y) (((x) > (y)) ? (x) : (y))
-#define min(x,y) (((x) < (y)) ? (x) : (y))
+//#define max(x,y) (((x) > (y)) ? (x) : (y))
+//#define min(x,y) (((x) < (y)) ? (x) : (y))
 
 
-#define __max(a,b)  (((a) > (b)) ? (a) : (b))
-#define __min(a,b)  (((a) < (b)) ? (a) : (b))
+//#define __max(a,b)  (((a) > (b)) ? (a) : (b))
+//#define __min(a,b)  (((a) < (b)) ? (a) : (b))
 
 
 

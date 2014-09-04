@@ -294,12 +294,12 @@ inline void debug_break() { asm("int $3"); }
 
 
 
-#define max(x,y) (((x) > (y)) ? (x) : (y))
-#define min(x,y) (((x) < (y)) ? (x) : (y))
+//#define max(x,y) (((x) > (y)) ? (x) : (y))
+//#define min(x,y) (((x) < (y)) ? (x) : (y))
 
 
-#define __max(a,b)  (((a) > (b)) ? (a) : (b))
-#define __min(a,b)  (((a) < (b)) ? (a) : (b))
+//#define __max(a,b)  (((a) > (b)) ? (a) : (b))
+//#define __min(a,b)  (((a) < (b)) ? (a) : (b))
 
 
 
