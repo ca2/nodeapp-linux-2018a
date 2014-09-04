@@ -77,7 +77,10 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/aura/aura.cbp" />
+		<Project filename="../../../app/atom/iconv/atomiconv.cbp" />
+		<Project filename="../../../app/appseed/aura/aura.cbp">
+			<Depends filename="../../../app/atom/iconv/atomiconv.cbp" />
+		</Project>
 		<Project filename="../../../app/aura/charguess/auracharguess.cbp" />
 		<Project filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 		<Project filename="../../../app/appseed/axis/axis.cbp">
@@ -148,6 +151,5 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
-		<Project filename="../../../app/atom/iconv/atomiconv.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
