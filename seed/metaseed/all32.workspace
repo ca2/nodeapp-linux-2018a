@@ -11,14 +11,12 @@
 			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
 			<Depends filename="../../../app-core/appseed/projection/projection.cbp" />
-			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
-			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
@@ -30,14 +28,12 @@
 		<Project filename="../../../app-core/appseed/flag/flag.cbp">
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
-			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
-			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/axis/bsdiff/axisbsdiff.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
@@ -56,18 +52,12 @@
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
-			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/rdpclient/rdpclient.cbp" />
-		<Project filename="../../../app-core/appseed/uinteraction/uinteraction.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-		</Project>
 		<Project filename="../../../app-veriwell/appseed/mplite/mplite.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
-			<Depends filename="../../../app-core/appseed/uinteraction/uinteraction.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
@@ -87,6 +77,9 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
+		<Project filename="../../../app/appseed/aura/aura.cbp" />
+		<Project filename="../../../app/aura/charguess/auracharguess.cbp" />
+		<Project filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 		<Project filename="../../../app/appseed/axis/axis.cbp" />
 		<Project filename="../../../app/axis/bsdiff/axisbsdiff.cbp">
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
@@ -150,5 +143,6 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
+		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
