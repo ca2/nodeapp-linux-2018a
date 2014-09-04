@@ -89,6 +89,7 @@
 			<Depends filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/bsdiff/axisbsdiff.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/bzip2/axisbzip2.cbp">
