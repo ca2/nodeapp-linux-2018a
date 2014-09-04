@@ -148,5 +148,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		<Project filename="../../../app/atom/iconv/atomiconv.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
