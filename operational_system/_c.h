@@ -259,18 +259,12 @@ typedef void * PVOID;
 #define _gmtime64 gmtime
 
 
-
-#undef stricmp
-#undef strnicmp
+#define stricmp strcasecmp
+#define strnicmp strncasecmp
 
 
 #define _stricmp  stricmp
 #define _strnicmp  strnicmp
-
-
-#define strcasecmp stricmp
-#define strncasecmp strnicmp
-
 
 
 
