@@ -21,20 +21,15 @@ xxx
 
 #define _ISOC99_SOURCE
 #define _ISOC11_SOURCE
-#ifndef _POSIX_SOURCE
 #define _POSIX_SOURCE
-#endif
 #define _POSIX_C_SOURCE 200809L
 #define _XOPEN_SOURCE 700
 #define _XOPEN_SOURCE_EXTENDED
 #define _LARGEFILE_SOURCE
 #define _LARGEFILE64_SOURCE
-#ifndef _SVID_SOURCE
-#define _SVID_SOURCE
-#endif
-#ifndef _ATFILE_SOURCE
-#define _ATFILE_SOURCE
-#endif
+#undef _SVID_SOURCE
+#undef _ATFILE_SOURCE
+#undef _BSD_SOURCE
 
 #define __WINESRC__
 
