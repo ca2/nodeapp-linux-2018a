@@ -14,23 +14,9 @@
 #define __USE_BSD 1
 
 #include <strings.h>
-#include <unistd.h>
-#include <time.h>
-#include <limits.h>
-#include <errno.h>
-#include <malloc.h>
 #include <inttypes.h>
-#include <pthread.h>
-#include <netinet/in.h>
-#include <arpa/inet.h>
-#include <netdb.h>
-#include <math.h>
-#include <assert.h>
-#include <sys/resource.h>
-#include <sys/time.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <sys/stat.h>
+#include <errno.h>
+
 
 
 
@@ -80,8 +66,8 @@ typedef uint32_t UINT;
 // Ubuntu apt-get install libx11-dev
 // CentOS yum install libX11-devel
 // openSUSE zypper install libx11-devel
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+//#include <X11/Xlib.h>
+//#include <X11/Xutil.h>
 
 
 typedef uint_ptr                 WPARAM;
