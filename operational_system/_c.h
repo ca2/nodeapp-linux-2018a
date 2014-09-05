@@ -11,21 +11,20 @@
 #include <errno.h>
 #include <malloc.h>
 #include <inttypes.h>
-#include <sys/time.h>
 #include <pthread.h>
-#include <sys/resource.h>
-#include <sys/types.h>
-#include <sys/socket.h>
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <netdb.h>
 #include <math.h>
 #include <assert.h>
+#include <sys/resource.h>
+#include <sys/time.h>
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/stat.h>
 
 
 
-#define _gmtime64 gmtime
-#define _stricmp  stricmp
 
 #ifndef _XSERVER64
 #ifndef _XTYPEDEF_XID
@@ -58,29 +57,24 @@ typedef unsigned long XID;
 #endif
 
 
-//typedef void * HANDLE;
-//typedef void * HDC;
 typedef unsigned char BYTE;
 typedef uint32_t UINT;
-//typedef int_ptr WPARAM;
-//typedef int_ptr LPARAM;
 
 
 
 #define __cdecl
 #define _stdcall
 
-// dbg alloc MS VC CRT
 #define _NORMAL_BLOCK  1
 
 
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
 // Ubuntu apt-get install libx11-dev
 // CentOS yum install libX11-devel
 // openSUSE zypper install libx11-devel
+#include <X11/Xlib.h>
+#include <X11/Xutil.h>
 
-/* Types use for passing & returning polymorphic values */
+
 typedef uint_ptr                 WPARAM;
 typedef long_ptr                 LPARAM;
 typedef long_ptr                 LRESULT;
@@ -94,12 +88,6 @@ struct gdi_object;
 
 
 
-/*struct tag_WINDOW;
-
-typedef struct tag_WINDOW WINDOW, * LPWINDOW;
-
-typedef LPWINDOW oswindow;*/
-
 typedef struct device_context * HDC;
 
 typedef struct gdi_object * HGDIOBJ;
@@ -107,9 +95,6 @@ typedef struct gdi_object * HGDIOBJ;
 union _XEvent;
 
 typedef union _XEvent XEvent;
-
-//typedef Font HFONT;
-
 
 #define DECL_SPEC_ANY
 
@@ -138,17 +123,10 @@ inline void debug_break() { asm("int $3"); }
 #endif
 
 
-// SIZE_T_MAX is used by the collection classes
 #ifndef SIZE_T_MAX
 	#define SIZE_T_MAX  UINT_MAX
 #endif
 
-// FASTcaLL is used for static member functions with little or no params
-#ifndef FASTcaLL
-	#define FASTcaLL
-#endif
-
-// CDECL and EXPORT are defined in case WINDOWS.H doesn't
 #ifndef CDECL
 	#define CDECL
 #endif
@@ -166,123 +144,13 @@ inline void debug_break() { asm("int $3"); }
 #endif
 #endif
 
-// __DEPREcaTED is used for functions that should no longer be used
-#ifndef __DEPREcaTED
-#ifdef _AFX_DISABLE_DEPREcaTED
-	#define __DEPREcaTED(_Message)
-#else
-	#define __DEPREcaTED(_Message) __declspec(deprecated(_Message))
-#endif
-#endif
 
-// _AFX_INSECURE_DEPREcaTE is used for deprecated, insecure functions.
-#ifndef _AFX_INSECURE_DEPREcaTE
-#ifdef _AFX_SECURE_NO_DEPREcaTE
-#define _AFX_INSECURE_DEPREcaTE(_Message)
-#else
-#define _AFX_INSECURE_DEPREcaTE(_Message) __declspec(deprecated(_Message))
-#endif // _AFX_SECURE_NO_DEPREcaTE
-#endif // _AFX_INSECURE_DEPREcaTE
-
-// _API is used on global public functions
-#ifndef _API
-	#define _API //__stdcall
-#endif
-
-// _OLEAPI is used for some special OLE functions
-#ifndef _OLEAPI
-	#define _OLEAPI __stdcall
-#endif
-
-// __CDECL is used for rare functions taking variable arguments
-#ifndef __CDECL
-	#define __CDECL __cdecl
-#endif
-
-// __EXPORT is used for functions which need to be exported
-#ifndef __EXPORT
-	#define __EXPORT EXPORT
-#endif
-
-#ifndef __STATIC
-	#define __STATIC extern
-	#define __STATIC_DATA extern __declspec(selectany)
-#endif
-
-// The following macros are used to enable export/import
-
-// for data
-#ifndef __DATA_EXPORT
-	#define __DATA_EXPORT __declspec(dllexport)
-#endif
-#ifndef __DATA_IMPORT
-	#define __DATA_IMPORT __declspec(dllimport)
-#endif
-
-// for classes
-#ifndef __CLASS_EXPORT
-	#define __CLASS_EXPORT __declspec(dllexport)
-#endif
-#ifndef __CLASS_IMPORT
-	#define __CLASS_IMPORT __declspec(dllimport)
-#endif
-
-// for global APIs
-#ifndef __API_EXPORT
-	#define __API_EXPORT __declspec(dllexport)
-#endif
-#ifndef __API_IMPORT
-	#define __API_IMPORT __declspec(dllimport)
-#endif
-
-// This macro is used to reduce size requirements of some classes
-#ifndef __ALWAYS_VTABLE
-#ifndef __NOVTABLE
-#if _MSC_VER >= 1100 && !defined(DEBUG)
-#define __NOVTABLE __declspec(novtable)
-#else
-#define __NOVTABLE
-#endif
-#endif
-#endif
 
 // for global data that should be in COMDATs (packaged data)
 #ifndef __COMDAT
-#define __COMDAT __declspec(selectany)
+#define __COMDAT // __declspec(selectany)
 #endif
 
-// The following macros are used on data declarations/definitions
-//  (they are redefined for extension DLLs and the shared MFC DLL)
-#define __DATADEF
-#define __API CLASS_DECL_LINUX
-
-
-// used when building extension DLLs
-#ifndef __EXT_DATA
-	#define __EXT_DATA
-	#define __EXT_DATADEF
-	#define __EXT_CLASS
-	#define __EXT_API
-#endif
-
-// BASED_XXXX macros are provided for backward compatibility
-#ifndef BASED_CODE
-	#define BASED_CODE
-#endif
-
-#ifndef BASED_DEBUG
-	#define BASED_DEBUG
-#endif
-
-#ifndef BASED_STACK
-	#define BASED_STACK
-#endif
-
-#ifdef _AFX_DEVBUILD
-	#define __IMPL_DATA __DATA_EXPORT
-#else
-	#define __IMPL_DATA CLASS_DECL_LINUX
-#endif
 
 #define NO_ANSIUNI_ONLY
 
@@ -383,17 +251,24 @@ typedef uint32_t dword_ptr;
 typedef void * PVOID;
 
 
-#define _strcmpi strcasecmp
-
-
 #define PURE = 0
 
 
 #define __stdcall
+#define _gmtime64 gmtime
 
 
-#define strnicmp strncasecmp
 
+#undef stricmp
+#undef strnicmp
+
+
+#define _stricmp  stricmp
+#define _strnicmp  strnicmp
+
+
+#define strcasecmp stricmp
+#define strncasecmp strnicmp
 
 
 
