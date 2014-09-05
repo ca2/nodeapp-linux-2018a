@@ -6,16 +6,10 @@
 #endif
 
 
+
 #ifndef LINUX
 #define LINUX
 #endif
-
-#undef _GNU_SOURCE
-
-#ifdef _GNU_SOURCE
-xxx
-#endif
-
 
 
 
@@ -27,11 +21,18 @@ xxx
 #define _XOPEN_SOURCE_EXTENDED
 #define _LARGEFILE_SOURCE
 #define _LARGEFILE64_SOURCE
+
+
+
 #undef _SVID_SOURCE
 #undef _ATFILE_SOURCE
 #undef _BSD_SOURCE
+#undef _GNU_SOURCE
+
+
 
 #define __WINESRC__
+
 
 
 #define CLASS_DECL_EXPORT
@@ -40,20 +41,15 @@ xxx
 
 
 #ifdef _LP64
-
 #define OS64BIT
-
 #endif
 
 
 #ifdef cplus
-
 #define inline static
-
 #endif
 
 
-//#define NO_LCMS
 
 
 
