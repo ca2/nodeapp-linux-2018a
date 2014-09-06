@@ -35,7 +35,6 @@
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/axis/bsdiff/axisbsdiff.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/cairo/axiscairo.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
@@ -87,10 +86,8 @@
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/aura/charguess/auracharguess.cbp" />
 			<Depends filename="../../../app/aura/sqlite/aurasqlite.cbp" />
-		</Project>
-		<Project filename="../../../app/axis/bsdiff/axisbsdiff.cbp">
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
+			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/bzip2/axisbzip2.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -117,7 +114,6 @@
 		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/axis/bsdiff/axisbsdiff.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
@@ -126,7 +122,6 @@
 		</Project>
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/axis/bsdiff/axisbsdiff.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
