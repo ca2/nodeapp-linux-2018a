@@ -29,19 +29,21 @@
 #define CLASS_DECL_THREAD __thread
 
 
-#ifdef _LP64
+#if defined(_LP64)
+
 #define OS64BIT
+#define AMD64
+
+#else
+
+#define _X86_
+
 #endif
 
 
 #ifdef cplus
 #define inline static
 #endif
-
-
-
-
-
 
 
 

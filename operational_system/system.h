@@ -19,12 +19,12 @@
 
 
 
-//#ifndef _XSERVER64
-//#ifndef _XTYPEDEF_XID
-//#define _XTYPEDEF_XID
-//typedef unsigned long XID;
-//#endif
-//#endif
+#ifndef _XSERVER64
+#ifndef _XTYPEDEF_XID
+#define _XTYPEDEF_XID
+typedef unsigned long XID;
+#endif
+#endif
 
 
 #pragma once
@@ -85,9 +85,9 @@ typedef struct device_context * HDC;
 
 typedef struct gdi_object * HGDIOBJ;
 
-//union _XEvent;
+union _XEvent;
 
-//typedef union _XEvent XEvent;
+typedef union _XEvent XEvent;
 
 #define DECL_SPEC_ANY
 

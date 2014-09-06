@@ -8,18 +8,6 @@
 typedef std::type_info std_type_info;
 
 
-#include <math.h>
-
-
-#if defined(_LP64)
-
-#define AMD64
-
-#else
-
-#define _X86_
-
-#endif
 
 
 
@@ -65,24 +53,6 @@ typedef std::type_info std_type_info;
 #define UNALIGNED
 #endif
 #endif
-
-// __DEPREcaTED is used for functions that should no longer be used
-#ifndef __DEPREcaTED
-#ifdef _AFX_DISABLE_DEPREcaTED
-	#define __DEPREcaTED(_Message)
-#else
-	#define __DEPREcaTED(_Message) __declspec(deprecated(_Message))
-#endif
-#endif
-
-// _AFX_INSECURE_DEPREcaTE is used for deprecated, insecure functions.
-#ifndef _AFX_INSECURE_DEPREcaTE
-#ifdef _AFX_SECURE_NO_DEPREcaTE
-#define _AFX_INSECURE_DEPREcaTE(_Message)
-#else
-#define _AFX_INSECURE_DEPREcaTE(_Message) __declspec(deprecated(_Message))
-#endif // _AFX_SECURE_NO_DEPREcaTE
-#endif // _AFX_INSECURE_DEPREcaTE
 
 // _API is used on global public functions
 #ifndef _API
@@ -130,13 +100,7 @@ typedef std::type_info std_type_info;
 
 // This macro is used to reduce size requirements of some classes
 #ifndef __ALWAYS_VTABLE
-#ifndef __NOVTABLE
-#if _MSC_VER >= 1100 && !defined(DEBUG)
-#define __NOVTABLE __declspec(novtable)
-#else
 #define __NOVTABLE
-#endif
-#endif
 #endif
 
 // for global data that should be in COMDATs (packaged data)
@@ -194,26 +158,6 @@ typedef std::type_info std_type_info;
 #define VC_EXTRALEAN
 #define NO_ANSIUNI_ONLY
 #define _MFC_OVERRIDES_NEW
-
-
-#undef AfxWndProc
-
-
-
-
-//#define _API
-
-
-
-// std:: includes can undef min max macros
-
-
-//#define max(x,y) (((x) > (y)) ? (x) : (y))
-//#define min(x,y) (((x) < (y)) ? (x) : (y))
-
-
-//#define __max(a,b)  (((a) > (b)) ? (a) : (b))
-//#define __min(a,b)  (((a) < (b)) ? (a) : (b))
 
 
 
