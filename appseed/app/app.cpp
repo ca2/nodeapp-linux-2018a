@@ -9,11 +9,17 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[]);
 int32_t main(int32_t argc, char * argv[])
 {
 
-   ::base::static_start::init();
+   if(!defer_core_init())
+      return -1;
 
    br_init_set_symbol(g_psz_br_init_symbol_app);
 
-   return __lnx_main(argc, argv);
+   int iRet = __lnx_main(argc, argv);
+
+
+   defer_core_term();
+
+   return iRet;
 
 }
 
