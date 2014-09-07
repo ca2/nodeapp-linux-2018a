@@ -3,4 +3,4 @@
 #endif
 
 
-#include "app/appseed/core/core.h"
+#include "app/appseed/core/core/core/core.h"

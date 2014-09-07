@@ -1,4 +1,4 @@
-#include "app/appseed/core/core.h"
+#include "app/appseed/core/core/core/core.h"
 
 const char * g_psz_br_init_symbol_app = "";
 
