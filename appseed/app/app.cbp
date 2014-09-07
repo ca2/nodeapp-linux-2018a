@@ -69,7 +69,14 @@
 			<Add option="-Wl,-R\\$$$ORIGIN" />
 			<Add option="-Wl,-z,origin" />
 			<Add option="-lX11" />
+			<Add option="-latomiconv" />
+			<Add option="-laurasqlite" />
+			<Add option="-lauracharguess" />
 			<Add option="-laura" />
+			<Add option="-laxisbzip2" />
+			<Add option="-laxiszlib" />
+			<Add option="-laxisopenssl" />
+			<Add option="-laxisidn" />
 			<Add option="-laxispixman" />
 			<Add option="-laxisfreeimage" />
 			<Add option="-laxisfreetype" />

@@ -101,7 +101,11 @@
 		<Project filename="../../../app/axis/bzip2/axisbzip2.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/cairo/axiscairo.cbp" />
+		<Project filename="../../../app/axis/cairo/axiscairo.cbp">
+			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
+			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
+			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
+		</Project>
 		<Project filename="../../../app/axis/freeimage/axisfreeimage.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
