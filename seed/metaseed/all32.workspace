@@ -106,6 +106,7 @@
 			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
+		<Project filename="../../../app/axis/clientchannels/axisclientchannels.cbp" />
 		<Project filename="../../../app/axis/freeimage/axisfreeimage.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
@@ -115,6 +116,7 @@
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
+		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
 		<Project filename="../../../app/axis/idn/axisidn.cbp" />
 		<Project filename="../../../app/axis/mysql/axismysql.cbp">
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
@@ -122,6 +124,7 @@
 		</Project>
 		<Project filename="../../../app/axis/openssl/axisopenssl.cbp" />
 		<Project filename="../../../app/axis/pixman/axispixman.cbp" />
+		<Project filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
@@ -162,8 +165,5 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
-		<Project filename="../../../app/axis/winpr/axiswinpr.cbp" />
-		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
-		<Project filename="../../../app/axis/clientchannels/axisclientchannels.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
