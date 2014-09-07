@@ -108,7 +108,6 @@
 		</Project>
 		<Project filename="../../../app/axis/freeimage/axisfreeimage.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/freetype/axisfreetype.cbp">
