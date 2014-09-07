@@ -162,5 +162,8 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		<Project filename="../../../app/axis/winpr/axiswinpr.cbp" />
+		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
+		<Project filename="../../../app/axis/clientchannels/axisclientchannels.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
