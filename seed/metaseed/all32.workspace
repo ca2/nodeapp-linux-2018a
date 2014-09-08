@@ -124,6 +124,7 @@
 		</Project>
 		<Project filename="../../../app/axis/openssl/axisopenssl.cbp" />
 		<Project filename="../../../app/axis/pixman/axispixman.cbp" />
+		<Project filename="../../../app/axis/rdpclient/axisrdpclient.cbp" />
 		<Project filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
