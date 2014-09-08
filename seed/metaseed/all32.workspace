@@ -62,7 +62,12 @@
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/rdpclient/rdpclient.cbp" />
+		<Project filename="../../../app-core/appseed/rdpclient/rdpclient.cbp">
+			<Depends filename="../../../app/axis/clientchannels/axisclientchannels.cbp" />
+			<Depends filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
+			<Depends filename="../../../app/axis/rdpclient/axisrdpclient.cbp" />
+			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
+		</Project>
 		<Project filename="../../../app-veriwell/appseed/mplite/mplite.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
@@ -106,7 +111,10 @@
 			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/clientchannels/axisclientchannels.cbp" />
+		<Project filename="../../../app/axis/clientchannels/axisclientchannels.cbp">
+			<Depends filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
+			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
+		</Project>
 		<Project filename="../../../app/axis/freeimage/axisfreeimage.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
@@ -116,7 +124,9 @@
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
+		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp">
+			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
+		</Project>
 		<Project filename="../../../app/axis/idn/axisidn.cbp" />
 		<Project filename="../../../app/axis/mysql/axismysql.cbp">
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
@@ -124,7 +134,15 @@
 		</Project>
 		<Project filename="../../../app/axis/openssl/axisopenssl.cbp" />
 		<Project filename="../../../app/axis/pixman/axispixman.cbp" />
-		<Project filename="../../../app/axis/rdpclient/axisrdpclient.cbp" />
+		<Project filename="../../../app/axis/rdpclient/axisrdpclient.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/axis/clientchannels/axisclientchannels.cbp" />
+			<Depends filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
+			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+		</Project>
 		<Project filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
