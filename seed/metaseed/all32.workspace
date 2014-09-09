@@ -125,6 +125,7 @@
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp">
+			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/idn/axisidn.cbp" />
