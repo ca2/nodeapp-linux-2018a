@@ -4,7 +4,7 @@
 function install()
 {
 	
-	cd ../../../../../stage/x86
+	cd ../../../../../../stage/x86
 
 	./app : app=app-cidadedecuritiba/alphaclock type=application locale=_std schema=_std install build_number=basis
 
