@@ -142,7 +142,9 @@
 			<Depends filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
 			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/winpr/axiswinpr.cbp" />
+		<Project filename="../../../app/axis/winpr/axiswinpr.cbp">
+			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
+		</Project>
 		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
