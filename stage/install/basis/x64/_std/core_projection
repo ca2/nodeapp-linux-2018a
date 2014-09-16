@@ -3,12 +3,14 @@
 
 function install()
 {
-	
-	cd ../../../../../../stage/x86
+
+	cd $1
+
+	cd stage/x86
 
 	./app : app=app-core/projection type=application locale=_std schema=_std install build_number=basis
 
 }
 
 
-install
+install $1
