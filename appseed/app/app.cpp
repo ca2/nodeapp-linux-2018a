@@ -1,9 +1,11 @@
 #include "app/appseed/core/core/core/core.h"
+#include "aura/aura/node/linux/linux.h"
+
 
 const char * g_psz_br_init_symbol_app = "";
 
 
-int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[]);
+int32_t __lnx_main(int32_t argc, char * argv[]);
 
 
 int32_t main(int32_t argc, char * argv[])
@@ -26,7 +28,7 @@ int32_t main(int32_t argc, char * argv[])
 int xlib_error_handler(Display * d, XErrorEvent * e);
 
 
-int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
+int32_t __lnx_main(int32_t argc, char * argv[])
 {
 
    if(!XInitThreads())
@@ -156,8 +158,9 @@ int32_t CLASS_DECL_LINUX __lnx_main(int32_t argc, char * argv[])
 
 
 
-int32_t CLASS_DECL_LINUX ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int32_t nCmdShow)
+int32_t ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCmdLine, int32_t nCmdShow)
 {
+
    try
    {
 
