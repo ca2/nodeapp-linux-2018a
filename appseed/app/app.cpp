@@ -43,6 +43,8 @@ int32_t __lnx_main(int32_t argc, char * argv[])
 
    ::core::system * psystem = new ::core::system();
 
+   psystem->m_durationRunLock = millis(1);
+
     psystem->::exception::translator::attach();
 
    int32_t nReturnCode = 0;
