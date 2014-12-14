@@ -88,7 +88,6 @@
 			<Add directory="../../../stage/x86" />
 			<Add directory="/usr/lib64/mysql/" />
 		</Linker>
-		<Unit filename="../../../app/appseed/aura/primitive/collection/collection_lemon_heap.h" />
 		<Unit filename="app.cpp" />
 		<Unit filename="framework.h">
 			<Option compile="1" />
