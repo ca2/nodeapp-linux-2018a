@@ -41,8 +41,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
-			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/cairo/axiscairo.cbp" />

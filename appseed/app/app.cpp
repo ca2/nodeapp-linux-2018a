@@ -141,6 +141,30 @@ int32_t __lnx_main(int32_t argc, char * argv[])
    try
    {
 
+      psystem->m_signala.remove_all();
+
+   }
+   catch(...)
+   {
+
+   }
+
+
+   try
+   {
+
+      psystem->m_pthreadimpl->m_signala.remove_all();
+
+   }
+   catch(...)
+   {
+
+   }
+
+
+   try
+   {
+
       delete psystem;
 
    }
