@@ -48,3 +48,7 @@
 
 
 
+#define AXIS_FREEIMAGE
+
+
+

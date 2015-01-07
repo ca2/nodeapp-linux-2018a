@@ -100,8 +100,8 @@
 		</Project>
 		<Project filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 		<Project filename="../../../app/appseed/axis/axis.cbp">
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/aura/charguess/auracharguess.cbp" />
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
@@ -124,6 +124,7 @@
 		<Project filename="../../../app/axis/freetype/axisfreetype.cbp">
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
+			<Depends filename="../../../app/axis/png/axispng.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp">
@@ -144,6 +145,7 @@
 			<Depends filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
 			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		</Project>
+		<Project filename="../../../app/axis/png/axispng.cbp" />
 		<Project filename="../../../app/axis/winpr/axiswinpr.cbp">
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
 		</Project>
