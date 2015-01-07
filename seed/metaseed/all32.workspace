@@ -94,7 +94,9 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app/atom/iconv/atomiconv.cbp" />
-		<Project filename="../../../app/aura/charguess/auracharguess.cbp" />
+		<Project filename="../../../app/aura/charguess/auracharguess.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/aura/aura.cbp">
 			<Depends filename="../../../app/atom/iconv/atomiconv.cbp" />
 		</Project>
