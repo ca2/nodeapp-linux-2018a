@@ -45,7 +45,7 @@
 #define inline static
 #endif
 
-#define static_inline inline
+#define static_inline static inline
 
 
 #define AXIS_FREEIMAGE
