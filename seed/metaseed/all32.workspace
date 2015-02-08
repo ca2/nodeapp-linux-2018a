@@ -106,6 +106,7 @@
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
+			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
 			<Depends filename="../../../app/axis/idn/axisidn.cbp" />
@@ -139,6 +140,7 @@
 		</Project>
 		<Project filename="../../../app/axis/idn/axisidn.cbp" />
 		<Project filename="../../../app/axis/mysql/axismysql.cbp">
+			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
