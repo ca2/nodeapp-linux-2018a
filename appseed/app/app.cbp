@@ -75,10 +75,12 @@
 			<Add option="-laura" />
 			<Add option="-laxisbzip2" />
 			<Add option="-laxiszlib" />
+			<Add option="-laxiscrypto" />
 			<Add option="-laxisopenssl" />
 			<Add option="-laxisidn" />
 			<Add option="-laxispixman" />
 			<Add option="-laxisfreeimage" />
+			<Add option="-laxispng" />
 			<Add option="-laxisfreetype" />
 			<Add option="-laxismysql" />
 			<Add option="-laxis" />
