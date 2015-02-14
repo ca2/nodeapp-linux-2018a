@@ -19,7 +19,15 @@
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/netnodelite/netnodelite.cbp" />
+		<Project filename="../../../app-core/appseed/netnodelite/netnodelite.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app-core/appseed/netnode/netnode.cbp" />
+			<Depends filename="../../../app-core/appseed/netnode_dynamic_source_script/netnode_dynamic_source_script.cbp" />
+			<Depends filename="../../../app-core/appseed/netnode_dynamic_source_library/netnode_dynamic_source_library.cbp" />
+		</Project>
 		<Project filename="../../../app/atom/iconv/atomiconv.cbp" />
 		<Project filename="../../../app/aura/charguess/auracharguess.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -92,16 +100,38 @@
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
+		<Project filename="../../../app/appseed/data/data.cbp" />
 		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/draw2d_xlib/draw2d_xlib.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
+		<Project filename="../../../app/axis/html_lite/html_lite.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/math/math.cbp" />
-		<Project filename="../../../app-core/appseed/netnode/netnode.cbp" />
-		<Project filename="../../../app-core/appseed/netnode_dynamic_source_script/netnode_dynamic_source_script.cbp" />
-		<Project filename="../../../app-core/appseed/netnode_dynamic_source_library/netnode_dynamic_source_library.cbp" />
+		<Project filename="../../../app-core/appseed/netnode/netnode.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/netnode_dynamic_source_script/netnode_dynamic_source_script.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app-core/appseed/netnode/netnode.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/netnode_dynamic_source_library/netnode_dynamic_source_library.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app-core/appseed/netnode/netnode.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/sphere/sphere.cbp" />
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
