@@ -33,7 +33,7 @@
 
 #define OS64BIT
 #define AMD64
-
+#define _M_X64
 
 #else
 
