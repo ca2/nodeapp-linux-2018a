@@ -80,6 +80,7 @@
 		<Project filename="../../../app/axis/idn/axisidn.cbp">
 			<Depends filename="../../../app/atom/iconv/atomiconv.cbp" />
 		</Project>
+		<Project filename="../../../app/axis/idn/test/axisidn_test.cbp" />
 		<Project filename="../../../app/axis/mysql/axismysql.cbp">
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
