@@ -201,6 +201,7 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 	</Workspace>
