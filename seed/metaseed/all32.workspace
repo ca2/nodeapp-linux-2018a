@@ -28,6 +28,7 @@
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
+			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
@@ -37,9 +38,10 @@
 			<Depends filename="../../../app-core/appseed/alarm/alarm.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/flag/flag.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
-			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
