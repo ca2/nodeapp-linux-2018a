@@ -203,7 +203,8 @@ namespace multimedia
 
          }
 
-         string strHw = "hw:1,0,0";
+         //string strHw = "hw:0,0";
+         string strHw = "default";
 
 
          //if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, SND_PCM_NONBLOCK)) < 0)
@@ -245,11 +246,19 @@ namespace multimedia
             format = SND_PCM_FORMAT_S16_LE;
 
          }
+         else if(pformat->wBitsPerSample == 8)
+         {
+
+            format = SND_PCM_FORMAT_U8;
+
+         }
 
          if ((err = snd_pcm_hw_params_set_format (m_ppcm, m_phwparams, format)) < 0)
          {
 
-            TRACE ("cannot set sample format (%s)\n", snd_strerror (err));
+            string strError = snd_strerror (err);
+
+            TRACE ("cannot set sample format (%s)\n", strError);
 
             return result_error;
 

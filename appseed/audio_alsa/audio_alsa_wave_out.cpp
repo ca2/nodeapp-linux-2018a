@@ -84,7 +84,7 @@ namespace multimedia
          m_pwaveformat->nAvgBytesPerSec = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize = 0;
 
-         if((m_mmr = snd_pcm_open(SND_PCM_STREAM_PLAYBACK)) != result_success)
+         if((m_mmr = this->snd_pcm_open(SND_PCM_STREAM_PLAYBACK)) != result_success)
          {
 
             return result_error;
@@ -225,7 +225,7 @@ namespace multimedia
          m_pwaveformat->nAvgBytesPerSec   = m_pwaveformat->nSamplesPerSec * m_pwaveformat->nBlockAlign;
          m_pwaveformat->cbSize            = 0;
 
-         if((m_mmr = snd_pcm_open(SND_PCM_STREAM_PLAYBACK)) != result_success)
+         if((m_mmr = this->snd_pcm_open(SND_PCM_STREAM_PLAYBACK)) != result_success)
          {
 
             return m_mmr;
@@ -367,7 +367,7 @@ namespace multimedia
 
          }*/
 
-         mmr = snd_pcm_close();
+         mmr = this->snd_pcm_close();
 
          m_ppcm = NULL;
 
