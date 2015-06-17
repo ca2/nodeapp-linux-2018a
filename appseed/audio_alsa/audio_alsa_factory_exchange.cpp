@@ -9,8 +9,8 @@ namespace multimedia
    {
 
 
-      factory_exchange::factory_exchange(sp(::base::application) papp) :
-         element(papp)
+      factory_exchange::factory_exchange(::aura::application * papp) :
+         object(papp)
       {
 
          System.factory().cloneable_large < wave_in               >  (System.type_info < ::multimedia::audio::wave_in                  > ());
@@ -31,7 +31,7 @@ namespace multimedia
 
 
 extern "C"
-void ca2_factory_exchange(sp(::base::application) papp)
+void ca2_factory_exchange(::aura::application * papp)
 {
 
    ::multimedia::audio_alsa::factory_exchange factoryexchange(papp);

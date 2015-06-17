@@ -55,13 +55,13 @@ namespace multimedia
          virtual bool initialize_instance();
          virtual int32_t exit_instance();
 
-         DECL_GEN_SIGNAL(OnReady)
-         DECL_GEN_SIGNAL(OnFree)
-         DECL_GEN_SIGNAL(OnDone)
+         DECL_GEN_SIGNAL(OnReady);
+         DECL_GEN_SIGNAL(OnFree);
+         DECL_GEN_SIGNAL(OnDone);
 
          virtual ::multimedia::e_result wave_out_start(const imedia::position & position);
 
-         virtual void on_run_step();
+         virtual bool on_run_step();
 
          virtual int underrun_recovery(int err);
 

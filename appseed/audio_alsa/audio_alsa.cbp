@@ -61,16 +61,16 @@
 			<Add directory="../../../app" />
 			<Add directory="../../../app/thirdparty/include" />
 			<Add directory="../../.." />
+			<Add directory="../../../app/appseed/aura" />
+			<Add directory="../../../app/appseed/axis" />
+			<Add directory="../../../app/axis" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-R\\$$$ORIGIN" />
 			<Add option="-Wl,-z,origin" />
+			<Add option="-laura" />
+			<Add option="-laxis" />
 			<Add option="-lbase" />
-			<Add option="-lbasepixman" />
-			<Add option="-lbasefreeimage" />
-			<Add option="-lbasefreetype" />
-			<Add option="-lbasemysql" />
-			<Add option="-lbasecairo" />
 			<Add option="-lcore" />
 			<Add option="-lasound" />
 			<Add option="-lmultimedia" />

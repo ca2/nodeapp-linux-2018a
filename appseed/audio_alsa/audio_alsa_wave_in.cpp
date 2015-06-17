@@ -10,7 +10,7 @@ namespace multimedia
 
 
       wave_in::wave_in(sp(::base::application) papp) :
-         element(papp),
+         object(papp),
          ::thread(papp),
          wave_base(papp),
          snd_pcm(papp),
@@ -33,7 +33,7 @@ namespace multimedia
          TRACE("wave_in::initialize_instance %X\n", get_os_int());
          //SetMainWnd(NULL);
          //ASSERT(GetMainWnd() == NULL);
-         set_thread_priority(::base::scheduling_priority_highest);
+         set_thread_priority(::multithreading::priority_highest);
          m_evInitialized.SetEvent();
          return true;
       }

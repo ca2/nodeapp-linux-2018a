@@ -11,7 +11,7 @@ namespace multimedia
 
 
       wave_out::wave_out(sp(::base::application) papp) :
-         element(papp),
+         object(papp),
          ::thread(papp),
         wave_base(papp),
          snd_pcm(papp),
@@ -847,10 +847,10 @@ namespace multimedia
       }
 
 
-      void wave_out::on_run_step()
+      bool wave_out::on_run_step()
       {
 
-         ::multimedia::audio::wave_out::on_run_step();
+         return ::multimedia::audio::wave_out::on_run_step();
 
          /*if(m_estate == state_playing)
          {

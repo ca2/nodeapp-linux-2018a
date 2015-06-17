@@ -59,6 +59,15 @@
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/pacman/pacman.cbp">
+			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
+			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
+			<Depends filename="../../../app/axis/png/axispng.cbp" />
+			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
+			<Depends filename="../../../app/appseed/html/html.cbp" />
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/projection/projection.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
@@ -87,7 +96,11 @@
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app-core/appseed/id3lib/id3lib.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/libmpg123/basempg123.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
@@ -174,6 +187,11 @@
 			<Depends filename="../../../app/axis/mysql/axismysql.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/id3lib/id3lib.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
+		</Project>
+		<Project filename="../../../app-veriwell/appseed/libmpg123/basempg123.cbp" />
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
@@ -190,15 +208,24 @@
 		<Project filename="../../../app/appseed/draw2d_xlib/draw2d_xlib.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/gcom/gcom.cbp" />
+		<Project filename="../../../app/axis/html_lite/html_lite.cbp" />
+		<Project filename="../../../app/appseed/html/html.cbp">
+			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/math/math.cbp" />
 		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
 			<Depends filename="../../../app/appseed/math/math.cbp" />
 		</Project>
 		<Project filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp" />
 		<Project filename="../../../app/appseed/sphere/sphere.cbp" />
 		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
