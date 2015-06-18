@@ -249,6 +249,8 @@
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
+			<Depends filename="../../../app/appseed/html/html.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
