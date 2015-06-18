@@ -230,6 +230,12 @@
 		</Project>
 		<Project filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp" />
 		<Project filename="../../../app/appseed/sphere/sphere.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
+			<Depends filename="../../../app/appseed/html/html.cbp" />
 			<Depends filename="../../../app/appseed/math/math.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp">
