@@ -239,14 +239,15 @@ namespace multimedia
          uint32_t uiInterestSize;
          uint32_t uiSkippedSamplesCount;
 
-         iBufferCount            = buffer_size / period_size;
+         //iBufferCount            = buffer_size / period_size;
 
          iBufferSampleCount      = period_size;
 
          if(true)
          {
             uiBufferSizeLog2 = 16;
-            uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
+            //uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
+            uiBufferSize = buffer_size;
             uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
             if(iBufferCount > 0)
             {
@@ -282,7 +283,7 @@ namespace multimedia
 
          m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
 
-         m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount() + 4);
+         m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount());
 
          int err;
 
