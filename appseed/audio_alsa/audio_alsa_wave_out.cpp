@@ -247,6 +247,10 @@ namespace multimedia
          {
             uiBufferSizeLog2 = 16;
             //uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
+            while(((double)(buffer_size * 8) / (double)(uiBitsPerSample * uiSamplesPerSec)) > 0.084)
+            {
+                buffer_size /= 2;
+            }
             uiBufferSize = buffer_size;
             uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
             if(iBufferCount > 0)
