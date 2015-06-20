@@ -21,7 +21,7 @@ namespace multimedia
          m_phandler        = NULL;
          m_iCurrentBuffer  = 0;
          buffer_time       = 100 * 1000; /* ring buffer length in us */
-         period_time       = 10 * 1000; /* period time in us */
+         period_time       =  10 * 1000; /* period time in us */
       }
 
       snd_pcm::~snd_pcm()
@@ -265,8 +265,9 @@ namespace multimedia
          }
 
          unsigned int uiFreq = pformat->nSamplesPerSec;
+         int dir = 0;
 
-         if ((err = snd_pcm_hw_params_set_rate_near (m_ppcm, m_phwparams, &uiFreq, 0)) < 0)
+         if ((err = snd_pcm_hw_params_set_rate_near (m_ppcm, m_phwparams, &uiFreq, &dir)) < 0)
          {
 
             TRACE ("cannot set sample rate (%s)\n", snd_strerror (err));
@@ -289,7 +290,7 @@ namespace multimedia
 
          snd_pcm_uframes_t size;
 
-         int dir;
+         dir = 1;
 
          // set the buffer time
          if((err = snd_pcm_hw_params_set_buffer_time_near(m_ppcm, m_phwparams, &buffer_time, &dir)) < 0)
@@ -312,6 +313,8 @@ namespace multimedia
 
          buffer_size = size;
 
+         dir = 1;
+
          // set the period time
          if((err = snd_pcm_hw_params_set_period_time_near(m_ppcm, m_phwparams, &period_time, &dir)) < 0)
          {
@@ -321,6 +324,8 @@ namespace multimedia
             return result_error;
 
          }
+
+         dir = 1;
 
          if((err = snd_pcm_hw_params_get_period_size(m_phwparams, &size, &dir)) < 0)
          {
