@@ -21,7 +21,7 @@ namespace multimedia
          m_phandler        = NULL;
          m_iCurrentBuffer  = 0;
          buffer_time       = 100 * 1000; /* ring buffer length in us */
-         period_time       =  10 * 1000; /* period time in us */
+         period_time       =  20 * 1000; /* period time in us */
       }
 
       snd_pcm::~snd_pcm()
