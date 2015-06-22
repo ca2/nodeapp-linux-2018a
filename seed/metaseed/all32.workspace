@@ -82,8 +82,14 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/projection/projection.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
-			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
+			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
+			<Depends filename="../../../app/appseed/html/html.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/rdpclient/rdpclient.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -117,7 +123,9 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
+		<Project filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp">
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+		</Project>
 		<Project filename="../../appseed/audio_alsa/audio_alsa.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
