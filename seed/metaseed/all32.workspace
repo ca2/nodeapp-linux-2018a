@@ -53,6 +53,7 @@
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/axis/png/axispng.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
