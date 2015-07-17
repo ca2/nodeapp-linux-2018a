@@ -173,6 +173,10 @@
 			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/idn/axisidn.cbp" />
+		<Project filename="../../../app/axis/jpeg/axisjpeg.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
+		</Project>
 		<Project filename="../../../app/axis/mysql/axismysql.cbp">
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
