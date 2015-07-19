@@ -17,12 +17,10 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
-			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
-			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
+			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
 			<Depends filename="../../../app-core/appseed/projection/projection.cbp" />
-			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
@@ -42,6 +40,7 @@
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
+			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
