@@ -245,6 +245,7 @@
 		<Project filename="../../../game/appseed/tictactoe/tictactoe.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/jpeg/axisjpeg.cbp" />
 			<Depends filename="../../../app/axis/png/axispng.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
