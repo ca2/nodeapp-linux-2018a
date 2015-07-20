@@ -242,7 +242,15 @@
 			<Depends filename="../../../app/appseed/html/html.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
-		<Project filename="../../../game/appseed/tictactoe/tictactoe.cbp" />
+		<Project filename="../../../game/appseed/tictactoe/tictactoe.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/axis/jpeg/axisjpeg.cbp" />
+			<Depends filename="../../../app/axis/png/axispng.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/gcom/gcom.cbp">
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
