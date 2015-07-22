@@ -8,7 +8,11 @@
 #define VARIADIC_TEMPLATE
 
 
-
+#ifdef __cplusplus
+typedef wchar_t unichar;
+#else
+typedef unsigned short unichar;
+#endif
 #ifdef _DEBUG
 #define DEBUG
 #endif
