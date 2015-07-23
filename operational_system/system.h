@@ -322,6 +322,8 @@ typedef void * PVOID;
 
 
 
+typedef unsigned short unichar;
+typedef wchar_t unichar32;
 
 
 
