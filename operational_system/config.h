@@ -13,6 +13,8 @@ typedef wchar_t unichar;
 #else
 typedef unsigned short unichar;
 #endif
+typedef unsigned int unichar32;
+
 #ifdef _DEBUG
 #define DEBUG
 #endif
