@@ -80,7 +80,7 @@
 			<Add option="-laxisidn" />
 			<Add option="-laxispixman" />
 			<Add option="-laxisfreeimage" />
-			<Add option="-laxispng" />
+			<Add option="-laxis_image_png" />
 			<Add option="-laxisfreetype" />
 			<Add option="-laxismysql" />
 			<Add option="-laxis" />
