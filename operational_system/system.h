@@ -75,37 +75,40 @@ typedef struct oswindow_data *   oswindow;
 
 #include <pthread.h>
 
-//#ifdef __cplusplus
-//class pthread
-//{
-//public:
-//
-//   pthread_t m_thread;
-//
-//   pthread(){}
-//   pthread(const pthread & p){operator=(p);}
-//   pthread(const pthread_t & p){operator=(p);}
-//
-//   inline operator pthread_t &() { return m_thread; }
-//   inline operator void *() { return (void *) (int_ptr) m_thread; }
-//
-//   inline operator pthread_t() const { return m_thread; }
-//   inline operator void *() const { return (void *) (int_ptr) m_thread; }
-//
-//   pthread & operator =(const pthread & p) {m_thread = p.m_thread; return *this;}
-//   pthread & operator =(const pthread_t & p) {m_thread = p; return *this;}
-//
-//   bool operator ==(const pthread_t & p) const {return m_thread == p;}
-//   bool operator ==(const pthread & p) const {return operator==(p.m_thread);}
-//   bool operator !=(const pthread_t & p) const {return !operator == (p);}
-//   bool operator !=(const pthread & p) const {return operator != (p.m_thread);}
-//
-//};
-//typedef pthread HTHREAD;
-//
-//#else
-typedef pthread_t HTHREAD;
-//#endif
+#ifdef __cplusplus
+struct pthread
+{
+
+   pthread_t m_thread;
+
+   pthread(){}
+   pthread(const pthread & p){operator=(p);}
+   pthread(const pthread_t & p){operator=(p);}
+
+   inline operator pthread_t &() { return m_thread; }
+   inline operator void *() { return (void *) (int_ptr) m_thread; }
+
+   inline operator pthread_t() const { return m_thread; }
+   inline operator void *() const { return (void *) (int_ptr) m_thread; }
+
+   pthread & operator =(const pthread & p) {m_thread = p.m_thread; return *this;}
+   pthread & operator =(const pthread_t & p) {m_thread = p; return *this;}
+
+   bool operator ==(const pthread_t & p) const {return m_thread == p;}
+   bool operator ==(const pthread & p) const {return operator==(p.m_thread);}
+   bool operator !=(const pthread_t & p) const {return !operator == (p);}
+   bool operator !=(const pthread & p) const {return operator != (p.m_thread);}
+
+};
+typedef pthread HTHREAD;
+
+#else
+struct pthread
+{
+   pthread_t m_thread;
+};
+#endif
+typedef struct pthread HTHREAD;
 
 //typedef XID                      Window;
 

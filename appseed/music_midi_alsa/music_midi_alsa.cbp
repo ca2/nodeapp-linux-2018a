@@ -50,17 +50,14 @@
 			<Add option="-fPIC" />
 			<Add option="-D_AUDIO_ALSA_LIBRARY" />
 			<Add directory="../../../include" />
-			<Add directory="../../../app/include" />
-			<Add directory="../../../app/thirdparty/appseed" />
-			<Add directory="." />
-			<Add directory=".." />
-			<Add directory="../.." />
-			<Add directory="../../../app/appseed/core" />
-			<Add directory="../../../app/appseed/base" />
+			<Add directory="../../../app/appseed/aura" />
 			<Add directory="../../../app/appseed" />
-			<Add directory="../../../app" />
-			<Add directory="../../../app/thirdparty/include" />
 			<Add directory="../../.." />
+			<Add directory="../../../app/appseed/core" />
+			<Add directory="../../../app/axis" />
+			<Add directory="../../../app/include" />
+			<Add directory="../../../app" />
+			<Add directory="../../../app/appseed/base" />
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-R\\$$$ORIGIN" />
@@ -99,12 +96,6 @@
 		<Unit filename="music_midi_alsa_translation.h" />
 		<Unit filename="player/music_midi_alsa_player.cpp" />
 		<Unit filename="player/music_midi_alsa_player.h" />
-		<Unit filename="player/music_midi_alsa_player_callback.cpp" />
-		<Unit filename="player/music_midi_alsa_player_callback.h" />
-		<Unit filename="player/music_midi_alsa_player_interface.cpp" />
-		<Unit filename="player/music_midi_alsa_player_interface.h" />
-		<Unit filename="player/music_midi_alsa_player_window.cpp" />
-		<Unit filename="player/music_midi_alsa_player_window.h" />
 		<Unit filename="seqlib.cpp" />
 		<Unit filename="seqlib.h" />
 		<Unit filename="seqmidi.cpp" />

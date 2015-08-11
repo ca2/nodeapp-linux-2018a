@@ -517,6 +517,124 @@ End:
             */
          }
 
+         bool callback::initialize()
+         {
+            if(!m_wnd.create())
+               return false;
+            m_wnd.set_callback(this);
+            return true;
+         }
+
+         bool callback::finalize()
+         {
+            if(!m_wnd.IsWindow())
+               return true;
+            m_wnd.DestroyWindow();
+            return true;
+         }
+
+
+         void callback::OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
+         {
+            UNREFERENCED_PARAMETER(pSeq);
+            UNREFERENCED_PARAMETER(lpmdd);
+         }
+
+         void callback::OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata)
+         {
+            switch(pdata->m_enotifyevent)
+            {
+            case music::midi::player::notify_event_set_sequence:
+               //      pdata->m_pplayer->get_sequence()->m_midicallbackdata.oswindow = m_wnd.GetSafeoswindow_();
+               break;
+            }
+         }
+
+         void callback::OnMidiLyricEvent(array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> * pevents)
+         {
+            UNREFERENCED_PARAMETER(pevents);
+         }
+         bool player_interface::Initialize(sp(::music::midi::midi) pcentral)
+         {
+
+            if(!initialize())
+               return false;
+
+            m_psection = pcentral;
+
+            return true;
+         }
+
+
+         bool player_interface::Finalize()
+         {
+
+            if(!finalize())
+               return false;
+
+            return true;
+         }
+
+
+         bool player_interface::OpenMidiPlayer()
+         {
+            try
+            {
+               m_pmidiplayer = dynamic_cast < ::music::midi::player::player * > (__begin_thread < player >(
+                  get_app(),
+                  ::base::scheduling_priority_normal,
+                  0,
+                  CREATE_SUSPENDED));
+            }
+            catch(memory_exception *pe)
+            {
+               System.simple_message_box(NULL, _T("No primitive::memory to perform this operation." ));
+               pe->Delete();
+               return false;
+            }
+
+            m_pmidiplayer->SetMidiCentral(m_psection);
+
+            m_pmidiplayer->SetCallbackWindow(&m_wnd);
+            if(::multimedia::failed(m_pmidiplayer->Initialize(
+               GetMidiPlayerCallbackThread())))
+            {
+               return false;
+            }
+
+
+
+            if(!OnOpenMidiPlayer())
+            {
+               return false;
+            }
+            m_pmidiplayer->ResumeThread();
+            m_pmidiplayer->m_evInitialized.wait();
+            return true;
+         }
+
+         bool player_interface::OnOpenMidiPlayer()
+         {
+            GetMidiPlayer()->SetInterface(this);
+            m_wnd.set_callback(m_composite);
+            return true;
+         }
+
+
+         // Event handling
+         void player_interface::OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata)
+         {
+            callback::OnMidiPlayerNotifyEvent(pdata);
+            switch(pdata->m_enotifyevent)
+            {
+            case music::midi::player::notify_event_set_sequence:
+               //      pdata->m_pplayer->get_sequence()->m_midicallbackdata.lpThreadV1 = GetMidiPlayerCallbackThread();
+               break;
+            }
+
+         }
+
+
 
       } // namespace player
 

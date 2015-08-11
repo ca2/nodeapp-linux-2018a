@@ -1,9 +1,9 @@
 #pragma once
 
 
-#include "music_midi_alsa_player_window.h"
-#include "music_midi_alsa_player_callback.h"
-#include "music_midi_alsa_player_interface.h"
+//#include "music_midi_alsa_player_window.h"
+//#include "music_midi_alsa_player_callback.h"
+//#include "music_midi_alsa_player_interface.h"
 
 
 
@@ -23,19 +23,19 @@ namespace music
       namespace player
       {
 
-         class player_callback;
-         class player_interface;
+         class player;
 
 
 
 
          class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_ALSA player :
+            virtual public ::music::midi::player::callback,
             virtual public ::music::midi::player::player
          {
          public:
 
 
-            player(sp(::base::application) papp);
+            player(::aura::application *  papp);
             virtual ~player();
 
 
@@ -87,6 +87,24 @@ namespace music
             // midi central listener
             DECL_GEN_VSIGNAL(on_attribute_change);
 
+
+
+            virtual bool OnOpenMidiPlayer();
+
+
+            virtual bool Initialize(sp(::music::midi::midi) pcentral);
+            virtual bool Finalize();
+
+
+            virtual bool OpenMidiPlayer();
+
+            virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata);
+            virtual bool initialize();
+            virtual bool finalize();
+
+            virtual void OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
+            virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata);
+            virtual void OnMidiLyricEvent(array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> * pevents);
 
          };
 

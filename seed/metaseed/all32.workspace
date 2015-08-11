@@ -57,6 +57,7 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/cairo/axiscairo.cbp" />

@@ -14,7 +14,7 @@ namespace music
 
 
          class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_ALSA callback :
-            virtual public ::music::midi::player::callback_interface
+            virtual public ::music::midi::player::callback
          {
          public:
 
@@ -23,15 +23,9 @@ namespace music
             friend class window;
             window m_wnd;
 
-            callback(sp(::base::application) papp);
+            callback(::aura::application *  papp);
             virtual ~callback();
 
-            virtual bool initialize();
-            virtual bool finalize();
-
-            virtual void OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
-            virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata);
-            virtual void OnMidiLyricEvent(array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> * pevents);
 
 
          };
