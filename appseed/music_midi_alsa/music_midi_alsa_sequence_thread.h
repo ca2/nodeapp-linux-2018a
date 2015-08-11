@@ -15,7 +15,7 @@ namespace music
       public:
 
 
-         sequence_thread(sp(::base::application) papp);
+         sequence_thread(::aura::application * papp);
          virtual ~sequence_thread();
 
 
@@ -44,9 +44,9 @@ namespace music
          virtual bool initialize_instance();
          virtual int32_t exit_instance();
 
-         DECL_GEN_SIGNAL(OnCommand)
-         DECL_GEN_SIGNAL(OnMidiSequenceEvent)
-         DECL_GEN_SIGNAL(OnRun)
+         DECL_GEN_SIGNAL(OnCommand);
+         DECL_GEN_SIGNAL(OnMidiSequenceEvent);
+         DECL_GEN_SIGNAL(OnRun);
 
       };
 

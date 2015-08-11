@@ -13,13 +13,13 @@ namespace music
       {
 
 
-         player::player(sp(::base::application) papp) :
-            element(papp),
+         player::player(::aura::application * papp) :
+            object(papp),
             thread(papp),
             ::music::midi::player::player(papp)
          {
 
-            m_psequencethread = dynamic_cast < ::music::midi::sequence_thread * > (__begin_thread < sequence_thread >(papp, ::base::scheduling_priority_normal, 0, CREATE_SUSPENDED));
+            m_psequencethread = dynamic_cast < ::music::midi::sequence_thread * > (__begin_thread < sequence_thread >(papp, ::multithreading::priority_normal, 0, CREATE_SUSPENDED));
 
             m_puie               = NULL;
 
@@ -39,7 +39,7 @@ namespace music
             //SetMainWnd(NULL);
             //ASSERT(GetMainWnd() == NULL);
 
-            set_thread_priority(::base::scheduling_priority_normal);
+            set_thread_priority(::multithreading::priority_normal);
 
             m_evInitialized.SetEvent();
 
@@ -302,9 +302,8 @@ namespace music
          //    m_pView = pview;
          //}
 
-         ::multimedia::e_result player::SetInterface(player_interface * pinterface)
+         ::multimedia::e_result player::SetInterface(player * pinterface)
          {
-            m_pinterface = pinterface;
             get_sequence()->m_pthread   = m_psequencethread;
             m_psequencethread->m_psequence = get_sequence();
             m_psequencethread->m_pplayer = this;
@@ -517,87 +516,56 @@ End:
             */
          }
 
-         bool callback::initialize()
-         {
-            if(!m_wnd.create())
-               return false;
-            m_wnd.set_callback(this);
-            return true;
-         }
 
-         bool callback::finalize()
-         {
-            if(!m_wnd.IsWindow())
-               return true;
-            m_wnd.DestroyWindow();
-            return true;
-         }
-
-
-         void callback::OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
+         void player::OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd)
          {
             UNREFERENCED_PARAMETER(pSeq);
             UNREFERENCED_PARAMETER(lpmdd);
          }
 
-         void callback::OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata)
-         {
-            switch(pdata->m_enotifyevent)
-            {
-            case music::midi::player::notify_event_set_sequence:
-               //      pdata->m_pplayer->get_sequence()->m_midicallbackdata.oswindow = m_wnd.GetSafeoswindow_();
-               break;
-            }
-         }
+//         void player::OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata)
+//         {
+//            switch(pdata->m_enotifyevent)
+//            {
+//            case music::midi::player::notify_event_set_sequence:
+//               //      pdata->m_pplayer->get_sequence()->m_midicallbackdata.oswindow = m_wnd.GetSafeoswindow_();
+//               break;
+//            }
+//         }
 
-         void callback::OnMidiLyricEvent(array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> * pevents)
+         void player::OnMidiLyricEvent(array<::ikaraoke::lyric_event_v1, ::ikaraoke::lyric_event_v1&> * pevents)
          {
             UNREFERENCED_PARAMETER(pevents);
          }
-         bool player_interface::Initialize(sp(::music::midi::midi) pcentral)
+         bool player::Initialize(sp(::music::midi::midi) pcentral)
          {
 
-            if(!initialize())
-               return false;
+//            if(!initialize())
+  //             return false;
 
-            m_psection = pcentral;
+            // = pcentral;
 
             return true;
          }
 
 
-         bool player_interface::Finalize()
+         bool player::Finalize()
          {
 
-            if(!finalize())
-               return false;
+            //if(!finalize())
+              // return false;
 
             return true;
          }
 
 
-         bool player_interface::OpenMidiPlayer()
+         bool player::OpenMidiPlayer()
          {
-            try
-            {
-               m_pmidiplayer = dynamic_cast < ::music::midi::player::player * > (__begin_thread < player >(
-                  get_app(),
-                  ::base::scheduling_priority_normal,
-                  0,
-                  CREATE_SUSPENDED));
-            }
-            catch(memory_exception *pe)
-            {
-               System.simple_message_box(NULL, _T("No primitive::memory to perform this operation." ));
-               pe->Delete();
-               return false;
-            }
 
-            m_pmidiplayer->SetMidiCentral(m_psection);
+            SetMidiCentral(Application.midi());
 
-            m_pmidiplayer->SetCallbackWindow(&m_wnd);
-            if(::multimedia::failed(m_pmidiplayer->Initialize(
-               GetMidiPlayerCallbackThread())))
+//            m_pmidiplayer->SetCallbackWindow(&m_wnd);
+            if(::multimedia::failed(Initialize(this)))
             {
                return false;
             }
@@ -608,21 +576,21 @@ End:
             {
                return false;
             }
-            m_pmidiplayer->ResumeThread();
-            m_pmidiplayer->m_evInitialized.wait();
+            ResumeThread();
+            m_evInitialized.wait();
             return true;
          }
 
-         bool player_interface::OnOpenMidiPlayer()
+         bool player::OnOpenMidiPlayer()
          {
-            GetMidiPlayer()->SetInterface(this);
-            m_wnd.set_callback(m_composite);
+            SetInterface(this);
+//            m_wnd.set_callback(m_composite);
             return true;
          }
 
 
          // Event handling
-         void player_interface::OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata)
+         void player::OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata)
          {
             callback::OnMidiPlayerNotifyEvent(pdata);
             switch(pdata->m_enotifyevent)

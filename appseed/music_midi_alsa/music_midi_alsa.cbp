@@ -48,7 +48,9 @@
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
 			<Add option="-fPIC" />
+			<Add option="-DLINUX" />
 			<Add option="-D_AUDIO_ALSA_LIBRARY" />
+			<Add directory="." />
 			<Add directory="../../../include" />
 			<Add directory="../../../app/appseed/aura" />
 			<Add directory="../../../app/appseed" />
@@ -62,13 +64,8 @@
 		<Linker>
 			<Add option="-Wl,-R\\$$$ORIGIN" />
 			<Add option="-Wl,-z,origin" />
+			<Add option="-laura" />
 			<Add option="-lbase" />
-			<Add option="-lbasepixman" />
-			<Add option="-lbasefreeimage" />
-			<Add option="-lbasefreetype" />
-			<Add option="-lbasemysql" />
-			<Add option="-lbasecairo" />
-			<Add option="-lcore" />
 			<Add option="-lasound" />
 			<Add option="-lmultimedia" />
 			<Add option="-lveriwell_multimedia" />

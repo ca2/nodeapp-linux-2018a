@@ -1,4 +1,5 @@
 #include "framework.h"
+#include <math.h>
 
 
 namespace music
@@ -318,7 +319,7 @@ namespace music
 
       }
 
-      ::multimedia::e_result FillTypeCombo(sp(simple_combo_box)lpcombo)
+      ::multimedia::e_result FillTypeCombo(::user::combo_box * lpcombo)
       {
          UNREFERENCED_PARAMETER(lpcombo);
          /*   lpcombo->ResetContent();
@@ -347,7 +348,7 @@ namespace music
          return ::multimedia::result_success;
       }
 
-      ::multimedia::e_result FillPitchCombo(sp(simple_combo_box)lpcombo)
+      ::multimedia::e_result FillPitchCombo(::user::combo_box * lpcombo)
       {
          UNREFERENCED_PARAMETER(lpcombo);
          /*    lpcombo->ResetContent();

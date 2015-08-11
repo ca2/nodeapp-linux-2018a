@@ -9,8 +9,8 @@ namespace music
    {
 
 
-      out::out(sp(::base::application) papp) :
-         element(papp),
+      out::out(::aura::application * papp) :
+         ::object(papp),
          ::music::midi::object(papp),
          ::music::midi::out(papp)
       {

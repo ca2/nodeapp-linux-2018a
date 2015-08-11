@@ -2,6 +2,7 @@
 
 
 #include "app-veriwell/appseed/multimedia/multimedia/multimedia.h"
+#include "app/appseed/core/user/user/user.h"
 #include "seqlib.h"
 
 

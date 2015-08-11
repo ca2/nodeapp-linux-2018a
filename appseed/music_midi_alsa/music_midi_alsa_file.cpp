@@ -9,8 +9,8 @@ namespace music
    {
 
 
-      file::file(sp(::base::application) papp) :
-         element(papp),
+      file::file(::aura::application * papp) :
+         object(papp),
          primitive::memory_container (papp),
          ::music::midi::file::buffer(papp)
       {
@@ -28,7 +28,7 @@ namespace music
          m_tempomap.set_size(0, C_TEMPO_MAP_CHK);
 
          m_iKeyShift             = 0;
-         m_iTempoShift           = 0;
+         m_dTempoShift           = 0;
 
 
          m_pFileHeader = NULL;

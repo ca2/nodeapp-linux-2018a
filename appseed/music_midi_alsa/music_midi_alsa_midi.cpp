@@ -14,9 +14,9 @@ namespace music
    {
 
 
-      midi::midi(sp(::base::application) papp) :
-         element(papp),
-         base_departament(papp),
+      midi::midi(::aura::application * papp) :
+         ::object(papp),
+         ::aura::departament(papp),
          ::music::midi::object(papp),
          ::music::midi::midi(papp)
       {

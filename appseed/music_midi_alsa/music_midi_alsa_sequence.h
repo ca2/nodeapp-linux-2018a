@@ -129,7 +129,7 @@ namespace music
 
 
 
-         sequence(sp(::base::application) papp);
+         sequence(::aura::application * papp);
          virtual ~sequence();
 
 
@@ -252,6 +252,9 @@ namespace music
 
          int seq_dump();
          ::music::midi::event * seq_get_next_event();
+
+
+
          int seq_play(::music::midi::event * pevent);
          ::multimedia::e_result seq_start();
 

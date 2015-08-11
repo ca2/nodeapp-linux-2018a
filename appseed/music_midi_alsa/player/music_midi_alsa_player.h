@@ -51,7 +51,7 @@ namespace music
             virtual int32_t exit_instance();
             virtual void pre_translate_message(::signal_details * pobj);
             void OnMmsgDone(::music::midi::sequence *pSeq);
-            DECL_GEN_SIGNAL(OnUserMessage)
+            DECL_GEN_SIGNAL(OnUserMessage);
                void SaveFile(const char * lpszPathName);
             void SetPosition(double dRate);
             void Pause();
@@ -69,7 +69,7 @@ namespace music
 
             bool SetMidiOutDevice(uint32_t uiDevice);
 
-            ::multimedia::e_result SetInterface(player_interface * pinterface);
+            ::multimedia::e_result SetInterface(player * pinterface);
 
             ::multimedia::e_result Initialize(::thread * pthread);
 
@@ -80,12 +80,12 @@ namespace music
             void SendTempoChange(); // verificar
 
 
-            DECL_GEN_SIGNAL(OnNotifyEvent)
-            DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone)
-            DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB)
+            DECL_GEN_SIGNAL(OnNotifyEvent);
+            DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessageDone);
+            DECL_GEN_SIGNAL(OnMultimediaMidiOutputMessagePositionCB);
 
             // midi central listener
-            DECL_GEN_VSIGNAL(on_attribute_change);
+            DECL_GEN_SIGNAL(on_attribute_change);
 
 
 
@@ -98,9 +98,6 @@ namespace music
 
             virtual bool OpenMidiPlayer();
 
-            virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata);
-            virtual bool initialize();
-            virtual bool finalize();
 
             virtual void OnMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
             virtual void OnMidiPlayerNotifyEvent(::music::midi::player::notify_event * pdata);

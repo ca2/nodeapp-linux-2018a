@@ -18,7 +18,7 @@ namespace music
 
 
 
-         file(sp(::base::application) papp);
+         file(::aura::application * papp);
          virtual ~file();
 
 

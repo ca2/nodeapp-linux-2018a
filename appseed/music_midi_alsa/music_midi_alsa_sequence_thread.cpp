@@ -9,8 +9,8 @@ namespace music
    {
 
 
-      sequence_thread::sequence_thread(sp(::base::application) papp) :
-         element(papp),
+      sequence_thread::sequence_thread(::aura::application * papp) :
+         object(papp),
          thread(papp),
          ::music::midi::sequence_thread(papp)
       {
@@ -22,7 +22,7 @@ namespace music
 
       bool sequence_thread::initialize_instance()
       {
-         set_thread_priority(::base::scheduling_priority_highest);
+         set_thread_priority(::multithreading::priority_highest);
          return true;
       }
 

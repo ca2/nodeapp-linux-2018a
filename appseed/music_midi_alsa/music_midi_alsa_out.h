@@ -20,7 +20,7 @@ namespace music
          //int               m_numPorts;
 
 
-         out(sp(::base::application) papp);
+         out(::aura::application * papp);
          virtual ~out();
 
 
