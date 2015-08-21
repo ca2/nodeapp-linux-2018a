@@ -174,6 +174,10 @@
 		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp">
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
+			<Depends filename="../../../app/axis/openh264/WelsCommon.cbp" />
+			<Depends filename="../../../app/axis/openh264/WelsDecoder.cbp" />
+			<Depends filename="../../../app/axis/openh264/WelsEncoder.cbp" />
+			<Depends filename="../../../app/axis/openh264/WelsProcessing.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/idn/axisidn.cbp" />
 		<Project filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
@@ -288,6 +292,17 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
+		<Project filename="../../../app/axis/openh264/WelsCommon.cbp" />
+		<Project filename="../../../app/axis/openh264/WelsDecoder.cbp">
+			<Depends filename="../../../app/axis/openh264/WelsCommon.cbp" />
+		</Project>
+		<Project filename="../../../app/axis/openh264/WelsEncoder.cbp">
+			<Depends filename="../../../app/axis/openh264/WelsCommon.cbp" />
+			<Depends filename="../../../app/axis/openh264/WelsProcessing.cbp" />
+		</Project>
+		<Project filename="../../../app/axis/openh264/WelsProcessing.cbp">
+			<Depends filename="../../../app/axis/openh264/WelsCommon.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
