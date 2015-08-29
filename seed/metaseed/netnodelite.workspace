@@ -11,7 +11,6 @@
 			<Depends filename="../../../app/axis/mysql/axismysql.cbp" />
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
 			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
-			<Depends filename="../../../app/axis/png/axispng.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
@@ -71,7 +70,6 @@
 		<Project filename="../../../app/axis/freetype/axisfreetype.cbp">
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/png/axispng.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp">
@@ -80,7 +78,7 @@
 		<Project filename="../../../app/axis/idn/axisidn.cbp">
 			<Depends filename="../../../app/atom/iconv/atomiconv.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/idn/test/axisidn_test.cbp" />
+		<Project filename="../../../app/axis/image_png/axis_image_png.cbp" />
 		<Project filename="../../../app/axis/mysql/axismysql.cbp">
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
@@ -90,7 +88,6 @@
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/pixman/axispixman.cbp" />
-		<Project filename="../../../app/axis/png/axispng.cbp" />
 		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
