@@ -70,6 +70,7 @@
 		<Project filename="../../../app/axis/freetype/axisfreetype.cbp">
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
+			<Depends filename="../../../app/axis/image_png/axis_image_png.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp">
