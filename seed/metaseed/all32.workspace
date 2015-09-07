@@ -138,6 +138,7 @@
 		<Project filename="../../../app/aura/charguess/auracharguess.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 		</Project>
+		<Project filename="../../../app/aura/expat/auraexpat.cbp" />
 		<Project filename="../../../app/aura/pcre/aurapcre.cbp" />
 		<Project filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 		<Project filename="../../../app/appseed/axis/axis.cbp">
@@ -285,6 +286,8 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/math/math.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
+		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
@@ -294,8 +297,6 @@
 			<Depends filename="../../../app/appseed/html/html.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
-		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app/axis/openh264/WelsCommon.cbp" />
 		<Project filename="../../../app/axis/openh264/WelsDecoder.cbp">
 			<Depends filename="../../../app/axis/openh264/WelsCommon.cbp" />
@@ -308,5 +309,17 @@
 			<Depends filename="../../../app/axis/openh264/WelsCommon.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		<Project filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
+		<Project filename="../../../app-core/appseed/xmpp_client/xmpp_client.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
+			<Depends filename="../../../app/appseed/html/html.cbp" />
+			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
