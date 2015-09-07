@@ -113,6 +113,10 @@
 			<Depends filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		</Project>
+		<Project filename="../../../app-veriwell/appseed/waven/waven.cbp">
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
+		</Project>
 		<Project filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
