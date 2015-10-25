@@ -1,5 +1,6 @@
 #pragma once
 
+#define index linux_bsd_index
 
 #include <features.h>
 
@@ -7,13 +8,22 @@
 #include <stdio.h>
 
 
-#undef __USE_BSD
 #include <string.h>
-#define __USE_BSD 1
 
 #include <strings.h>
-#include <inttypes.h>
 #include <errno.h>
+
+#include "_stdint.h"
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -27,31 +37,7 @@ typedef unsigned long XID;
 #endif
 */
 
-#pragma once
-
-
-
-#if defined(_LP64)
-
-    typedef int64_t int_ptr, *pint_ptr;
-    typedef uint64_t uint_ptr, *puint_ptr;
-
-    typedef int64_t long_ptr, *plong_ptr;
-    typedef uint64_t ulong_ptr, *pulong_ptr;
-
-#else
-
-    typedef int32_t int_ptr, *pint_ptr;
-    typedef uint32_t uint_ptr, *puint_ptr;
-
-    typedef int32_t long_ptr, *plong_ptr;
-    typedef unint32_t ulong_ptr, *pulong_ptr;
-
-#endif
-
-
-typedef unsigned char BYTE;
-typedef uint32_t UINT;
+//#pragma once
 
 
 
@@ -285,39 +271,6 @@ typedef unsigned long   u_long;
 #define __forceinline inline
 
 
-#if defined(__LP64__) || defined(_LP64)
-
-#define OS64BIT
-#define OSBIT 64
-#if !defined(__LP64__)
-#define __LP64__
-#endif
-
-#if !defined(_LP64)
-#define _LP64
-#endif
-
-
-typedef uint64_t dword_ptr;
-
-
-
-
-#else
-
-
-#define OS32BIT
-#define OSBIT 32
-#define _X86_
-
-
-typedef uint32_t dword_ptr;
-
-
-#define __int3264   int32_t
-
-
-#endif
 
 
 //typedef uint8_t byte;
@@ -365,6 +318,10 @@ typedef wchar_t unichar32;
 
 
 
+
+
+
+#undef index
 
 
 

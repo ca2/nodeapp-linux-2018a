@@ -29,16 +29,10 @@
 #define CLASS_DECL_THREAD __thread
 
 
-#if defined(_LP64)
-
-#define OS64BIT
-#define AMD64
-
-
+#ifdef OSBIT
+#error "OSBIT should not be defined before here!"
 #else
-
-#define _X86_
-
+#include "nodeapp/operational_system/bit.h"
 #endif
 
 
