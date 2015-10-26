@@ -29,9 +29,7 @@
 #define CLASS_DECL_THREAD __thread
 
 
-#ifdef OSBIT
-#error "OSBIT should not be defined before here!"
-#else
+#ifndef OSBIT
 #include "nodeapp/operational_system/bit.h"
 #endif
 

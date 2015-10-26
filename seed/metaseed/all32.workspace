@@ -152,7 +152,9 @@
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 		</Project>
 		<Project filename="../../../app/aura/expat/auraexpat.cbp" />
-		<Project filename="../../../app/aura/pcre/aurapcre.cbp" />
+		<Project filename="../../../app/aura/pcre/aurapcre.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+		</Project>
 		<Project filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 		<Project filename="../../../app/appseed/axis/axis.cbp">
 			<Depends filename="../../../app/aura/charguess/auracharguess.cbp" />
@@ -324,7 +326,10 @@
 			<Depends filename="../../../app/axis/openh264/WelsCommon.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
-		<Project filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
+		<Project filename="../../../app-core/appseed/xmpp/xmpp.cbp">
+			<Depends filename="../../../app/aura/expat/auraexpat.cbp" />
+			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/xmpp_client/xmpp_client.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -337,6 +342,17 @@
 			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 			<Depends filename="../../../app/appseed/html/html.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/xmpp_bot/xmpp_bot.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
+			<Depends filename="../../../app/appseed/html/html.cbp" />
+			<Depends filename="../../../app/appseed/math/math.cbp" />
 			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
 		</Project>
 	</Workspace>
