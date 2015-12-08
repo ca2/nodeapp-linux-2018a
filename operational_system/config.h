@@ -44,4 +44,8 @@
 #define AXIS_FREEIMAGE
 
 
+#define FONT_SANS "FreeSans"
+
+
+
 

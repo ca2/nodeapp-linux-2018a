@@ -29,16 +29,8 @@
 #define CLASS_DECL_THREAD __thread
 
 
-#if defined(_LP64)
-
-#define OS64BIT
-#define AMD64
-#define _M_X64
-
-#else
-
-#define _X86_
-
+#ifndef OSBIT
+#include "nodeapp/operational_system/bit.h"
 #endif
 
 
