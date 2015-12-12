@@ -45,7 +45,9 @@
 
 
 #define FONT_SANS "FreeSans"
-
+#define FONT_SERIF "FreeSerif"
+#define FONT_SANS_EX "Liberation Sans"
+#define FONT_SERIF_EX "Liberation Serif"
 
 
 
