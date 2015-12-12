@@ -489,7 +489,7 @@ namespace multimedia
             return dwMillis + dwPosition - ((m_dwLostSampleCount) * 1000 / m_pwaveformat->nSamplesPerSec);
       }*/
 
-      imedia::time wave_out::wave_out_get_position_millis()
+      imedia_time wave_out::wave_out_get_position_millis()
       {
 
          single_lock sLock(&m_mutex, TRUE);

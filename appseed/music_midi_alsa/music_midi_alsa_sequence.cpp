@@ -234,7 +234,7 @@ Seq_Open_File_Cleanup:
       }
 
 
-      ::music::e_result sequence::OpenFile(primitive::memory * pmemorystorage, int32_t openMode, e_storage estorage)
+      ::music::e_result sequence::OpenFile(memory * pmemorystorage, int32_t openMode, e_storage estorage)
       {
          SMFFILEINFO             sfi;
          ::music::e_result    smfrc;
@@ -1030,12 +1030,12 @@ seq_Preroll_Cleanup:
          return ::multimedia::result_success;
       }
 
-      void sequence::get_time(imedia::time & time)
+      void sequence::get_time(imedia_time & time)
       {
          get_millis(time);
       }
 
-      ::multimedia::e_result sequence::get_millis(imedia::time & time)
+      ::multimedia::e_result sequence::get_millis(imedia_time & time)
       {
          single_lock sl(&m_mutex);
          if(!sl.lock(millis(184)))
@@ -1118,7 +1118,7 @@ seq_Preroll_Cleanup:
       * Returns the number of ticks into the stream.
       *
       ***************************************************************************/
-      imedia::position sequence::MillisecsToTicks(imedia::time msOffset)
+      imedia::position sequence::MillisecsToTicks(imedia_time msOffset)
       {
          return file()->MillisecsToTicks(msOffset);
       }
@@ -1137,7 +1137,7 @@ seq_Preroll_Cleanup:
       * Returns the number of milliseconds into the stream.
       *
       ***************************************************************************/
-      imedia::time sequence::TicksToMillisecs(imedia::position tkOffset)
+      imedia_time sequence::TicksToMillisecs(imedia::position tkOffset)
       {
          return file()->TicksToMillisecs(tkOffset);
       }
@@ -1743,14 +1743,14 @@ seq_Preroll_Cleanup:
          return false;
       }
 
-      imedia::position sequence::TimeToPosition(imedia::time millis)
+      imedia::position sequence::TimeToPosition(imedia_time millis)
       {
          return imedia::position(MillisecsToTicks((int_ptr) millis));
       }
 
-      imedia::time sequence::PositionToTime(imedia::position tk)
+      imedia_time sequence::PositionToTime(imedia::position tk)
       {
-         return imedia::time(TicksToMillisecs((imedia::position) (int_ptr) tk));
+         return imedia_time(TicksToMillisecs((imedia::position) (int_ptr) tk));
       }
 
       void sequence::GetPosition(imedia::position & position)
@@ -1763,7 +1763,7 @@ seq_Preroll_Cleanup:
          return GetState() != status_no_file;
       }
 
-      void sequence::GetTimeLength(imedia::time & time)
+      void sequence::GetTimeLength(imedia_time & time)
       {
          time = m_msLength;
       }
@@ -1999,8 +1999,8 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis(i),
                0);
 
-            imedia::time time1(0);
-            imedia::time time2(0);
+            imedia_time time1(0);
+            imedia_time time2(0);
 
             pLyricEventsV2->m_msaTokensPosition.CopySorted(
                ms2DTokensMillis(i),
@@ -2011,15 +2011,15 @@ seq_Preroll_Cleanup:
                ms2DNoteOffMillis(i),
                ms2DNoteOnMillis(i));
 
-            imedia::time time3(0);
-            imedia::time time4(0);
+            imedia_time time3(0);
+            imedia_time time4(0);
 
             pLyricEventsV2->m_msaNotesPosition.CopySorted(
                ms2DNoteOnMillis(i),
                time3,
                time4);
 
-            imedia::time time5(0x7fffffff);
+            imedia_time time5(0x7fffffff);
 
             pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis(i),
@@ -2056,8 +2056,8 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis(i),
                0);
 
-            imedia::time time1(-100);
-            imedia::time time2(0);
+            imedia_time time1(-100);
+            imedia_time time2(0);
 
             pLyricEventsV2->m_msaTokensPosition.CopySorted(
                ms2DTokensMillis(i),
@@ -2068,15 +2068,15 @@ seq_Preroll_Cleanup:
                ms2DNoteOffMillis(i),
                ms2DNoteOnMillis(i));
 
-            imedia::time time3(-100);
-            imedia::time time4(0);
+            imedia_time time3(-100);
+            imedia_time time4(0);
 
             pLyricEventsV2->m_msaNotesPosition.CopySorted(
                ms2DNoteOnMillis(i),
                time3,
                time4);
 
-            imedia::time time5(0x7fffffff);
+            imedia_time time5(0x7fffffff);
 
             pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis(i),
@@ -2108,8 +2108,8 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis(i),
                -100);
 
-            imedia::time time1(-100);
-            imedia::time time2(0);
+            imedia_time time1(-100);
+            imedia_time time2(0);
 
             pLyricEventsV2->m_msaTokensPosition.CopySorted(
                ms2DTokensMillis(i),
@@ -2127,15 +2127,15 @@ seq_Preroll_Cleanup:
             */
 
 
-            imedia::time time3(-100);
-            imedia::time time4(0);
+            imedia_time time3(-100);
+            imedia_time time4(0);
 
             pLyricEventsV2->m_msaNotesPosition.CopySorted(
                ms2DNoteOnMillis(i),
                time3,
                time4);
 
-            imedia::time time5(0x7fffffff);
+            imedia_time time5(0x7fffffff);
 
             pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis(i),
@@ -2170,8 +2170,8 @@ seq_Preroll_Cleanup:
                ms2DNoteOnMillis(i),
                -100);
 
-            imedia::time time1(-100);
-            imedia::time time2(0);
+            imedia_time time1(-100);
+            imedia_time time2(0);
 
             pLyricEventsV2->m_msaTokensPosition.CopySorted(
                ms2DTokensMillis(i),
@@ -2188,15 +2188,15 @@ seq_Preroll_Cleanup:
             ms2DNoteOnMillis(i));
             */
 
-            imedia::time time3(-100);
-            imedia::time time4(0);
+            imedia_time time3(-100);
+            imedia_time time4(0);
 
             pLyricEventsV2->m_msaNotesPosition.CopySorted(
                ms2DNoteOnMillis(i),
                time3,
                time4);
 
-            imedia::time time5(0x7fffffff);
+            imedia_time time5(0x7fffffff);
 
             pLyricEventsV2->m_msaTokensDuration.ElementDiff(
                ms2DTokensMillis(i),

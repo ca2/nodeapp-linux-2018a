@@ -53,7 +53,7 @@ namespace music
 
 
             MIDIHDR              m_midihdr;
-            primitive::memory    m_storage;
+            memory               m_storage;
             bool                 m_bPrepared;
 
             bool IsPrepared();
@@ -166,14 +166,14 @@ namespace music
 
          void OnPositionCB(LPMIDIHDR lpmidihdr);
          void OnDone(seq_context_t * hmidistream, LPMIDIHDR lpmidihdr);
-         virtual void GetTimeLength(imedia::time & time);
+         virtual void GetTimeLength(imedia_time & time);
          virtual void GetPositionLength(imedia::position & position);
 
          using ::ikaraoke::karaoke::TimeToPosition;
          using ::ikaraoke::karaoke::PositionToTime;
 
-         virtual imedia::position TimeToPosition(imedia::time time);
-         virtual imedia::time PositionToTime(imedia::position position);
+         virtual imedia::position TimeToPosition(imedia_time time);
+         virtual imedia_time PositionToTime(imedia::position position);
 
          virtual bool IsOpened();
 
@@ -198,7 +198,7 @@ namespace music
          ::music::e_result OpenFile(::music::midi::sequence & sequence, int32_t iOpenMode);
          ::music::e_result OpenFile(::file::stream_buffer & ar, int32_t openMode);
          ::music::e_result OpenFile(const char * lpFileName, int32_t openMode);
-         ::music::e_result OpenFile(primitive::memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
+         ::music::e_result OpenFile(memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
 
          ::music::e_result CloseFile();
          ::music::e_result SaveFile(const char * lpFileName);
@@ -215,15 +215,15 @@ namespace music
          ::multimedia::e_result Stop();
 
          void GetPosition(imedia::position  & time);
-         void get_time(imedia::time  & time);
+         void get_time(imedia_time  & time);
 
          ::multimedia::e_result get_ticks(imedia::position & time);
-         ::multimedia::e_result get_millis(imedia::time & time);
+         ::multimedia::e_result get_millis(imedia_time & time);
 
 
-         imedia::position MillisecsToTicks(imedia::time msOffset);
+         imedia::position MillisecsToTicks(imedia_time msOffset);
 
-         imedia::time TicksToMillisecs(imedia::position tkOffset);
+         imedia_time TicksToMillisecs(imedia::position tkOffset);
 
          bool IsPlaying();
 
