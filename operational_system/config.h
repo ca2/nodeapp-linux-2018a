@@ -1,6 +1,10 @@
 #pragma once
 
 
+#define MEMDFREE
+#define STORE_LAST_BLOCK 1
+
+
 #ifndef LINUX
 #define LINUX
 #endif
