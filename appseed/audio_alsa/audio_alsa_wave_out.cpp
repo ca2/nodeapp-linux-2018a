@@ -138,7 +138,7 @@ namespace multimedia
 
          //uiBufferCount = 1;
 
-         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, m_pwaveformat, m_pwaveformat);
+         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, uiBufferCount, 128, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(this, m_pwaveformat->nChannels, uiBufferCount, iBufferSampleCount); // group sample count
 
@@ -203,7 +203,7 @@ namespace multimedia
 
 
 
-      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
       {
 
          single_lock sLock(&m_mutex, TRUE);
@@ -281,7 +281,7 @@ namespace multimedia
             uiSkippedSamplesCount = 1;
          }
 
-         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, iBufferCount, m_pwaveformat, m_pwaveformat);
+         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, iBufferCount, 128, m_pwaveformat, m_pwaveformat);
 
          m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
 
@@ -332,6 +332,8 @@ namespace multimedia
          }
 
          m_estate = state_opened;
+
+         m_epurpose = epurpose;
 
          return result_success;
 
