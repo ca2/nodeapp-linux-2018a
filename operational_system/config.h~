@@ -1,6 +1,10 @@
 #pragma once
 
 
+#define MEMDFREE
+#define STORE_LAST_BLOCK 1
+
+
 #ifndef LINUX
 #define LINUX
 #endif
@@ -50,5 +54,10 @@
 #define FONT_SERIF_EX "Liberation Serif"
 #define FONT_SANS_FX "Ubuntu"
 #define FONT_SERIF_FX "Bitstream Charter"
+
+
+
+
+
 
 

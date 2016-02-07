@@ -20,8 +20,7 @@ namespace multimedia
          {
 
             message_ready = 5555,
-            message_free,
-            message_done
+            message_free
 
          };
 
@@ -49,7 +48,6 @@ namespace multimedia
          snd_pcm_t * wave_out_get_safe_PCM();
 
          virtual void wave_out_on_playback_end() override;
-         virtual void alsa_out_out_buffer_done(int iBuffer);
          virtual void wave_out_buffer_ready(int iBuffer) override;
          virtual void alsa_out_buffer_ready(int iBuffer);
          virtual void wave_out_free(int iBuffer) override;
@@ -60,7 +58,6 @@ namespace multimedia
 
          DECL_GEN_SIGNAL(OnReady);
          DECL_GEN_SIGNAL(OnFree);
-         DECL_GEN_SIGNAL(OnDone);
 
          virtual ::multimedia::e_result wave_out_start(const imedia::position & position);
 

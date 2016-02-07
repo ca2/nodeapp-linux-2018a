@@ -25,12 +25,16 @@ namespace multimedia
          m_peffect            = NULL;
          m_dwLostSampleCount  = 0;
          m_bWrite             = false;
+
       }
+
 
       wave_out::~wave_out()
       {
 
+
       }
+
 
       void wave_out::install_message_handling(::message::dispatch * pinterface)
       {
@@ -39,7 +43,6 @@ namespace multimedia
 
          IGUI_WIN_MSG_LINK(message_ready, pinterface, this, &wave_out::OnReady);
          IGUI_WIN_MSG_LINK(message_free, pinterface, this, &wave_out::OnFree);
-         IGUI_WIN_MSG_LINK(message_done, pinterface, this, &wave_out::OnDone);
 
       }
 
@@ -376,7 +379,7 @@ namespace multimedia
 
          m_ppcm = NULL;
 
-         m_pprebuffer->Reset();
+         ::multimedia::audio::wave_out::wave_out_close();
 
          m_estate = state_initial;
 
@@ -650,17 +653,6 @@ namespace multimedia
 
       }
 
-      void wave_out::OnDone(::signal_details * pobj)
-      {
-
-         SCAST_PTR(::message::base, pbase, pobj);
-
-         int iBuffer = pbase->m_wparam;
-
-         alsa_out_out_buffer_done(iBuffer);
-
-      }
-
 
       void wave_out::alsa_out_buffer_ready(int iBuffer)
       {
@@ -774,11 +766,9 @@ namespace multimedia
 
          finalize:
 
-         m_iBufferedCount++;
-
          sLock.unlock();
 
-         post_thread_message(message_done, iBuffer);
+         wave_out_out_buffer_done(iBuffer);
 
       }
 
@@ -888,16 +878,6 @@ namespace multimedia
          ::multimedia::audio::wave_out::wave_out_free(iBuffer);
 
       }
-
-      void wave_out::alsa_out_out_buffer_done(int iBuffer)
-      {
-
-         m_iBufferedCount--;
-
-         ::multimedia::audio::wave_out::wave_out_out_buffer_done(iBuffer);
-
-      }
-
 
    } // namespace audio_alsa
 
