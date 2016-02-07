@@ -18,9 +18,11 @@ namespace multimedia
 
          enum e_impl_message
          {
-            MessageReady = 5555,
-            MessageFree,
-            MessageDone
+
+            message_ready = 5555,
+            message_free,
+            message_done
+
          };
 
 
@@ -36,9 +38,6 @@ namespace multimedia
 
          virtual imedia_time wave_out_get_position_millis();
          imedia::position wave_out_get_position();
-         virtual void wave_out_buffer_ready(int iBuffer);
-         virtual void alsa_out_buffer_ready(int iBuffer);
-         //virtual void wave_out_buffer_ready(LPWAVEHDR lpwavehdr);
 
          virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount) override;
          virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
@@ -49,8 +48,12 @@ namespace multimedia
          virtual void * get_os_data();
          snd_pcm_t * wave_out_get_safe_PCM();
 
-         virtual void wave_out_on_playback_end();
-         virtual void wave_out_free(int iBuffer);
+         virtual void wave_out_on_playback_end() override;
+         virtual void alsa_out_out_buffer_done(int iBuffer);
+         virtual void wave_out_buffer_ready(int iBuffer) override;
+         virtual void alsa_out_buffer_ready(int iBuffer);
+         virtual void wave_out_free(int iBuffer) override;
+         virtual void alsa_out_free(int iBuffer);
 
          virtual bool initialize_instance();
          virtual int32_t exit_instance();
@@ -65,7 +68,7 @@ namespace multimedia
 
          virtual int underrun_recovery(int err);
 
-         int32_t wave_out_get_buffered_buffer_count();
+         //int32_t wave_out_get_buffered_buffer_count();
 
       };
 

@@ -37,9 +37,9 @@ namespace multimedia
 
          ::multimedia::audio::wave_out::install_message_handling(pinterface);
 
-         IGUI_WIN_MSG_LINK(MessageReady, pinterface, this, &wave_out::OnReady);
-         IGUI_WIN_MSG_LINK(MessageFree, pinterface, this, &wave_out::OnFree);
-         IGUI_WIN_MSG_LINK(MessageDone, pinterface, this, &wave_out::OnDone);
+         IGUI_WIN_MSG_LINK(message_ready, pinterface, this, &wave_out::OnReady);
+         IGUI_WIN_MSG_LINK(message_free, pinterface, this, &wave_out::OnFree);
+         IGUI_WIN_MSG_LINK(message_done, pinterface, this, &wave_out::OnDone);
 
       }
 
@@ -478,19 +478,6 @@ namespace multimedia
       }
 
 
-      /*imedia::time wave_out::GetPositionMillisForSynch()
-      {
-         int64_t dwMillis = GetPositionMillis();
-         int64_t dwPosition = m_pprebuffer->m_position * 8;
-         dwPosition /= m_pwaveformat->wBitsPerSample;
-         dwPosition *= 1000;
-         dwPosition /= m_pwaveformat->nChannels * m_pwaveformat->nSamplesPerSec;
-         if(m_pprebuffer != NULL && m_pprebuffer->m_pdecoder != NULL)
-            return dwMillis + dwPosition - m_pprebuffer->m_pdecoder->DecoderGetLostMillis(dwMillis + dwPosition) - (((int64_t) m_dwLostSampleCount) /  ((int64_t) m_pwaveformat->nSamplesPerSec));
-         else
-            return dwMillis + dwPosition - ((m_dwLostSampleCount) * 1000 / m_pwaveformat->nSamplesPerSec);
-      }*/
-
       imedia_time wave_out::wave_out_get_position_millis()
       {
 
@@ -498,48 +485,44 @@ namespace multimedia
 
          ::multimedia::e_result                mmr;
 
-         snd_htimestamp_t                  mmt;
+         snd_htimestamp_t                  mmt = {};
 
-         snd_pcm_uframes_t ut;
+         snd_pcm_uframes_t ut = {};
+
+         snd_pcm_status_t * s = NULL;
 
          if(m_ppcm != NULL)
          {
 
-            mmr = translate_alsa(snd_pcm_htimestamp(m_ppcm, &ut, &mmt));
+            snd_pcm_status_alloca( &s);
 
-            try
+            int snderr = snd_pcm_status(m_ppcm, s);
+
+            mmr = translate_alsa(snderr);
+
+            if (result_success != mmr)
             {
-               if (result_success != mmr)
-               {
-                  TRACE( "snd_pcm_status_get_htstamp() returned %s", snd_strerror(mmr));
-                  //      return MCIERR_DEVICE_NOT_READY;
-                  return 0;
-               }
-            }
-            catch(...)
-            {
-               //return MCIERR_DEVICE_NOT_READY;
+
+               TRACE( "snd_pcm_status(1) (for snd_pcm_status_get_htstamp) failed with %s", snd_strerror(snderr));
+
                return 0;
+
             }
-            {
-               //*pTicks += mmt.u.ticks;
-               return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
-            }
+
+            snd_pcm_status_get_htstamp(s, &mmt);
+
+            return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
+
          }
          else
+         {
+
             return 0;
 
+         }
 
       }
 
-      /*imedia::position wave_out::get_position_for_synch()
-      {
-         imedia::position position = get_position();
-         if(m_pprebuffer != NULL && m_pprebuffer->m_pdecoder != NULL)
-            return m_pprebuffer->m_position + position - m_pprebuffer->m_pdecoder->DecoderGetLostPositionOffset(position) - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
-         else
-            return m_pprebuffer->m_position + position - m_dwLostSampleCount * m_pwaveformat->wBitsPerSample * m_pwaveformat->nChannels / 8;
-      }*/
 
       imedia::position wave_out::wave_out_get_position()
       {
@@ -548,46 +531,33 @@ namespace multimedia
 
          ::multimedia::e_result                mmr;
 
-         snd_htimestamp_t                    mmt;
+         snd_htimestamp_t                    mmt = {};
 
          snd_pcm_uframes_t                   ut;
+
+         snd_pcm_status_t * s= NULL;
 
          if(m_ppcm != NULL)
          {
 
-            mmr = translate_alsa(snd_pcm_htimestamp(m_ppcm, &ut, &mmt));
+            snd_pcm_status_alloca( &s);
 
-            try
+            int snderr = snd_pcm_status(m_ppcm, s);
+
+            mmr = translate_alsa(snderr);
+
+            if (result_success != mmr)
             {
 
-               if (result_success != mmr)
-               {
-
-                  TRACE( "snd_pcm_status_get_htstamp() returned %s", snd_strerror(mmr));
-
-                  //      return MCIERR_DEVICE_NOT_READY;
-
-                  return 0;
-
-               }
-
-            }
-            catch(...)
-            {
-
-               //return MCIERR_DEVICE_NOT_READY;
+               TRACE( "snd_pcm_status(2) (for snd_pcm_status_get_htstamp) failed with %s", snd_strerror(snderr));
 
                return 0;
 
             }
 
-            {
+            snd_pcm_status_get_htstamp(s, &mmt);
 
-               //*pTicks += mmt.u.ticks;
-
-               return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
-
-            }
+            return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
 
          }
          else
@@ -603,18 +573,20 @@ namespace multimedia
       void wave_out::wave_out_on_playback_end()
       {
 
-         wave_out_stop();
+         ::multimedia::audio::wave_out::wave_out_on_playback_end();
 
-         if(m_pprebuffer->m_pstreameffectOut != NULL)
-         {
-            ::multimedia::iaudio::wave_stream_effect * peffect = m_pprebuffer->m_pstreameffectOut;
-            m_pprebuffer->m_pstreameffectOut = NULL;
-            delete peffect;
-         }
+         //wave_out_stop();
 
-         m_eventStopped.SetEvent();
+         //if(m_pprebuffer->m_pstreameffectOut != NULL)
+         //{
+           // ::multimedia::iaudio::wave_stream_effect * peffect = m_pprebuffer->m_pstreameffectOut;
+            //m_pprebuffer->m_pstreameffectOut = NULL;
+            //delete peffect;
+         //}
 
-         m_pplayer->OnEvent(::multimedia::audio::wave_player::EventPlaybackEnd);
+         //m_eventStopped.SetEvent();
+
+         //m_pplayer->OnEvent(::multimedia::audio::wave_player::EventPlaybackEnd);
 
       }
 
@@ -638,12 +610,10 @@ namespace multimedia
       }
 
 
-      void wave_out::wave_out_free(int iBuffer)
+      void wave_out::wave_out_free(int ibuffer)
       {
 
-         m_iBufferedCount++;
-
-         post_thread_message(MessageFree, iBuffer);
+         post_thread_message(message_free, ibuffer);
 
       }
 
@@ -651,7 +621,7 @@ namespace multimedia
       void wave_out::wave_out_buffer_ready(int iBuffer)
       {
 
-         post_thread_message(MessageReady, iBuffer);
+         post_thread_message(message_ready, iBuffer);
 
       }
 
@@ -676,7 +646,7 @@ namespace multimedia
 
          int iBuffer = pbase->m_wparam;
 
-         multimedia::audio::wave_out::wave_out_free(iBuffer);
+         alsa_out_free(iBuffer);
 
       }
 
@@ -687,12 +657,7 @@ namespace multimedia
 
          int iBuffer = pbase->m_wparam;
 
-         m_iBufferedCount--;
-
-         if(m_iBufferedCount < 0)
-            m_iBufferedCount = 0;
-
-         wave_out_out_buffer_done(iBuffer);
+         alsa_out_out_buffer_done(iBuffer);
 
       }
 
@@ -709,16 +674,13 @@ namespace multimedia
 
          }
 
-
          int result = 0;
-
 
          int cptr = period_size;
 
          ::multimedia::e_result mmr = result_success;
 
          signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
-
 
          snd_pcm_sframes_t avail = 0;
 
@@ -729,13 +691,12 @@ namespace multimedia
 
          }
 
-
-
          while(avail >= 0 && avail < period_size)
          {
 
             if((result = snd_pcm_wait (m_ppcm, 1984)) < 0)
             {
+
                m_estate = state_opened;
 
                m_mmr = result_error;
@@ -749,10 +710,6 @@ namespace multimedia
             avail = snd_pcm_avail_update(m_ppcm);
 
          }
-
-
-
-
 
          /*
 
@@ -784,7 +741,11 @@ namespace multimedia
             result = snd_pcm_writei(m_ppcm, ptr, cptr);
 
             if(result == -EAGAIN)
+            {
+
                continue;
+
+            }
 
             if(result < 0)
             {
@@ -813,9 +774,11 @@ namespace multimedia
 
          finalize:
 
+         m_iBufferedCount++;
+
          sLock.unlock();
 
-         post_thread_message(MessageDone, iBuffer);
+         post_thread_message(message_done, iBuffer);
 
       }
 
@@ -856,19 +819,6 @@ namespace multimedia
       {
 
          return ::multimedia::audio::wave_out::on_run_step();
-
-         /*if(m_estate == state_playing)
-         {
-
-            wave_out_out_buffer_done(m_iCurrentBuffer);
-
-            m_iCurrentBuffer++;
-
-            if(m_iCurrentBuffer >= wave_out_get_buffer()->GetBufferCount())
-               m_iCurrentBuffer = 0;
-
-         }*/
-
 
       }
 
@@ -932,10 +882,19 @@ namespace multimedia
       }
 
 
-      int32_t wave_out::wave_out_get_buffered_buffer_count()
+      void wave_out::alsa_out_free(int iBuffer)
       {
 
-         return m_iBufferedCount;
+         ::multimedia::audio::wave_out::wave_out_free(iBuffer);
+
+      }
+
+      void wave_out::alsa_out_out_buffer_done(int iBuffer)
+      {
+
+         m_iBufferedCount--;
+
+         ::multimedia::audio::wave_out::wave_out_out_buffer_done(iBuffer);
 
       }
 
