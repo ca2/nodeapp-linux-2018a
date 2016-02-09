@@ -1,7 +1,7 @@
 #pragma once
 
 
-//#define MEMDFREE
+#define MEMDLEAK 1
 //#define STORE_LAST_BLOCK 1
 
 

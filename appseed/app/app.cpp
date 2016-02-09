@@ -14,6 +14,8 @@ int32_t main(int32_t argc, char * argv[])
    if(!defer_core_init())
       return -1;
 
+   int iSizeOfObject = sizeof(object);
+
    //void * p = aligned_memory_alloc(1024 * 1024 * 16);
 
    //memory_free(p);
@@ -157,7 +159,7 @@ int32_t __lnx_main(int32_t argc, char * argv[])
    try
    {
 
-      psystem->m_pthreadimpl->m_signala.remove_all();
+      psystem->m_signala.remove_all();
 
    }
    catch(...)
