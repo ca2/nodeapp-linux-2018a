@@ -14,6 +14,10 @@ int32_t main(int32_t argc, char * argv[])
    if(!defer_core_init())
       return -1;
 
+   //void * p = aligned_memory_alloc(1024 * 1024 * 16);
+
+   //memory_free(p);
+
    br_init_set_symbol(g_psz_br_init_symbol_app);
 
    int iRet = __lnx_main(argc, argv);
