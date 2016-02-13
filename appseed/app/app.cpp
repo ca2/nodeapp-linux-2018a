@@ -37,17 +37,17 @@ int xlib_error_handler(Display * d, XErrorEvent * e);
 int32_t __lnx_main(int32_t argc, char * argv[])
 {
 
+   if(!defer_core_init())
+      return -1;
+
+   ::core::system * psystem = new ::core::system();
+
    if(!XInitThreads())
       return -1;
 
    c_xstart();
 
    XSetErrorHandler(xlib_error_handler);
-
-   if(!defer_core_init())
-      return -1;
-
-   ::core::system * psystem = new ::core::system();
 
    //psystem->m_durationRunLock = millis(1);
 
