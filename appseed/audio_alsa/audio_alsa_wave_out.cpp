@@ -808,7 +808,8 @@ namespace multimedia
       bool wave_out::on_run_step()
       {
 
-         return ::multimedia::audio::wave_out::on_run_step();
+//         return ::multimedia::audio::wave_out::on_run_step();
+return false;
 
       }
 

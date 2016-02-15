@@ -11,8 +11,16 @@ int32_t __lnx_main(int32_t argc, char * argv[]);
 int32_t main(int32_t argc, char * argv[])
 {
 
+
    if(!defer_core_init())
       return -1;
+
+#ifdef MCHECK
+
+   mtrace();
+
+#endif
+
 
    int iSizeOfObject = sizeof(object);
 
@@ -23,6 +31,13 @@ int32_t main(int32_t argc, char * argv[])
    br_init_set_symbol(g_psz_br_init_symbol_app);
 
    int iRet = __lnx_main(argc, argv);
+
+
+#ifdef MCHECK
+
+   muntrace();
+
+#endif
 
 
    defer_core_term();
