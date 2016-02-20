@@ -2,7 +2,7 @@
 
 
 
-#define MEMDLEAK 1
+#define MEMDLEAK 0
 #define STORE_LAST_BLOCK 0
 
 
