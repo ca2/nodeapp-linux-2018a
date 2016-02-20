@@ -14,8 +14,8 @@
 #define memory_free free
 #endif
 
-//#define MEMDLEAK 1
-//#define STORE_LAST_BLOCK 1
+#define MEMDLEAK 0
+#define STORE_LAST_BLOCK 0
 
 
 #ifndef LINUX

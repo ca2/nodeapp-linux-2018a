@@ -52,8 +52,8 @@ int xlib_error_handler(Display * d, XErrorEvent * e);
 int32_t __lnx_main(int32_t argc, char * argv[])
 {
 
-   if(!defer_core_init())
-      return -1;
+  // if(!defer_core_init())
+    //  return -1;
 
    ::core::system * psystem = new ::core::system();
 
@@ -197,7 +197,7 @@ int32_t __lnx_main(int32_t argc, char * argv[])
    psystem = NULL;
 
 
-   defer_core_term();
+   //defer_core_term();
 
    return nReturnCode;
 
