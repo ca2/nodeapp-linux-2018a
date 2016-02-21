@@ -317,7 +317,9 @@
 			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/irc/irc.cbp">
+			<Depends filename="../../../app/aura/expat/auraexpat.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/appseed/programming/programming.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp">
@@ -332,6 +334,7 @@
 		<Project filename="../../../app/appseed/pcre/pcre.cbp" />
 		<Project filename="../../../app/appseed/programming/programming.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/sphere/sphere.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -343,6 +346,7 @@
 		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		<Project filename="../../../app-core/appseed/vericard/vericard.cbp">
 			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/appseed/programming/programming.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
