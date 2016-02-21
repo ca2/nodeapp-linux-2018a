@@ -14,7 +14,6 @@
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
@@ -33,7 +32,6 @@
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
@@ -72,7 +70,6 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 			<Depends filename="../../../app/appseed/pcre/pcre.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
@@ -93,7 +90,6 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/rdpclient/rdpclient.cbp">
@@ -119,7 +115,6 @@
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/xmpp_client/xmpp_client.cbp">
@@ -131,7 +126,6 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
 		</Project>
@@ -290,7 +284,6 @@
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
@@ -309,7 +302,6 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../game/appseed/tictactoe/tictactoe.cbp">
@@ -324,7 +316,6 @@
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/html_lite/html_lite.cbp" />
 		<Project filename="../../../app-core/appseed/irc/irc.cbp">
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
@@ -334,7 +325,6 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 		</Project>
 		<Project filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp">
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
@@ -359,7 +349,6 @@
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/axis/html_lite/html_lite.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/openh264/WelsCommon.cbp" />
