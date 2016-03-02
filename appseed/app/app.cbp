@@ -17,9 +17,13 @@
 				<Option host_application="/ca2/stage/x86/app" />
 				<Option run_host_application_in_terminal="0" />
 				<Compiler>
+					<Add option="-pg" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
+				<Linker>
+					<Add option="-pg" />
+				</Linker>
 			</Target>
 			<Target title="memdleak">
 				<Option output="../../../stage/x86/app" prefix_auto="0" extension_auto="0" />
