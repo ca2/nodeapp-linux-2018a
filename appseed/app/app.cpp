@@ -6,11 +6,24 @@ const char * g_psz_br_init_symbol_app = "";
 
 
 int32_t __lnx_main(int32_t argc, char * argv[]);
+namespace core
+{
 
+
+
+   namespace static_start
+   {
+
+      CLASS_DECL_CORE void gtk_init(int * c, char *** s);
+
+   } // namespace static_start
+
+} //namespace core
 
 int32_t main(int32_t argc, char * argv[])
 {
 
+   //::core::static_start::gtk_init(&argc, &argv);
 
    if(!defer_core_init())
       return -1;
