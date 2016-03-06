@@ -27,6 +27,7 @@
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/auraclick/auraclick.cbp" />
 		<Project filename="../../../app-core/appseed/auraverse/auraverse.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
@@ -291,6 +292,10 @@
 		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/gcom/gcom.cbp">
+			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
+			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/draw2d_xlib/draw2d_xlib.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
@@ -314,10 +319,6 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/gcom/gcom.cbp">
-			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/irc/irc.cbp">
 			<Depends filename="../../../app/aura/expat/auraexpat.cbp" />
