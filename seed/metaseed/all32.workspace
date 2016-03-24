@@ -129,6 +129,9 @@
 		<Project filename="../../../app-core/appseed/resident/resident.cbp">
 			<Depends filename="../../../app-core/appseed/irc_resident/irc_resident.cbp" />
 			<Depends filename="../../../app-core/appseed/xmpp_resident/xmpp_resident.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
+			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
+			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/xmpp_bot/xmpp_bot.cbp">
@@ -347,6 +350,7 @@
 			<Depends filename="../../../app/aura/expat/auraexpat.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+			<Depends filename="../../../app/appseed/pcre/pcre.cbp" />
 			<Depends filename="../../../app/appseed/programming/programming.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
 		</Project>
