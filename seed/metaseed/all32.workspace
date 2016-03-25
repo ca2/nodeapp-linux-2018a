@@ -382,9 +382,12 @@
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		<Project filename="../../../app-core/appseed/vericard/vericard.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/programming/programming.cbp" />
 		</Project>
