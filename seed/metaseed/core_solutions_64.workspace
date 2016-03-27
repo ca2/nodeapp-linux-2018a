@@ -27,7 +27,15 @@
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/auraclick/auraclick.cbp" />
+		<Project filename="../../../app-core/appseed/auraclick/auraclick.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
+			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
+			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/auratype/auratype.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
@@ -298,6 +306,7 @@
 			<Depends filename="../../../app/appseed/basecore/basecore.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp">
+			<Depends filename="../../../app/axis/cairo/axiscairo.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/gcom/gcom.cbp">
@@ -337,6 +346,7 @@
 		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app-core/appseed/id3lib/id3lib.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
 		</Project>

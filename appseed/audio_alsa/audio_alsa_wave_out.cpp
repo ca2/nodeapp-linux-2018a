@@ -486,35 +486,12 @@ namespace multimedia
 
          single_lock sLock(&m_mutex, TRUE);
 
-         ::multimedia::e_result                mmr;
-
-         snd_htimestamp_t                  mmt = {};
-
-         snd_pcm_uframes_t ut = {};
-
-         snd_pcm_status_t * s = NULL;
-
          if(m_ppcm != NULL)
          {
 
-            snd_pcm_status_alloca( &s);
+            snd_pcm_sframes_t frames = snd_pcm_avail_update(m_ppcm);
 
-            int snderr = snd_pcm_status(m_ppcm, s);
-
-            mmr = translate_alsa(snderr);
-
-            if (result_success != mmr)
-            {
-
-               TRACE( "snd_pcm_status(1) (for snd_pcm_status_get_htstamp) failed with %s", snd_strerror(snderr));
-
-               return 0;
-
-            }
-
-            snd_pcm_status_get_htstamp(s, &mmt);
-
-            return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
+            return frames * 1000 / m_pwaveformat->nSamplesPerSec;
 
          }
          else
@@ -532,35 +509,12 @@ namespace multimedia
 
          single_lock sLock(&m_mutex, TRUE);
 
-         ::multimedia::e_result                mmr;
-
-         snd_htimestamp_t                    mmt = {};
-
-         snd_pcm_uframes_t                   ut;
-
-         snd_pcm_status_t * s= NULL;
-
          if(m_ppcm != NULL)
          {
 
-            snd_pcm_status_alloca( &s);
+            snd_pcm_sframes_t frames = snd_pcm_avail_update(m_ppcm);
 
-            int snderr = snd_pcm_status(m_ppcm, s);
-
-            mmr = translate_alsa(snderr);
-
-            if (result_success != mmr)
-            {
-
-               TRACE( "snd_pcm_status(2) (for snd_pcm_status_get_htstamp) failed with %s", snd_strerror(snderr));
-
-               return 0;
-
-            }
-
-            snd_pcm_status_get_htstamp(s, &mmt);
-
-            return mmt.tv_nsec / (1000 * 1000) + mmt.tv_sec * 1000;
+            return frames;
 
          }
          else
@@ -756,6 +710,8 @@ namespace multimedia
                goto finalize;
 
             }
+
+            m_pprebuffer->m_position += result;
 
             ptr += result * m_pwaveformat->nChannels;
 
