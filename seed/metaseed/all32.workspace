@@ -70,6 +70,13 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/fuel/fuel.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
+			<Depends filename="../../../app/appseed/pcre/pcre.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
@@ -364,7 +371,9 @@
 		<Project filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp">
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/pcre/pcre.cbp" />
+		<Project filename="../../../app/appseed/pcre/pcre.cbp">
+			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/programming/programming.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
