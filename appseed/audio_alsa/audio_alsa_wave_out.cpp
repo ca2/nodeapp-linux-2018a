@@ -613,6 +613,14 @@ namespace multimedia
 
          single_lock sLock(&m_mutex, TRUE);
 
+         if(m_estate != audio::wave_out::state_playing
+         && m_estate != audio::wave_out::state_stopping)
+         {
+
+            goto finalize;
+
+         }
+
          if(m_peffect != NULL)
          {
 
@@ -620,15 +628,18 @@ namespace multimedia
 
          }
 
+         {
+
          int result = 0;
 
          int cptr = period_size;
 
          ::multimedia::e_result mmr = result_success;
 
+         snd_pcm_sframes_t avail = 0;
+
          signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
-         snd_pcm_sframes_t avail = 0;
 
          if(m_ppcm == NULL)
          {
@@ -717,6 +728,8 @@ namespace multimedia
 
             cptr -= result;
 
+
+         }
 
          }
 
