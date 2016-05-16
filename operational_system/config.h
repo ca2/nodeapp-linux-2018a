@@ -11,7 +11,7 @@
 #define LINUX
 #endif
 #define BSD_STYLE_SOCKETS
-#define VARIADIC_TEMPLATE_FORMAT
+#define VARIADIC_TEMPLATE_FORMAT2
 
 
 
