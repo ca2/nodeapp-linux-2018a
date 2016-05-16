@@ -12,6 +12,7 @@
 
 #include <strings.h>
 #include <errno.h>
+#include <stdarg.h>
 
 #include "_stdint.h"
 
