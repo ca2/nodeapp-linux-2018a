@@ -35,6 +35,10 @@
 #define CLASS_DECL_THREAD __thread
 
 
+#define __PLATFORM   "linux"
+
+
+
 #ifndef OSBIT
 #include "nodeapp/operational_system/bit.h"
 #endif
