@@ -108,14 +108,6 @@
 			<Depends filename="../../../app-core/appseed/irc_bot/irc_bot.cbp" />
 			<Depends filename="../../../app-core/appseed/irc_client/irc_client.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/resident/resident.cbp">
-			<Depends filename="../../../app-core/appseed/irc_resident/irc_resident.cbp" />
-			<Depends filename="../../../app-core/appseed/xmpp_resident/xmpp_resident.cbp" />
-			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
-			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
-			<Depends filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
-			<Depends filename="../../../app/axis/image_png/axis_image_png.cbp" />
-		</Project>
 		<Project filename="../../../app-core/appseed/projection/projection.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -138,6 +130,19 @@
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/resident/resident.cbp">
+			<Depends filename="../../../app-core/appseed/irc_resident/irc_resident.cbp" />
+			<Depends filename="../../../app-core/appseed/xmpp_resident/xmpp_resident.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
+			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
+			<Depends filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
+			<Depends filename="../../../app/axis/image_png/axis_image_png.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/timer/timer.cbp">
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/weather/weather.cbp" />
 		<Project filename="../../../app-core/appseed/xmpp_bot/xmpp_bot.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
