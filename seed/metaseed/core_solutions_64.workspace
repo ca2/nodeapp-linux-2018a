@@ -113,6 +113,8 @@
 			<Depends filename="../../../app-core/appseed/xmpp_resident/xmpp_resident.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
+			<Depends filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
+			<Depends filename="../../../app/axis/image_png/axis_image_png.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/projection/projection.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
