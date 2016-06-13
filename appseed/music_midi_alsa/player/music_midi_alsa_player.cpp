@@ -68,7 +68,7 @@ namespace music
             //IGUI_WIN_MSG_LINK(MM_MOM_POSITIONCB, pinterface, this, &player::OnMultimediaMidiOutputMessagePositionCB);
          }
 
-         bool player::Play(imedia::position tkStart, uint32_t dwEllapse)
+         bool player::Play(imedia_position tkStart, uint32_t dwEllapse)
          {
 
             ::music::midi::player::command * pcommand = new ::music::midi::player::command(get_app());
@@ -107,11 +107,11 @@ namespace music
 
          }
 
-         imedia::position player::RateToTicks(double dRate)
+         imedia_position player::RateToTicks(double dRate)
          {
             ASSERT(dRate >= 0.0);
             ASSERT(dRate <= 1.0);
-            return (imedia::position) (int32_t) (get_sequence()->m_tkLength * dRate);
+            return (imedia_position) (int32_t) (get_sequence()->m_tkLength * dRate);
          }
 
 
@@ -338,7 +338,7 @@ namespace music
              //get_sequence()->m_evMmsgDone.lock();
              */
                bool bPlay = IsPlaying();
-               imedia::position ticks = 0;
+               imedia_position ticks = 0;
                if(bPlay)
                {
                   ticks = get_sequence()->GetPositionTicks();
@@ -406,7 +406,7 @@ namespace music
             get_sequence()->SetMidiOutDevice(GetMidiOutDevice());
             if(get_sequence()->IsPlaying())
             {
-               imedia::position tkPosition = 0;
+               imedia_position tkPosition = 0;
                get_sequence()->GetPosition(tkPosition);
                ::music::midi::sequence::PlayerLink & link = get_sequence()->GetPlayerLink();
                link.ModifyFlag(

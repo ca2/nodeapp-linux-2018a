@@ -36,7 +36,7 @@ namespace multimedia
          void install_message_handling(::message::dispatch * pinterface);
 
          virtual imedia_time wave_out_get_position_millis();
-         imedia::position wave_out_get_position();
+         imedia_position wave_out_get_position();
 
          virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount) override;
          virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
@@ -59,7 +59,7 @@ namespace multimedia
          DECL_GEN_SIGNAL(OnReady);
          DECL_GEN_SIGNAL(OnFree);
 
-         virtual ::multimedia::e_result wave_out_start(const imedia::position & position);
+         virtual ::multimedia::e_result wave_out_start(const imedia_position & position);
 
          virtual bool on_run_step();
 

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="core solutions 64">
+		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
+			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/cairo/axiscairo.cbp" />
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
@@ -16,6 +18,7 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
+			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
@@ -23,6 +26,7 @@
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
+			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
