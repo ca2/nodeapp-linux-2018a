@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
+		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/cairo/axiscairo.cbp" />
@@ -57,11 +58,17 @@
 			<Depends filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" />
 			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
+			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
+			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/libmpg123/basempg123.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
@@ -236,6 +243,7 @@
 		</Project>
 		<Project filename="../../../app/atom/iconv/atomiconv.cbp" />
 		<Project filename="../../../app/appseed/aura/aura.cbp">
+			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 			<Depends filename="../../../app/atom/iconv/atomiconv.cbp" />
 		</Project>
 		<Project filename="../../../app/aura/charguess/auracharguess.cbp">
