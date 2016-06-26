@@ -271,6 +271,7 @@
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
 			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
+			<Depends filename="../../../app/axis/png/axispng.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/crypto/axiscrypto.cbp" />
@@ -285,7 +286,7 @@
 		<Project filename="../../../app/axis/freetype/axisfreetype.cbp">
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/image_png/axis_image_png.cbp" />
+			<Depends filename="../../../app/axis/png/axispng.cbp" />
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp">
@@ -297,8 +298,13 @@
 			<Depends filename="../../../app/axis/openh264/WelsProcessing.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/idn/axisidn.cbp" />
-		<Project filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
-		<Project filename="../../../app/axis/image_png/axis_image_png.cbp" />
+		<Project filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp">
+			<Depends filename="../../../app/axis/jpeg/axisjpeg.cbp" />
+		</Project>
+		<Project filename="../../../app/axis/image_png/axis_image_png.cbp">
+			<Depends filename="../../../app/axis/png/axispng.cbp" />
+		</Project>
+		<Project filename="../../../app/axis/jpeg/axisjpeg.cbp" />
 		<Project filename="../../../app/axis/mysql/axismysql.cbp">
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
@@ -308,6 +314,9 @@
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/pixman/axispixman.cbp" />
+		<Project filename="../../../app/axis/png/axispng.cbp">
+			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
+		</Project>
 		<Project filename="../../../app/axis/rdpclient/axisrdpclient.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
