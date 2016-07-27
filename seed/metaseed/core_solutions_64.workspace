@@ -279,11 +279,14 @@
 			<Depends filename="../../../app/axis/openh264/WelsProcessing.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/idn/axisidn.cbp" />
-		<Project filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
+		<Project filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp">
+			<Depends filename="../../../app/axis/jpeg/axisjpeg.cbp" />
+		</Project>
 		<Project filename="../../../app/axis/image_png/axis_image_png.cbp">
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/axis/png/axispng.cbp" />
 		</Project>
+		<Project filename="../../../app/axis/jpeg/axisjpeg.cbp" />
 		<Project filename="../../../app/axis/mysql/axismysql.cbp">
 			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
