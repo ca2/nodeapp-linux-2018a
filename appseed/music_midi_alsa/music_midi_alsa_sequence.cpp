@@ -2753,9 +2753,9 @@ seq_Preroll_Cleanup:
                      {
                      case ::music::midi::MetaTempo:
                         {
-                           DWORD dwTempo = (((uint32_t)pevent->GetParam()[0])<<16)|
-                           (((uint32_t)pevent->GetParam()[1])<<8)|
-                           ((uint32_t)pevent->GetParam()[2]);
+                           DWORD dwTempo = (((uint32_t)pevent->GetData()[0])<<16)|
+                           (((uint32_t)pevent->GetData()[1])<<8)|
+                           ((uint32_t)pevent->GetData()[2]);
                            dwTempo = (uint32_t) ((double) dwTempo / get_file()->GetTempoShiftRate());
 
                            seq_midi_tempo(m_pseq, &ev, dwTempo);
@@ -2778,7 +2778,7 @@ seq_Preroll_Cleanup:
                   break;
                case ::music::midi::SysEx:
                case ::music::midi::SysExEnd:
-                  seq_midi_sysex(m_pseq, &ev, pevent->GetFullType(), pevent->GetParam(), pevent->GetParamSize());
+                  seq_midi_sysex(m_pseq, &ev, pevent->GetFullType(), pevent->GetData(), pevent->GetDataSize());
                   break;
                default:
                   iCount = 0;
