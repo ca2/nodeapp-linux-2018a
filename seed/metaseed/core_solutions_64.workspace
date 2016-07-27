@@ -57,6 +57,16 @@
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/beampro_bot/beampro_bot.cbp">
+			<Depends filename="../../../app-core/appseed/beampro/beampro.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/beampro_client/beampro_client.cbp">
+			<Depends filename="../../../app-core/appseed/beampro/beampro.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/beampro_resident/beampro_resident.cbp">
+			<Depends filename="../../../app-core/appseed/beampro_bot/beampro_bot.cbp" />
+			<Depends filename="../../../app-core/appseed/beampro_client/beampro_client.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/clockverse/clockverse.cbp">
 			<Depends filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" />
 			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
@@ -135,6 +145,7 @@
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/resident/resident.cbp">
+			<Depends filename="../../../app-core/appseed/beampro_resident/beampro_resident.cbp" />
 			<Depends filename="../../../app-core/appseed/irc_resident/irc_resident.cbp" />
 			<Depends filename="../../../app-core/appseed/xmpp_resident/xmpp_resident.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
@@ -327,6 +338,10 @@
 			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/libmpg123/basempg123.cbp" />
+		<Project filename="../../../app-core/appseed/beampro/beampro.cbp">
+			<Depends filename="../../../app/appseed/programming/programming.cbp" />
+			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
