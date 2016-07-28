@@ -82,10 +82,8 @@
 			<Add option="-laxiscrypto" />
 			<Add option="-laxisopenssl" />
 			<Add option="-laxisidn" />
-			<Add option="-laxispixman" />
 			<Add option="-laxisfreeimage" />
-			<Add option="-laxispng" />
-			<Add option="-laxisfreetype" />
+			<Add option="-lfreetype" />
 			<Add option="-laxismysql" />
 			<Add option="-laxis" />
 			<Add option="-lbase" />

@@ -96,6 +96,8 @@ int32_t __lnx_main(int32_t argc, char * argv[])
 
    }
 
+   //pinitmaindata->m_vssCommandLine     = " : app=app-core/hellomultiver build_number=basis locale=_std schema=_std";
+
    bool bColon = false;
 
    for(int32_t i = 1; i < argc; i++)
