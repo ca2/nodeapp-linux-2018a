@@ -3,16 +3,7 @@
 	<Workspace title="all32">
 		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
-			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
-			<Depends filename="../../../app/axis/cairo/axiscairo.cbp" />
-			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
-			<Depends filename="../../../app/axis/idn/axisidn.cbp" />
-			<Depends filename="../../../app/axis/mysql/axismysql.cbp" />
-			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
-			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
@@ -72,7 +63,6 @@
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
-			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
@@ -97,18 +87,10 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
-			<Depends filename="../../../app/axis/cairo/axiscairo.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
 			<Depends filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
 			<Depends filename="../../../app/axis/image_png/axis_image_png.cbp" />
-			<Depends filename="../../../app/axis/mysql/axismysql.cbp" />
-			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
-			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
@@ -172,9 +154,7 @@
 		<Project filename="../../../app-core/appseed/xmpp_client/xmpp_client.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
@@ -210,7 +190,6 @@
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
 			<Depends filename="../../../app/axis/image_png/axis_image_png.cbp" />
-			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
@@ -249,45 +228,17 @@
 		<Project filename="../../../app/aura/charguess/auracharguess.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 		</Project>
-		<Project filename="../../../app/aura/expat/auraexpat.cbp" />
-		<Project filename="../../../app/aura/pcre/aurapcre.cbp">
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-		</Project>
-		<Project filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 		<Project filename="../../../app/appseed/axis/axis.cbp">
 			<Depends filename="../../../app/aura/charguess/auracharguess.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/aura/sqlite/aurasqlite.cbp" />
-			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
-			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
-			<Depends filename="../../../app/axis/idn/axisidn.cbp" />
-			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/bzip2/axisbzip2.cbp" />
-		<Project filename="../../../app/axis/cairo/axiscairo.cbp">
-			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
-			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
-			<Depends filename="../../../app/axis/png/axispng.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
-		</Project>
-		<Project filename="../../../app/axis/crypto/axiscrypto.cbp" />
 		<Project filename="../../../app/axis/clientchannels/axisclientchannels.cbp">
 			<Depends filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
 			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/freeimage/axisfreeimage.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
-		</Project>
-		<Project filename="../../../app/axis/freetype/axisfreetype.cbp">
-			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
-			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/png/axispng.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/axis/freerdp/axisfreerdp.cbp">
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
@@ -297,26 +248,8 @@
 			<Depends filename="../../../app/axis/openh264/WelsEncoder.cbp" />
 			<Depends filename="../../../app/axis/openh264/WelsProcessing.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/idn/axisidn.cbp" />
-		<Project filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp">
-			<Depends filename="../../../app/axis/jpeg/axisjpeg.cbp" />
-		</Project>
-		<Project filename="../../../app/axis/image_png/axis_image_png.cbp">
-			<Depends filename="../../../app/axis/png/axispng.cbp" />
-		</Project>
-		<Project filename="../../../app/axis/jpeg/axisjpeg.cbp" />
-		<Project filename="../../../app/axis/mysql/axismysql.cbp">
-			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
-			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
-		</Project>
-		<Project filename="../../../app/axis/openssl/axisopenssl.cbp">
-			<Depends filename="../../../app/axis/crypto/axiscrypto.cbp" />
-		</Project>
-		<Project filename="../../../app/axis/pixman/axispixman.cbp" />
-		<Project filename="../../../app/axis/png/axispng.cbp">
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
-		</Project>
+		<Project filename="../../../app/axis/image_jpeg/axis_image_jpeg.cbp" />
+		<Project filename="../../../app/axis/image_png/axis_image_png.cbp" />
 		<Project filename="../../../app/axis/rdpclient/axisrdpclient.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
@@ -324,33 +257,19 @@
 			<Depends filename="../../../app/axis/freerdp/axisfreerdp.cbp" />
 			<Depends filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		</Project>
-		<Project filename="../../../app/axis/winpr/axiswinpr.cbp">
-			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
-		</Project>
-		<Project filename="../../../app/axis/zlib/axiszlib.cbp" />
+		<Project filename="../../../app/axis/winpr/axiswinpr.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
-			<Depends filename="../../../app/axis/idn/axisidn.cbp" />
-			<Depends filename="../../../app/axis/mysql/axismysql.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/basecore/basecore.cbp" />
 		<Project filename="../../../app-core/appseed/id3lib/id3lib.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/libmpg123/basempg123.cbp" />
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
-			<Depends filename="../../../app/axis/mysql/axismysql.cbp" />
-			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
-			<Depends filename="../../../app/axis/zlib/axiszlib.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/basecore/basecore.cbp" />
 		</Project>
@@ -367,7 +286,6 @@
 			<Depends filename="../../../app/atom/iconv/atomiconv.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
@@ -383,10 +301,8 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/gcom/gcom.cbp">
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
-			<Depends filename="../../../app/axis/freetype/axisfreetype.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/irc/irc.cbp">
-			<Depends filename="../../../app/aura/expat/auraexpat.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/pcre/pcre.cbp" />
@@ -406,9 +322,7 @@
 		<Project filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp">
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/pcre/pcre.cbp">
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
-		</Project>
+		<Project filename="../../../app/appseed/pcre/pcre.cbp" />
 		<Project filename="../../../app/appseed/programming/programming.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
@@ -419,17 +333,12 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/strophe/strophe.cbp">
-			<Depends filename="../../../app/aura/expat/auraexpat.cbp" />
-			<Depends filename="../../../app/axis/openssl/axisopenssl.cbp" />
-		</Project>
+		<Project filename="../../../app-core/appseed/strophe/strophe.cbp" />
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		<Project filename="../../../app-core/appseed/vericard/vericard.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
-			<Depends filename="../../../app/axis/pixman/axispixman.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
@@ -455,8 +364,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		<Project filename="../../../app-core/appseed/xmpp/xmpp.cbp">
-			<Depends filename="../../../app/aura/expat/auraexpat.cbp" />
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/pcre/pcre.cbp" />
