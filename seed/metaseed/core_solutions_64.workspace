@@ -219,6 +219,7 @@
 		</Project>
 		<Project filename="../../../app/atom/iconv/atomiconv.cbp" />
 		<Project filename="../../../app/appseed/aura/aura.cbp">
+			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 			<Depends filename="../../../app/atom/iconv/atomiconv.cbp" />
 		</Project>
 		<Project filename="../../../app/aura/charguess/auracharguess.cbp">
