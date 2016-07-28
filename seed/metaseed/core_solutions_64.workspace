@@ -68,7 +68,6 @@
 			<Depends filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" />
 			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
@@ -88,7 +87,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/axis/bzip2/axisbzip2.cbp" />
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
@@ -150,7 +148,9 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/weather/weather.cbp" />
+		<Project filename="../../../app-core/appseed/weather/weather.cbp">
+			<Depends filename="../../../app/appseed/pcre/pcre.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/xmpp_bot/xmpp_bot.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -162,7 +162,6 @@
 		<Project filename="../../../app-core/appseed/xmpp_client/xmpp_client.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
@@ -234,9 +233,6 @@
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 		</Project>
 		<Project filename="../../../app/aura/expat/auraexpat.cbp" />
-		<Project filename="../../../app/aura/pcre/aurapcre.cbp">
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-		</Project>
 		<Project filename="../../../app/aura/sqlite/aurasqlite.cbp" />
 		<Project filename="../../../app/appseed/axis/axis.cbp">
 			<Depends filename="../../../app/aura/charguess/auracharguess.cbp" />
@@ -386,7 +382,6 @@
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		<Project filename="../../../app-core/appseed/vericard/vericard.cbp">
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
@@ -414,7 +409,6 @@
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		<Project filename="../../../app-core/appseed/xmpp/xmpp.cbp">
 			<Depends filename="../../../app/aura/expat/auraexpat.cbp" />
-			<Depends filename="../../../app/aura/pcre/aurapcre.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/strophe/strophe.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
