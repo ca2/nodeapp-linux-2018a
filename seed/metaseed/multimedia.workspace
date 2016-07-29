@@ -183,6 +183,7 @@
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/verisimplevideo/verisimplevideo.cbp">
+			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/video_decode_ffmpeg/video_decode_ffmpeg.cbp" />
