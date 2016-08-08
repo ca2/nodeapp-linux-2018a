@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
-	<Workspace title="all32">
+	<Workspace title="arcade">
 		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/axis/freeimage/axisfreeimage.cbp" />
@@ -290,6 +290,21 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+		</Project>
+		<Project filename="../../../game/appseed/sokoban/sokoban.cbp">
+			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		</Project>
+		<Project filename="../../../game/appseed/tetris/tetris.cbp">
+			<Depends filename="../../../app/appseed/ace/ace.cbp" />
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../game/appseed/tictactoe/tictactoe.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
