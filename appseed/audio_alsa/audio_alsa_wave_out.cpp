@@ -640,6 +640,13 @@ namespace multimedia
 
          signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
+         if(!m_bRun)
+         {
+
+            goto finalize;
+
+         }
+
 
          if(m_ppcm == NULL)
          {
