@@ -6,5 +6,24 @@
 			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 		</Project>
 		<Project filename="../../../third/appseed/strophe/strophe.cbp" />
+		<Project filename="../../../third/appseed/winpr/axiswinpr.cbp" />
+		<Project filename="../../../third/appseed/freerdp/axisfreerdp.cbp">
+			<Depends filename="../../../third/appseed/winpr/axiswinpr.cbp" />
+			<Depends filename="../../../third/appseed/openh264/WelsDecoder.cbp" />
+			<Depends filename="../../../third/appseed/openh264/WelsEncoder.cbp" />
+		</Project>
+		<Project filename="../../../third/appseed/clientchannels/axisclientchannels.cbp">
+			<Depends filename="../../../third/appseed/winpr/axiswinpr.cbp" />
+			<Depends filename="../../../third/appseed/freerdp/axisfreerdp.cbp" />
+		</Project>
+		<Project filename="../../../third/appseed/openh264/WelsDecoder.cbp" />
+		<Project filename="../../../third/appseed/openh264/WelsEncoder.cbp">
+			<Depends filename="../../../third/appseed/openh264/WelsProcessing.cbp" />
+			<Depends filename="../../../third/appseed/openh264/WelsCommon.cbp" />
+		</Project>
+		<Project filename="../../../third/appseed/openh264/WelsProcessing.cbp">
+			<Depends filename="../../../third/appseed/openh264/WelsCommon.cbp" />
+		</Project>
+		<Project filename="../../../third/appseed/openh264/WelsCommon.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
