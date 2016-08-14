@@ -75,7 +75,6 @@
 			<Add option="-lX11" />
 			<Add option="-latomiconv" />
 			<Add option="-lsqlite3" />
-			<Add option="-lauracharguess" />
 			<Add option="-laura" />
 			<Add option="-lbz2" />
 			<Add option="-lz" />
