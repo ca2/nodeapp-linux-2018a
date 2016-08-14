@@ -5,5 +5,6 @@
 		<Project filename="../../../third/appseed/iconv/atomiconv.cbp">
 			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 		</Project>
+		<Project filename="../../../third/appseed/strophe/strophe.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
