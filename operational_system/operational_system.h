@@ -160,4 +160,7 @@ typedef std::type_info std_type_info;
 #define _MFC_OVERRIDES_NEW
 
 
+#define WINBOOL int
+
+
 
