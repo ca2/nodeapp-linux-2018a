@@ -8,6 +8,8 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
+			<Depends filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
+			<Depends filename="../../../app/appseed/image_png/axis_image_png.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/flag/flag.cbp">
@@ -20,16 +22,15 @@
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
-			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
-			<Depends filename="../../../app-core/appseed/projection/projection.cbp" />
+			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
+			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/clockverse/clockverse.cbp">
-			<Depends filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" />
-			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
+			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
+			<Depends filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
@@ -214,6 +215,7 @@
 		</Project>
 		<Project filename="../../../app/appseed/axis/axis.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/freeimage/axisfreeimage.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/freeimage/axisfreeimage.cbp" />
 		<Project filename="../../../app/appseed/rdpclient/axisrdpclient.cbp" />
