@@ -75,7 +75,7 @@
 			<Add option="-lasound" />
 			<Add option="-lmultimedia" />
 			<Add option="-Wl,-z,defs" />
-			<Add directory="../../../stage/x86" />
+			<Add directory="../../../time/x64/basis" />
 			<Add directory="/usr/lib64/mysql/" />
 		</Linker>
 		<Unit filename="audio_alsa.h" />
