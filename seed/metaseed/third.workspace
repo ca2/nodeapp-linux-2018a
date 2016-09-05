@@ -1,14 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="all32">
-		<Project filename="../../../app/appseed/ace/ace.cbp" />
-		<Project filename="../../../third/appseed/iconv/atomiconv.cbp">
-			<Depends filename="../../../app/appseed/ace/ace.cbp" />
-		</Project>
+		<Project filename="../../../../ca2/app/appseed/ace/ace.cbp" />
+		<Project filename="../../../third/appseed/iconv/atomiconv.cbp" />
 		<Project filename="../../../third/appseed/strophe/strophe.cbp" />
-		<Project filename="../../../third/appseed/winpr/axiswinpr.cbp">
-			<Depends filename="../../../app/appseed/ace/ace.cbp" />
-		</Project>
+		<Project filename="../../../third/appseed/winpr/axiswinpr.cbp" />
 		<Project filename="../../../third/appseed/freerdp/axisfreerdp.cbp">
 			<Depends filename="../../../third/appseed/winpr/axiswinpr.cbp" />
 			<Depends filename="../../../third/appseed/openh264/WelsDecoder.cbp" />
