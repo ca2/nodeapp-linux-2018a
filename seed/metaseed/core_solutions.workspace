@@ -45,6 +45,7 @@
 			<Depends filename="../../../app-core/appseed/xmpp_resident/xmpp_resident.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
+			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app-core/appseed/beampro/beampro.cbp" />
 			<Depends filename="../../../app-core/appseed/irc/irc.cbp" />
 			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
