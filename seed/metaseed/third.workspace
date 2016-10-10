@@ -22,6 +22,7 @@
 			<Depends filename="../../../third/appseed/winpr/axiswinpr.cbp" />
 			<Depends filename="../../../third/appseed/freerdp/axisfreerdp.cbp" />
 		</Project>
+		<Project filename="../../../third/appseed/libmpg123/basempg123.cbp" />
 		<Project filename="../../../third/appseed/protobuf/protobuf.cbp" />
 		<Project filename="../../../third/appseed/protobuf/protoc.cbp" />
 		<Project filename="../../../third/appseed/openh264/WelsDecoder.cbp">
