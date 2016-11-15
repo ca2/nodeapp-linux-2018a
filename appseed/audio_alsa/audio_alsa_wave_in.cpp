@@ -28,7 +28,7 @@ namespace multimedia
       {
       }
 
-      bool wave_in::initialize_instance()
+      bool wave_in::initialize_thread()
       {
          TRACE("wave_in::initialize_instance %X\n", get_os_int());
          //SetMainWnd(NULL);
@@ -38,10 +38,10 @@ namespace multimedia
          return true;
       }
 
-      int32_t wave_in::exit_instance()
+      int32_t wave_in::exit_thread()
       {
          m_eventExitInstance.SetEvent();
-         return thread::exit_instance();
+         return thread::exit_thread();
       }
 
 
@@ -59,7 +59,7 @@ namespace multimedia
 
          }
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          ::multimedia::e_result mmr = result_success;
 
@@ -226,7 +226,7 @@ Opened:
       ::multimedia::e_result wave_in::wave_in_close()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          ::multimedia::e_result mmr;
 
@@ -266,7 +266,7 @@ Opened:
       {
          return result_success;
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_estate == state_recording)
             return result_success;
@@ -289,7 +289,7 @@ Opened:
       ::multimedia::e_result wave_in::wave_in_stop()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_estate != state_recording)
             return result_error;
@@ -331,7 +331,7 @@ Opened:
          int iSize;
          int err;
 
-         while(m_bRun)
+         while(get_run_thread())
          {
 
             if(wave_in_is_recording() && wave_in_get_buffer()->GetBufferCount() > 0)
@@ -394,7 +394,7 @@ Opened:
 
       ::multimedia::e_result wave_in::wave_in_reset()
       {
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
          m_bResetting = true;
          if(m_ppcm == NULL)
          {

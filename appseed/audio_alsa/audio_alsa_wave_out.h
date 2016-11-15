@@ -53,8 +53,8 @@ namespace multimedia
          virtual void wave_out_free(int iBuffer) override;
          virtual void alsa_out_free(int iBuffer);
 
-         virtual bool initialize_instance();
-         virtual int32_t exit_instance();
+         virtual bool initialize_thread();
+         virtual int32_t exit_thread();
 
          DECL_GEN_SIGNAL(OnReady);
          DECL_GEN_SIGNAL(OnFree);

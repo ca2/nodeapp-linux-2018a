@@ -47,8 +47,8 @@ namespace music
             bool Play(double dRate = 0.0, uint32_t dwEllapse = 584);
             bool Play(imedia_position tkStart, uint32_t dwEllapse = 584);
 
-            virtual bool initialize_instance();
-            virtual int32_t exit_instance();
+            virtual bool initialize_thread();
+            virtual int32_t exit_thread();
             virtual void pre_translate_message(::signal_details * pobj);
             void OnMmsgDone(::music::midi::sequence *pSeq);
             DECL_GEN_SIGNAL(OnUserMessage);

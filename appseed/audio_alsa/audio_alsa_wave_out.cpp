@@ -48,28 +48,28 @@ namespace multimedia
 
 
 
-      bool wave_out::initialize_instance()
+      bool wave_out::initialize_thread()
       {
 
-         if(!::multimedia::audio::wave_out::initialize_instance())
+         if(!::multimedia::audio::wave_out::initialize_thread())
             return false;
 
          return true;
 
       }
 
-      int32_t wave_out::exit_instance()
+      int32_t wave_out::exit_thread()
       {
 
-         ::multimedia::audio::wave_out::exit_instance();
+         ::multimedia::audio::wave_out::exit_thread();
 
-         return thread::exit_instance();
+         return thread::exit_thread();
 
       }
 
       ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
       {
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
          if(m_ppcm != NULL &&
             m_estate != state_initial)
             return result_success;
@@ -209,7 +209,7 @@ namespace multimedia
       ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_ppcm != NULL && m_estate != state_initial)
             return result_success;
@@ -347,7 +347,7 @@ namespace multimedia
       ::multimedia::e_result wave_out::wave_out_close()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_estate == state_playing)
          {
@@ -394,7 +394,7 @@ namespace multimedia
       ::multimedia::e_result wave_out::wave_out_stop()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_estate != state_playing && m_estate != state_paused)
             return result_error;
@@ -427,7 +427,7 @@ namespace multimedia
       ::multimedia::e_result wave_out::wave_out_pause()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          ASSERT(m_estate == state_playing);
 
@@ -455,7 +455,7 @@ namespace multimedia
       ::multimedia::e_result wave_out::wave_out_restart()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          ASSERT(m_estate == state_paused);
 
@@ -484,7 +484,7 @@ namespace multimedia
       imedia_time wave_out::wave_out_get_position_millis()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_ppcm != NULL)
          {
@@ -507,7 +507,7 @@ namespace multimedia
       imedia_position wave_out::wave_out_get_position()
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_ppcm != NULL)
          {
@@ -570,7 +570,7 @@ namespace multimedia
       void wave_out::wave_out_free(int ibuffer)
       {
 
-         post_thread_message(message_free, ibuffer);
+         post_message(message_free, ibuffer);
 
       }
 
@@ -578,7 +578,7 @@ namespace multimedia
       void wave_out::wave_out_buffer_ready(int iBuffer)
       {
 
-         post_thread_message(message_ready, iBuffer);
+         post_message(message_ready, iBuffer);
 
       }
 
@@ -611,7 +611,7 @@ namespace multimedia
       void wave_out::alsa_out_buffer_ready(int iBuffer)
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_estate != audio::wave_out::state_playing
          && m_estate != audio::wave_out::state_stopping)
@@ -640,7 +640,7 @@ namespace multimedia
 
          signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
-         if(!m_bRun)
+         if(!get_run_thread())
          {
 
             goto finalize;
@@ -752,7 +752,7 @@ namespace multimedia
       ::multimedia::e_result wave_out::wave_out_start(const imedia_position & position)
       {
 
-         single_lock sLock(&m_mutex, TRUE);
+         single_lock sLock(m_pmutex, TRUE);
 
          if(m_estate == state_playing)
             return result_success;

@@ -38,8 +38,8 @@ namespace multimedia
 
          //virtual void translate_wave_in_message(::signal_details * pobj);
 
-         virtual bool initialize_instance();
-         virtual int32_t exit_instance();
+         virtual bool initialize_thread();
+         virtual int32_t exit_thread();
          //virtual void pre_translate_message(::signal_details * pobj);
 
          void CALLBACK wave_in_proc(snd_pcm_t * hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
