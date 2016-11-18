@@ -32,6 +32,7 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
@@ -218,7 +219,9 @@
 		</Project>
 		<Project filename="../../../app/appseed/axis/axis.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/freeimage/axisfreeimage.cbp" />
 		</Project>
+		<Project filename="../../../app/appseed/freeimage/axisfreeimage.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 		</Project>
@@ -311,6 +314,5 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/freeimage/axisfreeimage.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>

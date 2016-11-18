@@ -1,6 +1,31 @@
 #include "framework.h"
 
 
+long long timestamp2ns(snd_htimestamp_t t)
+{
+
+   long long nsec;
+
+   nsec = t.tv_sec * 1000000000;
+   nsec += t.tv_nsec;
+
+   return nsec;
+
+}
+
+
+long long timediff(snd_htimestamp_t t1, snd_htimestamp_t t2)
+{
+
+   long long nsec1, nsec2;
+
+   nsec1 = timestamp2ns(t1);
+   nsec2 = timestamp2ns(t2);
+
+   return nsec1 - nsec2;
+
+}
+
 
 namespace multimedia
 {
@@ -20,11 +45,14 @@ namespace multimedia
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
-         m_iBufferedCount     = 0;
          m_mmr                = result_success;
          m_peffect            = NULL;
          m_dwLostSampleCount  = 0;
          m_bWrite             = false;
+         m_bStarted           = false;
+
+         m_pstatus            = NULL;
+         snd_pcm_status_malloc (&m_pstatus);
 
       }
 
@@ -32,6 +60,7 @@ namespace multimedia
       wave_out::~wave_out()
       {
 
+         snd_pcm_status_free (m_pstatus);
 
       }
 
@@ -244,6 +273,7 @@ namespace multimedia
 
          iBufferSampleCount      = period_size;
 
+
          if(true)
          {
             uiBufferSizeLog2 = 16;
@@ -292,13 +322,13 @@ namespace multimedia
 
          int err;
 
-         snd_pcm_sw_params_alloca(&m_pswparams);
+         //snd_pcm_sw_params_alloca(&m_pswparams);
 
          // get the current m_pswparams
          if((err = snd_pcm_sw_params_current(m_ppcm, m_pswparams)) < 0)
          {
 
-            TRACE("Unable to determine current m_pswparams for playback: %s\n", snd_strerror(err));
+            TRACE("unable to determine current m_pswparams for playback: %s\n", snd_strerror(err));
 
             return result_error;
 
@@ -308,7 +338,7 @@ namespace multimedia
          if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, buffer_size)) < 0)
          {
 
-            TRACE("Unable to set start threshold mode for playback: %s\n", snd_strerror(err));
+            TRACE("unable to set start threshold mode for playback: %s\n", snd_strerror(err));
 
             return result_error;
 
@@ -318,7 +348,7 @@ namespace multimedia
          if((err = snd_pcm_sw_params_set_avail_min(m_ppcm, m_pswparams, period_size)) < 0)
          {
 
-            TRACE("Unable to set avail min for playback: %s\n", snd_strerror(err));
+            TRACE("unable to set avail min for playback: %s\n", snd_strerror(err));
 
             return result_error;
 
@@ -328,7 +358,7 @@ namespace multimedia
          if((err = snd_pcm_sw_params(m_ppcm, m_pswparams)) < 0)
          {
 
-            TRACE("Unable to set sw params for playback: %s\n", snd_strerror(err));
+            TRACE("unable to set sw params for playback: %s\n", snd_strerror(err));
 
             return result_error;
 
@@ -484,22 +514,34 @@ namespace multimedia
       imedia_time wave_out::wave_out_get_position_millis()
       {
 
-         single_lock sLock(m_pmutex, TRUE);
+         synch_lock sl(m_pmutex);
+
+         imedia_time time = 0;
 
          if(m_ppcm != NULL)
          {
 
-            snd_pcm_sframes_t frames = snd_pcm_avail_update(m_ppcm);
+            if(snd_pcm_status(m_ppcm, m_pstatus) == 0)
+            {
 
-            return frames * 1000 / m_pwaveformat->nSamplesPerSec;
+               snd_htimestamp_t t;
+
+               snd_pcm_status_get_htstamp (m_pstatus, &t);
+
+               time = t.tv_sec * 1000 + t.tv_nsec / (1000 * 1000);
+
+            }
 
          }
-         else
+
+         if(time > 0)
          {
 
-            return 0;
+            output_debug_string("test");
 
          }
+
+         return time;
 
       }
 
@@ -507,22 +549,7 @@ namespace multimedia
       imedia_position wave_out::wave_out_get_position()
       {
 
-         single_lock sLock(m_pmutex, TRUE);
-
-         if(m_ppcm != NULL)
-         {
-
-            snd_pcm_sframes_t frames = snd_pcm_avail_update(m_ppcm);
-
-            return frames;
-
-         }
-         else
-         {
-
-            return 0;
-
-         }
+         return wave_out_get_position_millis();
 
       }
 
@@ -611,7 +638,7 @@ namespace multimedia
       void wave_out::alsa_out_buffer_ready(int iBuffer)
       {
 
-         single_lock sLock(m_pmutex, TRUE);
+         synch_lock sLock(m_pmutex);
 
          if(m_estate != audio::wave_out::state_playing
          && m_estate != audio::wave_out::state_stopping)
@@ -655,88 +682,100 @@ namespace multimedia
 
          }
 
-         while(avail >= 0 && avail < period_size)
-         {
 
-            if((result = snd_pcm_wait (m_ppcm, 1984)) < 0)
+            while(true)
             {
 
-               m_estate = state_opened;
+               avail = snd_pcm_avail_update(m_ppcm);
 
-               m_mmr = result_error;
+               if(avail < 0 || avail >= period_size)
+               {
 
-               TRACE("alsa wave_out wait error: %s\n", snd_strerror(result));
+                  break;
 
-               goto finalize;
+               }
 
-            }
 
-            avail = snd_pcm_avail_update(m_ppcm);
-
-         }
-
-         /*
-
-         int l = 0;
-         for(int i = 0; i < period_size; i++)
-         {
-            if(l %  40 < 20)
-            {
-               ptr[0] = 1000;
-               ptr[1] = 1000;
-            }
-            else
-            {
-               ptr[0] = -1000;
-               ptr[1] = -1000;
-            }
-
-            ptr+=2;
-            l++;
-         }
-
-         ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
-
-         */
-
-         while (cptr > 0)
-         {
-
-            result = snd_pcm_writei(m_ppcm, ptr, cptr);
-
-            if(result == -EAGAIN)
-            {
-
-               continue;
-
-            }
-
-            if(result < 0)
-            {
-
-               if((result = underrun_recovery(result)) < 0)
+               if((result = snd_pcm_wait (m_ppcm, 2000)) < 0)
                {
 
                   m_estate = state_opened;
 
                   m_mmr = result_error;
 
-                  TRACE("alsa wave_out Write error: %s\n", snd_strerror(result));
+                  TRACE("alsa wave_out wait error: %s\n", snd_strerror(result));
+
+                  goto finalize;
 
                }
 
-               goto finalize;
 
             }
 
-            m_pprebuffer->m_position += result;
+            /*
 
-            ptr += result * m_pwaveformat->nChannels;
+            int l = 0;
+            for(int i = 0; i < period_size; i++)
+            {
+               if(l %  40 < 20)
+               {
+                  ptr[0] = 1000;
+                  ptr[1] = 1000;
+               }
+               else
+               {
+                  ptr[0] = -1000;
+                  ptr[1] = -1000;
+               }
 
-            cptr -= result;
+               ptr+=2;
+               l++;
+            }
+
+            ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
+
+            */
+
+            while (cptr > 0)
+            {
+
+               result = snd_pcm_writei(m_ppcm, ptr, cptr);
+
+               m_bStarted = true;
+
+               if(result == -EAGAIN)
+               {
+
+                  continue;
+
+               }
+
+               if(result < 0)
+               {
+
+                  if((result = underrun_recovery(result)) < 0)
+                  {
+
+                     m_estate = state_opened;
+
+                     m_mmr = result_error;
+
+                     TRACE("alsa wave_out Write error: %s\n", snd_strerror(result));
+
+                  }
+
+                  goto finalize;
+
+               }
+
+               m_pprebuffer->m_position += result;
+
+               ptr += result * m_pwaveformat->nChannels;
+
+               cptr -= result;
 
 
-         }
+            }
 
          }
 
@@ -770,6 +809,8 @@ namespace multimedia
             return result_error;
 
          }
+
+         m_bStarted = false;
 
          m_mmr = ::multimedia::audio::wave_out::wave_out_start(position);
 

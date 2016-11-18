@@ -207,7 +207,6 @@ namespace multimedia
          string strHw = "default";
 
 
-         //if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, SND_PCM_NONBLOCK)) < 0)
          if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, 0)) < 0)
          {
 
@@ -217,7 +216,7 @@ namespace multimedia
 
          }
 
-         snd_pcm_hw_params_alloca (&m_phwparams);
+         snd_pcm_hw_params_malloc (&m_phwparams);
 
          if ((err = snd_pcm_hw_params_any (m_ppcm, m_phwparams)) < 0)
          {
@@ -288,6 +287,7 @@ namespace multimedia
 
          }
 
+
          snd_pcm_uframes_t size;
 
          dir = 1;
@@ -342,6 +342,54 @@ namespace multimedia
          {
 
             TRACE("cannot set parameters (%s)\n", snd_strerror (err));
+
+            return result_error;
+
+         }
+
+         snd_pcm_sw_params_malloc(&m_pswparams);
+
+         err = snd_pcm_sw_params_current(m_ppcm, m_pswparams);
+
+         if (err < 0)
+         {
+
+            printf("Unable to determine current m_pswparams: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         err = snd_pcm_sw_params_set_tstamp_mode(m_ppcm, m_pswparams, SND_PCM_TSTAMP_ENABLE);
+         if (err < 0)
+         {
+
+            printf("Unable to set tstamp mode : %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         err = snd_pcm_sw_params_set_tstamp_type(m_ppcm, m_pswparams, SND_PCM_TSTAMP_TYPE_MONOTONIC_RAW);
+
+         if (err < 0)
+         {
+
+            printf("Unable to set tstamp type : %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+
+
+
+         err = snd_pcm_sw_params(m_ppcm, m_pswparams);
+
+         if (err < 0)
+         {
+
+            printf("Unable to set swparams_p : %s\n", snd_strerror(err));
 
             return result_error;
 

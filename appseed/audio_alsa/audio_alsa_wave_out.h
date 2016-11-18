@@ -27,6 +27,13 @@ namespace multimedia
 
          bool                    m_bWrite;
          int                     m_iBuffer;
+         //imedia_time           m_timeCache;
+         bool                    m_bStarted;
+         uint64_t                m_uiStart;
+         snd_pcm_status_t *      m_pstatus;
+
+
+
 
 
          wave_out(sp(::base::application) papp);

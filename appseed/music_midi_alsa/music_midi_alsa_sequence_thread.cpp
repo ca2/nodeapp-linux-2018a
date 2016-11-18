@@ -81,7 +81,7 @@ namespace music
 
          SCAST_PTR(::message::base, pbase, pobj);
 
-         ::music::midi::sequence::event * pevent = (::music::midi::sequence::event *) pbase->m_lparam.m_lparam;
+         sp(::music::midi::sequence::event) pevent(pbase->m_lparam);
 
          sp(::music::midi_alsa::sequence) pseq = pevent->m_psequence;
 
@@ -194,8 +194,6 @@ namespace music
             break;
 
          }
-
-         delete pevent;
 
 
       }
@@ -395,21 +393,30 @@ namespace music
 
       void sequence_thread::OnCommand(::signal_details * pobj)
       {
+
          SCAST_PTR(::message::base, pbase, pobj);
-         smart_pointer < ::music::midi::player::command > spcommand;
-         spcommand = (::music::midi::player::command *) pbase->m_lparam.m_lparam;
+
+         sp(::music::midi::player::command) spcommand(pbase->m_lparam);
+
          try
          {
+
             _ExecuteCommand(spcommand);
+
          }
          catch(exception * pe)
          {
+
             pe->Delete();
+
          }
          catch(...)
          {
+
          }
+
          spcommand->OnFinish();
+
       }
 
 
