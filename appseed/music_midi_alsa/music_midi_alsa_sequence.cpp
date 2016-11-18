@@ -2738,7 +2738,7 @@ seq_Preroll_Cleanup:
             seq_midi_program(m_pseq, &ev, pevent->GetTrack(), pevent->GetProgram());
             break;
          case ::music::midi::PitchBend:
-            seq_midi_pitchbend(m_pseq, &ev, pevent->GetTrack(), pevent->GetPitchBendLevel());
+            seq_midi_pitchbend(m_pseq, &ev, pevent->GetTrack(),((int) pevent->GetPitchBendLevel())-8192);
             break;
          case ::music::midi::ChanPressure:
             seq_midi_chanpress(m_pseq, &ev, pevent->GetTrack(), pevent->GetChannelPressure());
