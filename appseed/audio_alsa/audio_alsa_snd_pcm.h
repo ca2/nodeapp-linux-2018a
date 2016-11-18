@@ -28,7 +28,7 @@ namespace multimedia
 
 
 
-         snd_pcm(sp(::base::application) papp);
+         snd_pcm(::aura::application * papp);
          virtual ~snd_pcm();
 
 

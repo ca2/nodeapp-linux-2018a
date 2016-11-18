@@ -35,8 +35,7 @@ namespace multimedia
 
 
 
-
-         wave_out(sp(::base::application) papp);
+         wave_out(::aura::application * papp);
          virtual ~wave_out();
 
 

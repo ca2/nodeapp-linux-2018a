@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      snd_pcm::snd_pcm(sp(::base::application) papp) :
+      snd_pcm::snd_pcm(::aura::application * papp) :
          object(papp),
          thread(papp),
          wave_base(papp)
