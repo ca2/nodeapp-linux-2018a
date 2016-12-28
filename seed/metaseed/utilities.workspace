@@ -20,7 +20,11 @@
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/verifile/verifile.cbp" />
+		<Project filename="../../../app-core/appseed/verifile/verifile.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/veriedit/veriedit.cbp">
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		</Project>
