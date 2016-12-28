@@ -24,9 +24,9 @@ namespace music
          m_buffera.Initialize(16, 4 * 1024, 0);
          m_midicallbackdata.m_psequence = this;
 
-         m_iClient = 128;
+         m_iClient = 129;
          //m_iClient = 16;
-         m_iPort = 0;
+         m_iPort = 1;
 
 
       };
