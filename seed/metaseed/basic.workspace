@@ -110,51 +110,10 @@
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/irc_bot/irc_bot.cbp">
-			<Depends filename="../../../app-core/appseed/irc/irc.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/irc_client/irc_client.cbp">
-			<Depends filename="../../../app-core/appseed/irc/irc.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/irc_resident/irc_resident.cbp">
-			<Depends filename="../../../app-core/appseed/irc_bot/irc_bot.cbp" />
-			<Depends filename="../../../app-core/appseed/irc_client/irc_client.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-		</Project>
 		<Project filename="../../../app-core/appseed/resident/resident.cbp">
-			<Depends filename="../../../app-core/appseed/irc_resident/irc_resident.cbp" />
-			<Depends filename="../../../app-core/appseed/xmpp_resident/xmpp_resident.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/xmpp_bot/xmpp_bot.cbp">
-			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/xmpp_client/xmpp_client.cbp">
-			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
-			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/xmpp_resident/xmpp_resident.cbp">
-			<Depends filename="../../../app-core/appseed/xmpp_bot/xmpp_bot.cbp" />
-			<Depends filename="../../../app-core/appseed/xmpp_client/xmpp_client.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/asciimedia/asciimedia.cbp">
@@ -254,12 +213,6 @@
 		<Project filename="../../../app-core/appseed/gcom/gcom.cbp" />
 		<Project filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
 		<Project filename="../../../app/appseed/image_png/axis_image_png.cbp" />
-		<Project filename="../../../app-core/appseed/irc/irc.cbp">
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-			<Depends filename="../../../app/appseed/programming/programming.cbp" />
-			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
-		</Project>
 		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
@@ -273,10 +226,6 @@
 		<Project filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp">
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/programming/programming.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-		</Project>
 		<Project filename="../../../app/appseed/sphere/sphere.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
@@ -285,14 +234,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
-		<Project filename="../../../app-core/appseed/vericard/vericard.cbp">
-			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-			<Depends filename="../../../app/appseed/programming/programming.cbp" />
-		</Project>
 		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
@@ -301,10 +242,5 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
-		<Project filename="../../../app-core/appseed/xmpp/xmpp.cbp">
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
-		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
