@@ -224,7 +224,7 @@ Seq_Open_File_Cleanup:
 
       ::music::e_result sequence::OpenFile(const char * lpFileName, int32_t openMode)
       {
-         ::file::buffer_sp file(
+         ::file::file_sp file(
             get_app());
          file->open(lpFileName,
             ::file::mode_read |
@@ -278,7 +278,7 @@ Seq_Open_File_Cleanup:
       }
 
       ::music::e_result sequence::OpenFile(
-         ::file::stream_buffer & ar,
+         ::file::file & ar,
          int32_t openMode)
       {
          ::multimedia::e_result                rc      = ::multimedia::result_success;
@@ -522,7 +522,7 @@ Seq_Open_File_Cleanup:
 
          m_flags.unsignalize(FlagEOF);
 
-         file()->GetFlags().unsignalize(::music::midi::file::EndOfFile);
+         file()->m_ulFlags &= ~::music::midi::file::EndOfFile;
 
 
 /*
@@ -1387,7 +1387,7 @@ seq_Preroll_Cleanup:
 
       }
 
-      ::music::e_result sequence::SaveFile(::file::buffer_sp &ar)
+      ::music::e_result sequence::SaveFile(::file::file_sp &ar)
       {
          return file()->SaveFile(*ar);
       }

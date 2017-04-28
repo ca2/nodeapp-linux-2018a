@@ -7,13 +7,9 @@
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/berdge/berdge.cbp">
-			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
+		<Project filename="../../../app-core/appseed/desk/desk.cbp">
 			<Depends filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
 			<Depends filename="../../../app/appseed/image_png/axis_image_png.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/todo/todo.cbp">
 			<Depends filename="../../../app/appseed/ace/ace.cbp" />
@@ -109,7 +105,6 @@
 		<Project filename="../../../app-core/appseed/alarm/alarm.cbp">
 			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
 			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/auraverse/auraverse.cbp">
@@ -121,13 +116,6 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/deepfish/deepfish.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp">
-			<Depends filename="../../../app-core/appseed/alarm/alarm.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/flag/flag.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
@@ -167,6 +155,9 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/resident_client/resident_client.cbp">
 			<Depends filename="../../../app/appseed/programming/programming.cbp" />
+			<Depends filename="../../../app-core/appseed/resident_beampro/resident_beampro.cbp" />
+			<Depends filename="../../../app-core/appseed/resident_liveedutv/resident_liveedutv.cbp" />
+			<Depends filename="../../../app-core/appseed/resident_twitchtv/resident_twitchtv.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/asciimedia/asciimedia.cbp">
@@ -176,8 +167,6 @@
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/mplite/mplite.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app-core/appseed/deepfish/deepfish.cbp" />
-			<Depends filename="../../../app-core/appseed/deepfish_alarm/deepfish_alarm.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
@@ -238,27 +227,6 @@
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
-		</Project>
-		<Project filename="../../../app/appseed/draw2d_xlib/draw2d_xlib.cbp">
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-		</Project>
-		<Project filename="../../../game/appseed/pacman/pacman.cbp">
-			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
-			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
-			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
-		</Project>
-		<Project filename="../../../game/appseed/tictactoe/tictactoe.cbp">
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
 		<Project filename="../../../app/appseed/image_png/axis_image_png.cbp" />

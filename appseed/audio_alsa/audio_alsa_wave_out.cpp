@@ -47,7 +47,7 @@ namespace multimedia
          m_pthreadCallback    = NULL;
          m_mmr                = result_success;
          m_peffect            = NULL;
-         m_dwLostSampleCount  = 0;
+         //m_dwLostSampleCount  = 0;
          m_bWrite             = false;
          m_bStarted           = false;
 
