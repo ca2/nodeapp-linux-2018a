@@ -62,7 +62,7 @@
 			<Add directory="../../../app/appseed/base" />
 		</Compiler>
 		<Linker>
-			<Add option="-Wl,-rpath=\\$$ORIGIN" />
+			<Add option="-Wl,-rpath=\\$$$ORIGIN" />
 			
 			
 			<Add option="-laura" />

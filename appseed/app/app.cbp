@@ -70,7 +70,7 @@
 			<Add directory="../../../app/appseed/axis" />
 		</Compiler>
 		<Linker>
-			<Add option="-Wl,-rpath=\\$$ORIGIN" />
+			<Add option="-Wl,-rpath=\\$$$ORIGIN" />
 			
 			
 			<Add option="-lX11" />
