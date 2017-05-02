@@ -63,8 +63,8 @@
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath=\\$$ORIGIN" />
-			<Add option="-Wl,-z,origin" />
-			<Add option="-Wl,-E" />
+			
+			
 			<Add option="-laura" />
 			<Add option="-lbase" />
 			<Add option="-lasound" />

@@ -39,6 +39,12 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/clockverse/clockverse.cbp">
+			<Depends filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" />
+			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
+			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/timer/timer.cbp">
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
@@ -81,12 +87,6 @@
 			<Depends filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/clockverse/clockverse.cbp">
-			<Depends filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" />
-			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
-			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
-			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../../app-core/appseed/announcecom/announcecom.cbp" />

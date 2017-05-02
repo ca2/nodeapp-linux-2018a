@@ -42,7 +42,7 @@
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath,\\$$ORIGIN" />
-			<Add option="-Wl,-E" />
+			
 			<Add option="-lca2c" />
 			<Add option="-lca2ca" />
 			<Add option="-lca2" />
