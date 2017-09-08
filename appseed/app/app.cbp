@@ -42,7 +42,7 @@
 			</Target>
 		</Build>
 		<Compiler>
-			<Add option="-std=c++0x" />
+			<Add option="-std=c++14" />
 			<Add option="-fexceptions" />
 			<Add option="-fnon-call-exceptions" />
 			<Add option="-fno-pie" />
@@ -71,8 +71,6 @@
 		</Compiler>
 		<Linker>
 			<Add option="-Wl,-rpath=\\$$$ORIGIN" />
-			
-			
 			<Add option="-lX11" />
 			<Add option="-latomiconv" />
 			<Add option="-lsqlite3" />
@@ -82,11 +80,10 @@
 			<Add option="-lcrypto" />
 			<Add option="-lssl" />
 			<Add option="-lidn" />
-			<Add option="-laxisfreeimage" />
 			<Add option="-lfreetype" />
+			<Add option="-laxisfreeimage" />
 			<Add option="-laxis" />
 			<Add option="-lbase" />
-			<Add option="-lbasecore" />
 			<Add option="-lcore" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />

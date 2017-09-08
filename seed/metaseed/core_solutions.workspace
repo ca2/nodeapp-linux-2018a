@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
 <CodeBlocks_workspace_file>
 	<Workspace title="core solutions 64">
-		<Project filename="../../../app-core/appseed/commander/commander.cbp">
-			<Depends filename="../../appseed/app.axis/app.axis.cbp" />
+		<Project filename="../../../app-core/appseed/weather/weather.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
+			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/commander/commander.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/desk/desk.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
@@ -56,23 +67,11 @@
 			<Depends filename="../../../app-core/appseed/audio_decode_spotify/audio_decode_spotify.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
-			<Depends filename="../../../app-core/appseed/beampro/beampro.cbp" />
 			<Depends filename="../../../app-core/appseed/irc/irc.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia_playlist_spotify/multimedia_playlist_spotify.cbp" />
-			<Depends filename="../../../app-core/appseed/resident_beampro/resident_beampro.cbp" />
 			<Depends filename="../../../app-core/appseed/resident_liveedutv/resident_liveedutv.cbp" />
 			<Depends filename="../../../app-core/appseed/resident_twitchtv/resident_twitchtv.cbp" />
 			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/weather/weather.cbp">
-			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/waven/waven.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
@@ -92,11 +91,10 @@
 		<Project filename="../../../app-core/appseed/announcecom/announcecom.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/appseed/ace/ace.cbp" />
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/freeimage/axisfreeimage.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
-		</Project>
-		<Project filename="../../appseed/app.axis/app.axis.cbp">
-			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
 			<Depends filename="../../../app/appseed/ace/ace.cbp" />
@@ -125,7 +123,6 @@
 		</Project>
 		<Project filename="../../../app-core/appseed/resident_client/resident_client.cbp">
 			<Depends filename="../../../app/appseed/programming/programming.cbp" />
-			<Depends filename="../../../app-core/appseed/resident_beampro/resident_beampro.cbp" />
 			<Depends filename="../../../app-core/appseed/resident_liveedutv/resident_liveedutv.cbp" />
 			<Depends filename="../../../app-core/appseed/resident_twitchtv/resident_twitchtv.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
@@ -160,6 +157,7 @@
 		</Project>
 		<Project filename="../../../app/appseed/axis/axis.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/freeimage/axisfreeimage.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/freeimage/axisfreeimage.cbp" />
 		<Project filename="../../../app/appseed/base/base.cbp">
@@ -170,10 +168,6 @@
 		<Project filename="../../../app/appseed/basecore/basecore.cbp" />
 		<Project filename="../../../app-core/appseed/id3lib/id3lib.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-		</Project>
-		<Project filename="../../../app-core/appseed/beampro/beampro.cbp">
-			<Depends filename="../../../app/appseed/programming/programming.cbp" />
-			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/core/core.cbp">
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
@@ -196,6 +190,7 @@
 			<Depends filename="../../../app/appseed/programming/programming.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/mixercom/mixercom.cbp" />
 		<Project filename="../../../app-core/appseed/multimedia/multimedia.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
@@ -212,15 +207,14 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/resident_beampro/resident_beampro.cbp">
-			<Depends filename="../../../app-core/appseed/beampro/beampro.cbp" />
-		</Project>
 		<Project filename="../../../app-core/appseed/resident_liveedutv/resident_liveedutv.cbp">
 			<Depends filename="../../../app-core/appseed/xmpp/xmpp.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/resident_mixercom/resident_mixercom.cbp" />
 		<Project filename="../../../app-core/appseed/resident_twitchtv/resident_twitchtv.cbp">
 			<Depends filename="../../../app-core/appseed/irc/irc.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/resident_youtube/resident_youtube.cbp" />
 		<Project filename="../../../app/appseed/sphere/sphere.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />

@@ -58,7 +58,7 @@ int32_t __lnx_main(int32_t argc, char * argv[])
 
    int32_t nReturnCode = 0;
 
-   ::linux::main_init_data * pinitmaindata  = new ::linux::main_init_data;
+   ::command::command * pinitmaindata  = new ::command::command;
 
    pinitmaindata->m_hInstance             = NULL;
 
@@ -213,7 +213,7 @@ int32_t ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCm
 
       int32_t nReturnCode = 0;
 
-      ::linux::main_init_data * pinitmaindata  = new ::linux::main_init_data;
+      ::command::command * pinitmaindata  = new ::command::command;
 
       pinitmaindata->m_hInstance             = hInstance;
       pinitmaindata->m_hPrevInstance         = hPrevInstance;

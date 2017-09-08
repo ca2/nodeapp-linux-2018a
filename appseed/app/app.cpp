@@ -4,12 +4,10 @@
 
 const char * g_psz_br_init_symbol_app = "";
 
-
 int32_t __lnx_main(int32_t argc, char * argv[]);
+
 namespace core
 {
-
-
 
    namespace static_start
    {
@@ -65,9 +63,6 @@ int xlib_error_handler(Display * d, XErrorEvent * e);
 int32_t __lnx_main(int32_t argc, char * argv[])
 {
 
-  // if(!defer_core_init())
-    //  return -1;
-
    ::core::system * psystem = new ::core::system();
 
    if(!XInitThreads())
@@ -77,26 +72,18 @@ int32_t __lnx_main(int32_t argc, char * argv[])
 
    XSetErrorHandler(xlib_error_handler);
 
-   //psystem->m_durationRunLock = millis(1);
-
-    psystem->::exception::translator::attach();
+   psystem->::exception::translator::attach();
 
    int32_t nReturnCode = 0;
 
-   ::linux::main_init_data * pinitmaindata  = new ::linux::main_init_data;
-
-   pinitmaindata->m_hInstance             = NULL;
-
-   pinitmaindata->m_hPrevInstance         = NULL;
+   ::command::command * pcommand  = new ::command::command;
 
    if(argc > 0)
    {
 
-      pinitmaindata->m_vssCommandLine     = argv[0];
+      pcommand->m_strCommandLine     = argv[0];
 
    }
-
-   //pinitmaindata->m_vssCommandLine     = " : app=app-core/hellomultiver build_number=basis locale=_std schema=_std";
 
    bool bColon = false;
 
@@ -106,27 +93,27 @@ int32_t __lnx_main(int32_t argc, char * argv[])
       if(bColon || (bColon = (strcmp(argv[i], ":") == 0)))
       {
 
-         pinitmaindata->m_vssCommandLine     += " ";
+         pcommand->m_strCommandLine     += " ";
 
-         pinitmaindata->m_vssCommandLine     += argv[i];
+         pcommand->m_strCommandLine     += argv[i];
 
       }
       else
       {
 
-         pinitmaindata->m_vssCommandLine     += " \"";
+         pcommand->m_strCommandLine     += " \"";
 
-         pinitmaindata->m_vssCommandLine     += argv[i];
+         pcommand->m_strCommandLine     += argv[i];
 
-         pinitmaindata->m_vssCommandLine     += "\"";
+         pcommand->m_strCommandLine     += "\"";
 
       }
 
    }
 
-   pinitmaindata->m_nCmdShow              = SW_SHOW;
+//   pcommand->m_nCmdShow              = SW_SHOW;
 
-   psystem->init_main_data(pinitmaindata);
+   psystem->startup_command(pcommand);
 
    bool bOk = true;
 
@@ -177,19 +164,7 @@ int32_t __lnx_main(int32_t argc, char * argv[])
    try
    {
 
-      psystem->m_signala.remove_all();
-
-   }
-   catch(...)
-   {
-
-   }
-
-
-   try
-   {
-
-      psystem->m_signala.remove_all();
+      psystem->remove_all_routes();
 
    }
    catch(...)
@@ -210,9 +185,6 @@ int32_t __lnx_main(int32_t argc, char * argv[])
    }
 
    psystem = NULL;
-
-
-   //defer_core_term();
 
    return nReturnCode;
 
@@ -238,15 +210,15 @@ int32_t ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCm
 
       int32_t nReturnCode = 0;
 
-      ::linux::main_init_data * pinitmaindata  = new ::linux::main_init_data;
+      ::command::command * pcommand  = new ::command::command;
 
-      pinitmaindata->m_hInstance             = hInstance;
-      pinitmaindata->m_hPrevInstance         = hPrevInstance;
-      pinitmaindata->m_vssCommandLine        = lpCmdLine;
-      pinitmaindata->m_nCmdShow              = nCmdShow;
+      //pcommand->m_hInstance             = hInstance;
+      //pcommand->m_hPrevInstance         = hPrevInstance;
+      pcommand->m_strCommandLine        = lpCmdLine;
+      //pcommand->m_nCmdShow              = nCmdShow;
 
 
-      psystem->init_main_data(pinitmaindata);
+      psystem->startup_command(pcommand);
 
 
       nReturnCode = psystem->main();
@@ -254,20 +226,27 @@ int32_t ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCm
 
       try
       {
+
          delete psystem;
+
       }
       catch(...)
       {
+
       }
 
       psystem = NULL;
 
-      defer_base_term();
+      defer_aura_term();
 
       return nReturnCode;
+
    }
    catch(...)
    {
+
    }
+
    return -1;
+
 }
