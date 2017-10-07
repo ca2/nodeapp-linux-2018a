@@ -21,7 +21,11 @@
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
 			<Depends filename="../../../app/appseed/image_png/axis_image_png.cbp" />
+			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		</Project>
+		<Project filename="../../../app-core/appseed/verifile/verifile.cbp">
+			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/todo/todo.cbp">
 			<Depends filename="../../../app/appseed/ace/ace.cbp" />
