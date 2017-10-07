@@ -199,7 +199,7 @@ namespace multimedia
          for(int i = 0; i < straDevice.get_count(); i++)
          {
 
-            TRACE0(straName[i] + " : " + straDevice[i]);
+            TRACE("%s", straName[i] + " : " + straDevice[i]);
 
          }
 

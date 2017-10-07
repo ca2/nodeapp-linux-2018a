@@ -39,13 +39,13 @@ namespace multimedia
          virtual ~wave_out();
 
 
-         void install_message_handling(::message::dispatch * pinterface);
+         void install_message_routing(::message::sender * pinterface) override;
 
          virtual imedia_time wave_out_get_position_millis();
          imedia_position wave_out_get_position();
 
-         virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount) override;
-         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
+         virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
+         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
          virtual ::multimedia::e_result wave_out_stop() override;
          virtual ::multimedia::e_result wave_out_close() override;
          virtual ::multimedia::e_result wave_out_pause() override;
@@ -54,10 +54,10 @@ namespace multimedia
          snd_pcm_t * wave_out_get_safe_PCM();
 
          virtual void wave_out_on_playback_end() override;
-         virtual void wave_out_buffer_ready(int iBuffer) override;
-         virtual void alsa_out_buffer_ready(int iBuffer);
-         virtual void wave_out_free(int iBuffer) override;
-         virtual void alsa_out_free(int iBuffer);
+         virtual void wave_out_buffer_ready(index iBuffer) override;
+         virtual void alsa_out_buffer_ready(index iBuffer);
+         virtual void wave_out_free(index iBuffer) override;
+         virtual void alsa_out_free(index iBuffer);
 
          virtual bool initialize_thread();
          virtual int32_t exit_thread();

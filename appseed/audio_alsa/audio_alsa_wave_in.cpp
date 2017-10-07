@@ -9,7 +9,7 @@ namespace multimedia
    {
 
 
-      wave_in::wave_in(sp(::base::application) papp) :
+      wave_in::wave_in(::aura::application * papp) :
          object(papp),
          ::thread(papp),
          wave_base(papp),
@@ -38,10 +38,14 @@ namespace multimedia
          return true;
       }
 
+
       int32_t wave_in::exit_thread()
       {
+
          m_eventExitInstance.SetEvent();
+
          return thread::exit_thread();
+
       }
 
 

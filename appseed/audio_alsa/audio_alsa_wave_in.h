@@ -10,7 +10,7 @@ namespace multimedia
 
 
       class  CLASS_DECL_AUDIO_MMSYSTEM wave_in :
-         public snd_pcm,
+         virtual public snd_pcm,
          virtual public ::multimedia::audio::wave_in
       {
       public:
@@ -18,7 +18,7 @@ namespace multimedia
 
 
 
-         wave_in(sp(::base::application) papp);
+         wave_in(::aura::application * papp);
          virtual ~wave_in();
 
 
@@ -44,7 +44,7 @@ namespace multimedia
 
          void CALLBACK wave_in_proc(snd_pcm_t * hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 
-         int run();
+         virtual int run() override;
 
          //WAVEFORMATEX * wave_format();
          //LPWAVEHDR wave_hdr(int iBuffer);

@@ -65,13 +65,13 @@ namespace multimedia
       }
 
 
-      void wave_out::install_message_handling(::message::dispatch * pinterface)
+      void wave_out::install_message_routing(::message::sender * pinterface)
       {
 
-         ::multimedia::audio::wave_out::install_message_handling(pinterface);
+         ::multimedia::audio::wave_out::install_message_routing(pinterface);
 
-         IGUI_WIN_MSG_LINK(message_ready, pinterface, this, &wave_out::OnReady);
-         IGUI_WIN_MSG_LINK(message_free, pinterface, this, &wave_out::OnFree);
+         IGUI_MSG_LINK(message_ready, pinterface, this, &wave_out::OnReady);
+         IGUI_MSG_LINK(message_free, pinterface, this, &wave_out::OnFree);
 
       }
 
@@ -87,6 +87,7 @@ namespace multimedia
 
       }
 
+
       int32_t wave_out::exit_thread()
       {
 
@@ -96,12 +97,19 @@ namespace multimedia
 
       }
 
-      ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount)
+
+      ::multimedia::e_result wave_out::wave_out_open(thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount)
       {
+
          single_lock sLock(m_pmutex, TRUE);
-         if(m_ppcm != NULL &&
-            m_estate != state_initial)
+
+         if(m_ppcm != NULL && m_estate != state_initial)
+         {
+
             return result_success;
+
+         }
+
          m_pthreadCallback = pthreadCallback;
          ::multimedia::e_result mmr;
          ASSERT(m_ppcm == NULL);
@@ -235,13 +243,17 @@ namespace multimedia
 
 
 
-      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, int32_t iBufferCount, int32_t iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
       {
 
          single_lock sLock(m_pmutex, TRUE);
 
          if(m_ppcm != NULL && m_estate != state_initial)
+         {
+
             return result_success;
+
+         }
 
          m_pthreadCallback = pthreadCallback;
 
