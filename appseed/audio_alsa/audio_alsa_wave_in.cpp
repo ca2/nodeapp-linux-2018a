@@ -335,7 +335,7 @@ Opened:
          int iSize;
          int err;
 
-         while(get_run_thread())
+         while(thread_get_run())
          {
 
             if(wave_in_is_recording() && wave_in_get_buffer()->GetBufferCount() > 0)

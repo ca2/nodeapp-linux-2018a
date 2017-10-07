@@ -606,7 +606,7 @@ namespace multimedia
       }
 
 
-      void wave_out::wave_out_free(int ibuffer)
+      void wave_out::wave_out_free(index ibuffer)
       {
 
          post_message(message_free, ibuffer);
@@ -614,7 +614,7 @@ namespace multimedia
       }
 
 
-      void wave_out::wave_out_buffer_ready(int iBuffer)
+      void wave_out::wave_out_buffer_ready(index iBuffer)
       {
 
          post_message(message_ready, iBuffer);
@@ -623,10 +623,10 @@ namespace multimedia
 
 
 
-      void wave_out::OnReady(::signal_details * pobj)
+      void wave_out::OnReady(::message::message * pmessage)
       {
 
-         SCAST_PTR(::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pmessage);
 
          int iBuffer = pbase->m_wparam;
 
@@ -635,10 +635,10 @@ namespace multimedia
       }
 
 
-      void wave_out::OnFree(::signal_details * pobj)
+      void wave_out::OnFree(::message::message * pmessage)
       {
 
-         SCAST_PTR(::message::base, pbase, pobj);
+         SCAST_PTR(::message::base, pbase, pmessage);
 
          int iBuffer = pbase->m_wparam;
 
@@ -647,7 +647,7 @@ namespace multimedia
       }
 
 
-      void wave_out::alsa_out_buffer_ready(int iBuffer)
+      void wave_out::alsa_out_buffer_ready(index iBuffer)
       {
 
          synch_lock sLock(m_pmutex);
@@ -679,7 +679,7 @@ namespace multimedia
 
          signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
-         if(!get_run_thread())
+         if(!thread_get_run())
          {
 
             goto finalize;
@@ -902,12 +902,13 @@ return false;
       }
 
 
-      void wave_out::alsa_out_free(int iBuffer)
+      void wave_out::alsa_out_free(index iBuffer)
       {
 
          ::multimedia::audio::wave_out::wave_out_free(iBuffer);
 
       }
+
 
    } // namespace audio_alsa
 

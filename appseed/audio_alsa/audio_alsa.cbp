@@ -78,7 +78,6 @@
 			<Add directory="/usr/lib64/mysql/" />
 		</Linker>
 		<Unit filename="audio_alsa.h" />
-		<Unit filename="audio_alsa_command.h" />
 		<Unit filename="audio_alsa_factory_exchange.cpp" />
 		<Unit filename="audio_alsa_factory_exchange.h" />
 		<Unit filename="audio_alsa_snd_pcm.cpp" />
@@ -90,7 +89,10 @@
 		<Unit filename="audio_alsa_wave_out.cpp" />
 		<Unit filename="audio_alsa_wave_out.h" />
 		<Unit filename="framework.cpp" />
-		<Unit filename="framework.h" />
+		<Unit filename="framework.h">
+			<Option compile="1" />
+			<Option weight="0" />
+		</Unit>
 		<Extensions>
 			<code_completion />
 			<debugger>
