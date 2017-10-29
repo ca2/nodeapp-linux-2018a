@@ -66,6 +66,8 @@
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
+			<Depends filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
+			<Depends filename="../../../app/appseed/image_png/axis_image_png.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -117,5 +119,11 @@
 		</Project>
 		<Project filename="../../../app/appseed/sphere/sphere.cbp" />
 		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		<Project filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+		</Project>
+		<Project filename="../../../app/appseed/image_png/axis_image_png.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+		</Project>
 	</Workspace>
 </CodeBlocks_workspace_file>
