@@ -81,8 +81,8 @@
 			<Add option="-lssl" />
 			<Add option="-lidn" />
 			<Add option="-lfreetype" />
-			<Add option="-laxisfreeimage" />
 			<Add option="-laxis" />
+			<Add option="-lbasecore" />
 			<Add option="-lbase" />
 			<Add option="-lcore" />
 			<Add option="-Wl,-z,defs" />

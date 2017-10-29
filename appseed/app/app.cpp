@@ -57,7 +57,7 @@ int32_t main(int32_t argc, char * argv[])
 
 }
 
-int xlib_error_handler(Display * d, XErrorEvent * e);
+//int xlib_error_handler(Display * d, XErrorEvent * e);
 
 
 int32_t __lnx_main(int32_t argc, char * argv[])
@@ -65,12 +65,9 @@ int32_t __lnx_main(int32_t argc, char * argv[])
 
    ::core::system * psystem = new ::core::system();
 
-   if(!XInitThreads())
-      return -1;
-
    c_xstart();
 
-   XSetErrorHandler(xlib_error_handler);
+   //XSetErrorHandler(xlib_error_handler);
 
    psystem->::exception::translator::attach();
 
