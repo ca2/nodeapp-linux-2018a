@@ -1,20 +1,21 @@
 #pragma once
 
 
-
-//#define _GNU_SOURCE
 #define _REENTRANT
 #define _THREAD_SAFE
-
-
 
 
 #ifndef LINUX
 #define LINUX
 #endif
-#define BSD_STYLE_SOCKETS
-#define VARIADIC_TEMPLATE_FORMAT2
 
+
+#define BSD_STYLE_SOCKETS
+#define HAVE_MYSQL
+#define HAVE_OPENSSL
+
+
+#define VARIADIC_TEMPLATE_FORMAT2
 
 
 #ifdef _DEBUG
@@ -22,14 +23,7 @@
 #endif
 
 
-
-#ifndef LINUX
-#define LINUX
-#endif
-
-
 #define __WINESRC__
-
 
 
 #define CLASS_DECL_EXPORT
