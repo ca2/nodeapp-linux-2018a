@@ -320,10 +320,10 @@ namespace music
       }
 
 
-      void sequence_thread::ExecuteCommand(smart_pointer < ::music::midi::player::command > spcommand)
+      void sequence_thread::ExecuteCommand(::music::midi::player::command * pcommand)
       {
 
-         post_object(::music::midi::player::message_command, 0, spcommand);
+         post_object(::music::midi::player::message_command, 0, pcommand);
 
       }
 
@@ -420,7 +420,7 @@ namespace music
       }
 
 
-      void sequence_thread::_ExecuteCommand(smart_pointer < ::music::midi::player::command > spcommand)
+      void sequence_thread::_ExecuteCommand(::music::midi::player::command * pcommand)
       {
          switch(spcommand->GetCommand())
          {
