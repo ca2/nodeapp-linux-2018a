@@ -136,14 +136,14 @@ int32_t __lnx_main(int32_t argc, char * argv[])
       if(!bOk)
       {
 
-         if(psystem->m_iReturnCode == 0)
+         if(psystem->m_error.get_exit_code() == 0)
          {
 
             return -1;
 
          }
 
-         return psystem->m_iReturnCode;
+         return psystem->m_error.get_exit_code();
 
       }
 
@@ -156,7 +156,7 @@ int32_t __lnx_main(int32_t argc, char * argv[])
 
    }
 
-   nReturnCode = psystem->main();
+   psystem->main();
 
    try
    {
@@ -218,7 +218,7 @@ int32_t ca2_main(HINSTANCE hInstance, HINSTANCE hPrevInstance, const char * lpCm
       psystem->startup_command(pcommand);
 
 
-      nReturnCode = psystem->main();
+      psystem->main();
 
 
       try
