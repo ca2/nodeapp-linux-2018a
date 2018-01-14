@@ -28,7 +28,8 @@ namespace multimedia
       {
       }
 
-      bool wave_in::initialize_thread()
+
+      bool wave_in::init_thread()
       {
          TRACE("wave_in::initialize_instance %X\n", get_os_int());
          //SetMainWnd(NULL);
@@ -39,12 +40,12 @@ namespace multimedia
       }
 
 
-      int32_t wave_in::exit_thread()
+      void wave_in::term_thread()
       {
 
          m_eventExitInstance.SetEvent();
 
-         return thread::exit_thread();
+         thread::term_thread();
 
       }
 
@@ -328,7 +329,8 @@ Opened:
 
       }
 
-      int wave_in::run()
+
+      void wave_in::run()
       {
 
          int iBuffer = 0;

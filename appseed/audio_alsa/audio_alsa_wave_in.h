@@ -38,13 +38,13 @@ namespace multimedia
 
          //virtual void translate_wave_in_message(::signal_details * pobj);
 
-         virtual bool initialize_thread() override;
-         virtual int32_t exit_thread() override;
+         virtual bool init_thread() override;
+         virtual void term_thread() override;
          //virtual void pre_translate_message(::signal_details * pobj);
 
          void CALLBACK wave_in_proc(snd_pcm_t * hwi, UINT uMsg, DWORD dwInstance, DWORD dwParam1, DWORD dwParam2);
 
-         virtual int run() override;
+         virtual void run() override;
 
          //WAVEFORMATEX * wave_format();
          //LPWAVEHDR wave_hdr(int iBuffer);
