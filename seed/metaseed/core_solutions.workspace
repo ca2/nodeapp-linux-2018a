@@ -20,8 +20,6 @@
 		<Project filename="../../../app-core/appseed/desk/desk.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
-			<Depends filename="../../../app/appseed/image_png/axis_image_png.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
@@ -87,8 +85,6 @@
 			<Depends filename="../../../app-core/appseed/audio_decode_spotify/audio_decode_spotify.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
-			<Depends filename="../../../app/appseed/image_png/axis_image_png.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
@@ -186,8 +182,6 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/image_jpeg/axis_image_jpeg.cbp" />
-		<Project filename="../../../app/appseed/image_png/axis_image_png.cbp" />
 		<Project filename="../../../app-core/appseed/irc/irc.cbp">
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/programming/programming.cbp" />

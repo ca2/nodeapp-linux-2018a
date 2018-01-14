@@ -1,29 +1,5 @@
-#define GET_COMMAND_LINE(RET, ARGC, ARGV) linux_get_command_line(RET, ARGC, ARGV)
-
-class string;
-
-void linux_get_command_line(string & str, int argc, char ** argv);
-
 #include "aura/aura/app/aura.inl"
 
-extern char _binary_data_txt_start;
-
-extern char _binary_data_txt_end;
-
-void linux_get_command_line(string & str, int argc, char ** argv)
-{
-
-   char*  p1 = &_binary_data_txt_start;
-
-   char * p2 = &_binary_data_txt_end;
-
-   string strAppId = string(p1, p2 - p1);
-
-   strAppId.trim();
-
-   str = string(argv[0]) + " : " + "app=" + strAppId;
-
-}
 
 
 
