@@ -63,7 +63,9 @@
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/chronometer/chronometer.cbp">
+			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
 			<Depends filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp" />
+			<Depends filename="../../../app-core/appseed/flag/flag.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
@@ -115,8 +117,9 @@
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp" />
-			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_anthill/wndfrm_anthill.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../../app-core/appseed/announcecom/announcecom.cbp">
@@ -262,6 +265,9 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/programming/programming.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp">
+			<Depends filename="../../../app/appseed/core/core.cbp" />
+		</Project>
 		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
@@ -270,9 +276,7 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp">
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-		</Project>
+		<Project filename="../../../app-core/appseed/wndfrm_anthill/wndfrm_anthill.cbp" />
 		<Project filename="../../../app-core/appseed/xmpp/xmpp.cbp">
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
