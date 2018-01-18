@@ -12,8 +12,12 @@ namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
+
+
+      namespace alsa
+      {
 
 
       class file;
@@ -149,7 +153,7 @@ namespace music
          void Prepare(int32_t iTrack, ::ikaraoke::data & data);
          void Prepare(
             string2a & str2a,
-            imedia::position_2darray & tka2DTokensTicks,
+            imedia_position_2darray & tka2DTokensTicks,
             int32_t iMelodyTrack,
             int2a & ia2TokenLine,
             ::ikaraoke::data & data);
@@ -201,9 +205,9 @@ namespace music
          ::music::e_result OpenFile(memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
 
          ::music::e_result CloseFile();
-         ::music::e_result SaveFile(const char * lpFileName);
-         ::music::e_result SaveFile();
-         ::music::e_result SaveFile(::file::file_sp &ar) override;
+         //::music::e_result SaveFile(const char * lpFileName);
+         //::music::e_result SaveFile();
+         //::music::e_result SaveFile(::file::file & file) override;
          ::multimedia::e_result Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow);
          ::multimedia::e_result Start();
 
@@ -237,12 +241,12 @@ namespace music
          imedia_position GetQuarterNote();
 
 
-         inline sp(::music::midi_alsa::file) file()
+         inline sp(::music::midi::alsa::file) file()
          {
             return get_file();
          }
 
-         inline sp(::music::midi_alsa::sequence_thread) thread()
+         inline sp(::music::midi::alsa::sequence_thread) thread()
          {
             return m_pthread;
          }
@@ -261,8 +265,10 @@ namespace music
       };
 
 
+      } // namespace alsa
 
-   } // namespace midi_alsa
+
+   } // namespace midi
 
 
 } // namespace music

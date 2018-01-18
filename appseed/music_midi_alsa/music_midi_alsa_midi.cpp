@@ -1,17 +1,17 @@
 #include "framework.h"
 
 
-
-//#define LOG(format, ...) TRACE(format, __VA_ARGS__)
-
-
-
 namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
+
+
+      namespace alsa
+      {
+
 
 
       midi::midi(::aura::application * papp) :
@@ -281,6 +281,9 @@ namespace music
          return mmrc;
 
       }
+
+
+      } // namespace alsa
 
 
    } // namespace midi

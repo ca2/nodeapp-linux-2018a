@@ -5,8 +5,12 @@ namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
+
+
+      namespace alsa
+      {
 
 
       file::file(::aura::application * papp) :
@@ -25,7 +29,7 @@ namespace music
          m_cbPendingUserEvent    = 0;
          m_hpbPendingUserEvent   = 0;
 
-         m_tempomap.set_size(0, C_TEMPO_MAP_CHK);
+         //m_tempoa.set_size(0, C_TEMPO_MAP_CHK);
 
          m_iKeyShift             = 0;
          m_dTempoShift           = 0;
@@ -3384,8 +3388,10 @@ namespace music
 //      }
 
 
+      } // namespace alsa
 
-   } // namespace midi_alsa
+
+   } // namespace midi
 
 
 } // namespace music

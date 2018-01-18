@@ -364,7 +364,11 @@ set_channel(snd_seq_event_t *ep, int chan)
 		break;
 	default:
 		if (snd_seq_ev_is_channel_type(ep))
-		::OutputDebugString("Missed a case in set_channel");
+      {
+
+         output_debug_string("Missed a case in set_channel");
+
+      }
 //			g_warning("Missed a case in set_channel");
 		break;
 	}

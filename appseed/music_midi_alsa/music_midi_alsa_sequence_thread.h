@@ -5,8 +5,13 @@
 namespace music
 {
 
-   namespace midi_alsa
+
+   namespace midi
    {
+
+
+      namespace alsa
+      {
 
 
       class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_ALSA sequence_thread :
@@ -19,7 +24,7 @@ namespace music
          virtual ~sequence_thread();
 
 
-         void install_message_handling(::message::dispatch * pinterface);
+         void install_message_routing(::message::sender * pinterface);
 
          ::music::midi::sequence * get_sequence();
          void Stop(imedia_time msEllapse);
@@ -41,8 +46,8 @@ namespace music
          void ExecuteCommand(::music::midi::player::command * pcommand);
          void _ExecuteCommand(::music::midi::player::command * pcommand);
 
-         virtual bool initialize_thread() override;
-         virtual int32_t exit_thread() override;
+         virtual bool init_thread() override;
+         virtual void term_thread() override;
 
          DECL_GEN_SIGNAL(OnCommand);
          DECL_GEN_SIGNAL(OnMidiSequenceEvent);
@@ -51,7 +56,10 @@ namespace music
       };
 
 
-   } // namespace midi_alsa
+   } // namespace alsa
+
+
+   } // namespace midi
 
 
 } // namespace music

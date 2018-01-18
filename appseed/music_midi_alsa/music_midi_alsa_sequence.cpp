@@ -1,15 +1,16 @@
 #include "framework.h"
 
 
-
-
-
 namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
+
+
+      namespace alsa
+      {
 
 
       sequence::sequence(::aura::application * papp) :
@@ -362,7 +363,7 @@ Seq_Open_File_Cleanup:
       ***************************************************************************/
       ::music::e_result sequence::CloseFile()
       {
-         single_lock sl(&m_mutex, true);
+         single_lock sl(m_pmutex, true);
 
          //if (status_no_file == GetState())
          //   return ::music::EFunctionNotSupported;
@@ -438,7 +439,7 @@ Seq_Open_File_Cleanup:
       ::multimedia::e_result sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
       {
          UNREFERENCED_PARAMETER(pthread);
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          int32_t i;
          //   midi_callback_data *      lpData = &m_midicallbackdata;
          ::music::e_result     smfrc;
@@ -630,7 +631,7 @@ seq_Preroll_Cleanup:
       ::multimedia::e_result sequence::Start()
       {
 
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
 
          if (::music::midi::sequence::status_pre_rolled != GetState())
          {
@@ -661,7 +662,7 @@ seq_Preroll_Cleanup:
       ::multimedia::e_result sequence::seq_start()
       {
 
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
 
          if(GetState() != status_pre_rolled)
             return ::music::translate(::music::EFunctionNotSupported);
@@ -816,7 +817,7 @@ seq_Preroll_Cleanup:
       ***************************************************************************/
       ::multimedia::e_result sequence::Pause()
       {
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
 
          //    assert(NULL != pSeq);
 
@@ -860,7 +861,7 @@ seq_Preroll_Cleanup:
       {
          //    assert(NULL != pSeq);
 
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
 
          if (status_paused != GetState())
             return ::music::translate(::music::EFunctionNotSupported);
@@ -899,7 +900,7 @@ seq_Preroll_Cleanup:
       ::multimedia::e_result sequence::Stop()
       {
 
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
 
          if(GetState() == status_stopping)
             return ::multimedia::result_success;
@@ -963,7 +964,7 @@ seq_Preroll_Cleanup:
       ::multimedia::e_result sequence::get_ticks(imedia_position &  pTicks)
       {
 
-         single_lock sl(&m_mutex);
+         single_lock sl(m_pmutex);
 
          if(!sl.lock(millis(184)))
             return ::multimedia::result_internal;
@@ -1037,7 +1038,7 @@ seq_Preroll_Cleanup:
 
       ::multimedia::e_result sequence::get_millis(imedia_time & time)
       {
-         single_lock sl(&m_mutex);
+         single_lock sl(m_pmutex);
          if(!sl.lock(millis(184)))
             return ::multimedia::result_internal;
 
@@ -1376,23 +1377,6 @@ seq_Preroll_Cleanup:
 
 
 
-      ::music::e_result sequence::SaveFile()
-      {
-         return SaveFile(file()->m_strName);
-      }
-
-      ::music::e_result sequence::SaveFile(const char * lpFileName)
-      {
-         return file()->SaveFile(lpFileName);
-
-      }
-
-      ::music::e_result sequence::SaveFile(::file::file_sp &ar)
-      {
-         return file()->SaveFile(*ar);
-      }
-
-
 
       uint32_t sequence::SetState(uint32_t uiState)
       {
@@ -1468,7 +1452,7 @@ seq_Preroll_Cleanup:
          imedia_position ticks = 0;
          if(bPlay)
          {
-            ticks = GetPositionTicks();
+            ticks = get_position_ticks();
             Stop();
          }
          get_file()->SetKeyShift(iKeyShift);
@@ -1520,7 +1504,7 @@ seq_Preroll_Cleanup:
 
       ::multimedia::e_result sequence::CloseStream()
       {
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          if(IsPlaying())
          {
             Stop();
@@ -1554,7 +1538,7 @@ seq_Preroll_Cleanup:
       void sequence::OnMidiPlaybackEnd(::music::midi::sequence::event * pevent)
       {
          UNREFERENCED_PARAMETER(pevent);
-         single_lock sl(&m_mutex, TRUE);
+         single_lock sl(m_pmutex, TRUE);
          //   LPMIDIHDR lpmh = pevent->m_lpmh;
          //   midi_callback_data * lpData = &m_midicallbackdata;
          ::multimedia::e_result mmrc;
@@ -1612,7 +1596,7 @@ seq_Preroll_Cleanup:
 
 
 
-               single_lock sl(&m_mutex, TRUE);
+               single_lock sl(m_pmutex, TRUE);
 
                ::music::midi_alsa::sequence::event * pev = (::music::midi_alsa::sequence::event *) pevent;
 
@@ -1705,7 +1689,7 @@ seq_Preroll_Cleanup:
 
       /*imedia_position sequence::GetPositionTicks()
       {
-         single_lock sl(&m_mutex);
+         single_lock sl(m_pmutex);
          if(!sl.lock(millis(0)))
             return -1;
          MMTIME mmt;
@@ -1772,13 +1756,13 @@ seq_Preroll_Cleanup:
 
       void sequence::Prepare(
          string2a & str2a,
-         imedia::position_2darray & tka2DTokensTicks,
+         imedia_position_2darray & tka2DTokensTicks,
          int32_t iMelodyTrack,
          int2a & ia2TokenLine,
          ::ikaraoke::data & data)
       {
          UNREFERENCED_PARAMETER(str2a);
-         ::music::midi_alsa::file & file = *this->file();
+         ::music::midi::alsa::file & file = *this->file();
          ::music::midi::tracks & tracks = file.GetTracks();
 
          ASSERT(!file.IsNull());
@@ -1799,15 +1783,15 @@ seq_Preroll_Cleanup:
          }
          staticdata.m_LyricsDisplay = 30;
 
-         imedia::position_2darray tk2DNoteOnPositions(get_app());
-         imedia::position_2darray tk2DNoteOffPositions(get_app());
-         imedia::position_2darray tk2DBegPositions(get_app());
-         imedia::position_2darray tk2DEndPositions(get_app());
-         imedia::time_2darray ms2DTokensMillis(get_app());
-         imedia::time_2darray ms2DNoteOnMillis(get_app());
-         imedia::time_2darray ms2DNoteOffMillis(get_app());
-         imedia::time_2darray ms2DBegMillis(get_app());
-         imedia::time_2darray ms2DEndMillis(get_app());
+         imedia_position_2darray tk2DNoteOnPositions(get_app());
+         imedia_position_2darray tk2DNoteOffPositions(get_app());
+         imedia_position_2darray tk2DBegPositions(get_app());
+         imedia_position_2darray tk2DEndPositions(get_app());
+         imedia_time_2darray ms2DTokensMillis(get_app());
+         imedia_time_2darray ms2DNoteOnMillis(get_app());
+         imedia_time_2darray ms2DNoteOffMillis(get_app());
+         imedia_time_2darray ms2DBegMillis(get_app());
+         imedia_time_2darray ms2DEndMillis(get_app());
          ::music::midi::events midiEvents;
 
 
@@ -2209,10 +2193,10 @@ seq_Preroll_Cleanup:
 
       void sequence::Prepare(int32_t iTrack, ::ikaraoke::data & data)
       {
-         ::music::midi_alsa::file & file = *this->file();
+         ::music::midi::alsa::file & file = *this->file();
          ::music::midi::tracks & tracks = file.GetTracks();
          string2a & str2a = data.GetStaticData().m_str2aRawTokens;
-         imedia::position_2darray position2a;
+         imedia_position_2darray position2a;
          int2a ia2TokenLine;
 
 
@@ -2236,10 +2220,10 @@ seq_Preroll_Cleanup:
 
       void sequence::Prepare(::ikaraoke::data & data)
       {
-         ::music::midi_alsa::file & file = *this->file();
+         ::music::midi::alsa::file & file = *this->file();
          ::music::midi::tracks & tracks = file.GetTracks();
          string2a & str2a = data.GetStaticData().m_str2aRawTokens;
-         imedia::position_2darray position2a;
+         imedia_position_2darray position2a;
          int2a i2aTokenLine;
 
          ::music::xf::info_headers xfihs;
@@ -2469,7 +2453,7 @@ seq_Preroll_Cleanup:
          imedia_position ticks = 0;
          if(bPlay)
          {
-            ticks = GetPositionTicks();
+            ticks = get_position_ticks();
             Stop();
          }
          get_file()->MuteAll(bMute, iExcludeTrack);
@@ -2486,7 +2470,7 @@ seq_Preroll_Cleanup:
          imedia_position ticks = 0;
          if(bPlay)
          {
-            ticks = GetPositionTicks();
+            ticks = get_position_ticks();
             Stop();
          }
          get_file()->MuteTrack(iIndex, bMute);
@@ -2798,7 +2782,11 @@ seq_Preroll_Cleanup:
       }
 
 
-   } // namespace midi_alsa
+      } // namespace alsa
+
+
+   } // namespace midi
+
 
 } // namespace music
 

@@ -7,12 +7,18 @@
 namespace music
 {
 
-   namespace midi_alsa
+
+   namespace midi
    {
 
 
+      namespace alsa
+      {
+
       //::multimedia::e_result ::music::translate(::music::e_result smfrc);
 
+
+      }
 
    } // namespace midi_alsa
 

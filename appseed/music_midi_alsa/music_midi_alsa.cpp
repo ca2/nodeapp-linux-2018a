@@ -6,8 +6,12 @@ namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
+
+
+      namespace alsa
+      {
 
 
       uint32_t const DefaultTempo = 500000L;
@@ -426,7 +430,10 @@ namespace music
       }
 
 
-   } // namespace midi_alsa
+      } // namespace alsa
+
+
+   } // namespace midi
 
 
 } // namespace music

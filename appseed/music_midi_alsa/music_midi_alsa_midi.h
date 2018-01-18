@@ -5,8 +5,13 @@ namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
+
+
+      namespace alsa
+      {
+
 
 
       class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_ALSA midi :
@@ -51,6 +56,9 @@ namespace music
 
 
       };
+
+
+      } // namespace alsa
 
 
    } // namespace midi

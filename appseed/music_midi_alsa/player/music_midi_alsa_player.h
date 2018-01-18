@@ -6,15 +6,16 @@
 //#include "music_midi_alsa_player_interface.h"
 
 
-
-
-
 namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
+
+
+      namespace alsa
+      {
 
 
       class sequence_thread;
@@ -39,7 +40,7 @@ namespace music
             virtual ~player();
 
 
-            void install_message_handling(::message::dispatch * pinterface);
+            void install_message_routing(::message::sender * pinterface) override;
 
 
             void SendMmsgDone(::music::midi::sequence *pSeq, ::music::midi::LPMIDIDONEDATA lpmdd);
@@ -47,9 +48,11 @@ namespace music
             bool Play(double dRate = 0.0, uint32_t dwEllapse = 584);
             bool Play(imedia_position tkStart, uint32_t dwEllapse = 584);
 
-            virtual bool initialize_thread();
-            virtual int32_t exit_thread();
-            virtual void pre_translate_message(::signal_details * pobj);
+            virtual bool init_thread() override;
+            virtual void term_thread() override;
+
+            virtual void pre_translate_message(::message::message * pobj) override;
+
             void OnMmsgDone(::music::midi::sequence *pSeq);
             DECL_GEN_SIGNAL(OnUserMessage);
                void SaveFile(const char * lpszPathName);
@@ -109,7 +112,10 @@ namespace music
       } // namespace player
 
 
-   } // namespace midi_alsa
+      } // namespace alsa
+
+
+   } // namespace midi
 
 
 } // namespace music

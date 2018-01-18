@@ -5,8 +5,12 @@ namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
+
+
+      namespace alsa
+      {
 
 
       out::out(::aura::application * papp) :
@@ -98,8 +102,10 @@ namespace music
 
       }
 
+      } // namespace alsa
 
-   } // namespace midi_alsa
+
+   } // namespace midi
 
 
 } // namespace music

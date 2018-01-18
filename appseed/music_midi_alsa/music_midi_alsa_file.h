@@ -8,11 +8,16 @@ namespace music
 {
 
 
-   namespace midi_alsa
+   namespace midi
    {
 
+
+      namespace alsa
+      {
+
+
       class CLASS_DECL_VERIWELL_MULTIMEDIA_MUSIC_MIDI_ALSA file :
-         virtual public ::music::midi::file::buffer::buffer
+         virtual public ::music::midi::file::buffer
       {
       public:
 
@@ -182,7 +187,10 @@ namespace music
       };
 
 
-   } // namespace midi_alsa
+      } // namespace alsa
+
+
+   } // namespace midi
 
 
 } // namespace music
