@@ -240,13 +240,12 @@ namespace multimedia
       }
 
 
-
-
-
       ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
       {
 
          single_lock sLock(m_pmutex, TRUE);
+
+         TRACE("multimedia::audio_alsa::wave_out_open_ex");
 
          if(m_ppcm != NULL && m_estate != state_initial)
          {
@@ -385,37 +384,28 @@ namespace multimedia
       }
 
 
-
       ::multimedia::e_result wave_out::wave_out_close()
       {
 
          single_lock sLock(m_pmutex, TRUE);
 
+         TRACE("multimedia::audio_alsa::wave_out_close");
+
          if(m_estate == state_playing)
          {
+
             wave_out_stop();
+
          }
 
          if(m_estate != state_opened)
-            return result_success;
-
-         ::multimedia::e_result mmr;
-
-/*         int32_t i, iSize;
-
-         iSize =  wave_out_get_buffer()->GetBufferCount();
-
-         for(i = 0; i < iSize; i++)
          {
 
-            if(result_success != (mmr = waveOutUnprepareHeader(m_ppcm, wave_hdr(i), sizeof(WAVEHDR))))
-            {
-               TRACE("ERROR OPENING Unpreparing INPUT DEVICE buffer =%d", mmr);
-            }
+            return result_success;
 
-            delete wave_hdr(i);
+         }
 
-         }*/
+         ::multimedia::e_result mmr;
 
          mmr = this->snd_pcm_close();
 
@@ -436,10 +426,16 @@ namespace multimedia
       ::multimedia::e_result wave_out::wave_out_stop()
       {
 
-         single_lock sLock(m_pmutex, TRUE);
+         synch_lock sLock(m_pmutex);
+
+         TRACE("multimedia::audio_alsa::wave_out_stop");
 
          if(m_estate != state_playing && m_estate != state_paused)
+         {
+
             return result_error;
+
+         }
 
          m_eventStopped.ResetEvent();
 
@@ -454,7 +450,6 @@ namespace multimedia
          // returned to the application.
          m_mmr = translate_alsa(snd_pcm_drain(m_ppcm));
 
-
          if(m_mmr == result_success)
          {
 
@@ -466,6 +461,7 @@ namespace multimedia
 
       }
 
+
       ::multimedia::e_result wave_out::wave_out_pause()
       {
 
@@ -473,8 +469,14 @@ namespace multimedia
 
          ASSERT(m_estate == state_playing);
 
+         TRACE("multimedia::audio_alsa::wave_out_pause");
+
          if(m_estate != state_playing)
+         {
+
             return result_error;
+
+         }
 
          // waveOutReset
          // The waveOutReset function stops playback on the given
@@ -487,19 +489,24 @@ namespace multimedia
 
          if(m_mmr == result_success)
          {
+
             m_estate = state_paused;
+
          }
 
          return m_mmr;
 
       }
 
+
       ::multimedia::e_result wave_out::wave_out_restart()
       {
 
-         single_lock sLock(m_pmutex, TRUE);
+         synch_lock sLock(m_pmutex);
 
          ASSERT(m_estate == state_paused);
+
+         TRACE("multimedia::audio_alsa::wave_out_restart");
 
          if(m_estate != state_paused)
             return result_error;
@@ -569,20 +576,9 @@ namespace multimedia
       void wave_out::wave_out_on_playback_end()
       {
 
+         TRACE("multimedia::audio_alsa::wave_out_on_playback_end");
+
          ::multimedia::audio::wave_out::wave_out_on_playback_end();
-
-         //wave_out_stop();
-
-         //if(m_pprebuffer->m_pstreameffectOut != NULL)
-         //{
-           // ::multimedia::iaudio::wave_stream_effect * peffect = m_pprebuffer->m_pstreameffectOut;
-            //m_pprebuffer->m_pstreameffectOut = NULL;
-            //delete peffect;
-         //}
-
-         //m_eventStopped.SetEvent();
-
-         //m_pplayer->OnEvent(::multimedia::audio::wave_player::EventPlaybackEnd);
 
       }
 
@@ -592,7 +588,11 @@ namespace multimedia
       {
 
          if(this == NULL)
+         {
+
             return NULL;
+
+         }
 
          return m_ppcm;
 
@@ -652,9 +652,10 @@ namespace multimedia
 
          synch_lock sLock(m_pmutex);
 
-         if(m_estate != audio::wave_out::state_playing
-         && m_estate != audio::wave_out::state_stopping)
+         if(m_estate != audio::wave_out::state_playing && m_estate != audio::wave_out::state_stopping)
          {
+
+            TRACE("alsa_out_buffer_ready !playing && !stopping");
 
             goto finalize;
 
@@ -669,38 +670,54 @@ namespace multimedia
 
          {
 
-         int result = 0;
+            int result = 0;
 
-         int cptr = period_size;
+            int cptr = period_size;
 
-         ::multimedia::e_result mmr = result_success;
+            ::multimedia::e_result mmr = result_success;
 
-         snd_pcm_sframes_t avail = 0;
+            snd_pcm_sframes_t avail = 0;
 
-         signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
+            signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
-         if(!thread_get_run())
-         {
-
-            goto finalize;
-
-         }
-
-
-         if(m_ppcm == NULL)
-         {
-
-            goto finalize;
-
-         }
-
-
-            while(true)
+            if(!thread_get_run())
             {
 
-               avail = snd_pcm_avail_update(m_ppcm);
+               TRACE("alsa_out_buffer_ready !thread_get_run");
 
-               if(avail < 0 || avail >= period_size)
+               goto finalize;
+
+            }
+
+
+            if(m_ppcm == NULL)
+            {
+
+               TRACE("alsa_out_buffer_ready m_ppcm == NULL");
+
+               goto finalize;
+
+            }
+
+            while(thread_get_run())
+            {
+
+               avail = snd_pcm_avail(m_ppcm);
+
+               if(avail < 0)
+               {
+
+                  m_estate = state_opened;
+
+                  m_mmr = result_error;
+
+                  TRACE("alsa wave_out snd_pcm_avail error: %s\n", snd_strerror(result));
+
+                  goto finalize;
+
+
+               }
+               else if(avail >= 0)
                {
 
                   break;
@@ -708,7 +725,7 @@ namespace multimedia
                }
 
 
-               if((result = snd_pcm_wait (m_ppcm, 2000)) < 0)
+               if((result = snd_pcm_wait (m_ppcm, 100)) < 0)
                {
 
                   m_estate = state_opened;
@@ -721,32 +738,7 @@ namespace multimedia
 
                }
 
-
             }
-
-            /*
-
-            int l = 0;
-            for(int i = 0; i < period_size; i++)
-            {
-               if(l %  40 < 20)
-               {
-                  ptr[0] = 1000;
-                  ptr[1] = 1000;
-               }
-               else
-               {
-                  ptr[0] = -1000;
-                  ptr[1] = -1000;
-               }
-
-               ptr+=2;
-               l++;
-            }
-
-            ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
-
-            */
 
             while (cptr > 0)
             {
@@ -758,12 +750,16 @@ namespace multimedia
                if(result == -EAGAIN)
                {
 
+                  TRACE("snd_pcm_writei -EAGAIN");
+
                   continue;
 
                }
 
                if(result < 0)
                {
+
+                  TRACE("ALSA wave_out writei error: %s\n", snd_strerror(result));
 
                   if((result = underrun_recovery(result)) < 0)
                   {
@@ -772,7 +768,7 @@ namespace multimedia
 
                      m_mmr = result_error;
 
-                     TRACE("alsa wave_out Write error: %s\n", snd_strerror(result));
+                     TRACE("ALSA wave_out writei underrun recovery error: %s\n", snd_strerror(result));
 
                   }
 
@@ -806,28 +802,46 @@ namespace multimedia
          single_lock sLock(m_pmutex, TRUE);
 
          if(m_estate == state_playing)
+         {
+
             return result_success;
 
+         }
+
          if(m_estate != state_opened && m_estate != state_stopped)
+         {
+
             return result_error;
+
+         }
 
          int err = 0;
 
          if ((err = snd_pcm_prepare (m_ppcm)) < 0)
          {
 
-            TRACE ("cannot prepare audio interface for use (%s)\n",snd_strerror (err));
+            TRACE ("wave_out_start: Cannot prepare audio interface for use (%s)\n",snd_strerror (err));
 
             return result_error;
 
          }
+
+         TRACE("wave_out_start: snd_pcm_prepare OK");
 
          m_bStarted = false;
 
          m_mmr = ::multimedia::audio::wave_out::wave_out_start(position);
 
          if(failed(m_mmr))
+         {
+
+            TRACE("wave_out_start: ::multimedia::audio::wave_out::wave_out_start FAILED");
+
             return m_mmr;
+
+         }
+
+         TRACE("wave_out_start: ::multimedia::audio::wave_out::wave_out_start OK");
 
          return result_success;
 
@@ -837,8 +851,7 @@ namespace multimedia
       bool wave_out::on_run_step()
       {
 
-//         return ::multimedia::audio::wave_out::on_run_step();
-return false;
+         return false;
 
       }
 
@@ -846,11 +859,18 @@ return false;
       int wave_out::underrun_recovery(int err)
       {
 
-         //if(verbose)
-           //printf("stream recovery\n");
-
-         if(m_pprebuffer->IsEOF() || wave_out_get_state() == state_stopping)
+         if(m_pprebuffer->IsEOF())
          {
+
+            TRACE("underrun_recovery, prebuffer EOF: %s\n", snd_strerror(err));
+
+            return 0;
+
+         }
+         else if(wave_out_get_state() == state_stopping)
+         {
+
+            TRACE("underrun_recovery, stopping: %s\n", snd_strerror(err));
 
             return 0;
 
@@ -870,8 +890,12 @@ return false;
             else if (err == -ESTRPIPE)
             {
 
+               TRACE("underrun_recovery, -ESTRPIPE: %s\n", snd_strerror(err));
+
                while ((err = snd_pcm_resume(m_ppcm)) == -EAGAIN)
                {
+
+                  TRACE("underrun_recovery, snd_pcm_resume return -EAGAIN: %s\n", snd_strerror(err));
 
                   sleep(1); /* wait until the suspend flag is released */
 
