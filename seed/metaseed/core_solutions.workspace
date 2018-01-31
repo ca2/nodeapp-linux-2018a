@@ -98,7 +98,6 @@
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/basecore/basecore.cbp" />
 			<Depends filename="../../../app-core/appseed/id3lib/id3lib.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
@@ -126,7 +125,6 @@
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/basecore/basecore.cbp" />
 			<Depends filename="../../../app-core/appseed/id3lib/id3lib.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
@@ -216,7 +214,9 @@
 			<Depends filename="../../../app/appseed/ace/ace.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 		</Project>
-		<Project filename="../../../app/appseed/basecore/basecore.cbp" />
+		<Project filename="../../../app/appseed/basecore/basecore.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/id3lib/id3lib.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 		</Project>
@@ -296,7 +296,6 @@
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/basecore/basecore.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/xmpp/xmpp.cbp">
