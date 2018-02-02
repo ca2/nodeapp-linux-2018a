@@ -20,8 +20,8 @@ namespace multimedia
          m_pswparams       = NULL;
          m_phandler        = NULL;
          m_iCurrentBuffer  = 0;
-         buffer_time       = 100 * 1000; /* ring buffer length in us */
-         period_time       =  20 * 1000; /* period time in us */
+         m_dwBufferTime    = 100 * 1000; /* ring buffer length in us */
+         m_dwPeriodTime    =  20 * 1000; /* period time in us */
       }
 
       snd_pcm::~snd_pcm()
@@ -264,6 +264,7 @@ namespace multimedia
          }
 
          unsigned int uiFreq = pformat->nSamplesPerSec;
+
          int dir = 0;
 
          if ((err = snd_pcm_hw_params_set_rate_near (m_ppcm, m_phwparams, &uiFreq, &dir)) < 0)
@@ -292,11 +293,10 @@ namespace multimedia
 
          dir = 1;
 
-         // set the buffer time
-         if((err = snd_pcm_hw_params_set_buffer_time_near(m_ppcm, m_phwparams, &buffer_time, &dir)) < 0)
+         if((err = snd_pcm_hw_params_set_buffer_time_near(m_ppcm, m_phwparams, &m_dwBufferTime, &dir)) < 0)
          {
 
-            TRACE("Unable to set buffer time %i for playback: %s\n", buffer_time, snd_strerror(err));
+            TRACE("Unable to set buffer time %i for playback: %s\n", m_dwBufferTime, snd_strerror(err));
 
             return result_error;
 
@@ -311,15 +311,14 @@ namespace multimedia
 
          }
 
-         buffer_size = size;
+         m_framesBufferSize = size;
 
          dir = 1;
 
-         // set the period time
-         if((err = snd_pcm_hw_params_set_period_time_near(m_ppcm, m_phwparams, &period_time, &dir)) < 0)
+         if((err = snd_pcm_hw_params_set_period_time_near(m_ppcm, m_phwparams, &m_dwPeriodTime, &dir)) < 0)
          {
 
-            TRACE("Unable to set period time %i for playback: %s\n", period_time, snd_strerror(err));
+            TRACE("Unable to set period time %i for playback: %s\n", m_dwPeriodTime, snd_strerror(err));
 
             return result_error;
 
@@ -336,7 +335,7 @@ namespace multimedia
 
          }
 
-         period_size = size;
+         m_framesPeriodSize = size;
 
          if ((err = snd_pcm_hw_params (m_ppcm, m_phwparams)) < 0)
          {
@@ -381,9 +380,6 @@ namespace multimedia
 
          }
 
-
-
-
          err = snd_pcm_sw_params(m_ppcm, m_pswparams);
 
          if (err < 0)
@@ -395,9 +391,6 @@ namespace multimedia
 
          }
 
-         //snd_pcm_hw_params_free (m_phwparams);
-
-
          return result_success;
 
       }
@@ -407,7 +400,11 @@ namespace multimedia
       {
 
          if(m_ppcm == NULL)
+         {
+
             return result_success;
+
+         }
 
 
          int err;

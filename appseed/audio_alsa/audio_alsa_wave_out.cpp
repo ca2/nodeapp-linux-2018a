@@ -206,7 +206,7 @@ namespace multimedia
 
          /* start the transfer when the buffer is almost full: */
          /* (buffer_size / avail_min) * avail_min */
-         err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, (buffer_size / period_size) * period_size);
+         err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, (m_framesBufferSize / m_framesPeriodSize) * m_framesPeriodSize);
          if (err < 0)
          {
 
@@ -217,7 +217,7 @@ namespace multimedia
          }
 
          /* allow the transfer when at least period_size samples can be processed */
-         err = snd_pcm_sw_params_set_avail_min(m_ppcm, m_pswparams, period_size);
+         err = snd_pcm_sw_params_set_avail_min(m_ppcm, m_pswparams, m_framesPeriodSize);
          if (err < 0)
          {
 
@@ -239,7 +239,9 @@ namespace multimedia
          }
 
          m_estate = state_opened;
+
          return result_success;
+
       }
 
 
@@ -287,67 +289,16 @@ namespace multimedia
 
          }
 
-         uint32_t uiBufferSizeLog2;
-         uint32_t uiBufferSize;
-         uint32_t uiAnalysisSize;
-         uint32_t uiAllocationSize;
-         uint32_t uiInterestSize;
-         uint32_t uiSkippedSamplesCount;
-
-         iBufferSampleCount      = period_size;
-
-
-         if(true)
-         {
-            uiBufferSizeLog2 = 16;
-            //uiBufferSize = m_pwaveformat->nChannels * 2 * iBufferSampleCount; // 512 kbytes
-            /*while(((double)(buffer_size * 8) / (double)(uiBitsPerSample * uiSamplesPerSec)) > 0.084)
-            {
-                buffer_size /= 2;
-            }*/
-            uiBufferSize = period_size;
-            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
-            if(iBufferCount > 0)
-            {
-               uiAllocationSize = iBufferCount * uiAnalysisSize;
-            }
-            else
-            {
-               uiAllocationSize = 8 * uiAnalysisSize;
-            }
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 2;
-         }
-         else if(m_pwaveformat->nSamplesPerSec == 22050)
-         {
-            uiBufferSizeLog2 = 10;
-            uiBufferSize = 4 * 1 << uiBufferSizeLog2;
-            uiAnalysisSize = 4 * 1 << uiBufferSizeLog2;
-            uiAllocationSize = 4 * uiAnalysisSize;
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 1;
-         }
-         else if(m_pwaveformat->nSamplesPerSec == 11025)
-         {
-            uiBufferSizeLog2 = 10;
-            uiBufferSize = 2 * 1 << uiBufferSizeLog2;
-            uiAnalysisSize = 2 * 1 << uiBufferSizeLog2;
-            uiAllocationSize = 4 * uiAnalysisSize;
-            uiInterestSize = 200;
-            uiSkippedSamplesCount = 1;
-         }
+         UINT uiBufferSize = snd_pcm_frames_to_bytes(m_ppcm, m_framesPeriodSize);
 
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, iBufferCount, 128, m_pwaveformat, m_pwaveformat);
 
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, iBufferSampleCount);
+         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, m_framesPeriodSize);
 
          m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount());
 
          int err;
 
-         //snd_pcm_sw_params_alloca(&m_pswparams);
-
-         // get the current m_pswparams
          if((err = snd_pcm_sw_params_current(m_ppcm, m_pswparams)) < 0)
          {
 
@@ -358,7 +309,7 @@ namespace multimedia
          }
 
          // start the transfer when the buffer is almost full:
-         if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, buffer_size)) < 0)
+         if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, m_framesBufferSize)) < 0)
          {
 
             TRACE("unable to set start threshold mode for playback: %s\n", snd_strerror(err));
@@ -367,8 +318,8 @@ namespace multimedia
 
          }
 
-         // allow the transfer when at least period_size samples can be processed
-         if((err = snd_pcm_sw_params_set_avail_min(m_ppcm, m_pswparams, period_size)) < 0)
+         // allow the transfer when at least m_framesPeriodSize samples can be processed
+         if((err = snd_pcm_sw_params_set_avail_min(m_ppcm, m_pswparams, m_framesPeriodSize)) < 0)
          {
 
             TRACE("unable to set avail min for playback: %s\n", snd_strerror(err));
@@ -430,9 +381,6 @@ namespace multimedia
          return result_success;
 
       }
-
-
-
 
 
       ::multimedia::e_result wave_out::wave_out_stop()
@@ -595,7 +543,6 @@ namespace multimedia
       }
 
 
-
       snd_pcm_t * wave_out::wave_out_get_safe_PCM()
       {
 
@@ -609,6 +556,7 @@ namespace multimedia
          return m_ppcm;
 
       }
+
 
       void * wave_out::get_os_data()
       {
@@ -628,8 +576,6 @@ namespace multimedia
 
       void wave_out::wave_out_buffer_ready(index iBuffer)
       {
-
-         //post_message(message_ready, iBuffer);
 
          synch_lock sl(m_pmutex);
 
@@ -668,6 +614,8 @@ namespace multimedia
       void wave_out::alsa_write_thread()
       {
 
+         ::multithreading::set_priority(::multithreading::priority_time_critical);
+
          while(::get_thread_run())
          {
 
@@ -675,7 +623,13 @@ namespace multimedia
 
                synch_lock sl(m_pmutex);
 
-               if(m_iaReady.is_empty())
+               if(m_iaReady.has_elements())
+               {
+
+                  goto next_step;
+
+               }
+               else
                {
 
                   m_evReady.ResetEvent();
@@ -690,6 +644,8 @@ namespace multimedia
                continue;
 
             }
+
+            next_step:;
 
             int iReady;
 
@@ -721,6 +677,7 @@ namespace multimedia
 
          }
 
+         m_pthreadWriter = NULL;
 
       }
 
@@ -750,7 +707,9 @@ namespace multimedia
 
             int result = 0;
 
-            int cptr = period_size;
+            snd_pcm_sframes_t framesRemain = m_framesPeriodSize;
+
+            int cptr = snd_pcm_frames_to_bytes(m_ppcm, framesRemain);
 
             ::multimedia::e_result mmr = result_success;
 
@@ -767,7 +726,6 @@ namespace multimedia
 
             }
 
-
             if(m_ppcm == NULL)
             {
 
@@ -777,67 +735,88 @@ namespace multimedia
 
             }
 
-            snd_pcm_sframes_t framesMin = snd_pcm_bytes_to_frames(m_ppcm, period_size);
+            while(::get_thread_run())
+            {
 
-//            while(get_thread_run())
-//            {
-//
-//               avail = snd_pcm_avail_update(m_ppcm);
-//
-//               if(avail < 0)
-//               {
-//
-//                  avail = defer_underrun_recovery(avail)
-//
-//                  if(avail >= 0)
-//                  {
-//
-//                     TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_avail_update)");
-//
-//                     break;
-//
-//                  }
-//
-//                  TRACE("ALSA wave_out framesMin %d\n", framesMin);
-//
-//                  m_estate = state_opened;
-//
-//                  m_mmr = result_error;
-//
-//                  TRACE("ALSA wave_out snd_pcm_avail_update error: %s\n", snd_strerror(avail));
-//
-//                  goto finalize;
-//
-//
-//               }
-//               else if(avail >= framesMin)
-//               {
-//
-//                  break;
-//
-//               }
-//
-//               if((result = snd_pcm_wait (m_ppcm, 16)) < 0)
-//               {
-//
-//                  m_estate = state_opened;
-//
-//                  m_mmr = result_error;
-//
-//                  TRACE("ALSA wave_out wait error: %s\n", snd_strerror(result));
-//
-//                  goto finalize;
-//
-//               }
-//
-//            }
-//
+               avail = snd_pcm_avail(m_ppcm);
+
+               if(avail < 0)
+               {
+
+                  avail = defer_underrun_recovery(avail);
+
+                  if(avail >= 0)
+                  {
+
+                     TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_avail_update)");
+
+                     break;
+
+                  }
+
+                  TRACE("ALSA wave_out minimum byte count %d\n", cptr);
+
+                  m_estate = state_opened;
+
+                  m_mmr = result_error;
+
+                  TRACE("ALSA wave_out snd_pcm_avail_update error: %s\n", snd_strerror(avail));
+
+                  goto end;
+
+
+               }
+               else if(avail >= m_framesPeriodSize)
+               {
+
+                  break;
+
+               }
+
+               Sleep(5);
+
+            }
+
+            int iZero = 0;
+
             while (cptr > 0)
             {
 
-               result = snd_pcm_writei(m_ppcm, ptr, cptr);
+               result = snd_pcm_writei(m_ppcm, ptr, framesRemain);
 
                m_bStarted = true;
+
+               if(result == 0)
+               {
+
+                  iZero++;
+
+                  TRACE("ALSA wave_out snd_pcm_writei returned 0 (" + ::str::from(iZero) + ")");
+
+                  if(iZero == 1)
+                  {
+
+                     Sleep(5);
+
+                     TRACE("ALSA wave_out snd_pcm_writei returned 0 and waited a bit");
+
+                     continue;
+
+                  }
+                  else if(snd_pcm_prepare(m_ppcm) < 0)
+                  {
+
+                     TRACE("ALSA wave_out snd_pcm_writei returned 0 and failed to prepare");
+
+                     break;
+
+                  }
+
+                  TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_writei zero return)");
+
+                  continue;
+
+               }
 
                if(result == -EAGAIN)
                {
@@ -878,6 +857,8 @@ namespace multimedia
 
                int iBytes = snd_pcm_frames_to_bytes(m_ppcm, result);
 
+               framesRemain -= result;
+
                m_pprebuffer->m_position += iBytes;
 
                ptr = (short *) (((byte *) ptr) + iBytes);
@@ -887,6 +868,8 @@ namespace multimedia
             }
 
          }
+
+end:;
 
          sLock.unlock();
 
