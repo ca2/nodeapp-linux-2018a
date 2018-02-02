@@ -19,7 +19,7 @@ namespace multimedia
          enum e_impl_message
          {
 
-            message_ready = 5555,
+            message_ready = WM_APP + 200,
             message_free
 
          };
@@ -32,7 +32,9 @@ namespace multimedia
          uint64_t                m_uiStart;
          snd_pcm_status_t *      m_pstatus;
 
-
+         ::thread *              m_pthreadWriter;
+         int_array               m_iaReady;
+         manual_reset_event      m_evReady;
 
 
          wave_out(::aura::application * papp);
@@ -45,13 +47,15 @@ namespace multimedia
          imedia_position wave_out_get_position();
 
          virtual ::multimedia::e_result wave_out_open(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount) override;
-         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
+         virtual ::multimedia::e_result wave_out_open_ex(::thread * pthreadCallback, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose) override;
          virtual ::multimedia::e_result wave_out_stop() override;
          virtual ::multimedia::e_result wave_out_close() override;
          virtual ::multimedia::e_result wave_out_pause() override;
          virtual ::multimedia::e_result wave_out_restart() override;
          virtual void * get_os_data();
          snd_pcm_t * wave_out_get_safe_PCM();
+
+         virtual void alsa_write_thread();
 
          virtual void wave_out_on_playback_end() override;
          virtual void wave_out_buffer_ready(index iBuffer) override;
@@ -69,7 +73,7 @@ namespace multimedia
 
          virtual bool on_run_step();
 
-         virtual int underrun_recovery(int err);
+         virtual int defer_underrun_recovery(int err);
 
          //int32_t wave_out_get_buffered_buffer_count();
 

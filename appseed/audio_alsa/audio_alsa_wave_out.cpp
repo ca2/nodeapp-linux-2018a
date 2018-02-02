@@ -40,7 +40,8 @@ namespace multimedia
          ::thread(papp),
         wave_base(papp),
          snd_pcm(papp),
-         ::multimedia::audio::wave_out(papp)
+         ::multimedia::audio::wave_out(papp),
+         m_evReady(papp)
       {
 
          m_estate             = state_initial;
@@ -53,6 +54,8 @@ namespace multimedia
 
          m_pstatus            = NULL;
          snd_pcm_status_malloc (&m_pstatus);
+
+         m_pthreadWriter      = NULL;
 
       }
 
@@ -240,7 +243,7 @@ namespace multimedia
       }
 
 
-      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, ::count iBufferCount, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
+      ::multimedia::e_result wave_out::wave_out_open_ex(thread * pthreadCallback, ::count iBufferSampleCount, uint32_t uiSamplesPerSec, uint32_t uiChannelCount, uint32_t uiBitsPerSample, ::multimedia::audio::e_purpose epurpose)
       {
 
          single_lock sLock(m_pmutex, TRUE);
@@ -251,6 +254,15 @@ namespace multimedia
          {
 
             return result_success;
+
+         }
+
+         int iBufferCount = 4;
+
+         if(epurpose == ::multimedia::audio::purpose_playback)
+         {
+
+            iBufferCount = 8;
 
          }
 
@@ -617,7 +629,13 @@ namespace multimedia
       void wave_out::wave_out_buffer_ready(index iBuffer)
       {
 
-         post_message(message_ready, iBuffer);
+         //post_message(message_ready, iBuffer);
+
+         synch_lock sl(m_pmutex);
+
+         m_iaReady.add(iBuffer);
+
+         m_evReady.SetEvent();
 
       }
 
@@ -647,6 +665,66 @@ namespace multimedia
       }
 
 
+      void wave_out::alsa_write_thread()
+      {
+
+         while(::get_thread_run())
+         {
+
+            {
+
+               synch_lock sl(m_pmutex);
+
+               if(m_iaReady.is_empty())
+               {
+
+                  m_evReady.ResetEvent();
+
+               }
+
+            }
+
+            if(!m_evReady.wait(millis(20)).succeeded())
+            {
+
+               continue;
+
+            }
+
+            int iReady;
+
+            {
+
+               synch_lock sl(m_pmutex);
+
+               iReady = m_iaReady[0];
+
+               m_iaReady.remove_at(0);
+
+            }
+
+            alsa_out_buffer_ready(iReady);
+
+            if(m_estate != audio::wave_out::state_playing && m_estate != audio::wave_out::state_stopping)
+            {
+
+               break;
+
+            }
+
+            if(m_ppcm == NULL)
+            {
+
+               break;
+
+            }
+
+         }
+
+
+      }
+
+
       void wave_out::alsa_out_buffer_ready(index iBuffer)
       {
 
@@ -657,7 +735,7 @@ namespace multimedia
 
             TRACE("alsa_out_buffer_ready !playing && !stopping");
 
-            goto finalize;
+            return;
 
          }
 
@@ -680,12 +758,12 @@ namespace multimedia
 
             signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
-            if(!thread_get_run())
+            if(!::get_thread_run())
             {
 
                TRACE("alsa_out_buffer_ready !thread_get_run");
 
-               goto finalize;
+               return;
 
             }
 
@@ -695,51 +773,65 @@ namespace multimedia
 
                TRACE("alsa_out_buffer_ready m_ppcm == NULL");
 
-               goto finalize;
+               return;
 
             }
 
-            while(thread_get_run())
-            {
+            snd_pcm_sframes_t framesMin = snd_pcm_bytes_to_frames(m_ppcm, period_size);
 
-               avail = snd_pcm_avail(m_ppcm);
-
-               if(avail < 0)
-               {
-
-                  m_estate = state_opened;
-
-                  m_mmr = result_error;
-
-                  TRACE("alsa wave_out snd_pcm_avail error: %s\n", snd_strerror(result));
-
-                  goto finalize;
-
-
-               }
-               else if(avail >= 0)
-               {
-
-                  break;
-
-               }
-
-
-               if((result = snd_pcm_wait (m_ppcm, 100)) < 0)
-               {
-
-                  m_estate = state_opened;
-
-                  m_mmr = result_error;
-
-                  TRACE("alsa wave_out wait error: %s\n", snd_strerror(result));
-
-                  goto finalize;
-
-               }
-
-            }
-
+//            while(get_thread_run())
+//            {
+//
+//               avail = snd_pcm_avail_update(m_ppcm);
+//
+//               if(avail < 0)
+//               {
+//
+//                  avail = defer_underrun_recovery(avail)
+//
+//                  if(avail >= 0)
+//                  {
+//
+//                     TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_avail_update)");
+//
+//                     break;
+//
+//                  }
+//
+//                  TRACE("ALSA wave_out framesMin %d\n", framesMin);
+//
+//                  m_estate = state_opened;
+//
+//                  m_mmr = result_error;
+//
+//                  TRACE("ALSA wave_out snd_pcm_avail_update error: %s\n", snd_strerror(avail));
+//
+//                  goto finalize;
+//
+//
+//               }
+//               else if(avail >= framesMin)
+//               {
+//
+//                  break;
+//
+//               }
+//
+//               if((result = snd_pcm_wait (m_ppcm, 16)) < 0)
+//               {
+//
+//                  m_estate = state_opened;
+//
+//                  m_mmr = result_error;
+//
+//                  TRACE("ALSA wave_out wait error: %s\n", snd_strerror(result));
+//
+//                  goto finalize;
+//
+//               }
+//
+//            }
+//
             while (cptr > 0)
             {
 
@@ -750,6 +842,8 @@ namespace multimedia
                if(result == -EAGAIN)
                {
 
+                  Sleep(5);
+
                   TRACE("snd_pcm_writei -EAGAIN");
 
                   continue;
@@ -759,39 +853,57 @@ namespace multimedia
                if(result < 0)
                {
 
-                  TRACE("ALSA wave_out writei error: %s\n", snd_strerror(result));
+                  TRACE("ALSA wave_out snd_pcm_writei error: %s\n", snd_strerror(result));
 
-                  if((result = underrun_recovery(result)) < 0)
+                  result = defer_underrun_recovery(result);
+
+                  if(result >= 0)
                   {
 
-                     m_estate = state_opened;
+                     TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_writei)");
 
-                     m_mmr = result_error;
-
-                     TRACE("ALSA wave_out writei underrun recovery error: %s\n", snd_strerror(result));
+                     continue;
 
                   }
 
-                  goto finalize;
+                  m_estate = state_opened;
+
+                  m_mmr = result_error;
+
+                  TRACE("ALSA wave_out snd_pcm_writei couldn't recover from error: %s\n", snd_strerror(result));
+
+                  break;
 
                }
 
-               m_pprebuffer->m_position += result;
+               int iBytes = snd_pcm_frames_to_bytes(m_ppcm, result);
 
-               ptr += result * m_pwaveformat->nChannels;
+               m_pprebuffer->m_position += iBytes;
 
-               cptr -= result;
+               ptr = (short *) (((byte *) ptr) + iBytes);
 
+               cptr -= iBytes;
 
             }
 
          }
 
-         finalize:
-
          sLock.unlock();
 
-         wave_out_out_buffer_done(iBuffer);
+         if(m_estate == state_opened)
+         {
+
+            TRACE("ALSA wave_out: an error has occurred.\n");
+            TRACE("ALSA wave_out: the state was: playing or stopping.\n");
+            TRACE("ALSA wave_out: now the state is: opened.\n");
+
+         }
+         else
+         {
+
+            post_message(message_done, iBuffer);
+
+         }
 
       }
 
@@ -826,6 +938,13 @@ namespace multimedia
 
          }
 
+         m_pthreadWriter = fork([&]()
+         {
+
+            alsa_write_thread();
+
+         });
+
          TRACE("wave_out_start: snd_pcm_prepare OK");
 
          m_bStarted = false;
@@ -856,48 +975,33 @@ namespace multimedia
       }
 
 
-      int wave_out::underrun_recovery(int err)
+      int wave_out::defer_underrun_recovery(int err)
       {
 
-         if(m_pprebuffer->IsEOF())
+         if (err == -EPIPE)
          {
 
-            TRACE("underrun_recovery, prebuffer EOF: %s\n", snd_strerror(err));
+            TRACE("underrun_recovery, going to snd_pcm_prepare: %s\n", snd_strerror(err));
 
-            return 0;
-
-         }
-         else if(wave_out_get_state() == state_stopping)
-         {
-
-            TRACE("underrun_recovery, stopping: %s\n", snd_strerror(err));
-
-            return 0;
-
-         }
-         else if (err == -EPIPE)
-         {
-
-            // under-run
             err = snd_pcm_prepare(m_ppcm);
 
             if (err < 0)
             {
 
-               TRACE("Can't recovery from underrun, prepare failed: %s\n", snd_strerror(err));
+               TRACE("Can't recover from underrun, snd_pcm_prepare failed: %s\n", snd_strerror(err));
 
             }
             else if (err == -ESTRPIPE)
             {
 
-               TRACE("underrun_recovery, -ESTRPIPE: %s\n", snd_strerror(err));
+               TRACE("underrun_recovery, snd_pcm_prepare returned -ESTRPIPE: %s\n", snd_strerror(err));
 
                while ((err = snd_pcm_resume(m_ppcm)) == -EAGAIN)
                {
 
-                  TRACE("underrun_recovery, snd_pcm_resume return -EAGAIN: %s\n", snd_strerror(err));
+                  TRACE("underrun_recovery, snd_pcm_resume returned -EAGAIN: %s\n", snd_strerror(err));
 
-                  sleep(1); /* wait until the suspend flag is released */
+                  Sleep(10); /* wait until the suspend flag is released */
 
                }
 
@@ -909,15 +1013,13 @@ namespace multimedia
                   if (err < 0)
                   {
 
-                     TRACE("Can't recovery from suspend, prepare failed: %s\n", snd_strerror(err));
+                     TRACE("Can't recovery from suspend, snd_pcm_prepare failed: %s\n", snd_strerror(err));
 
                   }
 
                }
 
             }
-
-            return 0;
 
          }
 
