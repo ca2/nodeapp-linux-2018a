@@ -259,14 +259,21 @@ namespace multimedia
 
          }
 
-         int iBufferCount = 4;
+
+         m_dwPeriodTime =  20 * 1000; /* period time in us */
+
+         m_iBufferCountEffective = 2;
 
          if(epurpose == ::multimedia::audio::purpose_playback)
          {
 
-            iBufferCount = 8;
+            m_dwPeriodTime =  50 * 1000; /* period time in us */
+
+            m_iBufferCountEffective = 8;
 
          }
+
+         m_iBufferCount = m_iBufferCountEffective;
 
          m_pthreadCallback = pthreadCallback;
 
@@ -289,11 +296,18 @@ namespace multimedia
 
          }
 
+         if(m_iBufferCount < m_iBufferCountEffective)
+         {
+
+            m_iBufferCountEffective = m_iBufferCount;
+
+         }
+
          UINT uiBufferSize = snd_pcm_frames_to_bytes(m_ppcm, m_framesPeriodSize);
 
-         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, iBufferCount, 128, m_pwaveformat, m_pwaveformat);
+         wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, m_iBufferCountEffective, 128, m_pwaveformat, m_pwaveformat);
 
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, iBufferCount, m_framesPeriodSize);
+         m_pprebuffer->open(this, m_pwaveformat->nChannels, m_iBufferCountEffective, m_framesPeriodSize);
 
          m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount());
 
@@ -308,8 +322,12 @@ namespace multimedia
 
          }
 
+         int iBufferThreshold = MIN((m_framesBufferSize / m_framesPeriodSize), m_iBufferCountEffective);
+
+         snd_pcm_sframes_t framesThreshold = iBufferThreshold * m_framesPeriodSize;
+
          // start the transfer when the buffer is almost full:
-         if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, m_framesBufferSize)) < 0)
+         if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, framesThreshold)) < 0)
          {
 
             TRACE("unable to set start threshold mode for playback: %s\n", snd_strerror(err));
@@ -569,7 +587,7 @@ namespace multimedia
       void wave_out::wave_out_free(index ibuffer)
       {
 
-         post_message(message_free, ibuffer);
+         ::multimedia::audio::wave_out::wave_out_free(ibuffer);
 
       }
 
@@ -610,13 +628,50 @@ namespace multimedia
 
       }
 
+      bool wave_out::alsa_should_play()
+      {
+
+         if(!::get_thread_run())
+         {
+
+            return false;
+
+         }
+
+         if(m_ppcm == NULL)
+         {
+
+            TRACE("alsa_out_buffer_ready m_ppcm == NULL");
+
+            return false;
+
+         }
+
+         if(m_estate != audio::wave_out::state_playing && m_estate != audio::wave_out::state_stopping)
+         {
+
+            TRACE("alsa_out_buffer_ready failure: !playing && !stopping");
+
+            return false;
+
+         }
+
+         return true;
+
+      }
+
+
 
       void wave_out::alsa_write_thread()
       {
 
          ::multithreading::set_priority(::multithreading::priority_time_critical);
 
-         while(::get_thread_run())
+         int_array iaReady;
+
+         int iReady;
+
+         while(alsa_should_play())
          {
 
             {
@@ -626,7 +681,9 @@ namespace multimedia
                if(m_iaReady.has_elements())
                {
 
-                  goto next_step;
+                  iReady = m_iaReady[0];
+
+                  m_iaReady.remove_at(0);
 
                }
                else
@@ -634,254 +691,196 @@ namespace multimedia
 
                   m_evReady.ResetEvent();
 
+                  sl.unlock();
+
+                  m_evReady.wait(micros(m_dwPeriodTime));
+
+                  continue;
+
                }
 
             }
 
-            if(!m_evReady.wait(millis(20)).succeeded())
+            if(!alsa_out_buffer_ready(iReady))
+            {
+
+               TRACE("ALSA wave_out: an error has occurred.\n");
+
+               break;
+
+            }
+
+         }
+
+         end:;
+
+         m_pthreadWriter = NULL;
+
+         if(m_estate == state_opened)
+         {
+
+            TRACE("ALSA wave_out: now the state is: opened.\n");
+
+         }
+
+      }
+
+
+      bool wave_out::alsa_out_buffer_ready(index iBuffer)
+      {
+
+         synch_lock sLock(m_pmutex);
+
+         int result = 0;
+
+         snd_pcm_sframes_t framesRemain = m_framesPeriodSize;
+
+         int cptr = snd_pcm_frames_to_bytes(m_ppcm, framesRemain);
+
+         ::multimedia::e_result mmr = result_success;
+
+         snd_pcm_sframes_t avail;
+
+         while(::get_thread_run())
+         {
+
+            avail = snd_pcm_avail_update(m_ppcm);
+
+            if(avail == -EAGAIN)
             {
 
                continue;
 
             }
-
-            next_step:;
-
-            int iReady;
-
+            else if(avail < 0)
             {
 
-               synch_lock sl(m_pmutex);
+               const char * pszError = snd_strerror(avail);
 
-               iReady = m_iaReady[0];
+               TRACE("ALSA wave_out snd_pcm_avail error: %s (%d)\n", pszError, avail);
 
-               m_iaReady.remove_at(0);
+               avail = defer_underrun_recovery(avail);
+
+               if(avail >= 0)
+               {
+
+                  TRACE("ALSA wave_out snd_pcm_avail underrun recovery success (snd_pcm_avail)");
+
+                  break;
+
+               }
+
+               TRACE("ALSA wave_out snd_pcm_avail minimum byte count %d\n", cptr);
+
+               m_estate = state_opened;
+
+               m_mmr = result_error;
+
+               TRACE("ALSA wave_out snd_pcm_avail error: %s\n", snd_strerror(avail));
+
+               return false;
 
             }
-
-            alsa_out_buffer_ready(iReady);
-
-            if(m_estate != audio::wave_out::state_playing && m_estate != audio::wave_out::state_stopping)
+            else if(avail >= m_framesPeriodSize)
             {
 
                break;
 
             }
 
-            if(m_ppcm == NULL)
-            {
-
-               break;
-
-            }
+            Sleep(m_dwPeriodTime / (4 * 1000));
 
          }
 
-         m_pthreadWriter = NULL;
 
-      }
+         signed short * ptr;
 
+         memory m;
 
-      void wave_out::alsa_out_buffer_ready(index iBuffer)
-      {
-
-         synch_lock sLock(m_pmutex);
-
-         if(m_estate != audio::wave_out::state_playing && m_estate != audio::wave_out::state_stopping)
+         if(iBuffer >= 0)
          {
 
-            TRACE("alsa_out_buffer_ready !playing && !stopping");
-
-            return;
-
-         }
-
-         if(m_peffect != NULL)
-         {
-
-            m_peffect->Process16bits((int16_t *) wave_out_get_buffer_data(iBuffer), wave_out_get_buffer_size());
-
-         }
-
-         {
-
-            int result = 0;
-
-            snd_pcm_sframes_t framesRemain = m_framesPeriodSize;
-
-            int cptr = snd_pcm_frames_to_bytes(m_ppcm, framesRemain);
-
-            ::multimedia::e_result mmr = result_success;
-
-            snd_pcm_sframes_t avail = 0;
-
-            signed short * ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
-
-            if(!::get_thread_run())
-            {
-
-               TRACE("alsa_out_buffer_ready !thread_get_run");
-
-               return;
-
-            }
-
-            if(m_ppcm == NULL)
-            {
-
-               TRACE("alsa_out_buffer_ready m_ppcm == NULL");
-
-               return;
-
-            }
-
-            while(::get_thread_run())
-            {
-
-               avail = snd_pcm_avail(m_ppcm);
-
-               if(avail < 0)
-               {
-
-                  avail = defer_underrun_recovery(avail);
-
-                  if(avail >= 0)
-                  {
-
-                     TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_avail_update)");
-
-                     break;
-
-                  }
-
-                  TRACE("ALSA wave_out minimum byte count %d\n", cptr);
-
-                  m_estate = state_opened;
-
-                  m_mmr = result_error;
-
-                  TRACE("ALSA wave_out snd_pcm_avail_update error: %s\n", snd_strerror(avail));
-
-                  goto end;
-
-
-               }
-               else if(avail >= m_framesPeriodSize)
-               {
-
-                  break;
-
-               }
-
-               Sleep(5);
-
-            }
-
-            int iZero = 0;
-
-            while (cptr > 0)
-            {
-
-               result = snd_pcm_writei(m_ppcm, ptr, framesRemain);
-
-               m_bStarted = true;
-
-               if(result == 0)
-               {
-
-                  iZero++;
-
-                  TRACE("ALSA wave_out snd_pcm_writei returned 0 (" + ::str::from(iZero) + ")");
-
-                  if(iZero == 1)
-                  {
-
-                     Sleep(5);
-
-                     TRACE("ALSA wave_out snd_pcm_writei returned 0 and waited a bit");
-
-                     continue;
-
-                  }
-                  else if(snd_pcm_prepare(m_ppcm) < 0)
-                  {
-
-                     TRACE("ALSA wave_out snd_pcm_writei returned 0 and failed to prepare");
-
-                     break;
-
-                  }
-
-                  TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_writei zero return)");
-
-                  continue;
-
-               }
-
-               if(result == -EAGAIN)
-               {
-
-                  Sleep(5);
-
-                  TRACE("snd_pcm_writei -EAGAIN");
-
-                  continue;
-
-               }
-
-               if(result < 0)
-               {
-
-                  TRACE("ALSA wave_out snd_pcm_writei error: %s\n", snd_strerror(result));
-
-                  result = defer_underrun_recovery(result);
-
-                  if(result >= 0)
-                  {
-
-                     TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_writei)");
-
-                     continue;
-
-                  }
-
-                  m_estate = state_opened;
-
-                  m_mmr = result_error;
-
-                  TRACE("ALSA wave_out snd_pcm_writei couldn't recover from error: %s\n", snd_strerror(result));
-
-                  break;
-
-               }
-
-               int iBytes = snd_pcm_frames_to_bytes(m_ppcm, result);
-
-               framesRemain -= result;
-
-               m_pprebuffer->m_position += iBytes;
-
-               ptr = (short *) (((byte *) ptr) + iBytes);
-
-               cptr -= iBytes;
-
-            }
-
-         }
-
-end:;
-
-         sLock.unlock();
-
-         if(m_estate == state_opened)
-         {
-
-            TRACE("ALSA wave_out: an error has occurred.\n");
-            TRACE("ALSA wave_out: the state was: playing or stopping.\n");
-            TRACE("ALSA wave_out: now the state is: opened.\n");
+            ptr = (signed short *) wave_out_get_buffer_data(iBuffer);
 
          }
          else
+         {
+
+            m.allocate(cptr);
+
+            m.zero();
+
+            ptr = (short int *) m.get_data();
+
+         }
+
+         int iZero = 0;
+
+         while (cptr > 0)
+         {
+
+            result = snd_pcm_writei(m_ppcm, ptr, framesRemain);
+
+            m_bStarted = true;
+
+            if(result == -EINTR)
+            {
+
+               continue;
+
+            }
+            else if(result == -EAGAIN)
+            {
+
+               continue;
+
+            }
+            else if(result < 0)
+            {
+
+               TRACE("ALSA wave_out snd_pcm_writei error: %s (%d)\n", snd_strerror(result), result);
+
+               result = defer_underrun_recovery(result);
+
+               if(result >= 0)
+               {
+
+                  TRACE("ALSA wave_out snd_pcm_writei underrun recovery success (snd_pcm_writei)");
+
+                  continue;
+
+               }
+
+               m_estate = state_opened;
+
+               m_mmr = result_error;
+
+               TRACE("ALSA wave_out snd_pcm_writei couldn't recover from error: %s\n", snd_strerror(result));
+
+               return false;
+
+            }
+
+            int iBytes = snd_pcm_frames_to_bytes(m_ppcm, result);
+
+            framesRemain -= result;
+
+            if(iBuffer >= 0)
+            {
+
+               m_pprebuffer->m_position += result;
+
+            }
+
+            ptr = (short *) (((byte *) ptr) + iBytes);
+
+            cptr -= iBytes;
+
+         }
+
+         sLock.unlock();
+
+         if(iBuffer >= 0)
          {
 
             post_message(message_done, iBuffer);
@@ -921,13 +920,6 @@ end:;
 
          }
 
-         m_pthreadWriter = fork([&]()
-         {
-
-            alsa_write_thread();
-
-         });
-
          TRACE("wave_out_start: snd_pcm_prepare OK");
 
          m_bStarted = false;
@@ -942,6 +934,13 @@ end:;
             return m_mmr;
 
          }
+
+         m_pthreadWriter = fork([&]()
+         {
+
+            alsa_write_thread();
+
+         });
 
          TRACE("wave_out_start: ::multimedia::audio::wave_out::wave_out_start OK");
 
@@ -974,31 +973,31 @@ end:;
                TRACE("Can't recover from underrun, snd_pcm_prepare failed: %s\n", snd_strerror(err));
 
             }
-            else if (err == -ESTRPIPE)
+
+         }
+         else if (err == -ESTRPIPE)
+         {
+
+            TRACE("underrun_recovery, snd_pcm_prepare returned -ESTRPIPE: %s\n", snd_strerror(err));
+
+            while ((err = snd_pcm_resume(m_ppcm)) == -EAGAIN)
             {
 
-               TRACE("underrun_recovery, snd_pcm_prepare returned -ESTRPIPE: %s\n", snd_strerror(err));
+               TRACE("underrun_recovery, snd_pcm_resume returned -EAGAIN: %s\n", snd_strerror(err));
 
-               while ((err = snd_pcm_resume(m_ppcm)) == -EAGAIN)
-               {
+               sleep(1); /* wait until the suspend flag is released */
 
-                  TRACE("underrun_recovery, snd_pcm_resume returned -EAGAIN: %s\n", snd_strerror(err));
+            }
 
-                  Sleep(10); /* wait until the suspend flag is released */
+            if (err < 0)
+            {
 
-               }
+               err = snd_pcm_prepare(m_ppcm);
 
                if (err < 0)
                {
 
-                  err = snd_pcm_prepare(m_ppcm);
-
-                  if (err < 0)
-                  {
-
-                     TRACE("Can't recovery from suspend, snd_pcm_prepare failed: %s\n", snd_strerror(err));
-
-                  }
+                  TRACE("Can't recovery from suspend, snd_pcm_prepare failed: %s\n", snd_strerror(err));
 
                }
 

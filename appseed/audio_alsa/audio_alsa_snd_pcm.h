@@ -25,6 +25,7 @@ namespace multimedia
          unsigned int                     m_dwPeriodTime;
          snd_pcm_uframes_t                m_framesBufferSize;
          snd_pcm_uframes_t                m_framesPeriodSize;
+         int                              m_iBufferCount;
 
 
 

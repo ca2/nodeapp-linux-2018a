@@ -36,6 +36,8 @@ namespace multimedia
          int_array               m_iaReady;
          manual_reset_event      m_evReady;
 
+         int                     m_iBufferCountEffective;
+
 
          wave_out(::aura::application * papp);
          virtual ~wave_out();
@@ -59,9 +61,10 @@ namespace multimedia
 
          virtual void wave_out_on_playback_end() override;
          virtual void wave_out_buffer_ready(index iBuffer) override;
-         virtual void alsa_out_buffer_ready(index iBuffer);
+         virtual bool alsa_out_buffer_ready(index iBuffer);
          virtual void wave_out_free(index iBuffer) override;
          virtual void alsa_out_free(index iBuffer);
+         virtual bool alsa_should_play();
 
          virtual bool init_thread() override;
          virtual void term_thread() override;

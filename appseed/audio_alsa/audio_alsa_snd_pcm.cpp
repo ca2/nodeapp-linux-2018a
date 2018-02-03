@@ -21,7 +21,6 @@ namespace multimedia
          m_phandler        = NULL;
          m_iCurrentBuffer  = 0;
          m_dwBufferTime    = 100 * 1000; /* ring buffer length in us */
-         m_dwPeriodTime    =  20 * 1000; /* period time in us */
       }
 
       snd_pcm::~snd_pcm()
@@ -288,8 +287,33 @@ namespace multimedia
 
          }
 
+         dir = 1;
+
+         if((err = snd_pcm_hw_params_set_period_time_near(m_ppcm, m_phwparams, &m_dwPeriodTime, &dir)) < 0)
+         {
+
+            TRACE("Unable to set period time %i for playback: %s\n", m_dwPeriodTime, snd_strerror(err));
+
+            return result_error;
+
+         }
 
          snd_pcm_uframes_t size;
+
+         dir = 1;
+
+         if((err = snd_pcm_hw_params_get_period_size(m_phwparams, &size, &dir)) < 0)
+         {
+
+            TRACE("Unable to get period size for playback: %s\n", snd_strerror(err));
+
+            return result_error;
+
+         }
+
+         m_framesPeriodSize = size;
+
+         m_dwBufferTime = m_iBufferCount * uiFreq * 1000 / size ;
 
          dir = 1;
 
@@ -313,29 +337,7 @@ namespace multimedia
 
          m_framesBufferSize = size;
 
-         dir = 1;
-
-         if((err = snd_pcm_hw_params_set_period_time_near(m_ppcm, m_phwparams, &m_dwPeriodTime, &dir)) < 0)
-         {
-
-            TRACE("Unable to set period time %i for playback: %s\n", m_dwPeriodTime, snd_strerror(err));
-
-            return result_error;
-
-         }
-
-         dir = 1;
-
-         if((err = snd_pcm_hw_params_get_period_size(m_phwparams, &size, &dir)) < 0)
-         {
-
-            TRACE("Unable to get period size for playback: %s\n", snd_strerror(err));
-
-            return result_error;
-
-         }
-
-         m_framesPeriodSize = size;
+         m_iBufferCount = (m_framesBufferSize / m_framesPeriodSize) + 1;
 
          if ((err = snd_pcm_hw_params (m_ppcm, m_phwparams)) < 0)
          {
