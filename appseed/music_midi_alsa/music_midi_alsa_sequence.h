@@ -130,7 +130,7 @@ namespace music
          array < imedia_position >    m_iaBuffered;
 
          int                           m_iBuffered;
-
+         bool                          m_bPlay;
 
 
          sequence(::aura::application * papp);
@@ -199,10 +199,10 @@ namespace music
          VOID FreeBuffers();
 
          //::multimedia::e_result OpenFile(const char * lpFileName, int32_t openMode);
-         ::music::e_result OpenFile(::music::midi::sequence & sequence, int32_t iOpenMode);
-         ::music::e_result OpenFile(::file::file & ar, int32_t openMode) override;
-         ::music::e_result OpenFile(const char * lpFileName, int32_t openMode);
-         ::music::e_result OpenFile(memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
+//         ::music::e_result OpenFile(::music::midi::sequence & sequence, int32_t iOpenMode);
+//         ::music::e_result OpenFile(::file::file & ar, int32_t openMode) override;
+//         ::music::e_result OpenFile(const char * lpFileName, int32_t openMode);
+//         ::music::e_result OpenFile(memory * pmemorystorage, int32_t openMode, ::music::e_storage estorage);
 
          ::music::e_result CloseFile();
          //::music::e_result SaveFile(const char * lpFileName);
@@ -218,11 +218,11 @@ namespace music
          //::multimedia::e_result Stop(uint32_t dwEllapse);
          ::multimedia::e_result Stop();
 
-         void GetPosition(imedia_position  & time);
-         void get_time(imedia_time  & time);
+         void get_position(imedia_position  & time) override;
+         void get_time(imedia_time  & time) override;
 
-         ::multimedia::e_result get_ticks(imedia_position & time);
-         ::multimedia::e_result get_millis(imedia_time & time);
+         ::multimedia::e_result get_ticks(imedia_position & time) override;
+         ::multimedia::e_result get_millis(imedia_time & time) override;
 
 
          imedia_position MillisecsToTicks(imedia_time msOffset);
@@ -255,6 +255,7 @@ namespace music
          virtual ::music::midi::sequence::event * create_new_event(::music::midi::sequence::e_event eevent, LPMIDIHDR lpmidihdr);
 
          int seq_dump();
+         void seq_run();
          ::music::midi::event * seq_get_next_event();
 
 

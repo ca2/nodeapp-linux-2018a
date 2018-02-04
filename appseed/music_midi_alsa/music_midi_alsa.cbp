@@ -17,6 +17,7 @@
 				<Option host_application="../../../time/x64/basis/app" />
 				<Option run_host_application_in_terminal="0" />
 				<Compiler>
+					<Add option="-fPIC" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
@@ -39,6 +40,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="-fnon-call-exceptions" />
 			<Add option="-fno-pie" />
@@ -47,7 +49,6 @@
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
-			<Add option="-fPIC" />
 			<Add option="-DLINUX" />
 			<Add option="-D_AUDIO_ALSA_LIBRARY" />
 			<Add directory="." />
@@ -66,14 +67,18 @@
 			<Add option="-laura" />
 			<Add option="-lbase" />
 			<Add option="-lasound" />
+			<Add option="-lsphere" />
 			<Add option="-lmultimedia" />
+			<Add option="-ltesseract" />
 			<Add option="-lveriwell_multimedia" />
 			<Add option="-Wl,-z,defs" />
 			<Add directory="../../../time/x64/basis" />
 			<Add directory="/usr/lib64/mysql/" />
 		</Linker>
 		<Unit filename="framework.cpp" />
-		<Unit filename="framework.h" />
+		<Unit filename="framework.h">
+			<Option compile="1" />
+		</Unit>
 		<Unit filename="music_midi_alsa.cpp" />
 		<Unit filename="music_midi_alsa.h" />
 		<Unit filename="music_midi_alsa_factory_exchange.cpp" />

@@ -184,8 +184,6 @@ namespace music
 
                   pseq->seq_start();
 
-                  post_message(::music::midi::alsa::sequence::message_run, 0, 0);
-
                   PostNotifyEvent(::music::midi::player::notify_event_playback_start);
 
                }
@@ -339,62 +337,44 @@ namespace music
          void sequence_thread::OnRun(::message::message * pobj)
          {
 
-            sp(sequence) pseq = get_sequence();
-
-            snd_seq_event_t * pev = NULL;
-
-            imedia_position pos = 0;
-
-            pseq->GetPosition(pos);
-
-            /*while(snd_seq_event_input_pending(pseq->m_pseq->handle, TRUE) > 0)
-            {
-
-               if(snd_seq_event_input(pseq->m_pseq->handle, &pev) == -ENOSPC)
-               {
-
-                  pseq->m_iBuffered = 0;
-
-               }
-               else
-               {
-
-                  pseq->m_iBuffered--;
-
-               }
-
-            }*/
-
-            while(pseq->m_iaBuffered.get_count() > 0 && pseq->m_iaBuffered[0] <= pos)
-            {
-
-               pseq->m_iaBuffered.remove_at(0);
-
-            }
-
-            if(pseq->seq_dump() < 0)
-            {
-
-               if(pseq->m_iaBuffered.get_count() <= 0)
-               {
-
-                  PostMidiSequenceEvent(pseq, ::music::midi::sequence::EventMidiPlaybackEnd);
-
-                  return;
-
-               }
-
-               Sleep(84);
-
-            }
-            else
-            {
-
-               Sleep(5);
-
-            }
-
-            post_message(sequence::message_run);
+//            sp(sequence) pseq = get_sequence();
+//
+//            snd_seq_event_t * pev = NULL;
+//
+//            imedia_position pos = 0;
+//
+//            pseq->get_position(pos);
+//
+//            while(pseq->m_iaBuffered.get_count() > 0 && pseq->m_iaBuffered[0] <= pos)
+//            {
+//
+//               pseq->m_iaBuffered.remove_at(0);
+//
+//            }
+//
+//            if(pseq->seq_dump() < 0)
+//            {
+//
+//               if(pseq->m_iaBuffered.get_count() <= 0 || !pseq->m_bPlay)
+//               {
+//
+//                  PostMidiSequenceEvent(pseq, ::music::midi::sequence::EventMidiPlaybackEnd);
+//
+//                  return;
+//
+//               }
+//
+//               Sleep(84);
+//
+//            }
+//            else
+//            {
+//
+//               Sleep(5);
+//
+//            }
+//
+//            post_message(sequence::message_run);
 
          }
 

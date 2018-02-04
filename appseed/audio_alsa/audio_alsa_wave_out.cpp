@@ -890,6 +890,25 @@ namespace multimedia
       }
 
 
+      imedia_time wave_out::wave_out_get_position_millis_for_synch()
+      {
+
+         if (m_pprebuffer == NULL)
+            return 0;
+
+         int64_t dwPosition = m_pprebuffer->m_position;
+
+         dwPosition *= 1000;
+
+         if (m_pwaveformat->nSamplesPerSec <= 0)
+            return 0;
+
+         dwPosition /= m_pwaveformat->nSamplesPerSec;
+
+         return dwPosition;
+
+      }
+
       ::multimedia::e_result wave_out::wave_out_start(const imedia_position & position)
       {
 

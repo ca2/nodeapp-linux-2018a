@@ -78,6 +78,8 @@ namespace multimedia
 
          virtual int defer_underrun_recovery(int err);
 
+         imedia_time wave_out_get_position_millis_for_synch();
+
          //int32_t wave_out_get_buffered_buffer_count();
 
       };

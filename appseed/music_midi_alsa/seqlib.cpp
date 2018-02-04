@@ -37,6 +37,22 @@ seq_create_context()
 		//except(ioError, "Could not open sequencer: %s", snd_strerror(errno));
 		return NULL;
 
+
+
+size_t sOut = snd_seq_get_output_buffer_size
+(ctxp->handle);
+
+printf("BufferSize: %d", sOut);
+if(!snd_seq_set_output_buffer_size
+(ctxp->handle, 128))
+{
+sOut = snd_seq_get_output_buffer_size
+(ctxp->handle);
+printf("BufferSize: %d", sOut);
+
+}
+
+
 	q = snd_seq_alloc_queue(ctxp->handle);
 	ctxp->client = snd_seq_client_id(ctxp->handle);
 	ctxp->queue = q;
@@ -48,6 +64,25 @@ seq_create_context()
 	ctxp->source.port = 0;
 
 	seq_new_port(ctxp);
+
+	 sOut = snd_seq_get_output_buffer_size
+(ctxp->handle);
+
+printf("BufferSize: %d", sOut);
+if(!snd_seq_set_output_buffer_size
+(ctxp->handle, 1024))
+{
+sOut = snd_seq_get_output_buffer_size
+(ctxp->handle);
+printf("BufferSize: %d", sOut);
+
+snd_seq_nonblock	(	ctxp->handle,
+0
+);
+
+}
+
+
 
 	return ctxp;
 }

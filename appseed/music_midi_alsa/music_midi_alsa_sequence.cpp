@@ -20,6 +20,7 @@ namespace music
          ::music::midi::sequence(papp)
       {
 
+         m_bPlay = false;
          m_pseq = NULL;
 
          m_buffera.Initialize(16, 4 * 1024, 0);
@@ -30,7 +31,7 @@ namespace music
          m_iPort = 1;
 
 
-      };
+      }
 
       sequence::~sequence()
       {
@@ -177,170 +178,180 @@ namespace music
       *
       ***************************************************************************/
 
-      ::music::e_result sequence::OpenFile(::music::midi::sequence & sequence, int32_t openMode)
-      {
-         SMFFILEINFO             sfi;
-         ::music::e_result               smfrc;
-         uint32_t                   cbBuffer;
-
-         if (GetState() != status_no_file)
-         {
-            return ::music::EFunctionNotSupported;
-         }
-
-         m_iOpenMode = openMode;
-
-         smfrc = file()->OpenFile(*sequence.get_file(), openMode);
-
-         if (::music::success != smfrc)
-         {
-            goto Seq_Open_File_Cleanup;
-         }
-
-         file()->GetFileInfo(&sfi);
-
-         m_dwTimeDivision = sfi.dwTimeDivision;
-         m_tkLength       = sfi.tkLength;
-         if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
-         {
-            m_msLength      = TicksToMillisecs(m_tkLength);
-         }
-         /* Track buffers must be big enough to hold the state data returned
-         ** by smfSeek()
-         */
-         cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
-
-
-Seq_Open_File_Cleanup:
-
-         if (::music::success != smfrc)
-            CloseFile();
-         else
-            SetState(status_opened);
-
-         return smfrc;
-
-      }
-
-
-      ::music::e_result sequence::OpenFile(const char * lpFileName, int32_t openMode)
-      {
-         ::file::file_sp file(
-            get_app());
-         file->open(lpFileName,
-            ::file::mode_read |
-            ::file::share_deny_write |
-            ::file::type_binary);
-         return OpenFile(*file, openMode);
-      }
+//      ::music::e_result sequence::OpenFile(::music::midi::sequence & sequence, int32_t openMode)
+//      {
+//
+//         return ::music::midi::sequence::OpenFile(sequuence, openMode);
+//
+////         SMFFILEINFO                sfi;
+////         ::music::e_result          smfrc;
+////         uint32_t                   cbBuffer;
+////
+////         if (GetState() != status_no_file)
+////         {
+////
+////            return ::music::EFunctionNotSupported;
+////
+////         }
+////
+////         m_iOpenMode = openMode;
+////
+////         smfrc = file()->OpenFile(*sequence.get_file(), openMode);
+////
+////         if (::music::success != smfrc)
+////         {
+////
+////            goto Seq_Open_File_Cleanup;
+////
+////         }
+////
+////         file()->GetFileInfo(&sfi);
+////
+////         m_dwTimeDivision = sfi.dwTimeDivision;
+////         m_tkLength       = sfi.tkLength;
+////         if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
+////         {
+////            m_msLength      = TicksToMillisecs(m_tkLength);
+////         }
+////         /* Track buffers must be big enough to hold the state data returned
+////         ** by smfSeek()
+////         */
+////         cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
+////
+////
+////Seq_Open_File_Cleanup:
+////
+////         if (::music::success != smfrc)
+////            CloseFile();
+////         else
+////            SetState(status_opened);
+////
+////         return smfrc;
+////
+//      }
 
 
-      ::music::e_result sequence::OpenFile(memory * pmemorystorage, int32_t openMode, e_storage estorage)
-      {
-         SMFFILEINFO             sfi;
-         ::music::e_result    smfrc;
-         uint32_t                   cbBuffer;
-
-         if (GetState() != status_no_file)
-         {
-            CloseFile();
-            //return ::music::EFunctionNotSupported;
-         }
-
-         m_iOpenMode = openMode;
-
-         smfrc = file()->OpenFile(pmemorystorage, openMode, estorage);
-
-         if (::music::success != smfrc)
-         {
-         }
-         else
-         {
-            file()->GetFileInfo(&sfi);
-
-            m_dwTimeDivision = sfi.dwTimeDivision;
-            m_tkLength       = sfi.tkLength;
-            if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
-            {
-               m_msLength      = TicksToMillisecs(m_tkLength);
-            }
-            /* Track buffers must be big enough to hold the state data returned
-            ** by smfSeek()
-            */
-            cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
-         }
-
-         if(::music::success != smfrc)
-            CloseFile();
-         else
-            SetState(status_opened);
-
-         return smfrc;
-      }
-
-      ::music::e_result sequence::OpenFile(
-         ::file::file & ar,
-         int32_t openMode)
-      {
-         ::multimedia::e_result                rc      = ::multimedia::result_success;
-         //    SMFOPENFILESTRUCT       sofs;
-         SMFFILEINFO             sfi;
-         ::music::e_result               smfrc;
-         uint32_t                   cbBuffer;
-         //    assert(pSeq != NULL);
-
-         if (GetState() != status_no_file)
-         {
-            return ::music::EFunctionNotSupported;
-         }
-
-
-
-         //   m_pstrFile = _tcsdup(lpFileName);
-         //   m_strFile = lpFileName;
-
-         //    ASSERT(m_pstrFile != NULL);
-
-         m_iOpenMode = openMode;
-
-         //    sofs.pstrName     = m_pstrFile;
-
-         //PSMF pSmf = new SMF();
-
-         //smfrc = file()->OpenFile(&sofs);
-         smfrc = file()->OpenFile(ar, openMode);
-
-         //smfrc = smfOpenFile(&sofs);
-         if (::music::success != smfrc)
-         {
-            //      delete pSmf;
-            rc = ::music::translate(smfrc);
-         }
-         else
-         {
-            //    m_hSmf = sofs.hSmf;
-            //    ((PSMF) m_hSmf)->GetFileInfo(&sfi);
-            file()->GetFileInfo(&sfi);
-
-            m_dwTimeDivision = sfi.dwTimeDivision;
-            m_tkLength       = sfi.tkLength;
-            if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
-            {
-               m_msLength      = TicksToMillisecs(m_tkLength);
-            }
-            /* Track buffers must be big enough to hold the state data returned
-            ** by smfSeek()
-            */
-            cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
-         }
-
-         if (::music::success != smfrc)
-            CloseFile();
-         else
-            SetState(status_opened);
-
-         return smfrc;
-      }
+//      ::music::e_result sequence::OpenFile(const char * lpFileName, int32_t openMode)
+//      {
+//
+//         return ::music::midi::sequence::OpenFile(lpFileName, openMode);
+//
+////         ::file::file_sp file(
+////            get_app());
+////         file->open(lpFileName,
+////            ::file::mode_read |
+////            ::file::share_deny_write |
+////            ::file::type_binary);
+////         return OpenFile(*file, openMode);
+//      }
+//
+//
+//      ::music::e_result sequence::OpenFile(memory * pmemorystorage, int32_t openMode, e_storage estorage)
+//      {
+//         SMFFILEINFO             sfi;
+//         ::music::e_result    smfrc;
+//         uint32_t                   cbBuffer;
+//
+//         if (GetState() != status_no_file)
+//         {
+//            CloseFile();
+//            //return ::music::EFunctionNotSupported;
+//         }
+//
+//         m_iOpenMode = openMode;
+//
+//         smfrc = file()->OpenFile(pmemorystorage, openMode, estorage);
+//
+//         if (::music::success != smfrc)
+//         {
+//         }
+//         else
+//         {
+//            file()->GetFileInfo(&sfi);
+//
+//            m_dwTimeDivision = sfi.dwTimeDivision;
+//            m_tkLength       = sfi.tkLength;
+//            if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
+//            {
+//               m_msLength      = TicksToMillisecs(m_tkLength);
+//            }
+//            /* Track buffers must be big enough to hold the state data returned
+//            ** by smfSeek()
+//            */
+//            cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
+//         }
+//
+//         if(::music::success != smfrc)
+//            CloseFile();
+//         else
+//            SetState(status_opened);
+//
+//         return smfrc;
+//      }
+//
+//      ::music::e_result sequence::OpenFile(
+//         ::file::file & ar,
+//         int32_t openMode)
+//      {
+//         ::multimedia::e_result                rc      = ::multimedia::result_success;
+//         //    SMFOPENFILESTRUCT       sofs;
+//         SMFFILEINFO             sfi;
+//         ::music::e_result               smfrc;
+//         uint32_t                   cbBuffer;
+//         //    assert(pSeq != NULL);
+//
+//         if (GetState() != status_no_file)
+//         {
+//            return ::music::EFunctionNotSupported;
+//         }
+//
+//
+//
+//         //   m_pstrFile = _tcsdup(lpFileName);
+//         //   m_strFile = lpFileName;
+//
+//         //    ASSERT(m_pstrFile != NULL);
+//
+//         m_iOpenMode = openMode;
+//
+//         //    sofs.pstrName     = m_pstrFile;
+//
+//         //PSMF pSmf = new SMF();
+//
+//         //smfrc = file()->OpenFile(&sofs);
+//         smfrc = file()->OpenFile(ar, openMode);
+//
+//         //smfrc = smfOpenFile(&sofs);
+//         if (::music::success != smfrc)
+//         {
+//            //      delete pSmf;
+//            rc = ::music::translate(smfrc);
+//         }
+//         else
+//         {
+//            //    m_hSmf = sofs.hSmf;
+//            //    ((PSMF) m_hSmf)->GetFileInfo(&sfi);
+//            file()->GetFileInfo(&sfi);
+//
+//            m_dwTimeDivision = sfi.dwTimeDivision;
+//            m_tkLength       = sfi.tkLength;
+//            if(m_iOpenMode == ::music::midi::file::OpenForPlaying)
+//            {
+//               m_msLength      = TicksToMillisecs(m_tkLength);
+//            }
+//            /* Track buffers must be big enough to hold the state data returned
+//            ** by smfSeek()
+//            */
+//            cbBuffer = MIN(m_cbBuffer, ::music::midi::GetStateMaxSize());
+//         }
+//
+//         if (::music::success != smfrc)
+//            CloseFile();
+//         else
+//            SetState(status_opened);
+//
+//         return smfrc;
+//      }
       /***************************************************************************
       *
       * seqCloseFile
@@ -363,48 +374,22 @@ Seq_Open_File_Cleanup:
       ***************************************************************************/
       ::music::e_result sequence::CloseFile()
       {
-         single_lock sl(m_pmutex, true);
 
-         //if (status_no_file == GetState())
-         //   return ::music::EFunctionNotSupported;
+         synch_lock sl(m_pmutex);
 
-         file()->CloseFile();
-
-         /* If we were prerolled, need to clean up -- have an open MIDI handle
-         ** and buffers in the ready queue
-         */
-
-         //    single_lock slStream(&m_csStream, false);
-
-         //    for (lpmh = m_lpmhFree; lpmh; lpmh = lpmh->lpNext)
-         //    for (lpmh = m_buffera[0]; lpmh != NULL; lpmh = lpmh->lpNext)
-
-
-         /*   m_lpmhFree = NULL;
-
-         if (m_lpmhPreroll != NULL)
-         {
-         slStream.lock();
-         if(m_hstream != NULL)
-         {
-         midiOutUnprepareHeader((HMIDIOUT) m_hstream, m_lpmhPreroll, sizeof(*m_lpmhPreroll));
-         }
-         slStream.unlock();
-         }
-         m_lpmhPreroll = NULL;*/
-         //    slStream.lock();
          if (m_pseq)
          {
 
             seq_free_context(m_pseq);
 
          }
-         //  slStream.unlock();
 
-         SetState(status_no_file);
+         ::music::e_result eresult = ::music::midi::sequence::CloseFile();
 
-         return ::music::success;
+         return eresult;
+
       }
+
 
       /***************************************************************************
       *
@@ -438,10 +423,10 @@ Seq_Open_File_Cleanup:
       ****************************************************************************/
       ::multimedia::e_result sequence::Preroll(::thread * pthread, ::music::midi::LPPREROLL lpPreroll, bool bThrow)
       {
+
          UNREFERENCED_PARAMETER(pthread);
          single_lock sl(m_pmutex, TRUE);
          int32_t i;
-         //   midi_callback_data *      lpData = &m_midicallbackdata;
          ::music::e_result     smfrc;
          ::multimedia::e_result                mmrc        = ::multimedia::result_success;
 //         MIDIPROPTIMEDIV         mptd;
@@ -472,12 +457,10 @@ Seq_Open_File_Cleanup:
 
             seq_free_context(m_pseq);
 
-         }
-         else
-         {
+            m_pseq = NULL;
+
          }
 
-         //m_uBuffersInMMSYSTEM = 0;
          SetState(::music::midi::sequence::status_pre_rolling);
 
          //
@@ -659,141 +642,117 @@ seq_Preroll_Cleanup:
 
       }
 
+
       ::multimedia::e_result sequence::seq_start()
       {
 
          single_lock sl(m_pmutex, TRUE);
 
          if(GetState() != status_pre_rolled)
+         {
+
             return ::music::translate(::music::EFunctionNotSupported);
+
+         }
 
          if (m_pseq == NULL)
          {
 
-//            uDeviceID = m_uiDeviceID;
-
             m_pseq = seq_create_context();
 
             if(m_pseq == NULL)
-               return ::multimedia::result_error;
-
-            int  err;
-
-            err = seq_connect_add(m_pseq, m_iClient, m_iPort);
-
-            if (err < 0)
             {
-
-               ::output_debug_string("Could not connect to port "+::str::from(m_iClient)+":"+::str::from(m_iPort)+"\n");
 
                return ::multimedia::result_error;
 
             }
 
-            /*if(seq_init_tempo(m_pseq, m_dwTimeDivision, 120, 1) < 0)
-            {
-               TRACE( "midiStreamProperty() -> %04X", (WORD)mmrc);
-               seq_free_context(m_pseq);
-//               m_hstream = NULL;
-//               mmrc = MCIERR_DEVICE_NOT_READY;
-               if(bThrow)
-               {
-                  SetState(status_opened);
-                  throw new exception(get_app(), ::music::EMidiPlayerPrerollStreamProperty);
-               }
-               goto seq_Preroll_Cleanup;
-            }*/
          }
 
-         if(m_pseq != NULL)
+         int  err;
+
+         err = seq_connect_add(m_pseq, m_iClient, m_iPort);
+
+         if (err < 0)
          {
 
-            SetState(status_playing);
+            ::output_debug_string("Could not connect to port "+::str::from(m_iClient)+":"+::str::from(m_iPort)+"\n");
 
-            seq_init_tempo(m_pseq, m_dwTimeDivision, 120, 1);
+            return ::multimedia::result_error;
 
-            seq_start_timer(m_pseq);
+         }
 
-            snd_seq_event_t ev;
+         SetState(status_playing);
 
-            KEYFRAME & keyframe = get_file()->m_keyframe;
+         seq_init_tempo(m_pseq, m_dwTimeDivision, 120, 1);
 
-            if (KF_EMPTY != keyframe.rbTempo[0] ||
-                KF_EMPTY != keyframe.rbTempo[1] ||
-                KF_EMPTY != keyframe.rbTempo[2])
+         snd_seq_event_t ev;
+
+         KEYFRAME & keyframe = get_file()->m_keyframe;
+
+         if (KF_EMPTY != keyframe.rbTempo[0] || KF_EMPTY != keyframe.rbTempo[1] || KF_EMPTY != keyframe.rbTempo[2])
+         {
+
+            uint32_t dwTempo =  (((uint32_t)keyframe.rbTempo[0])<<16) | (((uint32_t)keyframe.rbTempo[1])<<8) | ((uint32_t)keyframe.rbTempo[2]);
+
+            dwTempo = (uint32_t) ((double) dwTempo / get_file()->GetTempoShiftRate());
+
+            seq_midi_event_init(m_pseq, &ev, 0, 0);
+
+            seq_midi_tempo(m_pseq, &ev, dwTempo);
+
+         }
+
+         for (index idxChannel = 0; idxChannel < 16; idxChannel++)
+         {
+
+            if (KF_EMPTY != keyframe.rbProgram[idxChannel])
             {
 
+               seq_midi_event_init(m_pseq, &ev, 0, idxChannel);
 
-               uint32_t dwTempo =  (((uint32_t)keyframe.rbTempo[0])<<16) |
-                                   (((uint32_t)keyframe.rbTempo[1])<<8) |
-                                   ((uint32_t)keyframe.rbTempo[2]);
-
-               dwTempo = (uint32_t) ((double) dwTempo / get_file()->GetTempoShiftRate());
-
-               seq_midi_event_init(m_pseq, &ev, 0, 0);
-
-               seq_midi_tempo(m_pseq, &ev, dwTempo);
+               seq_midi_program(m_pseq, &ev, idxChannel, keyframe.rbProgram[idxChannel]);
 
             }
 
-            /* Program change events?
-            */
-            for (index idxChannel = 0; idxChannel < 16; idxChannel++)
+         }
+
+         for (index idxChannel = 0; idxChannel < 16; idxChannel++)
+         {
+
+            for (index idxController = 0; idxController < 120; idxController++)
             {
 
-               if (KF_EMPTY != keyframe.rbProgram[idxChannel])
+               if (KF_EMPTY != keyframe.rbControl[idxChannel][idxController])
                {
 
                   seq_midi_event_init(m_pseq, &ev, 0, idxChannel);
 
-                  seq_midi_program(m_pseq, &ev, idxChannel, keyframe.rbProgram[idxChannel]);
+                  seq_midi_control(m_pseq, &ev, idxChannel, idxController, keyframe.rbControl[idxChannel][idxController]);
 
                }
-
-            }
-
-            /* Controller events?
-            */
-
-            for (index idxChannel = 0; idxChannel < 16; idxChannel++)
-            {
-
-               for (index idxController = 0; idxController < 120; idxController++)
-               {
-
-                  if (KF_EMPTY != keyframe.rbControl[idxChannel][idxController])
-                  {
-
-                     seq_midi_event_init(m_pseq, &ev, 0, idxChannel);
-
-                     seq_midi_control(m_pseq, &ev, idxChannel, idxController, keyframe.rbControl[idxChannel][idxController]);
-
-                  }
-
-               }
-
-            }
-
-            m_iaBuffered.remove_all();
-
-            m_iBuffered = 0;
-
-            m_evptra.remove_all();
-
-            if(seq_dump() <= 0)
-            {
-
-               thread()->PostMidiSequenceEvent(this, ::music::midi::sequence::EventMidiPlaybackEnd);
-
-               return ::multimedia::result_success;
 
             }
 
          }
 
+         m_iaBuffered.remove_all();
+
+         m_iBuffered = 0;
+
+         m_evptra.remove_all();
+
+         fork([&]()
+         {
+
+            seq_run();
+
+         });
+
          return ::multimedia::result_success;
 
       }
+
 
       /***************************************************************************
       *
@@ -900,42 +859,74 @@ seq_Preroll_Cleanup:
       ::multimedia::e_result sequence::Stop()
       {
 
-         single_lock sl(m_pmutex, TRUE);
+         synch_lock sl(m_pmutex);
 
          if(GetState() == status_stopping)
+         {
+
             return ::multimedia::result_success;
 
-         // Automatic success if we're already stopped
-         if (GetState() != status_playing
-            && GetState() != status_paused)
+         }
+
+         if (GetState() != status_playing && GetState() != status_paused)
          {
+
             m_flags.unsignalize(::music::midi::sequence::FlagWaiting);
+
             GetPlayerLink().OnFinishCommand(::music::midi::player::command_stop);
+
             return ::multimedia::result_success;
+
          }
 
          SetState(status_stopping);
+
          m_flags.signalize(::music::midi::sequence::FlagWaiting);
 
          m_eventMidiPlaybackEnd.ResetEvent();
 
-         if(m_pseq != NULL)
-         {
-            seq_stop_timer(m_pseq);
-            if(::multimedia::result_success != m_mmrcLastErr)
-            {
-               TRACE( "::music::midi::sequence::Stop() -> midiOutStop() returned %lu in seqStop()!\n", (uint32_t)m_mmrcLastErr);
-               m_flags.unsignalize(FlagWaiting);
-               return ::multimedia::result_not_ready;
-            }
-         }
-
-         //m_eventMidiPlaybackEnd.lock();
+         m_bPlay = false;
 
          SetLevelMeter(0);
 
+//         if(m_pseq != NULL)
+//         {
+//
+////            Sleep(250);
+////
+//////            seq_stop_timer(m_pseq);
+//////
+////            if(m_pseq != NULL)
+////            {
+////
+////               seq_stop_timer(m_pseq);
+////
+////               seq_free_context(m_pseq);
+////
+////               m_pseq = NULL;
+////
+////            }
+//
+//
+//            if(::multimedia::result_success != m_mmrcLastErr)
+//            {
+//
+//               TRACE( "::music::midi::sequence::Stop() -> midiOutStop() returned %lu in seqStop()!\n", (uint32_t)m_mmrcLastErr);
+//
+//               m_flags.unsignalize(FlagWaiting);
+//
+//               return ::multimedia::result_not_ready;
+//
+//            }
+//
+//         }
+
+//         m_eventMidiPlaybackEnd.lock();
+
          return ::multimedia::result_success;
+
       }
+
 
       /***************************************************************************
       *
@@ -964,13 +955,9 @@ seq_Preroll_Cleanup:
       ::multimedia::e_result sequence::get_ticks(imedia_position &  pTicks)
       {
 
-         single_lock sl(m_pmutex);
-
-         if(!sl.lock(millis(184)))
-            return ::multimedia::result_internal;
+         synch_lock sl(m_pmutex);
 
          ::multimedia::e_result                mmr;
-// xxx         MMTIME                  mmt;
 
          if (::music::midi::sequence::status_playing != GetState() &&
             ::music::midi::sequence::status_paused != GetState() &&
@@ -1737,7 +1724,7 @@ seq_Preroll_Cleanup:
          return imedia_time(TicksToMillisecs((imedia_position) (int_ptr) tk));
       }
 
-      void sequence::GetPosition(imedia_position & position)
+      void sequence::get_position(imedia_position & position)
       {
          get_ticks(position);
       }
@@ -2548,7 +2535,9 @@ seq_Preroll_Cleanup:
          else
          {
 
-            get_file()->WorkGetNextEvent(pevent, ::numeric_info<imedia_position>::get_maximum_value  (), false);
+            imedia_position tkMax = ::numeric_info<imedia_position>::get_maximum_value  ();
+
+            get_file()->WorkGetNextEvent(pevent, tkMax, false);
 
          }
 
@@ -2556,26 +2545,36 @@ seq_Preroll_Cleanup:
 
       }
 
+
       int sequence::seq_dump()
       {
+
 
          ::music::midi::event * pevent = seq_get_next_event();
 
          if(pevent == NULL)
+         {
+
             return -1;
+
+         }
 
          array < ::music::midi::event * > & evptra = m_evptra;
 
          m_tkPosition = pevent->m_tkPosition;
 
-         for(index iBuffer = 0; iBuffer < 8; iBuffer++)
-         {
-
-            int iCount = 0;
-
-            while(pevent != NULL)
-            {
-
+//         int iBufferIter = 1;
+//
+//         for(index iBuffer = 0; iBuffer < iBufferIter && m_bPlay; iBuffer++)
+//         {
+//
+//            int iCount = 0;
+//
+//            int iMaxEventGroup = 8;
+//
+//            while(pevent != NULL && m_bPlay)
+//            {
+//
                if(pevent->GetType() == ::music::midi::NoteOn && pevent->GetNoteVelocity() > 0)
                {
 
@@ -2643,7 +2642,7 @@ seq_Preroll_Cleanup:
                         tkDuration,
                         peventOff->GetNoteVelocity());
 
-                     iCount++;
+//                     iCount++;
 
                   }
 
@@ -2651,47 +2650,180 @@ seq_Preroll_Cleanup:
                else
                {
 
-                  iCount += seq_play(pevent);
+                  //iCount += seq_play(pevent);
+                  seq_play(pevent);
 
                }
 
-               if(iCount >= 32 && pevent != NULL && pevent->m_tkPosition != m_tkPosition)
-                  break;
+//               if(iCount >= iMaxEventGroup && pevent != NULL && pevent->m_tkPosition != m_tkPosition)
+//                  break;
+//
+//               pevent = seq_get_next_event();
+//
+//            }
+//
+//            if(pevent != NULL)
+//            {
+//
+//               m_tkPosition = pevent->m_tkPosition;
+//
+//               m_iaBuffered.add(m_tkPosition);
+//
+//               m_iBuffered++;
+//
+//               //seq_midi_echo(m_pseq, m_tkPosition - m_tkPrerollBase);
+//
+//            }
+//            else
+//            {
+//
+//               m_iaBuffered.add(get_file()->m_tkLength);
+//
+//               m_iBuffered++;
+//
+//               //seq_midi_echo(m_pseq, get_file()->m_tkLength - m_tkPrerollBase);
+//
+//            }
+//
+//            if(m_bPlay)
+//            {
+//
+//               //snd_seq_drain_output(m_pseq->handle);
+//
+//            }
+//
+////////            if(snd_seq_client_pool_get_output_free (m_pseq->ctlist->get_head()) < 64)
+////////            {
+////////
+////////               break;
+////////
+////////            }
 
-               pevent = seq_get_next_event();
-
-            }
-
-            if(pevent != NULL)
-            {
-
-               m_tkPosition = pevent->m_tkPosition;
-
-               m_iaBuffered.add(m_tkPosition);
-
-               m_iBuffered++;
-
-               //seq_midi_echo(m_pseq, m_tkPosition - m_tkPrerollBase);
-
-            }
-            else
-            {
-
-               m_iaBuffered.add(get_file()->m_tkLength);
-
-               m_iBuffered++;
-
-               //seq_midi_echo(m_pseq, get_file()->m_tkLength - m_tkPrerollBase);
-
-            }
-
-            snd_seq_drain_output(m_pseq->handle);
-
-         }
+//         }
+//
+//         if(!m_bPlay)
+//         {
+//
+//            return -1;
+//
+//         }
 
          return 1;
 
       }
+
+
+      void sequence::seq_run()
+      {
+
+         m_bPlay = true;
+
+         seq_start_timer(m_pseq);
+
+         int npfd = snd_seq_poll_descriptors_count(m_pseq->handle, POLLOUT);
+
+         struct pollfd  * pfd = (struct pollfd *)alloca(npfd * sizeof(struct pollfd));
+
+         snd_seq_poll_descriptors(m_pseq->handle, pfd, npfd, POLLOUT);
+
+         if(seq_dump() >= 0)
+         {
+
+         while (m_bPlay)
+         {
+
+            if (poll(pfd, npfd, 100000) > 0)
+            {
+
+               if(seq_dump()< 0)
+               {
+
+                  break;
+
+               }
+
+            }
+
+         }
+         }
+
+                  if(m_pseq != NULL)
+                  {
+
+                     seq_stop_timer(m_pseq);
+
+                     seq_free_context(m_pseq);
+
+                     m_pseq = NULL;
+
+                  }
+
+                  m_eventMidiPlaybackEnd.SetEvent();
+
+                  sequence_thread * pthread = dynamic_cast < sequence_thread * > (m_pthread);
+
+                  pthread->PostMidiSequenceEvent(this, ::music::midi::sequence::EventMidiPlaybackEnd);
+
+                  return;
+//         seq_start_timer(m_pseq);
+//
+//         snd_seq_event_t * pev = NULL;
+//
+//         imedia_position pos = 0;
+//
+//         while(true)
+//         {
+//
+//            get_position(pos);
+//
+//            while(m_iaBuffered.get_count() > 0 && m_iaBuffered[0] <= pos)
+//            {
+//
+//               m_iaBuffered.remove_at(0);
+//
+//            }
+//
+//            if(seq_dump() < 0 || !m_bPlay)
+//            {
+//
+//               if(m_iaBuffered.get_count() <= 0 || !m_bPlay)
+//               {
+//
+//                  if(m_pseq != NULL)
+//                  {
+//
+//                     seq_stop_timer(m_pseq);
+//
+//                     seq_free_context(m_pseq);
+//
+//                     m_pseq = NULL;
+//
+//                  }
+//
+//                  m_eventMidiPlaybackEnd.SetEvent();
+//
+//                  sequence_thread * pthread = dynamic_cast < sequence_thread * > (m_pthread);
+//
+//                  pthread->PostMidiSequenceEvent(this, ::music::midi::sequence::EventMidiPlaybackEnd);
+//
+//                  return;
+//
+//               }
+//
+//               Sleep(84);
+//
+//            }
+//            else
+//            {
+//
+//               Sleep(5);
+//
+//            }
+//
+//         }
+
+      }
+
 
       int sequence::seq_play(::music::midi::event * pevent)
       {
