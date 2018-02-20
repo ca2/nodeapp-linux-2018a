@@ -47,6 +47,16 @@
 #define static_inline static inline
 
 
+
+#ifdef cplusplus
+
+#define LOG_THIS_TAG (demangle(typeid(*this).name()))
+#define LOG_MEMBER_PREFIX __FUNCTION__
+
+#endif
+
+
+
 #define AXIS_FREEIMAGE
 
 
