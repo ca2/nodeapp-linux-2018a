@@ -137,11 +137,11 @@ namespace music
          virtual ~sequence();
 
 
-         inline uint32_t GetState();
-         inline uint32_t GetPreviousState();
-         uint32_t SetState(uint32_t uiState);
-
-         void SetSpecialModeV001Flag(bool bSet = true);
+//         inline uint32_t get_status();
+//         inline uint32_t GetPreviousState();
+//         uint32_t set_status(uint32_t uiState);
+//
+//         void SetSpecialModeV001Flag(bool bSet = true);
 
          void MuteAll(bool bMute = true, int32_t iExcludeTrack = -1);
          void MuteTrack(int32_t iIndex, bool bMute = true);
@@ -186,10 +186,10 @@ namespace music
          virtual bool IsChangingTempo();
 
          virtual double GetTempoShift();
-         virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
+//         virtual void GetMidiDoneData(::music::midi::LPMIDIDONEDATA lpmdd);
          virtual bool IsInSpecialModeV001();
          virtual bool WasInSpecialModeV001();
-         virtual void SetSpecialModeV001Operation(uint32_t uiOperation);
+         //virtual void SetSpecialModeV001Operation(uint32_t uiOperation);
 
          virtual void OnEvent(::music::midi::sequence::event * pevent);
 
@@ -219,7 +219,7 @@ namespace music
          ::multimedia::e_result Stop();
 
          void get_position(imedia_position  & time) override;
-         void get_time(imedia_time  & time) override;
+//         void get_time(imedia_time  & time) override;
 
          ::multimedia::e_result get_ticks(imedia_position & time) override;
          ::multimedia::e_result get_millis(imedia_time & time) override;

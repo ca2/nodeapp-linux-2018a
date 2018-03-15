@@ -35,10 +35,10 @@ namespace music
 
          void PostNotifyEvent(::music::midi::player::e_notify_event eevent);
 
-         void PrerollAndWait(double rate = 0.0);
-         void PrerollAndWait(imedia_position tkStart);
-         void Play(double dRate = 0.0);
-         void Play(imedia_position tkStart);
+         virtual void PrerollRateAndWait(double rate = 0.0) override;
+         virtual void PrerollAndWait(imedia_position tkStart) override;
+         virtual void PlayRate(double dRate = 0.0) override;
+         virtual void Play(imedia_position tkStart) override;
          void PostGMReset();
          void PostTempoChange();
          void SendTempoChange();

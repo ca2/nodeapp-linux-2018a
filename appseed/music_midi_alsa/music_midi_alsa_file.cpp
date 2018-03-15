@@ -45,7 +45,7 @@ namespace music
       file::~file()
       {
 
-         CloseFile();
+         close_file();
 
          if(m_estorage == ::music::storage_attach)
          {
