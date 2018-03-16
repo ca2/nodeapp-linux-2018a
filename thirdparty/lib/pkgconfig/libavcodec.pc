@@ -1,0 +1,14 @@
+prefix=/ubuntu/nodeapp/thirdparty
+exec_prefix=${prefix}
+libdir=/ubuntu/nodeapp/thirdparty/lib
+includedir=/ubuntu/nodeapp/thirdparty/include
+
+Name: libavcodec
+Description: FFmpeg codec library
+Version: 58.14.100
+Requires: 
+Requires.private: libswresample >= 3.0.101, libavutil >= 56.9.100
+Conflicts:
+Libs: -L${libdir}  -lavcodec 
+Libs.private: -lvpx -lm -lvpx -lm -lvpx -lm -lvpx -lm -pthread -lm -llzma -lz -lfdk-aac -lmp3lame -lm -lopus -ltheoraenc -ltheoradec -logg -lvorbis -lvorbisenc -lx264 -lva
+Cflags: -I${includedir}

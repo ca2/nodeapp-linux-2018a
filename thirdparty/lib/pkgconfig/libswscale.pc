@@ -1,0 +1,14 @@
+prefix=/ubuntu/nodeapp/thirdparty
+exec_prefix=${prefix}
+libdir=/ubuntu/nodeapp/thirdparty/lib
+includedir=/ubuntu/nodeapp/thirdparty/include
+
+Name: libswscale
+Description: FFmpeg image rescaling library
+Version: 5.0.102
+Requires: 
+Requires.private: libavutil >= 56.9.100
+Conflicts:
+Libs: -L${libdir}  -lswscale 
+Libs.private: -lm
+Cflags: -I${includedir}

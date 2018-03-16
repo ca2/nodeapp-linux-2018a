@@ -1,0 +1,14 @@
+prefix=/ubuntu/nodeapp/thirdparty
+exec_prefix=${prefix}
+libdir=/ubuntu/nodeapp/thirdparty/lib
+includedir=/ubuntu/nodeapp/thirdparty/include
+
+Name: libavformat
+Description: FFmpeg container format library
+Version: 58.10.100
+Requires: 
+Requires.private: libavcodec >= 58.14.100, libswresample >= 3.0.101, libavutil >= 56.9.100
+Conflicts:
+Libs: -L${libdir}  -lavformat 
+Libs.private: -lm -lbz2 -lz
+Cflags: -I${includedir}
