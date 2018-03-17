@@ -16,13 +16,24 @@
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/verisimplevideo/verisimplevideo.cbp">
+			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
 			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+			<Depends filename="../../../app/appseed/axis/axis.cbp" />
+			<Depends filename="../../../app/appseed/base/base.cbp" />
+			<Depends filename="../../../app/appseed/basecore/basecore.cbp" />
+			<Depends filename="../../../app-core/appseed/id3lib/id3lib.cbp" />
+			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
+			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
+			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp" />
 			<Depends filename="../../../app-veriwell/appseed/video_decode_ffmpeg/video_decode_ffmpeg.cbp" />
+			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-veriwell/appseed/musical_player_lite/musical_player_lite.cbp">
 			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
@@ -41,6 +52,7 @@
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
+			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app/appseed/ace/ace.cbp" />

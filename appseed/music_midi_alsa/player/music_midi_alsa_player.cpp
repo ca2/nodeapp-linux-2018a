@@ -65,7 +65,7 @@ namespace music
             //    delete m_pmidicallbackdata;
             ///  m_pmidicallbackdata = NULL;
             //}
-            term_thread();
+            music::midi::player::player::term_thread();
 
          }
 

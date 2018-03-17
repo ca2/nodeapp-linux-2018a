@@ -131,6 +131,7 @@ namespace music
 
          int                           m_iBuffered;
          bool                          m_bPlay;
+         midi_out *                    m_pmidiout;
 
 
          sequence(::aura::application * papp);
@@ -218,24 +219,25 @@ namespace music
          //::multimedia::e_result Stop(uint32_t dwEllapse);
          ::multimedia::e_result Stop();
 
-         void get_position(imedia_position  & time) override;
+         //void get_position(imedia_position  & time) override;
 //         void get_time(imedia_time  & time) override;
 
-         ::multimedia::e_result get_ticks(imedia_position & time) override;
-         ::multimedia::e_result get_millis(imedia_time & time) override;
+         //::multimedia::e_result get_ticks(imedia_position & time) override;
+         //::multimedia::e_result get_millis(imedia_time & time) override;
 
 
-         imedia_position MillisecsToTicks(imedia_time msOffset);
+         //imedia_position MillisecsToTicks(imedia_time msOffset);
 
-         imedia_time TicksToMillisecs(imedia_position tkOffset);
+         //imedia_time TicksToMillisecs(imedia_position tkOffset);
 
          bool IsPlaying();
 
 //         static void CALLBACK MidiOutProc(HMIDIOUT hmo, uint32_t wMsg, uint32_t dwInstance, uint32_t dwParam1, uint32_t dwParam2);
 
-
+         message_out * get_message_out();
 
          bool IsSettingPosition();
+
          void SetSettingPositionFlag(bool bSet = TRUE);
 
          imedia_position GetQuarterNote();
@@ -254,14 +256,14 @@ namespace music
          using ::music::midi::sequence::create_new_event;
          virtual ::music::midi::sequence::event * create_new_event(::music::midi::sequence::e_event eevent, LPMIDIHDR lpmidihdr);
 
-         int seq_dump();
-         void seq_run();
-         ::music::midi::event * seq_get_next_event();
+         //int seq_dump();
+         //void seq_run();
+         //::music::midi::event * seq_get_next_event();
 
 
 
-         int seq_play(::music::midi::event * pevent);
-         ::multimedia::e_result seq_start();
+         //int seq_play(::music::midi::event * pevent);
+         //::multimedia::e_result seq_start();
 
       };
 

@@ -37,8 +37,8 @@ namespace music
 
          m_pFileHeader = NULL;
 
-         keep_pointer((void **) &m_pMThd);
-         keep_pointer((void **) &m_pFileHeader);
+         //keep_pointer((void **) &m_pMThd);
+         //keep_pointer((void **) &m_pFileHeader);
 
       }
 

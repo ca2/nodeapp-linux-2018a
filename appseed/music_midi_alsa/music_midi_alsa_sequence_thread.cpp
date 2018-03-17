@@ -87,6 +87,8 @@ namespace music
          void sequence_thread::OnMidiSequenceEvent(::message::message * pobj)
          {
 
+//            music::midi::sequence_thread::OnMidiSequenceEvent(pobj);
+
             SCAST_PTR(::message::base, pbase, pobj);
 
             sp(::music::midi::sequence::event) pevent(pbase->m_lparam);
@@ -216,7 +218,9 @@ namespace music
             case ::music::midi::sequence::EventMidiPlaybackStart:
                {
 
-                  pseq->seq_start();
+                  pseq->m_psequencer = pseq->create_sequencer();
+
+                  pseq->m_psequencer->begin();
 
                   PostNotifyEvent(::music::midi::player::notify_event_playback_start);
 
@@ -506,6 +510,12 @@ namespace music
                   }
                }
                break;
+            default:
+            {
+            music::midi::sequence_thread::_ExecuteCommand(pcommand);
+            }
+            break;
+
             }
          }
 

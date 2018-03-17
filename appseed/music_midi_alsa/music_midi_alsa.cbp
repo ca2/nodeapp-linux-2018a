@@ -87,6 +87,8 @@
 		<Unit filename="music_midi_alsa_file.h" />
 		<Unit filename="music_midi_alsa_midi.cpp" />
 		<Unit filename="music_midi_alsa_midi.h" />
+		<Unit filename="music_midi_alsa_midi_out.cpp" />
+		<Unit filename="music_midi_alsa_midi_out.h" />
 		<Unit filename="music_midi_alsa_out.cpp" />
 		<Unit filename="music_midi_alsa_out.h" />
 		<Unit filename="music_midi_alsa_sequence.cpp" />

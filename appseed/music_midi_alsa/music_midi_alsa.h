@@ -17,6 +17,7 @@
 
 #include "music_midi_alsa_translation.h"
 
+#include "music_midi_alsa_midi_out.h"
 
 #include "music_midi_alsa_sequence.h"
 
