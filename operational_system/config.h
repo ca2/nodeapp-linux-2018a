@@ -71,6 +71,6 @@
 
 
 
-
+#define _strdup strdup
 
 
