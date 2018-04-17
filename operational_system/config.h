@@ -74,3 +74,5 @@
 #define _strdup strdup
 
 
+#define STR_NEWLINE "\n"
+
