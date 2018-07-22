@@ -9,7 +9,6 @@
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/gcom/gcom.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/flag/flag.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
@@ -18,7 +17,6 @@
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-cidadedecuritiba/appseed/alphaclock/alphaclock.cbp">
 			<Depends filename="../../../app-core/appseed/hellomultiverse/hellomultiverse.cbp" />
@@ -40,7 +38,6 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/projection/projection.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
@@ -49,7 +46,6 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/rdpclient/rdpclient.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
@@ -59,7 +55,6 @@
 			<Depends filename="../../../app/appseed/basecore/basecore.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 			<Depends filename="../../../third/appseed/clientchannels/axisclientchannels.cbp" />
 			<Depends filename="../../../third/appseed/freerdp/axisfreerdp.cbp" />
 			<Depends filename="../../../third/appseed/winpr/axiswinpr.cbp" />
@@ -110,7 +105,6 @@
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		<Project filename="../../../third/appseed/clientchannels/axisclientchannels.cbp">
 			<Depends filename="../../../third/appseed/freerdp/axisfreerdp.cbp" />
 			<Depends filename="../../../third/appseed/winpr/axiswinpr.cbp" />
@@ -119,5 +113,6 @@
 			<Depends filename="../../../third/appseed/winpr/axiswinpr.cbp" />
 		</Project>
 		<Project filename="../../../third/appseed/winpr/axiswinpr.cbp" />
+		<Project filename="../../../app/appseed/wndfrm_core/wndfrm_core.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
