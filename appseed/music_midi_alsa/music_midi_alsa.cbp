@@ -66,6 +66,7 @@
 			<Add option="-Wl,-rpath=\\$$$ORIGIN" />
 			<Add option="-laura" />
 			<Add option="-lbase" />
+			<Add option="-lcore" />
 			<Add option="-lasound" />
 			<Add option="-lsphere" />
 			<Add option="-lmultimedia" />
