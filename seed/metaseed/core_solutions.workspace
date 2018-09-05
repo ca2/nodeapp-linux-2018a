@@ -110,6 +110,7 @@
 			<Depends filename="../../../app-core/appseed/resident_liveedutv/resident_liveedutv.cbp" />
 			<Depends filename="../../../app-core/appseed/resident_mixercom/resident_mixercom.cbp" />
 			<Depends filename="../../../app-core/appseed/resident_twitchtv/resident_twitchtv.cbp" />
+			<Depends filename="../../../app-core/appseed/resident_youtube/resident_youtube.cbp" />
 			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 			<Depends filename="../../../app-core/appseed/vericard/vericard.cbp" />
