@@ -45,6 +45,8 @@ namespace music
 
             virtual void add_short_message(byte * pmessage, int iSize);
 
+            virtual bool is_ok() override;
+
          };
 
 

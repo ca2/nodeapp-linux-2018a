@@ -658,7 +658,7 @@ seq_Preroll_Cleanup:
 
             string strDriver;
 
-            strDriver = file_as_string_dup(dir::system() / "rawmidi.txt");
+            strDriver = file_as_string_dup(dir::localconfig() / "rawmidi.txt");
 
             if(strDriver.is_empty())
             {
