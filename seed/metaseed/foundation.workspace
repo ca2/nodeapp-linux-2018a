@@ -30,7 +30,9 @@
 			<Depends filename="../../../app-core/appseed/hash_md5/hash_md5.cbp" />
 			<Depends filename="../../../app-core/appseed/hash_sha1/hash_sha1.cbp" />
 		</Project>
-		<Project filename="../../../design/appseed/textformat/textformat.cbp" />
+		<Project filename="../../../design/appseed/textformat/textformat.cbp">
+			<Depends filename="../../../app/appseed/aura/aura.cbp" />
+		</Project>
 		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
