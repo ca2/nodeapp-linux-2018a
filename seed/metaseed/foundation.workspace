@@ -11,27 +11,30 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/verilux/verilux.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/verifile/verifile.cbp">
 			<Depends filename="../../appseed/app/app.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
 		</Project>
 		<Project filename="../../../app-core/appseed/veriedit/veriedit.cbp">
 			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/hash_hub/hash_hub.cbp" />
+		<Project filename="../../../design/appseed/textformat/textformat.cbp" />
 		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
+		<Project filename="../../../app-core/appseed/hash_base/hash_base.cbp" />
+		<Project filename="../../../app-core/appseed/hash_crc/hash_crc.cbp" />
+		<Project filename="../../../app-core/appseed/hash_md5/hash_md5.cbp" />
+		<Project filename="../../../app-core/appseed/hash_sha1/hash_sha1.cbp" />
 		<Project filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
 			<Depends filename="../../../app/appseed/axis/axis.cbp" />
@@ -94,7 +97,14 @@
 			<Depends filename="../../../app/appseed/base/base.cbp" />
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
+		<Project filename="../../../app-core/appseed/tesseract/tesseract.cbp">
+			<Depends filename="../../../app-veriwell/appseed/audio_decode_libmpg123/audio_decode_libmpg123.cbp" />
+			<Depends filename="../../../app-core/appseed/audio_decode_wave/audio_decode_wave.cbp" />
+			<Depends filename="../../appseed/audio_alsa/audio_alsa.cbp" />
+			<Depends filename="../../../app-core/appseed/id3lib/id3lib.cbp" />
+			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
+			<Depends filename="../../appseed/music_midi_alsa/music_midi_alsa.cbp" />
+		</Project>
 		<Project filename="../../../app-core/appseed/userdatetime/userdatetime.cbp" />
 		<Project filename="../../../app-veriwell/appseed/multimedia/veriwell_multimedia.cbp">
 			<Depends filename="../../../app/appseed/aura/aura.cbp" />
@@ -103,6 +113,6 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app-core/appseed/multimedia/multimedia.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/wndfrm_core/wndfrm_core.cbp" />
+		<Project filename="../../../app/appseed/wndfrm_core/wndfrm_core.cbp" />
 	</Workspace>
 </CodeBlocks_workspace_file>
