@@ -47,20 +47,6 @@
 			<Depends filename="../../../app/appseed/core/core.cbp" />
 			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
 		</Project>
-		<Project filename="../../../app-core/appseed/rdpclient/rdpclient.cbp">
-			<Depends filename="../../appseed/app/app.cbp" />
-			<Depends filename="../../../app/appseed/aura/aura.cbp" />
-			<Depends filename="../../../app/appseed/axis/axis.cbp" />
-			<Depends filename="../../../app/appseed/base/base.cbp" />
-			<Depends filename="../../../app/appseed/basecore/basecore.cbp" />
-			<Depends filename="../../../app/appseed/core/core.cbp" />
-			<Depends filename="../../../app/appseed/draw2d_cairo/draw2d_cairo.cbp" />
-			<Depends filename="../../../app/appseed/sphere/sphere.cbp" />
-			<Depends filename="../../../app-core/appseed/tesseract/tesseract.cbp" />
-			<Depends filename="../../../third/appseed/clientchannels/axisclientchannels.cbp" />
-			<Depends filename="../../../third/appseed/freerdp/axisfreerdp.cbp" />
-			<Depends filename="../../../third/appseed/winpr/axiswinpr.cbp" />
-		</Project>
 		<Project filename="../../../app/appseed/ace/ace.cbp" />
 		<Project filename="../../appseed/app/app.cbp">
 			<Depends filename="../../../app/appseed/base/base.cbp" />
