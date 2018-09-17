@@ -40,22 +40,21 @@ namespace multimedia
          ::thread(papp),
         wave_base(papp),
          snd_pcm(papp),
-         ::multimedia::audio::wave_out(papp),
-         m_evReady(papp)
+         ::multimedia::audio::wave_out(papp) // ,
+         //m_evReady(papp)
       {
 
          m_estate             = state_initial;
          m_pthreadCallback    = NULL;
          m_mmr                = result_success;
          m_peffect            = NULL;
-         //m_dwLostSampleCount  = 0;
          m_bWrite             = false;
          m_bStarted           = false;
 
          m_pstatus            = NULL;
          snd_pcm_status_malloc (&m_pstatus);
 
-         m_pthreadWriter      = NULL;
+         //m_pthreadWriter      = NULL;
 
       }
 
@@ -68,16 +67,12 @@ namespace multimedia
       }
 
 
-      void wave_out::install_message_routing(::message::sender * pinterface)
+      void wave_out::install_message_routing(::message::sender * psender)
       {
 
-         ::multimedia::audio::wave_out::install_message_routing(pinterface);
-
-         IGUI_MSG_LINK(message_ready, pinterface, this, &wave_out::OnReady);
-         IGUI_MSG_LINK(message_free, pinterface, this, &wave_out::OnFree);
+         ::multimedia::audio::wave_out::install_message_routing(psender);
 
       }
-
 
 
       bool wave_out::init_thread()
@@ -584,50 +579,6 @@ namespace multimedia
       }
 
 
-      void wave_out::wave_out_free(index ibuffer)
-      {
-
-         ::multimedia::audio::wave_out::wave_out_free(ibuffer);
-
-      }
-
-
-      void wave_out::wave_out_buffer_ready(index iBuffer)
-      {
-
-         synch_lock sl(m_pmutex);
-
-         m_iaReady.add(iBuffer);
-
-         m_evReady.SetEvent();
-
-      }
-
-
-
-      void wave_out::OnReady(::message::message * pmessage)
-      {
-
-         SCAST_PTR(::message::base, pbase, pmessage);
-
-         int iBuffer = pbase->m_wparam;
-
-         alsa_out_buffer_ready(iBuffer);
-
-      }
-
-
-      void wave_out::OnFree(::message::message * pmessage)
-      {
-
-         SCAST_PTR(::message::base, pbase, pmessage);
-
-         int iBuffer = pbase->m_wparam;
-
-         alsa_out_free(iBuffer);
-
-      }
-
       bool wave_out::alsa_should_play()
       {
 
@@ -661,75 +612,81 @@ namespace multimedia
       }
 
 
+//      void wave_out::alsa_write_thread()
+//      {
+//
+//         ::multithreading::set_priority(::multithreading::priority_time_critical);
+//
+//         int_array iaReady;
+//
+//         int iReady;
+//
+//         while(alsa_should_play())
+//         {
+//
+//            {
+//
+//               synch_lock sl(m_pmutex);
+//
+//               if(m_iaReady.has_elements())
+//               {
+//
+//                  iReady = m_iaReady[0];
+//
+//                  m_iaReady.remove_at(0);
+//
+//               }
+//               else
+//               {
+//
+//                  m_evReady.ResetEvent();
+//
+//                  sl.unlock();
+//
+//                  m_evReady.wait(micros(m_dwPeriodTime));
+//
+//                  continue;
+//
+//               }
+//
+//            }
+//
+//            if(!alsa_out_buffer_ready(iReady))
+//            {
+//
+//               TRACE("ALSA wave_out: an error has occurred.\n");
+//
+//               break;
+//
+//            }
+//
+//         }
+//
+//         end:;
+//
+//         m_pthreadWriter = NULL;
+//
+//         if(m_estate == state_opened)
+//         {
+//
+//            TRACE("ALSA wave_out: now the state is: opened.\n");
+//
+//         }
+//
+//      }
 
-      void wave_out::alsa_write_thread()
-      {
 
-         ::multithreading::set_priority(::multithreading::priority_time_critical);
-
-         int_array iaReady;
-
-         int iReady;
-
-         while(alsa_should_play())
-         {
-
-            {
-
-               synch_lock sl(m_pmutex);
-
-               if(m_iaReady.has_elements())
-               {
-
-                  iReady = m_iaReady[0];
-
-                  m_iaReady.remove_at(0);
-
-               }
-               else
-               {
-
-                  m_evReady.ResetEvent();
-
-                  sl.unlock();
-
-                  m_evReady.wait(micros(m_dwPeriodTime));
-
-                  continue;
-
-               }
-
-            }
-
-            if(!alsa_out_buffer_ready(iReady))
-            {
-
-               TRACE("ALSA wave_out: an error has occurred.\n");
-
-               break;
-
-            }
-
-         }
-
-         end:;
-
-         m_pthreadWriter = NULL;
-
-         if(m_estate == state_opened)
-         {
-
-            TRACE("ALSA wave_out: now the state is: opened.\n");
-
-         }
-
-      }
-
-
-      bool wave_out::alsa_out_buffer_ready(index iBuffer)
+      void wave_out::wave_out_filled(index iBuffer)
       {
 
          synch_lock sLock(m_pmutex);
+
+         if(m_ppcm == NULL)
+         {
+
+            return;
+
+         }
 
          int result = 0;
 
@@ -778,7 +735,7 @@ namespace multimedia
 
                TRACE("ALSA wave_out snd_pcm_avail error: %s\n", snd_strerror(avail));
 
-               return false;
+               return;
 
             }
             else if(avail >= m_framesPeriodSize)
@@ -857,7 +814,7 @@ namespace multimedia
 
                TRACE("ALSA wave_out snd_pcm_writei couldn't recover from error: %s\n", snd_strerror(result));
 
-               return false;
+               return;
 
             }
 
@@ -878,12 +835,14 @@ namespace multimedia
 
          }
 
+         m_iBufferedCount++;
+
          sLock.unlock();
 
          if(iBuffer >= 0)
          {
 
-            post_message(message_done, iBuffer);
+            m_psynththread->post_message(message_free, iBuffer);
 
          }
 
@@ -954,12 +913,12 @@ namespace multimedia
 
          }
 
-         m_pthreadWriter = fork([&]()
-         {
-
-            alsa_write_thread();
-
-         });
+//         m_pthreadWriter = fork([&]()
+//         {
+//
+//            alsa_write_thread();
+//
+//         });
 
          TRACE("wave_out_start: ::multimedia::audio::wave_out::wave_out_start OK");
 
@@ -1029,13 +988,13 @@ namespace multimedia
       }
 
 
-      void wave_out::alsa_out_free(index iBuffer)
-      {
-
-         ::multimedia::audio::wave_out::wave_out_free(iBuffer);
-
-      }
-
+//      void wave_out::alsa_out_free(index iBuffer)
+//      {
+//
+//         ::multimedia::audio::wave_out::wave_out_free(iBuffer);
+//
+//      }
+//
 
    } // namespace audio_alsa
 
