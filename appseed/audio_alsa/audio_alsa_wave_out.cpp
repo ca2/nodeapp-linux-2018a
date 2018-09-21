@@ -257,7 +257,7 @@ namespace multimedia
 
          m_dwPeriodTime =  20 * 1000; /* period time in us */
 
-         m_iBufferCountEffective = 2;
+         m_iBufferCountEffective = 4;
 
          if(epurpose == ::multimedia::audio::purpose_playback)
          {
@@ -302,7 +302,7 @@ namespace multimedia
 
          wave_out_get_buffer()->PCMOutOpen(this, uiBufferSize, m_iBufferCountEffective, 128, m_pwaveformat, m_pwaveformat);
 
-         m_pprebuffer->open(this, m_pwaveformat->nChannels, m_iBufferCountEffective, m_framesPeriodSize);
+         m_pprebuffer->open(m_pwaveformat->nChannels, m_iBufferCountEffective, m_framesPeriodSize);
 
 //         m_pprebuffer->SetMinL1BufferCount(wave_out_get_buffer()->GetBufferCount());
 
@@ -319,7 +319,7 @@ namespace multimedia
 
          int iBufferThreshold = MIN((m_framesBufferSize / m_framesPeriodSize), m_iBufferCountEffective);
 
-         snd_pcm_sframes_t framesThreshold = iBufferThreshold * m_framesPeriodSize;
+         snd_pcm_sframes_t framesThreshold = (iBufferThreshold - 1) * m_framesPeriodSize;
 
          // start the transfer when the buffer is almost full:
          if((err = snd_pcm_sw_params_set_start_threshold(m_ppcm, m_pswparams, framesThreshold)) < 0)
@@ -409,8 +409,6 @@ namespace multimedia
             return result_error;
 
          }
-
-         m_eventStopped.ResetEvent();
 
          m_pprebuffer->stop();
 

@@ -206,7 +206,7 @@ namespace multimedia
          string strHw = "default";
 
 
-         if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, 0)) < 0)
+         if ((err = ::snd_pcm_open (&m_ppcm, strHw, stream_type, SND_PCM_NONBLOCK)) < 0)
          {
 
             TRACE ("cannot open audio device %s (%s)\n", strHw, snd_strerror (err));
@@ -298,6 +298,19 @@ namespace multimedia
 
          }
 
+         m_dwBufferTime = m_iBufferCount * 1000 * 1000 / uiFreq;
+
+         dir = 1;
+
+         if((err = snd_pcm_hw_params_set_buffer_time_near(m_ppcm, m_phwparams, &m_dwBufferTime, &dir)) < 0)
+         {
+
+            TRACE("Unable to set buffer time %i for playback: %s\n", m_dwBufferTime, snd_strerror(err));
+
+            return result_error;
+
+         }
+
          snd_pcm_uframes_t size;
 
          dir = 1;
@@ -313,19 +326,6 @@ namespace multimedia
 
          m_framesPeriodSize = size;
 
-         m_dwBufferTime = m_iBufferCount * uiFreq * 1000 / size ;
-
-         dir = 1;
-
-         if((err = snd_pcm_hw_params_set_buffer_time_near(m_ppcm, m_phwparams, &m_dwBufferTime, &dir)) < 0)
-         {
-
-            TRACE("Unable to set buffer time %i for playback: %s\n", m_dwBufferTime, snd_strerror(err));
-
-            return result_error;
-
-         }
-
          if((err = snd_pcm_hw_params_get_buffer_size(m_phwparams, &size)) < 0)
          {
 
@@ -337,7 +337,7 @@ namespace multimedia
 
          m_framesBufferSize = size;
 
-         m_iBufferCount = (m_framesBufferSize / m_framesPeriodSize) + 1;
+         m_iBufferCount = (m_framesBufferSize / m_framesPeriodSize);
 
          if ((err = snd_pcm_hw_params (m_ppcm, m_phwparams)) < 0)
          {
