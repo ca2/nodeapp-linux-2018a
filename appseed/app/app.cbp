@@ -18,6 +18,7 @@
 				<Option run_host_application_in_terminal="0" />
 				<Compiler>
 					<Add option="-pg" />
+					<Add option="-fPIC" />
 					<Add option="-g" />
 					<Add option="-D_DEBUG" />
 				</Compiler>
@@ -43,6 +44,7 @@
 		</Build>
 		<Compiler>
 			<Add option="-std=c++14" />
+			<Add option="-fPIC" />
 			<Add option="-fexceptions" />
 			<Add option="-fnon-call-exceptions" />
 			<Add option="-fno-pie" />
@@ -51,7 +53,6 @@
 			<Add option="-Wno-attributes" />
 			<Add option="-Winvalid-pch" />
 			<Add option="-Wno-conversion-null" />
-			<Add option="-fPIC" />
 			<Add directory="../../../include" />
 			<Add directory="../../../app/include" />
 			<Add directory="../../../app/thirdparty/appseed" />
@@ -82,7 +83,6 @@
 			<Add option="-lidn" />
 			<Add option="-lfreetype" />
 			<Add option="-laxis" />
-			<Add option="-lbasecore" />
 			<Add option="-lbase" />
 			<Add option="-lcore" />
 			<Add option="-Wl,-z,defs" />
